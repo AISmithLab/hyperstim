@@ -33,3 +33,14 @@ Before committing, check `git diff --staged` for anything above.
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests before commit.
 - Commit messages: imperative, describe the why. Do not commit or push unless asked.
+
+## Dev environment
+
+New team members must be able to clone the repo and get a working setup from the docs alone.
+
+- Tools: **npm** for the frontend (Node version via nvm), **uv** for the backend (it also installs the pinned Python). No Poetry, conda, pnpm, or Yarn.
+- Pin runtime versions in the repo: Node in `frontend/.nvmrc` (and `engines` in `package.json`), Python in `backend/.python-version` (and `requires-python` in `pyproject.toml`). CI uses the same versions.
+- Track every dependency with a committed lock file: `package.json` + `package-lock.json` (install with `npm ci`); `pyproject.toml` + `uv.lock` (install with `uv sync`). Dev tools (linters, test runners) are dependencies too. Don't rely on globally installed tools beyond nvm/Node and uv.
+- The external analysis pipeline keeps its own environment; the backend runs it as a separate process via its configured path, so its dependencies never enter `uv.lock`.
+- `frontend/README.md` and `backend/README.md` are short dev guides: prerequisites, install, env vars (pointing to `.env.example`), and the commands to run, lint, type check, test, and build. The root `README.md` links to both.
+- When a change adds a dependency or changes a command or env var, update the README and lock file in the same change.
