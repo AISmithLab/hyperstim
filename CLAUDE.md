@@ -28,6 +28,8 @@ Before committing, check `git diff --staged` for anything above.
 - Frontend: Next.js (App Router, TypeScript, static export), Tailwind CSS. No server-side features (no API routes, no SSR, no image optimization).
 - Backend: Python, FastAPI. Config only through environment variables.
 - The frontend talks to the backend only through the typed API client in `frontend/src/lib/api.ts`; the backend's API contract lives in `backend/` and both change together.
-- Accessibility and mobile layouts are requirements, not polish.
+- Accessibility and responsive design are requirements, not polish: every page must work on phones (from 320 px), tablets, and large desktop screens.
+- Visual style follows `frontend/design/Design Mockup.png` and the "Visual style" section of the plans (fonts, palette, look), not its text or layout.
+- Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests before commit.
 - Commit messages: imperative, describe the why. Do not commit or push unless asked.

@@ -26,9 +26,41 @@ plans/      numbered plans
   - `/how-it-works` Method explained for a general audience (features → categories → score).
   - `/about` Team, paper, contact.
   - `/faq` Accordion of common questions.
-- Shared layout: top nav, footer, light/dark theme. Data fetched client-side from the backend with small typed hooks; static text pages need no backend.
+- Shared layout: top nav, footer. Data fetched client-side from the backend with small typed hooks; static text pages need no backend.
+- Responsive (RWD), mobile-first with Tailwind's default breakpoints; supported from 320 px phones up to wide desktop monitors:
+  - Content in a max-width container on large screens so lines and tables don't stretch.
+  - Nav collapses into a menu button on small screens.
+  - Rankings: table on `md`+, stacked cards on phones.
+  - Compare and detail pages: side-by-side on `lg`+, stacked on smaller screens.
+  - Touch targets ≥ 44 px; no hover-only interactions; YouTube embeds and charts scale with width.
+  - Check each page at 360, 768, 1280, and 1920 px wide before merging.
 - Home input flow: parse link/ID → if the video is in the dataset, go to its detail page; otherwise start live analysis, show progress, then land on the detail page.
 - Carry over the useful old-site behaviours (shareable compare links, accessible chart fallbacks), re-implemented rather than copied.
+
+## Visual style
+
+Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, names, and layouts are not ours to copy.
+
+- Look: warm and friendly, with hand-drawn crayon/watercolor illustrations, lots of whitespace, cards with large rounded corners, pastel section backgrounds, pill-shaped filter chips, and a yellow marker highlight behind key words in headings.
+- Fonts (Google Fonts via `next/font`, self-hosted at build):
+  - Headings, logo: a rounded handwritten font, e.g. **Patrick Hand**.
+  - Body, UI, tables: a rounded sans-serif, e.g. **Nunito**.
+- Palette (Tailwind theme tokens; tune for contrast during the build):
+
+  | Role | Hex |
+  |---|---|
+  | Page background (cream) | `#FDFBF6` |
+  | Heading / nav ink (navy) | `#0F2E8A` |
+  | Body text (slate) | `#4A5262` |
+  | Primary button | `#0F4A9C` |
+  | Marker highlight / sunny accent | `#F8E683` / `#F8D040` |
+  | Stimulation scale low → high | `#F8D040` → `#F8A048` → `#F85858` |
+  | Compare: video A / video B | `#FDA28C` / `#9FBBF5` |
+  | Pastel panels: butter / mint / sky | `#FEF8D4` / `#E5F6E6` / `#EEF6FA` |
+  | Accents: leaf green / sky blue / heart coral | `#448D62` / `#32ADF7` / `#FD7371` |
+
+- Light theme only (no dark mode for now). Colours are never the only way information is shown (scores also carry numbers/labels).
+- Illustrations live in `frontend/public/images/`. Claude Code asks for each one (object, pose, colours, size, background) and the team supplies it; no placeholder art is committed.
 
 ## Backend
 
