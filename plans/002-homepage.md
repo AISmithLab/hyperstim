@@ -119,7 +119,7 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 |---|---|
 | Footer nav `aria-label` | Footer |
 | Links | Privacy policy · About us · FAQ |
-| Copyright | © {year} HyperStim Research Team _(was: “research team”, lower case)_ |
+| Copyright | © {year} HyperStim? _(was: “HyperStim Research Team”; before that “research team”, lower case)_ |
 
 All decorative images (`kid_1`, `sun_1`, `grass_*`, `flower_*`, warning triangle) have `alt=""`.
 
@@ -217,6 +217,7 @@ Human decisions from the step 6 review of the page on mock data (recorded per th
 19. **The table was too busy; simplified:** the bottom ranks show as −3, −2, −1 instead of their full ranks; the gap row says “↓ Least stimulating” instead of the count in between (overrides 15); the meter has 5 segments instead of 10 (overrides 17).
 20. **Videos/Channels is a segmented control on the same line as the H2, on its right** (instead of two chips).
 21. **A little more space between the table's columns** (rank → name 16/20 px, name → score 16/24 px, phone/desktop).
+22. **The footer copyright says “© {year} HyperStim?”** instead of “© {year} HyperStim Research Team”.
 
 ## Open questions
 
@@ -227,7 +228,7 @@ None.
 1. Copy: approved as in **Copy**, with the user's edits.
 2. Channel ranking: mean score, channels with ≥ 5 scored videos.
 3. Images: originals (incl. unused ones) kept in `frontend/art/`; only used images are converted and shipped.
-4. Footer: no contact email for now; copyright holder “HyperStim Research Team” _(was: “HyperStim research team”)_.
+4. Footer: no contact email for now; copyright holder “HyperStim?” _(was: “HyperStim Research Team”; before that “HyperStim research team”)_.
 5. Header nav: Home · Rankings · Compare · How it works · About; FAQ only in the footer (overrides 001).
 6. Data release: IDs, metadata and features are public; clips never (review decision 6).
 7. Score: average of the 12 percentiles (review decision 7).

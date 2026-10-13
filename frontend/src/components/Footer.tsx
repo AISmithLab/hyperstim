@@ -24,7 +24,7 @@ export default function Footer() {
             ))}
           </ul>
         </nav>
-        <p className="px-2">© {new Date().getFullYear()} HyperStim Research Team</p>
+        <p className="px-2">© {new Date().getFullYear()} HyperStim?</p>
       </div>
     </footer>
   );
