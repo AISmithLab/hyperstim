@@ -34,7 +34,11 @@ Before committing, check `git diff --staged` for anything above.
 - Backend: Python, FastAPI. Config only through environment variables.
 - The frontend talks to the backend only through the typed API client in `frontend/src/lib/api.ts`; the backend's API contract lives in `backend/` and both change together.
 - Accessibility and responsive design are requirements, not polish: every page must work on phones (from 320 px), tablets, and large desktop screens.
-- Visual style follows `frontend/design/Design Mockup.png` and the "Visual style" section of the plans (fonts, palette, look), not its text or layout.
+- Visual style: `frontend/design/STYLE.md` is the single source (look, rules, and the classes for each shared surface and control); colour and font values live only as tokens in `frontend/src/app/globals.css`. It overrides the "Visual style" sections of earlier plans. The mockup (`frontend/design/Design Mockup.png`) sets the overall look only, not text or layout.
+  - Read `STYLE.md` before any UI work. New UI reuses its surfaces and controls; plans reference them instead of restating styles.
+  - A new or changed style goes into `STYLE.md` in the same change, and the plan says so.
+  - If a requested style change conflicts with `STYLE.md`, point out the conflict before applying it.
+  - Before handing back UI work, screenshot the changed parts next to their neighbours at phone (360 px) and desktop (1280 px) widths and compare them against `STYLE.md`.
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests before commit.
 - Commit messages: imperative, describe the why. Do not commit or push unless asked.

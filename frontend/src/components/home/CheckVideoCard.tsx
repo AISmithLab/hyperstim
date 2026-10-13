@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState, type FormEvent } from "react";
-import InfoTip from "@/components/InfoTip";
 import { asset } from "@/lib/asset";
 import { parseVideoInput } from "@/lib/youtube";
 
@@ -33,15 +32,9 @@ export default function CheckVideoCard() {
       aria-labelledby={`${id}-heading`}
       className="relative rounded-[2rem] bg-butter px-5 py-8 sm:px-8 md:pb-24"
     >
-      <div className="flex items-center justify-between gap-2">
-        <h2 id={`${id}-heading`} className="font-hand text-2xl font-semibold text-navy sm:text-3xl">
-          Check a video
-        </h2>
-        <InfoTip id={`${id}-info`} label="More about checking a video">
-          <p>Paste a YouTube link or video ID to see its stimulation score.</p>
-          <p className="mt-2">Works best with children’s videos up to 15 minutes.</p>
-        </InfoTip>
-      </div>
+      <h2 id={`${id}-heading`} className="font-hand text-2xl font-semibold text-navy sm:text-3xl">
+        Check a video
+      </h2>
 
       <form noValidate onSubmit={onSubmit} className="mt-6">
         <label htmlFor={`${id}-input`} className="block font-semibold text-navy">
@@ -61,7 +54,7 @@ export default function CheckVideoCard() {
               if (error) setError(null);
             }}
             aria-invalid={error ? true : undefined}
-            aria-describedby={`${id}-error ${id}-info`}
+            aria-describedby={`${id}-hint ${id}-error`}
             className="h-12 w-full min-w-0 rounded-full border-2 border-navy bg-white px-5 text-navy placeholder:text-ink/70 focus:shadow-[0_0_0_5px_var(--color-sunny)] focus:outline-none aria-invalid:border-error md:flex-1"
           />
           <button
@@ -71,7 +64,10 @@ export default function CheckVideoCard() {
             Check video <span aria-hidden="true">→</span>
           </button>
         </div>
-        <p id={`${id}-error`} aria-live="polite" className="mt-2 min-h-6 font-semibold text-error">
+        <p id={`${id}-hint`} className="mt-2 text-sm">
+          Works best with children’s videos up to 15 minutes.
+        </p>
+        <p id={`${id}-error`} aria-live="polite" className="mt-1 min-h-6 font-semibold text-error">
           {error}
         </p>
       </form>

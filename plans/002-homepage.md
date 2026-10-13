@@ -37,10 +37,10 @@ All visible text is in **Copy** below; this list says only where things go.
 1. **Header** (shared layout): skip link (visible on focus) first; logo left, links to `/`; nav right with the current page underlined and `aria-current="page"`; `sun_1.png` small, decorative, beside the nav on `lg`+. Below `lg`: menu button opens the nav as a full-width list.
 2. **Hero, left.** H1 (Shantell Sans _(was: Patrick Hand)_, navy, large) with a yellow marker highlight behind its last words; intro in two paragraphs (Nunito, slate). _(was: one intro paragraph plus a small note under it)_
 3. **Hero, right.** `kid_1.png`, `aria-hidden`, no speech bubble. _(was: with a hand-styled CSS speech bubble saying “What’s next?”)_
-4. **Check-a-video card** (butter panel `#FEF8D4`, large rounded corners). `grass_1.png` / `flower_1.png` peeking from the bottom-left corner on `md`+. H2 with an info button on the same row, right-aligned with the “Check video” button (small navy-outlined circle, navy “i” in Shantell Sans _(was: Patrick Hand)_, no fill; 44 px touch target) _(was: right next to the H2; briefly a larger sunny-yellow filled circle)_, visible label + input (white, 2px navy outline, thick sunny-yellow ring on focus _(was: light grey-navy outline, default focus outline)_), primary button, inline error (`aria-live="polite"`). The intro and hint live in a small popup from the info button, styled as a speech bubble (white, 2px navy outline, tail pointing at the button, slight tilt) _(was: plain white card with subtle border)_: shown while the mouse hovers; a click/tap or Enter/Space keeps it open until clicked again, Escape, or a click outside. Not hover-only, so it works on touch and keyboard. The input's `aria-describedby` points to the popup text, so screen readers get it without opening it. _(was: intro under the H2 and hint under the button, always visible)_
+4. **Check-a-video card** (butter panel `#FEF8D4`, large rounded corners). `grass_1.png` / `flower_1.png` peeking from the bottom-left corner on `md`+. H2 alone _(was: with an info button on the same row, right-aligned with the “Check video” button)_, visible label + input (white, 2px navy outline, thick sunny-yellow ring on focus _(was: light grey-navy outline, default focus outline)_), primary button, helper text under them (the length hint, always visible, small slate text), inline error (`aria-live="polite"`). The input's `aria-describedby` points to the helper text and the error. No popup: the label already says what to paste, so the intro is dropped. _(was: intro and hint in a speech-bubble popup from the info button; before that, intro under the H2 and hint under the button)_
 5. **Table card** (white card, subtle border, large rounded corners). `flower_2.png` decorative at top-right corner on `md`+.
    - H2 with the chip group to its right (wraps below it on narrow screens). Pill chips; active chip filled sunny yellow. Two buttons with `aria-pressed`; default Videos.
-   - Table with an sr-only caption naming the current view. Columns: rank, name, score. The Score header has a small info "i" right after it (same component and behaviour as the check-a-video card) with the score explanation. _(was: explanation as a footnote under the table)_
+   - Table with an sr-only caption naming the current view. Columns: rank, name, score. The Score header has a small info "i" right after it (`InfoTip`: small navy-outlined circle, navy “i” in Shantell Sans, 44 px touch target) with the score explanation in the popover from `frontend/design/STYLE.md`, opening below the "i" so it covers table rows rather than the heading and chips, above it when there is no room below. Shown while the mouse hovers; a click/tap or Enter/Space keeps it open until clicked again, Escape, or a click outside. _(was: a speech bubble, white with 2px navy outline, tail and slight tilt, opening below; shared with the check-a-video card)_ _(was: explanation as a footnote under the table)_
    - Every row has the same fixed height (room for a two-line name plus the second line), so the card doesn't change height when switching views or while loading. The "…" row is short and `aria-hidden`; screen readers get the gap from the rank numbers. _(was: rows sized to content)_
    - Rank cell: ranks 1–3 sit inside a hand-drawn warning triangle (art below), number in navy, centred in the lower part of the triangle; other ranks are a plain slate number with a thousands separator. _(was: ranks 4–5)_ The triangle is `aria-hidden`; the rank number stays real text, and no "warning" wording is added. The triangle's shape carries the meaning, so it doesn't rely on colour alone. No row tint. _(was: rows 1–3 get a very light coral row tint)_
    - Name cell: name clamped to 2 lines (full name stays in the DOM); second line in small text (channel name for videos, video count for channels).
@@ -85,12 +85,10 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Where | Text |
 |---|---|
 | H2 | Check a video |
-| Info button label (sr) | More about checking a video |
-| Info popup, line 1 | Paste a YouTube link or video ID to see its stimulation score. _(was: intro under the H2)_ |
 | Input label | YouTube link or video ID |
 | Placeholder | https://www.youtube.com/watch?v=… |
 | Button | Check video → |
-| Info popup, line 2 | Works best with children’s videos up to 15 minutes. _(was: hint under the button)_ |
+| Helper text under the input | Works best with children’s videos up to 15 minutes. _(was: info popup line 2; before that, hint under the button)_ |
 | Error: empty | Paste a YouTube link or video ID first. |
 | Error: not valid | That doesn’t look like a YouTube link or video ID. |
 
@@ -206,6 +204,9 @@ Human decisions from the step 6 review of the page on mock data (recorded per th
 8. **Copy in the pipeline, only the parts needed to serve the website:** the download and extract scripts. _(overrides 001: pipeline “not vendored into this repo”, run from its own environment)_
 9. **Downloader is `58_download_clips_v2.py` only**, the script that produced the dataset's clips. _(was: `03_download_clips.py`)_
 10. **Scores are percentiles, 0–100.** Percentiles are computed on each of the 12 dimensions separately; a video's overall score averages the 12, rescaled so it shows a percentile; a channel's score averages all its videos' scores.
+11. **The check-a-video tooltip is removed.** It felt out of place: dialog-like (thick navy border, shadow, tail), too large, and covering the input it explains. The label already says what to paste, so the 15-minute hint becomes helper text under the input and the intro line is dropped.
+12. **Popovers follow the site's quiet UI style** (thin light border, soft shadow, rounded, no tail or tilt, compact) and open on the side of the trigger with no controls, so the Score info opens below its “i”.
+13. **One living style guide, `frontend/design/STYLE.md`**, kept as part of this plan's work: it is the single source for the current look (values stay in `globals.css` tokens), overrides 001's Visual style section, and plans reference it instead of restating styles. `CLAUDE.md` says to read it before UI work, update it with any style change, flag requests that conflict with it, and screenshot UI changes before handing them back.
 
 ## Open questions
 

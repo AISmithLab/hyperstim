@@ -42,35 +42,7 @@ describe("CheckVideoCard", () => {
     expect(push).toHaveBeenCalledWith("/video?id=dQw4w9WgXcQ");
   });
 
-  it("shows the info text on click and hides it on Escape", async () => {
-    const user = userEvent.setup();
-    render(<CheckVideoCard />);
-    const info = screen.getByRole("button", { name: "More about checking a video" });
-    const text = screen.getByText("Works best with children’s videos up to 15 minutes.");
-
-    expect(text).not.toBeVisible();
-    await user.click(info);
-    expect(info).toHaveAttribute("aria-expanded", "true");
-    expect(text).toBeVisible();
-    await user.unhover(info);
-    expect(text).toBeVisible(); // stays open after a click
-    await user.keyboard("{Escape}");
-    expect(text).not.toBeVisible();
-  });
-
-  it("shows the info text while the mouse hovers", async () => {
-    const user = userEvent.setup();
-    render(<CheckVideoCard />);
-    const info = screen.getByRole("button", { name: "More about checking a video" });
-    const text = screen.getByText("Works best with children’s videos up to 15 minutes.");
-
-    await user.hover(info);
-    expect(text).toBeVisible();
-    await user.unhover(info);
-    expect(text).not.toBeVisible();
-  });
-
-  it("describes the input with the info text even while it is closed", () => {
+  it("describes the input with the length hint", () => {
     render(<CheckVideoCard />);
     expect(screen.getByLabelText("YouTube link or video ID")).toHaveAccessibleDescription(
       /Works best with children’s videos up to 15 minutes\./,

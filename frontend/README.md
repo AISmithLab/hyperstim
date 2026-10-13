@@ -39,3 +39,7 @@ See `.env.example`. All are read at build time.
 ## Images
 
 Originals from the team live in `art/` (including unused ones). Only images listed in `art/used.json` are converted to WebP into `public/images/` (git-ignored), at 2× the given display width. To use a new image, add a line to `used.json` and reference it as `asset("/images/<name>.webp")`.
+
+## Styles
+
+How the site looks (rules, and the classes for each card, control and popover) is in [`design/STYLE.md`](design/STYLE.md). Colour and font values are Tailwind tokens in `src/app/globals.css`.

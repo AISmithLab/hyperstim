@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+
+/** Gap between the trigger and the popover, in px (matches mt-1 / mb-1). */
+const GAP = 4;
 
 /**
- * Small circled "i" that shows `children` in a speech bubble on mouse hover, click/tap, or
- * Enter/Space. The bubble opens leftwards, so place it at the right end of a row.
+ * Small circled "i" that shows `children` in a popover on mouse hover, click/tap, or
+ * Enter/Space. The popover opens below the trigger (above if there is no room below) and is
+ * right-aligned with it, so place it at the right end of a row with no controls under it.
  */
 export default function InfoTip({
   id,
@@ -21,8 +25,10 @@ export default function InfoTip({
   // Escape, or a click outside.
   const [hovered, setHovered] = useState(false);
   const [pinned, setPinned] = useState(false);
+  const [above, setAbove] = useState(false);
   const open = hovered || pinned;
   const ref = useRef<HTMLDivElement>(null);
+  const popover = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -42,11 +48,17 @@ export default function InfoTip({
     };
   }, [open]);
 
+  // Measured before paint, so a flip never flashes.
+  useLayoutEffect(() => {
+    if (!open || !ref.current || !popover.current) return;
+    const spaceBelow = window.innerHeight - ref.current.getBoundingClientRect().bottom;
+    setAbove(spaceBelow < popover.current.offsetHeight + GAP);
+  }, [open]);
+
   return (
     <div
       ref={ref}
-      // -mr-3: the 44px touch target overhangs so the visible circle lines up with the form's right edge.
-      className={`relative -mr-3 ${className}`}
+      className={`relative ${className}`}
       // Hover only for mice; touch gets the click toggle alone.
       onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
       onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(false)}
@@ -67,9 +79,10 @@ export default function InfoTip({
         </span>
       </button>
       <div
+        ref={popover}
         id={id}
         hidden={!open}
-        className="absolute top-full -right-1 z-10 mt-2 w-64 text-left font-normal max-w-[calc(100vw-2.5rem)] -rotate-1 rounded-2xl border-2 border-navy bg-white p-4 text-sm shadow-md before:absolute before:-top-[9px] before:right-[18px] before:size-4 before:rotate-45 before:border-t-2 before:border-l-2 before:border-navy before:bg-white"
+        className={`absolute right-0 z-10 w-64 max-w-[calc(100vw-2rem)] rounded-2xl border border-navy/15 bg-white px-4 py-3 text-left text-sm font-normal text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)] ${above ? "bottom-full mb-1" : "top-full mt-1"}`}
       >
         {children}
       </div>
