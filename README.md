@@ -3,5 +3,5 @@
 Website for the HyperStimulation project: how stimulating are children’s videos?
 
 - [`frontend/`](frontend/README.md): Next.js static site (GitHub Pages)
-- `backend/`: Python API (coming in plan 002, steps 7–9)
+- [`backend/`](backend/README.md): Python API (FastAPI) with the video dataset and analysis pipeline
 - [`plans/`](plans/): numbered design and implementation plans

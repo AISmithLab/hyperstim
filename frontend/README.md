@@ -22,7 +22,7 @@ See `.env.example`. All are read at build time.
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_BASE_PATH` | Path prefix the site is served under (`/<repo-name>` on GitHub Pages). Empty locally. |
-| `NEXT_PUBLIC_API_BASE` | Backend base URL, no trailing slash. |
+| `NEXT_PUBLIC_API_BASE` | Backend base URL, no trailing slash. Locally `http://localhost:8000`: start the backend first ([`../backend/README.md`](../backend/README.md)); its `CORS_ORIGIN` must be this site's origin (`http://localhost:3000`). |
 | `NEXT_PUBLIC_API_MOCK` | `1` = use the mock data in `src/lib/mock.ts` instead of the backend. |
 
 ## Commands

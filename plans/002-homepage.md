@@ -151,6 +151,35 @@ GET /api/channels?sort=score_desc|score_asc&limit=3&minVideos=5
 
 `/api/videos` gets search/filters/pagination in the rankings plan; this plan implements only `sort` (`score_desc`, `score_asc`; _was: `score_desc` only_) and `limit`. The home table makes one request per end and view. `score` is rounded to 1 decimal by the backend; the frontend shows it as an integer.
 
+## Backend (steps 7–8)
+
+- **Layout.** `backend/` as a uv project: `pyproject.toml`, `uv.lock`, `.python-version` (3.12, same as the pipeline's environment _(was: 3.13)_), `.env.example`, `README.md`, `src/hyperstim_api/` (`main.py` app + routes, `config.py` env, `dataset.py` load + rank, `scoring.py` percentiles), `scripts/import_dataset.py`, `data/`, `pipeline/`, `tests/` with a small synthetic fixture TSV.
+- **Dependencies.** Runtime: `fastapi`, `uvicorn`, plus the pipeline's deps at its exact pins (`numpy==2.4.3`, `opencv-python-headless==4.13.0.92`, `PyYAML==6.0.1`, `yt-dlp==2026.8.19`; exact because feature values must match the dataset's). Not copied: deps these two scripts don’t use (`scipy`, `google-api-python-client`, `matplotlib`). Dev: `pytest`, `httpx2` (FastAPI test client; `httpx2`, which Starlette now asks for), `ruff`, `mypy`. Data read with the stdlib `csv` module, no pandas (16k rows is small).
+- **Env vars** (`.env.example` has placeholders only):
+  - `DATASET_PATH`: the dataset file. Required, like `CORS_ORIGIN`; the app refuses to start without them. `.env.example` points it at the committed `backend/data/videos.tsv`. _(was: a file outside the repo)_
+  - `CORS_ORIGIN`: the one allowed origin (the Pages site, or `http://localhost:3000` locally). GET only.
+- **Dataset source** (research repo, read-only; copied, never modified there). Contemporary v2 corpus, feature caches `CACHE_VERSION 11`, 16,375 videos:
+  - `runs/feature-set-v11/features-contemporary-v11.tsv`: exactly the 16,375 videos, metadata + the 12 features. No titles; its `content_category` is empty.
+  - `data/contemporary-v2-categories.tsv`: `category` and `title`, joined on `video_id`. `play` is shown as “play & activity” (as the analysis does).
+  - `data/contemporary-v2-corpus.tsv`: used only as a check (rows with `removed_v30 == 0` and `clip_present == 1` must be exactly the features file's IDs).
+  - `data/contemporary-v2-figures-of-record.md`: the import checks its totals (16,375 videos; per-category counts).
+  - Checked: all joins are 1:1, every video has a title; `inter_cut_dssim_mean` is empty for 1,461 videos (no cut pair) and `loudness_jumps_per_min`/`lufs` for 7; 542 channels, 512 with ≥ 5 videos.
+- **Import script** `backend/scripts/import_dataset.py <research-repo-dir>`: reads the files above, runs the checks, and writes `backend/data/videos.tsv` (committed, ≈ 3 MB) plus `backend/data/videos.meta.json` (source, `CACHE_VERSION`, feature-table date, row count). Columns: `video_id`, `title`, `channel_id`, `channel_title`, `category`, `published_at`, `duration_s` (the video's full length, from the corpus file; the features file's `duration_s` is the clip's), the 12 features. Nothing else from the research files (no view/subscriber counts, tiers, cache info). Re-run by hand when the research data changes.
+- **Dataset input** for the app: `videos.tsv` as above. Rows without an ID or with no feature values are skipped and counted in a startup log line.
+- **Score** = a percentile, 0–100. Computed at startup: each of the 12 features is ranked separately as a percentile within the dataset (`100·(count ≤ value − 1)/(n − 1)`); a video's composite is the mean of its 12 feature percentiles (missing features left out); its score is the percentile of that composite among all videos' composites (same formula), rounded to 1 decimal. So the least stimulating video is 0 and the most stimulating 100. A channel's score is the mean of its videos' scores. Live videos are scored against the same pools. _(was: the composite itself, which only spans about 28–83 because averaging pulls scores toward the middle)_ `scoring.py` will be reused by live analysis later.
+- **Ranking.** Videos sorted by score, ties broken by `video_id` so the order is stable. `score_asc` is the exact reverse of `score_desc`, so ranks counted back from `total` match. Channels grouped by `channel_id` (name = `channel_title`), score = mean of their videos' unrounded scores, then rounded. `total` = number of videos / channels that pass `minVideos`.
+- **`/api/meta`.** `videoCount` = scored videos, `channelCount` = distinct channels among them (no threshold), `updatedAt` = the feature-table date from `videos.meta.json` _(was: the file's modification date; git doesn't keep those)_.
+- **Params.** `sort` ∈ {`score_desc`, `score_asc`} (default `score_desc`), `limit` 1–100 (default 20), `minVideos` 1–1000 (default 5). Anything else → 422 (FastAPI's default validation).
+- **`/api/health`** → `{ "status": "ok" }`.
+- **Pipeline** (`backend/pipeline/`, copied from the research repo's `code/pipeline/`; only what serving the site needs):
+  - `58_download_clips_v2.py`: the downloader that produced the dataset's clips (30 s offset, 300 s, format 18 / ≤ 360p, player clients default → mweb → android). One change: `--clips-dir` has no default (the original default is a server path).
+  - `04_extract_features_v2.py` at `CACHE_VERSION 11`, unchanged.
+  - `config.yaml`: only `output_dir` and `clips_dir`, which 04 reads. `pipeline/output/` (clips, caches) is git-ignored.
+  - `README.md`: source commit, what was copied and changed, the two-stage usage.
+  - Vendored code: excluded from ruff and mypy so it stays identical to the research version.
+- **Server tools** (not pip packages; in `backend/README.md` as prerequisites): ffmpeg + ffprobe 6.1.1 (the version the dataset was extracted with), and deno (yt-dlp's JS runtime for `--remote-components ejs:github`).
+- **CI.** New `backend` job: `uv sync --locked`, `ruff check`, `ruff format --check`, `mypy`, `pytest`. uv version pinned in the workflow.
+
 ## Steps
 
 1. **Frontend scaffold.** Next.js (App Router, TS, static export, `basePath` from env), Tailwind with the palette from 001 as theme tokens, Shantell Sans _(was: Patrick Hand)_ + Nunito via `next/font`, ESLint, Vitest + Testing Library. npm scripts: `lint`, `typecheck`, `build`, `test`. GitHub Actions CI running them.
@@ -161,7 +190,7 @@ GET /api/channels?sort=score_desc|score_asc&limit=3&minVideos=5
 6. **Frontend tests + review.** Unit tests: link/ID parser, chip toggle switches table and caption, loading/error/empty states. Manual check at 320, 360, 768, 1280, 1920 px and keyboard-only. Stop here for review of the page on mock data.
 7. **Backend scaffold.** FastAPI app, env config (`DATASET_PATH`, `CORS_ORIGIN`), `.env.example`, ruff + mypy + pytest, CI job. Dataset loaded into memory at startup.
 8. **Backend endpoints.** `/api/health`, `/api/meta`, `/api/videos` (sort + limit), `/api/channels` (sort, limit, minVideos). Pytest against a small synthetic fixture dataset (ranking order, channel threshold, limits, bad params → 422).
-9. **Connect.** Frontend uses the real backend when `NEXT_PUBLIC_API_BASE` is set; run both locally and check the page end to end.
+9. **Connect.** Frontend uses the real backend when `NEXT_PUBLIC_API_BASE` is set; run both locally and check the page end to end. `frontend/.env.example` now defaults to the local backend (`http://localhost:8000`, mock off); CI builds keep using the mock.
 
 ## Review decisions
 
@@ -169,6 +198,14 @@ Human decisions from the step 6 review of the page on mock data (recorded per th
 
 1. **Images can't be selected or dragged, on every page.** Set once for all `<img>` in the global stylesheet (`user-select: none`, `-webkit-user-drag: none`), so later pages get it without extra work.
 2. **Heading font is Shantell Sans, weight 600, on every page** (headings, the info “i”, and any other hand-lettered text; body and UI stay Nunito). Chosen after comparing ten handwritten Google Fonts on the home hero: marker-style and very readable. Replaces 001's example **Patrick Hand** (thin, narrow pen strokes that read like notebook handwriting). Shantell Sans runs wider, so heading sizes are about 10 % smaller than with Patrick Hand.
+3. **Data comes from the research repo, copied into this one.** Copy (and transform if needed) the data into this repo without modifying anything in the research repo; this repo must stand alone afterwards. Source files as listed under **Backend**. _(overrides 001: “dataset loaded from a file outside the repo”)_
+4. **Extraction pipeline for later live analysis:** the research repo's `code/pipeline/04_extract_features_v2.py` at `CACHE_VERSION 11`, in two stages: `extract` (expensive decode, run once, writes a per-clip cache) and `derive` (cheap thresholds, re-runnable). Its default thresholds equal the v11 run that produced the dataset.
+5. **The clip download script is copied too.** We definitely need the server tools (ffmpeg/ffprobe) to serve the backend.
+6. **Video IDs and metadata may be committed**, as long as it's not the actual video clips. So `videos.tsv` (IDs, metadata, features) is committed.
+7. **Score = the average of the 12 percentiles.**
+8. **Copy in the pipeline, only the parts needed to serve the website:** the download and extract scripts. _(overrides 001: pipeline “not vendored into this repo”, run from its own environment)_
+9. **Downloader is `58_download_clips_v2.py` only**, the script that produced the dataset's clips. _(was: `03_download_clips.py`)_
+10. **Scores are percentiles, 0–100.** Percentiles are computed on each of the 12 dimensions separately; a video's overall score averages the 12, rescaled so it shows a percentile; a channel's score averages all its videos' scores.
 
 ## Open questions
 
@@ -181,3 +218,6 @@ None.
 3. Images: originals (incl. unused ones) kept in `frontend/art/`; only used images are converted and shipped.
 4. Footer: no contact email for now; copyright holder “HyperStim Research Team” _(was: “HyperStim research team”)_.
 5. Header nav: Home · Rankings · Compare · How it works · About; FAQ only in the footer (overrides 001).
+6. Data release: IDs, metadata and features are public; clips never (review decision 6).
+7. Score: average of the 12 percentiles (review decision 7).
+8. Pipeline: copied in, downloader + extractor only (review decisions 8–9).

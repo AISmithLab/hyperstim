@@ -155,7 +155,7 @@ export default function RankingsCard() {
         >
           <caption className="sr-only">{VIEWS[view].caption}</caption>
           <colgroup>
-            <col className="w-14" />
+            <col className="w-16 sm:w-20" />
             <col />
             <col className="w-20 sm:w-32" />
           </colgroup>
