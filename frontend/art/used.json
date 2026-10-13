@@ -1,0 +1,9 @@
+{
+  "_comment": "Images shipped with the site: name (file in art/ without .png) -> largest display width in CSS px. Output is WebP at 2x that width.",
+  "Logo": 180,
+  "kid_1": 560,
+  "sun_1": 64,
+  "grass_1": 110,
+  "flower_1": 130,
+  "flower_2": 150
+}
