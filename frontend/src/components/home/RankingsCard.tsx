@@ -80,10 +80,16 @@ const VIEWS: Record<View, { chip: string; column: string; caption: string }> = {
   },
 };
 
-function barColor(score: number): string {
-  if (score >= 67) return "bg-scale-high";
-  if (score >= 34) return "bg-scale-mid";
-  return "bg-scale-low";
+/** Colour of the score meter by filled segments, cool for low scores and warm for high ones. */
+const METER_COLORS = ["bg-sky-blue", "bg-leaf", "bg-scale-low", "bg-scale-mid", "bg-scale-high"];
+const SEGMENTS = METER_COLORS.length;
+
+/**
+ * Filled segments of the score meter: one per 20 points, at least one so a score of 0 still
+ * shows the meter's colour. The number next to it is the exact score.
+ */
+export function filledSegments(score: number): number {
+  return Math.max(1, Math.ceil((score * SEGMENTS) / 100));
 }
 
 // Every row has room for a two-line name plus the small second line, so switching
@@ -114,18 +120,25 @@ export default function RankingsCard() {
 
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
         <h2 id="rankings-heading" className="font-hand text-2xl font-semibold text-navy sm:text-3xl">
-          Most stimulating
+          Stimulation rankings
         </h2>
-        <div role="group" aria-label="Show ranking of" className="flex gap-2">
+        {/* Segmented control: each button is a 44px touch target; the visible pill sits inside it. */}
+        <div
+          role="group"
+          aria-label="Show ranking of"
+          className="flex rounded-full border border-navy/15 bg-white px-0.5"
+        >
           {(Object.keys(VIEWS) as View[]).map((v) => (
             <button
               key={v}
               type="button"
               aria-pressed={view === v}
               onClick={() => setView(v)}
-              className="min-h-11 rounded-full border-2 border-navy/20 bg-white px-5 font-semibold text-navy hover:border-navy/50 aria-pressed:border-sunny aria-pressed:bg-sunny"
+              className="group flex min-h-11 items-center rounded-full text-sm font-semibold text-navy"
             >
-              {VIEWS[v].chip}
+              <span className="rounded-full px-3 py-1.5 group-hover:bg-sky group-aria-pressed:bg-sunny">
+                {VIEWS[v].chip}
+              </span>
             </button>
           ))}
         </div>
@@ -155,17 +168,17 @@ export default function RankingsCard() {
         >
           <caption className="sr-only">{VIEWS[view].caption}</caption>
           <colgroup>
-            <col className="w-16 sm:w-20" />
+            <col className="w-10 sm:w-12" />
             <col />
-            <col className="w-20 sm:w-32" />
+            <col className="w-20 sm:w-28" />
           </colgroup>
           <thead>
             <tr className="border-b border-navy/15 text-left text-sm text-ink">
-              <th scope="col" className="py-2 pr-2 font-semibold">
+              <th scope="col" className="py-2 pr-4 text-right font-semibold sm:pr-5">
                 <span aria-hidden="true">#</span>
                 <span className="sr-only">Rank</span>
               </th>
-              <th scope="col" className="py-2 pr-2 font-semibold">
+              <th scope="col" className="py-2 pr-4 sm:pr-6 font-semibold">
                 {VIEWS[view].column}
               </th>
               <th scope="col" className="py-2 font-semibold">
@@ -180,7 +193,11 @@ export default function RankingsCard() {
             </tr>
           </thead>
           <tbody>
-            {state.status === "loading" ? <SkeletonRows /> : <RankRows rows={state.data} />}
+            {state.status === "loading" ? (
+              <SkeletonRows />
+            ) : (
+              <RankRows rows={state.data} />
+            )}
           </tbody>
         </table>
       )}
@@ -195,32 +212,46 @@ export default function RankingsCard() {
   );
 }
 
-/** Marks the skipped middle of the ranking. Screen readers get the gap from the rank numbers. */
+/** Marks where the least stimulating end of the ranking starts. */
 function GapRow() {
   return (
-    <tr aria-hidden="true" className="border-b border-navy/10">
-      <td colSpan={3} className="py-1 pl-1 text-lg leading-none font-bold text-ink">
-        …
+    <tr className="h-9 border-b border-navy/10">
+      <td colSpan={3} className="text-center text-sm text-ink/80">
+        <span aria-hidden="true">↓</span> Least stimulating
       </td>
     </tr>
   );
 }
 
+/**
+ * Rows after a gap in the ranking count back from the end (−3, −2, −1); without a gap
+ * (small dataset), every row shows its plain rank.
+ */
 function RankRows({ rows }: { rows: Row[] }) {
+  const gapAt = rows.findIndex((row, i) => i > 0 && row.rank > rows[i - 1].rank + 1);
+  const last = rows.at(-1)?.rank ?? 0;
   return rows.map((row, i) => {
-    const gap = i > 0 && row.rank > rows[i - 1].rank + 1;
-    return [gap && <GapRow key={`gap-${row.key}`} />, <RankRow key={row.key} row={row} />];
+    const fromEnd = gapAt > 0 && i >= gapAt ? last - row.rank + 1 : undefined;
+    return [
+      i === gapAt && <GapRow key="gap" />,
+      <RankRow key={row.key} row={row} fromEnd={fromEnd} />,
+    ];
   });
+}
+
+/** "3rd", for the screen-reader text of ranks counted from the end. */
+function ordinal(n: number): string {
+  return n === 1 ? "" : n === 2 ? "2nd " : n === 3 ? "3rd " : `${n}th `;
 }
 
 function SkeletonRows() {
   const bar = "block animate-pulse rounded bg-gray-200";
   const row = (i: number) => (
     <tr key={i} className={ROW}>
-      <td className="pr-2">
-        <span className={`${bar} h-4 w-4`} />
+      <td className="pr-4 sm:pr-5">
+        <span className={`${bar} ml-auto h-4 w-4`} />
       </td>
-      <td className="pr-2">
+      <td className="pr-4 sm:pr-6">
         <span className={`${bar} h-4 w-4/5`} />
         <span className={`${bar} mt-2 h-3 w-2/5`} />
       </td>
@@ -238,18 +269,26 @@ function SkeletonRows() {
   );
 }
 
-function RankRow({ row }: { row: Row }) {
+function RankRow({ row, fromEnd }: { row: Row; fromEnd?: number }) {
   const warn = row.rank <= END;
   const score = Math.round(row.score);
+  const filled = filledSegments(score);
   return (
     <tr className={`relative ${ROW}`}>
-      {/* Ranks 1–3 get the warning-triangle art behind the number once it arrives (plan 002). */}
+      {/* Ranks 1–3 may get warning-triangle art behind the number later (plan 002). */}
       <td
-        className={`pr-2 pl-1 align-middle text-sm font-bold tabular-nums sm:text-base ${warn ? "text-navy" : "text-ink"}`}
+        className={`pr-4 text-right align-middle text-sm font-bold tabular-nums sm:pr-5 sm:text-base ${warn ? "text-navy" : "text-ink"}`}
       >
-        {row.rank.toLocaleString("en-US")}
+        {fromEnd ? (
+          <>
+            <span aria-hidden="true">−{fromEnd}</span>
+            <span className="sr-only">{`${ordinal(fromEnd)}least stimulating`}</span>
+          </>
+        ) : (
+          row.rank.toLocaleString("en-US")
+        )}
       </td>
-      <td className="pr-2 align-middle">
+      <td className="pr-4 align-middle sm:pr-6">
         {row.href ? (
           <Link
             href={row.href}
@@ -263,13 +302,16 @@ function RankRow({ row }: { row: Row }) {
         <span className="mt-0.5 block truncate text-sm">{row.detail}</span>
       </td>
       <td className="align-middle">
-        <span className="flex items-center gap-2">
-          <span className="w-7 text-right font-bold text-navy tabular-nums">{score}</span>
-          <span aria-hidden="true" className="h-2 flex-1 overflow-hidden rounded-full bg-gray-100">
-            <span
-              className={`block h-full rounded-full ${barColor(score)}`}
-              style={{ width: `${score}%` }}
-            />
+        {/* Number above the meter on phones, beside it from sm up. */}
+        <span className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+          <span className="font-bold text-navy tabular-nums sm:w-7 sm:text-right">{score}</span>
+          <span aria-hidden="true" data-filled={filled} className="flex flex-1 gap-1">
+            {Array.from({ length: SEGMENTS }, (_, i) => (
+              <span
+                key={i}
+                className={`h-2.5 flex-1 rounded-[3px] ${i < filled ? METER_COLORS[filled - 1] : "bg-navy/10"}`}
+              />
+            ))}
           </span>
         </span>
       </td>

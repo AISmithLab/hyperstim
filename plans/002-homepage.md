@@ -8,13 +8,13 @@ Build the home page (`/`) following the look of the mockup's home panel: hero wi
 
 - **Scope.** This plan also covers what the home page needs to exist at all: frontend scaffold, root layout (header + footer), the typed API client, and the backend scaffold with the endpoints below. Cookie banner, other pages, live analysis, and the Pages deploy workflow are later plans.
 - **Score shown.** "Stimulation score", 0–100 = the dataset's composite percentile (higher = more intense production than other videos in the dataset). Shown as an integer plus a small bar.
-- **"Top" means highest score**, so the table is titled "Most stimulating", never "top-rated" or "best". It keeps this title even though it also shows the least stimulating (see below). _(briefly “Most and least stimulating”)_
-- **High ranks are a warning, not a prize.** The table highlights the most stimulating videos/channels as the ones to watch out for. Nothing in it looks like an award: no gold/silver/bronze, trophies, stars, or crowns. Ranks 1–3 get a warning style (see table card below); this is shown by design only, with no extra text.
-- **Both ends in one table.** The table shows the 3 most and the 3 least stimulating, separated by a "…" row, so parents see the range. _(was: no calm view; only the most stimulating, calmer videos on `/rankings`)_
+- **"Top" means highest score.** The table is titled "Stimulation rankings", never "top-rated" or "best". _(was: “Most stimulating”, kept even though it also shows the least stimulating; briefly “Most and least stimulating”)_
+- **High ranks are a warning, not a prize.** The table highlights the most stimulating videos/channels as the ones to watch out for. Nothing in it looks like an award: no gold/silver/bronze, trophies, stars, or crowns. Ranks 1–3 may later get a warning style (see table card below); this is shown by design only, with no extra text. The score meter's warmest colour (coral) is at the high end.
+- **Both ends in one table.** The table shows the 3 most and the 3 least stimulating, separated by a row saying how many are in between, so parents see the range. _(was: no calm view; only the most stimulating, calmer videos on `/rankings`)_
 - **Table rows.**
   - Videos: rank, video title (channel name in small text below it), score. Row links to `/video?id=…`.
   - Channels: rank, channel name, score, plus "N videos" in small text below the name. Not linked for now (no channel page yet).
-  - Ranks 1–3, a "…" row, then the 3 lowest-scoring, in rank order (e.g. 1, 2, 3, …, 10,410, 10,411, 10,412). Their ranks count back from `total`. When the dataset is too small for a gap, overlapping items are dropped and the "…" row is left out. Then a "See full rankings →" link to `/rankings`. _(was: top 5 rows)_
+  - Ranks 1–3, a “↓ Least stimulating” row, then the 3 lowest-scoring, shown as −3, −2, −1 (−1 = least stimulating; screen readers: “3rd least stimulating”, …, “least stimulating”). _(was: their real ranks counting back from `total`, e.g. 10,410, 10,411, 10,412)_ When the dataset is too small for a gap, overlapping items are dropped and the gap row is left out; every row then shows its plain rank. Then a "See full rankings →" link to `/rankings`. _(was: top 5 rows)_
 - **Channel score** = mean stimulation score of the channel's videos in the dataset; only channels with ≥ 5 scored videos are ranked.
 - **Art location** changes from 001: originals live in `frontend/art/`, and `public/images/` holds only generated WebP files (see **Images**).
 - **Mock data** uses made-up video titles and channel names, so the public repo makes no claims about real channels.
@@ -39,14 +39,14 @@ All visible text is in **Copy** below; this list says only where things go.
 3. **Hero, right.** `kid_1.png`, `aria-hidden`, no speech bubble. _(was: with a hand-styled CSS speech bubble saying “What’s next?”)_
 4. **Check-a-video card** (butter panel `#FEF8D4`, large rounded corners). `grass_1.png` / `flower_1.png` peeking from the bottom-left corner on `md`+. H2 alone _(was: with an info button on the same row, right-aligned with the “Check video” button)_, visible label + input (white, 2px navy outline, thick sunny-yellow ring on focus _(was: light grey-navy outline, default focus outline)_), primary button, helper text under them (the length hint, always visible, small slate text), inline error (`aria-live="polite"`). The input's `aria-describedby` points to the helper text and the error. No popup: the label already says what to paste, so the intro is dropped. _(was: intro and hint in a speech-bubble popup from the info button; before that, intro under the H2 and hint under the button)_
 5. **Table card** (white card, subtle border, large rounded corners). `flower_2.png` decorative at top-right corner on `md`+.
-   - H2 with the chip group to its right (wraps below it on narrow screens). Pill chips; active chip filled sunny yellow. Two buttons with `aria-pressed`; default Videos.
-   - Table with an sr-only caption naming the current view. Columns: rank, name, score. The Score header has a small info "i" right after it (`InfoTip`: small navy-outlined circle, navy “i” in Shantell Sans, 44 px touch target) with the score explanation in the popover from `frontend/design/STYLE.md`, opening below the "i" so it covers table rows rather than the heading and chips, above it when there is no room below. Shown while the mouse hovers; a click/tap or Enter/Space keeps it open until clicked again, Escape, or a click outside. _(was: a speech bubble, white with 2px navy outline, tail and slight tilt, opening below; shared with the check-a-video card)_ _(was: explanation as a footnote under the table)_
-   - Every row has the same fixed height (room for a two-line name plus the second line), so the card doesn't change height when switching views or while loading. The "…" row is short and `aria-hidden`; screen readers get the gap from the rank numbers. _(was: rows sized to content)_
-   - Rank cell: ranks 1–3 sit inside a hand-drawn warning triangle (art below), number in navy, centred in the lower part of the triangle; other ranks are a plain slate number with a thousands separator. _(was: ranks 4–5)_ The triangle is `aria-hidden`; the rank number stays real text, and no "warning" wording is added. The triangle's shape carries the meaning, so it doesn't rely on colour alone. No row tint. _(was: rows 1–3 get a very light coral row tint)_
+   - H2 with a segmented control on the same line, to its right (wraps below it when the row is too narrow: phones, and 1024–~1110 px where the two-column card is narrowest). Compact pill with two options, the selected one filled sunny yellow (see `STYLE.md`). Two buttons with `aria-pressed`; default Videos. _(was: two separate pill chips, which wrapped below the longer H2 on desktop)_
+   - Table with an sr-only caption naming the current view. Columns: rank, name, score. The Score header has a small info "i" right after it (`InfoTip`: small navy-outlined circle, navy “i” in Shantell Sans, 44 px touch target) with the score explanation in the popover from `frontend/design/STYLE.md`, opening below the "i" so it covers table rows rather than the heading and the Videos/Channels control, above it when there is no room below. Shown while the mouse hovers; a click/tap or Enter/Space keeps it open until clicked again, Escape, or a click outside. _(was: a speech bubble, white with 2px navy outline, tail and slight tilt, opening below; shared with the check-a-video card)_ _(was: explanation as a footnote under the table)_
+   - Every row has the same fixed height (room for a two-line name plus the second line), so the card doesn't change height when switching views or while loading. The gap row is short, its text centred, small and muted, and read by screen readers too. _(was: rows sized to content; a short `aria-hidden` “…” row; briefly “16,369 videos in between”)_
+   - Rank cell: numbers (1, 2, 3, −3, −2, −1) right-aligned in a narrow fixed-width column, `tabular-nums` _(was: left-aligned)_; ranks 1–3 in navy, others slate. No row tint. _(was: rows 1–3 get a very light coral row tint)_ Deferred: ranks 1–3 inside a hand-drawn warning triangle (art below), `aria-hidden`, number staying real text, no "warning" wording. _(was: part of this plan)_
    - Name cell: name clamped to 2 lines (full name stays in the DOM); second line in small text (channel name for videos, video count for channels).
-   - Score cell: integer, then a bar (yellow → orange → coral by value) that is `aria-hidden`.
+   - Score cell: integer, then the segmented score meter from `frontend/design/STYLE.md` (5 segments, `aria-hidden`; one colour per score, cool → warm) _(briefly 10 segments)_, beside the number from `sm` up and below it on phones. _(was: a continuous bar, yellow → orange → coral by value)_
    - "See full rankings" link. _(was: footnote, then the link)_
-   - States: loading = 3 grey skeleton rows, the "…" row, 3 more _(was: 5 rows)_ (`aria-busy`) plus sr-only loading text; error = message + retry button; empty = message.
+   - States: loading = 3 grey skeleton rows, the gap row, 3 more _(was: 5 rows)_ (`aria-busy`) plus sr-only loading text; error = message + retry button; empty = message.
 6. **Footer** (shared layout): copyright on the left, footer links on the right on `md`+ _(was: links left, copyright right)_; stacked below `md` with the links first. _(was: also a “Source code on GitHub” link)_ No contact email for now. "Cookie settings" comes with the cookie-banner plan.
 
 ### Copy
@@ -96,10 +96,12 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 
 | Where | Text |
 |---|---|
-| H2 | Most stimulating _(briefly “Most and least stimulating”)_ |
-| Chip group `aria-label` | Show ranking of |
-| Chips | Videos · Channels |
+| H2 | Stimulation rankings _(was: “Most stimulating”; briefly “Most and least stimulating”)_ |
+| Segmented control `aria-label` | Show ranking of |
+| Segmented control options | Videos · Channels |
 | Caption (videos / channels) | The 3 most and 3 least stimulating videos / The 3 most and 3 least stimulating channels _(was: Top 5 most stimulating videos / channels)_ |
+| Gap row | ↓ Least stimulating (arrow decorative) _(was: “…”; briefly “{n} videos in between” / “{n} channels in between”)_ |
+| Bottom ranks (sr-only) | 3rd least stimulating · 2nd least stimulating · least stimulating (shown as −3, −2, −1) |
 | Column headers | # (sr-only: Rank) · Video *or* Channel · Score + info “i” |
 | Score info button label (sr) | About the score |
 | Video row, second line | {channel name} |
@@ -128,13 +130,13 @@ All decorative images (`kid_1`, `sun_1`, `grass_*`, `flower_*`, warning triangle
   - `frontend/public/images/`: generated, git-ignored. A script (`npm run images`, run automatically before `dev` and `build`) converts only the images listed in `frontend/art/used.json` to WebP, resized to 2× their largest display width (≈ 100–300 KB instead of 1–2 MB). Unused art adds nothing to the site's size or load time.
   - Every page uses the same images through `/images/<name>.webp` (a small helper adds the `basePath`). Using a new image = add one line to `used.json`.
   - Conversion uses `sharp` (dev dependency only).
-- Used on this page: `Logo`, `kid_1`, `sun_1`, `grass_1`, `flower_1`, `flower_2`, and the warning triangle once it arrives.
-- **New art needed from the team: warning triangle** (`warning_1.png`).
+- Used on this page: `Logo`, `kid_1`, `sun_1`, `grass_1`, `flower_1`, `flower_2`.
+- **Deferred (not needed for now): warning triangle** (`warning_1.png`). Spec kept for when it is requested:
   - Shows: a road-sign-style warning triangle with rounded corners, empty inside (no "!"); the rank number is laid over it in code.
   - Colours: sunny yellow fill `#F8D040`, coral outline `#F85858`.
   - Style: hand-drawn crayon, matching the other illustrations; slightly wobbly edges.
   - Size: 1:1 canvas, at least 256 × 256 px, triangle filling the canvas; transparent PNG.
-  - Until it arrives, ranks 1–3 render as plain numbers (no placeholder art).
+  - Until then, ranks 1–3 render as plain numbers (no placeholder art).
 
 ## API contract (frontend `api.ts` ↔ backend)
 
@@ -207,6 +209,14 @@ Human decisions from the step 6 review of the page on mock data (recorded per th
 11. **The check-a-video tooltip is removed.** It felt out of place: dialog-like (thick navy border, shadow, tail), too large, and covering the input it explains. The label already says what to paste, so the 15-minute hint becomes helper text under the input and the intro line is dropped.
 12. **Popovers follow the site's quiet UI style** (thin light border, soft shadow, rounded, no tail or tilt, compact) and open on the side of the trigger with no controls, so the Score info opens below its “i”.
 13. **One living style guide, `frontend/design/STYLE.md`**, kept as part of this plan's work: it is the single source for the current look (values stay in `globals.css` tokens), overrides 001's Visual style section, and plans reference it instead of restating styles. `CLAUDE.md` says to read it before UI work, update it with any style change, flag requests that conflict with it, and screenshot UI changes before handing them back.
+14. **The table is titled “Stimulation rankings”.**
+15. **The gap between the two ends says how many items it skips** (“16,369 videos in between”, counted, not hard-coded), in small muted centred text instead of “…”, which looked like missing data.
+16. **Ranks are right-aligned** in a fixed-width column with tabular digits.
+17. **Scores show a 10-segment meter instead of a bar.** Filled = `max(1, ceil(score/10))`; one segment always shows as a visual convention, the number stays exact. All filled segments share one colour by score (cool for low, warm for high).
+18. **High ranks are still the warnings** (the meter's coral end), but the warning triangles aren't needed at this moment.
+19. **The table was too busy; simplified:** the bottom ranks show as −3, −2, −1 instead of their full ranks; the gap row says “↓ Least stimulating” instead of the count in between (overrides 15); the meter has 5 segments instead of 10 (overrides 17).
+20. **Videos/Channels is a segmented control on the same line as the H2, on its right** (instead of two chips).
+21. **A little more space between the table's columns** (rank → name 16/20 px, name → score 16/24 px, phone/desktop).
 
 ## Open questions
 

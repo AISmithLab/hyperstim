@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getChannels, getVideos, type ChannelSummary, type VideoSummary } from "@/lib/api";
-import RankingsCard, { joinEnds } from "./RankingsCard";
+import RankingsCard, { filledSegments, joinEnds } from "./RankingsCard";
 
 vi.mock("@/lib/api", () => ({
   getVideos: vi.fn(),
@@ -33,7 +33,7 @@ beforeEach(() => {
     .mockImplementation(async ({ sort }) => (sort === "score_desc" ? channelsDesc : channelsAsc));
 });
 
-// Includes the aria-hidden "…" row, which role queries skip.
+// First cell of every body row (as read by screen readers too), including the gap row.
 const rankCells = (table: HTMLElement) =>
   Array.from(table.querySelectorAll("tbody tr"), (row) => row.querySelector("td")?.textContent);
 
@@ -44,12 +44,22 @@ describe("RankingsCard", () => {
     const table = await screen.findByRole("table", {
       name: "The 3 most and 3 least stimulating videos",
     });
-    expect(rankCells(table)).toEqual(["1", "2", "3", "…", "118", "119", "120"]);
+    expect(rankCells(table)).toEqual([
+      "1",
+      "2",
+      "3",
+      "↓ Least stimulating",
+      "−33rd least stimulating",
+      "−22nd least stimulating",
+      "−1least stimulating",
+    ]);
     expect(within(table).getByRole("link", { name: "Video 1" })).toHaveAttribute(
       "href",
       "/video?id=video000001",
     );
     expect(within(table).getByText("97")).toBeInTheDocument();
+    const meters = table.querySelectorAll("[data-filled]");
+    expect(Array.from(meters, (m) => m.getAttribute("data-filled"))).toEqual(["5", "5", "5", "1", "1", "1"]);
     expect(within(table).getByRole("link", { name: "Video 120" })).toBeInTheDocument();
   });
 
@@ -62,7 +72,12 @@ describe("RankingsCard", () => {
     await user.click(screen.getByRole("button", { name: "Channels" }));
 
     const table = screen.getByRole("table", { name: "The 3 most and 3 least stimulating channels" });
-    expect(rankCells(table)).toEqual(["1", "2", "3", "…", "38", "39", "40"]);
+    expect(rankCells(table).slice(3)).toEqual([
+      "↓ Least stimulating",
+      "−33rd least stimulating",
+      "−22nd least stimulating",
+      "−1least stimulating",
+    ]);
     expect(within(table).getByText("Loud")).toBeInTheDocument();
     expect(within(table).getAllByText("12 videos")).toHaveLength(6);
     expect(within(table).queryByRole("link")).not.toBeInTheDocument();
@@ -78,6 +93,16 @@ describe("RankingsCard", () => {
     expect(text).not.toBeVisible();
     await user.hover(screen.getByRole("button", { name: "About the score" }));
     expect(text).toBeVisible();
+  });
+
+  it("shows plain ranks and no gap row when both ends meet", async () => {
+    const v = [1, 2, 3, 4].map((n) => video(n, 100 - n * 10));
+    vi.mocked(getVideos).mockImplementation(async ({ sort }) =>
+      sort === "score_desc" ? { items: v.slice(0, 3), total: 4 } : { items: [v[3], v[2], v[1]], total: 4 },
+    );
+    render(<RankingsCard />);
+
+    expect(rankCells(await screen.findByRole("table", { name: /videos/ }))).toEqual(["1", "2", "3", "4"]);
   });
 
   it("shows a busy table with loading text while loading", () => {
@@ -108,6 +133,12 @@ describe("RankingsCard", () => {
 
     expect(await screen.findByText("No rankings yet.")).toBeInTheDocument();
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
+});
+
+describe("filledSegments", () => {
+  it("fills one segment per 20 points, at least one", () => {
+    expect([0, 1, 20, 21, 45, 81, 100].map(filledSegments)).toEqual([1, 1, 1, 2, 3, 5, 5]);
   });
 });
 
