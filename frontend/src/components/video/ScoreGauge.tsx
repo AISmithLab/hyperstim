@@ -1,0 +1,108 @@
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
+
+/** Sweep time of the needle on first render, in ms. */
+const DURATION = 1000;
+
+// Dial geometry in SVG units: a half circle open at the bottom.
+const CX = 120;
+const CY = 118;
+const R = 96;
+const STROKE = 26;
+const BANDS = ["stroke-sky-blue", "stroke-leaf", "stroke-scale-low", "stroke-scale-mid", "stroke-scale-high"];
+
+/** Clockwise rotation of the needle from the "calm" end, in degrees: 0 → 0°, 50 → 90°, 100 → 180°. */
+export function needleAngle(score: number): number {
+  return (Math.min(100, Math.max(0, score)) / 100) * 180;
+}
+
+/** Point on the dial at `score`, at radius `r`. */
+function point(score: number, r: number): [number, number] {
+  const a = Math.PI - (needleAngle(score) * Math.PI) / 180;
+  return [CX + r * Math.cos(a), CY - r * Math.sin(a)];
+}
+
+function prefersReducedMotion(): boolean {
+  return typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+/** Counts from 0 up to `target` with an ease-out, or returns `target` at once with reduced motion. */
+function useCountUp(target: number): number {
+  const [value, setValue] = useState(() => (prefersReducedMotion() ? target : 0));
+  useEffect(() => {
+    // With reduced motion the first frame jumps straight to the target.
+    const duration = prefersReducedMotion() ? 0 : DURATION;
+    let frame = 0;
+    let start: number | undefined;
+    const step = (now: number) => {
+      start ??= now;
+      const t = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
+      setValue(target * (1 - (1 - t) ** 3));
+      if (t < 1) frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [target]);
+  return value;
+}
+
+/**
+ * Half-circle dial with a needle for a 0–100 score (see STYLE.md, Score gauge); fills its
+ * container's width. `children` (e.g. an info button) sit after the number.
+ */
+export default function ScoreGauge({ score, children }: { score: number; children?: ReactNode }) {
+  const rounded = Math.round(score);
+  const shown = useCountUp(rounded);
+  return (
+    <div className="flex flex-col items-center">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 240 132"
+        className="w-full"
+        data-angle={needleAngle(shown)}
+      >
+        {BANDS.map((band, i) => {
+          // A hair of overlap so no seam shows between bands.
+          const [x1, y1] = point(i * 20, R);
+          const [x2, y2] = point(Math.min(100, (i + 1) * 20 + 0.5), R);
+          return (
+            <path
+              key={band}
+              d={`M ${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2}`}
+              fill="none"
+              strokeWidth={STROKE}
+              className={band}
+            />
+          );
+        })}
+        <g transform={`rotate(${needleAngle(shown)} ${CX} ${CY})`}>
+          <path
+            d={`M ${CX - R + 6} ${CY} L ${CX} ${CY - 5} L ${CX} ${CY + 5} Z`}
+            className="fill-navy"
+            strokeLinejoin="round"
+          />
+        </g>
+        <circle cx={CX} cy={CY} r={10} className="fill-navy" />
+        <circle cx={CX} cy={CY} r={3.5} className="fill-white" />
+      </svg>
+      <div aria-hidden="true" className="flex w-full justify-between text-sm text-ink">
+        <span>calm</span>
+        <span>intense</span>
+      </div>
+      <div className="mt-1 flex items-center gap-1">
+        <p className="font-hand font-semibold text-navy">
+          <span aria-hidden="true" className="text-5xl tabular-nums">
+            {Math.round(shown)}
+          </span>
+          <span aria-hidden="true" className="text-xl">
+            {" "}
+            / 100
+          </span>
+          <span className="sr-only">Stimulation score {rounded} out of 100</span>
+        </p>
+        {children}
+      </div>
+    </div>
+  );
+}

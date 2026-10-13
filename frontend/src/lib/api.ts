@@ -10,12 +10,27 @@ export type Meta = {
 export type VideoSummary = {
   id: string;
   title: string;
+  channelId: string;
   channel: string;
   /** Stimulation score 0–100, one decimal. */
   score: number;
 };
 
+/** One of the 12 measurements, in taxonomy order. */
+export type Feature = {
+  key: string;
+  /** Raw value; null when it couldn't be measured. */
+  value: number | null;
+  /** Percentile 0–100 in the dataset, one decimal; null when `value` is. */
+  percentile: number | null;
+};
+
+export type VideoDetail = VideoSummary & {
+  features: Feature[];
+};
+
 export type ChannelSummary = {
+  id: string;
   name: string;
   /** Mean stimulation score of the channel's videos, 0–100, one decimal. */
   score: number;
@@ -76,4 +91,9 @@ export function getChannels(params: {
   minVideos: number;
 }): Promise<ListResponse<ChannelSummary>> {
   return get("/api/channels", params);
+}
+
+/** One video in the dataset. A video that isn't in it rejects with an `ApiError` with status 404. */
+export function getVideo(id: string): Promise<VideoDetail> {
+  return get(`/api/videos/${encodeURIComponent(id)}`);
 }

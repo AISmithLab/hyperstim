@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getChannels, getVideos, type ChannelSummary, type VideoSummary } from "@/lib/api";
-import RankingsCard, { filledSegments, joinEnds } from "./RankingsCard";
+import RankingsCard, { joinEnds } from "./RankingsCard";
 
 vi.mock("@/lib/api", () => ({
   getVideos: vi.fn(),
@@ -12,6 +12,7 @@ vi.mock("@/lib/api", () => ({
 const video = (n: number, score: number): VideoSummary => ({
   id: `video${String(n).padStart(6, "0")}`,
   title: `Video ${n}`,
+  channelId: `chan${n}`,
   channel: `Channel of ${n}`,
   score,
 });
@@ -20,7 +21,12 @@ const video = (n: number, score: number): VideoSummary => ({
 const videosDesc = { items: [video(1, 96.6), video(2, 90.1), video(3, 85.4)], total: 120 };
 const videosAsc = { items: [video(120, 3.2), video(119, 5.5), video(118, 7.9)], total: 120 };
 
-const channel = (name: string, score: number): ChannelSummary => ({ name, score, videoCount: 12 });
+const channel = (name: string, score: number): ChannelSummary => ({
+  id: `id-${name}`,
+  name,
+  score,
+  videoCount: 12,
+});
 const channelsDesc = { items: [channel("Loud", 88), channel("Busy", 80), channel("Zippy", 75)], total: 40 };
 const channelsAsc = { items: [channel("Calm", 9), channel("Slow", 12), channel("Soft", 15)], total: 40 };
 
@@ -57,6 +63,7 @@ describe("RankingsCard", () => {
       "href",
       "/video?id=video000001",
     );
+    expect(within(table).getByRole("link", { name: "Channel of 1" })).toHaveAttribute("href", "/channel?id=chan1");
     expect(within(table).getByText("97")).toBeInTheDocument();
     const meters = table.querySelectorAll("[data-filled]");
     expect(Array.from(meters, (m) => m.getAttribute("data-filled"))).toEqual(["5", "5", "5", "1", "1", "1"]);
@@ -80,7 +87,8 @@ describe("RankingsCard", () => {
     ]);
     expect(within(table).getByText("Loud")).toBeInTheDocument();
     expect(within(table).getAllByText("12 videos")).toHaveLength(6);
-    expect(within(table).queryByRole("link")).not.toBeInTheDocument();
+    expect(within(table).getByRole("link", { name: "Loud" })).toHaveAttribute("href", "/channel?id=id-Loud");
+    expect(within(table).getAllByRole("link")).toHaveLength(6);
     expect(screen.getByRole("button", { name: "Channels" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Videos" })).toHaveAttribute("aria-pressed", "false");
   });
@@ -136,12 +144,6 @@ describe("RankingsCard", () => {
   });
 });
 
-describe("filledSegments", () => {
-  it("fills one segment per 20 points, at least one", () => {
-    expect([0, 1, 20, 21, 45, 81, 100].map(filledSegments)).toEqual([1, 1, 1, 2, 3, 5, 5]);
-  });
-});
-
 describe("joinEnds", () => {
   const toRow = (v: VideoSummary, rank: number) => ({
     key: v.id,
@@ -149,6 +151,7 @@ describe("joinEnds", () => {
     name: v.title,
     detail: "",
     score: v.score,
+    href: "",
   });
   const ranks = (top: VideoSummary[], bottom: VideoSummary[], total: number) =>
     joinEnds({ items: top, total }, { items: bottom, total }, toRow).map((r) => r.rank);

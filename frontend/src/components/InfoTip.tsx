@@ -9,17 +9,21 @@ const GAP = 4;
  * Small circled "i" that shows `children` in a popover on mouse hover, click/tap, or
  * Enter/Space. The popover opens below the trigger (above if there is no room below) and is
  * right-aligned with it, so place it at the right end of a row with no controls under it.
+ * With `align="row"` it starts at the left edge of the nearest positioned ancestor instead
+ * (e.g. a `relative` row), for a trigger that sits after a label at the row's start.
  */
 export default function InfoTip({
   id,
   label,
   children,
   className = "",
+  align = "end",
 }: {
   id: string;
   label: string;
   children: ReactNode;
   className?: string;
+  align?: "end" | "row";
 }) {
   // Hover shows it while the mouse is over; a click pins it until clicked again,
   // Escape, or a click outside.
@@ -58,7 +62,7 @@ export default function InfoTip({
   return (
     <div
       ref={ref}
-      className={`relative ${className}`}
+      className={`${align === "end" ? "relative" : ""} ${className}`}
       // Hover only for mice; touch gets the click toggle alone.
       onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
       onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(false)}
@@ -82,7 +86,7 @@ export default function InfoTip({
         ref={popover}
         id={id}
         hidden={!open}
-        className={`absolute right-0 z-10 w-64 max-w-[calc(100vw-2rem)] rounded-2xl border border-navy/15 bg-white px-4 py-3 text-left text-sm font-normal text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)] ${above ? "bottom-full mb-1" : "top-full mt-1"}`}
+        className={`absolute z-10 w-64 ${align === "end" ? "right-0" : "left-0"} max-w-[calc(100vw-2rem)] rounded-2xl border border-navy/15 bg-white px-4 py-3 text-left text-sm font-normal text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)] ${above ? "bottom-full mb-1" : "top-full mt-1"}`}
       >
         {children}
       </div>

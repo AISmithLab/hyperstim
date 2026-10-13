@@ -24,6 +24,9 @@
   html {
     background: var(--color-white);
     color: var(--color-ink);
+    /* Always reserve the scrollbar's space, so the centred header and content stay in the
+       same place whether or not a page is long enough to scroll. */
+    scrollbar-gutter: stable;
   }
 
   /* Illustrations are not selectable or draggable on any page. */

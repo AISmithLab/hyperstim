@@ -29,11 +29,13 @@ class Meta(ApiModel):
 class VideoSummary(ApiModel):
     id: str
     title: str
+    channel_id: str
     channel: str
     score: float
 
 
 class ChannelSummary(ApiModel):
+    id: str
     name: str
     score: float
     video_count: int
@@ -75,7 +77,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         limit: Annotated[int, Query(ge=1, le=100)] = 20,
     ) -> VideoList:
         items = [
-            VideoSummary(id=v.id, title=v.title, channel=v.channel, score=round(v.score, 1))
+            VideoSummary(
+                id=v.id,
+                title=v.title,
+                channel_id=v.channel_id,
+                channel=v.channel,
+                score=round(v.score, 1),
+            )
             for v in dataset.ranked_videos(sort, limit)
         ]
         return VideoList(items=items, total=len(dataset.videos))
@@ -88,7 +96,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     ) -> ChannelList:
         ranked, total = dataset.ranked_channels(sort, limit, min_videos)
         items = [
-            ChannelSummary(name=c.name, score=round(c.score, 1), video_count=c.video_count)
+            ChannelSummary(id=c.id, name=c.name, score=round(c.score, 1), video_count=c.video_count)
             for c in ranked
         ]
         return ChannelList(items=items, total=total)

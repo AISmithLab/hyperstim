@@ -31,9 +31,27 @@ def test_videos_most_stimulating_first(client: TestClient) -> None:
     body = client.get("/api/videos", params={"sort": "score_desc", "limit": 3}).json()
     assert body["total"] == N
     assert body["items"] == [
-        {"id": "vid-c1", "title": "Title of vid-c1", "channel": "Channel chan-c", "score": 100.0},
-        {"id": "vid-a1", "title": "Title of vid-a1", "channel": "Channel chan-a", "score": pct(10)},
-        {"id": "vid-a2", "title": "Title of vid-a2", "channel": "Channel chan-a", "score": pct(9)},
+        {
+            "id": "vid-c1",
+            "title": "Title of vid-c1",
+            "channelId": "chan-c",
+            "channel": "Channel chan-c",
+            "score": 100.0,
+        },
+        {
+            "id": "vid-a1",
+            "title": "Title of vid-a1",
+            "channelId": "chan-a",
+            "channel": "Channel chan-a",
+            "score": pct(10),
+        },
+        {
+            "id": "vid-a2",
+            "title": "Title of vid-a2",
+            "channelId": "chan-a",
+            "channel": "Channel chan-a",
+            "score": pct(9),
+        },
     ]
 
 
@@ -79,8 +97,8 @@ def test_channels_ranked_by_mean_score(client: TestClient) -> None:
     body = client.get("/api/channels", params={"sort": "score_desc", "limit": 3}).json()
     assert body["total"] == 2  # chan-c has only 2 videos
     assert body["items"] == [
-        {"name": "Channel chan-a", "score": pct(8), "videoCount": 5},
-        {"name": "Channel chan-b", "score": pct(3), "videoCount": 5},
+        {"id": "chan-a", "name": "Channel chan-a", "score": pct(8), "videoCount": 5},
+        {"id": "chan-b", "name": "Channel chan-b", "score": pct(3), "videoCount": 5},
     ]
 
 

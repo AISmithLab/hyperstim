@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import InfoTip from "@/components/InfoTip";
+import ScoreMeter from "@/components/ScoreMeter";
 import { getChannels, getVideos, type ListResponse } from "@/lib/api";
 import { asset } from "@/lib/asset";
+import { channelHref } from "@/lib/routes";
 import { useApi } from "@/lib/use-api";
 
 /** Rows shown from each end of the ranking. */
@@ -15,8 +17,10 @@ type Row = {
   rank: number;
   name: string;
   detail: string;
+  /** Link for the second line (the channel of a video). */
+  detailHref?: string;
   score: number;
-  href?: string;
+  href: string;
 };
 
 /**
@@ -46,6 +50,7 @@ async function loadVideos(): Promise<Row[]> {
     rank,
     name: v.title,
     detail: v.channel,
+    detailHref: channelHref(v.channelId),
     score: v.score,
     href: `/video?id=${encodeURIComponent(v.id)}`,
   }));
@@ -61,6 +66,7 @@ async function loadChannels(): Promise<Row[]> {
     rank,
     name: c.name,
     detail: `${c.videoCount} videos`,
+    href: channelHref(c.id),
     score: c.score,
   }));
 }
@@ -79,18 +85,6 @@ const VIEWS: Record<View, { chip: string; column: string; caption: string }> = {
     caption: "The 3 most and 3 least stimulating channels",
   },
 };
-
-/** Colour of the score meter by filled segments, cool for low scores and warm for high ones. */
-const METER_COLORS = ["bg-sky-blue", "bg-leaf", "bg-scale-low", "bg-scale-mid", "bg-scale-high"];
-const SEGMENTS = METER_COLORS.length;
-
-/**
- * Filled segments of the score meter: one per 20 points, at least one so a score of 0 still
- * shows the meter's colour. The number next to it is the exact score.
- */
-export function filledSegments(score: number): number {
-  return Math.max(1, Math.ceil((score * SEGMENTS) / 100));
-}
 
 // Every row has room for a two-line name plus the small second line, so switching
 // between videos and channels never changes the card's height.
@@ -271,8 +265,6 @@ function SkeletonRows() {
 
 function RankRow({ row, fromEnd }: { row: Row; fromEnd?: number }) {
   const warn = row.rank <= END;
-  const score = Math.round(row.score);
-  const filled = filledSegments(score);
   return (
     <tr className={`relative ${ROW}`}>
       {/* Ranks 1–3 may get warning-triangle art behind the number later (plan 002). */}
@@ -289,31 +281,25 @@ function RankRow({ row, fromEnd }: { row: Row; fromEnd?: number }) {
         )}
       </td>
       <td className="pr-4 align-middle sm:pr-6">
-        {row.href ? (
-          <Link
-            href={row.href}
-            className="line-clamp-2 font-semibold text-navy after:absolute after:inset-0 hover:underline"
-          >
-            {row.name}
-          </Link>
-        ) : (
-          <span className="line-clamp-2 font-semibold text-navy">{row.name}</span>
-        )}
-        <span className="mt-0.5 block truncate text-sm">{row.detail}</span>
+        {/* The name's link covers the whole row; the second line's link sits above it. */}
+        <Link
+          href={row.href}
+          className="line-clamp-2 font-semibold text-navy after:absolute after:inset-0 hover:underline"
+        >
+          {row.name}
+        </Link>
+        <span className="mt-0.5 block truncate text-sm">
+          {row.detailHref ? (
+            <Link href={row.detailHref} className="relative z-10 hover:text-navy hover:underline">
+              {row.detail}
+            </Link>
+          ) : (
+            row.detail
+          )}
+        </span>
       </td>
       <td className="align-middle">
-        {/* Number above the meter on phones, beside it from sm up. */}
-        <span className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
-          <span className="font-bold text-navy tabular-nums sm:w-7 sm:text-right">{score}</span>
-          <span aria-hidden="true" data-filled={filled} className="flex flex-1 gap-1">
-            {Array.from({ length: SEGMENTS }, (_, i) => (
-              <span
-                key={i}
-                className={`h-2.5 flex-1 rounded-[3px] ${i < filled ? METER_COLORS[filled - 1] : "bg-navy/10"}`}
-              />
-            ))}
-          </span>
-        </span>
+        <ScoreMeter score={row.score} />
       </td>
     </tr>
   );
