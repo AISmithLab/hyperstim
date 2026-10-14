@@ -1,57 +1,60 @@
 # 004 — Video detail page
 
+**Status:** done (2026-10-14). Later changes to this page go in a new plan.
+
 ## Goal
 
-Build `/video?id=<youtube-id>`: one video's stimulation score and its 12 measurements, visible without scrolling, plus the video itself on request. The check-a-video form and the rankings rows on the home page already link here. The backend gets `GET /api/videos/{id}`.
+Build `/video?id=<youtube-id>`: one video's stimulation score and its 12 measurements, visible without scrolling, plus the video itself on request. The check-a-video form and the rankings rows on the home page already link here. The backend gets `GET /api/videos/{id}`. A video that isn't in the dataset is analyzed on request with the research pipeline while the page shows the progress, then gets the same result view (see **Live analysis**). _(human decision)_
 
 ## Decisions
 
-- **Scope.** The page, the endpoint, a shared YouTube player, and the states for videos not in the dataset. Not in scope: live analysis (a video not in the dataset gets a "not checked yet" state until that plan), the compare link (comes with `/compare`), and the cookie banner.
+- **Scope.** The page, the endpoint, a shared YouTube player, live analysis of videos not in the dataset _(human decision)_, and the page's states. Not in scope: the compare link (comes with `/compare`), the cookie banner, and comparison within the video's category _(human decision)_.
 - **Query param, not a path** (`/video?id=…`), as 001 says: a static export can't pre-render pages for videos analyzed later. The page reads the ID on the client.
-- **Information hierarchy.** People arrive with one question: how stimulating is this video? They already know the video (they pasted its link or clicked its title). So, top to bottom:
-  1. Which video this is: title, channel, and the video preview beside them. _(was: a small thumbnail, title, channel; before that title, channel, the kid)_
-  2. The answer: the overall score, and the 12 measurements behind it, in one score panel. **The panel fits above the fold on desktop (1280 × 720) up to its bottom padding** (_was: the whole panel; review decision 30 trades ~20 px for a larger kid_)**; on phones the gauge does**, the measurements follow right below.
-  3. The video plays on request, in the preview in the header. _(was: extras below the panel: the video, on request)_
-  _(was: title block with category, date and length → score card → player → breakdown card with descriptions, the breakdown below the fold)_
-- **Video header: title (smaller, 2 lines) and channel on the left 2/3** (no "Watch on YouTube" link: the embedded player links to YouTube; _was: also "Watch on YouTube ↗"_)**; the video preview (16:9) on the right 1/3, at every width.** _(was: a small static thumbnail on the left, for recognition only)_ No category, published date or length. _(was: title block with the kid on its right; before that a metadata line "{Category} · Published {date} · {length}")_
-- **Score**, as on the home page: the 0–100 percentile. Shown on a **gauge** (see Design). No sentence under it; the score's info popover says it is a position in our dataset, not a grade. _(was: a sentence under the gauge, “More intense than about {87}% of the {16,375} kids’ videos in our dataset.”)_ No rank number (#412 of 16,375): the page is about this one video, and a rank reads like a leaderboard.
-- **Measurements = the 12 features, in the research taxonomy's three groups**, as a compact table: name + info "i", percentile number, small meter. What each one measures, and this video's raw value where it has a readable unit, are in the info popover. No group subtotals: a group score would be a new summary with no research behind it.
-  - Groups: **Pacing intensification** (types 1.1–1.6), **Sustained sensory intensity** (2.1–2.4), **Reward patterning** (3.1–3.2). _(was: plain names Pacing / Constant intensity / Build-ups and surprises)_
-  - Measurement names are the research taxonomy's type names (see **Copy**), in sentence case. _(was: plain-language names such as “Cuts”, “Scene jumps”)_
+- **Information hierarchy: the most important information shows without scrolling, and the main thing is the scores** _(human decision)_. People arrive with one question: how stimulating is this video? They already know the video (they pasted its link or clicked its title). So, top to bottom:
+  1. Which video this is: title, channel, and the video preview beside them.
+  2. The answer: the overall score, and the 12 measurements behind it, in one score panel. **The panel fits above the fold on desktop (1280 × 720) up to its bottom padding** (the larger kid costs ~20 px, see below)**; on phones the gauge does**, the measurements follow right below.
+  3. The video plays on request, in the preview in the header.
+- **Video header: title (smaller, at most 2 lines, longer titles end in “…”) and channel on the left 2/3; the video preview (16:9) on the right 1/3, at every width** _(human decision)_. No category, published date or length _(human decision)_. No "Watch on YouTube" link _(human decision: the embedded player already links to YouTube)_.
+- **Channel names are links, on the home page and on this page** _(human decision; overrides plan 002's "Channels … Not linked for now")_, for the channel details page to come. The link is `/channel?id={channelId}` (a query param like `/video`, since that page will be a static export too), keyed by the channel ID because names aren't unique; so `/api/videos` items gain `channelId` and `/api/channels` items gain `id`. Home page: in the Videos view the channel name under each title links to the channel (the rest of the row still opens the video); in the Channels view the whole row links to the channel. Until the channel page exists, these links lead to the site's 404 page. On this page, a video checked live whose channel isn't in the dataset shows the channel name without a link _(human decision: there is no channel page to link to)_; the API says so with `channelInDataset`.
+- **Score**, as on the home page: the 0–100 percentile. Shown on a **gauge with an animation** _(human decision)_ (see Design). No sentence under it _(human decision)_; the score's info popover says it is a position in our dataset, not a grade. No rank number (#412 of 16,375): the page is about this one video, and a rank reads like a leaderboard.
+- **Measurements = the 12 features, in the research taxonomy's three groups**, as a compact table to the right of the gauge _(human decision)_: name + info "i", percentile number, small meter. What each one measures, and this video's raw value where it has a readable unit, are in the info popover, not visible in the row _(human decision)_. No group subtotals: a group score would be a new summary with no research behind it.
+  - Groups: **Pacing intensification** (types 1.1–1.6), **Sustained sensory intensity** (2.1–2.4), **Reward patterning** (3.1–3.2). In two columns: Pacing intensification in one; Sustained sensory intensity above Reward patterning in the other _(human decision)_.
+  - Measurement names are the research taxonomy's type names (see **Copy**), in sentence case _(human decision)_.
+  - Meters keep 5 cells and the score scale colours _(human decision)_.
   - **"None detected" instead of a percentile when an event count is 0.** Many videos have no flashes, build-ups or surprise sounds, and with ties at 0 a zero would show as a middling percentile (e.g. 60). Applies to the per-minute features (1.1, 1.3, 1.4, 1.6, 3.1, 3.2).
   - **Missing values** (1.2 has none when no cuts were found; 1.6/2.3 missing for 7 videos): "No cuts" for 1.2, "Not measured" otherwise. No meter for either.
   - Raw values (in the popover) only for features with a plain unit (per minute, share of time). Saturation, brightness, loudness (LUFS) and scene dissimilarity have none: their units mean nothing to parents.
-  - _(was: a separate breakdown card, each row with a visible description and value)_
 - **Copy limits** (from the research team's guidance): describe what is measured, not effects on children. No claims about addiction, attention, or development; no "good/bad" or "safe/unsafe" wording.
-- **No clip-coverage note.** _(was: a muted line at the bottom of the score panel: “We measured up to 5 minutes of each video, starting 30 seconds in.”)_
-- **The video: the preview in the header; a click turns it into the player in the same spot.** No player below the score panel. _(was: a thumbnail card below the score panel, max ~800 px wide)_ The preview is a 16:9 box showing the video's YouTube thumbnail with a centred "▶ Play video" button. Clicking swaps in the `youtube-nocookie.com` player and starts it; nothing else on the page moves. The click is the consent 001 asks for, so this works before the cookie banner exists. The thumbnail comes from YouTube's image server (no cookies, but YouTube sees the visitor's IP; the privacy policy will say so) and loads with the page, since it's at the top. `YouTubePlayer` component, reused by `/compare` later. People who prefer YouTube itself use the player's own YouTube link. _(was: a "Watch on YouTube ↗" link in the title block)_ _(was: a collapsed "Watch the video here" button with no thumbnail; before that, a thumbnail facade always open beside the score card)_
+- **No clip-coverage note** ("We measured up to 5 minutes…") **and no cookie note** under the video ("Plays from YouTube, which may set cookies.") _(human decision)_.
+- **The video: the preview in the header; a click turns it into the player in the same spot** _(human decision)_. No player below the score panel _(human decision)_. The preview is a 16:9 box showing the video's YouTube thumbnail with a centred "▶ Play video" button. Clicking swaps in the `youtube-nocookie.com` player and starts it; nothing else on the page moves. The click is the consent 001 asks for, so this works before the cookie banner exists. The thumbnail comes from YouTube's image server (no cookies, but YouTube sees the visitor's IP; the privacy policy will say so) and loads with the page, since it's at the top. `YouTubePlayer` component, reused by `/compare` later. People who prefer YouTube itself use the player's own YouTube link.
 - **Score meter becomes a shared component** (`ScoreMeter`), used by the rankings card and the measurement rows (compact size).
-- **New styles go into `STYLE.md` in the same change:** `ScoreGauge`, the measurement table, the video disclosure (Data display / Controls), and `ScoreMeter` as the meter's owner.
-- **The kid is the site's recurring character** and appears on every page (now a rule in `STYLE.md`). On this page _(was: dropped from the result for a while, review decision 21)_:
-  - `kid_3` (peeking over an edge with both hands on it, looking down to the right, smiling; transparent PNG), one image for every video. _(was: `kid_lens_downward`; before that `kid_lens_smile` / `kid_lens_surprised` by the 90th-percentile rule (`kidMood`, kept in the code); the switch can return with a surprised version of this pose)_
-  - Peeking over the score panel's top edge, hands on the border line (the art's table edge, 92.1 % down the image), looking right toward the measurements (no flip). Head the same size as decision 30's (~75 % of the home page kid): `w-40` phones, `w-44` from `sm`, `w-52` from `lg`; above the right part of the gauge column from `lg`, at the panel's left below that. At every width. The space above the panel makes room for it (`mt-28 sm:mt-20 lg:mt-16 xl:mt-10`). _(was: `kid_lens_*` lying on the edge, ~144 px; before that in the gauge column's corner, and to the right of the title block)_ Decorative (`alt=""`, `aria-hidden`): the text already says how intense the video is.
-  - Not shown while loading. In the "not checked yet" state: `kid_2` (peeking over a table with a teddy bear).
+- **New styles go into `STYLE.md` in the same change:** `ScoreGauge`, the measurement table, the video preview (Data display / Controls), `ScoreMeter` as the meter's owner, and (live analysis) the progress bar and the step list.
+- **Fonts stay as in `STYLE.md`:** the video title, group headings and score number use the handwritten font; only the title's size is reduced _(human decision)_.
+- **The kid is the site's recurring character** and appears on every page (a rule in `STYLE.md`) _(human decision)_. On this page:
+  - `kid_3` (peeking over an edge with both hands on it, looking down to the right, smiling; transparent PNG), one image for every video _(human decision)_. A smile/surprised switch (`kidMood`, smile when no measurement is above 90) stays in the code, unused, for when a surprised version of this pose exists.
+  - On the score panel's top edge, looking at the measurements _(human decision)_: hands on the border line (the art's table edge, 92.1 % down the image), looking right (no flip). Head about 75 % of the home page kid, keeping close to the fold _(human decision: should look similarly large as the home page's)_: `w-40` phones, `w-44` from `sm`, `w-52` from `lg`; above the right part of the gauge column from `lg`, at the panel's left below that. At every width. The space above the panel makes room for it (`mt-28 sm:mt-20 lg:mt-16 xl:mt-10`). Decorative (`alt=""`, `aria-hidden`): the text already says how intense the video is.
+  - Not shown while loading. While a video is analyzed live, and when that fails: `kid_2` (peeking over a table with a teddy bear).
   - The kid images are RGB with a near-white background (250–255, not transparent), so they sit on white only, never on a pastel panel. On the panel edge the kid uses `mix-blend-multiply`, so the border line shows through the background. A transparent version from the team would be cleaner.
-- **No plants on the score panel** (review decision 31). _(was: `plant_3` and `plant_1` on its bottom-left edge)_
-  - _(was: `kid_2` in the "not checked yet" state only, no character on the result)_
+- **No plants on the score panel** _(human decision: the page left too little breathing space)_.
+- **The header and content stay in the same place on every page** _(human decision)_. The content width is the same everywhere; what moved was its position: with classic scrollbars (Windows, most Linux, macOS with a mouse), a page that scrolls loses 15 px to the scrollbar, so its centred content sat 7.5 px further left than on a page that doesn't scroll. Fix: `scrollbar-gutter: stable` on `html` (site-wide, `globals.css`). Side effect: on a page that doesn't scroll, the footer's sky background stops 15 px short of the window's right edge.
 
 ## Design
 
 ### Layout
 
-DOM order at every width: header (metadata, then preview) → score panel (gauge, then measurements) → (footer). _(was: title block → score panel → video card)_
+DOM order at every width: header (metadata, then preview) → score panel (gauge, then measurements) → (footer).
 
 | Width | Layout |
 |---|---|
-| `lg`+ (≥1024) | Header: title, channel (2/3, top-aligned) · preview (1/3). Kid on the panel's top edge above the gauge column. Score panel: gauge column (13rem with `gap-x-8` below `xl`, 17rem with `gap-x-12` from `xl`; the gauge fills it, vertically centred) · measurements in two columns: Pacing intensification on the left; Sustained sensory intensity above Reward patterning on the right. No divider between them. |
+| `lg`+ (≥1024) | Header: title, channel (2/3, top-aligned) · preview (1/3). Kid on the panel's top edge above the gauge column. Score panel: gauge column (13rem with `gap-x-8` below `xl`, 17rem with `gap-x-12` from `xl`; the gauge fills it, vertically centred) · measurements in two columns: Pacing intensification on the left; Sustained sensory intensity above Reward patterning on the right. No dividers _(human decision)_. |
 | `md` (768–1023) | Header as above; kid on the panel's top edge at its left. Score panel: gauge (~192 px) centred; the two measurement columns below. |
 | < `md` (320–767) | Header as above (the preview's play button shows its icon only); kid on the panel's top edge at its left. Score panel: gauge, then the three groups in one column. |
 
-_(was: thumbnail left of the text, the kid in the score panel, a video card below the panel; before that title block · kid in the header and a vertical divider between gauge and measurements)_
+The title is top-aligned so the kid has room under it; the gauge column is 13rem below `xl` so measurement names don't wrap at 1024 px.
 
-Sketches: not to scale (names shortened only in the phone sketch); made-up title and channel; `▮▮▮▯▯` = compact meter, `(i)` = info button.
+Sketches _(human decision)_: not to scale (names shortened only in the phone sketch); made-up title and channel; `▮▮▮▯▯` = compact meter, `(i)` = info button. The live analysis sketch is under **Live analysis → Design**.
 
-**Desktop (1280 px; the whole score panel is above the fold)**
+**Desktop (1280 px; the score panel is above the fold up to its bottom padding)**
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -61,7 +64,7 @@ Sketches: not to scale (names shortened only in the phone sketch); made-up title
 │  Tiny Trucks Race to the Rainbow Bridge!                         ┌───────────────────────────────┐ │
 │  Wheelie Friends TV                                              │ [thumbnail] ( ▶ Play video )  │ │
 │                                                                  └───────────────────────────────┘ │
-│                     {kid, lens →}                                                                  │
+│                     {kid →}                                                                        │
 │  ╭─ score panel (white card) ──────────────────────────────────────────────────────────────────╮   │
 │  │                          Pacing intensification              Sustained sensory intensity    │   │
 │  │                                                                                             │   │
@@ -106,33 +109,21 @@ After "Play video": the preview becomes the YouTube player, same size and place.
 └──────────────────────────────┘
 ```
 
-**Not checked yet** (any width)
-
-```
-                  {kid_2 peeking}
-╭─ message box (sky) ──────────────────────────────╮
-│        We haven’t checked this video yet         │
-│  It isn’t one of the 16,375 videos in our        │
-│  dataset. Checking new videos is coming soon.    │
-│   Check another video →    Watch on YouTube ↗    │
-╰──────────────────────────────────────────────────╯
-```
-
 ### Elements, top to bottom
 
 All surfaces and controls are from `STYLE.md`; new ones are marked **new**.
 
-1. **Video header** (no card): a `grid-cols-[2fr_1fr]` grid, items top-aligned (_was: vertically centred_): the text on the left, the video preview (`YouTubePlayer`) on the right. _(was: a static thumbnail `w-28 sm:w-48 lg:w-56` on the left)_ H1 = the video title (`font-hand`, `text-[1.375rem] sm:text-2xl lg:text-[1.75rem]`, no marker, clamped to 2 lines with the full title in the DOM). Under it: channel name (bold navy), a link to the channel page (`/channel?id={channelId}`, hover underline; _was: plain text_). _(was: then the "Watch on YouTube" text link)_ _(was: title block with the kid on its right, title `text-[1.5rem] sm:text-[2rem] lg:text-[2.25rem]`)_
+1. **Video header** (no card): a `grid-cols-[2fr_1fr]` grid, items top-aligned: the text on the left, the video preview (`YouTubePlayer`) on the right. H1 = the video title (`font-hand`, `text-[1.375rem] sm:text-2xl lg:text-[1.75rem]`, no marker, clamped to 2 lines with the full title in the DOM). Under it: channel name (bold navy), a link to the channel page (`/channel?id={channelId}`, hover underline), or plain text when `channelInDataset` is false _(human decision)_.
 2. **Score panel** (section card, white).
-   - Panel padding `py-6` (_was: `py-8` on desktop_); no vertical divider, a gap instead (`gap-x-8` at `lg`, `gap-x-12` from `xl`; _was: `gap-x-12` from `lg`, which wrapped measurement names at 1024 px_); a `navy/10` line between gauge and measurements only when stacked.
-   - **Gauge column** (**new**: `ScoreGauge`). An sr-only H2 "Stimulation score" names the panel (_was: a visible H2 with the score `InfoTip`_); the score `InfoTip` sits after the number. A half-circle dial (inline SVG, ~192 px wide below `lg`, the full column from `lg`; _was: ~240 px and 21rem_) split into five bands in the score scale colours (`sky-blue` → `leaf` → `scale-low` → `scale-mid` → `scale-high`, 20 points each), "calm" and "intense" labels under its two ends (small, ink), and a navy needle with a round hub. Under the dial: the score as a large navy `font-hand` number with "/ 100" small after it. _(was: then the comparison sentence)_
+   - Panel padding `py-6`; no vertical divider, a gap instead (`gap-x-8` at `lg`, `gap-x-12` from `xl`); a `navy/10` line between gauge and measurements only when stacked.
+   - **Gauge column** (**new**: `ScoreGauge`). No visible "Stimulation score" title _(human decision)_: an sr-only H2 "Stimulation score" names the panel; the score `InfoTip` sits after the number. A half-circle dial (inline SVG, ~192 px wide below `lg`, the full column from `lg`; about 80 % of its first size, to leave more gap between the columns _(human decision)_) split into five bands in the score scale colours (`sky-blue` → `leaf` → `scale-low` → `scale-mid` → `scale-high`, 20 points each), "calm" and "intense" labels under its two ends (small, ink), and a navy needle with a round hub. Under the dial: the score as a large navy `font-hand` number with "/ 100" small after it.
    - **Animation:** on first render the needle sweeps from 0 to the score (~1 s, ease-out) while the number counts up with it. With `prefers-reduced-motion`, both show the final value at once. The SVG is `aria-hidden`; the counting number is `aria-hidden` too, with the final score in sr-only text, so screen readers read one value.
    - **Measurements** (**new**: measurement table). Each group: H3 (`font-hand text-lg text-navy`), then one row per feature, `min-h-11`, lines `navy/10`. Row: name (semibold navy) + `InfoTip`; percentile (bold navy, `tabular-nums`, right-aligned fixed-width column); `ScoreMeter` compact (5 segments, ~4.5 rem wide). "None detected" / "No cuts" / "Not measured" in muted text in place of number + meter. sr-only text on the number: "Higher than {93}% of videos in our dataset". The popover: the description, then this video's value where there is one.
-3. **Video preview** (**new**: `YouTubePlayer`), in the header. A 16:9 `rounded-2xl` box, overflow hidden, as wide as its column. Before the click: the thumbnail as `<img alt="">`, a light navy scrim, centred primary button with a play icon; the "Play video" label shows from a 20rem-wide box, a round icon-only button below that. _(was: a card below the score panel, max ~800 px wide, lazy-loaded thumbnail)_ After: the iframe (`title` = video title, `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`) in the same box, focus moved to it. No "hide" control: the player is just a player once loaded.
+3. **Video preview** (**new**: `YouTubePlayer`), in the header. A 16:9 `rounded-2xl` box, overflow hidden, as wide as its column. Before the click: the thumbnail as `<img alt="">`, a light navy scrim, centred primary button with a play icon; the "Play video" label shows from a 20rem-wide box, a round icon-only button below that. After: the iframe (`title` = video title, `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`) in the same box, focus moved to it. No "hide" control: the player is just a player once loaded.
 4. **States**
    - Loading: skeletons for the thumbnail, the title and the score panel (dial outline, 12 grey rows), `aria-busy`, sr-only loading text. The preview is a grey 16:9 box.
    - No `id` or not a valid ID: message box with the text and a "Check another video" link to `/`.
-   - Not in the dataset (404): `kid_2` (decorative, ~280 px wide, every width) on the white page just above the message box (its background isn't transparent), then the box with the text, "Check another video" and "Watch on YouTube" links.
+   - Not in the dataset (404): the page starts a live analysis and shows its progress, then the result (see **Live analysis**) _(human decision)_.
    - Error (network/5xx): message box + "Try again" (outlined button), as on the home page.
 
 ### Copy
@@ -147,12 +138,6 @@ All surfaces and controls are from `STYLE.md`; new ones are marked **new**.
 | `<title>` (after load, set on the client) | {video title} - HyperStim? |
 | Meta description | How stimulating is this video? Its score and what we measured. |
 
-**Title block**
-
-| Where | Text |
-|---|---|
-| Link | _(dropped; was: Watch on YouTube ↗, sr-only "(opens in a new tab)")_ |
-
 **Score panel: gauge**
 
 | Where | Text |
@@ -162,8 +147,6 @@ All surfaces and controls are from `STYLE.md`; new ones are marked **new**.
 | Number | {87} / 100 (sr-only: "Stimulation score {87} out of 100") |
 | InfoTip | Score 0–100: where this video’s production sits among the videos in our dataset, not whether it is good or bad. |
 
-_(was: a “Comparison” row: “More intense than about {87}% of the {16,375} kids’ videos in our dataset.”)_ `{N}` in the not-in-dataset text is the exact count from `/api/meta`; while it loads it is left out.
-
 **Score panel: measurements**
 
 | Group (H3) |
@@ -171,6 +154,8 @@ _(was: a “Comparison” row: “More intense than about {87}% of the {16,375} 
 | Pacing intensification |
 | Sustained sensory intensity |
 | Reward patterning |
+
+Descriptions as below _(human decision: they look good)_.
 
 | # | Name | Popover: description | Popover: this video |
 |---|---|---|---|
@@ -209,9 +194,7 @@ Per-minute values: 1 decimal; shares: whole percent. Info button sr label: "Abou
 |---|---|
 | Loading (sr-only) | Loading video… |
 | Invalid / missing ID | That doesn’t look like a YouTube video ID. |
-| Not in dataset, H1 | We haven’t checked this video yet |
-| Not in dataset, text | It isn’t one of the {16,375} videos in our dataset. Checking new videos is coming soon. |
-| Links | Check another video → · Watch on YouTube ↗ |
+| Not in dataset | See **Live analysis → Copy** |
 | Error | We couldn’t load this video. |
 | Error button | Try again |
 
@@ -222,82 +205,154 @@ GET /api/videos/{id}
   → {
       id: string, title: string, channelId: string, channel: string,
       score: number,             // 0–100, 1 decimal
+      channelInDataset: boolean, // false for a live video from a channel not in the dataset (no link)
       features: [{ key: string, value: number | null, percentile: number | null }]  // the 12, in taxonomy order
     }
   404 → { detail: "Video not found" }
   422 → id not 11 characters of [A-Za-z0-9_-]
 
-GET /api/videos     items gain channelId: string   (review decision 26; was: no channel ID)
-GET /api/channels   items gain id: string          (the channel ID; was: name only)
+GET /api/videos     items gain channelId: string   (channel links, human decision)
+GET /api/channels   items gain id: string          (the channel ID; channel links, human decision)
 ```
 
-`percentile` is the feature's percentile in the dataset (same formula as the score, 1 decimal), `null` when `value` is. The "None detected" rule lives in the frontend. Feature names and descriptions are frontend copy keyed by `key`. _(was: also `category`, `publishedAt`, `durationS`; dropped since the page no longer shows them)_
+`GET /api/videos/{id}` also answers for videos analyzed live (same shape); `/api/meta`, `/api/videos` and `/api/channels` never include them. Live analysis endpoints: see **Live analysis → API**.
+
+`percentile` is the feature's percentile in the dataset (same formula as the score, 1 decimal), `null` when `value` is. The "None detected" rule lives in the frontend. Feature names and descriptions are frontend copy keyed by `key`. No category, publication date or length: the page doesn't show them.
 
 ## Backend
 
 - `Video` keeps the 12 values and their percentiles (computed at startup from the pools `scoring.py` already builds). A dict by ID for lookup.
 - `GET /api/videos/{id}` as above; ID pattern checked by FastAPI (`Path(pattern=…)`).
-- CORS stays GET-only.
+- CORS allows GET and POST (POST for live analysis).
 - Tests (synthetic fixture): found video has all fields and 12 features in order; missing value → `null` value and percentile; unknown ID → 404; malformed ID → 422; feature percentiles match `scoring.percentile_rank`.
+
+## Live analysis
+
+_(human decision: “Check a video” should actually work, by running the download and analysis scripts.)_ Overrides 001's `POST /api/analyze` + `GET /api/analyze/{job_id}` (jobs are keyed by video ID instead) and 001's default proposal that analysis results join the dataset.
+
+### Decisions
+
+- **Starts on its own.** When `GET /api/videos/{id}` says 404, the page starts the analysis (no extra click): the person already asked for this video in the check-a-video form. Starting is idempotent per video ID: a second visitor, a reload, or coming back later to the same link joins the running analysis or gets the stored result. So the link can be closed and reopened.
+- **The research pipeline, unchanged.** The backend runs the two scripts in `backend/pipeline/` as subprocesses, exactly as the README's usage shows (one-row manifest, `--workers 1`, no download delays, `derive` with its default thresholds), so live features are measured like the dataset's. Steps for one video:
+  1. **Look up**. First YouTube's "made for kids" flag (`status.madeForKids`, YouTube Data API `videos.list`, 1 quota unit, ~0.1 s; yt-dlp doesn't expose it): refuse a video without it, like the dataset's sampling did _(human decision: same filter as the dataset)_. The key is `YOUTUBE_API_KEY`; unset, the check is off and the API logs a warning at startup (local development). Then yt-dlp (metadata only, no download): title, channel, channel ID, duration, live status. Refuse live streams / upcoming premieres and videos shorter than 90 s (the clip starts at 0:30; the old live API used the same minimum). No maximum, and Shorts are not refused, unlike the dataset's 120–3600 s sampling _(human decision: 90 s and up is fine)_.
+  2. **Download** the clip (`58_download_clips_v2.py`): 5 minutes from 0:30, 360p. Only that section is fetched (yt-dlp `--download-sections`), so the time doesn't grow with the video's length: ~14 s for videos from 2 minutes to 3 hours (timed 2026-10-14).
+  3. **Measure** (`04_extract_features_v2.py extract`, then `derive`): the 12 features. Limited to 4 of the server's cores _(human decision: more cores barely help; timed 2026-10-14 per video: 1 core 32 s, 2 28 s, 4 26 s, 8 26 s, since the motion pass is single-threaded and only ffmpeg's decoding uses more)_.
+  4. **Score** against the dataset (below), store, delete the clip and the cache.
+- **Never part of the dataset** _(human decision)_. A live video is scored against the dataset's pools (each feature's percentile in the dataset, its composite's percentile among the dataset's composites), the same way `scoring.py` already describes. The pools, the dataset's scores, the rankings and the video count never change. If a video later joins the dataset, its dataset row wins.
+- **Stored as plain files, one JSON file per video** (`ANALYSIS_DIR/<video_id>.json`) _(human decision: no SQLite, plain file reads and writes are enough for this lightweight task)_: status, stage times, title, channel, channel ID, the 12 raw features, error, timestamps. Written to a temporary file and renamed into place, so a reader never sees a half-written file. Writes go through one lock (the request that queues a video writes its first state; the analysis thread the rest). Raw values only; percentiles are computed on each read, so they follow the dataset if it is re-imported. No visitor data (no IP, no cookie) is stored.
+- **Kept until removed by hand** (delete the file) _(human decision)_; the privacy policy says requested video IDs are stored.
+- **One analysis at a time,** in a background thread of the API process; the others wait in a first-in, first-out queue. Queue full (10 waiting) → 503 _(human decision)_. The API must run as a single process (no `--workers`) for this; the README says so.
+- **Limits: per IP only, no site-wide limit** _(human decision)_: 5 new analyses per IP address per hour (the old API's limit). No cookies: they wouldn't stop abuse (cleared at will, blocked across sites). The counts live in memory only, for at most an hour, never stored; the privacy policy says so. Requests for a stored or running video don't count. Behind the reverse proxy, uvicorn runs with `--proxy-headers` so the limit sees the visitor's IP (README). Set by `ANALYSIS_LIMIT_PER_IP` (new analyses per hour; `0` = off). Off for local development (`dev.sh`, `.env.example`) _(human decision: so it doesn't interfere with debugging)_.
+- **Timeouts:** look-up 1 min, download 15 min (the script tries three YouTube clients, 5 min each), measure 10 min. A timeout fails the analysis.
+- **Restart:** at startup the backend reads the folder; analyses that were waiting or running when the API stopped start again from the beginning. The queue itself lives in memory.
+- **Failed analyses** stay stored with their reason, so the page can explain; requesting the video again retries it (counts toward the limit).
+- **Progress the person can trust** _(human decision: show the status and/or a progress bar so people know what to expect)_. The scripts don't report progress inside one video, and they must stay unchanged, so:
+  - The page shows **the steps** (look up, download, measure), with the current one marked; while waiting, the number of videos ahead.
+  - A **progress bar** with the time left, estimated from typical step durations: timed on our server and kept as constants (`TYPICAL_S`: look-up 6 s, download 15 s, measure 25 s; a 30-minute video took 4 + 13 + 23 s end to end); each analysis logs its step times for re-timing. Within a step the bar moves with elapsed time but stops at 90 % of the step until the step is really done, and the page shows at most 99 % before the result, so it never claims to be finished early. No "taking longer than usual" note _(human decision: it competed with the time left for space)_.
+  - No text on how long it usually takes _(human decision: the bar and the time left give enough information)_.
+- **When done,** the page fetches `GET /api/videos/{id}` and shows the normal result view; the gauge animation then plays as the reveal. Nothing on the result says it was a live analysis _(human decision)_.
+
+### API
+
+```
+POST /api/analyses/{id}     start (or join) the analysis of a video
+  → 202 Analysis   (200 if it is already done or running)
+  404 → never; a video in the dataset → 200 { status: "done" }
+  422 → malformed ID (same pattern as /api/videos/{id})
+  429 → { detail: "Too many requests" }      (ANALYSIS_LIMIT_PER_IP new analyses per IP per hour)
+  503 → { detail: "Busy" }                    (queue full)
+
+GET /api/analyses/{id}      poll (the page polls every 2 s)
+  → 200 Analysis
+  404 → never requested
+
+Analysis = {
+  status: "queued" | "lookup" | "download" | "measure" | "done" | "failed",
+  queuePosition: number | null,  // videos ahead, while queued
+  progress: number,              // 0–1, the estimate above
+  remainingS: number | null,     // estimated seconds left; null when queued or done
+  error: "unavailable" | "not_for_kids" | "too_short" | "live" | "failed" | null
+}
+```
+
+`unavailable`: the look-up or download failed (private, removed, age- or region-restricted, or YouTube refused). `not_for_kids`: YouTube doesn't mark it as made for kids. `failed`: measuring failed or timed out, or the Data API couldn't be reached.
+
+### Backend
+
+- `analysis.py`: the queue, worker thread, the JSON file store, the pipeline runs (subprocess, temp folder per video under `ANALYSIS_DIR`, always deleted), and the progress estimate. `scoring.py` gains nothing new: `feature_percentiles` and `percentile_rank` against the existing pools; `Dataset` keeps its sorted composite pool for this.
+- New env vars (`.env.example`, README, `dev.sh`): `ANALYSIS_DIR` (the result files + temporary clips; outside the repo or git-ignored), `YTDLP_COOKIES` (optional path to a cookies file for yt-dlp, as the research download uses; never committed), `ANALYSIS_LIMIT_PER_IP` (optional; default 5 when unset, so a server that forgets it is still limited; `0` in `.env.example` and `dev.sh`), `YOUTUBE_API_KEY` (for the made-for-kids check; a secret, never committed; set on the server).
+- Tests with the pipeline replaced by a fake runner (no network, no ffmpeg): start → queued → stages → done; idempotent start; queue position; queue full → 503; limit → 429 (stored videos don't count; `0` = off); dataset video → done; too short / live / unavailable / not for kids / failed mapping; restart resumes; the temp folder is deleted after success and failure; a live result through `GET /api/videos/{id}` has percentiles against the dataset pools, and `/api/meta`, rankings and the dataset videos' scores are unchanged. Plus one real end-to-end run by hand during review (not in CI).
+
+### Design
+
+The look of the old "We haven’t checked this video yet" state, now saying the analysis is running _(human decision)_: `kid_2` (decorative, ~280 px wide, every width) on the white page just above a message box (sky), centred, `max-w-2xl`. Inside, top to bottom: H1, the steps, the progress bar with the time left. No video title _(human decision: it popped in after the look-up)_; the result page shows it. **New in `STYLE.md`:** the progress bar and the step list (Data display).
+
+```
+                  {kid_2 peeking}
+╭─ message box (sky) ──────────────────────────────╮
+│            Checking this video…                  │
+│                                                  │
+│      ✓ Looking up the video                      │
+│      ● Downloading a 5-minute clip               │
+│      ○ Measuring                                 │
+│        [██████████░░░░░░░░░░░░░░░░░░░░]          │
+│                About 1 min left                  │
+╰──────────────────────────────────────────────────╯
+```
+
+- Steps: a list; done ✓ (leaf), current ● (navy, bold), next ○ (muted). Icons `aria-hidden`; sr-only "done" / "current" on each.
+- Progress bar: `role="progressbar"`, `aria-valuenow` in %, `aria-label` "Analysis progress"; navy fill on a pale navy track (navy at 12 %) _(human decision: the white track hardly showed on the sky box)_, rounded-full, ~12 px high, width animates (none with `prefers-reduced-motion`). The time left sits centred under the bar at every width, so the bar keeps its full width and stays centred _(human decision: beside it, the text shortened the bar and pushed it off-centre)_.
+- Screen readers: a polite live region (outside the states, so it stays on the page) announces only step changes and the outcome (done, a failure, a refusal), not every bar tick.
+- Queued: the steps all ○, above them "{2} videos ahead of yours."; the bar stays at 0.
+- Failed: the same box with the reason, "Check another video →" and "Watch on YouTube ↗"; for `failed` also "Try again" (outlined button).
+- Busy (503) / limit (429): the box with the message and "Try again" / "Check another video →". Nothing is stored for a refused request; the page doesn't retry on its own _(human decision)_.
+- Lost connection while polling: keep polling quietly; after ~30 s of failures, the error message box with "Try again".
+
+### Copy
+
+| Where | Text |
+|---|---|
+| H1 | Checking this video… |
+| Queued | {2} videos ahead of yours. (1: “1 video ahead of yours.”) |
+| Step 1 | Looking up the video |
+| Step 2 | Downloading a 5-minute clip |
+| Step 3 | Measuring |
+| Time left | About {1} min left · Less than a minute left |
+| `unavailable` | We couldn’t get this video from YouTube. It may be private, removed, or restricted. |
+| `not_for_kids` | YouTube doesn’t list this video as made for kids, so we can’t check it. _(human decision)_ |
+| `too_short` | This video is too short to measure: we need at least 90 seconds. |
+| `live` | We can’t measure live streams or premieres that haven’t aired yet. |
+| `failed` | Something went wrong while measuring this video. |
+| 503 | We’re checking a lot of videos right now. Please try again in a few minutes. |
+| 429 | You’ve checked several new videos in the last hour. Please try again later. |
+| Failed-state links | Check another video → · Watch on YouTube ↗ |
+| Live region | Downloading a 5-minute clip · Measuring · Done |
+
+### Mocks
+
+Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, then shows a mock result; `mockVidFail`, `mockNotKids`, `mockVidShrt`, `mockVidLive` and `mockVidErrr` fail as `unavailable`, `not_for_kids`, `too_short`, `live` and `failed`, `mockVidWait` sits in the queue for a few seconds, `mockVidBusy` gets 503 and `mockVid0429` gets 429.
 
 ## Steps
 
 1. **Backend.** Endpoint, dataset fields, tests.
 2. **API client + mocks.** `getVideo(id)` in `api.ts` (404 surfaces as `ApiError` with status 404); mock details for the mock videos, with one zero-event, one missing-value case, and one mock ID that returns 404.
-3. **Shared pieces.** Extract `ScoreMeter` from `RankingsCard` (no visual change) with a compact size; `ScoreGauge`; `YouTubePlayer`; `STYLE.md` entries; add `kid_2`, `kid_lens_smile`, `kid_lens_surprised` to `used.json`; the mood rule (`kidMood(features)`) as a small tested function.
+3. **Shared pieces.** Extract `ScoreMeter` from `RankingsCard` (no visual change) with a compact size; `ScoreGauge`; `YouTubePlayer`; `STYLE.md` entries; add `kid_2` and `kid_3` to `used.json`; the mood rule (`kidMood(features)`) as a small tested function.
 4. **Page.** `/video` with all states; `useSearchParams` inside a `Suspense` boundary (needed for static export).
-5. **Tests.** Value formatting (per minute, percent), "None detected"/missing rules, kid mood rule, gauge needle angle for 0/50/100 and reduced motion, video card swaps to the iframe on click (and loads nothing from YouTube before), each state renders, title set after load.
+5. **Tests.** Value formatting (per minute, percent), "None detected"/missing rules, kid mood rule, gauge needle angle for 0/50/100 and reduced motion, the preview swaps to the iframe on click (and loads nothing from YouTube before), each state renders, title set after load.
 6. **Review.** Screenshots at 360 and 1280 px (plus 320, 768, 1920 and keyboard-only check) compared with `STYLE.md`; check the score panel is above the fold at 1280 × 720 and the gauge at 360 × 640; run against the real backend. Stop for review.
+7. **Live analysis, backend.** `analysis.py`, endpoints, env vars, tests; time a few real runs on our server to set the typical step durations. README, `.env.example`, `dev.sh`.
+8. **Live analysis, frontend.** `startAnalysis(id)` / `getAnalysis(id)` in `api.ts` and mocks; the progress view in `VideoPage` (404 → start → poll → result); `STYLE.md` entries; tests (each step and failure renders, polling stops on done/failed, the bar never reaches 100 % before done, reduced motion, live region text).
+9. **Review.** Screenshots of each state at 360 and 1280 px; one real video end to end against the real backend; a second tab joining the same analysis. Stop for review.
 
 ## Review decisions
 
-1. **Show the layout as ASCII sketches** in the plan (desktop, phone, not-checked state), under **Layout**.
-2. **The kid is a recurring character that shows up on every page.** Added to `STYLE.md` (The look).
-3. **This page uses `kid_lens_smile` / `kid_lens_surprised`:** smile when none of the 12 dimensions is above 50, surprised otherwise (see **Decisions**). _(threshold later changed to 90, decision 11)_
-4. **The most important info shows without scrolling; the main thing is the scores.** Title block keeps the video title, the channel and the kid; category and date are dropped. Below it, one large score panel.
-5. **Score panel: overall score on the left, as a gauge with an animation; measurements on the right**, in a relatively compact table. No visible description per measurement: it's in a tooltip.
-6. **Measurement columns:** one column for Pacing intensification; the other holds Sustained sensory intensity on top and Reward patterning below.
-7. **The video should be embedded somewhere, maybe only shown when required**, placed by information hierarchy (Claude's proposal: collapsed below the score panel; settled by decision 13).
-8. **Drop the clip-coverage note** (“We measured up to 5 minutes…”) **and the cookie note** (“Plays from YouTube, which may set cookies.”).
-9. **Keep a video thumbnail.** Maybe a click expands the page in between and the embedded video shows up; better ideas wanted (settled by decision 13).
-10. **Measurement names are the research type names:** rapid cutting, scene discontinuity, palette instability, luminance flash, motion density, loudness jumps, visual intensity, visual brightness, audio intensity, silence elimination, audio build-resolve, surprise reveals. The rest of the text is fine.
-11. **Kid split at 90:** smile when no measurement is above 90.
-12. **No within-category comparison now.**
-13. **Video: a thumbnail card below the score panel**; a click turns it into the player in place. (Chosen over a thumbnail by the title playing in a pop-up, and over expanding the player between the title and the score panel.)
+Human decisions applied to the sketches, which can't carry an inline mark:
 
-14. **Redesign brief (pasted review) applied, except where decisions 15–18 say otherwise:** compact video header with a small static thumbnail beside the title; the kid moved out of the header into the score panel, flipped to face the measurements, in the gauge column's bottom-right corner, without adding height; no vertical divider; less padding and spacing between header and panel.
-15. _(replaced by decision 19)_ **The video stays an in-place card below the panel** (the brief's modal player not adopted); the header gets only a small thumbnail, for recognition.
-16. **Drop the comparison sentence** under the gauge.
-17. **Measurement meters keep 5 cells** and their colours (the brief's 10 cells and new thresholds not adopted).
-18. **Fonts stay as in `STYLE.md`:** the video title, category headings and score number keep the handwritten font (the brief's sans-serif title, headings and score not adopted). Only the title's size is reduced.
-
-19. **Remove the video player at the bottom of the page** (replaces decision 15).
-20. **The video preview moves to the top right:** 2/3 of the width for the video metadata, 1/3 for the preview. Claude's reading: the preview is the player too (click plays in place), so the video can still be watched on the page.
-21. **Drop the kid's figure (for now).**
-
-22. **Drop "Watch on YouTube"** on the result: the embedded player allows jumping to YouTube. (Kept in the not-checked-yet state, which has no player.)
-23. **Drop the "Stimulation score" title** (Claude kept it as sr-only text so the panel still has a heading, and moved its "i" next to the score).
-24. **Gauge about 80 % of its size**, to allow more gap between the columns.
-
-25. **Video titles: at most two lines, anything longer ends in “…”** (already the case; checked with an extra-long title at 360 and 1280 px).
-26. **Channel names are links, on the home page and on this page,** for the channel details page to come. Claude's choices: the link is `/channel?id={channelId}` (a query param like `/video`, since the page will be a static export too), keyed by the channel ID because names aren't unique; so `/api/videos` items gain `channelId` and `/api/channels` items gain `id` (backend and tests updated, see API contract). Home page: in the Videos view the channel name under each title links to the channel (the rest of the row still opens the video); in the Channels view the whole row links to the channel. _(overrides plan 002: “Channels … Not linked for now”)_ Until the channel page exists, these links lead to the site's 404 page.
-
-27. **Kid on the score panel's top edge, looking at the measurements** (Claude's suggested fix 1), with the existing `kid_lens_*` art. _(art replaced by decision 30)_
-28. _(replaced by decision 31)_ **Plants on the panel's bottom edge: a selection, not all;** save some for the other pages. Claude chose `plant_3` and `plant_1`.
-29. Claude's fixes along the way: the header's title is top-aligned so the kid has room under it; the gauge column is 13rem below `xl` so measurement names don't wrap at 1024 px.
-
-30. **Use `kid_lens_downward` instead; the kid should look similarly large as the one on the home page.** Asked about the fold (home size pushes the panel ~80 px down): **~75 % of the home size, keeping close to the fold.** At 1280 × 720 the last row is visible and only the panel's bottom padding is cut.
-
-31. **The page leaves little breathing space: remove the flowers at the bottom, and use `kid_3` instead of `kid_lens_downward`.** Kept the gaps above the panel as they were, so the smaller-reaching kid leaves ~20 px more space under the title (5–11 px before).
-
-32. **The header and content must stay in the same place on every page** (the width must not change). Diagnosis: the content width is the same (1152 px) everywhere; what moved was its position. On browsers with classic scrollbars (Windows, most Linux, macOS with a mouse), a page that scrolls loses 15 px to the scrollbar and its centred content sits 7.5 px further left than on a page that doesn't scroll (e.g. the home page vs this page at 1280 × 1080 or 1920 × 1080). Fix: `scrollbar-gutter: stable` on `html`, which always reserves the scrollbar's space (site-wide, `globals.css`). Side effect: on a page that doesn't scroll, the footer's sky background stops 15 px short of the window's right edge.
+1. **Desktop and phone sketches:** the preview at the top right, the kid on the score panel's top edge, no plants, no video card below the panel (see **Decisions**: video header, the video, the kid, no plants).
+2. **"Not checked yet" sketch removed;** the live analysis sketch replaces it (see **Live analysis**).
+3. **Live analysis sketch:** no "This usually takes about 2 minutes. You can leave and come back to this link later." under the bar (see **Live analysis → Decisions**: progress).
+4. **Live analysis sketch:** no video title under the heading; the time left under the bar, both centred (see **Live analysis → Design**).
 
 ## Open questions
 
-1. **Feature descriptions** in **Copy** are new wording; the research team may want to check them.
-
-## Resolved questions
-
-1. Smile threshold: no measurement above 90 (review decision 11).
-2. Comparison within the video's category: not now (review decision 12).
-3. Thumbnail placement: a card below the score panel that becomes the player (review decision 13).
+None.

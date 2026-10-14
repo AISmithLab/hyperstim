@@ -33,6 +33,7 @@ The single, current source for how the site looks. Values (colours, fonts) live 
 | Section card (white) | `rounded-[2rem] border border-navy/15 bg-white px-4 py-8 sm:px-8` |
 | Section panel (pastel) | `rounded-[2rem] bg-butter px-5 py-8 sm:px-8` (or `bg-mint` / `bg-sky`), no border |
 | Message box (error, empty) | `rounded-2xl bg-sky p-6 text-center` |
+| Message box with the kid (a video being checked live, or failing to be) | `kid_2` (`w-[280px]`, centred, at every width) on the white page just above a `max-w-2xl` message box. |
 | Popover (info tips) | `InfoTip`: `rounded-2xl border border-navy/15 bg-white px-4 py-3 text-sm text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)]`, `w-64`, opens next to its trigger on the side with no controls, flips when there's no room. A trigger right after a label at a row's start uses `align="row"`: the popover starts at the row's left edge. Only for supplementary text; anything users need to act should be visible text instead (e.g. helper text under an input). |
 
 ## Text
@@ -57,6 +58,10 @@ The single, current source for how the site looks. Values (colours, fonts) live 
 - **Video header**: `grid-cols-[2fr_1fr]`, top-aligned, at every width: title and channel (bold navy link) on the left; the video preview (`YouTubePlayer`) on the right. No card.
 
 - **Score panel** (video page): a `relative` section card with `py-6` and an sr-only H2; gauge column (gauge vertically centred) and measurements side by side from `lg`, no divider: `13rem` with `gap-x-8`, from `xl` `17rem` with `gap-x-12`; stacked below `lg`, with a `navy/10` line between them. The kid (`kid_3`, looking toward the measurements, `w-40 sm:w-44 lg:w-52`, head ~75 % of the home kid's) peeks over its top edge, hands on the border line. No other art on it.
+
+- **Step list** (live analysis): an `ol`, centred as a block (`w-fit`), left-aligned text, one row per step (`min-h-7`, icon `size-5` + `gap-2.5`). Done: a `leaf` disc with a white check, text `ink`. Current: a navy ring with a navy dot, text bold navy, `aria-current="step"`. Next: a `navy/30` ring, text `ink/70`. Icons `aria-hidden`; done and current steps carry sr-only "(done)" / "(current)".
+
+- **Progress bar** (live analysis): `role="progressbar"` with an `aria-label` and `aria-valuenow` in %; track `h-3 rounded-full bg-navy/12` (visible on the sky message box), fill `rounded-full bg-navy` whose width glides over the 2 s between updates (`transition-[width] duration-[2000ms] ease-linear`, none with `motion-reduce`). Never full before the work is done (at most 99 %). Bar `max-w-md`, centred; the time left (`mt-2 text-sm text-ink`) centred under it at every width. A polite live region announces step changes, not the bar.
 
 - **Video preview** (`YouTubePlayer`): a 16:9 box as wide as its container, `rounded-2xl overflow-hidden`. Before a click: the YouTube thumbnail (`object-cover`), a `navy/20` scrim and a centred primary button with a play icon; the button shows its "Play video" label from a 20rem-wide box (`@xs`) and is a round icon-only `size-12` button below that. The click swaps in the player in the same box and moves focus to it.
 

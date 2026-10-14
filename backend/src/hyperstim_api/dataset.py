@@ -47,6 +47,8 @@ class Dataset:
     channels: tuple[Channel, ...]  # highest score first; ties by id
     updated_at: str  # ISO date
     videos_by_id: dict[str, Video]
+    pools: scoring.Pools  # the dataset's sorted values per feature
+    composite_pool: list[float]  # the dataset's composites, sorted
 
     @property
     def channel_count(self) -> int:
@@ -58,6 +60,44 @@ class Dataset:
     def ranked_channels(self, sort: Sort, limit: int, min_videos: int) -> tuple[list[Channel], int]:
         eligible = tuple(c for c in self.channels if c.video_count >= min_videos)
         return _take(eligible, sort, limit), len(eligible)
+
+    def score_video(
+        self, id: str, title: str, channel_id: str, channel: str, features: scoring.Features
+    ) -> Video | None:
+        """A video outside the dataset, scored against it; the dataset is unchanged.
+
+        None if it has no feature value.
+        """
+        return _video(id, title, channel_id, channel, features, self.pools, self.composite_pool)
+
+
+def _video(
+    id: str,
+    title: str,
+    channel_id: str,
+    channel: str,
+    features: scoring.Features,
+    pools: scoring.Pools,
+    composite_pool: list[float],
+) -> Video | None:
+    value = scoring.composite(features, pools)
+    if value is None:
+        return None
+    score = scoring.percentile_rank(value, composite_pool)
+    if score is None:
+        return None
+    percentiles = scoring.feature_percentiles(features, pools)
+    return Video(
+        id=id,
+        title=title,
+        channel_id=channel_id,
+        channel=channel,
+        score=score,
+        features=tuple(
+            Feature(key=name, value=features.get(name), percentile=percentiles[name])
+            for name in scoring.FEATURES
+        ),
+    )
 
 
 def _take[T](ranked: tuple[T, ...], sort: Sort, limit: int) -> list[T]:
@@ -102,23 +142,18 @@ def load_dataset(path: Path) -> Dataset:
         composites.append(value)
     composite_pool = sorted(composites)
     videos = []
-    for (row, features), value in zip(kept, composites, strict=True):
-        score = scoring.percentile_rank(value, composite_pool)
-        assert score is not None  # the pool holds at least this video
-        percentiles = scoring.feature_percentiles(features, pools)
-        videos.append(
-            Video(
-                id=row["video_id"].strip(),
-                title=row["title"],
-                channel_id=row["channel_id"],
-                channel=row["channel_title"],
-                score=score,
-                features=tuple(
-                    Feature(key=name, value=features[name], percentile=percentiles[name])
-                    for name in scoring.FEATURES
-                ),
-            )
+    for row, features in kept:
+        video = _video(
+            row["video_id"].strip(),
+            row["title"],
+            row["channel_id"],
+            row["channel_title"],
+            features,
+            pools,
+            composite_pool,
         )
+        assert video is not None  # every kept row has a feature value
+        videos.append(video)
     videos.sort(key=lambda v: (-v.score, v.id))
 
     by_channel: dict[str, list[Video]] = {}
@@ -148,4 +183,6 @@ def load_dataset(path: Path) -> Dataset:
         channels=tuple(channels),
         updated_at=meta["featuresDate"],
         videos_by_id={v.id: v for v in videos},
+        pools=pools,
+        composite_pool=composite_pool,
     )

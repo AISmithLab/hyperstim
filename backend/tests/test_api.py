@@ -160,12 +160,48 @@ def test_settings_require_env(monkeypatch: pytest.MonkeyPatch) -> None:
         load_settings()
 
 
-def test_settings_from_env(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.fixture
+def env(monkeypatch: pytest.MonkeyPatch) -> pytest.MonkeyPatch:
     monkeypatch.setenv("DATASET_PATH", "data/videos.tsv")
     monkeypatch.setenv("CORS_ORIGIN", ORIGIN + "/")
+    monkeypatch.setenv("ANALYSIS_DIR", "analysis")
+    monkeypatch.delenv("YTDLP_COOKIES", raising=False)
+    monkeypatch.delenv("YOUTUBE_API_KEY", raising=False)
+    monkeypatch.delenv("ANALYSIS_LIMIT_PER_IP", raising=False)
+    return monkeypatch
+
+
+def test_settings_from_env(env: pytest.MonkeyPatch) -> None:
     settings = load_settings()
     assert settings.dataset_path == Path("data/videos.tsv")
     assert settings.cors_origin == ORIGIN
+    assert settings.analysis_dir == Path("analysis")
+    assert settings.ytdlp_cookies is None
+    assert settings.youtube_api_key is None  # no made-for-kids check
+    assert settings.analysis_limit_per_ip == 5  # unset: limited all the same
+
+
+def test_settings_require_analysis_dir(env: pytest.MonkeyPatch) -> None:
+    env.delenv("ANALYSIS_DIR")
+    with pytest.raises(RuntimeError, match="ANALYSIS_DIR"):
+        load_settings()
+
+
+def test_settings_optional_analysis_values(env: pytest.MonkeyPatch) -> None:
+    env.setenv("YTDLP_COOKIES", "/secret/cookies.txt")
+    env.setenv("ANALYSIS_LIMIT_PER_IP", "0")
+    env.setenv("YOUTUBE_API_KEY", " key ")
+    settings = load_settings()
+    assert settings.ytdlp_cookies == Path("/secret/cookies.txt")
+    assert settings.youtube_api_key == "key"
+    assert settings.analysis_limit_per_ip == 0
+
+
+@pytest.mark.parametrize("raw", ["-1", "five", "2.5"])
+def test_settings_reject_a_bad_limit(env: pytest.MonkeyPatch, raw: str) -> None:
+    env.setenv("ANALYSIS_LIMIT_PER_IP", raw)
+    with pytest.raises(RuntimeError, match="ANALYSIS_LIMIT_PER_IP"):
+        load_settings()
 
 
 DETAIL_IDS = ("aaaaaaaaaa1", "aaaaaaaaaa2", "aaaaaaaaaa3")
@@ -195,6 +231,7 @@ def test_video_detail(detail_client: TestClient) -> None:
         "channelId": "UC-chan",
         "channel": "Channel UC-chan",
         "score": 50.0,
+        "channelInDataset": True,
     }
     assert [f["key"] for f in body["features"]] == list(FEATURES)
     assert body["features"][0] == {"key": "cuts_per_min", "value": 2.0, "percentile": 50.0}

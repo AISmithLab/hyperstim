@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
+from hyperstim_api.analysis import AnalysisError, ErrorCode, VideoInfo
 from hyperstim_api.config import Settings
 from hyperstim_api.dataset import REQUIRED_COLUMNS
 from hyperstim_api.main import create_app
@@ -58,12 +59,70 @@ def dataset_path(tmp_path: Path) -> Path:
     return write_dataset(tmp_path / "videos.tsv", [video_row(*v) for v in VIDEOS])
 
 
+class FakePipeline:
+    """Stands in for the research scripts: no network, no ffmpeg.
+
+    Every video gets the same features unless `features` says otherwise, and the channel
+    UC-live unless `channels` says otherwise; `fail` makes a
+    step fail for a video; `during(step, video_id, workdir)` runs inside each step.
+    """
+
+    def __init__(self) -> None:
+        self.features: dict[str, dict[str, float | None]] = {}
+        self.channels: dict[str, str] = {}  # id -> channel ID
+        self.fail: dict[str, tuple[str, ErrorCode | None]] = {}  # id -> (step, code or crash)
+        self.during: Callable[[str, str, Path | None], None] | None = None
+        self.workdirs: list[Path] = []
+
+    def _step(self, step: str, video_id: str, workdir: Path | None = None) -> None:
+        if workdir is not None:
+            self.workdirs.append(workdir)
+            (workdir / f"{step}.tmp").write_text("clip")
+        if self.during:
+            self.during(step, video_id, workdir)
+        failing = self.fail.get(video_id)
+        if failing and failing[0] == step:
+            if failing[1] is None:
+                raise RuntimeError("pipeline crashed")
+            raise AnalysisError(failing[1])
+
+    def lookup(self, video_id: str) -> VideoInfo:
+        self._step("lookup", video_id)
+        channel_id = self.channels.get(video_id, "UC-live")
+        return VideoInfo(title=f"Live {video_id}", channel_id=channel_id, channel="Live channel")
+
+    def download(self, video_id: str, workdir: Path) -> None:
+        self._step("download", video_id, workdir)
+
+    def measure(self, video_id: str, workdir: Path) -> dict[str, float | None]:
+        self._step("measure", video_id, workdir)
+        return self.features.get(video_id, dict.fromkeys(FEATURES, 5.5))
+
+    def cancel(self) -> None:
+        pass
+
+
 @pytest.fixture
-def make_client() -> Iterator[Callable[[Path], TestClient]]:
+def pipeline() -> FakePipeline:
+    return FakePipeline()
+
+
+@pytest.fixture
+def make_client(
+    tmp_path_factory: pytest.TempPathFactory, pipeline: FakePipeline
+) -> Iterator[Callable[..., TestClient]]:
     clients: list[TestClient] = []
 
-    def make(path: Path) -> TestClient:
-        client = TestClient(create_app(Settings(dataset_path=path, cors_origin=ORIGIN)))
+    def make(path: Path, analysis_dir: Path | None = None, limit_per_ip: int = 5) -> TestClient:
+        settings = Settings(
+            dataset_path=path,
+            cors_origin=ORIGIN,
+            analysis_dir=analysis_dir or tmp_path_factory.mktemp("analyses"),
+            analysis_limit_per_ip=limit_per_ip,
+        )
+        # Not used as a context manager, so the worker thread doesn't start: tests run
+        # the queue themselves with `analyzer.run_next()`.
+        client = TestClient(create_app(settings, pipeline))
         clients.append(client)
         return client
 
@@ -73,5 +132,5 @@ def make_client() -> Iterator[Callable[[Path], TestClient]]:
 
 
 @pytest.fixture
-def client(dataset_path: Path, make_client: Callable[[Path], TestClient]) -> TestClient:
+def client(dataset_path: Path, make_client: Callable[..., TestClient]) -> TestClient:
     return make_client(dataset_path)

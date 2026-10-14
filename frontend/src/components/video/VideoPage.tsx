@@ -2,22 +2,20 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, type ReactNode } from "react";
+import { useCallback, useEffect, useState } from "react";
 import InfoTip from "@/components/InfoTip";
 import YouTubePlayer from "@/components/YouTubePlayer";
-import { ApiError, getMeta, getVideo, type VideoDetail } from "@/lib/api";
+import { ApiError, getVideo, type VideoDetail } from "@/lib/api";
 import { asset } from "@/lib/asset";
 import { useApi } from "@/lib/use-api";
 import { channelHref } from "@/lib/routes";
 import { parseVideoInput } from "@/lib/youtube";
+import LiveAnalysis from "./LiveAnalysis";
 import Measurements from "./Measurements";
+import { CheckAnother, CONTAINER, Message, OUTLINED_BUTTON } from "./parts";
 import ScoreGauge from "./ScoreGauge";
 
-const CONTAINER = "mx-auto max-w-6xl px-4 pt-6 sm:px-6 lg:px-8";
 const SECTION_CARD = "rounded-[2rem] border border-navy/15 bg-white px-4 py-6 sm:px-8";
-const MESSAGE_BOX = "rounded-2xl bg-sky p-6 text-center";
-const TEXT_LINK =
-  "inline-flex min-h-11 items-center font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny";
 // Video metadata on 2/3 of the width, the preview on 1/3.
 const HEADER = "grid grid-cols-[2fr_1fr] items-start gap-4 sm:gap-6";
 // Room above the score panel for the kid peeking over its top edge.
@@ -39,25 +37,42 @@ export default function VideoPage() {
 function VideoDetails({ id }: { id: string }) {
   const load = useCallback(() => getVideo(id), [id]);
   const video = useApi(load);
-  const meta = useApi(getMeta);
-  const count = meta.status === "success" ? meta.data.videoCount : undefined;
+  // Live analysis step changes, read out by screen readers. Outside the states below, so
+  // it stays on the page while they change.
+  const [announcement, setAnnouncement] = useState("");
 
   useEffect(() => {
     if (video.status === "success") document.title = `${video.data.title} - HyperStim?`;
   }, [video]);
 
+  return (
+    <>
+      <VideoState id={id} video={video} announce={setAnnouncement} />
+      <p aria-live="polite" className="sr-only">
+        {announcement}
+      </p>
+    </>
+  );
+}
+
+function VideoState({
+  id,
+  video,
+  announce,
+}: {
+  id: string;
+  video: ReturnType<typeof useApi<VideoDetail>>;
+  announce: (text: string) => void;
+}) {
   if (video.status === "loading") return <Loading />;
   if (video.status === "error") {
+    // Not in the dataset: analyze it live, then load the result.
     return video.error instanceof ApiError && video.error.status === 404 ? (
-      <NotChecked id={id} count={count} />
+      <LiveAnalysis id={id} onDone={video.retry} announce={announce} />
     ) : (
       <Message>
         <p>We couldn’t load this video.</p>
-        <button
-          type="button"
-          onClick={video.retry}
-          className="mt-3 min-h-11 rounded-full border-2 border-navy px-5 font-semibold text-navy hover:bg-white"
-        >
+        <button type="button" onClick={video.retry} className={`mt-3 ${OUTLINED_BUTTON}`}>
           Try again
         </button>
       </Message>
@@ -74,10 +89,15 @@ function Result({ video }: { video: VideoDetail }) {
           <h1 className="line-clamp-2 font-hand text-[1.375rem] leading-tight font-semibold text-navy sm:text-2xl lg:text-[1.75rem]">
             {video.title}
           </h1>
-          <p className="mt-1 truncate">
-            <Link href={channelHref(video.channelId)} className="font-bold text-navy hover:underline">
-              {video.channel}
-            </Link>
+          <p className="mt-1 truncate font-bold text-navy">
+            {/* A live-checked video's channel may have no page here. */}
+            {video.channelInDataset ? (
+              <Link href={channelHref(video.channelId)} className="hover:underline">
+                {video.channel}
+              </Link>
+            ) : (
+              video.channel
+            )}
           </p>
         </div>
         {/* The preview plays in place on click; the embedded player links on to YouTube. */}
@@ -126,41 +146,6 @@ function PanelKid() {
   );
 }
 
-function WatchOnYouTube({ id }: { id: string }) {
-  return (
-    <a
-      href={`https://www.youtube.com/watch?v=${encodeURIComponent(id)}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={TEXT_LINK}
-    >
-      {/* One span, so the text and arrow wrap like plain text in a narrow column. */}
-      <span>
-        Watch on YouTube&nbsp;<span aria-hidden="true">↗</span>
-        <span className="sr-only"> (opens in a new tab)</span>
-      </span>
-    </a>
-  );
-}
-
-function CheckAnother() {
-  return (
-    <Link href="/" className={TEXT_LINK}>
-      Check another video&nbsp;<span aria-hidden="true">→</span>
-    </Link>
-  );
-}
-
-/** States without a result: a visually hidden H1 and a message box. */
-function Message({ children }: { children: ReactNode }) {
-  return (
-    <div className={CONTAINER}>
-      <h1 className="sr-only">Video details</h1>
-      <div className={`mx-auto max-w-2xl ${MESSAGE_BOX}`}>{children}</div>
-    </div>
-  );
-}
-
 function InvalidId() {
   return (
     <Message>
@@ -169,35 +154,6 @@ function InvalidId() {
         <CheckAnother />
       </div>
     </Message>
-  );
-}
-
-function NotChecked({ id, count }: { id: string; count?: number }) {
-  return (
-    <div className={CONTAINER}>
-      {/* eslint-disable-next-line @next/next/no-img-element -- static export, images pre-converted */}
-      <img
-        src={asset("/images/kid_2.webp")}
-        alt=""
-        aria-hidden="true"
-        width={560}
-        height={280}
-        className="mx-auto h-auto w-[280px]"
-      />
-      <div className={`mx-auto max-w-2xl ${MESSAGE_BOX}`}>
-        <h1 className="font-hand text-2xl font-semibold text-navy sm:text-3xl">
-          We haven’t checked this video yet
-        </h1>
-        <p className="mt-2">
-          It isn’t one of the {count === undefined ? "" : `${count.toLocaleString("en-US")} `}videos in our
-          dataset. Checking new videos is coming soon.
-        </p>
-        <div className="mt-2 flex flex-wrap justify-center gap-x-6">
-          <CheckAnother />
-          <WatchOnYouTube id={id} />
-        </div>
-      </div>
-    </div>
   );
 }
 

@@ -1,12 +1,18 @@
 // Mock API responses for frontend work without a backend (NEXT_PUBLIC_API_MOCK=1).
-// All titles and channel names are made up. Video pages: unknown IDs (e.g. mockVid0404) return
-// 404, and mockVid0500 returns a server error.
+// All titles and channel names are made up. Video pages: mockVid0500 returns a server error;
+// any other ID that isn't a mock video is analyzed live in ~12 s, then has a result. Live
+// analysis: mockVidWait waits in the queue first; the IDs in MOCK_FAILURES fail with their
+// error; mockVidBusy gets 503 (queue full) and mockVid0429 gets 429 (limit reached).
 import {
   ApiError,
+  type Analysis,
+  type AnalysisErrorCode,
+  type AnalysisStatus,
   type ChannelSummary,
   type Feature,
   type ListResponse,
   type Meta,
+  type Method,
   type Params,
   type VideoDetail,
   type VideoSummary,
@@ -89,8 +95,71 @@ const featureOverrides: Record<string, Record<string, number | null>> = {
 function videoDetail(id: string): VideoDetail {
   if (id === "mockVid0500") throw new ApiError(500, "Mock server error");
   const video = videos.find((v) => v.id === id);
-  if (!video) throw new ApiError(404, "Video not found");
-  return { ...video, features: mockFeatures(video.score, featureOverrides[id]) };
+  if (video) return { ...video, channelInDataset: true, features: mockFeatures(video.score, featureOverrides[id]) };
+  if (analyses.has(id) && mockAnalysis(id).status === "done") {
+    const live = { id, title: LIVE_TITLE, channelId: "mock-fresh-finds", channel: "Fresh Finds", score: 64.2 };
+    return { ...live, channelInDataset: false, features: mockFeatures(live.score) };
+  }
+  throw new ApiError(404, "Video not found");
+}
+
+const LIVE_TITLE = "Jelly Bean Jungle Adventure – Mock Video Checked Live";
+// Seconds per step, shorter than the real ones (~6, 15 and 25 s) so the flow is quick to try.
+const MOCK_STEPS: [AnalysisStatus, number][] = [
+  ["lookup", 2],
+  ["download", 4],
+  ["measure", 6],
+];
+const MOCK_WAIT_S = 4; // mockVidWait's time in the queue
+// IDs that fail after the look-up, one per error.
+const MOCK_FAILURES: Record<string, AnalysisErrorCode> = {
+  mockVidFail: "unavailable",
+  mockNotKids: "not_for_kids",
+  mockVidShrt: "too_short",
+  mockVidLive: "live",
+  mockVidErrr: "failed",
+};
+const analyses = new Map<string, number>(); // ID -> start time (ms)
+
+function mockAnalysis(id: string): Analysis {
+  const base = { queuePosition: null, remainingS: null, error: null };
+  let elapsed = (Date.now() - (analyses.get(id) ?? Date.now())) / 1000;
+  const wait = id === "mockVidWait" ? MOCK_WAIT_S : 0;
+  if (elapsed < wait) {
+    return { ...base, status: "queued", queuePosition: Math.ceil((wait - elapsed) / 2), progress: 0 };
+  }
+  elapsed -= wait;
+  const error = MOCK_FAILURES[id];
+  if (error && elapsed > MOCK_STEPS[0][1]) return { ...base, status: "failed", progress: 0, error };
+  const total = MOCK_STEPS.reduce((sum, [, s]) => sum + s, 0);
+  let before = 0;
+  for (const [status, seconds] of MOCK_STEPS) {
+    if (elapsed < before + seconds) {
+      const within = elapsed - before;
+      return {
+        ...base,
+        status,
+        progress: (before + Math.min(within, seconds * 0.9)) / total,
+        remainingS: Math.round(total - before - Math.min(within, seconds * 0.9)),
+      };
+    }
+    before += seconds;
+  }
+  return { ...base, status: "done", progress: 1 };
+}
+
+function analysisRequest(method: Method, id: string): Analysis {
+  const video = videos.find((v) => v.id === id);
+  if (video) return { queuePosition: null, remainingS: null, error: null, status: "done", progress: 1 };
+  if (method === "POST") {
+    if (id === "mockVidBusy") throw new ApiError(503, "Busy");
+    if (id === "mockVid0429") throw new ApiError(429, "Too many requests");
+    const current = analyses.has(id) ? mockAnalysis(id) : null;
+    if (!current || current.status === "failed") analyses.set(id, Date.now());
+  } else if (!analyses.has(id)) {
+    throw new ApiError(404, "Analysis not found");
+  }
+  return mockAnalysis(id);
 }
 
 function list<T extends { score: number }>(
@@ -103,7 +172,7 @@ function list<T extends { score: number }>(
   return { items: sorted.slice(0, limit), total: sorted.length };
 }
 
-export async function mockGet(path: string, params: Params): Promise<unknown> {
+export async function mockRequest(method: Method, path: string, params: Params): Promise<unknown> {
   // Short delay so loading states are visible during development.
   await new Promise((resolve) => setTimeout(resolve, 400));
   const limit = Number(params.limit ?? 50);
@@ -124,6 +193,9 @@ export async function mockGet(path: string, params: Params): Promise<unknown> {
     default:
       if (path.startsWith("/api/videos/")) {
         return videoDetail(decodeURIComponent(path.slice("/api/videos/".length)));
+      }
+      if (path.startsWith("/api/analyses/")) {
+        return analysisRequest(method, decodeURIComponent(path.slice("/api/analyses/".length)));
       }
       throw new Error(`No mock for ${path}`);
   }

@@ -108,6 +108,8 @@ if [ "$MOCK" = 0 ]; then
     [ -f .env ] && env_file=(--env-file .env)
     DATASET_PATH=data/videos.tsv \
       CORS_ORIGIN="http://localhost:$FRONTEND_PORT" \
+      ANALYSIS_DIR=analysis \
+      ANALYSIS_LIMIT_PER_IP=0 \
       uv run "${env_file[@]+"${env_file[@]}"}" \
       uvicorn --factory hyperstim_api.main:create_app \
       --host 127.0.0.1 --port "$BACKEND_PORT" --reload 2>&1 | prefix backend
