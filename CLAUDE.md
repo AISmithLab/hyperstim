@@ -7,9 +7,9 @@ Website for the HyperStimulation project: a Next.js frontend (static, GitHub Pag
 - Work is iterative. For each request: write a plan in `plans/`, wait for review, then implement only the parts that were approved.
 - Plans are concise: goal, decisions, steps, open questions. No long prose.
 - Plan files are numbered: `plans/NNN-short-title.md` (e.g. `001-architecture.md`). Once a plan is done, never rewrite its decisions; write a new plan instead.
-- Human decisions: while a plan is in progress (including reviewing what was built), record every decision the user makes in that plan, so it always reflects the current understanding:
-  - If it changes something the plan already says, edit that spot in place and add a short note of the previous choice (e.g. "_was: …_").
-  - Otherwise add it to the plan's **Review decisions** section (create it before **Open questions** if missing), numbered in the order made, close to the user's wording.
+- Human decisions: while a plan is in progress (including reviewing what was built), record every decision the user makes in that plan, so the plan always reads as what is (or will be) built:
+  - Edit the plan in place: rewrite the spot the decision is about (or add it where it belongs) and mark it _(human decision)_. If the user said why the earlier version didn't work, add that very briefly: _(human decision: too little breathing space)_. Don't keep the earlier version in the plan.
+  - Only where a mark can't go in place (e.g. ASCII sketches): edit it directly, and list the decision in the plan's **Review decisions** section (before **Open questions**), naming what changed and the related spot in the plan.
   - Ask when a comment is unclear or conflicts with an earlier plan.
   - Apply each decision to the implementation right away too (with lint, type check, tests, build passing), so plan and code stay in sync.
 - Later plans override earlier ones. If a new plan contradicts an earlier one and it is unclear whether that is intended, ask before proceeding.
