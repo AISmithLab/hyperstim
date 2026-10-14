@@ -3,13 +3,15 @@
 import logging
 from typing import Annotated
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, HTTPException, Path, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
 from hyperstim_api.config import Settings, load_settings
 from hyperstim_api.dataset import Sort, load_dataset
+
+VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
 
 
 class ApiModel(BaseModel):
@@ -32,6 +34,16 @@ class VideoSummary(ApiModel):
     channel_id: str
     channel: str
     score: float
+
+
+class FeatureValue(ApiModel):
+    key: str
+    value: float | None
+    percentile: float | None
+
+
+class VideoDetail(VideoSummary):
+    features: list[FeatureValue]
 
 
 class ChannelSummary(ApiModel):
@@ -87,6 +99,27 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             for v in dataset.ranked_videos(sort, limit)
         ]
         return VideoList(items=items, total=len(dataset.videos))
+
+    @app.get("/api/videos/{video_id}", responses={404: {"description": "Video not found"}})
+    def video(video_id: Annotated[str, Path(pattern=VIDEO_ID_PATTERN)]) -> VideoDetail:
+        v = dataset.videos_by_id.get(video_id)
+        if v is None:
+            raise HTTPException(status_code=404, detail="Video not found")
+        return VideoDetail(
+            id=v.id,
+            title=v.title,
+            channel_id=v.channel_id,
+            channel=v.channel,
+            score=round(v.score, 1),
+            features=[
+                FeatureValue(
+                    key=f.key,
+                    value=f.value,
+                    percentile=None if f.percentile is None else round(f.percentile, 1),
+                )
+                for f in v.features
+            ],
+        )
 
     @app.get("/api/channels")
     def channels(

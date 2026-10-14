@@ -17,12 +17,20 @@ REQUIRED_COLUMNS = ("video_id", "title", "channel_id", "channel_title", *scoring
 
 
 @dataclass(frozen=True)
+class Feature:
+    key: str  # one of scoring.FEATURES
+    value: float | None  # raw value; None if not measured
+    percentile: float | None  # within the dataset, unrounded; None when value is
+
+
+@dataclass(frozen=True)
 class Video:
     id: str
     title: str
     channel_id: str
     channel: str
     score: float  # percentile of its composite among the dataset's, unrounded
+    features: tuple[Feature, ...]  # the 12, in scoring.FEATURES order
 
 
 @dataclass(frozen=True)
@@ -38,6 +46,7 @@ class Dataset:
     videos: tuple[Video, ...]  # highest score first; ties by id
     channels: tuple[Channel, ...]  # highest score first; ties by id
     updated_at: str  # ISO date
+    videos_by_id: dict[str, Video]
 
     @property
     def channel_count(self) -> int:
@@ -93,9 +102,10 @@ def load_dataset(path: Path) -> Dataset:
         composites.append(value)
     composite_pool = sorted(composites)
     videos = []
-    for (row, _), value in zip(kept, composites, strict=True):
+    for (row, features), value in zip(kept, composites, strict=True):
         score = scoring.percentile_rank(value, composite_pool)
         assert score is not None  # the pool holds at least this video
+        percentiles = scoring.feature_percentiles(features, pools)
         videos.append(
             Video(
                 id=row["video_id"].strip(),
@@ -103,6 +113,10 @@ def load_dataset(path: Path) -> Dataset:
                 channel_id=row["channel_id"],
                 channel=row["channel_title"],
                 score=score,
+                features=tuple(
+                    Feature(key=name, value=features[name], percentile=percentiles[name])
+                    for name in scoring.FEATURES
+                ),
             )
         )
     videos.sort(key=lambda v: (-v.score, v.id))
@@ -129,4 +143,9 @@ def load_dataset(path: Path) -> Dataset:
         path,
         skipped,
     )
-    return Dataset(videos=tuple(videos), channels=tuple(channels), updated_at=meta["featuresDate"])
+    return Dataset(
+        videos=tuple(videos),
+        channels=tuple(channels),
+        updated_at=meta["featuresDate"],
+        videos_by_id={v.id: v for v in videos},
+    )

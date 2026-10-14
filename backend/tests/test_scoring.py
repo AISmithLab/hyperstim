@@ -1,6 +1,12 @@
 import pytest
 
-from hyperstim_api.scoring import FEATURES, build_pools, composite, percentile_rank
+from hyperstim_api.scoring import (
+    FEATURES,
+    build_pools,
+    composite,
+    feature_percentiles,
+    percentile_rank,
+)
 
 
 def test_percentile_rank_spans_0_to_100() -> None:
@@ -40,3 +46,12 @@ def test_composite_skips_missing_features() -> None:
     pools = build_pools([{"lufs": 1.0}, {"lufs": 2.0}, {"lufs": 3.0}])
     assert composite({"lufs": 3.0, "motion_frac": None}, pools) == 100.0
     assert composite({"motion_frac": None}, pools) is None
+
+
+def test_feature_percentiles_per_feature() -> None:
+    pools = build_pools([{"lufs": 1.0}, {"lufs": 2.0}, {"lufs": 3.0}])
+    percentiles = feature_percentiles({"lufs": 2.0, "motion_frac": None}, pools)
+    assert list(percentiles) == list(FEATURES)
+    assert percentiles["lufs"] == 50.0
+    assert percentiles["motion_frac"] is None
+    assert percentiles["cuts_per_min"] is None  # absent counts as missing

@@ -54,14 +54,16 @@ def percentile_rank(value: float, sorted_pool: list[float]) -> float | None:
     return max(0.0, min(100.0, 100 * (at_or_below - 1) / (n - 1)))
 
 
-def composite(features: Features, pools: Pools) -> float | None:
-    """Mean of the available feature percentiles, unrounded; None if no feature has a value."""
-    percentiles = []
+def feature_percentiles(features: Features, pools: Pools) -> dict[str, float | None]:
+    """Each feature's percentile in its pool, unrounded; None where the value is missing."""
+    percentiles: dict[str, float | None] = {}
     for name in FEATURES:
         value = features.get(name)
-        if value is None:
-            continue
-        pct = percentile_rank(value, pools[name])
-        if pct is not None:
-            percentiles.append(pct)
+        percentiles[name] = None if value is None else percentile_rank(value, pools[name])
+    return percentiles
+
+
+def composite(features: Features, pools: Pools) -> float | None:
+    """Mean of the available feature percentiles, unrounded; None if no feature has a value."""
+    percentiles = [p for p in feature_percentiles(features, pools).values() if p is not None]
     return sum(percentiles) / len(percentiles) if percentiles else None
