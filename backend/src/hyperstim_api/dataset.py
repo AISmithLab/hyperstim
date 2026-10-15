@@ -13,7 +13,14 @@ log = logging.getLogger(__name__)
 
 Sort = Literal["score_desc", "score_asc"]
 
-REQUIRED_COLUMNS = ("video_id", "title", "channel_id", "channel_title", *scoring.FEATURES)
+REQUIRED_COLUMNS = (
+    "video_id",
+    "title",
+    "channel_id",
+    "channel_title",
+    "published_at",
+    *scoring.FEATURES,
+)
 
 
 @dataclass(frozen=True)
@@ -31,6 +38,7 @@ class Video:
     channel: str
     score: float  # percentile of its composite among the dataset's, unrounded
     features: tuple[Feature, ...]  # the 12, in scoring.FEATURES order
+    published_at: str | None  # ISO date; None for a video analyzed live
 
 
 @dataclass(frozen=True)
@@ -38,7 +46,12 @@ class Channel:
     id: str
     name: str
     score: float  # unrounded mean of its videos' scores
-    video_count: int
+    features: tuple[Feature, ...]  # the 12: mean raw value and mean percentile of its videos
+    videos: tuple[Video, ...]  # oldest first; ties by id
+
+    @property
+    def video_count(self) -> int:
+        return len(self.videos)
 
 
 @dataclass(frozen=True)
@@ -47,6 +60,7 @@ class Dataset:
     channels: tuple[Channel, ...]  # highest score first; ties by id
     updated_at: str  # ISO date
     videos_by_id: dict[str, Video]
+    channels_by_id: dict[str, Channel]
     pools: scoring.Pools  # the dataset's sorted values per feature
     composite_pool: list[float]  # the dataset's composites, sorted
 
@@ -68,7 +82,9 @@ class Dataset:
 
         None if it has no feature value.
         """
-        return _video(id, title, channel_id, channel, features, self.pools, self.composite_pool)
+        return _video(
+            id, title, channel_id, channel, None, features, self.pools, self.composite_pool
+        )
 
 
 def _video(
@@ -76,6 +92,7 @@ def _video(
     title: str,
     channel_id: str,
     channel: str,
+    published_at: str | None,
     features: scoring.Features,
     pools: scoring.Pools,
     composite_pool: list[float],
@@ -97,6 +114,32 @@ def _video(
             Feature(key=name, value=features.get(name), percentile=percentiles[name])
             for name in scoring.FEATURES
         ),
+        published_at=published_at,
+    )
+
+
+def _mean(values: list[float]) -> float | None:
+    return sum(values) / len(values) if values else None
+
+
+def _channel(members: list[Video]) -> Channel:
+    """A channel from its videos; each feature is the mean over the videos that have it."""
+    features = []
+    for i, name in enumerate(scoring.FEATURES):
+        measured = [v.features[i] for v in members if v.features[i].value is not None]
+        features.append(
+            Feature(
+                key=name,
+                value=_mean([f.value for f in measured if f.value is not None]),
+                percentile=_mean([f.percentile for f in measured if f.percentile is not None]),
+            )
+        )
+    return Channel(
+        id=members[0].channel_id,
+        name=members[0].channel,
+        score=sum(v.score for v in members) / len(members),
+        features=tuple(features),
+        videos=tuple(sorted(members, key=lambda v: (v.published_at or "", v.id))),
     )
 
 
@@ -148,6 +191,7 @@ def load_dataset(path: Path) -> Dataset:
             row["title"],
             row["channel_id"],
             row["channel_title"],
+            row["published_at"].strip() or None,
             features,
             pools,
             composite_pool,
@@ -159,15 +203,7 @@ def load_dataset(path: Path) -> Dataset:
     by_channel: dict[str, list[Video]] = {}
     for video in videos:
         by_channel.setdefault(video.channel_id, []).append(video)
-    channels = [
-        Channel(
-            id=channel_id,
-            name=members[0].channel,
-            score=sum(v.score for v in members) / len(members),
-            video_count=len(members),
-        )
-        for channel_id, members in by_channel.items()
-    ]
+    channels = [_channel(members) for members in by_channel.values()]
     channels.sort(key=lambda c: (-c.score, c.id))
 
     meta = json.loads(meta_path(path).read_text(encoding="utf-8"))
@@ -183,6 +219,7 @@ def load_dataset(path: Path) -> Dataset:
         channels=tuple(channels),
         updated_at=meta["featuresDate"],
         videos_by_id={v.id: v for v in videos},
+        channels_by_id={c.id: c for c in channels},
         pools=pools,
         composite_pool=composite_pool,
     )

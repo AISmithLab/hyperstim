@@ -22,10 +22,12 @@ from hyperstim_api.analysis import (
     estimate,
 )
 from hyperstim_api.config import Settings, load_settings
-from hyperstim_api.dataset import Sort, Video, load_dataset
+from hyperstim_api.dataset import Channel, Feature, Sort, Video, load_dataset
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
 VideoId = Annotated[str, Path(pattern=VIDEO_ID_PATTERN)]
+CHANNEL_ID_PATTERN = r"^UC[A-Za-z0-9_-]{22}$"  # a YouTube channel ID
+ChannelId = Annotated[str, Path(pattern=CHANNEL_ID_PATTERN)]
 
 
 class ApiModel(BaseModel):
@@ -68,6 +70,23 @@ class ChannelSummary(ApiModel):
     video_count: int
 
 
+class ChannelVideo(ApiModel):
+    id: str
+    title: str
+    published_at: str  # YYYY-MM-DD
+    score: float
+    features: list[FeatureValue]
+
+
+class ChannelDetail(ApiModel):
+    id: str
+    name: str
+    video_count: int
+    score: float
+    features: list[FeatureValue]  # mean raw value and mean percentile of its videos
+    videos: list[ChannelVideo]  # oldest first
+
+
 class VideoList(ApiModel):
     items: list[VideoSummary]
     total: int
@@ -86,6 +105,17 @@ class Analysis(ApiModel):
     error: ErrorCode | None
 
 
+def feature_values(features: tuple[Feature, ...]) -> list[FeatureValue]:
+    return [
+        FeatureValue(
+            key=f.key,
+            value=f.value,
+            percentile=None if f.percentile is None else round(f.percentile, 1),
+        )
+        for f in features
+    ]
+
+
 def video_detail(v: Video, channel_in_dataset: bool) -> VideoDetail:
     return VideoDetail(
         id=v.id,
@@ -94,13 +124,26 @@ def video_detail(v: Video, channel_in_dataset: bool) -> VideoDetail:
         channel=v.channel,
         score=round(v.score, 1),
         channel_in_dataset=channel_in_dataset,
-        features=[
-            FeatureValue(
-                key=f.key,
-                value=f.value,
-                percentile=None if f.percentile is None else round(f.percentile, 1),
+        features=feature_values(v.features),
+    )
+
+
+def channel_detail(c: Channel) -> ChannelDetail:
+    return ChannelDetail(
+        id=c.id,
+        name=c.name,
+        video_count=c.video_count,
+        score=round(c.score, 1),
+        features=feature_values(c.features),
+        videos=[
+            ChannelVideo(
+                id=v.id,
+                title=v.title,
+                published_at=v.published_at or "",
+                score=round(v.score, 1),
+                features=feature_values(v.features),
             )
-            for f in v.features
+            for v in c.videos
         ],
     )
 
@@ -121,7 +164,6 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
     logging.basicConfig(level=logging.INFO)
     settings = settings or load_settings()
     dataset = load_dataset(settings.dataset_path)
-    channel_ids = {c.id for c in dataset.channels}
     if pipeline is None:
         pipeline = ResearchPipeline(settings.ytdlp_cookies, settings.youtube_api_key)
         if settings.youtube_api_key is None:
@@ -192,7 +234,7 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
                 )
         if v is None:
             raise HTTPException(status_code=404, detail="Video not found")
-        return video_detail(v, v.channel_id in channel_ids)
+        return video_detail(v, v.channel_id in dataset.channels_by_id)
 
     @app.post(
         "/api/analyses/{video_id}",
@@ -246,5 +288,12 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
             for c in ranked
         ]
         return ChannelList(items=items, total=total)
+
+    @app.get("/api/channels/{channel_id}", responses={404: {"description": "Channel not found"}})
+    def channel(channel_id: ChannelId) -> ChannelDetail:
+        c = dataset.channels_by_id.get(channel_id)
+        if c is None:
+            raise HTTPException(status_code=404, detail="Channel not found")
+        return channel_detail(c)
 
     return app

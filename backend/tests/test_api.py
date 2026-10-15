@@ -1,3 +1,4 @@
+import re
 from collections.abc import Callable
 from pathlib import Path
 
@@ -264,3 +265,99 @@ def test_video_detail_unknown_id(detail_client: TestClient) -> None:
 @pytest.mark.parametrize("video_id", ["short", "aaaaaaaaaa12", "aaaaaaaaa.1", "aaaaaaaaa%201"])
 def test_video_detail_malformed_id(detail_client: TestClient, video_id: str) -> None:
     assert detail_client.get(f"/api/videos/{video_id}").status_code == 422
+
+
+CHAN_A = "UC" + "a" * 22
+CHAN_B = "UC" + "b" * 22
+# (video ID, channel, value of every feature, publish date); rows out of date order.
+CHANNEL_VIDEOS = [
+    ("aaaaaaaaaa1", CHAN_A, 3.0, "2022-07-08"),
+    ("aaaaaaaaaa2", CHAN_A, 1.0, "2018-02-03"),
+    ("aaaaaaaaaa3", CHAN_A, 2.0, "2020-05-01"),
+    ("bbbbbbbbbb1", CHAN_B, 4.0, "2021-01-01"),
+    ("bbbbbbbbbb2", CHAN_B, 5.0, "2021-01-01"),
+]
+
+
+def channel_rows() -> list[Row]:
+    """motion_frac is missing for one video of channel A; lufs for all of them."""
+    rows = [video_row(*v) for v in CHANNEL_VIDEOS]
+    rows[0]["motion_frac"] = ""
+    for row in rows[:3]:
+        row["lufs"] = ""
+    return rows
+
+
+def pct_of(rank_from_bottom: float, n: int) -> float:
+    return round(100 * rank_from_bottom / (n - 1), 1)
+
+
+@pytest.fixture
+def channel_client(tmp_path: Path, make_client: Callable[[Path], TestClient]) -> TestClient:
+    return make_client(write_dataset(tmp_path / "videos.tsv", channel_rows()))
+
+
+def test_channel_detail(channel_client: TestClient) -> None:
+    body = channel_client.get(f"/api/channels/{CHAN_A}").json()
+    assert {k: v for k, v in body.items() if k not in ("features", "videos")} == {
+        "id": CHAN_A,
+        "name": f"Channel {CHAN_A}",
+        "videoCount": 3,
+        "score": pct_of(1, 5),  # mean of 0, 25 and 50
+    }
+    assert [f["key"] for f in body["features"]] == list(FEATURES)
+    videos = body["videos"]  # oldest first
+    assert [v["id"] for v in videos] == ["aaaaaaaaaa2", "aaaaaaaaaa3", "aaaaaaaaaa1"]
+    assert videos[0] == {
+        "id": "aaaaaaaaaa2",
+        "title": "Title of aaaaaaaaaa2",
+        "publishedAt": "2018-02-03",
+        "score": 0.0,
+        "features": channel_client.get("/api/videos/aaaaaaaaaa2").json()["features"],
+    }
+
+
+def test_channel_features_are_means_over_measured_videos(channel_client: TestClient) -> None:
+    body = channel_client.get(f"/api/channels/{CHAN_A}").json()
+    features = {f["key"]: f for f in body["features"]}
+    # Values 1, 2, 3 rank 0, 1, 2 of 5: percentiles 0, 25, 50.
+    assert features["cuts_per_min"] == {"key": "cuts_per_min", "value": 2.0, "percentile": 25.0}
+    # motion_frac is missing for the video with 3.0: the mean of 1 and 2, ranked 0 and 1 of 4.
+    rows = channel_rows()
+    pool = sorted(float(r["motion_frac"]) for r in rows if r["motion_frac"])
+    expected = (percentile_rank(1.0, pool) or 0) / 2 + (percentile_rank(2.0, pool) or 0) / 2
+    assert features["motion_frac"] == {
+        "key": "motion_frac",
+        "value": 1.5,
+        "percentile": round(expected, 1),
+    }
+    # No video of the channel has lufs.
+    assert features["lufs"] == {"key": "lufs", "value": None, "percentile": None}
+
+
+def test_channel_score_is_the_mean_of_its_video_scores(channel_client: TestClient) -> None:
+    body = channel_client.get(f"/api/channels/{CHAN_B}").json()
+    scores = [v["score"] for v in body["videos"]]
+    assert body["score"] == round(sum(scores) / len(scores), 1)
+    assert [v["id"] for v in body["videos"]] == ["bbbbbbbbbb1", "bbbbbbbbbb2"]  # same day: by id
+
+
+def test_channel_detail_unknown_id(channel_client: TestClient) -> None:
+    response = channel_client.get("/api/channels/UC" + "z" * 22)
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Channel not found"}
+
+
+@pytest.mark.parametrize(
+    "channel_id", ["UC" + "a" * 21, "UC" + "a" * 23, "XY" + "a" * 22, "UC" + "a" * 21 + "."]
+)
+def test_channel_detail_malformed_id(channel_client: TestClient, channel_id: str) -> None:
+    assert channel_client.get(f"/api/channels/{channel_id}").status_code == 422
+
+
+def test_dataset_channel_ids_match_the_pattern() -> None:
+    from hyperstim_api.dataset import load_dataset
+    from hyperstim_api.main import CHANNEL_ID_PATTERN
+
+    dataset = load_dataset(Path(__file__).parents[1] / "data" / "videos.tsv")
+    assert all(re.match(CHANNEL_ID_PATTERN, c.id) for c in dataset.channels)
