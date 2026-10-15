@@ -65,3 +65,14 @@
     outline-offset: 2px;
   }
 }
+
+@theme {
+  /* The over-years chart's dots and line fading to a new measurement. */
+  --animate-fade-in: fade-in 200ms ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+}

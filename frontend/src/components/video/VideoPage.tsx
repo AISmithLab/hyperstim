@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import InfoTip from "@/components/InfoTip";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { ApiError, getVideo, type VideoDetail } from "@/lib/api";
 import { asset } from "@/lib/asset";
@@ -11,19 +10,13 @@ import { useApi } from "@/lib/use-api";
 import { channelHref } from "@/lib/routes";
 import { parseVideoInput } from "@/lib/youtube";
 import LiveAnalysis from "./LiveAnalysis";
-import Measurements from "./Measurements";
 import { CheckAnother, CONTAINER, Message, OUTLINED_BUTTON } from "./parts";
-import ScoreGauge from "./ScoreGauge";
+import ScorePanel, { ScorePanelSkeleton } from "./ScorePanel";
 
-const SECTION_CARD = "rounded-[2rem] border border-navy/15 bg-white px-4 py-6 sm:px-8";
 // Video metadata on 2/3 of the width, the preview on 1/3.
 const HEADER = "grid grid-cols-[2fr_1fr] items-start gap-4 sm:gap-6";
 // Room above the score panel for the kid peeking over its top edge.
 const PANEL_GAP = "mt-28 sm:mt-20 lg:mt-16 xl:mt-10";
-// Gauge column beside the measurements from lg; wider, with a wider gap, from xl.
-const PANEL_GRID = "grid lg:grid-cols-[13rem_1fr] lg:gap-x-8 xl:grid-cols-[17rem_1fr] xl:gap-x-12";
-// The gauge fills its column from lg and is vertically centred against the measurements.
-const GAUGE = "mx-auto w-full max-w-48 lg:max-w-none lg:self-center";
 
 /** `/video?id=…`: reads the ID on the client, since a static export can't pre-render it. */
 export default function VideoPage() {
@@ -104,27 +97,19 @@ function Result({ video }: { video: VideoDetail }) {
         <YouTubePlayer id={video.id} title={video.title} />
       </div>
 
-      <section aria-labelledby="score-heading" className={`relative ${PANEL_GAP} ${SECTION_CARD}`}>
-        <PanelKid />
-        <h2 id="score-heading" className="sr-only">
-          Stimulation score
-        </h2>
-        <div className={PANEL_GRID}>
-          <div className={GAUGE}>
-            <ScoreGauge score={video.score}>
-              <InfoTip id="score-info" label="About the stimulation score">
-                <p>
-                  Score 0–100: where this video’s production sits among the videos in our dataset, not
-                  whether it is good or bad.
-                </p>
-              </InfoTip>
-            </ScoreGauge>
-          </div>
-          <div className="mt-6 border-t border-navy/10 pt-4 lg:mt-0 lg:border-t-0 lg:pt-0">
-            <Measurements features={video.features} />
-          </div>
-        </div>
-      </section>
+      <ScorePanel
+        score={video.score}
+        features={video.features}
+        subject="video"
+        className={PANEL_GAP}
+        kid={<PanelKid />}
+        scoreInfo={
+          <p>
+            Score 0–100: where this video’s production sits among the videos in our dataset, not whether
+            it is good or bad.
+          </p>
+        }
+      />
     </div>
   );
 }
@@ -173,28 +158,7 @@ export function Loading() {
         </div>
         <div className="aspect-video w-full animate-pulse rounded-2xl bg-gray-200" />
       </div>
-      <div className={`${PANEL_GAP} ${SECTION_CARD}`}>
-        <div className={PANEL_GRID}>
-          <div className={GAUGE}>
-            <svg aria-hidden="true" viewBox="0 0 240 132" className="w-full">
-              <path d="M 24 118 A 96 96 0 0 1 216 118" fill="none" strokeWidth={26} className="stroke-gray-200" />
-            </svg>
-            <span className={`${bar} mx-auto mt-6 h-10 w-28`} />
-          </div>
-          <div className="mt-6 grid gap-x-6 border-t border-navy/10 pt-4 md:grid-cols-2 lg:mt-0 lg:border-t-0 lg:pt-0">
-            {[6, 6].map((rows, col) => (
-              <div key={col}>
-                {Array.from({ length: rows }, (_, i) => (
-                  <div key={i} className="flex h-11 items-center justify-between gap-4 border-b border-navy/10 last:border-0">
-                    <span className={`${bar} h-4 w-2/5`} />
-                    <span className={`${bar} h-4 w-24`} />
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <ScorePanelSkeleton className={PANEL_GAP} />
     </div>
   );
 }

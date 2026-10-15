@@ -6,7 +6,7 @@ import InfoTip from "@/components/InfoTip";
 import ScoreMeter from "@/components/ScoreMeter";
 import { getChannels, getVideos, type ListResponse } from "@/lib/api";
 import { asset } from "@/lib/asset";
-import { channelHref } from "@/lib/routes";
+import { channelHref, videoHref } from "@/lib/routes";
 import { useApi } from "@/lib/use-api";
 
 /** Rows shown from each end of the ranking. */
@@ -52,7 +52,7 @@ async function loadVideos(): Promise<Row[]> {
     detail: v.channel,
     detailHref: channelHref(v.channelId),
     score: v.score,
-    href: `/video?id=${encodeURIComponent(v.id)}`,
+    href: videoHref(v.id),
   }));
 }
 

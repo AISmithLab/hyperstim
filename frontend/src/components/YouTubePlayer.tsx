@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { thumbnailUrl } from "@/lib/youtube";
 
 /**
  * A video's YouTube thumbnail with a "Play video" button; the click (the visitor's consent)
@@ -31,7 +32,7 @@ export default function YouTubePlayer({ id, title }: { id: string; title: string
         <>
           {/* eslint-disable-next-line @next/next/no-img-element -- external thumbnail, static export */}
           <img
-            src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+            src={thumbnailUrl(id)}
             alt=""
             width={480}
             height={360}

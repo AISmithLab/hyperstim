@@ -39,6 +39,32 @@ export type ChannelSummary = {
   videoCount: number;
 };
 
+/** One of a channel's videos, with its scores (as in `VideoDetail`). */
+export type ChannelVideo = {
+  id: string;
+  title: string;
+  /** YYYY-MM-DD */
+  publishedAt: string;
+  /** Stimulation score 0–100, one decimal. */
+  score: number;
+  features: Feature[];
+};
+
+export type ChannelDetail = {
+  id: string;
+  name: string;
+  videoCount: number;
+  /** Mean stimulation score of the channel's videos, 0–100, one decimal. */
+  score: number;
+  /**
+   * The 12 measurements: `value` is the mean raw value and `percentile` the mean of the videos'
+   * percentiles, over the videos that have one; null if none has.
+   */
+  features: Feature[];
+  /** Oldest first. */
+  videos: ChannelVideo[];
+};
+
 export type ListResponse<T> = {
   items: T[];
   total: number;
@@ -127,6 +153,11 @@ export function getChannels(params: {
  */
 export function getVideo(id: string): Promise<VideoDetail> {
   return get(`/api/videos/${encodeURIComponent(id)}`);
+}
+
+/** One channel in the dataset. Any other rejects with an `ApiError` with status 404. */
+export function getChannel(id: string): Promise<ChannelDetail> {
+  return get(`/api/channels/${encodeURIComponent(id)}`);
 }
 
 /**

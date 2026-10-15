@@ -40,3 +40,11 @@ export function parseVideoInput(input: string): ParseResult {
     ? { ok: true, id: candidate }
     : { ok: false, reason: "invalid" };
 }
+
+/**
+ * A video's thumbnail on YouTube's image server: `hq` is 480×360 (4:3, letterboxed), `mq`
+ * 320×180 (16:9).
+ */
+export function thumbnailUrl(id: string, size: "hq" | "mq" = "hq"): string {
+  return `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}default.jpg`;
+}

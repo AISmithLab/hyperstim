@@ -3,12 +3,23 @@ import ScoreMeter from "@/components/ScoreMeter";
 import type { Feature } from "@/lib/api";
 import { FEATURE_GROUPS, FEATURE_INFO, featureDisplay, formatValue } from "@/lib/features";
 
-/** The 12 measurements in their three groups (see STYLE.md, Measurement table). */
-export default function Measurements({ features }: { features: Feature[] }) {
+type Subject = "video" | "channel";
+
+/**
+ * The 12 measurements in their three groups (see STYLE.md, Measurement table). `subject` says
+ * whose raw values the popovers show: one video's, or a channel's averages.
+ */
+export default function Measurements({
+  features,
+  subject = "video",
+}: {
+  features: Feature[];
+  subject?: Subject;
+}) {
   const byKey = new Map(features.map((f) => [f.key, f]));
   const [pacing, ...rest] = FEATURE_GROUPS;
   const group = ({ title, keys }: (typeof FEATURE_GROUPS)[number]) => (
-    <Group key={title} title={title} features={keys.flatMap((k) => byKey.get(k) ?? [])} />
+    <Group key={title} title={title} subject={subject} features={keys.flatMap((k) => byKey.get(k) ?? [])} />
   );
   // Pacing on the left; the two shorter groups stacked on the right.
   return (
@@ -19,7 +30,7 @@ export default function Measurements({ features }: { features: Feature[] }) {
   );
 }
 
-function Group({ title, features }: { title: string; features: Feature[] }) {
+function Group({ title, subject, features }: { title: string; subject: Subject; features: Feature[] }) {
   const id = `group-${title.toLowerCase().replace(/\W+/g, "-")}`;
   return (
     <section aria-labelledby={id}>
@@ -28,14 +39,14 @@ function Group({ title, features }: { title: string; features: Feature[] }) {
       </h3>
       <ul className="mt-1">
         {features.map((f) => (
-          <Row key={f.key} feature={f} />
+          <Row key={f.key} feature={f} subject={subject} />
         ))}
       </ul>
     </section>
   );
 }
 
-function Row({ feature }: { feature: Feature }) {
+function Row({ feature, subject }: { feature: Feature; subject: Subject }) {
   const info = FEATURE_INFO[feature.key];
   const display = featureDisplay(feature);
   const value = display.kind === "percentile" ? formatValue(feature.key, feature.value) : null;
@@ -47,7 +58,10 @@ function Row({ feature }: { feature: Feature }) {
           <p>{info.description}</p>
           {value && (
             <p className="mt-2">
-              <span className="font-semibold text-navy">This video:</span> {value}
+              <span className="font-semibold text-navy">
+                {subject === "video" ? "This video:" : "This channel:"}
+              </span>{" "}
+              {subject === "video" ? value : `${value} on average`}
             </p>
           )}
         </InfoTip>

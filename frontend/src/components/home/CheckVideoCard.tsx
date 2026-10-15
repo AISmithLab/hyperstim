@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useId, useState, type FormEvent } from "react";
 import { asset } from "@/lib/asset";
+import { videoHref } from "@/lib/routes";
 import { parseVideoInput } from "@/lib/youtube";
 
 const ERRORS = {
@@ -24,7 +25,7 @@ export default function CheckVideoCard() {
       return;
     }
     setError(null);
-    router.push(`/video?id=${encodeURIComponent(result.id)}`);
+    router.push(videoHref(result.id));
   }
 
   return (
