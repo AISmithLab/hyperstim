@@ -60,8 +60,8 @@ describe("InfoTip", () => {
     const user = userEvent.setup();
     vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(80);
     const rect = vi.spyOn(HTMLElement.prototype, "getBoundingClientRect");
-    const { button, text } = renderTip();
-    const popover = text.parentElement!;
+    const { button } = renderTip();
+    const popover = document.getElementById(button.getAttribute("aria-controls")!)!;
 
     rect.mockReturnValue({ bottom: 100 } as DOMRect);
     await user.click(button);

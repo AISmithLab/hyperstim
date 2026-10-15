@@ -6,6 +6,8 @@ type Unit = "cutsPerMin" | "perMin" | "shareOfTime" | "soundShare" | null;
 export type FeatureInfo = {
   name: string;
   description: string;
+  /** Short label beside its marker on the How it works timeline (plan 006). */
+  label: string;
   /** How the raw value reads to parents; null when its unit means nothing to them. */
   unit: Unit;
 };
@@ -14,61 +16,73 @@ export const FEATURE_INFO: Record<string, FeatureInfo> = {
   cuts_per_min: {
     name: "Rapid cutting",
     description: "How often the picture switches to a new shot.",
+    label: "each cut, counted",
     unit: "cutsPerMin",
   },
   inter_cut_dssim_mean: {
     name: "Scene discontinuity",
     description: "How different each new shot looks from the one before.",
+    label: "how different the next shot looks",
     unit: null,
   },
   palette_change_per_min: {
     name: "Palette instability",
     description: "How often the colors on screen are replaced.",
+    label: "the colors swap out",
     unit: "perMin",
   },
   lstar_flash_per_min: {
     name: "Luminance flash",
     description: "How often the picture suddenly gets brighter.",
+    label: "a sudden brightening",
     unit: "perMin",
   },
   motion_frac: {
     name: "Motion density",
     description: "How much of the time things on screen move fast.",
+    label: "fast movement on screen",
     unit: "shareOfTime",
   },
   loudness_jumps_per_min: {
     name: "Loudness jumps",
     description: "How often the sound jumps well above its usual level.",
+    label: "a sudden loud moment",
     unit: "perMin",
   },
   mean_saturation: {
     name: "Visual intensity",
     description: "How saturated the colors are.",
+    label: "vivid colors",
     unit: null,
   },
   mean_lstar: {
     name: "Visual brightness",
     description: "How bright the picture is.",
+    label: "brightness",
     unit: null,
   },
   lufs: {
     name: "Audio intensity",
     description: "How loud the sound is overall.",
+    label: "average loudness",
     unit: null,
   },
   high_lufs_frac: {
     name: "Silence elimination",
     description: "How much of the time sound is playing.",
+    label: "a quiet stretch",
     unit: "soundShare",
   },
   build_resolve_per_min: {
     name: "Audio build-resolve",
     description: "Sound that rises steadily, then drops back.",
+    label: "sound builds up, then drops back",
     unit: "perMin",
   },
   loudness_jump_at_cut_per_min: {
     name: "Surprise reveals",
     description: "Loud sounds that land right on a cut.",
+    label: "a loud jump right on a cut",
     unit: "perMin",
   },
 };
@@ -95,6 +109,11 @@ export const FEATURE_GROUPS: { title: string; keys: string[] }[] = [
     keys: ["build_resolve_per_min", "loudness_jump_at_cut_per_min"],
   },
 ];
+
+/** Anchor of a measurement on the How it works page ("rapid-cutting"). */
+export function featureSlug(key: string): string {
+  return FEATURE_INFO[key].name.toLowerCase().replace(/\W+/g, "-");
+}
 
 /** The raw value as a phrase ("22.6 cuts per minute"), or null when it has no plain unit. */
 export function formatValue(key: string, value: number | null): string | null {

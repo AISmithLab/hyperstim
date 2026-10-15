@@ -34,11 +34,11 @@ The single, current source for how the site looks. Values (colours, fonts) live 
 | Section panel (pastel) | `rounded-[2rem] bg-butter px-5 py-8 sm:px-8` (or `bg-mint` / `bg-sky`), no border |
 | Message box (error, empty) | `rounded-2xl bg-sky p-6 text-center` |
 | Message box with the kid (a video being checked live, or failing to be) | `kid_2` (`w-[280px]`, centred, at every width) on the white page just above a `max-w-2xl` message box. |
-| Popover (info tips) | `InfoTip`: `rounded-2xl border border-navy/15 bg-white px-4 py-3 text-sm text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)]`, `w-64`, opens next to its trigger on the side with no controls, flips when there's no room. A trigger right after a label at a row's start uses `align="row"`: the popover starts at the row's left edge. Only for supplementary text; anything users need to act should be visible text instead (e.g. helper text under an input). |
+| Popover (info tips) | `InfoTip`: `rounded-2xl border border-navy/15 bg-white px-4 py-3 text-sm text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)]`, `w-64`, opens next to its trigger on the side with no controls, flips when there's no room. A trigger right after a label at a row's start uses `align="row"`: the popover starts at the row's left edge. Only for supplementary text; anything users need to act should be visible text instead (e.g. helper text under an input). It may end with one "More about this →" text link to where the topic is explained (the measurement popovers link to How it works). The gap to the trigger is transparent padding inside the popover, so the mouse can cross it to the link. |
 
 ## Text
 
-- H1: `font-hand font-semibold text-navy`, `text-[2rem] sm:text-[2.75rem] lg:text-[3.25rem]`, key words in `.marker`. A data title (a video's title on its page) is smaller, `text-[1.375rem] sm:text-2xl lg:text-[1.75rem] leading-tight`, clamped to 2 lines, no marker.
+- H1: `font-hand font-semibold text-navy`, `text-[2rem] sm:text-[2.75rem] lg:text-[3.25rem]`. Only the home page's H1 has its key words in `.marker`; other pages' H1s have no highlight. A data title (a video's title on its page) is smaller, `text-[1.375rem] sm:text-2xl lg:text-[1.75rem] leading-tight`, clamped to 2 lines, no marker.
 - H2: `font-hand text-2xl font-semibold text-navy sm:text-3xl`.
 - Body: `text-ink`, intro `text-lg`. Helper text under a control: `mt-2 text-sm text-ink`.
 - Error text: `font-semibold text-error`, in an `aria-live="polite"` element.
@@ -75,6 +75,20 @@ The single, current source for how the site looks. Values (colours, fonts) live 
 
 - **Video preview** (`YouTubePlayer`): a 16:9 box as wide as its container, `rounded-2xl overflow-hidden`. Before a click: the YouTube thumbnail (`object-cover`), a `navy/20` scrim and a centred primary button with a play icon; the button shows its "Play video" label from a 20rem-wide box (`@xs`) and is a round icon-only `size-12` button below that. The click swaps in the player in the same box and moves focus to it.
 
+- **How it works page**: one column of section cards (`gap-8`) under the H1, ending with the mint questions panel. Each card holds an H2, at most a one-sentence lead (`mt-2`, full width) and one diagram. The page follows one video through a check: the cards for steps 1–4 have step headings. The H1 sits at the top left, level with the home page's H1. The kid (`kid_wonder`, `w-52 sm:w-64 lg:w-[19rem]`, head about the home kid's size) lies on the first card's top edge (negative bottom margins, `-mb-5 sm:-mb-10 lg:-mb-11`, so elbows and laptop rest on the border line); from `sm` its art's top lines up with the H1's letters (`sm:-mt-4`), and below `sm` the kid sits centred under the H1.
+
+- **Check field** (`CheckVideoForm`): the label, the text input with the primary "Check video →" button (a row from `md`), the hint and the error line. It always sits on `butter`, so it reads as the same thing wherever it appears: the home page's "Check a video" section panel, and How it works step 1, where it's a `rounded-2xl bg-butter` box (`px-5 pt-5 pb-1`, `lg:w-[28.25rem]` so the field is as long as the home page's) on the right of a slim card (title and sentence at the top left like every step title, `lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr] lg:items-start`; stacked below `lg`).
+
+- **Step headings** (How it works): the H2 (`flex items-center gap-3`) starts with a `size-9` `sunny` number circle (`font-hand text-lg`, navy, `aria-hidden`) and an sr-only "Step 1:". Steps inside a diagram have no numbers, so they don't clash with the page's.
+
+- **Diagrams** (How it works): drawn in code, never as images, from HTML boxes and inline SVG with the tokens only: `navy` lines and text, `navy/10`–`navy/30` for neutral marks, pastels and score-scale colours for fills. Boxes inside a section card are `rounded-2xl bg-sky`. Text in a diagram is HTML (`text-xs`/`text-sm`, never scaled with the drawing), placed at a % of the drawing's width, so it stays readable at every width. Every diagram is `aria-hidden`, with text next to it that says the same thing; words in a diagram that the text around it doesn't repeat (a ✓ list of criteria) are real text and are read out. Fills stay few and quiet: one or two pastels per diagram, `sunny` only for a highlight. A calm-to-intense row uses the score scale's 5 colors (as in `ScoreMeter`), filled up to the marked video and as rings after it. A diagram of steps is a row with `→` from `lg`, a 2 × 2 grid without arrows at `md`, stacked with `↓` below `md`.
+
+- **Numbered markers**: a `size-6` navy circle with a white bold number (`Marker`), `aria-hidden`. A diagram's markers match the numbers in the list that explains them, so the diagram can drop its labels where they don't fit (the How it works timeline shows labels from `lg` only).
+
+- **Timeline** (How it works, what we measure): a "Visual" and an "Audio" track (`text-xs` semibold names, beside the tracks from `sm`, above them below), numbered from left to right: events have their marker above the visual track or below the audio track; whole-clip levels sit in a column right of the tracks (icons under markers for the visual levels; a dashed `navy` average line in the audio track with its marker at its end). A time axis under it (`0:30 — 5 minutes — 5:30`, `text-xs`, `navy/30` line).
+
+- **Measurement list** (How it works): the 12 under the timeline in marker order: one column below `sm`, two from `sm`, three from `lg`, four from `xl`. Each item: its marker, the name (`text-sm` semibold navy) and its one-line description under it (`text-sm`, at most two lines at every width). Each item has the measurement's anchor (`#rapid-cutting`, …) with `scroll-mt-[32rem]`, so on desktop a link lands with the timeline in view (on phones the list is too long for that), and is highlighted while targeted (`target:bg-butter`, `rounded-xl`).
+
 ## Controls
 
 All at least 44 px tall (`min-h-11`, or `h-12` for form controls).
@@ -89,5 +103,6 @@ All at least 44 px tall (`min-h-11`, or `h-12` for form controls).
 | Select | Text input look with `appearance-none pr-11` and a navy chevron at the right (`right-5 size-4`); its label above it (`text-sm font-semibold text-navy`). |
 | Text link | `font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny`; trailing arrow `aria-hidden` |
 | Info button | `InfoTip`: navy-outlined circle with a `font-hand` "i", 44 px touch target |
+| Accordion (common questions) | Native `<details>`/`<summary>`, no JavaScript. Summary: `flex min-h-11 items-center justify-between gap-4 py-2 font-semibold text-navy`, no browser marker, a navy chevron that turns over when open (`group-open:rotate-180`, no transition with reduced motion). Answer: body text, `pb-4`. Items divided by `navy/10` lines, all closed at first. On the How it works page it sits in a mint section panel, `max-w-3xl`, with plants growing from the panel's bottom edge on `md`+. |
 
 Focus: a 3px `navy` outline on every focusable element (global `:focus-visible`), except inputs, which use the sunny ring.

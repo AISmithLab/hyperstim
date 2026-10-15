@@ -2,9 +2,6 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
-/** Gap between the trigger and the popover, in px (matches mt-1 / mb-1). */
-const GAP = 4;
-
 /**
  * Small circled "i" that shows `children` in a popover on mouse hover, click/tap, or
  * Enter/Space. The popover opens below the trigger (above if there is no room below) and is
@@ -56,7 +53,7 @@ export default function InfoTip({
   useLayoutEffect(() => {
     if (!open || !ref.current || !popover.current) return;
     const spaceBelow = window.innerHeight - ref.current.getBoundingClientRect().bottom;
-    setAbove(spaceBelow < popover.current.offsetHeight + GAP);
+    setAbove(spaceBelow < popover.current.offsetHeight);
   }, [open]);
 
   return (
@@ -82,13 +79,17 @@ export default function InfoTip({
           i
         </span>
       </button>
+      {/* The gap to the trigger is transparent padding, not margin, so the mouse can cross it
+          to a link in the popover without leaving it. */}
       <div
         ref={popover}
         id={id}
         hidden={!open}
-        className={`absolute z-10 w-64 ${align === "end" ? "right-0" : "left-0"} max-w-[calc(100vw-2rem)] rounded-2xl border border-navy/15 bg-white px-4 py-3 text-left text-sm font-normal text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)] ${above ? "bottom-full mb-1" : "top-full mt-1"}`}
+        className={`absolute z-10 w-64 ${align === "end" ? "right-0" : "left-0"} max-w-[calc(100vw-2rem)] ${above ? "bottom-full pb-1" : "top-full pt-1"}`}
       >
-        {children}
+        <div className="rounded-2xl border border-navy/15 bg-white px-4 py-3 text-left text-sm font-normal text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)]">
+          {children}
+        </div>
       </div>
     </div>
   );

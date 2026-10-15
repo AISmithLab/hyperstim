@@ -87,6 +87,18 @@ describe("VideoPage", () => {
     await user.click(await screen.findByRole("button", { name: "About Rapid cutting" }));
     expect(screen.getByText("How often the picture switches to a new shot.")).toBeVisible();
     expect(screen.getByText("1.5 cuts per minute")).toBeVisible();
+    expect(screen.getByRole("link", { name: "More about this: Rapid cutting" })).toHaveAttribute(
+      "href",
+      "/how-it-works#rapid-cutting",
+    );
+  });
+
+  it("says the score is about production style only", async () => {
+    const user = userEvent.setup();
+    open(ID);
+    await user.click(await screen.findByRole("button", { name: "About the stimulation score" }));
+    expect(screen.getByText(/We measure production style only\./)).toBeVisible();
+    expect(screen.queryByText(/good or bad/)).not.toBeInTheDocument();
   });
 
   it("shows None detected, No cuts and Not measured", async () => {

@@ -91,8 +91,8 @@ function Result({ channel }: { channel: ChannelDetail }) {
         kid={<PanelKid />}
         scoreInfo={
           <p>
-            Score 0–100: the average of this channel’s video scores. Each is where a video’s production
-            sits among the videos in our dataset, not whether it is good or bad.
+            Score 0–100: the average of this channel’s video scores. Each shows where a video’s
+            production sits among the videos in our dataset. We measure production style only.
           </p>
         }
       />

@@ -93,6 +93,15 @@ describe("ChannelPage", () => {
     expect(popover).toHaveTextContent("This channel: 1.6 per minute on average");
   });
 
+  it("says the score is about production style only", async () => {
+    const user = userEvent.setup();
+    open(ID);
+    await loaded();
+    await user.click(screen.getByRole("button", { name: "About the stimulation score" }));
+    expect(screen.getByText(/We measure production style only\./)).toBeVisible();
+    expect(screen.queryByText(/good or bad/)).not.toBeInTheDocument();
+  });
+
   it("charts the overall score by default, with a dot per video and a trend line", async () => {
     const { container } = open(ID);
     await loaded();

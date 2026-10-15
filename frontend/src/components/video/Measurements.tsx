@@ -1,7 +1,8 @@
+import Link from "next/link";
 import InfoTip from "@/components/InfoTip";
 import ScoreMeter from "@/components/ScoreMeter";
 import type { Feature } from "@/lib/api";
-import { FEATURE_GROUPS, FEATURE_INFO, featureDisplay, formatValue } from "@/lib/features";
+import { FEATURE_GROUPS, FEATURE_INFO, featureDisplay, featureSlug, formatValue } from "@/lib/features";
 
 type Subject = "video" | "channel";
 
@@ -64,6 +65,14 @@ function Row({ feature, subject }: { feature: Feature; subject: Subject }) {
               {subject === "video" ? value : `${value} on average`}
             </p>
           )}
+          <p className="mt-2">
+            <Link
+              href={`/how-it-works#${featureSlug(feature.key)}`}
+              className="font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny"
+            >
+              More about this<span className="sr-only">: {info.name}</span> <span aria-hidden="true">→</span>
+            </Link>
+          </p>
         </InfoTip>
       </span>
       <span className="w-28 shrink-0 text-right">

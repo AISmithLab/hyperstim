@@ -105,8 +105,8 @@ function Result({ video }: { video: VideoDetail }) {
         kid={<PanelKid />}
         scoreInfo={
           <p>
-            Score 0–100: where this video’s production sits among the videos in our dataset, not whether
-            it is good or bad.
+            Score 0–100: where this video’s production sits among the videos in our dataset. We measure
+            production style only.
           </p>
         }
       />
