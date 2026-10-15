@@ -7,6 +7,8 @@ Website for the HyperStimulation project: a Next.js frontend (static, GitHub Pag
 - Work is iterative. For each request: write a plan in `plans/`, wait for review, then implement only the parts that were approved.
 - Plans are concise: goal, decisions, steps, open questions. No long prose.
 - Plan files are numbered: `plans/NNN-short-title.md` (e.g. `001-architecture.md`). Once a plan is done, never rewrite its decisions; write a new plan instead.
+- Work on a plan happens on its own branch, named after the plan file: `NNN-short-title` (e.g. `005-channel-detail` for `plans/005-channel-detail.md`).
+- Never delete finished plans. They stay in `plans/` as the record of how things were built and the choices made along the way.
 - Human decisions: while a plan is in progress (including reviewing what was built), record every decision the user makes in that plan, so the plan always reads as what is (or will be) built:
   - Edit the plan in place: rewrite the spot the decision is about (or add it where it belongs) and mark it _(human decision)_. If the user said why the earlier version didn't work, add that very briefly: _(human decision: too little breathing space)_. Don't keep the earlier version in the plan.
   - Only where a mark can't go in place (e.g. ASCII sketches): edit it directly, and list the decision in the plan's **Review decisions** section (before **Open questions**), naming what changed and the related spot in the plan.
