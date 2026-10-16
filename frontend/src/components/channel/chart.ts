@@ -1,4 +1,5 @@
-// Pure helpers for the channel page's over-years chart (plan 005).
+// Pure helpers for the over-years charts: the channel page's (plan 005) and the compare page's
+// two channels (plan 008).
 import type { ChannelVideo } from "@/lib/api";
 import { FEATURE_INFO, featureDisplay } from "@/lib/features";
 
@@ -59,6 +60,51 @@ export function metaLine(videos: ChannelVideo[]): string {
   const [first, last] = yearRange(videos);
   const count = videos.length === 1 ? "1 video" : `${videos.length} videos`;
   return `${count} in our dataset · ${first === last ? first : `${first}–${last}`}`;
+}
+
+// Layout in px. The plot is open-ended: gridlines and the axis, no frame.
+export const LEFT = 32; // y labels
+export const RIGHT = 12;
+export const TOP = 12;
+export const LABELS = 28; // year ticks and labels under the axis
+const MIN_LABEL_SPACING = 44;
+
+/** Plot height by width: phones, tablets, desktop. */
+export function plotHeight(width: number, wide: boolean): number {
+  if (!wide) return 220;
+  return width >= 880 ? 320 : 280;
+}
+
+/** Where things go on a chart `width` px wide, covering whole years from `firstYear` to `lastYear`. */
+export type TimeScale = {
+  width: number;
+  plotW: number;
+  /** x of a YYYY-MM-DD date. */
+  x: (date: string) => number;
+  /** y of a value 0–100. */
+  y: (value: number) => number;
+  axisY: number;
+  /** Jan 1 of each year, and of the year after the last (it closes the axis). */
+  years: number[];
+  /** Every `step`-th year is labelled. */
+  step: number;
+};
+
+export function timeScale(width: number, wide: boolean, firstYear: number, lastYear: number): TimeScale {
+  const start = Date.UTC(firstYear, 0, 1);
+  const end = Date.UTC(lastYear + 1, 0, 1);
+  const plotW = Math.max(1, width - LEFT - RIGHT);
+  const plotH = plotHeight(width, wide);
+  const years = Array.from({ length: lastYear - firstYear + 2 }, (_, i) => firstYear + i);
+  return {
+    width,
+    plotW,
+    x: (date) => LEFT + ((dayOf(date) - start) / (end - start)) * plotW,
+    y: (value) => TOP + (1 - value / 100) * plotH,
+    axisY: TOP + plotH,
+    years,
+    step: labelStep(plotW / (years.length - 1), MIN_LABEL_SPACING),
+  };
 }
 
 /** Every `step`-th year gets a label, so labels at least `minSpacing` px apart fit. */

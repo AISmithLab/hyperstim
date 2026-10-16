@@ -81,6 +81,8 @@ class FakePipeline:
         self.fail: dict[str, tuple[str, ErrorCode | None]] = {}  # id -> (step, code or crash)
         self.during: Callable[[str, str, Path | None], None] | None = None
         self.workdirs: list[Path] = []
+        self.links: dict[str, tuple[str, str]] = {}  # channel lookups: URL -> (ID, name)
+        self.channel_calls: list[str] = []
 
     def _step(self, step: str, video_id: str, workdir: Path | None = None) -> None:
         if workdir is not None:
@@ -98,6 +100,13 @@ class FakePipeline:
         self._step("lookup", video_id)
         channel_id = self.channels.get(video_id, "UC-live")
         return VideoInfo(title=f"Live {video_id}", channel_id=channel_id, channel="Live channel")
+
+    def channel(self, url: str) -> tuple[str, str]:
+        """The channel for a link, from `links` (URL -> (ID, name)); unknown links fail."""
+        self.channel_calls.append(url)
+        if url not in self.links:
+            raise AnalysisError("unavailable")
+        return self.links[url]
 
     def download(self, video_id: str, workdir: Path) -> None:
         self._step("download", video_id, workdir)

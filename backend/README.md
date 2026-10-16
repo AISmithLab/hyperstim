@@ -62,6 +62,10 @@ A video that isn't in the dataset is analyzed on request (`POST /api/analyses/{i
 - Measuring uses at most 4 cores (`MEASURE_CORES` in `analysis.py`; more barely help, since most of the work is single-threaded), leaving the rest of the server free.
 - Each video's state is `ANALYSIS_DIR/<id>.json`. Results are kept until the file is deleted; videos waiting or running when the API stopped start again at the next start.
 - The per-IP limit sees the visitor's address only if uvicorn trusts the reverse proxy: on the server, run it with `--proxy-headers --forwarded-allow-ips <proxy address>`. The counts are kept in memory only.
+
+## Channel lookup
+
+`GET /api/channel-lookup?url=…` (`src/hyperstim_api/channel_lookup.py`) finds the channel behind a YouTube channel link (`/channel/UC…`, `/@handle`, `/c/…`, `/user/…`) or video link, and says whether it's in the dataset; the compare page uses it. A channel ID, a dataset video or a video already checked live is answered from what we have. Anything else asks YouTube with yt-dlp (under a second for a channel page, about 5 s for a video), is cached in memory for a day, and counts toward the same per-IP limit as new live analyses (`ANALYSIS_LIMIT_PER_IP`).
 - Needs ffmpeg/ffprobe and deno on the server (see Prerequisites); `deno` must be on the service's `PATH`.
 - The progress estimate uses typical step durations (`TYPICAL_S` in `analysis.py`); each finished analysis logs its step times, so re-time them if the server changes.
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import {
   ApiError,
   getAnalysis,
@@ -40,18 +40,27 @@ type State =
   | { kind: "refused"; status: keyof typeof REFUSED }
   | { kind: "lost" };
 
+/** A compact message box, for a live check inside a part of a page (a compare slot). */
+function CompactBox({ children }: { children: ReactNode }) {
+  return <div className="rounded-2xl bg-sky p-4 text-center sm:p-5">{children}</div>;
+}
+
 /**
  * A video that isn't in the dataset: starts (or joins) its live analysis, shows the progress
  * until it is done, then calls `onDone`. `announce` tells screen readers about step changes.
+ * `compact` shows it in a small box without the kid, the page heading and the links to check
+ * another video (the compare slot has its own way out).
  */
 export default function LiveAnalysis({
   id,
   onDone,
   announce,
+  compact = false,
 }: {
   id: string;
   onDone: () => void;
   announce: (text: string) => void;
+  compact?: boolean;
 }) {
   const [state, setState] = useState<State>({ kind: "starting" });
   const [attempt, setAttempt] = useState(0);
@@ -118,41 +127,54 @@ export default function LiveAnalysis({
     if (step) announce(step.label);
   }, [status, announce]);
 
+  const Box = compact ? CompactBox : KidMessage;
+  const heading = compact ? null : <h1 className="sr-only">Video details</h1>;
   switch (state.kind) {
     case "starting":
     case "running":
-      return <Progress analysis={state.kind === "running" ? state.analysis : null} />;
+      return <Progress analysis={state.kind === "running" ? state.analysis : null} compact={compact} />;
     case "failed":
       return (
-        <KidMessage>
-          <h1 className="sr-only">Video details</h1>
+        <Box>
+          {heading}
           <p>{FAILED[state.error]}</p>
           {state.error === "failed" && (
             <button type="button" onClick={retry} className={`mt-3 ${OUTLINED_BUTTON}`}>
               Try again
             </button>
           )}
-          <div className="mt-2 flex flex-wrap justify-center gap-x-6">
-            <CheckAnother />
-            <WatchOnYouTube id={id} />
-          </div>
-        </KidMessage>
+          {!compact && (
+            <div className="mt-2 flex flex-wrap justify-center gap-x-6">
+              <CheckAnother />
+              <WatchOnYouTube id={id} />
+            </div>
+          )}
+        </Box>
       );
     case "refused":
       return (
-        <KidMessage>
-          <h1 className="sr-only">Video details</h1>
+        <Box>
+          {heading}
           <p>{REFUSED[state.status]}</p>
           <button type="button" onClick={retry} className={`mt-3 ${OUTLINED_BUTTON}`}>
             Try again
           </button>
-          <div className="mt-2">
-            <CheckAnother />
-          </div>
-        </KidMessage>
+          {!compact && (
+            <div className="mt-2">
+              <CheckAnother />
+            </div>
+          )}
+        </Box>
       );
     case "lost":
-      return (
+      return compact ? (
+        <CompactBox>
+          <p>We couldn’t load this video.</p>
+          <button type="button" onClick={retry} className={`mt-3 ${OUTLINED_BUTTON}`}>
+            Try again
+          </button>
+        </CompactBox>
+      ) : (
         <Message>
           <p>We couldn’t load this video.</p>
           <button type="button" onClick={retry} className={`mt-3 ${OUTLINED_BUTTON}`}>
@@ -164,15 +186,20 @@ export default function LiveAnalysis({
 }
 
 /** The steps and the progress bar; `analysis` is null until the server has answered. */
-function Progress({ analysis }: { analysis: Analysis | null }) {
+function Progress({ analysis, compact }: { analysis: Analysis | null; compact: boolean }) {
   const current = STEPS.findIndex((s) => s.status === analysis?.status);
   const ahead = analysis?.status === "queued" ? (analysis.queuePosition ?? 0) : 0;
   // Never a full bar before the result is there.
   const percent = Math.min(99, Math.round((analysis?.progress ?? 0) * 100));
   const left = timeLeft(analysis?.remainingS ?? null);
+  const Box = compact ? CompactBox : KidMessage;
   return (
-    <KidMessage>
-      <h1 className="font-hand text-2xl font-semibold text-navy sm:text-3xl">Checking this video…</h1>
+    <Box>
+      {compact ? (
+        <p className="font-hand text-lg font-semibold text-navy">Checking this video…</p>
+      ) : (
+        <h1 className="font-hand text-2xl font-semibold text-navy sm:text-3xl">Checking this video…</h1>
+      )}
       {ahead > 0 && (
         <p className="mt-3">
           {ahead} {ahead === 1 ? "video" : "videos"} ahead of yours.
@@ -220,7 +247,7 @@ function Progress({ analysis }: { analysis: Analysis | null }) {
         {/* Keeps its height while empty, so the box doesn't jump when the estimate arrives. */}
         <p className="mt-2 min-h-6 text-sm text-ink">{left}</p>
       </div>
-    </KidMessage>
+    </Box>
   );
 }
 

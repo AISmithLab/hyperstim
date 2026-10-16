@@ -122,6 +122,7 @@ def estimate(record: Record, now: float) -> Progress:
 
 class Pipeline(Protocol):
     def lookup(self, video_id: str) -> VideoInfo: ...
+    def channel(self, url: str) -> tuple[str, str]: ...
     def download(self, video_id: str, workdir: Path) -> None: ...
     def measure(self, video_id: str, workdir: Path) -> dict[str, float | None]: ...
     def cancel(self) -> None: ...
@@ -199,6 +200,34 @@ class ResearchPipeline:
                 return str(response.read().decode("utf-8"))
         except (urllib.error.URLError, TimeoutError) as exc:
             raise AnalysisError("failed", f"YouTube Data API: {exc}") from exc
+
+    def channel(self, url: str) -> tuple[str, str]:
+        """The channel ID and name behind a channel page or video link (compare page, plan 008).
+
+        Runs on the request's thread, not the worker's, so it doesn't go through `_run`.
+        """
+        cmd = [sys.executable, "-m", "yt_dlp", "--no-warnings", "--skip-download"]
+        if self._cookies:
+            cmd += ["--cookies", str(self._cookies)]
+        if "/watch?" in url:
+            cmd += ["--remote-components", "ejs:github", "--print", "%(.{channel_id,channel})j"]
+        else:
+            # A channel page: its own details, none of its videos.
+            cmd += ["--flat-playlist", "--playlist-items", "0", "-J"]
+        cmd.append(url)
+        path = f"{Path(sys.executable).parent}{os.pathsep}{os.environ.get('PATH', '')}"
+        try:
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=LOOKUP_TIMEOUT_S,
+                env={**os.environ, "PATH": path},
+                check=True,
+            )
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            raise AnalysisError("unavailable", _stderr_tail(exc)) from exc
+        return parse_channel(proc.stdout)
 
     def cancel(self) -> None:
         """Stop the running script (on shutdown)."""
@@ -288,6 +317,21 @@ def parse_lookup(video_id: str, out: str) -> VideoInfo:
         channel_id=str(info.get("channel_id") or ""),
         channel=str(info.get("channel") or ""),
     )
+
+
+def parse_channel(out: str) -> tuple[str, str]:
+    """yt-dlp's JSON for a channel page or video → the channel's ID and name."""
+    lines = out.strip().splitlines()
+    try:
+        info = json.loads(lines[-1]) if lines else None
+    except json.JSONDecodeError:
+        info = None
+    if not isinstance(info, dict):
+        info = {}
+    channel_id = info.get("channel_id")
+    if not isinstance(channel_id, str) or not channel_id.startswith("UC"):
+        raise AnalysisError("unavailable", f"no channel in yt-dlp output: {out[-200:]!r}")
+    return channel_id, str(info.get("channel") or "")
 
 
 def parse_features(video_id: str, path: Path, detail: str = "") -> dict[str, float | None]:
@@ -400,6 +444,14 @@ class Analyzer:
             self._queue.append(video_id)
             self._wake.notify()
             return record, True
+
+    def count_request(self, ip: str) -> None:
+        """Count a request that asks YouTube (a channel lookup) toward the IP's limit.
+
+        Raises TooManyRequests when the IP is over it; shares the count with new analyses.
+        """
+        with self._lock:
+            self._count_request(ip)
 
     def _count_request(self, ip: str) -> None:
         if self._limit == 0:

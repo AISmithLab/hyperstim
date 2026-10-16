@@ -1,31 +1,92 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
 import { thumbnailUrl } from "@/lib/youtube";
+
+const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
+/** The player's "playing" state in the embed's message API. */
+const PLAYING = 1;
+
+/** Controls a player from outside: pausing it does nothing until it has been started. */
+export type PlayerHandle = { pause: () => void };
 
 /**
  * A video's YouTube thumbnail with a "Play video" button; the click (the visitor's consent)
  * swaps in the youtube-nocookie.com player in the same box. Nothing loads from the player
  * domain before the click.
+ *
+ * With `onPlay`, the player also reports when it starts playing (also after a pause), and `ref`
+ * can pause it, through the embed's message API; no script is loaded from YouTube. The compare
+ * page uses this to play one video at a time.
  */
-export default function YouTubePlayer({ id, title }: { id: string; title: string }) {
+export default function YouTubePlayer({
+  id,
+  title,
+  onPlay,
+  ref,
+}: {
+  id: string;
+  title: string;
+  onPlay?: () => void;
+  ref?: Ref<PlayerHandle>;
+}) {
   const [playing, setPlaying] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
+  const controlled = onPlay !== undefined;
+  // The latest callback, so a new function from the parent doesn't count as a new start.
+  const onPlayRef = useRef(onPlay);
+  useEffect(() => {
+    onPlayRef.current = onPlay;
+  });
+
+  const send = (message: object) =>
+    frame.current?.contentWindow?.postMessage(JSON.stringify(message), PLAYER_ORIGIN);
+
+  useImperativeHandle(ref, () => ({ pause: () => send({ event: "command", func: "pauseVideo", args: [] }) }), []);
 
   useEffect(() => {
     if (playing) frame.current?.focus();
   }, [playing]);
 
+  // The player's state changes, reported once it has been told someone is listening (on load).
+  useEffect(() => {
+    if (!playing || !controlled) return;
+    onPlayRef.current?.(); // the click that started it
+    let last: unknown = PLAYING;
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== PLAYER_ORIGIN || e.source !== frame.current?.contentWindow) return;
+      let data: { event?: string; info?: unknown } | null = null;
+      try {
+        data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+      } catch {
+        return;
+      }
+      const state =
+        data?.event === "onStateChange"
+          ? data.info
+          : data?.event === "infoDelivery"
+            ? (data.info as { playerState?: unknown } | null)?.playerState
+            : undefined;
+      if (state === undefined) return;
+      if (state === PLAYING && last !== PLAYING) onPlayRef.current?.();
+      last = state;
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [playing, controlled]);
+
   const videoId = encodeURIComponent(id);
+  const api = controlled ? `&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}` : "";
   return (
     <div className="@container relative aspect-video w-full overflow-hidden rounded-2xl bg-navy/10">
       {playing ? (
         <iframe
           ref={frame}
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+          src={`${PLAYER_ORIGIN}/embed/${videoId}?autoplay=1${api}`}
           title={title}
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           allowFullScreen
+          onLoad={controlled ? () => send({ event: "listening", id: videoId, channel: "widget" }) : undefined}
           className="absolute inset-0 size-full"
         />
       ) : (

@@ -76,3 +76,12 @@
     }
   }
 }
+
+@theme {
+  /* Compare page: the two sides' fills (plan 001), and darker shades for lines and outlines
+     (≥ 3:1 on white: 3.7 and 3.9). */
+  --color-side-a: #fda28c;
+  --color-side-b: #9fbbf5;
+  --color-side-a-strong: #d9603f;
+  --color-side-b-strong: #4f7fe0;
+}

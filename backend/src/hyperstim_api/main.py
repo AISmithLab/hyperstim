@@ -21,6 +21,7 @@ from hyperstim_api.analysis import (
     TooManyRequests,
     estimate,
 )
+from hyperstim_api.channel_lookup import ChannelLookup, NotALink, NotFound
 from hyperstim_api.config import Settings, load_settings
 from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video, load_dataset
 from hyperstim_api.ranking import CRITERIA, Order, Ranked
@@ -115,6 +116,12 @@ class VideoList(ApiModel):
 class ChannelList(ApiModel):
     items: list[RankedChannel]
     total: int
+
+
+class ChannelFound(ApiModel):
+    channel_id: str
+    name: str | None  # None when we didn't need to ask YouTube and don't have the channel
+    in_dataset: bool
 
 
 class Analysis(ApiModel):
@@ -228,6 +235,8 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
         yield
         analyzer.stop_worker()
 
+    lookup = ChannelLookup(dataset, analyzer, pipeline)
+
     app = FastAPI(title="HyperStim API", lifespan=lifespan)
     app.state.analyzer = analyzer
     app.add_middleware(
@@ -334,6 +343,31 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
             sort, order, category or None, q, offset, limit, min_videos
         )
         return ChannelList(items=[ranked_channel(r) for r in page], total=total)
+
+    @app.get(
+        "/api/channel-lookup",
+        responses={
+            404: {"description": "No YouTube channel for the link"},
+            422: {"description": "Not a YouTube channel or video link"},
+            429: {"description": "Too many new lookups and analyses from this IP address"},
+        },
+    )
+    def channel_lookup(
+        url: Annotated[str, Query(min_length=1, max_length=500)], request: Request
+    ) -> ChannelFound:
+        """The channel behind a YouTube channel or video link, and whether we have it."""
+        ip = request.client.host if request.client else ""
+        try:
+            found = lookup.find(url, ip)
+        except NotALink:
+            raise HTTPException(status_code=422, detail="Not a YouTube link") from None
+        except NotFound:
+            raise HTTPException(status_code=404, detail="Channel not found") from None
+        except TooManyRequests:
+            raise HTTPException(status_code=429, detail="Too many requests") from None
+        return ChannelFound(
+            channel_id=found.channel_id, name=found.name, in_dataset=found.in_dataset
+        )
 
     @app.get("/api/channels/{channel_id}", responses={404: {"description": "Channel not found"}})
     def channel(channel_id: ChannelId) -> ChannelDetail:

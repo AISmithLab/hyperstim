@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import InfoTip from "@/components/InfoTip";
 import ScoreMeter from "@/components/ScoreMeter";
 import type { Feature } from "@/lib/api";
@@ -55,8 +56,7 @@ function Row({ feature, subject }: { feature: Feature; subject: Subject }) {
     <li className="relative flex min-h-11 items-center justify-between gap-2 border-b border-navy/10 last:border-0">
       <span className="flex min-w-0 items-center">
         <span className="font-semibold text-navy">{info.name}</span>
-        <InfoTip id={`feature-${feature.key}`} label={`About ${info.name}`} align="row" className="-my-1 shrink-0">
-          <p>{info.description}</p>
+        <FeatureTip featureKey={feature.key} className="-my-1 shrink-0">
           {value && (
             <p className="mt-2">
               <span className="font-semibold text-navy">
@@ -65,15 +65,7 @@ function Row({ feature, subject }: { feature: Feature; subject: Subject }) {
               {subject === "video" ? value : `${value} on average`}
             </p>
           )}
-          <p className="mt-2">
-            <Link
-              href={`/how-it-works#${featureSlug(feature.key)}`}
-              className="font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny"
-            >
-              More about this<span className="sr-only">: {info.name}</span> <span aria-hidden="true">→</span>
-            </Link>
-          </p>
-        </InfoTip>
+        </FeatureTip>
       </span>
       <span className="w-28 shrink-0 text-right">
         {display.kind === "percentile" ? (
@@ -87,5 +79,39 @@ function Row({ feature, subject }: { feature: Feature; subject: Subject }) {
         )}
       </span>
     </li>
+  );
+}
+
+/**
+ * A measurement's info button: its description, then `children` (e.g. this video's raw value),
+ * then a link to where How it works explains it. Opens from the row's left edge, so the row
+ * must be `relative`.
+ */
+export function FeatureTip({
+  featureKey,
+  idPrefix = "feature",
+  className,
+  children,
+}: {
+  featureKey: string;
+  /** Keeps IDs unique when the same measurement shows twice on a page. */
+  idPrefix?: string;
+  className?: string;
+  children?: ReactNode;
+}) {
+  const info = FEATURE_INFO[featureKey];
+  return (
+    <InfoTip id={`${idPrefix}-${featureKey}`} label={`About ${info.name}`} align="row" className={className}>
+      <p>{info.description}</p>
+      {children}
+      <p className="mt-2">
+        <Link
+          href={`/how-it-works#${featureSlug(featureKey)}`}
+          className="font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny"
+        >
+          More about this<span className="sr-only">: {info.name}</span> <span aria-hidden="true">→</span>
+        </Link>
+      </p>
+    </InfoTip>
   );
 }

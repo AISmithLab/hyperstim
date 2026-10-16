@@ -12,7 +12,7 @@ Build `/channel?id=<channel-id>`: one channel's overall stimulation score and it
 - **Query param** (`/channel?id=…`, already used by `channelHref`), read on the client, as for `/video`.
 - **Every channel in the dataset gets a page,** also the 30 with fewer than 5 videos (the home page ranks only ≥ 5, but a video page can link to any channel). No rank number, as on the video page.
 - **Information hierarchy**, top to bottom:
-  1. Which channel: name on the top left, then "{29} videos in our dataset · 2018–2026" and a "View on YouTube ↗" link. The kid on the top right.
+  1. Which channel: name on the top left, then "{29} videos in our dataset · 2018–2026", a "View on YouTube ↗" link and a "Compare with another channel →" link to `/compare?view=channels&a={id}` _(human decision, 2026-10-16, plan 008)_. The kid on the top right.
   2. The answer: the score panel, same layout as the video page (gauge left, 12 measurements right). Above the fold at 1280 × 720, like the video page.
   3. Over the years: a chart section below the panel, showing which videos the scores come from.
 - **Channel score** = mean of its videos' scores (plan 002, unchanged).
@@ -147,6 +147,7 @@ DOM order: header → score panel → over-years section → footer.
 | Meta description | How stimulating are this channel’s videos, and how has that changed over the years? |
 | Meta line | {29} videos in our dataset · {2018}–{2026} (one year: · {2024}; 1 video: “1 video in our dataset”) |
 | Link | View on YouTube ↗ (sr-only “(opens in a new tab)”) → `https://www.youtube.com/channel/{id}` |
+| Compare link | Compare with another channel → (after “View on YouTube”, on the same line when it fits) _(2026-10-16, plan 008)_ |
 | Gauge H2 (sr-only) | Stimulation score |
 | Gauge InfoTip | Score 0–100: the average of this channel’s video scores. Each is where a video’s production sits among the videos in our dataset, not whether it is good or bad. |
 | Measurement popover, 2nd line | This channel: {1.6} per minute on average |

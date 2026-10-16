@@ -5,42 +5,31 @@ import ScoreMeter from "@/components/ScoreMeter";
 import type { ChannelVideo } from "@/lib/api";
 import { useWidth } from "@/lib/use-layout";
 import { thumbnailUrl } from "@/lib/youtube";
+import { ChartGrid, TimeAxis } from "./ChartAxes";
 import {
-  dayOf,
   formatDate,
-  labelStep,
+  LABELS,
   measureName,
   monotonePath,
   placeThumbs,
   stackShifts,
   pointOf,
   smooth,
+  timeScale,
+  TOP,
   yearRange,
   type Measure,
 } from "./chart";
 
-// Layout in px. The plot is open-ended: gridlines and the axis, no frame.
-const LEFT = 32; // y labels
-const RIGHT = 12;
-const TOP = 12;
+// Layout in px (the plot's margins are in chart.ts).
 const CROSS = 4; // half the size of a "No cuts" ×
 const CROSS_LIFT = 7; // the × sits this far above the 0 line, so the line doesn't cut it
-const LABELS = 28; // year ticks and labels under the axis
 const THUMB_W = 64;
 const THUMB_H = 36;
 const THUMB_GAP = 6; // between thumbnails in a row
 const ROW_PITCH = 10; // rows overlap like a fanned deck
 const FOCUS_NUDGE = 8; // the focused thumbnail drops this far
 const FOCUS_OPEN = THUMB_H + 16; // and the ones below it in its stack slide down this far
-const MIN_LABEL_SPACING = 44;
-const GRID = [0, 20, 40, 60, 80, 100];
-const Y_LABELS = [0, 50, 100];
-
-/** Plot height by width: phones, tablets, desktop. */
-function plotHeight(width: number, wide: boolean): number {
-  if (!wide) return 220;
-  return width >= 880 ? 320 : 280;
-}
 
 /**
  * One channel's videos over the years (see STYLE.md, Over-years chart): a dot per video at its
@@ -69,14 +58,8 @@ export default function TimeChart({
   const width = useWidth(box, 640);
   const [hovered, setHovered] = useState<string | null>(null);
 
-  const [firstYear, lastYear] = yearRange(videos);
-  const start = Date.UTC(firstYear, 0, 1);
-  const end = Date.UTC(lastYear + 1, 0, 1);
-  const plotW = Math.max(1, width - LEFT - RIGHT);
-  const x = (date: string) => LEFT + ((dayOf(date) - start) / (end - start)) * plotW;
-  const plotH = plotHeight(width, wide);
-  const y = (value: number) => TOP + (1 - value / 100) * plotH;
-  const axisY = TOP + plotH;
+  const scale = timeScale(width, wide, ...yearRange(videos));
+  const { x, y, axisY } = scale;
 
   const points = videos.map((video) => ({ video, point: pointOf(video, measure), cx: x(video.publishedAt) }));
   const dots = points.flatMap(({ video, point, cx }) => {
@@ -88,9 +71,6 @@ export default function TimeChart({
   const valued = dots.flatMap((d) => (d.point.kind === "value" ? [{ cx: d.cx, value: d.point.value }] : []));
   const trend = smooth(valued.map((d) => d.value));
   const trendPath = monotonePath(trend.map((value, i) => [valued[i].cx, y(value)]));
-
-  const years = Array.from({ length: lastYear - firstYear + 2 }, (_, i) => firstYear + i);
-  const step = labelStep(plotW / (years.length - 1), MIN_LABEL_SPACING);
 
   // The hovered video, or on phones the tapped one, gets the popover.
   const active = hovered ?? (wide ? null : marked);
@@ -116,14 +96,7 @@ export default function TimeChart({
   return (
     <div ref={box} className="relative mt-6" data-chart="">
       <svg aria-hidden="true" width={width} height={height} className="block overflow-visible">
-        {GRID.map((v) => (
-          <line key={v} x1={LEFT} x2={width - RIGHT} y1={y(v)} y2={y(v)} className="stroke-navy/10" />
-        ))}
-        {Y_LABELS.map((v) => (
-          <text key={v} x={LEFT - 8} y={y(v)} dy="0.32em" textAnchor="end" className="fill-ink/80 text-xs">
-            {v}
-          </text>
-        ))}
+        <ChartGrid scale={scale} />
         {band && (
           <rect
             data-band=""
@@ -153,30 +126,7 @@ export default function TimeChart({
             );
           })}
 
-        <line x1={LEFT} x2={width - RIGHT} y1={axisY} y2={axisY} className="stroke-navy/30" />
-        {years.map((year, i) => (
-          <g key={year}>
-            <line
-              x1={LEFT + (i / (years.length - 1)) * plotW}
-              x2={LEFT + (i / (years.length - 1)) * plotW}
-              y1={axisY}
-              y2={axisY + 5}
-              className="stroke-navy/30"
-            />
-            {/* The last tick closes the final year; it has no label of its own. */}
-            {i % step === 0 && i < years.length - 1 && (
-              <text
-                x={LEFT + (i / (years.length - 1)) * plotW}
-                y={axisY + 19}
-                textAnchor="middle"
-                // A white halo keeps the label readable over the thumbnail lines.
-                className="fill-ink stroke-white text-xs [paint-order:stroke] [stroke-width:4px]"
-              >
-                {year}
-              </text>
-            )}
-          </g>
-        ))}
+        <TimeAxis scale={scale} />
 
         {activeDot && (
           <line

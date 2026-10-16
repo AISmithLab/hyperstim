@@ -59,6 +59,7 @@ describe("VideoPage", () => {
     expect(await screen.findByRole("heading", { level: 1, name: "Tiny Trucks Race" })).toBeInTheDocument();
     expect(getVideo).toHaveBeenCalledWith(ID);
     expect(screen.getByRole("link", { name: "Wheelie Friends TV" })).toHaveAttribute("href", "/channel?id=UCwheelie");
+    expect(screen.getByRole("link", { name: /Compare with another video/ })).toHaveAttribute("href", `/compare?a=${ID}`);
     expect(screen.queryByRole("link", { name: /Watch on YouTube/ })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "Stimulation score" })).toHaveClass("sr-only");
     expect(screen.getByRole("button", { name: "About the stimulation score" })).toBeInTheDocument();

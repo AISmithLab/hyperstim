@@ -14,6 +14,7 @@ import {
   type AnalysisErrorCode,
   type AnalysisStatus,
   type ChannelDetail,
+  type ChannelLookup,
   type ChannelSummary,
   type ChannelVideo,
   type Feature,
@@ -389,6 +390,29 @@ function rankList<T extends Ranked>(
   return { items: matching.slice(offset, offset + limit), total: matching.length };
 }
 
+/**
+ * Channel links: `/channel/<mock ID>` and a mock video's link find their channel; `@zippy`
+ * finds Zippy Zoom Kids; `@missing` isn't found; `@busy` is over the limit; any other handle
+ * or video is a channel we don't have ("Faraway Friends").
+ */
+function channelLookup(url: string): ChannelLookup {
+  const byId = url.match(/\/channel\/(UC[\w-]{22})/);
+  const video = url.match(/(?:v=|youtu\.be\/|shorts\/)([\w-]{11})/);
+  const known = (id: string | undefined) => channels.find((c) => c.id === id);
+  if (byId) {
+    const channel = known(byId[1]);
+    return { channelId: byId[1], name: channel?.name ?? null, inDataset: Boolean(channel) };
+  }
+  if (/@missing/i.test(url)) throw new ApiError(404, "Channel not found");
+  if (/@busy/i.test(url)) throw new ApiError(429, "Too many requests");
+  const channel = /@zippy/i.test(url)
+    ? channels[0]
+    : known(allVideos().find((v) => v.id === video?.[1])?.channelId);
+  if (channel) return { channelId: channel.id, name: channel.name, inDataset: true };
+  if (!video && !/youtube\.com\/(@|c\/|user\/)/i.test(url)) throw new ApiError(422, "Not a YouTube link");
+  return { channelId: "UCmockFarawayFriends0000", name: "Faraway Friends", inDataset: false };
+}
+
 export async function mockRequest(method: Method, path: string, params: Params): Promise<unknown> {
   // Short delay so loading states are visible during development.
   await new Promise((resolve) => setTimeout(resolve, 400));
@@ -404,6 +428,8 @@ export async function mockRequest(method: Method, path: string, params: Params):
       );
     case "/api/channels":
       return rankList(allChannels(Number(params.minVideos ?? 5), category), params, (c) => [c.name]);
+    case "/api/channel-lookup":
+      return channelLookup(String(params.url ?? ""));
     default:
       if (path.startsWith("/api/videos/")) {
         return videoDetail(decodeURIComponent(path.slice("/api/videos/".length)));

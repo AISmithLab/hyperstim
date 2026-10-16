@@ -1,16 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { CheckAnother, CONTAINER, KidMessage, Message, OUTLINED_BUTTON, TEXT_LINK } from "@/components/video/parts";
 import ScorePanel, { ScorePanelSkeleton } from "@/components/video/ScorePanel";
 import { ApiError, getChannel, type ChannelDetail } from "@/lib/api";
 import { asset } from "@/lib/asset";
+import { compareHref } from "@/lib/routes";
 import { useApi } from "@/lib/use-api";
+import { isChannelId } from "@/lib/youtube";
 import { metaLine } from "./chart";
 import OverYears, { SECTION_CARD } from "./OverYears";
 
-const CHANNEL_ID = /^UC[A-Za-z0-9_-]{22}$/;
 const HEADING = "Channel details";
 // Name and meta line on 2/3 of the width; the kid's head rises into the right third.
 const HEADER = "grid grid-cols-[2fr_1fr] items-start gap-4 sm:gap-6";
@@ -18,7 +20,7 @@ const HEADER = "grid grid-cols-[2fr_1fr] items-start gap-4 sm:gap-6";
 /** `/channel?id=…`: reads the ID on the client, since a static export can't pre-render it. */
 export default function ChannelPage() {
   const id = useSearchParams().get("id") ?? "";
-  if (!CHANNEL_ID.test(id)) {
+  if (!isChannelId(id)) {
     return (
       <Message heading={HEADING}>
         <p>That doesn’t look like a channel link.</p>
@@ -80,6 +82,11 @@ function Result({ channel }: { channel: ChannelDetail }) {
               <span className="sr-only"> (opens in a new tab)</span>
             </span>
           </a>
+          <Link href={compareHref({ view: "channels", a: channel.id })} className={`${TEXT_LINK} sm:ml-6`}>
+            <span>
+              Compare with another channel&nbsp;<span aria-hidden="true">→</span>
+            </span>
+          </Link>
         </div>
       </div>
 

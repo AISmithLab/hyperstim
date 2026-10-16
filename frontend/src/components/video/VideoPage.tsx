@@ -7,10 +7,10 @@ import YouTubePlayer from "@/components/YouTubePlayer";
 import { ApiError, getVideo, type VideoDetail } from "@/lib/api";
 import { asset } from "@/lib/asset";
 import { useApi } from "@/lib/use-api";
-import { channelHref } from "@/lib/routes";
+import { channelHref, compareHref } from "@/lib/routes";
 import { parseVideoInput } from "@/lib/youtube";
 import LiveAnalysis from "./LiveAnalysis";
-import { CheckAnother, CONTAINER, Message, OUTLINED_BUTTON } from "./parts";
+import { CheckAnother, CONTAINER, Message, OUTLINED_BUTTON, TEXT_LINK } from "./parts";
 import ScorePanel, { ScorePanelSkeleton } from "./ScorePanel";
 
 // Video metadata on 2/3 of the width, the preview on 1/3.
@@ -82,15 +82,23 @@ function Result({ video }: { video: VideoDetail }) {
           <h1 className="line-clamp-2 font-hand text-[1.375rem] leading-tight font-semibold text-navy sm:text-2xl lg:text-[1.75rem]">
             {video.title}
           </h1>
-          <p className="mt-1 truncate font-bold text-navy">
-            {/* A live-checked video's channel may have no page here. */}
-            {video.channelInDataset ? (
-              <Link href={channelHref(video.channelId)} className="hover:underline">
-                {video.channel}
-              </Link>
-            ) : (
-              video.channel
-            )}
+          {/* The compare link shares the channel's line, so it stays clear of the kid below. */}
+          <p className="mt-1 flex flex-wrap items-center gap-x-5">
+            <span className="min-w-0 truncate font-bold text-navy">
+              {/* A live-checked video's channel may have no page here. */}
+              {video.channelInDataset ? (
+                <Link href={channelHref(video.channelId)} className="hover:underline">
+                  {video.channel}
+                </Link>
+              ) : (
+                video.channel
+              )}
+            </span>
+            <Link href={compareHref({ a: video.id })} className={`${TEXT_LINK} text-sm sm:-my-2.5`}>
+              <span>
+                Compare with another video&nbsp;<span aria-hidden="true">→</span>
+              </span>
+            </Link>
           </p>
         </div>
         {/* The preview plays in place on click; the embedded player links on to YouTube. */}

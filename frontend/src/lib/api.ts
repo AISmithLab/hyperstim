@@ -102,6 +102,14 @@ export type ListParams = {
   limit: number;
 };
 
+/** The channel behind a YouTube channel or video link (compare page). */
+export type ChannelLookup = {
+  channelId: string;
+  /** Null when we don't have the channel and didn't need to ask YouTube for its name. */
+  name: string | null;
+  inDataset: boolean;
+};
+
 /** Where a live analysis is: waiting, one of its three steps, or finished. */
 export type AnalysisStatus = "queued" | "lookup" | "download" | "measure" | "done" | "failed";
 
@@ -197,6 +205,15 @@ export function getChannel(id: string): Promise<ChannelDetail> {
  */
 export function startAnalysis(id: string): Promise<Analysis> {
   return request("POST", `/api/analyses/${encodeURIComponent(id)}`);
+}
+
+/**
+ * The channel behind a YouTube channel or video link. Rejects with an `ApiError` with status
+ * 404 (no channel found), 422 (not such a link) or 429 (over this visitor's limit, shared with
+ * live analyses).
+ */
+export function lookupChannel(url: string): Promise<ChannelLookup> {
+  return get("/api/channel-lookup", { url });
 }
 
 /** A live analysis' progress. Rejects with an `ApiError` with status 404 if it was never started. */

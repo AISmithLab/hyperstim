@@ -76,6 +76,10 @@ describe("ChannelPage", () => {
       "href",
       `https://www.youtube.com/channel/${ID}`,
     );
+    expect(screen.getByRole("link", { name: /Compare with another channel/ })).toHaveAttribute(
+      "href",
+      `/compare?view=channels&a=${ID}`,
+    );
     expect(screen.getByText("Stimulation score 74 out of 100")).toBeInTheDocument();
     expect(screen.getAllByText("Higher than 61% of videos in our dataset")).toHaveLength(12);
     expect(screen.queryByText(/^#/)).not.toBeInTheDocument(); // no rank
