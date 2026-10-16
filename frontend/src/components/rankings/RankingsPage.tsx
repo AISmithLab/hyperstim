@@ -214,7 +214,7 @@ export function Loading() {
  */
 function Hero() {
   return (
-    <div className="relative md:pr-[16rem] lg:pr-[19.5rem] xl:pr-[22.25rem]">
+    <div className="relative md:pr-[17.75rem] lg:pr-[21.5rem] xl:pr-[24.5rem]">
       <div className="md:pb-6">
         <h1 className="font-hand text-[2rem] leading-tight font-semibold text-navy sm:text-[2.75rem] lg:text-[3.25rem]">
           Stimulation rankings
@@ -238,10 +238,10 @@ function Hero() {
         src={asset("/images/kid_blocks_2.webp")}
         alt=""
         aria-hidden="true"
-        width={600}
-        height={400}
+        width={672}
+        height={448}
         data-kid=""
-        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-56 translate-y-[10%] -scale-x-100 md:mr-4 md:block lg:mr-8 lg:w-64 xl:w-[18.75rem]"
+        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-63 translate-y-[10%] -scale-x-100 md:mr-4 md:block lg:mr-8 lg:w-72 xl:w-84"
       />
     </div>
   );
