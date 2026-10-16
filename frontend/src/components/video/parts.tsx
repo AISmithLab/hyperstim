@@ -37,7 +37,7 @@ export function KidMessage({ children, heading }: { children: ReactNode; heading
         width={560}
         height={280}
         data-kid=""
-        className="mx-auto h-auto w-[280px]"
+        className="mx-auto hidden h-auto w-[280px] md:block"
       />
       <div className={MESSAGE_BOX}>{children}</div>
     </div>

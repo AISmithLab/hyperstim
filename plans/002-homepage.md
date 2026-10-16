@@ -29,8 +29,8 @@ Build the home page (`/`) following the look of the mockup's home panel: hero wi
 | Width | Layout |
 |---|---|
 | `lg`+ (≥1024) | Row 1: hero text (left, ~55%) · illustration (right). Row 2: check-a-video card (left, ~45%) · table card (right). Max-width container. |
-| `md` (768–1023) | Hero text full width, illustration below it at ~70% width, centred. Row 2 stacked: form card, then table card. |
-| < `md` (320–767) | Single column: heading → illustration (full width) → paragraph → form card → table card. Decorations hidden. Input and button stack, both full width. |
+| `md` (768–1023) | Hero as on `lg`: text on the left, illustration at the top right (344 px wide, see the kid's size in 001) _(human decision, 2026-10-16: as on the other pages; same head size on every page)_; at 768 px the H1 wraps to five lines. Row 2 stacked: form card, then table card. |
+| < `md` (320–767) | Single column: heading → paragraph → form card → table card. No illustration _(human decision, 2026-10-16)_; decorations hidden. Input and button stack, both full width. |
 
 ### Elements, top to bottom
 
@@ -38,7 +38,7 @@ All visible text is in **Copy** below; this list says only where things go.
 
 1. **Header** (shared layout): skip link (visible on focus) first; logo left, links to `/`; nav right with the current page underlined and `aria-current="page"`; `sun_1.png` small, decorative, beside the nav on `lg`+. Below `lg`: menu button opens the nav as a full-width list.
 2. **Hero, left.** H1 (Shantell Sans _(was: Patrick Hand)_, navy, large) with a yellow marker highlight behind its last words; intro in two paragraphs (Nunito, slate). _(was: one intro paragraph plus a small note under it)_
-3. **Hero, right.** `kid_1.png`, `aria-hidden`, no speech bubble. _(was: with a hand-styled CSS speech bubble saying “What’s next?”)_
+3. **Hero, right.** `kid_1.png`, `aria-hidden`, no speech bubble. Hidden below `md`; a fixed width from `md` (344 / 392 / 464 px at `md` / `lg` / `xl`), so its head is the same size as the other pages' kids (001) _(human decision, 2026-10-16)_. _(was: with a hand-styled CSS speech bubble saying “What’s next?”)_
 4. **Check-a-video card** (butter panel `#FEF8D4`, large rounded corners). `grass_1.png` / `flower_1.png` peeking from the bottom-left corner on `md`+. H2 alone _(was: with an info button on the same row, right-aligned with the “Check video” button)_, visible label + input (white, 2px navy outline, thick sunny-yellow ring on focus _(was: light grey-navy outline, default focus outline)_), primary button, helper text under them (the length hint, always visible, small slate text), inline error (`aria-live="polite"`). The input's `aria-describedby` points to the helper text and the error. No popup: the label already says what to paste, so the intro is dropped. _(was: intro and hint in a speech-bubble popup from the info button; before that, intro under the H2 and hint under the button)_
 5. **Table card** (white card, subtle border, large rounded corners). `flower_2.png` decorative at top-right corner on `md`+.
    - H2 with a segmented control on the same line, to its right (wraps below it when the row is too narrow: phones, and 1024–~1110 px where the two-column card is narrowest). Compact pill with two options, the selected one filled sunny yellow (see `STYLE.md`). Two buttons with `aria-pressed`; default Videos. _(was: two separate pill chips, which wrapped below the longer H2 on desktop)_

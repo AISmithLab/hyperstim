@@ -15,8 +15,8 @@ import ScorePanel, { ScorePanelSkeleton } from "./ScorePanel";
 
 // Video metadata on 2/3 of the width, the preview on 1/3.
 const HEADER = "grid grid-cols-[2fr_1fr] items-start gap-4 sm:gap-6";
-// Room above the score panel for the kid peeking over its top edge.
-const PANEL_GAP = "mt-28 sm:mt-20 lg:mt-16 xl:mt-10";
+// Room above the score panel for the kid peeking over its top edge, from md (it's hidden below).
+const PANEL_GAP = "mt-6 md:mt-20 lg:mt-16 xl:mt-10";
 
 /** `/video?id=…`: reads the ID on the client, since a static export can't pre-render it. */
 export default function VideoPage() {
@@ -134,7 +134,7 @@ function PanelKid() {
       height={277}
       data-kid=""
       // The art's table edge is 92.1% down the image; it sits on the border.
-      className="pointer-events-none absolute top-0 left-2 h-auto w-40 -translate-y-[92.1%] sm:left-6 sm:w-44 lg:left-[5.5rem] lg:w-52 xl:left-[10.5rem]"
+      className="pointer-events-none absolute top-0 left-6 hidden h-auto w-44 -translate-y-[92.1%] md:block lg:left-[5.5rem] lg:w-52 xl:left-[10.5rem]"
     />
   );
 }

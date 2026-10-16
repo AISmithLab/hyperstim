@@ -41,7 +41,7 @@ Two small changes on the video and channel pages come with it: their measurement
 - **Measurement copy has a single source.** Names and the one-line descriptions come from `frontend/src/lib/features.ts`. The short timeline labels are added there too, as `label`.
 - **Diagrams are drawn in code with UI tokens**: HTML boxes and inline SVG (navy lines, score-scale and pastel fills), with labels as HTML text so they keep their size at every width. They are not hand-drawn art, so they need no art request. Each diagram is `aria-hidden` and sits next to text that says the same thing, so nothing is lost without it.
 - **Art:**
-  - `kid_wonder` goes in the hero _(human decision)_: the kid lying in front of a laptop, chin on hand, with a question mark ("how does this work?"). It has a transparent background (checked), so it sits on the white page like the home kid. It stays at every width, **its head about the home kid's size** _(human decision: it was too big)_, lying on the top edge of the first card.
+  - `kid_wonder` goes in the hero _(human decision)_: the kid lying in front of a laptop, chin on hand, with a question mark ("how does this work?"). It has a transparent background (checked), so it sits on the white page like the home kid. **Hidden below `md`** _(human decision, 2026-10-16)_. **Its head the same size as the home kid's** _(human decision, 2026-10-16: it was 66–95 % of it)_: 272 / 308 / 364 px wide at `md` / `lg` / `xl` (001). Lying on the top edge of the first card; the negative margins scale with it, so elbows and laptop still rest on the border line and its top still lines up with the H1's letters.
   - The `grass_*` / `flower_*` art peeks from the bottom edge of the questions panel on `md`+.
 - **Look, following the mockup's How it works panel:**
   - numbered step circles, all `sunny` _(human decision)_, here in front of the step sections' H2s;
@@ -104,7 +104,7 @@ In the second box, one channel's uploads are small rectangles stacked by year, u
 |---|---|
 | `lg`+ | Hero: H1 (left) · kid (right) lying on the first card. Steps ①–④ are white section cards, one diagram each. Questions: mint section panel, accordion `max-w-3xl` inside. |
 | `md`–`lg` | As above. E becomes a 2 × 2 grid. |
-| < `md` | Single column: H1 → kid (centred, from `sm` beside the H1) → cards. E stacked. C uses ~19 dots. |
+| < `md` | Single column: H1 → cards, no kid _(human decision, 2026-10-16)_. E stacked. C uses ~19 dots. |
 
 **Desktop (1280 px)**
 
@@ -144,7 +144,6 @@ In the second box, one channel's uploads are small rectangles stacked by year, u
 ```
 ┌──────────────────────────────┐
 │ How it works                 │
-│      {kid, on the card}      │
 │ ╭─ (1) Paste a link ───────╮ │
 │ │ sentence, check field    │ │
 │ ╰──────────────────────────╯ │
@@ -289,6 +288,7 @@ The list shows the existing one-line descriptions (plan 004).
 - Step ①'s look was chosen from a mock review page (an artifact, not in the repo) showing five options; the user picked a mix of 1 (real field) and 2 (slim card), with the field on the right. The sketches below **Layout** show it.
 - The ASCII sketches of the desktop and phone layouts below **Layout** are redrawn for the page that follows one video: steps ①–④ as section titles, one diagram per card, descriptions under the list's names, no closing link (see **Sections**).
 - The ASCII sketch of diagram E drops its step numbers (see **Diagrams**, E).
+- The phone sketch below **Layout** has no kid under the H1 (2026-10-16; see **Decisions**, Art).
 
 ## Open questions
 

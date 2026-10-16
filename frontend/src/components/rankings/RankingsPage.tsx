@@ -207,10 +207,14 @@ export function Loading() {
   );
 }
 
-/** The H1 and intro, and the kid stacking blocks on the card's top edge. */
+/**
+ * The H1 and intro, and the kid stacking blocks on the card's top edge. The kid's head is as large
+ * as on the other pages (plan 001); where it's taller than the text, it rises above the text's top
+ * instead of pushing the H1 down.
+ */
 function Hero() {
   return (
-    <div className="flex items-end justify-between gap-6">
+    <div className="relative md:pr-[16rem] lg:pr-[19.5rem] xl:pr-[22.25rem]">
       <div className="md:pb-6">
         <h1 className="font-hand text-[2rem] leading-tight font-semibold text-navy sm:text-[2.75rem] lg:text-[3.25rem]">
           Stimulation rankings
@@ -227,16 +231,17 @@ function Hero() {
           </Link>
         </p>
       </div>
-      {/* Knees and blocks rest on the card's border; flipped, so the kid faces the page. */}
+      {/* Body and blocks rest on the card's border (the art's floor is 92 % down the image); flipped, so
+          the kid faces the page. */}
       {/* eslint-disable-next-line @next/next/no-img-element -- static export, images pre-converted */}
       <img
-        src={asset("/images/kid_blocks.webp")}
+        src={asset("/images/kid_blocks_2.webp")}
         alt=""
         aria-hidden="true"
-        width={520}
-        height={347}
+        width={600}
+        height={400}
         data-kid=""
-        className="relative z-10 hidden h-auto w-56 shrink-0 translate-y-[4%] -scale-x-100 md:mr-4 md:block lg:mr-8 lg:w-64"
+        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-56 translate-y-[10%] -scale-x-100 md:mr-4 md:block lg:mr-8 lg:w-64 xl:w-[18.75rem]"
       />
     </div>
   );

@@ -17,7 +17,7 @@ Build `/channel?id=<channel-id>`: one channel's overall stimulation score and it
   3. Over the years: a chart section below the panel, showing which videos the scores come from.
 - **Channel score** = mean of its videos' scores (plan 002, unchanged).
 - **Channel measurements** = for each of the 12, the mean of its videos' percentiles (missing values left out), shown with the same measurement table as the video page. Same as the score's rule, so no new statistic. A video's count of 0 counts as 0 in the mean _(human decision, 2026-10-16)_ (plan 004); "No cuts" / "No sound" / "Not measured" when no video has a value. The popover's second line: "This channel: {1.6} per minute on average" (mean of raw values, same units rule as plan 004).
-- **The kid:** `kid_lens_downward` _(human decision)_ (the kid with the magnifying glass, looking down: "taking a closer look at a channel"), not used on any page yet. Top right, peeking over the score panel's top edge from its right end, looking down toward the panel. Near-white background, so `mix-blend-multiply` on the edge, as on the video page. Same size as the video page's kid. Decorative.
+- **The kid:** `kid_lens_downward` _(human decision)_ (the kid with the magnifying glass, looking down: "taking a closer look at a channel"), not used on any page yet. Top right, peeking over the score panel's top edge from its right end, looking down toward the panel. Near-white background, so `mix-blend-multiply` on the edge, as on the video page. Same size as the video page's kid. Decorative. Hidden below `md` _(human decision, 2026-10-16)_; there the header's name and links use the full width, since no head rises into the right third.
 - **Over-years chart** (**new**, hand-written inline SVG, no chart library), open-ended: no frame around the plot _(human decision: option A of the explored timelines)_.
   - One dot per video at its publish date (`published_at`, day precision), y = its percentile (0–100) for the selected measurement, or its score for "Overall".
   - X axis: ticks and labels at each year (Jan 1); the range spans the first to the last video, padded to whole years.
@@ -54,8 +54,9 @@ DOM order: header → score panel → over-years section → footer.
 | Width | Layout |
 |---|---|
 | `lg`+ | Header: name and meta line (2/3) · kid space (1/3). Score panel as on the video page; the kid on its top edge at the right. Over-years section (section card): H2, picker chips under it, chart (plot ~360 px high, full width) with the thumbnail rows under its axis, note, the video panel once opened. |
-| `sm`–`lg` | Header as above; panel stacked as on the video page; the kid on its top edge at the right. Chips wrap; plot ~320 px high; deeper thumbnail stacks. |
-| < `sm` | Same order; kid smaller; picker is a `<select>`; plot ~260 px high, year labels thinned to every 2nd year when they don't fit; no thumbnails on the axis; the video strip under the chart. |
+| `md`–`lg` | Header as above; panel stacked as on the video page; the kid on its top edge at the right. Chips wrap; plot ~320 px high; deeper thumbnail stacks. |
+| `sm`–`md` | As `md`–`lg`, with no kid _(human decision, 2026-10-16)_: the header runs full width. |
+| < `sm` | Same order; no kid; picker is a `<select>`; plot ~260 px high, year labels thinned to every 2nd year when they don't fit; no thumbnails on the axis; the video strip under the chart. |
 
 **Desktop (1280 px)**
 
@@ -107,7 +108,7 @@ DOM order: header → score panel → over-years section → footer.
 ┌──────────────────────────────┐
 │ Wheelie Friends TV           │
 │ 29 videos · 2018–2026        │
-│ View on YouTube ↗  {kid ↙}   │
+│ View on YouTube ↗            │
 │ ╭─ score panel ────────────╮ │
 │ │   gauge, 74 / 100        │ │
 │ │   12 measurement rows    │ │
@@ -136,7 +137,7 @@ DOM order: header → score panel → over-years section → footer.
 
 - Loading: skeletons for the name, the panel (as on the video page) and a grey chart box; `aria-busy`, sr-only "Loading channel…".
 - No `id` or not a channel ID (`UC` + 22 characters): message box, "That doesn’t look like a channel link.", "Check a video →" to `/`.
-- Not in the dataset (404): `kid_2` above the message box: "This channel isn’t in our dataset." + "Check a video →". (Also reached from a live-analyzed video whose channel isn't in the dataset.)
+- Not in the dataset (404): `kid_2` above the message box (hidden below `md`, 001): "This channel isn’t in our dataset." + "Check a video →". (Also reached from a live-analyzed video whose channel isn't in the dataset.)
 - Error: message box + "Try again", as on the other pages.
 
 ### Copy
@@ -208,6 +209,7 @@ At most 60 videos per channel (~40 KB), so no paging. Thumbnails are built from 
 
 4. **Thumbnail rows overlap like a fanned deck** (option A of the explored overlap versions): the desktop sketch under **Layout** shows the overlapping rows (see **Decisions**: video thumbnails on the time axis, linked hover).
 5. **No "None detected" strip; a × for no cuts instead** (2026-10-15; the rings for counts of 0 dropped 2026-10-16, they are dots at 0 now): the note under the desktop sketch describes the mark (see **Decisions**: the chart keeps its size, event-count measurements, no cuts).
+6. **Phone sketch** (2026-10-16): no kid beside the links (see **Decisions**: the kid).
 
 ## Open questions
 

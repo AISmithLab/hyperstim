@@ -155,12 +155,12 @@ export default function ComparePage() {
 
 /**
  * The H1, intro and `children` (the view control), and the kid with two cards on the card's top
- * edge. The kid is as large as the home page's (by head size), so it's taller than the text; it
+ * edge. The kid's head is as large as on the other pages (plan 001), so it's taller than the text; it
  * rises above the text's top instead of pushing the H1 down.
  */
 function Hero({ view, children }: { view: View; children?: ReactNode }) {
   return (
-    <div className="relative md:pr-[18rem] lg:pr-[24rem] xl:pr-[27.5rem]">
+    <div className="relative md:pr-[20rem] lg:pr-[24rem] xl:pr-[27.5rem]">
       <div className="md:pb-6">
         <h1 className="font-hand text-[2rem] leading-tight font-semibold text-navy sm:text-[2.75rem] lg:text-[3.25rem]">
           Compare
@@ -177,7 +177,7 @@ function Hero({ view, children }: { view: View; children?: ReactNode }) {
         width={768}
         height={512}
         data-kid=""
-        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-64 translate-y-[7%] md:mr-4 md:block lg:mr-8 lg:w-[20.5rem] xl:w-96"
+        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-72 translate-y-[7%] md:mr-4 md:block lg:mr-8 lg:w-[20.5rem] xl:w-96"
       />
     </div>
   );

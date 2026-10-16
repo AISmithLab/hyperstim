@@ -68,6 +68,19 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
 
 - Light theme only (no dark mode for now). Colours are never the only way information is shown (scores also carry numbers/labels).
 - Illustrations live in `frontend/public/images/`. Claude Code asks for each one (object, pose, colours, size, background) and the team supplies it; no placeholder art is committed.
+- **The kid** _(human decision, 2026-10-16)_:
+  - **Hidden below `md` (768 px) on every page**: the hero kids, the kid on the score panel, and `kid_2` above the message box. Layouts drop the room they kept for it there.
+  - **The hero kids (home, rankings, compare, how it works) have the same head size** at every width they show at. The measure is the distance between the eyes (centre to centre): **30 px at `md`, 34 px at `lg`, 40 px from `xl`**, the home kid's size on desktop. Each artwork draws the kid at its own scale, so each page's width = target ÷ the art's eye distance per image width: `kid_1` 0.087, `kid_blocks_2` 0.133, `kid_compare` 0.104, `kid_wonder` 0.110.
+
+    | Art (page) | `md` | `lg` | `xl`+ |
+    |---|---|---|---|
+    | `kid_1` (home) | 344 px | 392 px | 464 px |
+    | `kid_blocks_2` (rankings) | 224 px | 256 px | 300 px |
+    | `kid_compare` (compare) | 288 px | 328 px | 384 px |
+    | `kid_wonder` (how it works) | 272 px | 308 px | 364 px |
+
+  - The score-panel kids (video, channel) keep their own size (about 75 % of the home kid's head, plan 004). New art gets its eye ratio measured and its widths from this table.
+  - `STYLE.md` gets this in the same change (the **Hand-drawn art** rule, the recurring-character line, and each page's entry); the pages' plans (002, 004–008) say what it means for each.
 
 ## Backend
 

@@ -14,8 +14,8 @@ import { metaLine } from "./chart";
 import OverYears, { SECTION_CARD } from "./OverYears";
 
 const HEADING = "Channel details";
-// Name and meta line on 2/3 of the width; the kid's head rises into the right third.
-const HEADER = "grid grid-cols-[2fr_1fr] items-start gap-4 sm:gap-6";
+// Name and meta line on 2/3 of the width from md; the kid's head rises into the right third.
+const HEADER = "grid items-start gap-4 sm:gap-6 md:grid-cols-[2fr_1fr]";
 
 /** `/channel?id=…`: reads the ID on the client, since a static export can't pre-render it. */
 export default function ChannelPage() {
@@ -122,7 +122,7 @@ function PanelKid() {
       data-kid=""
       // The art's table edge is 84% down the image; it sits on the border. Its near-white
       // background is lifted to white, and multiplies with the line it overlaps.
-      className="pointer-events-none absolute top-0 right-0 h-auto w-32 -translate-y-[84%] mix-blend-multiply brightness-[1.03] sm:right-4 sm:w-44 lg:right-8 lg:w-52"
+      className="pointer-events-none absolute top-0 right-4 hidden h-auto w-44 -translate-y-[84%] mix-blend-multiply brightness-[1.03] md:block lg:right-8 lg:w-52"
     />
   );
 }

@@ -31,9 +31,9 @@ Build `/video?id=<youtube-id>`: one video's stimulation score and its 12 measure
 - **Score meter becomes a shared component** (`ScoreMeter`), used by the rankings card and the measurement rows (compact size).
 - **New styles go into `STYLE.md` in the same change:** `ScoreGauge`, the measurement table, the video preview (Data display / Controls), `ScoreMeter` as the meter's owner, and (live analysis) the progress bar and the step list.
 - **Fonts stay as in `STYLE.md`:** the video title, group headings and score number use the handwritten font; only the title's size is reduced _(human decision)_.
-- **The kid is the site's recurring character** and appears on every page (a rule in `STYLE.md`) _(human decision)_. On this page:
+- **The kid is the site's recurring character** and appears on every page (a rule in `STYLE.md`) _(human decision)_, from `md` up: below `md` it's hidden on every page (001) _(human decision, 2026-10-16)_. On this page:
   - `kid_3` (peeking over an edge with both hands on it, looking down to the right, smiling; transparent PNG), one image for every video _(human decision)_. A smile/surprised switch (`kidMood`, smile when no measurement is above 90) stays in the code, unused, for when a surprised version of this pose exists.
-  - On the score panel's top edge, looking at the measurements _(human decision)_: hands on the border line (the art's table edge, 92.1 % down the image), looking right (no flip). Head about 75 % of the home page kid, keeping close to the fold _(human decision: should look similarly large as the home page's)_: `w-40` phones, `w-44` from `sm`, `w-52` from `lg`; above the right part of the gauge column from `lg`, at the panel's left below that. At every width. The space above the panel makes room for it (`mt-28 sm:mt-20 lg:mt-16 xl:mt-10`). Decorative (`alt=""`, `aria-hidden`): the text already says how intense the video is.
+  - On the score panel's top edge, looking at the measurements _(human decision)_: hands on the border line (the art's table edge, 92.1 % down the image), looking right (no flip). Head about 75 % of the home page kid, keeping close to the fold _(human decision: should look similarly large as the home page's)_: `w-44` at `md`, `w-52` from `lg`; above the right part of the gauge column from `lg`, at the panel's left below that. Hidden below `md` _(human decision, 2026-10-16)_; the head size stays its own, not matched to the hero kids (001). The space above the panel makes room for it from `md` (`md:mt-20 lg:mt-16 xl:mt-10`); below `md` the panel has the page's usual gap under the header. Decorative (`alt=""`, `aria-hidden`): the text already says how intense the video is.
   - Not shown while loading. While a video is analyzed live, and when that fails: `kid_2` (peeking over a table with a teddy bear).
   - The kid images are RGB with a near-white background (250–255, not transparent), so they sit on white only, never on a pastel panel. On the panel edge the kid uses `mix-blend-multiply`, so the border line shows through the background. A transparent version from the team would be cleaner.
 - **No plants on the score panel** _(human decision: the page left too little breathing space)_.
@@ -49,7 +49,7 @@ DOM order at every width: header (metadata, then preview) → score panel (gauge
 |---|---|
 | `lg`+ (≥1024) | Header: title, channel (2/3, top-aligned) · preview (1/3). Kid on the panel's top edge above the gauge column. Score panel: gauge column (13rem with `gap-x-8` below `xl`, 17rem with `gap-x-12` from `xl`; the gauge fills it, vertically centred) · measurements in two columns: Pacing intensification on the left; Sustained sensory intensity above Reward patterning on the right. No dividers _(human decision)_. |
 | `md` (768–1023) | Header as above; kid on the panel's top edge at its left. Score panel: gauge (~192 px) centred; the two measurement columns below. |
-| < `md` (320–767) | Header as above (the preview's play button shows its icon only); kid on the panel's top edge at its left. Score panel: gauge, then the three groups in one column. |
+| < `md` (320–767) | Header as above (the preview's play button shows its icon only); no kid _(human decision, 2026-10-16)_. Score panel: gauge, then the three groups in one column. |
 
 The title is top-aligned so the kid has room under it; the gauge column is 13rem below `xl` so measurement names don't wrap at 1024 px.
 
@@ -95,7 +95,6 @@ After "Play video": the preview becomes the YouTube player, same size and place.
 │ Tiny Trucks Race   ┌───────┐ │
 │ to the Rainbow B…  │  (▶)  │ │
 │ Wheelie Friends TV └───────┘ │
-│  {kid →}                     │
 │ ╭─ score panel ────────────╮ │
 │ │    ,-'''''''-.           │ │
 │ │  ,'    \      `.         │ │
@@ -287,7 +286,7 @@ Analysis = {
 
 ### Design
 
-The look of the old "We haven’t checked this video yet" state, now saying the analysis is running _(human decision)_: `kid_2` (decorative, ~280 px wide, every width) on the white page just above a message box (sky), centred, `max-w-2xl`. Inside, top to bottom: H1, the steps, the progress bar with the time left. No video title _(human decision: it popped in after the look-up)_; the result page shows it. A compact form, for a compare slot, shows the same steps and bar in a small sky box without the kid and the H1; its failures leave out the check-another links (the slot's × empties it) _(human decision, 2026-10-16, plan 008)_. **New in `STYLE.md`:** the progress bar and the step list (Data display).
+The look of the old "We haven’t checked this video yet" state, now saying the analysis is running _(human decision)_: `kid_2` (decorative, ~280 px wide, hidden below `md` _(human decision, 2026-10-16)_) on the white page just above a message box (sky), centred, `max-w-2xl`. Inside, top to bottom: H1, the steps, the progress bar with the time left. No video title _(human decision: it popped in after the look-up)_; the result page shows it. A compact form, for a compare slot, shows the same steps and bar in a small sky box without the kid and the H1; its failures leave out the check-another links (the slot's × empties it) _(human decision, 2026-10-16, plan 008)_. **New in `STYLE.md`:** the progress bar and the step list (Data display).
 
 ```
                   {kid_2 peeking}
@@ -355,6 +354,7 @@ Human decisions applied to the sketches, which can't carry an inline mark:
 3. **Live analysis sketch:** no "This usually takes about 2 minutes. You can leave and come back to this link later." under the bar (see **Live analysis → Decisions**: progress).
 4. **Live analysis sketch:** no video title under the heading; the time left under the bar, both centred (see **Live analysis → Design**).
 5. **Desktop sketch** (2026-10-16): Audio build-resolve and Surprise reveals show "0" with its meter instead of "None detected" (see **Decisions**: a count of 0).
+6. **Phone sketch** (2026-10-16): no kid above the score panel (see **Decisions**: the kid).
 
 ## Open questions
 
