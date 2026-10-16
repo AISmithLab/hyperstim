@@ -176,6 +176,7 @@ def env(monkeypatch: pytest.MonkeyPatch) -> pytest.MonkeyPatch:
     monkeypatch.setenv("DATASET_PATH", "data/videos.tsv")
     monkeypatch.setenv("CORS_ORIGIN", ORIGIN + "/")
     monkeypatch.setenv("ANALYSIS_DIR", "analysis")
+    monkeypatch.setenv("THUMBNAIL_DIR", "thumbnails")
     monkeypatch.delenv("YTDLP_COOKIES", raising=False)
     monkeypatch.delenv("YOUTUBE_API_KEY", raising=False)
     monkeypatch.delenv("ANALYSIS_LIMIT_PER_IP", raising=False)
@@ -187,6 +188,7 @@ def test_settings_from_env(env: pytest.MonkeyPatch) -> None:
     assert settings.dataset_path == Path("data/videos.tsv")
     assert settings.cors_origin == ORIGIN
     assert settings.analysis_dir == Path("analysis")
+    assert settings.thumbnail_dir == Path("thumbnails")
     assert settings.ytdlp_cookies is None
     assert settings.youtube_api_key is None  # no made-for-kids check
     assert settings.analysis_limit_per_ip == 5  # unset: limited all the same
@@ -195,6 +197,12 @@ def test_settings_from_env(env: pytest.MonkeyPatch) -> None:
 def test_settings_require_analysis_dir(env: pytest.MonkeyPatch) -> None:
     env.delenv("ANALYSIS_DIR")
     with pytest.raises(RuntimeError, match="ANALYSIS_DIR"):
+        load_settings()
+
+
+def test_settings_require_thumbnail_dir(env: pytest.MonkeyPatch) -> None:
+    env.delenv("THUMBNAIL_DIR")
+    with pytest.raises(RuntimeError, match="THUMBNAIL_DIR"):
         load_settings()
 
 

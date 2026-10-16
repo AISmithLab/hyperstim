@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
-import { thumbnailUrl } from "@/lib/youtube";
+import { thumbnailUrl } from "@/lib/api";
 
 const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
 /** The player's "playing" state in the embed's message API. */
@@ -91,7 +91,7 @@ export default function YouTubePlayer({
         />
       ) : (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element -- external thumbnail, static export */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization */}
           <img
             src={thumbnailUrl(id)}
             alt=""

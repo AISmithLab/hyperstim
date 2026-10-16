@@ -190,6 +190,15 @@ export function getChannels(params: ListParams & { minVideos?: number }): Promis
  * One video in the dataset, or one analyzed live. Any other video rejects with an `ApiError`
  * with status 404.
  */
+/**
+ * A video's YouTube thumbnail, served by our backend so the browser doesn't contact YouTube
+ * (plan 009): `hq` is 480×360 (4:3, letterboxed), `mq` 320×180 (16:9). 404 for a video the
+ * backend doesn't know; the image's grey box shows then.
+ */
+export function thumbnailUrl(id: string, size: "hq" | "mq" = "hq"): string {
+  return `${API_BASE}/api/thumbnails/${encodeURIComponent(id)}?size=${size}`;
+}
+
 export function getVideo(id: string): Promise<VideoDetail> {
   return get(`/api/videos/${encodeURIComponent(id)}`);
 }

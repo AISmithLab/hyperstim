@@ -11,7 +11,7 @@ describe("YouTubePlayer", () => {
 
     expect(container.querySelector("iframe")).toBeNull();
     expect(container.innerHTML).not.toContain("youtube-nocookie.com");
-    expect(container.querySelector("img")).toHaveAttribute("src", "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg");
+    expect(container.querySelector("img")).toHaveAttribute("src", "/api/thumbnails/dQw4w9WgXcQ?size=hq");
 
     await user.click(screen.getByRole("button", { name: "Play video: Snail time" }));
 

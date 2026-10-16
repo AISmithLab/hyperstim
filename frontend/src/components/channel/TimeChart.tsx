@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import ScoreMeter from "@/components/ScoreMeter";
 import type { ChannelVideo } from "@/lib/api";
 import { useWidth } from "@/lib/use-layout";
-import { thumbnailUrl } from "@/lib/youtube";
+import { thumbnailUrl } from "@/lib/api";
 import { ChartGrid, TimeAxis } from "./ChartAxes";
 import {
   formatDate,
@@ -207,7 +207,7 @@ export default function TimeChart({
             style={{ left, top: thumbTop(i), width: THUMB_W, height: THUMB_H, zIndex: front ? rows + 1 : row }}
             className={`absolute overflow-hidden rounded bg-navy/10 ring-2 transition-[top,scale] duration-200 ease-out motion-reduce:transition-none ${front ? "scale-108" : ""} ${on ? "ring-navy" : "ring-white"}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- external thumbnail, static export */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization */}
             <img
               src={thumbnailUrl(video.id, "mq")}
               alt=""

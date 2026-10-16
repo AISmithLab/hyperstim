@@ -28,11 +28,11 @@ plans/      numbered plans
   - `/how-it-works` Method explained for a general audience (features → categories → score).
   - `/about` Team, paper, contact. **Delayed** _(human decision, 2026-10-16)_: not built for now, and not linked from the header or footer until it is.
   - `/faq` Accordion of common questions.
-  - `/privacy` Privacy policy: what we store (submitted video links/IDs, analysis results, server logs with IPs for rate limiting and abuse prevention), how long, and the YouTube embeds. Embeds use `youtube-nocookie.com`. No analytics or tracking cookies.
+  - `/privacy` Privacy policy (plan 009): what we store, why, and for how long; GitHub Pages and YouTube; no analytics or cookies from us. Embeds use `youtube-nocookie.com`. **The policy must stay true:** a change to what the site or backend stores, logs, or loads from third parties updates the policy in the same change _(human decision, 2026-10-16, plan 009)_.
 - Shared layout on every page (in the root layout):
   - Header: site name/logo (links home) and nav (Home, Rankings, Compare, How it works, FAQ; About once it exists _(human decision, 2026-10-16)_), with the current page marked.
-  - Cookie consent banner on first visit: short text, link to the privacy policy, and "Accept" / "Reject" buttons of equal weight. The choice is saved in `localStorage` and can be changed via a "Cookie settings" link in the footer. Until the visitor accepts, YouTube players aren't loaded; each one shows its thumbnail with a "Load video from YouTube" button instead (which also counts as consent for that video). The site sets no other non-essential cookies.
-  - Footer: links to Privacy policy, FAQ, Cookie settings (About us once it exists _(human decision, 2026-10-16)_); plus a contact email, the project's GitHub repo, and a copyright line.
+  - No cookie banner while the site stores nothing on the visitor's device _(human decision, 2026-10-16, plan 009: the rules require one only once analytics are added)_. YouTube players load only after "Play video" is clicked (plan 004). The banner (Accept / Reject of equal weight) and a "Cookie settings" footer link come with analytics; plan 009 has the plan for it.
+  - Footer: links to Privacy policy, FAQ (About us once it exists _(human decision, 2026-10-16)_); plus a contact email, the project's GitHub repo, and a copyright line.
 - Data fetched client-side from the backend with small typed hooks; static text pages need no backend.
 - Responsive (RWD), mobile-first with Tailwind's default breakpoints; supported from 320 px phones up to wide desktop monitors:
   - Content in a max-width container on large screens so lines and tables don't stretch.
@@ -70,7 +70,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
 - Illustrations live in `frontend/public/images/`. Claude Code asks for each one (object, pose, colours, size, background) and the team supplies it; no placeholder art is committed.
 - **The kid** _(human decision, 2026-10-16)_:
   - **Hidden below `md` (768 px) on every page**: the hero kids, the kid on the score panel, and `kid_2` above the message box. Layouts drop the room they kept for it there.
-  - **The hero kids (home, rankings, compare, how it works) have the same head size** at every width they show at. The measure is the distance between the eyes (centre to centre): **30 px at `md`, 34 px at `lg`, 40 px from `xl`**, the home kid's size on desktop. Each artwork draws the kid at its own scale, so each page's width = target ÷ the art's eye distance per image width: `kid_1` 0.087, `kid_blocks_2` 0.119, `kid_compare` 0.104, `kid_wonder` 0.110.
+  - **The hero kids (home, rankings, compare, how it works, privacy) have the same head size** at every width they show at. The measure is the distance between the eyes (centre to centre): **30 px at `md`, 34 px at `lg`, 40 px from `xl`**, the home kid's size on desktop. Each artwork draws the kid at its own scale, so each page's width = target ÷ the art's eye distance per image width: `kid_1` 0.087, `kid_blocks_2` 0.119, `kid_compare` 0.104, `kid_wonder` 0.110, `kid_quiet` 0.139 (privacy, plan 009; its head is turned, so the ratio comes from its head height against `kid_compare`'s).
 
     | Art (page) | `md` | `lg` | `xl`+ |
     |---|---|---|---|
@@ -78,6 +78,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
     | `kid_blocks_2` (rankings) | 252 px | 288 px | 336 px |
     | `kid_compare` (compare) | 288 px | 328 px | 384 px |
     | `kid_wonder` (how it works) | 272 px | 308 px | 364 px |
+    | `kid_quiet` (privacy) | 216 px | 244 px | 288 px |
 
   - The score-panel kids (video, channel) keep their own size (about 75 % of the home kid's head, plan 004). New art gets its eye ratio measured and its widths from this table.
   - `STYLE.md` gets this in the same change (the **Hand-drawn art** rule, the recurring-character line, and each page's entry); the pages' plans (002, 004–008) say what it means for each.
@@ -92,6 +93,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
   - `GET /api/meta` — filter options, dataset size, last-updated date.
   - `POST /api/analyze` (YouTube link or video ID only), `GET /api/analyze/{job_id}` — live analysis (same contract as today's API, cleaned up).
   - `GET /api/health`.
+  - `GET /api/thumbnails/{id}` — a known video's YouTube thumbnail, fetched and cached by the backend so visitors' browsers never contact YouTube before they press play _(human decision, 2026-10-16, plan 009)_.
 - Data exposure: the API returns video IDs, public metadata, and scores/features only. Downloaded clips are never served, never committed, and are deleted once analysis finishes; playback on the site uses YouTube embeds.
 - Data: dataset loaded into memory at startup from a file outside the repo (5k rows is small). Analysis results stored as plain JSON files, one per video, so they survive restarts _(human decision, plan 004: plain files are enough for this lightweight task)_. Analysis runs the existing pipeline via its configured path (not vendored into this repo).
 - Tests: pytest for endpoints with a small synthetic fixture dataset.
@@ -105,7 +107,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
 
 ## Open questions
 
-1. Privacy policy text: who is the contact for privacy requests, and how long should submitted links and server logs be kept? (Default proposal: logs 30 days; analysis results kept as part of the dataset.)
+None.
 
 ## Resolved questions
 
@@ -113,3 +115,4 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
 2. GitHub Pages project page.
 3. Yes — rankings rows link to a per-video detail page.
 4. No file upload; YouTube links or video IDs only.
+5. Privacy policy contact and log retention: moved to plan 009 (server logs kept 14 days) _(2026-10-16)_.

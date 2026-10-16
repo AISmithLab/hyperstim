@@ -26,6 +26,7 @@ See `.env.example`.
 | `DATASET_PATH` | Dataset TSV (`data/videos.tsv`); its `videos.meta.json` must sit next to it. |
 | `CORS_ORIGIN` | The one origin allowed to call the API (the frontend's URL). |
 | `ANALYSIS_DIR` | Folder for live analyses: one JSON result per video, plus the running video's temporary clip. Outside the repo on the server (locally `analysis/`, git-ignored). |
+| `THUMBNAIL_DIR` | Folder for cached video thumbnails (see Thumbnails). Outside the repo on the server (locally `thumbnails/`, git-ignored). |
 | `ANALYSIS_LIMIT_PER_IP` | New live analyses one IP address may start per hour; `0` = no limit (local development). Optional, default 5. |
 | `YOUTUBE_API_KEY` | YouTube Data API key for the live analysis's made-for-kids check (1 quota unit per new video). Empty = no check, for local development; always set it on the server. Never commit it. |
 | `YTDLP_COOKIES` | Optional cookies file for yt-dlp, if YouTube asks for one. Never commit it. |
@@ -62,6 +63,18 @@ A video that isn't in the dataset is analyzed on request (`POST /api/analyses/{i
 - Measuring uses at most 4 cores (`MEASURE_CORES` in `analysis.py`; more barely help, since most of the work is single-threaded), leaving the rest of the server free.
 - Each video's state is `ANALYSIS_DIR/<id>.json`. Results are kept until the file is deleted; videos waiting or running when the API stopped start again at the next start.
 - The per-IP limit sees the visitor's address only if uvicorn trusts the reverse proxy: on the server, run it with `--proxy-headers --forwarded-allow-ips <proxy address>`. The counts are kept in memory only.
+
+## Thumbnails
+
+`GET /api/thumbnails/{id}?size=hq|mq` (`src/hyperstim_api/thumbnails.py`) serves a video's YouTube thumbnail (`hq` 480×360, `mq` 320×180), so visitors' browsers don't contact YouTube before they press play (the privacy policy says so; plan 009). Only for videos in the dataset or requested for live analysis; anything else is 404. The server fetches each image from YouTube once and keeps it in `THUMBNAIL_DIR` for at most 30 days (YouTube's API terms), then fetches it again; files past that are deleted hourly even if nobody asks for them. A thumbnail YouTube doesn't have is 404 and remembered for a day; YouTube unreachable is 502.
+
+## Privacy
+
+The privacy policy (`/privacy`, plan 009) promises what the server keeps; keep the server set up to match:
+
+- Run uvicorn with `--no-access-log` in production. The reverse proxy already logs every request (rotated, deleted after 14 days), so uvicorn's access log would only be a second, unrotated copy with visitors' IPs. The app's own log lines contain no IPs.
+- The reverse proxy's access and error logs are deleted after 14 days.
+- A change to what the backend stores or logs updates the policy in the same change.
 
 ## Channel lookup
 

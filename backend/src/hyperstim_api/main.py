@@ -7,6 +7,7 @@ from typing import Annotated
 
 from fastapi import FastAPI, HTTPException, Path, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
@@ -25,6 +26,7 @@ from hyperstim_api.channel_lookup import ChannelLookup, NotALink, NotFound
 from hyperstim_api.config import Settings, load_settings
 from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video, load_dataset
 from hyperstim_api.ranking import CRITERIA, Order, Ranked
+from hyperstim_api.thumbnails import Size, Thumbnails, Unavailable
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
 VideoId = Annotated[str, Path(pattern=VIDEO_ID_PATTERN)]
@@ -212,8 +214,12 @@ def analysis(record: Record, queue_position: int | None, now: float) -> Analysis
     )
 
 
-def create_app(settings: Settings | None = None, pipeline: Pipeline | None = None) -> FastAPI:
-    """The app; `pipeline` replaces the research scripts in tests."""
+def create_app(
+    settings: Settings | None = None,
+    pipeline: Pipeline | None = None,
+    thumbnails: Thumbnails | None = None,
+) -> FastAPI:
+    """The app; `pipeline` and `thumbnails` replace the research scripts and YouTube in tests."""
     logging.basicConfig(level=logging.INFO)
     settings = settings or load_settings()
     dataset = load_dataset(settings.dataset_path)
@@ -236,6 +242,7 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
         analyzer.stop_worker()
 
     lookup = ChannelLookup(dataset, analyzer, pipeline)
+    thumbnails = thumbnails or Thumbnails(settings.thumbnail_dir)
 
     app = FastAPI(title="HyperStim API", lifespan=lifespan)
     app.state.analyzer = analyzer
@@ -367,6 +374,30 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
             raise HTTPException(status_code=429, detail="Too many requests") from None
         return ChannelFound(
             channel_id=found.channel_id, name=found.name, in_dataset=found.in_dataset
+        )
+
+    @app.get(
+        "/api/thumbnails/{video_id}",
+        response_class=FileResponse,
+        responses={
+            200: {"content": {"image/jpeg": {}}},
+            404: {"description": "Not a video we know, or YouTube has no thumbnail"},
+            502: {"description": "YouTube couldn't be reached"},
+        },
+    )
+    def thumbnail(video_id: VideoId, size: Size = "hq") -> FileResponse:
+        """A video's YouTube thumbnail, served by us so visitors' browsers don't contact YouTube.
+        Only for videos in the dataset or requested for live analysis."""
+        if video_id not in dataset.videos_by_id and analyzer.snapshot(video_id) is None:
+            raise HTTPException(status_code=404, detail="Video not found")
+        try:
+            path = thumbnails.get(video_id, size)
+        except Unavailable:
+            raise HTTPException(status_code=502, detail="YouTube unavailable") from None
+        if path is None:
+            raise HTTPException(status_code=404, detail="No thumbnail")
+        return FileResponse(
+            path, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=86400"}
         )
 
     @app.get("/api/channels/{channel_id}", responses={404: {"description": "Channel not found"}})
