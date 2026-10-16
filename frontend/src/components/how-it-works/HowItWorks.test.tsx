@@ -47,7 +47,7 @@ describe("HowItWorks", () => {
     const { container } = render(<HowItWorks />);
     const questions = container.querySelector("#questions")!;
     const items = within(questions as HTMLElement).getAllByRole("group");
-    expect(items).toHaveLength(5);
+    expect(items).toHaveLength(6);
     for (const item of items) {
       expect(item).not.toHaveAttribute("open");
       await user.click(item.querySelector("summary")!);

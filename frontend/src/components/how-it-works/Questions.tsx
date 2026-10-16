@@ -23,6 +23,7 @@ const QUESTIONS: [string, ReactNode][] = [
     "How is a channel’s score worked out?",
     "It’s the average of its videos’ scores in our dataset.",
   ],
+  ["Can I check a video that isn’t on YouTube?", "Not yet. For now, we can only check YouTube videos."],
   [
     "Do you keep anything about me?",
     <>
