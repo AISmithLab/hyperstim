@@ -1,5 +1,7 @@
 # 002 — Homepage
 
+**Area:** Home page (`/`) and its endpoints.
+
 ## Goal
 
 Build the home page (`/`) following the look of the mockup's home panel: hero with illustration on top, "check a video" card bottom-left, and a top-ranked table bottom-right (replacing the mockup's highlights block). Build it first on mock data, then add the backend endpoints that feed it.

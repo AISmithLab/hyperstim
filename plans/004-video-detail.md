@@ -1,6 +1,7 @@
 # 004 — Video detail page
 
-**Status:** done (2026-10-14). Later changes to this page go in a new plan.
+**Area:** Video page (`/video`), its endpoint and live analysis.
+**Status:** done (2026-10-14).
 
 ## Goal
 

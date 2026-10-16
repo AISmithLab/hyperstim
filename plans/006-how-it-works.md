@@ -1,5 +1,7 @@
 # 006 — How it works
 
+**Area:** How it works page (`/how-it-works`).
+
 ## Goal
 
 Build `/how-it-works`, a static page that explains to parents, in plain words, how a video gets its score:

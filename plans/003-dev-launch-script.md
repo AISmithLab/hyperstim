@@ -1,5 +1,7 @@
 # 003 — Dev launch script
 
+**Area:** Local development setup (`dev.sh`).
+
 ## Goal
 
 One command that starts the backend and the frontend together for local development, with the frontend talking to the real backend.

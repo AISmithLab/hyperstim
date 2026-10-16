@@ -1,5 +1,7 @@
 # 001 — Overall architecture
 
+**Area:** Site-wide: architecture, hosting, API conventions, privacy, and rules that apply to every page.
+
 ## Goal
 
 Replace the old static site (vanilla HTML/JS, dataset baked into a ~10 MB JS file, separate live-analysis API) with a maintainable Next.js frontend and a single backend that serves both the dataset and live analysis.

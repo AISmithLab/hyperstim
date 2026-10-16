@@ -4,17 +4,20 @@ Website for the HyperStimulation project: a Next.js frontend (static, GitHub Pag
 
 ## Workflow
 
-- Work is iterative. For each request: write a plan in `plans/`, wait for review, then implement only the parts that were approved.
+- Work is iterative. For each request: write the plan (or the change to it) in `plans/`, wait for review, then implement only the parts that were approved.
 - Plans are concise: goal, decisions, steps, open questions. No long prose.
-- Plan files are numbered: `plans/NNN-short-title.md` (e.g. `001-architecture.md`). Once a plan is done, never rewrite its decisions; write a new plan instead.
-- Work on a plan happens on its own branch, named after the plan file: `NNN-short-title` (e.g. `005-channel-detail` for `plans/005-channel-detail.md`).
-- Never delete finished plans. They stay in `plans/` as the record of how things were built and the choices made along the way.
+- Plan files are numbered: `plans/NNN-short-title.md` (e.g. `001-architecture.md`).
+- Each plan owns an area of concern (a page, the dev setup, the architecture), named in an **Area** line under its title. It stays the current description of that area, so anyone working on the area reads that one plan.
+  - A change to an area goes into the plan that owns it, also after the plan is done: edit it in place as a human decision (below), with the date. A change that spans areas goes into each affected area's plan; site-wide rules go into 001 or `STYLE.md`.
+  - A new plan only for a new area.
+- Work on a plan happens on its own branch, named after the plan file: `NNN-short-title` (e.g. `005-channel-detail` for `plans/005-channel-detail.md`). Later work on the same area reuses that branch, rebased onto `main` first so it has the latest changes.
+- Never delete plans. Together with the dated decision marks and git history, they are the record of how things were built and the choices made along the way.
 - Human decisions: while a plan is in progress (including reviewing what was built), record every decision the user makes in that plan, so the plan always reads as what is (or will be) built:
   - Edit the plan in place: rewrite the spot the decision is about (or add it where it belongs) and mark it _(human decision)_. If the user said why the earlier version didn't work, add that very briefly: _(human decision: too little breathing space)_. Don't keep the earlier version in the plan.
   - Only where a mark can't go in place (e.g. ASCII sketches): edit it directly, and list the decision in the plan's **Review decisions** section (before **Open questions**), naming what changed and the related spot in the plan.
   - Ask when a comment is unclear or conflicts with an earlier plan.
   - Apply each decision to the implementation right away too (with lint, type check, tests, build passing), so plan and code stay in sync.
-- Later plans override earlier ones. If a new plan contradicts an earlier one and it is unclear whether that is intended, ask before proceeding.
+- If a change contradicts another plan and it is unclear whether that is intended, ask before proceeding.
 - Keep this file up to date when a rule changes.
 
 ## Public repository
