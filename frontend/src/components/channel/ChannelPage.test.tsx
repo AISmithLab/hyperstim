@@ -29,9 +29,9 @@ function video(n: number, publishedAt: string, overrides: Record<string, [number
 }
 
 function channel(videos = [
-  video(1, "2018-02-03", { lstar_flash_per_min: [0, 58.3] }),
+  video(1, "2018-02-03", { lstar_flash_per_min: [0, 0] }),
   video(2, "2020-05-01", { lufs: [null, null] }),
-  video(3, "2024-09-06", { lstar_flash_per_min: [0, 58.3], lufs: [null, null] }),
+  video(3, "2024-09-06", { lstar_flash_per_min: [0, 0], lufs: [null, null] }),
   video(4, "2026-01-10", { inter_cut_dssim_mean: [null, null] }),
 ]): ChannelDetail {
   return {
@@ -127,12 +127,10 @@ describe("ChannelPage", () => {
     expect(height()).toBe(overallHeight);
     expect(chips.getByRole("button", { name: "Luminance flash", pressed: true })).toBeInTheDocument();
     expect(chips.getAllByRole("button", { pressed: true })).toHaveLength(1);
-    // Two zero-event videos are rings on the 0 line, counted as 0 in the trend; no strip, no legend.
-    expect(container.querySelectorAll('[data-mark="zero"]')).toHaveLength(2);
+    // Two videos with a count of 0 are plain dots at 0, counted in the trend.
     expect(container.querySelectorAll("[data-dot]")).toHaveLength(4);
     expect(container.querySelector("[data-trend]")).toBeInTheDocument();
-    expect(screen.queryByText("None detected", { selector: "text" })).toBeNull();
-    expect(within(table()).getAllByRole("row")[1]).toHaveTextContent("Feb 3, 2018Tiny Trucks 1None detected");
+    expect(within(table()).getAllByRole("row")[1]).toHaveTextContent("Feb 3, 2018Tiny Trucks 10");
 
     // No cuts: a ×, left out of the trend (3 videos remain), and not counted as not measured.
     await user.click(chips.getByRole("button", { name: "Scene discontinuity" }));
@@ -144,7 +142,7 @@ describe("ChannelPage", () => {
 
     await user.click(chips.getByRole("button", { name: "Audio intensity" }));
     expect(container.querySelectorAll("[data-dot]")).toHaveLength(2);
-    expect(screen.getByText("2 videos not measured")).toBeInTheDocument();
+    expect(screen.getByText("2 videos without sound")).toBeInTheDocument();
     expect(within(table()).getAllByRole("columnheader")[2]).toHaveTextContent("Audio intensity");
   });
 
@@ -173,7 +171,7 @@ describe("ChannelPage", () => {
 
     // Changing the measurement keeps the panel and updates its value.
     await user.click(screen.getByRole("button", { name: "Luminance flash" }));
-    expect(within(screen.getByRole("region", { name: "Tiny Trucks 3" })).getByText("None detected")).toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Tiny Trucks 3" })).getByText("0")).toBeInTheDocument();
 
     // A dot opens its video in place of the first.
     fireEvent.click(container.querySelector('[data-hit="video000001"]')!);

@@ -277,6 +277,36 @@ def test_video_detail_malformed_id(detail_client: TestClient, video_id: str) -> 
     assert detail_client.get(f"/api/videos/{video_id}").status_code == 422
 
 
+def test_counts_of_zero_show_as_percentile_0(
+    tmp_path: Path, make_client: Callable[[Path], TestClient]
+) -> None:
+    """Shown values only: the score still uses the pool percentiles."""
+    rows = detail_rows()
+    channel_id = "UC" + "c" * 22
+    for row in rows:
+        row["channel_id"] = channel_id
+    for row in rows[:2]:
+        row["cuts_per_min"] = "0"
+    # A clip without sound: no loudness, so no loudness jumps either.
+    rows[0]["loudness_jumps_per_min"] = rows[0]["lufs"] = ""
+    client = make_client(write_dataset(tmp_path / "videos.tsv", rows))
+    features = {f["key"]: f for f in client.get("/api/videos/aaaaaaaaaa1").json()["features"]}
+    # In the pool the two zeros tie at 50; shown as 0.
+    assert features["cuts_per_min"] == {"key": "cuts_per_min", "value": 0.0, "percentile": 0.0}
+    assert features["loudness_jumps_per_min"] == {
+        "key": "loudness_jumps_per_min",
+        "value": 0.0,
+        "percentile": 0.0,
+    }
+    assert features["lufs"] == {"key": "lufs", "value": None, "percentile": None}
+    channel = client.get(f"/api/channels/{channel_id}").json()
+    chan = {f["key"]: f for f in channel["features"]}
+    assert chan["cuts_per_min"]["percentile"] == round((0 + 0 + 100) / 3, 1)
+    # The score is unchanged: video 1's composite still ranks lowest of the three.
+    scores = [client.get(f"/api/videos/{i}").json()["score"] for i in DETAIL_IDS]
+    assert scores == sorted(scores)
+
+
 CHAN_A = "UC" + "a" * 22
 CHAN_B = "UC" + "b" * 22
 # (video ID, channel, value of every feature, publish date); rows out of date order.

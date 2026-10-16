@@ -20,6 +20,20 @@ CATEGORIES: dict[str, str] = {
     "gaming": "gaming",
 }
 
+# Per-minute counts (plan 004). A count of 0 is the calmest value there is, so it shows as
+# percentile 0: in the pool thousands of videos tie at 0, and "at or below" puts them in the
+# middle (e.g. 60). Shown values only; the score uses the pool percentiles (scoring.py).
+EVENT_FEATURES = frozenset(
+    {
+        "cuts_per_min",
+        "palette_change_per_min",
+        "lstar_flash_per_min",
+        "loudness_jumps_per_min",
+        "build_resolve_per_min",
+        "loudness_jump_at_cut_per_min",
+    }
+)
+
 REQUIRED_COLUMNS = (
     "video_id",
     "title",
@@ -153,12 +167,20 @@ def _video(
         channel=channel,
         category=category,
         score=score,
-        features=tuple(
-            Feature(key=name, value=features.get(name), percentile=percentiles[name])
-            for name in scoring.FEATURES
-        ),
+        features=tuple(_shown(name, features, percentiles) for name in scoring.FEATURES),
         published_at=published_at,
     )
+
+
+def _shown(name: str, features: scoring.Features, percentiles: dict[str, float | None]) -> Feature:
+    """A feature as the site shows it (see EVENT_FEATURES)."""
+    value = features.get(name)
+    # A clip without sound has no loudness (2.3 blank), so no loudness jumps either.
+    if name == "loudness_jumps_per_min" and value is None and features.get("lufs") is None:
+        value = 0.0
+    if value == 0 and name in EVENT_FEATURES:
+        return Feature(key=name, value=value, percentile=0.0)
+    return Feature(key=name, value=value, percentile=percentiles[name])
 
 
 def _mean(values: list[float]) -> float | None:

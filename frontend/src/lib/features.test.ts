@@ -41,24 +41,14 @@ describe("featureDisplay", () => {
     expect(featureDisplay(f("cuts_per_min", 12, 71.4))).toEqual({ kind: "percentile", percentile: 71.4 });
   });
 
-  it.each([
-    "cuts_per_min",
-    "palette_change_per_min",
-    "lstar_flash_per_min",
-    "loudness_jumps_per_min",
-    "build_resolve_per_min",
-    "loudness_jump_at_cut_per_min",
-  ])("shows None detected for zero %s", (key) => {
-    expect(featureDisplay(f(key, 0, 60))).toEqual({ kind: "none", text: "None detected" });
-  });
-
-  it("keeps the percentile for a zero share or level", () => {
-    expect(featureDisplay(f("motion_frac", 0, 0))).toEqual({ kind: "percentile", percentile: 0 });
+  it("shows a count of 0 as 0", () => {
+    expect(featureDisplay(f("lstar_flash_per_min", 0, 0))).toEqual({ kind: "percentile", percentile: 0 });
   });
 
   it("explains missing values", () => {
     expect(featureDisplay(f("inter_cut_dssim_mean", null))).toEqual({ kind: "none", text: "No cuts" });
-    expect(featureDisplay(f("lufs", null))).toEqual({ kind: "none", text: "Not measured" });
+    expect(featureDisplay(f("lufs", null))).toEqual({ kind: "none", text: "No sound" });
+    expect(featureDisplay(f("motion_frac", null))).toEqual({ kind: "none", text: "Not measured" });
   });
 });
 
@@ -69,9 +59,5 @@ describe("kidMood", () => {
 
   it("is surprised when any measurement is above 90", () => {
     expect(kidMood([f("cuts_per_min", 30, 40), f("mean_saturation", 0.6, 90.1)])).toBe("surprised");
-  });
-
-  it("ignores percentiles of zero-event measurements", () => {
-    expect(kidMood([f("build_resolve_per_min", 0, 95)])).toBe("smile");
   });
 });

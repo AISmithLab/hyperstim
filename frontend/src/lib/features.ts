@@ -138,20 +138,16 @@ export type FeatureDisplay =
   | { kind: "percentile"; percentile: number }
   | { kind: "none"; text: string };
 
+/** Why a measurement has no value: no cuts to compare, no sound to measure, or not measured. */
+const NO_VALUE: Record<string, string> = { inter_cut_dssim_mean: "No cuts", lufs: "No sound" };
+
 /**
- * What a measurement row shows. Per-minute features with no events show "None detected": with
- * ties at 0 their percentile would look middling. Missing values show why instead of a number.
+ * What a measurement row shows: the percentile, or why there is none. A count of 0 comes from
+ * the backend as percentile 0, so it shows as 0.
  */
 export function featureDisplay(feature: Feature): FeatureDisplay {
   if (feature.value === null || feature.percentile === null) {
-    return {
-      kind: "none",
-      text: feature.key === "inter_cut_dssim_mean" ? "No cuts" : "Not measured",
-    };
-  }
-  const unit = FEATURE_INFO[feature.key]?.unit;
-  if (feature.value === 0 && (unit === "perMin" || unit === "cutsPerMin")) {
-    return { kind: "none", text: "None detected" };
+    return { kind: "none", text: NO_VALUE[feature.key] ?? "Not measured" };
   }
   return { kind: "percentile", percentile: feature.percentile };
 }

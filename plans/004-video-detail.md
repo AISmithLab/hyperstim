@@ -22,8 +22,8 @@ Build `/video?id=<youtube-id>`: one video's stimulation score and its 12 measure
   - Groups: **Pacing intensification** (types 1.1–1.6), **Sustained sensory intensity** (2.1–2.4), **Reward patterning** (3.1–3.2). In two columns: Pacing intensification in one; Sustained sensory intensity above Reward patterning in the other _(human decision)_.
   - Measurement names are the research taxonomy's type names (see **Copy**), in sentence case _(human decision)_.
   - Meters keep 5 cells and the score scale colours _(human decision)_.
-  - **"None detected" instead of a percentile when an event count is 0.** Many videos have no flashes, build-ups or surprise sounds, and with ties at 0 a zero would show as a middling percentile (e.g. 60). Applies to the per-minute features (1.1, 1.3, 1.4, 1.6, 3.1, 3.2).
-  - **Missing values** (1.2 has none when no cuts were found; 1.6/2.3 missing for 7 videos): "No cuts" for 1.2, "Not measured" otherwise. No meter for either.
+  - **A count of 0 shows as 0, with its meter like any other value** _(human decision, 2026-10-16: a real count of 0 is a number, not a missing value, so no "None detected" label)_. The API sends it as percentile 0, not its pool percentile: many videos have no flashes, build-ups or surprise sounds, and with ties at 0 a zero would show as a middling percentile (e.g. 60). Applies to the per-minute features (1.1, 1.3, 1.4, 1.6, 3.1, 3.2). Display only: the score keeps the pool percentiles (`scoring.py`).
+  - **No value:** "No cuts" for 1.2 when a video has no cuts (nothing to compare). **Silent clips** (the 7 videos without sound, two titled "No Sound"): the pipeline leaves 1.6 and 2.3 blank, since silence has no loudness and jumps are measured against it; the API sends 1.6 as a count of 0 (no sound, no jumps), and 2.3 shows "No sound" _(human decision, 2026-10-16)_. "Not measured" for any other missing value. No meter for these.
   - Raw values (in the popover) only for features with a plain unit (per minute, share of time). Saturation, brightness, loudness (LUFS) and scene dissimilarity have none: their units mean nothing to parents.
 - **Copy limits** (from the research team's guidance): describe what is measured, not effects on children. No claims about addiction, attention, or development; no "good/bad" or "safe/unsafe" wording.
 - **No clip-coverage note** ("We measured up to 5 minutes…") **and no cookie note** under the video ("Plays from YouTube, which may set cookies.") _(human decision)_.
@@ -75,8 +75,8 @@ Sketches _(human decision)_: not to scale (names shortened only in the phone ske
 │  │ calm     ●  intense     Luminance flash (i)      64 ▮▮▮▮▯   Silence elimination (i) 30 ▮▮▯▯▯│   │
 │  │     87 / 100 (i)         Motion density (i)       58 ▮▮▮▯▯                                  │   │
 │  │                          Loudness jumps (i)       40 ▮▮▯▯▯   Reward patterning              │   │
-│  │                                                              Audio build-resolve (i) None d.│   │
-│  │                                                              Surprise reveals (i)    None d.│   │
+│  │                                                              Audio build-resolve (i)  0 ▮▯▯▯▯│   │
+│  │                                                              Surprise reveals (i)     0 ▮▯▯▯▯│   │
 │  ╰─────────────────────────────────────────────────────────────────────────────────────────────╯   │
 │                                                                                                    │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
@@ -119,7 +119,7 @@ All surfaces and controls are from `STYLE.md`; new ones are marked **new**.
    - Panel padding `py-6`; no vertical divider, a gap instead (`gap-x-8` at `lg`, `gap-x-12` from `xl`); a `navy/10` line between gauge and measurements only when stacked.
    - **Gauge column** (**new**: `ScoreGauge`). No visible "Stimulation score" title _(human decision)_: an sr-only H2 "Stimulation score" names the panel; the score `InfoTip` sits after the number. A half-circle dial (inline SVG, ~192 px wide below `lg`, the full column from `lg`; about 80 % of its first size, to leave more gap between the columns _(human decision)_) split into five bands in the score scale colours (`sky-blue` → `leaf` → `scale-low` → `scale-mid` → `scale-high`, 20 points each), "calm" and "intense" labels under its two ends (small, ink), and a navy needle with a round hub. Under the dial: the score as a large navy `font-hand` number with "/ 100" small after it.
    - **Animation:** on first render the needle sweeps from 0 to the score (~1 s, ease-out) while the number counts up with it. With `prefers-reduced-motion`, both show the final value at once. The SVG is `aria-hidden`; the counting number is `aria-hidden` too, with the final score in sr-only text, so screen readers read one value.
-   - **Measurements** (**new**: measurement table). Each group: H3 (`font-hand text-lg text-navy`), then one row per feature, `min-h-11`, lines `navy/10`. Row: name (semibold navy) + `InfoTip`; percentile (bold navy, `tabular-nums`, right-aligned fixed-width column); `ScoreMeter` compact (5 segments, ~4.5 rem wide). "None detected" / "No cuts" / "Not measured" in muted text in place of number + meter. sr-only text on the number: "Higher than {93}% of videos in our dataset". The popover: the description, then this video's value where there is one.
+   - **Measurements** (**new**: measurement table). Each group: H3 (`font-hand text-lg text-navy`), then one row per feature, `min-h-11`, lines `navy/10`. Row: name (semibold navy) + `InfoTip`; percentile (bold navy, `tabular-nums`, right-aligned fixed-width column); `ScoreMeter` compact (5 segments, ~4.5 rem wide). A count of 0 is a "0" with its meter _(human decision, 2026-10-16)_. "No cuts" / "No sound" / "Not measured" in muted text in place of number + meter. sr-only text on the number: "Higher than {93}% of videos in our dataset". The popover: the description, then this video's value where there is one.
 3. **Video preview** (**new**: `YouTubePlayer`), in the header. A 16:9 `rounded-2xl` box, overflow hidden, as wide as its column. Before the click: the thumbnail as `<img alt="">`, a light navy scrim, centred primary button with a play icon; the "Play video" label shows from a 20rem-wide box, a round icon-only button below that. After: the iframe (`title` = video title, `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`) in the same box, focus moved to it. No "hide" control: the player is just a player once loaded.
 4. **States**
    - Loading: skeletons for the thumbnail, the title and the score panel (dial outline, 12 grey rows), `aria-busy`, sr-only loading text. The preview is a grey 16:9 box.
@@ -178,8 +178,9 @@ Per-minute values: 1 decimal; shares: whole percent. Info button sr label: "Abou
 | Where | Text |
 |---|---|
 | Percentile (sr-only) | Higher than {93}% of videos in our dataset |
-| Zero events | None detected |
+| Zero events | 0, with its meter _(human decision, 2026-10-16)_ |
 | 1.2 missing | No cuts |
+| 2.3 missing (no sound) | No sound _(human decision, 2026-10-16)_ |
 | Other missing | Not measured |
 
 **Video**
@@ -218,7 +219,7 @@ GET /api/channels   items gain id: string          (the channel ID; channel link
 
 `GET /api/videos/{id}` also answers for videos analyzed live (same shape); `/api/meta`, `/api/videos` and `/api/channels` never include them. Live analysis endpoints: see **Live analysis → API**.
 
-`percentile` is the feature's percentile in the dataset (same formula as the score, 1 decimal), `null` when `value` is. The "None detected" rule lives in the frontend. Feature names and descriptions are frontend copy keyed by `key`. No category, publication date or length: the page doesn't show them.
+`percentile` is the feature's percentile in the dataset (same formula as the score, 1 decimal), `null` when `value` is; a per-minute count of 0 is `0`, and a clip without sound (2.3 `null`) has 1.6 as `value: 0, percentile: 0` _(human decision, 2026-10-16)_. These rules live in the backend (`dataset.py`), so every page and the channel averages and rankings follow them; the frontend only shows "No cuts" / "No sound" / "Not measured" for `null`. Feature names and descriptions are frontend copy keyed by `key`. No category, publication date or length: the page doesn't show them.
 
 ## Backend
 
@@ -339,7 +340,7 @@ Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, t
 2. **API client + mocks.** `getVideo(id)` in `api.ts` (404 surfaces as `ApiError` with status 404); mock details for the mock videos, with one zero-event, one missing-value case, and one mock ID that returns 404.
 3. **Shared pieces.** Extract `ScoreMeter` from `RankingsCard` (no visual change) with a compact size; `ScoreGauge`; `YouTubePlayer`; `STYLE.md` entries; add `kid_2` and `kid_3` to `used.json`; the mood rule (`kidMood(features)`) as a small tested function.
 4. **Page.** `/video` with all states; `useSearchParams` inside a `Suspense` boundary (needed for static export).
-5. **Tests.** Value formatting (per minute, percent), "None detected"/missing rules, kid mood rule, gauge needle angle for 0/50/100 and reduced motion, the preview swaps to the iframe on click (and loads nothing from YouTube before), each state renders, title set after load.
+5. **Tests.** Value formatting (per minute, percent), zero-count/missing rules, kid mood rule, gauge needle angle for 0/50/100 and reduced motion, the preview swaps to the iframe on click (and loads nothing from YouTube before), each state renders, title set after load.
 6. **Review.** Screenshots at 360 and 1280 px (plus 320, 768, 1920 and keyboard-only check) compared with `STYLE.md`; check the score panel is above the fold at 1280 × 720 and the gauge at 360 × 640; run against the real backend. Stop for review.
 7. **Live analysis, backend.** `analysis.py`, endpoints, env vars, tests; time a few real runs on our server to set the typical step durations. README, `.env.example`, `dev.sh`.
 8. **Live analysis, frontend.** `startAnalysis(id)` / `getAnalysis(id)` in `api.ts` and mocks; the progress view in `VideoPage` (404 → start → poll → result); `STYLE.md` entries; tests (each step and failure renders, polling stops on done/failed, the bar never reaches 100 % before done, reduced motion, live region text).
@@ -353,6 +354,7 @@ Human decisions applied to the sketches, which can't carry an inline mark:
 2. **"Not checked yet" sketch removed;** the live analysis sketch replaces it (see **Live analysis**).
 3. **Live analysis sketch:** no "This usually takes about 2 minutes. You can leave and come back to this link later." under the bar (see **Live analysis → Decisions**: progress).
 4. **Live analysis sketch:** no video title under the heading; the time left under the bar, both centred (see **Live analysis → Design**).
+5. **Desktop sketch** (2026-10-16): Audio build-resolve and Surprise reveals show "0" with its meter instead of "None detected" (see **Decisions**: a count of 0).
 
 ## Open questions
 

@@ -10,12 +10,11 @@ export function measureName(measure: Measure): string {
 }
 
 /**
- * A video's place on the chart: a value 0–100; a real zero (events counted, none found: a ring on
- * the 0 line); no value because the measurement doesn't apply ("No cuts": a ×); or left out.
+ * A video's place on the chart: a value 0–100 (a count of 0 is 0); no value because the
+ * measurement doesn't apply ("No cuts": a ×); or left out.
  */
 export type Point =
   | { kind: "value"; value: number }
-  | { kind: "zero"; text: string }
   | { kind: "na"; text: string }
   | { kind: "missing"; text: string };
 
@@ -25,8 +24,6 @@ export function pointOf(video: ChannelVideo, measure: Measure): Point {
   if (!feature) return { kind: "missing", text: "Not measured" };
   const display = featureDisplay(feature);
   if (display.kind === "percentile") return { kind: "value", value: display.percentile };
-  // Per-minute features with no events: their tied percentile would read as middling.
-  if (display.text === "None detected") return { kind: "zero", text: display.text };
   return display.text === "No cuts" ? { kind: "na", text: display.text } : { kind: "missing", text: display.text };
 }
 

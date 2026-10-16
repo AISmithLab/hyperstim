@@ -7,7 +7,8 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from hyperstim_api.ranking import CRITERIA, NO_EVENTS_FEATURES, fold
+from hyperstim_api.dataset import EVENT_FEATURES
+from hyperstim_api.ranking import CRITERIA, fold
 from hyperstim_api.scoring import FEATURES
 from tests.conftest import Row, video_row, write_dataset
 
@@ -27,7 +28,7 @@ def rows() -> list[Row]:
     for video_id, channel_id, value, category in VIDEOS:
         out.append(video_row(video_id, channel_id, value, category=category))
     by_id = {r["video_id"]: r for r in out}
-    by_id["vid-1"]["cuts_per_min"] = "0"  # no cuts: no value for cuts_per_min
+    by_id["vid-1"]["cuts_per_min"] = "0"  # no cuts: a count of 0
     by_id["vid-5"]["cuts_per_min"] = "0.0"
     by_id["vid-4"]["lufs"] = ""  # not measured
     by_id["vid-2"]["title"] = "Café Crayón Song"
@@ -56,7 +57,7 @@ def channels(client: TestClient, **params: str | int) -> tuple[list[tuple[str, i
     return [(c["id"], c["rank"]) for c in body["items"]], body["total"]
 
 
-def test_feature_ranking_puts_no_events_last_and_unranked(client: TestClient) -> None:
+def test_counts_of_zero_rank_last_and_share_a_rank(client: TestClient) -> None:
     desc, total = videos(client, sort="cuts_per_min")
     assert total == 6
     assert desc == [
@@ -64,18 +65,18 @@ def test_feature_ranking_puts_no_events_last_and_unranked(client: TestClient) ->
         ("vid-2", 2),
         ("vid-3", 3),
         ("vid-6", 4),
-        ("vid-1", None),  # zero events, ties by id
-        ("vid-5", None),
+        ("vid-1", 5),  # a count of 0 (percentile 0), ties by id
+        ("vid-5", 5),
     ]
     asc, _ = videos(client, sort="cuts_per_min", order="asc")
-    # Reversed, ranks counted from the calm end; no-value rows stay last.
+    # Reversed, ranks counted from the calm end.
     assert asc == [
-        ("vid-6", 1),
-        ("vid-3", 2),
-        ("vid-2", 3),
-        ("vid-4", 4),
-        ("vid-1", None),
-        ("vid-5", None),
+        ("vid-5", 1),
+        ("vid-1", 1),
+        ("vid-6", 3),
+        ("vid-3", 4),
+        ("vid-2", 5),
+        ("vid-4", 6),
     ]
 
 
@@ -84,7 +85,7 @@ def test_missing_values_are_unranked(client: TestClient) -> None:
     assert desc[-1] == ("vid-4", None)
     assert [rank for _, rank in desc[:-1]] == [1, 2, 3, 4, 5]
     # A zero on a feature that isn't per minute is a value like any other.
-    assert "lufs" not in NO_EVENTS_FEATURES
+    assert "lufs" not in EVENT_FEATURES
 
 
 @pytest.mark.parametrize("criterion", CRITERIA)
@@ -93,7 +94,6 @@ def test_every_criterion_ranks_by_percentile_with_ties_by_id(
 ) -> None:
     body = client.get("/api/videos", params={"sort": criterion, "limit": 100}).json()
     ranked = [v for v in body["items"] if v["rank"] is not None]
-    assert [v["rank"] for v in ranked] == list(range(1, len(ranked) + 1))
 
     def value(v: dict[str, object]) -> float:
         if criterion == "score":
@@ -102,13 +102,21 @@ def test_every_criterion_ranks_by_percentile_with_ties_by_id(
         assert isinstance(features, list)
         return float(next(f["percentile"] for f in features if f["key"] == criterion))
 
+    def ranks(rows: list[dict[str, object]]) -> list[int]:
+        """Positions, with equal values sharing the first one's rank."""
+        out: list[int] = []
+        for i, v in enumerate(rows):
+            out.append(out[-1] if i > 0 and value(v) == value(rows[i - 1]) else i + 1)
+        return out
+
+    assert [v["rank"] for v in ranked] == ranks(ranked)
     keys = [(-value(v), v["id"]) for v in ranked]
     assert keys == sorted(keys)
     asc = client.get(
         "/api/videos", params={"sort": criterion, "order": "asc", "limit": 100}
     ).json()["items"]
     assert [v["id"] for v in asc[: len(ranked)]] == [v["id"] for v in reversed(ranked)]
-    assert [v["rank"] for v in asc[: len(ranked)]] == list(range(1, len(ranked) + 1))
+    assert [v["rank"] for v in asc[: len(ranked)]] == ranks(asc[: len(ranked)])
 
 
 @pytest.mark.parametrize("criterion", ["score", "cuts_per_min"])
@@ -192,12 +200,12 @@ def test_fold() -> None:
     assert fold("STRASSE Straße") == "strasse strasse"
 
 
-def test_no_events_features_match_the_frontend() -> None:
-    """The frontend's "None detected" rule: per-minute units in `lib/features.ts`."""
+def test_event_features_match_the_frontend() -> None:
+    """The counts shown as percentile 0 at zero are the per-minute units in `lib/features.ts`."""
     source = Path(__file__).parents[2] / "frontend" / "src" / "lib" / "features.ts"
     text = source.read_text(encoding="utf-8")
     entries = re.findall(r"^  (\w+): \{(.*?)^  \},", text, re.MULTILINE | re.DOTALL)
     units = {key: re.search(r'unit: "?(\w+)"?', body) for key, body in entries}
     assert set(units) == set(FEATURES)
     per_minute = {key for key, m in units.items() if m and m[1] in ("perMin", "cutsPerMin")}
-    assert per_minute == NO_EVENTS_FEATURES
+    assert per_minute == EVENT_FEATURES

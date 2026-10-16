@@ -102,16 +102,16 @@ describe("stackShifts", () => {
 });
 
 describe("pointOf", () => {
-  it("tells real zeros, no cuts and missing values apart", () => {
+  it("tells counts of 0, no cuts and missing values apart", () => {
     const v = video("2024-09-06", {
-      lstar_flash_per_min: [0, 58.3],
+      lstar_flash_per_min: [0, 0],
       lufs: [null, null],
       inter_cut_dssim_mean: [null, null],
     });
     expect(pointOf(v, "overall")).toEqual({ kind: "value", value: 74 });
     expect(pointOf(v, "cuts_per_min")).toEqual({ kind: "value", value: 40 });
-    expect(pointOf(v, "lstar_flash_per_min")).toEqual({ kind: "zero", text: "None detected" });
-    expect(pointOf(v, "lufs")).toEqual({ kind: "missing", text: "Not measured" });
+    expect(pointOf(v, "lstar_flash_per_min")).toEqual({ kind: "value", value: 0 });
+    expect(pointOf(v, "lufs")).toEqual({ kind: "missing", text: "No sound" });
     expect(pointOf(v, "inter_cut_dssim_mean")).toEqual({ kind: "na", text: "No cuts" });
   });
 });

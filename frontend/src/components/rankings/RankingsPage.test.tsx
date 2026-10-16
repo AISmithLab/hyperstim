@@ -50,7 +50,7 @@ function video(n: number): RankedVideo {
     score: Math.max(0, 100 - n),
     features: KEYS.map((key) =>
       key === "lstar_flash_per_min" && n === 2
-        ? { key, value: 0, percentile: 58.3 } // no events: "None detected"
+        ? { key, value: 0, percentile: 0 } // a count of 0
         : { key, value: 1.5, percentile: 50 },
     ),
   };
@@ -121,8 +121,8 @@ describe("RankingsPage", () => {
     expect(first.querySelectorAll("[data-filled]")[0]).toHaveTextContent("99");
     expect(first.querySelectorAll("[data-filled]")[0]).toHaveAttribute("data-filled", "5");
     expect(first.querySelectorAll("[data-filled]")[1]).toHaveAttribute("data-filled", "3");
-    // No events: a dash that reads its reason.
-    expect(within(rows[3]).getByText("None detected")).toBeInTheDocument();
+    // A count of 0 is a 0 on the calmest tile.
+    expect(rows[3].querySelectorAll("[data-filled]")[4]).toHaveTextContent("0");
     expect(screen.getByRole("columnheader", { name: "Overall" })).toHaveAttribute("aria-sort", "descending");
     expect(screen.getByRole("columnheader", { name: "Pacing intensification" })).toBeInTheDocument();
   });

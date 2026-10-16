@@ -28,6 +28,8 @@ export default function OverYears({ channel }: { channel: ChannelDetail }) {
   const { videos } = channel;
   const opened = wide ? videos.find((v) => v.id === marked) : undefined;
   const missing = videos.filter((v) => pointOf(v, measure).kind === "missing").length;
+  // Audio intensity is missing only for clips without sound.
+  const missingNote = measure === "lufs" ? "without sound" : "not measured";
 
   const close = () => {
     const id = marked;
@@ -75,7 +77,7 @@ export default function OverYears({ channel }: { channel: ChannelDetail }) {
       />
       {missing > 0 && (
         <p className="mt-3 text-center text-sm text-ink/80">
-          {missing === 1 ? "1 video not measured" : `${missing} videos not measured`}
+          {missing === 1 ? "1 video" : `${missing} videos`} {missingNote}
         </p>
       )}
       {opened && <VideoPanel video={opened} measure={measure} onClose={close} />}

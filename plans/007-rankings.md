@@ -16,8 +16,9 @@ Build `/rankings`: every video or channel in the dataset, ranked by the overall 
 - **Ranks:**
   - A rank is the position, most intense first, by the selected criterion among the rows in the selected category. **Search does not change ranks**: it only hides rows, so a search result still shows a video's real place.
   - When the order is flipped to calmest first, the list is reversed and the ranks count back from the calm end: −1 is the calmest, then −2, −3, as on the home card (screen readers: “1st calmest”) _(human decision: not the huge numbers)_. The API returns them as 1, 2, 3 in that order; the page adds the minus sign.
-  - Rows with no value for the criterion ("None detected", "Not measured", "No cuts", see plan 004) get no rank ("–"). They come last in both orders, so a tie at zero events doesn't hand out thousands of arbitrary ranks.
-  - Ties are broken by ID, so the order is stable (same rule as plan 002). With Overall, all categories, most intense first, the top 3 match the home card.
+  - Rows with no value for the criterion ("No cuts", "No sound", "Not measured", see plan 004) get no rank ("–"). They come last in both orders.
+  - A count of 0 is a value (0, plan 004) _(human decision, 2026-10-16)_, so those rows are ranked, at the calm end. **Equal values share a rank** (the first one's: 1, 2, 2, 4), so the thousands of videos tied at 0 don't get arbitrary ranks; calmest first, they are all −1 _(human decision, 2026-10-16)_.
+  - Ties are listed by ID, so the order is stable (same rule as plan 002). With Overall, all categories, most intense first, the top 3 match the home card.
 - **Colour-coded numbers** (**new**, the *score cell*). Each score is a navy bold number on a rounded tile. The tile's background is the score scale colour the score meter uses for that score (`filledSegments`: `sky-blue`, `leaf`, `scale-low`, `scale-mid`, `scale-high`) at 50 %. At 50 %, navy text has a contrast of at least 6.3 : 1 on every colour (checked). Full-strength colours fail on `leaf` and `scale-high`. The number carries the value, so colour is never the only cue. Empty values show a muted "–" on no tile, with the reason for screen readers.
 - **Search:** one search input at the top of the card. It matches any part of the name, ignoring case and accents. For videos it searches the title and the channel name (typing a channel's name lists its videos). For channels it searches the name. Results update as the user types (300 ms debounce) and the list goes back to page 1. 1–100 characters; the field is trimmed.
 - **Category filter:** "All" (the default), then the dataset's categories (Music, Narrative, Play & activity, Educational, Gaming), as chips. The five are fixed in the frontend (`lib/categories.ts`, keys `music`, `narrative`, `play`, `educational`, `gaming`, also used in the URL and the API), like the 12 measurements, so the chips show without waiting for the backend (`STYLE.md`; a select below `sm`). Only one can be picked, as with the measurement picker (plan 005). A channel is listed under a category if at least one of its videos is in it. Its scores stay whole-channel scores, the same numbers as on its channel page; the filter only picks which channels are listed _(human decision)_.
@@ -134,7 +135,7 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 | Sort button | the column's name; the header's `aria-sort` tells the current order |
 | Rank “–” (sr-only) | Not ranked |
 | Rank “−{12}” (sr-only), calmest first | {12th} calmest |
-| Empty cell (sr-only) | None detected / Not measured / No cuts |
+| Empty cell (sr-only) | No cuts / No sound / Not measured |
 | Page control (`nav` “Pages”) | ‹ Previous · Next › (`aria-label` “Previous page” / “Next page”) · page buttons (`aria-label` “Page {3}”), current `aria-current="page"` · phones: Page {3} of {655} |
 | No match | No {videos} match “{q}”. · Clear search |
 | Error | We couldn’t load the rankings. · Try again |
@@ -160,17 +161,17 @@ GET /api/channels?sort=…&order=…&category=…&q=…&minVideos=5&offset=0&lim
 ## Backend
 
 - `Video` gains `category` (the API key: the dataset's “play & activity” is `play`; an unknown category stops the load); `Channel` gains `categories` (the set of its videos' categories).
-- "None detected" moves into the backend too, because ranking needs it: a zero value on a per-minute feature (the six `perMin`/`cutsPerMin` keys) counts as no value for ranking. The frontend keeps its copy of the rule for display. Both lists name the same keys, and a test checks this.
-- At startup, for each of the 13 criteria (score + 12), the videos and the channels are pre-sorted once: most intense first, ties by ID, no-value rows last. A request filters by category (O(n), fine for 16k rows), numbers the ranks, applies the search, reverses for `asc` and counts its ranks from the calm end (no-value rows stay last), and slices. One helper (`ranking.py`) serves both videos and channels. A feature ranks by its percentile (for a channel, the mean percentile shown in its tile).
+- A count of 0 on a per-minute feature ranks as percentile 0, as the API sends it (plan 004, `dataset.py`) _(human decision, 2026-10-16)_. The six keys match the frontend's `perMin`/`cutsPerMin` units, and a test checks this.
+- At startup, for each of the 13 criteria (score + 12), the videos and the channels are pre-sorted once: most intense first, ties by ID, no-value rows last. A request filters by category (O(n), fine for 16k rows), numbers the ranks (equal values share one), applies the search, reverses for `asc` and counts its ranks from the calm end (no-value rows stay last), and slices. One helper (`ranking.py`) serves both videos and channels. A feature ranks by its percentile (for a channel, the mean percentile shown in its tile).
 - Search: compare `casefold()` + accents removed (NFKD, combining marks dropped), precomputed per row.
-- Tests (synthetic fixture): each criterion's order and tie-break; `asc` is the reverse with the same ranks; no-value rows last and unranked in both orders; category filter for videos, and channels with ≥ 1 video in the category; search ignores case and accents, keeps ranks, and matches a video's channel name; `offset`/`limit`/`total`; `minVideos`; bad params → 422.
+- Tests (synthetic fixture): each criterion's order and tie-break; equal values share a rank, also in `asc`; `asc` is the reverse; no-value rows last and unranked in both orders; category filter for videos, and channels with ≥ 1 video in the category; search ignores case and accents, keeps ranks, and matches a video's channel name; `offset`/`limit`/`total`; `minVideos`; bad params → 422.
 
 ## Steps
 
 Order: the frontend first (steps 2–5, on mock data) and a review of it; then the backend (step 1) and the review against it _(human decision)_.
 
 1. **Backend.** Dataset fields, pre-sorted orders, the extended endpoints, the category keys, tests. Update `backend/README.md` if it lists the endpoints.
-2. **API client + mocks.** New params and types; the home card moves to `sort`/`order`; mocks with made-up names: enough rows for many pages, all categories, zero-event and missing values, accented names.
+2. **API client + mocks.** New params and types; the home card moves to `sort`/`order`; mocks with made-up names: enough rows for many pages, all categories, counts of 0 and missing values, accented names.
 3. **Shared pieces.** `ScoreCell`; `Pagination` (page window helper tested: 1 … 4 5 [6] 7 8 … 655); the URL state helper (parse with fallbacks, serialize without defaults; tested); `STYLE.md` entries; `kid_blocks` in `used.json`.
 4. **Page.** `/rankings` (`useSearchParams` inside `Suspense`, as on `/channel`) with the table, cards, controls, and all states; the home card's link carries the view.
 5. **Tests.** Header click sorts and the second click flips (`aria-sort`); rank by select + order button below `lg`; view switch keeps search/category/criterion and resets the page; search debounce, page reset, and the replace-vs-push history rule; category chips/select; paging moves focus to the results line; stale responses ignored; cell colours follow `filledSegments`; empty cells read their reason; each state renders.

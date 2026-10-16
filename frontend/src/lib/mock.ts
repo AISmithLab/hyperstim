@@ -4,7 +4,7 @@
 // analysis: mockVidWait waits in the queue first; the IDs in MOCK_FAILURES fail with their
 // error; mockVidBusy gets 503 (queue full) and mockVid0429 gets 429 (limit reached). Channel
 // pages: every mock channel has generated videos (Zippy Zoom Kids: 60 over many years; Little
-// Paws Play: one year; Quiet Meadow Tales: one video; Puddle Lane: zero events and missing
+// Paws Play: one year; Quiet Meadow Tales: one video; Puddle Lane: counts of 0 and missing
 // values); MOCK_CHANNEL_ERROR returns a server error; any other channel ID is not found.
 // Rankings: every mock channel's videos (~1,100, with generated channels and an accented
 // name), ranked like the backend; the search "mock error" returns a server error.
@@ -28,7 +28,7 @@ import {
   type VideoSummary,
 } from "./api";
 import { CATEGORIES } from "./categories";
-import { FEATURE_INFO, featureDisplay } from "./features";
+import { FEATURE_INFO } from "./features";
 
 const round1 = (x: number) => Math.round(x * 10) / 10;
 
@@ -117,8 +117,8 @@ function mockFeatures(score: number, overrides: Record<string, number | null> = 
   return Object.entries(FEATURE_SCALE).map(([key, scale], i) => {
     if (key in overrides) {
       const value = overrides[key];
-      // Ties at 0 put zero-event videos in the middle of the dataset.
-      return { key, value, percentile: value === null ? null : value === 0 ? 58.3 : 50 };
+      // A count of 0 shows as percentile 0, as the backend sends it.
+      return { key, value, percentile: value === null ? null : value === 0 ? 0 : 50 };
     }
     const percentile = round1(Math.min(100, Math.max(0, score + OFFSETS[i])));
     return { key, value: Math.round(scale(percentile) * 1000) / 1000, percentile };
@@ -128,10 +128,10 @@ function mockFeatures(score: number, overrides: Record<string, number | null> = 
 const NO_EVENTS = { lstar_flash_per_min: 0, build_resolve_per_min: 0, loudness_jump_at_cut_per_min: 0 };
 
 const featureOverrides: Record<string, Record<string, number | null>> = {
-  // Zero-event case: shows "None detected".
+  // Counts of 0: shown as 0.
   mockVid0009: NO_EVENTS,
-  // Missing values: no cuts at all, and a feature that couldn't be measured.
-  mockVid0010: { ...NO_EVENTS, cuts_per_min: 0, inter_cut_dssim_mean: null, lufs: null },
+  // Missing values: no cuts at all, and no sound (no loudness, so no loudness jumps either).
+  mockVid0010: { ...NO_EVENTS, cuts_per_min: 0, inter_cut_dssim_mean: null, lufs: null, loudness_jumps_per_min: 0 },
 };
 
 function videoDetail(id: string): VideoDetail {
@@ -263,12 +263,16 @@ function channelVideos(channel: ChannelSummary): ChannelVideo[] {
     );
     if (shape.zeroEvents && !own) {
       for (const f of features) {
-        if (PER_MINUTE_EVENTS.includes(f.key) && rand() < 0.4) Object.assign(f, { value: 0, percentile: 58.3 });
+        if (PER_MINUTE_EVENTS.includes(f.key) && rand() < 0.4) Object.assign(f, { value: 0, percentile: 0 });
       }
-      if (i % 6 === 2) Object.assign(features[8], { value: null, percentile: null }); // lufs not measured
+      if (i % 6 === 2) {
+        // No sound: no loudness, so no loudness jumps either.
+        Object.assign(features[8], { value: null, percentile: null });
+        Object.assign(features[5], { value: 0, percentile: 0 });
+      }
       if (i % 7 === 3) {
-        // No cuts at all: none detected for Rapid cutting, no value for Scene discontinuity.
-        Object.assign(features[0], { value: 0, percentile: 9.2 });
+        // No cuts at all: 0 for Rapid cutting, no value for Scene discontinuity.
+        Object.assign(features[0], { value: 0, percentile: 0 });
         Object.assign(features[1], { value: null, percentile: null });
       }
     }
@@ -331,21 +335,28 @@ function allChannels(minVideos: number, category: string): Omit<RankedChannel, "
     .map(({ id, name, videoCount, score, features }) => ({ id, name, videoCount, score, features }));
 }
 
-/** The value a list is ranked by; null when the item has none (see `featureDisplay`). */
+/** The value a list is ranked by; null when the item has none. */
 function rankValue(item: Ranked, sort: string): number | null {
   if (sort === "score") return item.score;
-  const feature = item.features.find((f) => f.key === sort);
-  if (!feature) return null;
-  const display = featureDisplay(feature);
-  return display.kind === "percentile" ? display.percentile : null;
+  return item.features.find((f) => f.key === sort)?.percentile ?? null;
+}
+
+/** Ranks by position; equal values share the first one's rank. */
+function withRanks<T>(items: { item: T; value: number }[]): (T & { rank: number })[] {
+  const out: (T & { rank: number })[] = [];
+  items.forEach(({ item, value }, i) => {
+    const tied = i > 0 && value === items[i - 1].value;
+    out.push({ ...item, rank: tied ? out[i - 1].rank : i + 1 });
+  });
+  return out;
 }
 
 /** Lower case, accents removed, for search. */
 const fold = (text: string) => text.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase();
 
 /**
- * Ranks like the backend: by `sort` within the category, most intense first, ties by ID, items
- * without a value last and unranked. Search keeps ranks; `asc` reverses the ranked items and
+ * Ranks like the backend: by `sort` within the category, most intense first, ties by ID (equal
+ * values share a rank), items without a value last and unranked. Search keeps ranks; `asc` reverses the ranked items and
  * counts their ranks from the calm end.
  */
 function rankList<T extends Ranked>(
@@ -366,11 +377,11 @@ function rankList<T extends Ranked>(
       if (a.value === null || b.value === null) return a.value === null ? (b.value === null ? 0 : 1) : -1;
       return b.value - a.value || a.item.id.localeCompare(b.item.id);
     })
-    .map(({ item, value }, i) => ({ ...item, rank: value === null ? null : i + 1 }));
-  const ranked = valued.filter((item) => item.rank !== null);
-  const unranked = valued.filter((item) => item.rank === null);
+  const withValue = valued.filter((v): v is { item: T; value: number } => v.value !== null);
+  const ranked = withRanks(withValue);
+  const unranked = valued.filter((v) => v.value === null).map(({ item }) => ({ ...item, rank: null }));
   // Calmest first: reversed, ranks counted from the calm end (1 = the calmest).
-  const calmFirst = [...ranked].reverse().map((item, i) => ({ ...item, rank: i + 1 }));
+  const calmFirst = withRanks([...withValue].reverse());
   const ordered = [...(order === "asc" ? calmFirst : ranked), ...unranked];
   const matching = q ? ordered.filter((item) => names(item).some((name) => fold(name).includes(q))) : ordered;
   const offset = Number(params.offset ?? 0);

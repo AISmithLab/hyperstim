@@ -101,18 +101,20 @@ describe("VideoPage", () => {
     expect(screen.queryByText(/good or bad/)).not.toBeInTheDocument();
   });
 
-  it("shows None detected, No cuts and Not measured", async () => {
+  it("shows a count of 0 as 0, and No cuts, No sound and Not measured", async () => {
     vi.mocked(getVideo).mockResolvedValue(
       video({
-        build_resolve_per_min: { value: 0, percentile: 62 },
+        build_resolve_per_min: { value: 0, percentile: 0 },
         inter_cut_dssim_mean: { value: null, percentile: null },
         lufs: { value: null, percentile: null },
+        motion_frac: { value: null, percentile: null },
       }),
     );
     open(ID);
-    expect(await screen.findByText("None detected")).toBeInTheDocument();
-    expect(screen.getByText("No cuts")).toBeInTheDocument();
+    expect(await screen.findByText("No cuts")).toBeInTheDocument();
+    expect(screen.getByText("No sound")).toBeInTheDocument();
     expect(screen.getByText("Not measured")).toBeInTheDocument();
+    expect(screen.getByText("Higher than 0% of videos in our dataset")).toBeInTheDocument();
     expect(screen.getAllByText(/^Higher than/)).toHaveLength(9);
   });
 

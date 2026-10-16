@@ -44,7 +44,7 @@ function plotHeight(width: number, wide: boolean): number {
 
 /**
  * One channel's videos over the years (see STYLE.md, Over-years chart): a dot per video at its
- * publish date (a ring on the 0 line for none detected, a × above it for no cuts), a smoothed trend
+ * publish date (a × just above the 0 line for no cuts), a smoothed trend
  * line, and (when `wide`) each video's thumbnail hanging from its date under the axis. The size
  * and the axis stay the same for every measurement. Clicking a dot or thumbnail calls `onOpen`.
  * `marked` is the opened (or tapped) video; `band` is the range of videos to highlight, as indexes
@@ -81,12 +81,12 @@ export default function TimeChart({
   const points = videos.map((video) => ({ video, point: pointOf(video, measure), cx: x(video.publishedAt) }));
   const dots = points.flatMap(({ video, point, cx }) => {
     if (point.kind === "missing") return [];
-    const cy = point.kind === "value" ? y(point.value) : point.kind === "zero" ? y(0) : y(0) - CROSS_LIFT;
+    const cy = point.kind === "value" ? y(point.value) : y(0) - CROSS_LIFT;
     return [{ video, point, cx, cy }];
   });
-  // The trend counts a real zero as 0; a video the measurement doesn't apply to stays out of it.
-  const valued = dots.filter((d) => d.point.kind === "value" || d.point.kind === "zero");
-  const trend = smooth(valued.map((d) => (d.point.kind === "value" ? d.point.value : 0)));
+  // A video the measurement doesn't apply to stays out of the trend.
+  const valued = dots.flatMap((d) => (d.point.kind === "value" ? [{ cx: d.cx, value: d.point.value }] : []));
+  const trend = smooth(valued.map((d) => d.value));
   const trendPath = monotonePath(trend.map((value, i) => [valued[i].cx, y(value)]));
 
   const years = Array.from({ length: lastYear - firstYear + 2 }, (_, i) => firstYear + i);
@@ -214,15 +214,8 @@ export default function TimeChart({
                 cx={cx}
                 cy={cy}
                 r={on ? 7 : 4.5}
-                className={
-                  point.kind === "zero"
-                    ? `fill-white stroke-2 ${on ? "stroke-navy" : "stroke-navy/60"}`
-                    : on
-                      ? "fill-navy"
-                      : "fill-navy/50"
-                }
+                className={on ? "fill-navy" : "fill-navy/50"}
                 data-dot={video.id}
-                data-mark={point.kind === "zero" ? "zero" : undefined}
               />
             );
           })}

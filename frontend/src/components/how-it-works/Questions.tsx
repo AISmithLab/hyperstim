@@ -16,8 +16,8 @@ const QUESTIONS: [string, ReactNode][] = [
     "We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are intense too, so a video can feel busy and still sit in the middle.",
   ],
   [
-    "What does “None detected” mean?",
-    "Some measurements count events, like flashes or surprise sounds. Many videos have none at all. We mark those as “None detected”.",
+    "What do “No cuts” and “No sound” mean?",
+    "Scene discontinuity measures how different each new shot looks from the one before. If a video stays on one shot for the whole 5 minutes we measure, there’s nothing to compare, so we show “No cuts” instead of a score. Likewise, a video without sound has no loudness to measure, so Audio intensity shows “No sound”.",
   ],
   [
     "How is a channel’s score worked out?",
