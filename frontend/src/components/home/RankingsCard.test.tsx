@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getChannels, getVideos, type ChannelSummary, type VideoSummary } from "@/lib/api";
+import { getChannels, getVideos, type RankedChannel, type RankedVideo } from "@/lib/api";
 import RankingsCard, { joinEnds } from "./RankingsCard";
 
 vi.mock("@/lib/api", () => ({
@@ -9,23 +9,28 @@ vi.mock("@/lib/api", () => ({
   getChannels: vi.fn(),
 }));
 
-const video = (n: number, score: number): VideoSummary => ({
+const video = (n: number, score: number): RankedVideo => ({
   id: `video${String(n).padStart(6, "0")}`,
   title: `Video ${n}`,
   channelId: `chan${n}`,
   channel: `Channel of ${n}`,
+  category: "music",
+  rank: n,
   score,
+  features: [],
 });
 
 // 120 videos in the dataset; the API returns the 3 at each end.
 const videosDesc = { items: [video(1, 96.6), video(2, 90.1), video(3, 85.4)], total: 120 };
 const videosAsc = { items: [video(120, 3.2), video(119, 5.5), video(118, 7.9)], total: 120 };
 
-const channel = (name: string, score: number): ChannelSummary => ({
+const channel = (name: string, score: number): RankedChannel => ({
   id: `id-${name}`,
   name,
   score,
   videoCount: 12,
+  rank: null,
+  features: [],
 });
 const channelsDesc = { items: [channel("Loud", 88), channel("Busy", 80), channel("Zippy", 75)], total: 40 };
 const channelsAsc = { items: [channel("Calm", 9), channel("Slow", 12), channel("Soft", 15)], total: 40 };
@@ -33,10 +38,10 @@ const channelsAsc = { items: [channel("Calm", 9), channel("Slow", 12), channel("
 beforeEach(() => {
   vi.mocked(getVideos)
     .mockReset()
-    .mockImplementation(async ({ sort }) => (sort === "score_desc" ? videosDesc : videosAsc));
+    .mockImplementation(async ({ order }) => (order === "desc" ? videosDesc : videosAsc));
   vi.mocked(getChannels)
     .mockReset()
-    .mockImplementation(async ({ sort }) => (sort === "score_desc" ? channelsDesc : channelsAsc));
+    .mockImplementation(async ({ order }) => (order === "desc" ? channelsDesc : channelsAsc));
 });
 
 // First cell of every body row (as read by screen readers too), including the gap row.
@@ -91,6 +96,7 @@ describe("RankingsCard", () => {
     expect(within(table).getAllByRole("link")).toHaveLength(6);
     expect(screen.getByRole("button", { name: "Channels" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Videos" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("link", { name: /See full rankings/ })).toHaveAttribute("href", "/rankings?view=channels");
   });
 
   it("explains the score in an info popup next to the Score header", async () => {
@@ -105,8 +111,8 @@ describe("RankingsCard", () => {
 
   it("shows plain ranks and no gap row when both ends meet", async () => {
     const v = [1, 2, 3, 4].map((n) => video(n, 100 - n * 10));
-    vi.mocked(getVideos).mockImplementation(async ({ sort }) =>
-      sort === "score_desc" ? { items: v.slice(0, 3), total: 4 } : { items: [v[3], v[2], v[1]], total: 4 },
+    vi.mocked(getVideos).mockImplementation(async ({ order }) =>
+      order === "desc" ? { items: v.slice(0, 3), total: 4 } : { items: [v[3], v[2], v[1]], total: 4 },
     );
     render(<RankingsCard />);
 
@@ -145,7 +151,7 @@ describe("RankingsCard", () => {
 });
 
 describe("joinEnds", () => {
-  const toRow = (v: VideoSummary, rank: number) => ({
+  const toRow = (v: RankedVideo, rank: number) => ({
     key: v.id,
     rank,
     name: v.title,
@@ -153,7 +159,7 @@ describe("joinEnds", () => {
     score: v.score,
     href: "",
   });
-  const ranks = (top: VideoSummary[], bottom: VideoSummary[], total: number) =>
+  const ranks = (top: RankedVideo[], bottom: RankedVideo[], total: number) =>
     joinEnds({ items: top, total }, { items: bottom, total }, toRow).map((r) => r.rank);
 
   it("drops items from the bottom that are already in the top", () => {

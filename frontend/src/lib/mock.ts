@@ -6,6 +6,8 @@
 // pages: every mock channel has generated videos (Zippy Zoom Kids: 60 over many years; Little
 // Paws Play: one year; Quiet Meadow Tales: one video; Puddle Lane: zero events and missing
 // values); MOCK_CHANNEL_ERROR returns a server error; any other channel ID is not found.
+// Rankings: every mock channel's videos (~1,100, with generated channels and an accented
+// name), ranked like the backend; the search "mock error" returns a server error.
 import {
   ApiError,
   type Analysis,
@@ -17,17 +19,18 @@ import {
   type Feature,
   type ListResponse,
   type Meta,
+  type Order,
+  type RankedChannel,
+  type RankedVideo,
   type Method,
   type Params,
   type VideoDetail,
   type VideoSummary,
 } from "./api";
+import { CATEGORIES } from "./categories";
+import { FEATURE_INFO, featureDisplay } from "./features";
 
-const meta: Meta = {
-  videoCount: 10412,
-  channelCount: 312,
-  updatedAt: "2026-09-30",
-};
+const round1 = (x: number) => Math.round(x * 10) / 10;
 
 const videos: VideoSummary[] = [
   { id: "mockVid0001", title: "Super Turbo Rainbow Race – 40 Minutes of Non-Stop Surprise Eggs and Racing Cars Compilation", channelId: "UCmockZippyZoomKids00000", channel: "Zippy Zoom Kids", score: 97.4 },
@@ -53,7 +56,43 @@ const channels: ChannelSummary[] = [
   { id: "UCmockTumbleTown00000000", name: "Tumble Town", score: 58.2, videoCount: 14 },
   { id: "UCmockStarrySongClub0000", name: "Starry Song Club", score: 47.5, videoCount: 26 },
   { id: "UCmockPebblePine00000000", name: "Pebble & Pine", score: 19.8, videoCount: 11 },
+  { id: "UCmockCafeCrayon00000000", name: "Café Crayón Kids", score: 52.7, videoCount: 12 },
 ];
+
+// Generated channels, so the rankings have many pages. IDs "UCmockG01…": their videos are "mockG010000"….
+const NAME_WORDS = [
+  ["Happy", "Bright", "Little", "Sunny", "Wonder", "Jolly", "Merry", "Cozy", "Lucky", "Zany"],
+  ["Tots", "Sprouts", "Pals", "Beats", "Tales", "Builders", "Explorers", "Giggles", "Rockets", "Gardens"],
+  ["TV", "Club", "World", "Land", "Studio"],
+];
+for (let n = 1; n <= 30; n++) {
+  const rand = random(`channel${n}`);
+  const pick = (words: string[]) => words[Math.floor(rand() * words.length)];
+  channels.push({
+    id: `UCmockG${String(n).padStart(2, "0")}${"0".repeat(15)}`,
+    name: `${pick(NAME_WORDS[0])} ${pick(NAME_WORDS[1])} ${pick(NAME_WORDS[2])}`,
+    score: round1(5 + rand() * 90),
+    videoCount: 3 + Math.floor(rand() * 58),
+  });
+}
+
+/** Each mock channel's main category; generated channels take turns. */
+function mainCategory(channelId: string, index: number): string {
+  const fixed: Record<string, string> = {
+    UCmockZippyZoomKids00000: "gaming",
+    UCmockBouncyBeatsTv00000: "music",
+    UCmockQuietMeadowTales00: "narrative",
+    UCmockPuddleLane00000000: "educational",
+  };
+  return fixed[channelId] ?? CATEGORIES[index % CATEGORIES.length].key;
+}
+
+/** A video's category: mostly its channel's main one. */
+function categoryOf(videoId: string, channelId: string): string {
+  const rand = random(`${videoId}:category`);
+  const main = mainCategory(channelId, channels.findIndex((c) => c.id === channelId));
+  return rand() < 0.75 ? main : CATEGORIES[Math.floor(rand() * CATEGORIES.length)].key;
+}
 
 /** Mock raw value per feature at a given percentile (rough dataset ranges). */
 const FEATURE_SCALE: Record<string, (p: number) => number> = {
@@ -73,8 +112,6 @@ const FEATURE_SCALE: Record<string, (p: number) => number> = {
 
 // Spread around the video's score so the measurements differ from each other.
 const OFFSETS = [6, -9, 3, -2, -14, -7, 1, -25, 4, -18, -10, -5];
-
-const round1 = (x: number) => Math.round(x * 10) / 10;
 
 function mockFeatures(score: number, overrides: Record<string, number | null> = {}): Feature[] {
   return Object.entries(FEATURE_SCALE).map(([key, scale], i) => {
@@ -268,34 +305,94 @@ function channelDetail(id: string): ChannelDetail {
   };
 }
 
-function list<T extends { score: number }>(
+type Ranked = { id: string; score: number; features: Feature[] };
+
+/** Every mock channel's videos, with their channel and category. */
+function allVideos(): Omit<RankedVideo, "rank">[] {
+  return channels.flatMap((channel) =>
+    channelVideos(channel).map(({ id, title, score, features }) => ({
+      id,
+      title,
+      channelId: channel.id,
+      channel: channel.name,
+      category: categoryOf(id, channel.id),
+      score,
+      features,
+    })),
+  );
+}
+
+/** Channels as the rankings list them: those with a video in `category` ("" = all). */
+function allChannels(minVideos: number, category: string): Omit<RankedChannel, "rank">[] {
+  return channels
+    .filter((c) => c.videoCount >= minVideos)
+    .map((c) => channelDetail(c.id))
+    .filter((c) => !category || c.videos.some((v) => categoryOf(v.id, c.id) === category))
+    .map(({ id, name, videoCount, score, features }) => ({ id, name, videoCount, score, features }));
+}
+
+/** The value a list is ranked by; null when the item has none (see `featureDisplay`). */
+function rankValue(item: Ranked, sort: string): number | null {
+  if (sort === "score") return item.score;
+  const feature = item.features.find((f) => f.key === sort);
+  if (!feature) return null;
+  const display = featureDisplay(feature);
+  return display.kind === "percentile" ? display.percentile : null;
+}
+
+/** Lower case, accents removed, for search. */
+const fold = (text: string) => text.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase();
+
+/**
+ * Ranks like the backend: by `sort` within the category, most intense first, ties by ID, items
+ * without a value last and unranked. Search keeps ranks; `asc` reverses the ranked items and
+ * counts their ranks from the calm end.
+ */
+function rankList<T extends Ranked>(
   items: T[],
-  sort: string,
-  limit: number,
-): ListResponse<T> {
-  const sign = sort === "score_asc" ? 1 : -1;
-  const sorted = [...items].sort((a, b) => sign * (a.score - b.score));
-  return { items: sorted.slice(0, limit), total: sorted.length };
+  params: Params,
+  names: (item: T) => string[],
+): ListResponse<T & { rank: number | null }> {
+  const sort = String(params.sort ?? "score");
+  const order = String(params.order ?? "desc") as Order;
+  const q = fold(String(params.q ?? "").trim());
+  if ((sort !== "score" && !Object.hasOwn(FEATURE_INFO, sort)) || (order !== "desc" && order !== "asc")) {
+    throw new ApiError(422, "Bad parameters");
+  }
+  if (q === "mock error") throw new ApiError(500, "Mock server error");
+  const valued = items
+    .map((item) => ({ item, value: rankValue(item, sort) }))
+    .sort((a, b) => {
+      if (a.value === null || b.value === null) return a.value === null ? (b.value === null ? 0 : 1) : -1;
+      return b.value - a.value || a.item.id.localeCompare(b.item.id);
+    })
+    .map(({ item, value }, i) => ({ ...item, rank: value === null ? null : i + 1 }));
+  const ranked = valued.filter((item) => item.rank !== null);
+  const unranked = valued.filter((item) => item.rank === null);
+  // Calmest first: reversed, ranks counted from the calm end (1 = the calmest).
+  const calmFirst = [...ranked].reverse().map((item, i) => ({ ...item, rank: i + 1 }));
+  const ordered = [...(order === "asc" ? calmFirst : ranked), ...unranked];
+  const matching = q ? ordered.filter((item) => names(item).some((name) => fold(name).includes(q))) : ordered;
+  const offset = Number(params.offset ?? 0);
+  const limit = Number(params.limit ?? 20);
+  return { items: matching.slice(offset, offset + limit), total: matching.length };
 }
 
 export async function mockRequest(method: Method, path: string, params: Params): Promise<unknown> {
   // Short delay so loading states are visible during development.
   await new Promise((resolve) => setTimeout(resolve, 400));
-  const limit = Number(params.limit ?? 50);
-  const sort = String(params.sort ?? "score_desc");
+  const category = String(params.category ?? "");
   switch (path) {
     case "/api/meta":
-      return meta;
+      return { videoCount: allVideos().length, channelCount: channels.length, updatedAt: "2026-09-30" } satisfies Meta;
     case "/api/videos":
-      return list(videos, sort, limit);
-    case "/api/channels": {
-      const minVideos = Number(params.minVideos ?? 5);
-      return list(
-        channels.filter((c) => c.videoCount >= minVideos),
-        sort,
-        limit,
+      return rankList(
+        allVideos().filter((v) => !category || v.category === category),
+        params,
+        (v) => [v.title, v.channel],
       );
-    }
+    case "/api/channels":
+      return rankList(allChannels(Number(params.minVideos ?? 5), category), params, (c) => [c.name]);
     default:
       if (path.startsWith("/api/videos/")) {
         return videoDetail(decodeURIComponent(path.slice("/api/videos/".length)));

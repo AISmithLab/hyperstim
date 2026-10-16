@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import type { ChannelDetail } from "@/lib/api";
 import { SM_UP, useMediaQuery } from "@/lib/use-layout";
 import { formatDate, measureName, pointOf, pointText, type Measure } from "./chart";
-import MeasurementPicker from "./MeasurementPicker";
+import MeasurementPicker from "@/components/MeasurementPicker";
 import TimeChart from "./TimeChart";
 import VideoPanel from "./VideoPanel";
 import VideoStrip from "./VideoStrip";

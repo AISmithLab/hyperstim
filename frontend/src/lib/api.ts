@@ -65,12 +65,42 @@ export type ChannelDetail = {
   videos: ChannelVideo[];
 };
 
+/** A video in a ranking: its place and its 12 measurements. */
+export type RankedVideo = VideoSummary & {
+  /** Category key (see `CATEGORIES`). */
+  category: string;
+  /** Place by the ranking's criterion within its category, 1 = first in the order asked for (the
+   * most intense, or with `asc` the calmest); null = no value. */
+  rank: number | null;
+  features: Feature[];
+};
+
+/** A channel in a ranking; `features` as in `ChannelDetail`. */
+export type RankedChannel = ChannelSummary & {
+  rank: number | null;
+  features: Feature[];
+};
+
 export type ListResponse<T> = {
   items: T[];
+  /** Items matching the category and search. */
   total: number;
 };
 
-export type Sort = "score_desc" | "score_asc";
+/** What a ranking is sorted by: the overall score or one of the 12 feature keys. */
+export type SortKey = string;
+
+export type Order = "desc" | "asc";
+
+/** How a list is ranked, filtered and paged. Empty `category` or `q` = all. */
+export type ListParams = {
+  sort: SortKey;
+  order: Order;
+  category?: string;
+  q?: string;
+  offset?: number;
+  limit: number;
+};
 
 /** Where a live analysis is: waiting, one of its three steps, or finished. */
 export type AnalysisStatus = "queued" | "lookup" | "download" | "measure" | "done" | "failed";
@@ -132,19 +162,20 @@ export function getMeta(): Promise<Meta> {
   return get<Meta>("/api/meta");
 }
 
-export function getVideos(params: {
-  sort: Sort;
-  limit: number;
-}): Promise<ListResponse<VideoSummary>> {
-  return get("/api/videos", params);
+/** Drops unset and empty parameters, so the defaults apply. */
+function listParams(params: Record<string, string | number | undefined>): Params {
+  return Object.fromEntries(
+    Object.entries(params).filter((entry): entry is [string, string | number] => entry[1] !== undefined && entry[1] !== ""),
+  );
 }
 
-export function getChannels(params: {
-  sort: Sort;
-  limit: number;
-  minVideos: number;
-}): Promise<ListResponse<ChannelSummary>> {
-  return get("/api/channels", params);
+export function getVideos(params: ListParams): Promise<ListResponse<RankedVideo>> {
+  return get("/api/videos", listParams(params));
+}
+
+/** Channels with at least `minVideos` videos (default 5). */
+export function getChannels(params: ListParams & { minVideos?: number }): Promise<ListResponse<RankedChannel>> {
+  return get("/api/channels", listParams(params));
 }
 
 /**

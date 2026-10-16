@@ -35,13 +35,18 @@ Row = dict[str, str]
 
 
 def video_row(
-    video_id: str, channel_id: str, value: float | None, published_at: str = "2024-01-01"
+    video_id: str,
+    channel_id: str,
+    value: float | None,
+    published_at: str = "2024-01-01",
+    category: str = "music",
 ) -> Row:
     row = {
         "video_id": video_id,
         "title": f"Title of {video_id}",
         "channel_id": channel_id,
         "channel_title": f"Channel {channel_id}",
+        "category": category,
         "published_at": published_at,
     }
     row.update({name: "" if value is None else str(value) for name in FEATURES})

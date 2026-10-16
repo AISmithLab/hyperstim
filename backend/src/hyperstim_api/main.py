@@ -22,12 +22,21 @@ from hyperstim_api.analysis import (
     estimate,
 )
 from hyperstim_api.config import Settings, load_settings
-from hyperstim_api.dataset import Channel, Feature, Sort, Video, load_dataset
+from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video, load_dataset
+from hyperstim_api.ranking import CRITERIA, Order, Ranked
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
 VideoId = Annotated[str, Path(pattern=VIDEO_ID_PATTERN)]
 CHANNEL_ID_PATTERN = r"^UC[A-Za-z0-9_-]{22}$"  # a YouTube channel ID
 ChannelId = Annotated[str, Path(pattern=CHANNEL_ID_PATTERN)]
+
+# List parameters (plan 007).
+SortKey = Annotated[str, Query(pattern=f"^({'|'.join(CRITERIA)})$")]
+# Empty = all categories.
+CategoryKey = Annotated[str, Query(pattern=f"^({'|'.join(CATEGORIES.values())})?$")]
+Search = Annotated[str | None, Query(min_length=1, max_length=100)]
+Offset = Annotated[int, Query(ge=0, le=1_000_000)]
+Limit = Annotated[int, Query(ge=1, le=100)]
 
 
 class ApiModel(BaseModel):
@@ -58,6 +67,12 @@ class FeatureValue(ApiModel):
     percentile: float | None
 
 
+class RankedVideo(VideoSummary):
+    category: str
+    rank: int | None  # within its category, 1 = first in the list's order; None = no value
+    features: list[FeatureValue]
+
+
 class VideoDetail(VideoSummary):
     channel_in_dataset: bool  # false for a live video from a channel we don't have
     features: list[FeatureValue]
@@ -68,6 +83,11 @@ class ChannelSummary(ApiModel):
     name: str
     score: float
     video_count: int
+
+
+class RankedChannel(ChannelSummary):
+    rank: int | None
+    features: list[FeatureValue]
 
 
 class ChannelVideo(ApiModel):
@@ -88,12 +108,12 @@ class ChannelDetail(ApiModel):
 
 
 class VideoList(ApiModel):
-    items: list[VideoSummary]
-    total: int
+    items: list[RankedVideo]
+    total: int  # rows matching the category and search
 
 
 class ChannelList(ApiModel):
-    items: list[ChannelSummary]
+    items: list[RankedChannel]
     total: int
 
 
@@ -125,6 +145,32 @@ def video_detail(v: Video, channel_in_dataset: bool) -> VideoDetail:
         score=round(v.score, 1),
         channel_in_dataset=channel_in_dataset,
         features=feature_values(v.features),
+    )
+
+
+def ranked_video(r: Ranked[Video]) -> RankedVideo:
+    v = r.item
+    return RankedVideo(
+        id=v.id,
+        title=v.title,
+        channel_id=v.channel_id,
+        channel=v.channel,
+        category=v.category or "",
+        rank=r.rank,
+        score=round(v.score, 1),
+        features=feature_values(v.features),
+    )
+
+
+def ranked_channel(r: Ranked[Channel]) -> RankedChannel:
+    c = r.item
+    return RankedChannel(
+        id=c.id,
+        name=c.name,
+        video_count=c.video_count,
+        rank=r.rank,
+        score=round(c.score, 1),
+        features=feature_values(c.features),
     )
 
 
@@ -202,20 +248,16 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
 
     @app.get("/api/videos")
     def videos(
-        sort: Sort = "score_desc",
-        limit: Annotated[int, Query(ge=1, le=100)] = 20,
+        sort: SortKey = "score",
+        order: Order = "desc",
+        category: CategoryKey = "",
+        q: Search = None,
+        offset: Offset = 0,
+        limit: Limit = 20,
     ) -> VideoList:
-        items = [
-            VideoSummary(
-                id=v.id,
-                title=v.title,
-                channel_id=v.channel_id,
-                channel=v.channel,
-                score=round(v.score, 1),
-            )
-            for v in dataset.ranked_videos(sort, limit)
-        ]
-        return VideoList(items=items, total=len(dataset.videos))
+        """Videos ranked by `sort`, searched by title and channel name."""
+        page, total = dataset.ranked_videos(sort, order, category or None, q, offset, limit)
+        return VideoList(items=[ranked_video(r) for r in page], total=total)
 
     @app.get("/api/videos/{video_id}", responses={404: {"description": "Video not found"}})
     def video(video_id: VideoId) -> VideoDetail:
@@ -278,16 +320,20 @@ def create_app(settings: Settings | None = None, pipeline: Pipeline | None = Non
 
     @app.get("/api/channels")
     def channels(
-        sort: Sort = "score_desc",
-        limit: Annotated[int, Query(ge=1, le=100)] = 20,
+        sort: SortKey = "score",
+        order: Order = "desc",
+        category: CategoryKey = "",
+        q: Search = None,
+        offset: Offset = 0,
+        limit: Limit = 20,
         min_videos: Annotated[int, Query(alias="minVideos", ge=1, le=1000)] = 5,
     ) -> ChannelList:
-        ranked, total = dataset.ranked_channels(sort, limit, min_videos)
-        items = [
-            ChannelSummary(id=c.id, name=c.name, score=round(c.score, 1), video_count=c.video_count)
-            for c in ranked
-        ]
-        return ChannelList(items=items, total=total)
+        """Channels ranked by `sort` (whole-channel scores), listed under a category when at
+        least one of their videos is in it; searched by name."""
+        page, total = dataset.ranked_channels(
+            sort, order, category or None, q, offset, limit, min_videos
+        )
+        return ChannelList(items=[ranked_channel(r) for r in page], total=total)
 
     @app.get("/api/channels/{channel_id}", responses={404: {"description": "Channel not found"}})
     def channel(channel_id: ChannelId) -> ChannelDetail:

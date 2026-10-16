@@ -42,7 +42,7 @@ Build `/channel?id=<channel-id>`: one channel's overall stimulation score and it
   - **Below `sm`:** a native `<select>` with "Overall" and three `<optgroup>`s; phones show their own full-screen picker, which handles 13 options well, while the chips would take ~7 rows.
   - No legend, chart title or info "i": the chips name what's shown, and the measurement descriptions are in the score panel's popovers above.
   - The choice isn't kept in the URL for now _(human decision)_.
-- **Reuse:** `ScoreGauge`, `Measurements` (gains a "This video" / "This channel" label prop), `InfoTip`, the YouTube thumbnail URL helper from `YouTubePlayer`. New: `TimeChart`, `MeasurementPicker`, `VideoPanel`. Page container, section card, message box from `STYLE.md`.
+- **Reuse:** `ScoreGauge`, `Measurements` (gains a "This video" / "This channel" label prop), `InfoTip`, the YouTube thumbnail URL helper from `YouTubePlayer`. New: `TimeChart`, `MeasurementPicker` (moved to `components/` and shared with the rankings page, 2026-10-15, plan 007), `VideoPanel`. Page container, section card, message box from `STYLE.md`.
 - **New styles go into `STYLE.md` in the same change:** channel header, the over-years chart (with the hanging thumbnails), the video panel, the measurement picker (chips + phone select).
 
 ## Design

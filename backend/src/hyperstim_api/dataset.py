@@ -5,19 +5,27 @@ import json
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Literal
 
 from hyperstim_api import scoring
+from hyperstim_api.ranking import Order, Ranked, Ranking
 
 log = logging.getLogger(__name__)
 
-Sort = Literal["score_desc", "score_asc"]
+# The dataset's categories by their API key (the frontend's `lib/categories.ts`).
+CATEGORIES: dict[str, str] = {
+    "music": "music",
+    "narrative": "narrative",
+    "play & activity": "play",
+    "educational": "educational",
+    "gaming": "gaming",
+}
 
 REQUIRED_COLUMNS = (
     "video_id",
     "title",
     "channel_id",
     "channel_title",
+    "category",
     "published_at",
     *scoring.FEATURES,
 )
@@ -36,6 +44,7 @@ class Video:
     title: str
     channel_id: str
     channel: str
+    category: str | None  # a CATEGORIES key; None for a video analyzed live
     score: float  # percentile of its composite among the dataset's, unrounded
     features: tuple[Feature, ...]  # the 12, in scoring.FEATURES order
     published_at: str | None  # ISO date; None for a video analyzed live
@@ -48,6 +57,7 @@ class Channel:
     score: float  # unrounded mean of its videos' scores
     features: tuple[Feature, ...]  # the 12: mean raw value and mean percentile of its videos
     videos: tuple[Video, ...]  # oldest first; ties by id
+    categories: frozenset[str]  # its videos' categories
 
     @property
     def video_count(self) -> int:
@@ -63,17 +73,48 @@ class Dataset:
     channels_by_id: dict[str, Channel]
     pools: scoring.Pools  # the dataset's sorted values per feature
     composite_pool: list[float]  # the dataset's composites, sorted
+    video_ranking: Ranking[Video]
+    channel_ranking: Ranking[Channel]
 
     @property
     def channel_count(self) -> int:
         return len(self.channels)
 
-    def ranked_videos(self, sort: Sort, limit: int) -> list[Video]:
-        return _take(self.videos, sort, limit)
+    def ranked_videos(
+        self,
+        sort: str,
+        order: Order,
+        category: str | None,
+        query: str | None,
+        offset: int,
+        limit: int,
+    ) -> tuple[list[Ranked[Video]], int]:
+        """A page of videos by `sort` (score or a feature), ranked within `category`."""
+        return self.video_ranking.page(
+            sort, order, lambda v: category is None or v.category == category, query, offset, limit
+        )
 
-    def ranked_channels(self, sort: Sort, limit: int, min_videos: int) -> tuple[list[Channel], int]:
-        eligible = tuple(c for c in self.channels if c.video_count >= min_videos)
-        return _take(eligible, sort, limit), len(eligible)
+    def ranked_channels(
+        self,
+        sort: str,
+        order: Order,
+        category: str | None,
+        query: str | None,
+        offset: int,
+        limit: int,
+        min_videos: int,
+    ) -> tuple[list[Ranked[Channel]], int]:
+        """A page of channels with `min_videos`+ videos and at least one in `category`."""
+        return self.channel_ranking.page(
+            sort,
+            order,
+            lambda c: (
+                c.video_count >= min_videos and (category is None or category in c.categories)
+            ),
+            query,
+            offset,
+            limit,
+        )
 
     def score_video(
         self, id: str, title: str, channel_id: str, channel: str, features: scoring.Features
@@ -83,7 +124,7 @@ class Dataset:
         None if it has no feature value.
         """
         return _video(
-            id, title, channel_id, channel, None, features, self.pools, self.composite_pool
+            id, title, channel_id, channel, None, None, features, self.pools, self.composite_pool
         )
 
 
@@ -92,6 +133,7 @@ def _video(
     title: str,
     channel_id: str,
     channel: str,
+    category: str | None,
     published_at: str | None,
     features: scoring.Features,
     pools: scoring.Pools,
@@ -109,6 +151,7 @@ def _video(
         title=title,
         channel_id=channel_id,
         channel=channel,
+        category=category,
         score=score,
         features=tuple(
             Feature(key=name, value=features.get(name), percentile=percentiles[name])
@@ -140,15 +183,15 @@ def _channel(members: list[Video]) -> Channel:
         score=sum(v.score for v in members) / len(members),
         features=tuple(features),
         videos=tuple(sorted(members, key=lambda v: (v.published_at or "", v.id))),
+        categories=frozenset(v.category for v in members if v.category is not None),
     )
 
 
-def _take[T](ranked: tuple[T, ...], sort: Sort, limit: int) -> list[T]:
-    # Ascending is the exact reverse of descending, so ranks counted back from
-    # `total` agree with the descending ranks, ties included.
-    if sort == "score_desc":
-        return list(ranked[:limit])
-    return list(reversed(ranked[-limit:]))
+def _category(path: Path, raw: str) -> str:
+    key = CATEGORIES.get(raw.strip())
+    if key is None:
+        raise ValueError(f"{path}: unknown category {raw!r}")
+    return key
 
 
 def meta_path(dataset_path: Path) -> Path:
@@ -191,6 +234,7 @@ def load_dataset(path: Path) -> Dataset:
             row["title"],
             row["channel_id"],
             row["channel_title"],
+            _category(path, row["category"]),
             row["published_at"].strip() or None,
             features,
             pools,
@@ -222,4 +266,6 @@ def load_dataset(path: Path) -> Dataset:
         channels_by_id={c.id: c for c in channels},
         pools=pools,
         composite_pool=composite_pool,
+        video_ranking=Ranking(videos, lambda v: (v.title, v.channel)),
+        channel_ranking=Ranking(channels, lambda c: (c.name,)),
     )

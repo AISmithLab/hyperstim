@@ -52,6 +52,8 @@ The script only reads the research repo, checks the data against its figures of 
 
 At startup the app scores every video (`src/hyperstim_api/scoring.py`): each of the 12 features is ranked as a percentile within the dataset, the 12 percentiles are averaged, and the score is that average's percentile among all videos (0 = least, 100 = most stimulating). A channel's score is the mean of its videos' scores.
 
+Rankings (`GET /api/videos` and `GET /api/channels`; `src/hyperstim_api/ranking.py`) are sorted once at startup for the score and each feature: most intense first, ties by ID. Rows with no value come last and get no rank; on a per-minute feature, zero events counts as no value. A request filters by category (`sort`, `order`, `category`, `q`, `offset`, `limit`; channels also `minVideos`), and the ranks are counted within that category. Calmest first (`order=asc`) reverses the list and counts the ranks from the calm end (1 = the calmest). Search matches without regard to case or accents and doesn't change ranks. A channel is listed under a category when at least one of its videos is in it.
+
 ## Live analysis
 
 A video that isn't in the dataset is analyzed on request (`POST /api/analyses/{id}`, polled with `GET /api/analyses/{id}`; `src/hyperstim_api/analysis.py`): check YouTube's made-for-kids flag (Data API, `YOUTUBE_API_KEY`) and look up with yt-dlp, download the clip and measure it with the unchanged pipeline scripts, then score it against the dataset. Live results never change the dataset's scores, rankings or counts; `GET /api/videos/{id}` serves them like dataset videos.

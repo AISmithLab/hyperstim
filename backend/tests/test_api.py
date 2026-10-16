@@ -29,38 +29,38 @@ def test_meta(client: TestClient) -> None:
     }
 
 
+def summary(item: dict[str, object]) -> dict[str, object]:
+    return {k: item[k] for k in ("id", "rank", "score")}
+
+
 def test_videos_most_stimulating_first(client: TestClient) -> None:
-    body = client.get("/api/videos", params={"sort": "score_desc", "limit": 3}).json()
+    body = client.get("/api/videos", params={"sort": "score", "limit": 3}).json()
     assert body["total"] == N
-    assert body["items"] == [
-        {
-            "id": "vid-c1",
-            "title": "Title of vid-c1",
-            "channelId": "chan-c",
-            "channel": "Channel chan-c",
-            "score": 100.0,
-        },
-        {
-            "id": "vid-a1",
-            "title": "Title of vid-a1",
-            "channelId": "chan-a",
-            "channel": "Channel chan-a",
-            "score": pct(10),
-        },
-        {
-            "id": "vid-a2",
-            "title": "Title of vid-a2",
-            "channelId": "chan-a",
-            "channel": "Channel chan-a",
-            "score": pct(9),
-        },
+    first = body["items"][0]
+    assert {k: v for k, v in first.items() if k != "features"} == {
+        "id": "vid-c1",
+        "title": "Title of vid-c1",
+        "channelId": "chan-c",
+        "channel": "Channel chan-c",
+        "category": "music",
+        "rank": 1,
+        "score": 100.0,
+    }
+    assert [f["key"] for f in first["features"]] == list(FEATURES)
+    assert first["features"][0] == {"key": FEATURES[0], "value": 11.0, "percentile": 100.0}
+    assert [summary(v) for v in body["items"][1:]] == [
+        {"id": "vid-a1", "rank": 2, "score": pct(10)},
+        {"id": "vid-a2", "rank": 3, "score": pct(9)},
     ]
 
 
 def test_videos_least_stimulating_first(client: TestClient) -> None:
-    body = client.get("/api/videos", params={"sort": "score_asc", "limit": 3}).json()
-    assert [v["id"] for v in body["items"]] == ["vid-c2", "vid-b5", "vid-b4"]
-    assert [v["score"] for v in body["items"]] == [0.0, pct(1), pct(2)]
+    body = client.get("/api/videos", params={"order": "asc", "limit": 3}).json()
+    assert [summary(v) for v in body["items"]] == [
+        {"id": "vid-c2", "rank": 1, "score": 0.0},  # counted from the calm end
+        {"id": "vid-b5", "rank": 2, "score": pct(1)},
+        {"id": "vid-b4", "rank": 3, "score": pct(2)},
+    ]
 
 
 def test_videos_default_sort_and_limit(client: TestClient) -> None:
@@ -75,7 +75,7 @@ def test_video_ties_keep_a_stable_order(
     rows = [video_row(v, "chan", 1.0) for v in ("vid-y", "vid-x", "vid-z")]
     client = make_client(write_dataset(tmp_path / "ties.tsv", rows))
     desc = [v["id"] for v in client.get("/api/videos").json()["items"]]
-    asc = [v["id"] for v in client.get("/api/videos", params={"sort": "score_asc"}).json()["items"]]
+    asc = [v["id"] for v in client.get("/api/videos", params={"order": "asc"}).json()["items"]]
     assert desc == ["vid-x", "vid-y", "vid-z"]
     assert asc == list(reversed(desc))
 
@@ -91,22 +91,23 @@ def test_scores_are_percentiles_of_the_composite(
         row["cuts_per_min"] = str(cuts)
         rows.append(row)
     client = make_client(write_dataset(tmp_path / "videos.tsv", rows))
-    items = client.get("/api/videos", params={"sort": "score_asc"}).json()["items"]
+    items = client.get("/api/videos", params={"order": "asc"}).json()["items"]
     assert [v["score"] for v in items] == [0.0, 50.0, 100.0]
 
 
 def test_channels_ranked_by_mean_score(client: TestClient) -> None:
-    body = client.get("/api/channels", params={"sort": "score_desc", "limit": 3}).json()
+    body = client.get("/api/channels", params={"sort": "score", "limit": 3}).json()
     assert body["total"] == 2  # chan-c has only 2 videos
-    assert body["items"] == [
-        {"id": "chan-a", "name": "Channel chan-a", "score": pct(8), "videoCount": 5},
-        {"id": "chan-b", "name": "Channel chan-b", "score": pct(3), "videoCount": 5},
+    assert [{k: v for k, v in c.items() if k != "features"} for c in body["items"]] == [
+        {"id": "chan-a", "name": "Channel chan-a", "score": pct(8), "videoCount": 5, "rank": 1},
+        {"id": "chan-b", "name": "Channel chan-b", "score": pct(3), "videoCount": 5, "rank": 2},
     ]
+    assert [f["key"] for f in body["items"][0]["features"]] == list(FEATURES)
 
 
 def test_channels_least_stimulating_first(client: TestClient) -> None:
-    body = client.get("/api/channels", params={"sort": "score_asc", "limit": 1}).json()
-    assert [c["name"] for c in body["items"]] == ["Channel chan-b"]
+    body = client.get("/api/channels", params={"order": "asc", "limit": 1}).json()
+    assert [(c["name"], c["rank"]) for c in body["items"]] == [("Channel chan-b", 1)]
     assert body["total"] == 2
 
 
@@ -119,11 +120,20 @@ def test_channels_min_videos(client: TestClient) -> None:
 @pytest.mark.parametrize(
     ("path", "params"),
     [
-        ("/api/videos", {"sort": "score"}),
+        ("/api/videos", {"sort": "score_desc"}),
+        ("/api/videos", {"sort": "toString"}),
+        ("/api/videos", {"sort": "lufs|score"}),
+        ("/api/videos", {"order": "up"}),
+        ("/api/videos", {"category": "sports"}),
+        ("/api/videos", {"category": "play & activity"}),
+        ("/api/videos", {"q": ""}),
+        ("/api/videos", {"q": "a" * 101}),
+        ("/api/videos", {"offset": -1}),
         ("/api/videos", {"limit": 0}),
         ("/api/videos", {"limit": 101}),
         ("/api/videos", {"limit": "many"}),
         ("/api/channels", {"sort": "name"}),
+        ("/api/channels", {"order": "asc ", "category": "music"}),
         ("/api/channels", {"minVideos": 0}),
         ("/api/channels", {"minVideos": 1001}),
     ],

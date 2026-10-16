@@ -16,7 +16,7 @@ Build the home page (`/`) following the look of the mockup's home panel: hero wi
 - **Table rows.**
   - Videos: rank, video title (channel name in small text below it), score. Row links to `/video?id=…`.
   - Channels: rank, channel name, score, plus "N videos" in small text below the name. Not linked for now (no channel page yet).
-  - Ranks 1–3, a “↓ Least stimulating” row, then the 3 lowest-scoring, shown as −3, −2, −1 (−1 = least stimulating; screen readers: “3rd least stimulating”, …, “least stimulating”). _(was: their real ranks counting back from `total`, e.g. 10,410, 10,411, 10,412)_ When the dataset is too small for a gap, overlapping items are dropped and the gap row is left out; every row then shows its plain rank. Then a "See full rankings →" link to `/rankings`. _(was: top 5 rows)_
+  - Ranks 1–3, a “↓ Least stimulating” row, then the 3 lowest-scoring, shown as −3, −2, −1 (−1 = least stimulating; screen readers: “3rd least stimulating”, …, “least stimulating”). _(was: their real ranks counting back from `total`, e.g. 10,410, 10,411, 10,412)_ When the dataset is too small for a gap, overlapping items are dropped and the gap row is left out; every row then shows its plain rank. Then a "See full rankings →" link to `/rankings`, carrying the current view (`/rankings?view=channels`) _(human decision, 2026-10-15, with plan 007)_. _(was: top 5 rows)_
 - **Channel score** = mean stimulation score of the channel's videos in the dataset; only channels with ≥ 5 scored videos are ranked.
 - **Art location** changes from 001: originals live in `frontend/art/`, and `public/images/` holds only generated WebP files (see **Images**).
 - **Mock data** uses made-up video titles and channel names, so the public repo makes no claims about real channels.
@@ -145,13 +145,13 @@ All decorative images (`kid_1`, `sun_1`, `grass_*`, `flower_*`, warning triangle
 ```
 GET /api/meta
   → { videoCount: number, channelCount: number, updatedAt: string /* ISO date */ }
-GET /api/videos?sort=score_desc|score_asc&limit=3
-  → { items: [{ id: string, title: string, channel: string, score: number }], total: number }
-GET /api/channels?sort=score_desc|score_asc&limit=3&minVideos=5
-  → { items: [{ name: string, score: number, videoCount: number }], total: number }
+GET /api/videos?sort=score&order=desc|asc&limit=3
+  → { items: [{ id: string, title: string, channel: string, score: number, … }], total: number }
+GET /api/channels?sort=score&order=desc|asc&limit=3&minVideos=5
+  → { items: [{ name: string, score: number, videoCount: number, … }], total: number }
 ```
 
-`/api/videos` gets search/filters/pagination in the rankings plan; this plan implements only `sort` (`score_desc`, `score_asc`; _was: `score_desc` only_) and `limit`. The home table makes one request per end and view. `score` is rounded to 1 decimal by the backend; the frontend shows it as an integer.
+The list endpoints' full contract (sorting by measurement, `order`, category, search, paging, and the extra item fields) is owned by plan 007; the home card uses `sort=score`, `order=desc|asc` and `limit` _(human decision, 2026-10-15, plan 007: `sort=score_desc|score_asc` became `sort=score&order=desc|asc`)_. The home table makes one request per end and view. `score` is rounded to 1 decimal by the backend; the frontend shows it as an integer.
 
 ## Backend (steps 7–8)
 
@@ -169,9 +169,9 @@ GET /api/channels?sort=score_desc|score_asc&limit=3&minVideos=5
 - **Import script** `backend/scripts/import_dataset.py <research-repo-dir>`: reads the files above, runs the checks, and writes `backend/data/videos.tsv` (committed, ≈ 3 MB) plus `backend/data/videos.meta.json` (source, `CACHE_VERSION`, feature-table date, row count). Columns: `video_id`, `title`, `channel_id`, `channel_title`, `category`, `published_at`, `duration_s` (the video's full length, from the corpus file; the features file's `duration_s` is the clip's), the 12 features. Nothing else from the research files (no view/subscriber counts, tiers, cache info). Re-run by hand when the research data changes.
 - **Dataset input** for the app: `videos.tsv` as above. Rows without an ID or with no feature values are skipped and counted in a startup log line.
 - **Score** = a percentile, 0–100. Computed at startup: each of the 12 features is ranked separately as a percentile within the dataset (`100·(count ≤ value − 1)/(n − 1)`); a video's composite is the mean of its 12 feature percentiles (missing features left out); its score is the percentile of that composite among all videos' composites (same formula), rounded to 1 decimal. So the least stimulating video is 0 and the most stimulating 100. A channel's score is the mean of its videos' scores. Live videos are scored against the same pools. _(was: the composite itself, which only spans about 28–83 because averaging pulls scores toward the middle)_ `scoring.py` will be reused by live analysis later.
-- **Ranking.** Videos sorted by score, ties broken by `video_id` so the order is stable. `score_asc` is the exact reverse of `score_desc`, so ranks counted back from `total` match. Channels grouped by `channel_id` (name = `channel_title`), score = mean of their videos' unrounded scores, then rounded. `total` = number of videos / channels that pass `minVideos`.
+- **Ranking.** Videos sorted by score, ties broken by `video_id` so the order is stable. `order=asc` is the exact reverse of `order=desc`, so ranks counted back from `total` match (every video has a score, so `total` counts them all; see plan 007 for the other criteria). Channels grouped by `channel_id` (name = `channel_title`), score = mean of their videos' unrounded scores, then rounded. `total` = number of videos / channels that pass `minVideos`.
 - **`/api/meta`.** `videoCount` = scored videos, `channelCount` = distinct channels among them (no threshold), `updatedAt` = the feature-table date from `videos.meta.json` _(was: the file's modification date; git doesn't keep those)_.
-- **Params.** `sort` ∈ {`score_desc`, `score_asc`} (default `score_desc`), `limit` 1–100 (default 20), `minVideos` 1–1000 (default 5). Anything else → 422 (FastAPI's default validation).
+- **Params.** `sort` (default `score`), `order` ∈ {`desc`, `asc`} (default `desc`), `limit` 1–100 (default 20), `minVideos` 1–1000 (default 5); the rest in plan 007 _(2026-10-15)_. Anything else → 422 (FastAPI's default validation).
 - **`/api/health`** → `{ "status": "ok" }`.
 - **Pipeline** (`backend/pipeline/`, copied from the research repo's `code/pipeline/`; only what serving the site needs):
   - `58_download_clips_v2.py`: the downloader that produced the dataset's clips (30 s offset, 300 s, format 18 / ≤ 360p, player clients default → mweb → android). One change: `--clips-dir` has no default (the original default is a server path).

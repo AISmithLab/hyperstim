@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import InfoTip from "@/components/InfoTip";
 import ScoreMeter from "@/components/ScoreMeter";
+import SegmentedControl from "@/components/SegmentedControl";
 import { getChannels, getVideos, type ListResponse } from "@/lib/api";
 import { asset } from "@/lib/asset";
 import { channelHref, videoHref } from "@/lib/routes";
@@ -42,8 +43,8 @@ export function joinEnds<T>(
 
 async function loadVideos(): Promise<Row[]> {
   const [top, bottom] = await Promise.all([
-    getVideos({ sort: "score_desc", limit: END }),
-    getVideos({ sort: "score_asc", limit: END }),
+    getVideos({ sort: "score", order: "desc", limit: END }),
+    getVideos({ sort: "score", order: "asc", limit: END }),
   ]);
   return joinEnds(top, bottom, (v, rank) => ({
     key: v.id,
@@ -58,8 +59,8 @@ async function loadVideos(): Promise<Row[]> {
 
 async function loadChannels(): Promise<Row[]> {
   const [top, bottom] = await Promise.all([
-    getChannels({ sort: "score_desc", limit: END, minVideos: 5 }),
-    getChannels({ sort: "score_asc", limit: END, minVideos: 5 }),
+    getChannels({ sort: "score", order: "desc", limit: END, minVideos: 5 }),
+    getChannels({ sort: "score", order: "asc", limit: END, minVideos: 5 }),
   ]);
   return joinEnds(top, bottom, (c, rank) => ({
     key: c.name,
@@ -116,26 +117,12 @@ export default function RankingsCard() {
         <h2 id="rankings-heading" className="font-hand text-2xl font-semibold text-navy sm:text-3xl">
           Stimulation rankings
         </h2>
-        {/* Segmented control: each button is a 44px touch target; the visible pill sits inside it. */}
-        <div
-          role="group"
-          aria-label="Show ranking of"
-          className="flex rounded-full border border-navy/15 bg-white px-0.5"
-        >
-          {(Object.keys(VIEWS) as View[]).map((v) => (
-            <button
-              key={v}
-              type="button"
-              aria-pressed={view === v}
-              onClick={() => setView(v)}
-              className="group flex min-h-11 items-center rounded-full text-sm font-semibold text-navy"
-            >
-              <span className="rounded-full px-3 py-1.5 group-hover:bg-sky group-aria-pressed:bg-sunny">
-                {VIEWS[v].chip}
-              </span>
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          label="Show ranking of"
+          options={(Object.keys(VIEWS) as View[]).map((v) => ({ value: v, label: VIEWS[v].chip }))}
+          value={view}
+          onChange={setView}
+        />
       </div>
 
       <p role="status" className="sr-only">
@@ -197,7 +184,7 @@ export default function RankingsCard() {
       )}
 
       <Link
-        href="/rankings"
+        href={view === "videos" ? "/rankings" : "/rankings?view=channels"}
         className="mt-6 inline-flex min-h-11 items-center font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny"
       >
         See full rankings&nbsp;<span aria-hidden="true">→</span>

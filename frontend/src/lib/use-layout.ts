@@ -33,3 +33,6 @@ export function useWidth(ref: RefObject<HTMLElement | null>, fallback: number): 
   }, [ref]);
   return width;
 }
+
+/** From Tailwind's `lg` breakpoint (64rem) up. */
+export const LG_UP = "(min-width: 64rem)";
