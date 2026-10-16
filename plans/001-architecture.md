@@ -26,13 +26,13 @@ plans/      numbered plans
   - `/video?id=<youtube-id>` Per-video detail: embedded YouTube player, score, category breakdown, metadata, "compare with…". Query param rather than `/video/[id]` because a static export can't pre-render pages for videos analyzed live.
   - `/compare` Two videos side by side with per-category breakdown; state in the URL query (`?a=…&b=…`) so links are shareable.
   - `/how-it-works` Method explained for a general audience (features → categories → score).
-  - `/about` Team, paper, contact.
+  - `/about` Team, paper, contact. **Delayed** _(human decision, 2026-10-16)_: not built for now, and not linked from the header or footer until it is.
   - `/faq` Accordion of common questions.
   - `/privacy` Privacy policy: what we store (submitted video links/IDs, analysis results, server logs with IPs for rate limiting and abuse prevention), how long, and the YouTube embeds. Embeds use `youtube-nocookie.com`. No analytics or tracking cookies.
 - Shared layout on every page (in the root layout):
-  - Header: site name/logo (links home) and nav (Home, Rankings, Compare, How it works, About, FAQ), with the current page marked.
+  - Header: site name/logo (links home) and nav (Home, Rankings, Compare, How it works, FAQ; About once it exists _(human decision, 2026-10-16)_), with the current page marked.
   - Cookie consent banner on first visit: short text, link to the privacy policy, and "Accept" / "Reject" buttons of equal weight. The choice is saved in `localStorage` and can be changed via a "Cookie settings" link in the footer. Until the visitor accepts, YouTube players aren't loaded; each one shows its thumbnail with a "Load video from YouTube" button instead (which also counts as consent for that video). The site sets no other non-essential cookies.
-  - Footer: links to Privacy policy, About us, FAQ, Cookie settings; plus a contact email, the project's GitHub repo, and a copyright line.
+  - Footer: links to Privacy policy, FAQ, Cookie settings (About us once it exists _(human decision, 2026-10-16)_); plus a contact email, the project's GitHub repo, and a copyright line.
 - Data fetched client-side from the backend with small typed hooks; static text pages need no backend.
 - Responsive (RWD), mobile-first with Tailwind's default breakpoints; supported from 320 px phones up to wide desktop monitors:
   - Content in a max-width container on large screens so lines and tables don't stretch.

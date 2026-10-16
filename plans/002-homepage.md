@@ -69,7 +69,7 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Skip link | Skip to main content |
 | Logo alt | HyperStim? home |
 | Nav `aria-label` | Main |
-| Nav items | Home · Rankings · Compare · How it works · About |
+| Nav items | Home · Rankings · Compare · How it works _(human decision, 2026-10-16: About delayed, plan 001)_ |
 | Menu button (closed / open) | Menu / Close menu |
 
 **Hero**
@@ -120,7 +120,7 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Where | Text |
 |---|---|
 | Footer nav `aria-label` | Footer |
-| Links | Privacy policy · About us · FAQ |
+| Links | Privacy policy · FAQ _(human decision, 2026-10-16: About us delayed, plan 001)_ |
 | Copyright | © {year} HyperStim? _(was: “HyperStim Research Team”; before that “research team”, lower case)_ |
 
 All decorative images (`kid_1`, `sun_1`, `grass_*`, `flower_*`, warning triangle) have `alt=""`.
@@ -231,7 +231,7 @@ None.
 2. Channel ranking: mean score, channels with ≥ 5 scored videos.
 3. Images: originals (incl. unused ones) kept in `frontend/art/`; only used images are converted and shipped.
 4. Footer: no contact email for now; copyright holder “HyperStim?” _(was: “HyperStim Research Team”; before that “HyperStim research team”)_.
-5. Header nav: Home · Rankings · Compare · How it works · About; FAQ only in the footer (overrides 001).
+5. Header nav: Home · Rankings · Compare · How it works (About delayed, plan 001 _(human decision, 2026-10-16)_); FAQ only in the footer (overrides 001).
 6. Data release: IDs, metadata and features are public; clips never (review decision 6).
 7. Score: average of the 12 percentiles (review decision 7).
 8. Pipeline: copied in, downloader + extractor only (review decisions 8–9).

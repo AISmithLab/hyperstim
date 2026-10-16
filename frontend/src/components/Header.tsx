@@ -10,7 +10,6 @@ const NAV = [
   { href: "/rankings", label: "Rankings" },
   { href: "/compare", label: "Compare" },
   { href: "/how-it-works", label: "How it works" },
-  { href: "/about", label: "About" },
 ];
 
 function isCurrent(pathname: string, href: string): boolean {
