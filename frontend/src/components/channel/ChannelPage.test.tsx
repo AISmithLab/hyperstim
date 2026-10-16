@@ -32,7 +32,7 @@ function channel(videos = [
   video(1, "2018-02-03", { lstar_flash_per_min: [0, 58.3] }),
   video(2, "2020-05-01", { lufs: [null, null] }),
   video(3, "2024-09-06", { lstar_flash_per_min: [0, 58.3], lufs: [null, null] }),
-  video(4, "2026-01-10"),
+  video(4, "2026-01-10", { inter_cut_dssim_mean: [null, null] }),
 ]): ChannelDetail {
   return {
     id: ID,
@@ -121,14 +121,26 @@ describe("ChannelPage", () => {
     const { container } = open(ID);
     await loaded();
     const chips = within(screen.getByRole("group", { name: "Show" }));
+    const height = () => container.querySelector("[data-chart] svg")!.getAttribute("height");
+    const overallHeight = height();
     await user.click(chips.getByRole("button", { name: "Luminance flash" }));
+    expect(height()).toBe(overallHeight);
     expect(chips.getByRole("button", { name: "Luminance flash", pressed: true })).toBeInTheDocument();
     expect(chips.getAllByRole("button", { pressed: true })).toHaveLength(1);
-    // Two zero-event videos sit on the strip; the trend needs 3 videos above it.
-    expect(screen.getByText("None detected", { selector: "text" })).toBeInTheDocument();
+    // Two zero-event videos are rings on the 0 line, counted as 0 in the trend; no strip, no legend.
+    expect(container.querySelectorAll('[data-mark="zero"]')).toHaveLength(2);
     expect(container.querySelectorAll("[data-dot]")).toHaveLength(4);
-    expect(container.querySelector("[data-trend]")).toBeNull();
+    expect(container.querySelector("[data-trend]")).toBeInTheDocument();
+    expect(screen.queryByText("None detected", { selector: "text" })).toBeNull();
     expect(within(table()).getAllByRole("row")[1]).toHaveTextContent("Feb 3, 2018Tiny Trucks 1None detected");
+
+    // No cuts: a ×, left out of the trend (3 videos remain), and not counted as not measured.
+    await user.click(chips.getByRole("button", { name: "Scene discontinuity" }));
+    expect(container.querySelectorAll('[data-mark="na"]')).toHaveLength(1);
+    expect(container.querySelectorAll("[data-dot]")).toHaveLength(4);
+    expect(container.querySelector("[data-trend]")).toBeInTheDocument();
+    expect(screen.queryByText(/not measured$/)).not.toBeInTheDocument();
+    expect(within(table()).getAllByRole("row")[4]).toHaveTextContent("Jan 10, 2026Tiny Trucks 4No cuts");
 
     await user.click(chips.getByRole("button", { name: "Audio intensity" }));
     expect(container.querySelectorAll("[data-dot]")).toHaveLength(2);

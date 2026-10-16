@@ -229,6 +229,11 @@ function channelVideos(channel: ChannelSummary): ChannelVideo[] {
         if (PER_MINUTE_EVENTS.includes(f.key) && rand() < 0.4) Object.assign(f, { value: 0, percentile: 58.3 });
       }
       if (i % 6 === 2) Object.assign(features[8], { value: null, percentile: null }); // lufs not measured
+      if (i % 7 === 3) {
+        // No cuts at all: none detected for Rapid cutting, no value for Scene discontinuity.
+        Object.assign(features[0], { value: 0, percentile: 9.2 });
+        Object.assign(features[1], { value: null, percentile: null });
+      }
     }
     const title =
       own?.title ??

@@ -3,7 +3,6 @@ import type { ChannelVideo } from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
 import {
   formatDate,
-  hasZeroStrip,
   labelStep,
   metaLine,
   monotoneSegments,
@@ -103,7 +102,7 @@ describe("stackShifts", () => {
 });
 
 describe("pointOf", () => {
-  it("puts zero-event videos on the strip and leaves missing values out", () => {
+  it("tells real zeros, no cuts and missing values apart", () => {
     const v = video("2024-09-06", {
       lstar_flash_per_min: [0, 58.3],
       lufs: [null, null],
@@ -113,14 +112,7 @@ describe("pointOf", () => {
     expect(pointOf(v, "cuts_per_min")).toEqual({ kind: "value", value: 40 });
     expect(pointOf(v, "lstar_flash_per_min")).toEqual({ kind: "zero", text: "None detected" });
     expect(pointOf(v, "lufs")).toEqual({ kind: "missing", text: "Not measured" });
-    expect(pointOf(v, "inter_cut_dssim_mean").kind).toBe("missing");
-  });
-
-  it("has a strip for the per-minute measurements only", () => {
-    expect(hasZeroStrip("overall")).toBe(false);
-    expect(hasZeroStrip("lufs")).toBe(false);
-    expect(hasZeroStrip("motion_frac")).toBe(false);
-    expect(KEYS.filter(hasZeroStrip)).toHaveLength(6);
+    expect(pointOf(v, "inter_cut_dssim_mean")).toEqual({ kind: "na", text: "No cuts" });
   });
 });
 

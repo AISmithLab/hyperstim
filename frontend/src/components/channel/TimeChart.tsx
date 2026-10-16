@@ -8,7 +8,6 @@ import { thumbnailUrl } from "@/lib/youtube";
 import {
   dayOf,
   formatDate,
-  hasZeroStrip,
   labelStep,
   measureName,
   monotonePath,
@@ -24,7 +23,8 @@ import {
 const LEFT = 32; // y labels
 const RIGHT = 12;
 const TOP = 12;
-const STRIP = 34; // the "None detected" strip under the 0 line
+const CROSS = 4; // half the size of a "No cuts" ×
+const CROSS_LIFT = 7; // the × sits this far above the 0 line, so the line doesn't cut it
 const LABELS = 28; // year ticks and labels under the axis
 const THUMB_W = 64;
 const THUMB_H = 36;
@@ -44,9 +44,11 @@ function plotHeight(width: number, wide: boolean): number {
 
 /**
  * One channel's videos over the years (see STYLE.md, Over-years chart): a dot per video at its
- * publish date, a smoothed trend line, and (when `wide`) each video's thumbnail hanging from its
- * date under the axis. Clicking a dot or thumbnail calls `onOpen`. `marked` is the opened (or
- * tapped) video; `band` is the range of videos to highlight, as indexes into `videos`.
+ * publish date (a ring on the 0 line for none detected, a × above it for no cuts), a smoothed trend
+ * line, and (when `wide`) each video's thumbnail hanging from its date under the axis. The size
+ * and the axis stay the same for every measurement. Clicking a dot or thumbnail calls `onOpen`.
+ * `marked` is the opened (or tapped) video; `band` is the range of videos to highlight, as indexes
+ * into `videos`.
  */
 export default function TimeChart({
   videos,
@@ -74,16 +76,16 @@ export default function TimeChart({
   const x = (date: string) => LEFT + ((dayOf(date) - start) / (end - start)) * plotW;
   const plotH = plotHeight(width, wide);
   const y = (value: number) => TOP + (1 - value / 100) * plotH;
-  const strip = hasZeroStrip(measure);
-  const stripY = TOP + plotH + STRIP / 2 + 2;
-  const axisY = TOP + plotH + (strip ? STRIP : 0);
+  const axisY = TOP + plotH;
 
   const points = videos.map((video) => ({ video, point: pointOf(video, measure), cx: x(video.publishedAt) }));
-  const dots = points.flatMap(({ video, point, cx }) =>
-    point.kind === "missing" ? [] : [{ video, point, cx, cy: point.kind === "value" ? y(point.value) : stripY }],
-  );
-  // The trend runs over the videos above the strip only.
-  const valued = dots.filter((d) => d.point.kind === "value");
+  const dots = points.flatMap(({ video, point, cx }) => {
+    if (point.kind === "missing") return [];
+    const cy = point.kind === "value" ? y(point.value) : point.kind === "zero" ? y(0) : y(0) - CROSS_LIFT;
+    return [{ video, point, cx, cy }];
+  });
+  // The trend counts a real zero as 0; a video the measurement doesn't apply to stays out of it.
+  const valued = dots.filter((d) => d.point.kind === "value" || d.point.kind === "zero");
   const trend = smooth(valued.map((d) => (d.point.kind === "value" ? d.point.value : 0)));
   const trendPath = monotonePath(trend.map((value, i) => [valued[i].cx, y(value)]));
 
@@ -131,11 +133,6 @@ export default function TimeChart({
             height={axisY - TOP + 4}
             className="fill-sunny/25"
           />
-        )}
-        {strip && (
-          <text x={LEFT} y={TOP + plotH + 14} className="fill-ink/80 text-xs">
-            None detected
-          </text>
         )}
 
         {/* Lines from each date down to its thumbnail; the marked one on top. */}
@@ -195,16 +192,40 @@ export default function TimeChart({
         {/* Fades in again when the measurement changes (none with reduced motion). */}
         <g key={measure} className="motion-safe:animate-fade-in">
           {trendPath && <path d={trendPath} fill="none" strokeWidth={2.5} className="stroke-navy" data-trend="" />}
-          {dots.map(({ video, cx, cy }) => (
-            <circle
-              key={video.id}
-              cx={cx}
-              cy={cy}
-              r={isMarked(video.id) ? 7 : 4.5}
-              className={isMarked(video.id) ? "fill-navy" : "fill-navy/50"}
-              data-dot={video.id}
-            />
-          ))}
+          {dots.map(({ video, point, cx, cy }) => {
+            const on = isMarked(video.id);
+            if (point.kind === "na") {
+              const d = CROSS + (on ? 1.5 : 0);
+              return (
+                <path
+                  key={video.id}
+                  d={`M ${cx - d} ${cy - d} L ${cx + d} ${cy + d} M ${cx + d} ${cy - d} L ${cx - d} ${cy + d}`}
+                  strokeWidth={on ? 2.75 : 2}
+                  strokeLinecap="round"
+                  className={on ? "stroke-navy" : "stroke-navy/60"}
+                  data-dot={video.id}
+                  data-mark="na"
+                />
+              );
+            }
+            return (
+              <circle
+                key={video.id}
+                cx={cx}
+                cy={cy}
+                r={on ? 7 : 4.5}
+                className={
+                  point.kind === "zero"
+                    ? `fill-white stroke-2 ${on ? "stroke-navy" : "stroke-navy/60"}`
+                    : on
+                      ? "fill-navy"
+                      : "fill-navy/50"
+                }
+                data-dot={video.id}
+                data-mark={point.kind === "zero" ? "zero" : undefined}
+              />
+            );
+          })}
         </g>
         {/* Pointer targets, ~24 px; keyboard users have the thumbnails (or the strip's cards). */}
         {dots.map(({ video, cx, cy }) => (

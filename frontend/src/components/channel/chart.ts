@@ -9,10 +9,14 @@ export function measureName(measure: Measure): string {
   return measure === "overall" ? "Overall" : FEATURE_INFO[measure].name;
 }
 
-/** A video's place on the chart: a value 0–100, the "None detected" strip, or left out. */
+/**
+ * A video's place on the chart: a value 0–100; a real zero (events counted, none found: a ring on
+ * the 0 line); no value because the measurement doesn't apply ("No cuts": a ×); or left out.
+ */
 export type Point =
   | { kind: "value"; value: number }
   | { kind: "zero"; text: string }
+  | { kind: "na"; text: string }
   | { kind: "missing"; text: string };
 
 export function pointOf(video: ChannelVideo, measure: Measure): Point {
@@ -22,20 +26,13 @@ export function pointOf(video: ChannelVideo, measure: Measure): Point {
   const display = featureDisplay(feature);
   if (display.kind === "percentile") return { kind: "value", value: display.percentile };
   // Per-minute features with no events: their tied percentile would read as middling.
-  return display.text === "None detected"
-    ? { kind: "zero", text: display.text }
-    : { kind: "missing", text: display.text };
+  if (display.text === "None detected") return { kind: "zero", text: display.text };
+  return display.text === "No cuts" ? { kind: "na", text: display.text } : { kind: "missing", text: display.text };
 }
 
 /** The point as text: the rounded value, or why there is none. */
 export function pointText(point: Point): string {
   return point.kind === "value" ? String(Math.round(point.value)) : point.text;
-}
-
-/** Whether a measure has a "None detected" strip (the per-minute event counts). */
-export function hasZeroStrip(measure: Measure): boolean {
-  const unit = measure === "overall" ? null : FEATURE_INFO[measure].unit;
-  return unit === "perMin" || unit === "cutsPerMin";
 }
 
 /** A YYYY-MM-DD date as a UTC timestamp in ms. */
