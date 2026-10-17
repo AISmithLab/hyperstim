@@ -29,12 +29,14 @@ export default function Hero() {
       </div>
 
       <div className="max-w-prose text-lg md:col-start-1 md:row-start-2 md:self-start">
-        <p>
-          <i>HyperStim?</i> measures the production style of children’s videos: how fast they cut, how
-          loud they get, and how saturated the colors are.
-        </p>
+        <p>Ever wondered if your child’s favorite videos might be overstimulating?</p>
         <p className="mt-4">
-          See how any video compares with <DatasetCount /> other kids’ videos.
+          <b>
+            <i>HyperStim?</i>
+          </b>{" "}
+          helps parents see how stimulating children’s videos are: how fast they cut, how loud they
+          get, how bright their colors are, and more. See how any video compares with <DatasetCount />{" "}
+          other kids’ videos.
         </p>
       </div>
     </section>

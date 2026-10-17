@@ -5,7 +5,8 @@ import RankingsCard from "@/components/home/RankingsCard";
 
 export const metadata: Metadata = {
   title: "HyperStim? - How stimulating are kids’ videos?",
-  description: "See how fast, loud, and intense children’s YouTube videos are.",
+  description:
+    "Compare how stimulating children’s YouTube videos are: a 0–100 score for fast cuts, loud sound, bright colors, and more, made for parents.",
   alternates: { canonical: "/" },
 };
 

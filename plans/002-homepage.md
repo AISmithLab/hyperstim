@@ -37,7 +37,7 @@ Build the home page (`/`) following the look of the mockup's home panel: hero wi
 All visible text is in **Copy** below; this list says only where things go.
 
 1. **Header** (shared layout): skip link (visible on focus) first; logo left, links to `/`; nav right with the current page underlined and `aria-current="page"`; `sun_1.png` small, decorative, beside the nav on `lg`+. Below `lg`: menu button opens the nav as a full-width list.
-2. **Hero, left.** H1 (Shantell Sans _(was: Patrick Hand)_, navy, large) with a yellow marker highlight behind its last words; intro in two paragraphs (Nunito, slate). _(was: one intro paragraph plus a small note under it)_
+2. **Hero, left.** H1 (Shantell Sans _(was: Patrick Hand)_, navy, large) with a yellow marker highlight behind its last words; intro in two paragraphs: the opening question alone, then what the site does and the invitation to compare (Nunito, slate) _(human decision, 2026-10-17)_. _(was: three paragraphs, one per sentence; before that two paragraphs, and one intro paragraph plus a small note under it)_
 3. **Hero, right.** `kid_1.png`, `aria-hidden`, no speech bubble. Hidden below `md`; a fixed width from `md` (344 / 392 / 464 px at `md` / `lg` / `xl`), so its head is the same size as the other pages' kids (001) _(human decision, 2026-10-16)_. _(was: with a hand-styled CSS speech bubble saying “What’s next?”)_
 4. **Check-a-video card** (butter panel `#FEF8D4`, large rounded corners). `grass_1.png` / `flower_1.png` peeking from the bottom-left corner on `md`+. H2 alone _(was: with an info button on the same row, right-aligned with the “Check video” button)_, visible label + input (white, 2px navy outline, thick sunny-yellow ring on focus _(was: light grey-navy outline, default focus outline)_), primary button, helper text under them (the length hint, always visible, small slate text), inline error (`aria-live="polite"`). The input's `aria-describedby` points to the helper text and the error. No popup: the label already says what to paste, so the intro is dropped. _(was: intro and hint in a speech-bubble popup from the info button; before that, intro under the H2 and hint under the button)_
 5. **Table card** (white card, subtle border, large rounded corners). `flower_2.png` decorative at top-right corner on `md`+.
@@ -60,7 +60,7 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Where | Text |
 |---|---|
 | `<title>` | HyperStim? - How stimulating are kids’ videos? |
-| Meta description | See how fast, loud, and intense children’s YouTube videos are. |
+| Meta description | Compare how stimulating children’s YouTube videos are: a 0–100 score for fast cuts, loud sound, bright colors, and more, made for parents. _(human decision, 2026-10-17: name stimulation and parents; was: “See how fast, loud, and intense children’s YouTube videos are.”)_ |
 
 **Header**
 
@@ -77,8 +77,9 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Where | Text |
 |---|---|
 | H1 | How stimulating are the videos **your child watches?** (bold part = marker highlight) |
-| Intro, paragraph 1 | *HyperStim?* (italic, the site’s name as in the logo) measures the production style of children’s videos: how fast they cut, how loud they get, and how saturated the colors are. _(was: “HyperStim”, upright, no “?”)_ |
-| Intro, paragraph 2 | See how any video compares with {N} other kids’ videos. _(was: “… with {N} others in our research dataset.”; before that one paragraph with paragraph 1 and “more than {N}”)_ |
+| Intro, paragraph 1 | Ever wondered if your child’s favorite videos might be overstimulating? _(human decision, 2026-10-17: name stimulation and parents)_ |
+| Intro, paragraph 2, first sentence | ***HyperStim?*** (bold italic, the site’s name as in the logo) helps parents see how stimulating children’s videos are: how fast they cut, how loud they get, how bright their colors are, and more. _(human decision, 2026-10-17: name bold, and don’t limit it to three measurements; was: “*HyperStim?* measures the production style of children’s videos: how fast they cut, how loud they get, and how saturated the colors are.”, in paragraph 1)_ |
+| Intro, paragraph 2, second sentence | See how any video compares with {N} other kids’ videos. _(human decision, 2026-10-17: in the same paragraph; was: its own paragraph)_ _(was: “… with {N} others in our research dataset.”; before that one paragraph with paragraph 1 and “more than {N}”)_ |
 | `{N}` | Video count from `/api/meta`, rounded down to whole thousands as “{n}k+” (10,412 → “10k+”); below 1,000, the exact count. Before it loads or if it fails: “thousands of”. _(was: “more than 5,400”, rounded down to the nearest 100)_ |
 | Illustration alt | (empty, decorative) |
 
