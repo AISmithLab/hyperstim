@@ -5,6 +5,7 @@ import ComparePage, { Loading } from "@/components/compare/ComparePage";
 export const metadata: Metadata = {
   title: "Compare - HyperStim?",
   description: "Put two kids’ videos or channels side by side and see where their production differs.",
+  alternates: { canonical: "/compare/" },
 };
 
 export default function Page() {

@@ -5,6 +5,7 @@ import RankingsPage, { Loading } from "@/components/rankings/RankingsPage";
 export const metadata: Metadata = {
   title: "Stimulation rankings - HyperStim?",
   description: "Every video and channel in our dataset, ranked by how intense its production is.",
+  alternates: { canonical: "/rankings/" },
 };
 
 export default function Page() {

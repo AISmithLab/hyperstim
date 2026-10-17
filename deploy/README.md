@@ -36,6 +36,8 @@ Then make the first release with `hyperstim-release`.
    - `NEXT_PUBLIC_API_BASE` = `https://<api-host>/v2`
    - `NEXT_PUBLIC_BASE_PATH` = `/<repo-name>`
    - `NEXT_PUBLIC_GA_ID` = the Google Analytics measurement ID (`G-…`). Optional: without it the site has no consent banner and no analytics. The GA property's settings are in plan 009.
+   - `NEXT_PUBLIC_SITE_ORIGIN` = `https://<domain>` (no path, no trailing slash), for the sitemap and canonical URLs.
+   - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` = the token from Google Search Console's HTML tag. Optional: without it the pages have no verification tag. Search Console setup is in plan 011.
 
 ## Cloud firewall (once)
 

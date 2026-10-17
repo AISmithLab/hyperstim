@@ -25,6 +25,8 @@ jobs:
       NEXT_PUBLIC_API_BASE: ${{ vars.NEXT_PUBLIC_API_BASE }}
       NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
       NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
+      NEXT_PUBLIC_SITE_ORIGIN: ${{ vars.NEXT_PUBLIC_SITE_ORIGIN }}
+      NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }}
       NEXT_PUBLIC_API_MOCK: ""
     steps:
       - uses: actions/checkout@v4
@@ -32,6 +34,7 @@ jobs:
         run: |
           [ -n "$NEXT_PUBLIC_API_BASE" ] || { echo "Actions variable NEXT_PUBLIC_API_BASE is not set"; exit 1; }
           [ -n "$NEXT_PUBLIC_BASE_PATH" ] || { echo "Actions variable NEXT_PUBLIC_BASE_PATH is not set"; exit 1; }
+          [ -n "$NEXT_PUBLIC_SITE_ORIGIN" ] || { echo "Actions variable NEXT_PUBLIC_SITE_ORIGIN is not set"; exit 1; }
       - uses: actions/setup-node@v4
         with:
           node-version-file: frontend/.nvmrc

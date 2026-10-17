@@ -6,6 +6,7 @@ import RankingsCard from "@/components/home/RankingsCard";
 export const metadata: Metadata = {
   title: "HyperStim? - How stimulating are kids’ videos?",
   description: "See how fast, loud, and intense children’s YouTube videos are.",
+  alternates: { canonical: "/" },
 };
 
 export default function HomePage() {

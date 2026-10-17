@@ -3,6 +3,7 @@ import { Nunito, Shantell_Sans } from "next/font/google";
 import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -15,8 +16,13 @@ const shantellSans = Shantell_Sans({
   subsets: ["latin"],
 });
 
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   title: "HyperStim?",
+  metadataBase: new URL(siteUrl),
+  // Search Console ownership check (plan 011); no tag when unset.
+  verification: googleSiteVerification ? { google: googleSiteVerification } : undefined,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
