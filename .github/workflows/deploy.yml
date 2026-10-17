@@ -24,6 +24,7 @@ jobs:
     env:
       NEXT_PUBLIC_API_BASE: ${{ vars.NEXT_PUBLIC_API_BASE }}
       NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+      NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
       NEXT_PUBLIC_API_MOCK: ""
     steps:
       - uses: actions/checkout@v4

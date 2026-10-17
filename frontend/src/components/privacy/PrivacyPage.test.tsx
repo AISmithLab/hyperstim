@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { OPEN_EVENT } from "@/lib/consent";
 import PrivacyPage, { CONTACT_URL } from "./PrivacyPage";
 
 describe("PrivacyPage", () => {
@@ -7,7 +9,7 @@ describe("PrivacyPage", () => {
     const { container } = render(<PrivacyPage />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Privacy policy");
     const ids = [...container.querySelectorAll("h2")].map((h) => h.id);
-    expect(ids).toEqual(["browsing", "checking", "youtube", "cookies", "children", "your-choices"]);
+    expect(ids).toEqual(["browsing", "checking", "cookies", "your-choices"]);
   });
 
   it("links to the contact form as “contact us”, in a new tab", () => {
@@ -20,9 +22,27 @@ describe("PrivacyPage", () => {
     }
   });
 
-  it("states the retention times the backend keeps to", () => {
+  it("states the log retention the backend keeps to", () => {
     render(<PrivacyPage />);
     expect(screen.getByText(/delete them after 14 days/)).toBeInTheDocument();
-    expect(screen.getByText(/forgotten after an hour/)).toBeInTheDocument();
+  });
+
+  describe("changing the cookie choice", () => {
+    afterEach(() => vi.unstubAllEnvs());
+
+    it("reopens the banner from “cookie settings” in Your choices", async () => {
+      vi.stubEnv("NEXT_PUBLIC_GA_ID", "G-TEST123");
+      const opened = vi.fn();
+      window.addEventListener(OPEN_EVENT, opened);
+      render(<PrivacyPage />);
+      await userEvent.setup().click(screen.getByRole("button", { name: "cookie settings" }));
+      expect(opened).toHaveBeenCalled();
+      window.removeEventListener(OPEN_EVENT, opened);
+    });
+
+    it("leaves the sentence out when there is no choice to make", () => {
+      render(<PrivacyPage />);
+      expect(screen.queryByText(/change your mind about cookies/)).toBeNull();
+    });
   });
 });

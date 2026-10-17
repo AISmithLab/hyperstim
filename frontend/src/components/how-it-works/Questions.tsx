@@ -28,8 +28,8 @@ const QUESTIONS: [string, ReactNode][] = [
     "Do you keep anything about me?",
     <>
       When you check a video that isn’t in our dataset, we save its results, so anyone who checks it
-      later gets them right away. Nothing about who checked it is saved. Our server keeps short-lived
-      logs to prevent abuse. See our{" "}
+      later gets them right away. Nothing about who checked it is saved. We keep short-lived logs to
+      prevent abuse. If you allow it, Google Analytics counts your visit. See our{" "}
       <Link href="/privacy" className={TEXT_LINK}>
         privacy policy
       </Link>

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import CookieSettings from "./CookieSettings";
+
+const LINK = "inline-flex min-h-11 items-center px-2 font-semibold text-navy underline-offset-4 hover:underline";
 
 const LINKS = [
   { href: "/privacy", label: "Privacy policy" },
@@ -13,14 +16,12 @@ export default function Footer() {
           <ul className="flex flex-wrap gap-x-2 gap-y-1">
             {LINKS.map(({ href, label }) => (
               <li key={href}>
-                <Link
-                  href={href}
-                  className="inline-flex min-h-11 items-center px-2 font-semibold text-navy underline-offset-4 hover:underline"
-                >
+                <Link href={href} className={LINK}>
                   {label}
                 </Link>
               </li>
             ))}
+            <CookieSettings className={LINK} as="li" />
           </ul>
         </nav>
         <p className="px-2">© {new Date().getFullYear()} HyperStim?</p>

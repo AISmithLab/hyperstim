@@ -4,9 +4,9 @@
 
 ## Goal
 
-Build `/privacy`: a short policy, in plain words, that says exactly what the site does with visitor data today. Also set out what changes once analytics are added, so that step is planned and doesn't need a rewrite.
+Build `/privacy`: a short policy, in plain words, that says exactly what the site does with visitor data today. Then add Google Analytics behind an opt-in banner, and update the policy with it.
 
-## What the site does today (checked in the code)
+## What the site does (checked in the code; GA rows once built)
 
 | Where | What it sees or stores | Kept |
 |---|---|---|
@@ -18,29 +18,30 @@ Build `/privacy`: a short policy, in plain words, that says exactly what the sit
 | Live check, the clip | Downloaded to our server for analysis | Deleted when the analysis finishes |
 | YouTube thumbnails | Fetched by our server and cached there (see **Thumbnails**), so YouTube never sees the visitor. Public images only, nothing about visitors | 30 days on the server; the visitor's browser keeps each for a day |
 | YouTube player | Loads only after "Play video" is clicked. Privacy-enhanced mode (`youtube-nocookie.com`). Once playing, YouTube may set cookies and local storage | Google's policy |
-| Cookies, local storage | None set by us | – |
+| Google Analytics | Only after Accept: IP, browser, device, pages viewed, referrer, sent to Google | 2 months in GA; cookies 2 years |
+| Cookies, local storage | `_ga` cookies only after Accept; the consent choice in `localStorage` (never sent anywhere) | Cookies 2 years; choice 12 months |
 | Contact form (Google Form, linked) | What the visitor writes: reply email, request, optional IP/time | Deleted once the request is handled |
 
 ## Decisions
 
-- **Plain words, short sections, for parents.** The same tone as How it works. No legal boilerplate beyond what the law requires.
+- **Plain words, short sections, for parents.** No technical details such as "our server": the policy says "we" _(human decision, 2026-10-17)_. The same tone as How it works. No legal boilerplate beyond what the law requires.
 - **Facts only, and kept true.** Each statement matches the table above. A change to any of these behaviours updates the policy in the same change (a rule added to 001).
 - **"Last updated" date** at the top of the page.
 - **Sections:**
   No "In short" summary box _(human decision, 2026-10-16)_.
   No "Who we are" section _(human decision, 2026-10-16)_: the policy names no team, and the contact link is in **Your choices**.
-  1. **When you browse the site**: GitHub Pages logs, our server's logs (full IP addresses _(human decision)_, kept 14 days), and why: to run the site and keep it safe from abuse.
-  2. **When you check a video**: what is saved (the video's ID, public details and results, kept and shown to anyone who checks it later); the IP held in memory for at most an hour for the limit; the clip deleted after analysis.
-  3. **YouTube**: thumbnails come from our server, so YouTube doesn't see you while you browse (how long the server keeps them isn't stated _(human decision, 2026-10-16)_); the player loads only after you click, and then Google's privacy policy applies (link).
-  4. **Cookies**: we set none. YouTube may, only after you start a video. One sentence on browser privacy signals: "We don't track you, so Do Not Track signals change nothing." _(human decision)_
-  5. **Children**: the site is meant for parents and adults. We don't knowingly collect personal information from anyone, children included.
+  1. **When you browse the site**: GitHub Pages logs, our own logs (full IP addresses _(human decision)_, kept 14 days), and why: to run the site and keep it safe from abuse. With analytics, also Google Analytics, only if the visitor accepts (see **Google Analytics → Policy changes**) _(human decision, 2026-10-17: no separate Analytics section)_.
+  2. **When you check a video**: what is saved: "We save the results, with the video's ID, title and channel, so they're ready for the next person who checks the same video. They aren't linked to you." _(human decision, 2026-10-17: the earlier wording read awkwardly)_; the clip deleted after analysis; YouTube may set cookies when a video is played (link to Google's privacy policy). Not stated: the channel look-up and the in-memory rate-limit count _(human decision, 2026-10-17: details visitors don't need)_.
+  3. ~~**YouTube**~~: no YouTube section; its one point (YouTube may set cookies when a video plays) is in **When you check a video** _(human decision, 2026-10-17: thumbnails and privacy-enhanced mode were details visitors don't need)_.
+  4. **Cookies**: rewritten for analytics, see **Google Analytics → Policy changes**. YouTube's cookies are in **When you check a video**, not repeated here.
+  5. ~~**Children**~~: no Children section _(human decision, 2026-10-17: one sentence alone as a section looked awkward; dropping "knowingly" from its second sentence would have made it untrue)_.
   6. **Your choices**: "To ask what we hold about you, or to have it deleted, please fill out the contact us form." _(human decision, 2026-10-16)_. No reply time and no hint about IP address and time (the form's IP and time fields cover it) _(human decision, 2026-10-16)_. Nothing on the form being run by Google, what we do with messages, or complaining to a data protection authority _(human decision, 2026-10-16)_.
   No "Changes to this policy" section; the "Last updated" date at the top stays _(human decision, 2026-10-16)_.
 - **One policy for every visitor, with no jurisdiction named** _(human decision: visitors are mainly in the US, but anyone can visit)_. The text names no law and has no region-specific parts. Its content still meets the strictest common rules (EU/UK GDPR; in the US, California's CalOPPA and COPPA), which costs only a few plain sentences since we collect almost nothing:
   - what is collected, why, how long, who else sees it, the contact, a dated last update (all);
   - why we keep logs, said in plain words (security) (GDPR). GDPR also expects who runs the site, a reply time for requests and the right to complain to a data protection authority; left out _(human decision, 2026-10-16)_;
   - how Do Not Track is handled (CalOPPA, which applies once we collect emails through the contact form);
-  - the children section (COPPA). The site is for parents, but its topic and picture-book style may make it look aimed at children. Today that's fine: IPs used only for security and rate limiting need no parental consent. **It matters for analytics** (below).
+  - the children section (COPPA). The site is for parents, but its topic and picture-book style may make it look aimed at children. Today that's fine: IPs used only for security and rate limiting need no parental consent. With analytics too: the site is for parents, not aimed at children, so COPPA needs no parental consent for GA _(human decision, 2026-10-17)_. The Children section was later dropped (see **Sections**); COPPA needs no notice from a site not aimed at children.
   - Not legal advice: if the team belongs to an institution, its privacy office should read the final text.
 - **Logs** (checked on the server; details stay off the repo). The policy promises 14 days, so every log with visitor IPs must keep to that:
   - Reverse proxy access/error logs: already rotated daily and deleted after 14 days. No change.
@@ -53,7 +54,7 @@ Build `/privacy`: a short policy, in plain words, that says exactly what the sit
   - Frontend: `thumbnailUrl` moves from `lib/youtube.ts` to `lib/api.ts` (the one place that talks to the backend) and points to the endpoint (through `NEXT_PUBLIC_API_BASE`); every user (`YouTubePlayer`, `TimeChart`, `VideoStrip`) is unchanged otherwise.
   - Speed: one fewer outside host for the browser to connect to, but each image now goes through our one server (the fetch from YouTube takes about 40–90 ms), so first loads, especially far from the server, are a bit slower. The browser cache covers repeat views.
   - Tests: dataset/live/unknown ID, bad sizes and IDs, fetched once then served from the cache (also after a restart), fetched again after 30 days, a missing thumbnail → 404 and remembered for a day, YouTube down → 502 or the stale copy, no half-written files.
-- **Contact form** _(human decision: a Google Form)_: https://forms.gle/oLbWLgE8sT6zHhLR9, title "HyperStim? Support", a general contact form that also takes privacy requests _(human decision)_. Linked from the policy as "contact us" _(human decision)_, from the policy only, no footer link _(human decision)_; not embedded (no Google code on our pages); no Google sign-in; responses go to a team account checked at least weekly; each response deleted once handled. Fields:
+- **Contact form** _(human decision: a Google Form)_: https://forms.gle/oLbWLgE8sT6zHhLR9, title "HyperStim? Support", a general contact form that also takes privacy requests _(human decision)_. Linked from the policy as "contact us" _(human decision)_, from the policy only, no footer link _(human decision)_; not embedded (no form code on our pages); no Google sign-in; responses go to a team account checked at least weekly; each response deleted once handled. Fields:
 
   | Field | Type, required | Description shown in the form |
   |---|---|---|
@@ -74,18 +75,53 @@ Build `/privacy`: a short policy, in plain words, that says exactly what the sit
 - **Links in:** footer "Privacy policy" (exists) and the FAQ answer "Do you keep anything about me?" (exists, plan 006).
 - **No backend.** Static page.
 
-## Later: adding Google Analytics
+## Google Analytics
 
-Adding GA changes the picture in four ways:
+Google Analytics 4 (GA) counts visits and pages, behind an opt-in banner _(human decision, 2026-10-17: GA preferred over a cookieless tool)_. It changes the policy: the site now sets cookies and sends data to Google, but only after the visitor accepts.
 
-1. **Consent is required first.** GA sets cookies (`_ga`) and sends the visitor's IP, device and browsing to Google. For EU/UK visitors that needs opt-in **before** GA loads. US law needs no banner, but one banner for everyone is simpler than detecting location, and fits the one-policy rule. So 001's banner becomes necessary: Accept / Reject of equal weight, GA loads only after Accept, choice in `localStorage`, "Cookie settings" link in the footer to change it.
-2. **The policy gains:** an **Analytics** section (what GA collects, Google as processor, retention, transfers to the US), a **cookie table** (name, purpose, duration), consent as the legal basis, and how to withdraw consent. **Cookies** loses "we don't set any cookies".
-3. **Settings to choose then:** data retention (2 months, the minimum), Google Signals and ad personalisation off, data sharing off.
-4. **Children (COPPA):** if the site counts as aimed at children (see **One policy**), GA's cookies need verifiable parental consent, which a banner can't give. Check this before adding GA; a cookieless tool avoids it.
-5. **Do Not Track / Global Privacy Control:** honour GPC as a "Reject" (California treats it as an opt-out).
-6. **Code:** the GA ID from `NEXT_PUBLIC_GA_ID`; when unset (local dev, forks, CI), no analytics code at all. The script is added only after consent, through one small consent module that the YouTube player can also read.
+**Not aimed at children** _(human decision, 2026-10-17: the site is for parents, so COPPA's parental consent doesn't apply)_.
 
-A cookieless analytics tool (self-hosted or EU-hosted) would avoid points 1–5: no banner, a one-paragraph policy change. Worth weighing when the time comes; this plan doesn't decide it.
+### Consent
+
+- **Nothing from Google loads before Accept.** Consent Mode "basic": no `gtag.js`, no pings, no cookies until the visitor accepts. (Not "advanced", which sends cookieless pings before consent.)
+- **Banner** on the first visit, the same for every visitor _(human decision, 2026-10-17: the first draft's question as heading didn't look professional)_: "**Cookies on HyperStim?** We'd like to use analytics cookies from Google Analytics to understand how people use the site and improve it. We set them only if you accept." Then **Accept** and **Reject** as two equal primary buttons (short labels _(human decision)_), centred, with no link _(human decision, 2026-10-17)_.
+  - Not modal: the site works while it's open. A card at the bottom right, aligned with the page container's right edge _(human decision, 2026-10-17: the lower-left corner looked unnatural; centred tried, then bottom right preferred)_; gone once the visitor chooses.
+  - Comes first in the page's reading order (before the skip link), labelled as a region ("Cookie choice"), so keyboard and screen-reader users meet it first. No focus stealing.
+  - Rendered only in the browser (after reading the saved choice), so the static HTML has none and visitors who chose don't see it flash.
+- **The choice** is kept in `localStorage` (`hyperstim-consent`: accepted or rejected, and the date). Asked again after 12 months. If `localStorage` is blocked, the choice holds for the current page view only and the banner returns next time.
+- **Privacy signals:** Global Privacy Control or Do Not Track turned on counts as Reject: no banner, no GA _(human decision, 2026-10-17: Do Not Track too, not only GPC)_.
+- **Changing the choice:** a "Cookie settings" button in the footer (next to Privacy policy) reopens the banner, showing the current choice. The policy's **Your choices** has a "cookie settings" text link that does the same. Withdrawing (Reject after Accept) deletes the `_ga` cookies and reloads the page, so GA is gone at once. The button is hidden when the signals above are on; then the banner isn't needed, and the policy explains why.
+
+### Code
+
+- The GA ID from `NEXT_PUBLIC_GA_ID` (an Actions variable in `deploy.yml`, like the other two; `.env.example`, `frontend/README.md`, `deploy/README.md`). Unset (local dev, CI, forks): no banner, no footer button, no GA code.
+- One small consent module (`lib/consent.ts`): reads and saves the choice, checks the privacy signals, and on Accept adds `gtag.js` once with `allow_google_signals: false`, `allow_ad_personalization_signals: false`, and ad storage denied. Cookies keep GA's default of 2 years _(human decision, 2026-10-17)_. Hand-written, no new dependency (`@next/third-parties` isn't needed for one script).
+- Page views: GA's enhanced measurement counts Next.js page changes from the browser history; no per-page code. Pages already have their own titles.
+- Components: `ConsentBanner` (in the layout) and the footer's "Cookie settings" button.
+- YouTube stays click-to-load and is independent of this choice (pressing "Play video" is the visitor's own request, plan 004).
+- Tests: no script before a choice, after Reject, with GPC or DNT, or with no ID; Accept adds the script once; withdrawing deletes the cookies; the choice expires after 12 months; blocked `localStorage`; the banner's labels and equal buttons; the footer button only with an ID.
+
+### Style
+
+New surface in `STYLE.md`, **Consent banner**: the popover look, at the bottom right, `max-w-lg` so the text sits on two full lines _(human decision, 2026-10-17)_; heading, body, then the two primary buttons, centred (classes in `STYLE.md`). No kid (it would crowd small screens). Screenshots at 360 and 1280 px, with the footer and the home hero behind it.
+
+### Policy changes (in the same change)
+
+- **When you browse the site** gains a paragraph on analytics, after the server logs; no separate Analytics section _(human decision, 2026-10-17)_: only if you accept, we use Google Analytics to count visits and see which pages are used. Google receives your IP address, browser and device, the pages you view and how you got here, and stores them for 2 months. Google works for us as a service provider and may process the data in the US. We don't use it for ads and don't share it with Google for other purposes. How to change the choice is said once, in **Your choices**, not repeated here _(human decision, 2026-10-17: duplicated)_. Link to Google's privacy policy. The sentence on fonts and pictures coming with the site is dropped _(human decision, 2026-10-17)_.
+- **Cookies** (rewritten): we set cookies only if you accept analytics; what they are for (Google Analytics tells visits apart) and how long they are kept (2 years, or until the choice changes). No cookie names _(human decision, 2026-10-17: not friendly for a general audience; purpose and duration are what the rules ask for)_. Your choice itself is saved in your browser (not a cookie) for a year so we don't ask again; it is never sent anywhere. The privacy signals (below). YouTube may set cookies after you press play.
+- **Privacy signals** (in **Cookies**, replaces the Do Not Track sentence): "If your browser sends Global Privacy Control or Do Not Track, we treat it as a no to Google Analytics and don't ask." _(replaces the earlier human decision "We don't track you, so Do Not Track signals change nothing", which GA makes untrue)_
+- **Your choices**: adds "You can change your mind about cookies at any time in cookie settings.", where "cookie settings" is a text link (a button styled as one) that reopens the banner; left out when there is no choice to make (no GA ID, or a privacy signal on) _(human decision, 2026-10-17: a text link here, not the earlier outlined button)_. No hint on finding a visitor's GA data (such as their `_ga` cookie value): too technical for most visitors, and GA data ends after 2 months anyway _(human decision, 2026-10-17: keep it simple)_.
+- "Last updated" date; the table at the top of this plan gains the GA and consent rows; the contact form's "no Google code on our pages" becomes "no form code on our pages".
+- FAQ "Do you keep anything about me?" (plan 006) adds: "If you allow it, Google Analytics counts your visit."
+- 001: the banner and footer link now exist; "no analytics or cookies from us" becomes "analytics only after consent".
+
+### GA settings (done by the team in GA's admin, not in code)
+
+1. Create a GA4 property and a web stream for the site's address; send the measurement ID (`G-…`). It's public (it appears in the page), but it goes in the Actions variable, not the code.
+2. Data retention: 2 months. Google Signals off. Granular location and device data collection off. Ads personalisation off. All data-sharing settings off.
+3. Accept the Data Processing Terms (Admin → Account settings), which makes Google a processor.
+4. Enhanced measurement on, with "Page changes based on browser history events".
+5. Set the Actions variable `NEXT_PUBLIC_GA_ID`, then release (plan 010).
 
 ## Steps
 
@@ -94,7 +130,11 @@ A cookieless analytics tool (self-hosted or EU-hosted) would avoid points 1–5:
 3. ~~Backend: the thumbnail endpoint~~ (`thumbnails.py`, README); the README's **Privacy** section (access log off, 14-day proxy logs).
 4. ~~Update 001~~ (privacy page, no banner until analytics, the policy-stays-true rule, the thumbnail endpoint), 004 and 005 (thumbnails from our backend).
 5. ~~Lint, type check, tests, build; screenshots at 360, 768, 1280, 1920 px.~~
+6. ~~Google Analytics:~~ `lib/consent.ts`, `ConsentBanner`, the footer's "Cookie settings", `NEXT_PUBLIC_GA_ID` (deploy workflow, `.env.example`, READMEs); tests.
+7. ~~Policy~~ (Analytics, Cookies, privacy signals, Your choices, date), FAQ answer (006), 001, `STYLE.md` (Consent banner).
+8. ~~Lint, type check, tests, build; screenshots at 360 and 1280 px; check in the browser's network tab that nothing goes to Google before Accept, after Reject, or with GPC on.~~
+9. The team: GA settings (above) and the Actions variable; then release when asked.
 
 ## Open questions
 
-None. Next: the final copy (step 1).
+None.

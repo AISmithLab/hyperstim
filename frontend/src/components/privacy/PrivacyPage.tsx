@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
+import CookieSettings from "@/components/CookieSettings";
 import { asset } from "@/lib/asset";
 
 // The privacy policy (plan 009). Every statement must stay true: a change to what the site or the
 // backend stores, logs, or loads from other companies is agreed first, then updates this page in the
 // same change (CLAUDE.md).
 
-export const LAST_UPDATED = "October 16, 2026";
+export const LAST_UPDATED = "October 17, 2026";
 export const CONTACT_URL = "https://forms.gle/oLbWLgE8sT6zHhLR9";
 const GITHUB_PRIVACY = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement";
 const GOOGLE_PRIVACY = "https://policies.google.com/privacy";
@@ -25,59 +26,57 @@ export default function PrivacyPage() {
               details, and logs which pages are requested. See <External href={GITHUB_PRIVACY}>GitHub’s privacy statement</External>.
             </p>
             <p>
-              Scores and video details come from our own server. Its logs record each request: your IP address, the
-              time, the address requested, and your browser. We use them to keep the site running and safe from abuse,
-              and delete them after 14 days.
+              We log each request for scores and video details: your IP address, the time, the address requested, and
+              your browser. We use these logs to keep the site running and safe from abuse, and delete them after 14
+              days.
             </p>
-            <p>The site’s fonts and pictures come with the site, not from other companies.</p>
+            <p>
+              If you accept when the site asks, we also use Google Analytics to count visits and see which pages are
+              used. Google then receives your IP address, your browser and device, the pages you view, and the site
+              that sent you here, and keeps this for 2 months. Google works for us as a service provider and may
+              process the data in the US. We don’t use it for ads, and we’ve turned off sharing it with Google for
+              other purposes. See <External href={GOOGLE_PRIVACY}>Google’s privacy policy</External>.
+            </p>
           </Section>
           <Section id="checking" title="When you check a video">
             <p>
-              When you check a video that isn’t in our dataset, our server downloads it from YouTube, measures it, and
-              deletes the download as soon as it’s done.
+              When you check a video that isn’t in our dataset, we download it from YouTube, measure it, and delete
+              the download as soon as it’s done.
             </p>
             <p>
-              We keep the video’s ID, its public details (such as its title and channel), and its results, so anyone
-              who checks it later gets them right away. We don’t save who checked it.
+              We save the results, with the video’s ID, title and channel, so they’re ready for the next person who
+              checks the same video. They aren’t linked to you.
             </p>
             <p>
-              When you compare channels and paste a channel link, our server may ask YouTube which channel it is.
-              YouTube sees our server, not you.
-            </p>
-            <p>
-              So that no one can overload the server, we count how many new checks and channel look-ups each IP
-              address starts in an hour. The count is kept only in the server’s memory, is never saved, and is
-              forgotten after an hour.
-            </p>
-          </Section>
-          <Section id="youtube" title="YouTube">
-            <p>
-              Video thumbnails come from our server, which gets them from YouTube. So YouTube doesn’t see you while
-              you browse.
-            </p>
-            <p>
-              A video player loads only when you press “Play video”. It uses YouTube’s privacy-enhanced mode
-              (youtube-nocookie.com). Once it has loaded, YouTube receives your IP address and may set cookies or
-              store data in your browser, as described in <External href={GOOGLE_PRIVACY}>Google’s privacy policy</External>.
+              When you play a video, YouTube may set cookies in your browser. See{" "}
+              <External href={GOOGLE_PRIVACY}>Google’s privacy policy</External>.
             </p>
           </Section>
           <Section id="cookies" title="Cookies">
             <p>
-              We don’t set any cookies and don’t store anything in your browser. YouTube may, but only after you press
-              play on a video.
+              We set cookies only if you accept Google Analytics. It uses them to tell visits apart. They are kept for 2
+              years, or until you change your choice.
             </p>
-            <p>We don’t track you, so Do Not Track signals change nothing.</p>
-          </Section>
-          <Section id="children" title="Children">
             <p>
-              This site is meant for parents and other adults. We don’t knowingly collect personal information from
-              anyone, children included.
+              Your choice is saved in your browser for a year, so we don’t ask on every page. It never leaves your
+              browser.
+            </p>
+            <p>
+              If your browser sends Global Privacy Control or Do Not Track, we treat it as a no to Google Analytics and
+              don’t ask.
             </p>
           </Section>
           <Section id="your-choices" title="Your choices">
             <p>
               To ask what we hold about you, or to have it deleted, please fill out the <ContactLink /> form.
             </p>
+            <CookieSettings
+              className={TEXT_LINK}
+              label="cookie settings"
+              as="p"
+              before="You can change your mind about cookies at any time in "
+              after="."
+            />
           </Section>
         </div>
       </div>

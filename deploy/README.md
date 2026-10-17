@@ -35,6 +35,7 @@ Then make the first release with `hyperstim-release`.
 3. Settings → Secrets and variables → Actions → Variables:
    - `NEXT_PUBLIC_API_BASE` = `https://<api-host>/v2`
    - `NEXT_PUBLIC_BASE_PATH` = `/<repo-name>`
+   - `NEXT_PUBLIC_GA_ID` = the Google Analytics measurement ID (`G-…`). Optional: without it the site has no consent banner and no analytics. The GA property's settings are in plan 009.
 
 ## Cloud firewall (once)
 
