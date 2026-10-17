@@ -2,7 +2,15 @@ import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useSyncExternalStore } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getChannels, getVideos, type ListParams, type RankedChannel, type RankedVideo } from "@/lib/api";
+import {
+  ApiError,
+  getChannels,
+  getVideos,
+  lookupChannel,
+  type ListParams,
+  type RankedChannel,
+  type RankedVideo,
+} from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
 import RankingsPage from "./RankingsPage";
 
@@ -35,6 +43,7 @@ vi.mock("@/lib/api", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/api")>()),
   getVideos: vi.fn(),
   getChannels: vi.fn(),
+  lookupChannel: vi.fn(),
 }));
 
 const KEYS = FEATURE_GROUPS.flatMap((g) => g.keys);
@@ -95,6 +104,7 @@ beforeEach(() => {
   vi.stubGlobal("matchMedia", (query: string) => ({ matches: query.includes("reduced-motion"), media: query }));
   vi.mocked(getVideos).mockReset().mockImplementation(list(video, 60));
   vi.mocked(getChannels).mockReset().mockImplementation(list(channel, 30));
+  vi.mocked(lookupChannel).mockReset();
 });
 
 describe("RankingsPage", () => {
@@ -343,6 +353,105 @@ describe("RankingsPage", () => {
 
     await user.click(screen.getByRole("button", { name: "Clear search" }));
     expect(lastCall(url.push)).toBe("/rankings?category=gaming");
+  });
+
+  describe("links in the search", () => {
+    const VIDEO_ID = "dQw4w9WgXcQ";
+    const CHANNEL_ID = "UCbCmjCuTUZos6Inko4u57UQ";
+    const nothing = { items: [], total: 0 };
+
+    it("searches a pasted video link by its ID, and keeps the link in the field", async () => {
+      const user = userEvent.setup();
+      open();
+      const box = screen.getByRole("searchbox", { name: "Search videos" });
+      await user.click(box);
+      await user.paste(`https://youtu.be/${VIDEO_ID}?si=abc`);
+      await waitFor(() => expect(lastCall(url.replace)).toBe(`/rankings?q=${VIDEO_ID}`));
+      expect(box).toHaveValue(`https://youtu.be/${VIDEO_ID}?si=abc`);
+      // The results line doesn't repeat the ID.
+      vi.mocked(getVideos).mockImplementation(list(video, 1));
+      open(`q=${VIDEO_ID}`);
+      expect(await screen.findByText("Showing 1–1 of 1 video for this link")).toBeInTheDocument();
+    });
+
+    it("says when a linked video isn't in our dataset, with a way to check it", async () => {
+      vi.mocked(getVideos).mockResolvedValue(nothing);
+      open(`q=${VIDEO_ID}`);
+      expect(await screen.findByText(/This video isn’t in our dataset\./)).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /Check it/ })).toHaveAttribute("href", `/video?id=${VIDEO_ID}`);
+    });
+
+    it("searches a channel-ID link without a lookup", async () => {
+      const user = userEvent.setup();
+      open("view=channels");
+      await user.type(screen.getByRole("searchbox", { name: "Search channels" }), `youtube.com/channel/${CHANNEL_ID}`);
+      await waitFor(() => expect(lastCall(url.replace)).toBe(`/rankings?view=channels&q=${CHANNEL_ID}`));
+      expect(lookupChannel).not.toHaveBeenCalled();
+    });
+
+    it("looks up a pasted handle link, and a typed one only on Enter", async () => {
+      vi.mocked(lookupChannel).mockResolvedValue({ channelId: CHANNEL_ID, name: "Cocomelon", inDataset: true, videoCount: 40 });
+      const user = userEvent.setup();
+      open("view=channels");
+      const box = screen.getByRole("searchbox");
+      await user.click(box);
+      await user.paste("https://www.youtube.com/@CoComelon");
+      expect(lookupChannel).toHaveBeenCalledWith("https://www.youtube.com/@CoComelon");
+      await waitFor(() => expect(lastCall(url.replace)).toBe(`/rankings?view=channels&q=${CHANNEL_ID}`));
+
+      await user.clear(box);
+      await user.type(box, "youtube.com/@Pinkfong");
+      expect(await screen.findByText("Press Enter to look up this channel.")).toBeInTheDocument();
+      expect(lookupChannel).toHaveBeenCalledTimes(1);
+      await user.keyboard("{Enter}");
+      expect(lookupChannel).toHaveBeenLastCalledWith("youtube.com/@Pinkfong");
+    });
+
+    it("says when a lookup is refused", async () => {
+      vi.mocked(lookupChannel).mockRejectedValue(new ApiError(429, "limit"));
+      const user = userEvent.setup();
+      open("view=channels");
+      await user.click(screen.getByRole("searchbox"));
+      await user.paste("https://www.youtube.com/@CoComelon");
+      expect(await screen.findByText(/You’ve looked up or checked several new videos and channels/)).toBeInTheDocument();
+    });
+
+    it("says why a linked channel isn't ranked", async () => {
+      vi.mocked(getChannels).mockResolvedValue(nothing);
+      vi.mocked(lookupChannel).mockResolvedValueOnce({ channelId: CHANNEL_ID, name: "Tiny Tales", inDataset: true, videoCount: 3 });
+      const { unmount } = open(`view=channels&q=${CHANNEL_ID}`);
+      expect(
+        await screen.findByText(/Tiny Tales has fewer than 5 videos in our dataset, so it isn’t ranked\./),
+      ).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /See its page/ })).toHaveAttribute("href", `/channel?id=${CHANNEL_ID}`);
+      expect(lookupChannel).toHaveBeenCalledWith(`https://www.youtube.com/channel/${CHANNEL_ID}`);
+      unmount();
+
+      vi.mocked(lookupChannel).mockResolvedValueOnce({ channelId: CHANNEL_ID, name: null, inDataset: false, videoCount: 0 });
+      open(`view=channels&q=${CHANNEL_ID}`);
+      expect(await screen.findByText("This channel isn’t in our dataset yet.")).toBeInTheDocument();
+    });
+
+    it("says when a link is the wrong kind, and Clear search empties the field", async () => {
+      const user = userEvent.setup();
+      open();
+      const box = screen.getByRole("searchbox");
+      await user.click(box);
+      await user.paste("https://www.youtube.com/@CoComelon");
+      expect(await screen.findByText("That’s a channel link. Switch to Channels to find a channel.")).toBeInTheDocument();
+      expect(screen.queryByRole("table")).not.toBeInTheDocument();
+      expect(lookupChannel).not.toHaveBeenCalled();
+      await user.click(screen.getByRole("button", { name: "Clear search" }));
+      expect(box).toHaveValue("");
+      expect(await screen.findByRole("table")).toBeInTheDocument();
+
+      await user.click(screen.getByRole("button", { name: "Channels" }));
+      await user.click(box);
+      await user.paste(`https://youtu.be/${VIDEO_ID}`);
+      expect(
+        await screen.findByText("That’s a video link. To find a channel, paste a channel’s link or type its name."),
+      ).toBeInTheDocument();
+    });
   });
 
   it("shows a busy skeleton while loading", () => {

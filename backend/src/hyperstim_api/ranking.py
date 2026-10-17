@@ -3,7 +3,8 @@
 Each criterion's order is computed once: most intense first, ties by ID, rows with no
 value last. A request then keeps the rows in its category, numbers their ranks (equal
 values share one), applies the search, reverses the ranked rows for `asc` (counting their
-ranks from the calm end), and slices a page.
+ranks from the calm end), and slices a page. A search matches names, or a row's exact ID
+(a pasted link, plan 007).
 """
 
 import unicodedata
@@ -100,5 +101,5 @@ class Ranking[T: Rankable]:
         rows = ranked + unranked
         if query:
             q = fold(query)
-            rows = [r for r in rows if q in self._text[r.item.id]]
+            rows = [r for r in rows if r.item.id == query or q in self._text[r.item.id]]
         return rows[offset : offset + limit], len(rows)

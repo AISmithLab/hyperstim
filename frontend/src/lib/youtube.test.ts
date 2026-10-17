@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseVideoInput } from "./youtube";
+import { parseVideoInput, readSearchInput } from "./youtube";
 
 const ID = "dQw4w9WgXcQ";
 
@@ -45,5 +45,28 @@ describe("parseVideoInput", () => {
     "not a url at all",
   ])("rejects %s", (input) => {
     expect(parseVideoInput(input)).toEqual({ ok: false, reason: "invalid" });
+  });
+});
+
+describe("readSearchInput", () => {
+  const CHANNEL = "UCbCmjCuTUZos6Inko4u57UQ";
+  it.each([
+    ["", { kind: "empty" }],
+    ["   ", { kind: "empty" }],
+    ["peppa pig", { kind: "name", videoId: null }],
+    [ID, { kind: "name", videoId: ID }],
+    [`https://youtu.be/${ID}`, { kind: "video", id: ID }],
+    [`youtube.com/shorts/${ID}`, { kind: "video", id: ID }],
+    [`https://www.youtube.com/channel/${CHANNEL}`, { kind: "channel", id: CHANNEL }],
+    [`youtube.com/channel/${CHANNEL}/videos`, { kind: "channel", id: CHANNEL }],
+    ["https://www.youtube.com/@CoComelon", { kind: "channelPage" }],
+    ["m.youtube.com/@CoComelon/videos?si=x", { kind: "channelPage" }],
+    ["https://www.youtube.com/c/Cocomelon", { kind: "channelPage" }],
+    ["https://www.youtube.com/user/checkgate", { kind: "channelPage" }],
+    ["https://www.youtube.com/channel/nope", { kind: "badLink" }],
+    ["https://www.youtube.com/", { kind: "badLink" }],
+    ["https://example.com/@CoComelon", { kind: "badLink" }],
+  ])("reads %j", (input, expected) => {
+    expect(readSearchInput(input)).toEqual(expected);
   });
 });

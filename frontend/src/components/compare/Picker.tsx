@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, type UIEvent } from "react";
-import { ApiError, getChannels, getVideos, lookupChannel } from "@/lib/api";
+import { getChannels, getVideos, lookupChannel, thumbnailUrl } from "@/lib/api";
+import { LOOKING_UP, PRESS_ENTER, lookupErrorText } from "@/lib/lookup-text";
 import { useApi } from "@/lib/use-api";
-import { isChannelLink, isVideoId, parseVideoInput } from "@/lib/youtube";
+import { readSearchInput } from "@/lib/youtube";
 import { Badge } from "./parts";
 import type { Side, View } from "./state";
 
@@ -13,45 +14,41 @@ export const PAGE = 20;
 const MAX_QUERY = 100;
 /** Load the next page when the list is scrolled to within this many px of its end. */
 const LOAD_AHEAD_PX = 120;
-const LINK_OPTION = "link";
 
-type Option = { id: string; name: string; detail: string };
+/** `thumb`: the video whose thumbnail leads the option. */
+type Option = { id: string; name: string; detail: string; thumb?: string };
 type Page = { items: Option[]; total: number };
 
 const TEXT = {
   videos: {
-    label: "Video name or YouTube link",
-    placeholder: "Title, channel, or link…",
-    hint: "Search our dataset, or paste a link to check any video.",
-    noMatch: (q: string) => `No videos in our dataset match “${q}”. Paste a YouTube link to check any video.`,
+    label: "Video name or video link",
+    placeholder: "Title, channel, or video link…",
+    hint: "Search our dataset, or paste a YouTube video link to check any video.",
+    noMatch: (q: string) => `No videos in our dataset match “${q}”. Paste a YouTube video link to check any video.`,
+    badLink: "That doesn’t look like a YouTube link or video ID.",
   },
   channels: {
-    label: "Channel name or YouTube link",
-    placeholder: "Channel name, or link…",
-    hint: "Search our dataset, or paste a channel or video link.",
-    noMatch: (q: string) => `No channels in our dataset match “${q}”. You can also paste a channel or video link.`,
+    label: "Channel name or channel link",
+    placeholder: "Channel name or link…",
+    hint: "Search our dataset, or paste a YouTube channel link.",
+    noMatch: (q: string) => `No channels in our dataset match “${q}”. You can also paste a channel’s link.`,
+    badLink: "That doesn’t look like a YouTube channel link.",
   },
 };
 
 const LOOKUP = {
-  busy: "Looking up this channel…",
   notInDataset: (name: string | null) =>
     `${name ?? "This channel"} isn’t in our dataset yet. Checking a whole channel is coming soon. For now, pick a channel from our dataset.`,
-  notFound: "We couldn’t find a YouTube channel for that link.",
-  limit:
-    "You’ve looked up or checked several new videos and channels in the last hour. Please try again later, or pick a channel from our dataset.",
-  failed: "We couldn’t look up that link. Please try again in a moment.",
   taken: "That channel is already in the other slot.",
 };
 
-/** Text that is meant as a link rather than a name. */
-const looksLikeLink = (text: string) => /^https?:\/\/|youtu\.?be|youtube\./i.test(text);
+const videoCount = (n: number) => (n === 1 ? "1 video" : `${n.toLocaleString("en-US")} videos`);
 
 async function search(view: View, q: string, offset: number): Promise<Page> {
   const params = { sort: "score", order: "desc" as const, q, offset, limit: PAGE };
   if (view === "videos") {
     const { items, total } = await getVideos(params);
-    return { total, items: items.map((v) => ({ id: v.id, name: v.title, detail: v.channel })) };
+    return { total, items: items.map((v) => ({ id: v.id, name: v.title, detail: v.channel, thumb: v.id })) };
   }
   const { items, total } = await getChannels({ ...params, minVideos: 1 });
   return {
@@ -59,7 +56,7 @@ async function search(view: View, q: string, offset: number): Promise<Page> {
     items: items.map((c) => ({
       id: c.id,
       name: c.name,
-      detail: c.videoCount === 1 ? "1 video" : `${c.videoCount.toLocaleString("en-US")} videos`,
+      detail: videoCount(c.videoCount),
     })),
   };
 }
@@ -67,9 +64,10 @@ async function search(view: View, q: string, offset: number): Promise<Page> {
 /**
  * An empty slot's field (see STYLE.md, Compare picker): typing a name suggests videos or
  * channels from the dataset, in a list that scrolls and loads more as it nears its end. A
- * pasted YouTube link is offered as is: a video link is checked live if it isn't in the
- * dataset; for channels, a channel or video link is looked up, and only a channel we have can
- * be picked. An ARIA combobox with a listbox; `otherId` (the other slot's item) is never offered.
+ * pasted video link is offered as is, and checked live if it isn't in the dataset. A channel
+ * link is looked up when pasted or on Enter (it may ask YouTube), and a channel we have is
+ * offered by its name. An ARIA combobox with a listbox; `otherId` (the other slot's item) is
+ * never offered.
  */
 export default function Picker({
   side,
@@ -97,19 +95,19 @@ export default function Picker({
     items: [],
     loading: false,
   });
-  // The channel link being looked up (channels only).
+  // The channel link being looked up (channels only), and whether the last change was a paste.
   const [linkToFind, setLinkToFind] = useState<string | null>(null);
+  const pasted = useRef(false);
 
   useEffect(() => {
     if (autoFocus) input.current?.focus();
   }, [autoFocus]);
 
   const trimmed = value.trim();
-  const parsed = parseVideoInput(trimmed);
-  const isLink = looksLikeLink(trimmed);
-  const channelLink = isChannelLink(trimmed);
+  const entry = readSearchInput(trimmed);
+  const channelLink = entry.kind === "channel" || entry.kind === "channelPage";
   // A link isn't searched for; a bare video ID is both offered and searched.
-  const searchable = trimmed !== "" && !isLink;
+  const searchable = entry.kind === "name";
 
   useEffect(() => {
     const timer = setTimeout(() => setQuery(searchable ? trimmed.slice(0, MAX_QUERY) : ""), DEBOUNCE_MS);
@@ -143,13 +141,32 @@ export default function Picker({
     );
   };
 
+  // A channel link, looked up; a new value drops it, so an old answer never applies.
+  const loadChannel = useCallback(
+    () => (linkToFind ? lookupChannel(linkToFind) : Promise.resolve(null)),
+    [linkToFind],
+  );
+  const found = useApi(loadChannel);
+  const foundNow = linkToFind !== null && found.status !== "loading" && !found.stale;
+  const foundChannel = foundNow && found.status === "success" ? found.data : null;
+  let lookup: string | null = null;
+  if (linkToFind !== null) {
+    if (!foundNow) lookup = LOOKING_UP;
+    else if (found.status === "error") lookup = lookupErrorText(found.error);
+    else if (foundChannel) {
+      if (!foundChannel.inDataset) lookup = LOOKUP.notInDataset(foundChannel.name);
+      else if (foundChannel.channelId === otherId) lookup = LOOKUP.taken;
+    }
+  }
+
+  const videoId = entry.kind === "video" ? entry.id : entry.kind === "name" ? entry.videoId : null;
   const linkOption: Option | null =
     view === "videos"
-      ? parsed.ok && parsed.id !== otherId
-        ? { id: parsed.id, name: `Use this video: ${parsed.id}`, detail: "" }
+      ? videoId && videoId !== otherId
+        ? { id: videoId, name: `Use this video: ${videoId}`, detail: "" }
         : null
-      : (parsed.ok && !isVideoId(trimmed)) || channelLink
-        ? { id: LINK_OPTION, name: "Use this channel’s link", detail: "" }
+      : foundChannel?.inDataset && foundChannel.channelId !== otherId
+        ? { id: foundChannel.channelId, name: foundChannel.name ?? foundChannel.channelId, detail: videoCount(foundChannel.videoCount) }
         : null;
   const options = [
     ...(linkOption ? [linkOption] : []),
@@ -159,54 +176,28 @@ export default function Picker({
   let message: string | null = null;
   if (options.length === 0 && trimmed) {
     if (view === "videos" && channelLink) message = "That’s a channel link. Switch to Channels to compare channels.";
-    else if (isLink && !parsed.ok) message = "That doesn’t look like a YouTube link or video ID.";
-    else if (parsed.ok && parsed.id === otherId) message = "That video is already in the other slot.";
+    else if (view === "channels" && entry.kind === "video") message = "That’s a video link. To compare channels, paste a channel’s link or type its name.";
+    else if (entry.kind === "badLink") message = text.badLink;
+    else if (view === "channels" && channelLink && linkToFind !== trimmed) message = PRESS_ENTER;
+    else if (view === "videos" && videoId === otherId) message = "That video is already in the other slot.";
     else if (current && first.status === "error") message = "We couldn’t search right now. Please try again in a moment.";
     else if (current && first.status === "success" && query && query === trimmed.slice(0, MAX_QUERY)) message = text.noMatch(query);
   }
   const expanded = open && options.length > 0;
   const showPopup = open && (options.length > 0 || message !== null);
 
-  // A pasted channel link, looked up; a new value drops it, so an old answer never applies.
-  const loadChannel = useCallback(
-    () => (linkToFind ? lookupChannel(linkToFind) : Promise.resolve(null)),
-    [linkToFind],
-  );
-  const found = useApi(loadChannel);
-  const foundNow = linkToFind !== null && found.status !== "loading" && !found.stale;
-  const picked =
-    foundNow && found.status === "success" && found.data?.inDataset && found.data.channelId !== otherId
-      ? found.data.channelId
-      : null;
-  let lookup: string | null = null;
-  if (linkToFind !== null) {
-    if (!foundNow || picked) lookup = LOOKUP.busy;
-    else if (found.status === "error") {
-      const status = found.error instanceof ApiError ? found.error.status : null;
-      lookup = status === 404 || status === 422 ? LOOKUP.notFound : status === 429 ? LOOKUP.limit : LOOKUP.failed;
-    } else if (found.status === "success" && found.data) {
-      lookup = found.data.inDataset ? LOOKUP.taken : LOOKUP.notInDataset(found.data.name);
-    }
-  }
-  // A channel we have: fill the slot with it, once (`onPick` may be a new function each render).
-  const pickedOnce = useRef<string | null>(null);
-  useEffect(() => {
-    if (picked && pickedOnce.current !== picked) {
-      pickedOnce.current = picked;
-      onPick(picked);
-    }
-  }, [picked, onPick]);
-
   const choose = (option: Option) => {
     setOpen(false);
     setActive(-1);
-    if (option.id === LINK_OPTION) {
-      if (linkToFind === trimmed) found.retry();
-      else setLinkToFind(trimmed);
-      return;
-    }
     setValue("");
+    setLinkToFind(null);
     onPick(option.id);
+  };
+
+  /** Looks up the channel link in the field (again, if the last try failed). */
+  const findChannel = () => {
+    if (linkToFind !== trimmed) setLinkToFind(trimmed);
+    else if (found.status === "error") found.retry();
   };
 
   // Keeps the active option in view as the arrow keys move through the list.
@@ -226,7 +217,8 @@ export default function Picker({
       e.preventDefault();
       const option = options[active] ?? options[0];
       if (option) choose(option);
-      else setOpen(true);
+      else if (view === "channels" && channelLink) findChannel();
+      setOpen(true);
     } else if (e.key === "Escape") {
       if (open) e.preventDefault();
       setOpen(false);
@@ -270,11 +262,19 @@ export default function Picker({
           maxLength={500}
           placeholder={text.placeholder}
           value={value}
+          onPaste={() => {
+            pasted.current = true;
+          }}
           onChange={(e) => {
-            setValue(e.target.value);
+            const next = e.target.value;
+            setValue(next);
             setOpen(true);
             setActive(-1);
-            setLinkToFind(null);
+            // A pasted channel link is looked up at once; a typed one waits for Enter.
+            const kind = readSearchInput(next).kind;
+            const lookUp = pasted.current && view === "channels" && (kind === "channel" || kind === "channelPage");
+            pasted.current = false;
+            setLinkToFind(lookUp ? next.trim() : null);
           }}
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
@@ -303,10 +303,28 @@ export default function Picker({
                   // Keeps focus in the field, so the click lands before it closes the list.
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => choose(option)}
-                  className="flex min-h-11 cursor-pointer flex-col justify-center rounded-xl px-3 py-1.5 hover:bg-sky aria-selected:bg-sky"
+                  className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl px-3 py-1.5 hover:bg-sky aria-selected:bg-sky"
                 >
-                  <span className="truncate text-sm font-semibold text-navy">{option.name}</span>
-                  {option.detail && <span className="truncate text-sm text-ink">{option.detail}</span>}
+                  {option.thumb && (
+                    // eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization
+                    <img
+                      src={thumbnailUrl(option.thumb, "mq")}
+                      alt=""
+                      loading="lazy"
+                      width={64}
+                      height={36}
+                      className="aspect-video w-12 shrink-0 rounded bg-navy/10 object-cover sm:w-16"
+                    />
+                  )}
+                  <span className="flex min-w-0 flex-col">
+                    {/* Below `sm`, a video's title gets two lines: the thumbnail leaves it little room. */}
+                    <span
+                      className={`text-sm font-semibold text-navy ${option.thumb ? "line-clamp-2 sm:line-clamp-1" : "truncate"}`}
+                    >
+                      {option.name}
+                    </span>
+                    {option.detail && <span className="truncate text-sm text-ink">{option.detail}</span>}
+                  </span>
                 </li>
               ))}
             {expanded && more.query === query && more.loading && (

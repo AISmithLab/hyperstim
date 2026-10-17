@@ -168,7 +168,7 @@ describe("ComparePage", () => {
   it("starts with two empty pickers and a way into the rankings", () => {
     open();
     expect(screen.getByRole("heading", { level: 1, name: "Compare" })).toBeInTheDocument();
-    expect(screen.getAllByRole("combobox", { name: "Video name or YouTube link" })).toHaveLength(2);
+    expect(screen.getAllByRole("combobox", { name: "Video name or video link" })).toHaveLength(2);
     expect(screen.getByRole("link", { name: /Browse the rankings/ })).toHaveAttribute("href", "/rankings");
   });
 
@@ -183,6 +183,10 @@ describe("ComparePage", () => {
     await waitFor(() => expect(within(list).getAllByRole("option")).toHaveLength(1));
     expect(getVideos).toHaveBeenLastCalledWith({ sort: "score", order: "desc", q: "r", offset: 0, limit: 20 });
     expect(within(list).getByRole("option")).toHaveTextContent("Garden Walk");
+    // Each video leads with its thumbnail, from our backend.
+    expect(within(list).getByRole("option").querySelector("img")?.getAttribute("src")).toContain(
+      `/api/thumbnails/${VIDEO_B}?size=mq`,
+    );
     expect(screen.getByText("1 suggestions")).toBeInTheDocument();
 
     await user.keyboard("{ArrowDown}");
@@ -214,7 +218,7 @@ describe("ComparePage", () => {
     await user.type(box, "dinosaurs");
     // Shown under the field, and read out.
     expect(
-      await screen.findAllByText("No videos in our dataset match “dinosaurs”. Paste a YouTube link to check any video."),
+      await screen.findAllByText("No videos in our dataset match “dinosaurs”. Paste a YouTube video link to check any video."),
     ).toHaveLength(2);
 
     await user.clear(box);
@@ -246,27 +250,63 @@ describe("ComparePage", () => {
     expect(getVideos).toHaveBeenLastCalledWith({ sort: "score", order: "desc", q: "walk", offset: 20, limit: 20 });
   });
 
-  it("finds a pasted channel or video link's channel, if we have it", async () => {
-    vi.mocked(lookupChannel).mockResolvedValue({ channelId: CHANNEL_B, name: "Quiet Lane", inDataset: true });
+  it("looks up a pasted channel link and offers the channel by its name", async () => {
+    vi.mocked(lookupChannel).mockResolvedValue({ channelId: CHANNEL_B, name: "Quiet Lane", inDataset: true, videoCount: 2 });
     const user = userEvent.setup();
     open("view=channels");
-    const [box] = screen.getAllByRole("combobox", { name: "Channel name or YouTube link" });
+    const [box] = screen.getAllByRole("combobox", { name: "Channel name or channel link" });
+    await user.click(box);
+    await user.paste("https://www.youtube.com/@QuietLane");
+    expect(lookupChannel).toHaveBeenCalledWith("https://www.youtube.com/@QuietLane");
+    const option = await screen.findByRole("option", { name: /Quiet Lane/ });
+    expect(option).toHaveTextContent("Quiet Lane2 videos");
+    expect(url.push).not.toHaveBeenCalled();
+    await user.click(option);
+    expect(lastPush()).toBe(`/compare?view=channels&a=${CHANNEL_B}`);
+  });
+
+  it("looks up a typed channel link only on Enter", async () => {
+    vi.mocked(lookupChannel).mockResolvedValue({ channelId: CHANNEL_B, name: "Quiet Lane", inDataset: true, videoCount: 2 });
+    const user = userEvent.setup();
+    open("view=channels");
+    const [box] = screen.getAllByRole("combobox");
+    await user.type(box, `youtube.com/channel/${CHANNEL_B}`);
+    expect(await screen.findAllByText("Press Enter to look up this channel.")).toHaveLength(2);
+    await new Promise((r) => setTimeout(r, 400));
+    expect(lookupChannel).not.toHaveBeenCalled();
+    expect(getChannels).not.toHaveBeenCalled();
+
+    await user.keyboard("{Enter}");
+    expect(lookupChannel).toHaveBeenCalledWith(`youtube.com/channel/${CHANNEL_B}`);
+    await user.keyboard("{Enter}");
+    await waitFor(() => expect(lastPush()).toBe(`/compare?view=channels&a=${CHANNEL_B}`));
+  });
+
+  it("doesn't take video links for channels", async () => {
+    const user = userEvent.setup();
+    open("view=channels");
+    const [box] = screen.getAllByRole("combobox");
     await user.click(box);
     await user.paste(`https://youtu.be/${NEW_VIDEO}`);
-    await user.click(await screen.findByRole("option", { name: "Use this channel’s link" }));
-    expect(lookupChannel).toHaveBeenCalledWith(`https://youtu.be/${NEW_VIDEO}`);
-    await waitFor(() => expect(lastPush()).toBe(`/compare?view=channels&a=${CHANNEL_B}`));
-    expect(url.push).toHaveBeenCalledTimes(1);
+    expect(
+      await screen.findAllByText("That’s a video link. To compare channels, paste a channel’s link or type its name."),
+    ).toHaveLength(2);
+    expect(screen.queryByRole("option")).toBeNull();
+    expect(lookupChannel).not.toHaveBeenCalled();
   });
 
   it("says when a linked channel isn't in our dataset, or the lookup is refused", async () => {
-    vi.mocked(lookupChannel).mockResolvedValueOnce({ channelId: "UCzzzzzzzzzzzzzzzzzzzzzz", name: "Faraway Friends", inDataset: false });
+    vi.mocked(lookupChannel).mockResolvedValueOnce({
+      channelId: "UCzzzzzzzzzzzzzzzzzzzzzz",
+      name: "Faraway Friends",
+      inDataset: false,
+      videoCount: 0,
+    });
     const user = userEvent.setup();
     open("view=channels");
     const [box] = screen.getAllByRole("combobox");
     await user.click(box);
     await user.paste("https://www.youtube.com/@FarawayFriends");
-    await user.keyboard("{Enter}");
     expect(
       await screen.findByText(
         "Faraway Friends isn’t in our dataset yet. Checking a whole channel is coming soon. For now, pick a channel from our dataset.",
@@ -277,7 +317,6 @@ describe("ComparePage", () => {
     vi.mocked(lookupChannel).mockRejectedValueOnce(new ApiError(429, "limit"));
     await user.clear(box);
     await user.paste("https://www.youtube.com/@Another");
-    await user.keyboard("{Enter}");
     expect(await screen.findByText(/You’ve looked up or checked several new videos and channels/)).toBeInTheDocument();
   });
 

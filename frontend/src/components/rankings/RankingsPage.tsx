@@ -8,12 +8,14 @@ import MeasurementPicker from "@/components/MeasurementPicker";
 import ScoreCell from "@/components/ScoreCell";
 import SegmentedControl from "@/components/SegmentedControl";
 import Select from "@/components/Select";
-import { getChannels, getVideos, type Feature, type ListResponse, type Order } from "@/lib/api";
+import { getChannels, getVideos, lookupChannel, type Feature, type ListResponse, type Order } from "@/lib/api";
 import { asset } from "@/lib/asset";
 import { CATEGORIES, categoryLabel } from "@/lib/categories";
 import { FEATURE_GROUPS, FEATURE_INFO, featureDisplay } from "@/lib/features";
+import { LOOKING_UP, PRESS_ENTER, lookupErrorText } from "@/lib/lookup-text";
 import { channelHref, videoHref } from "@/lib/routes";
 import { useApi } from "@/lib/use-api";
+import { isChannelId, isVideoId, readSearchInput } from "@/lib/youtube";
 import Pagination from "./Pagination";
 import { MAX_QUERY, PAGE_SIZE, parseState, serializeState, type RankingState, type View } from "./state";
 
@@ -23,6 +25,11 @@ const OUTLINED_BUTTON =
   "min-h-11 rounded-full border-2 border-navy px-5 font-semibold text-navy hover:bg-white";
 const MESSAGE_BOX = "mt-6 rounded-2xl bg-sky p-6 text-center";
 const FEATURE_KEYS = FEATURE_GROUPS.flatMap((g) => g.keys);
+/** The rankings list channels with at least this many videos (plan 007). */
+const MIN_VIDEOS = 5;
+
+/** What the search field says instead of a search: a message, or that a channel is being looked up. */
+type Notice = { kind: "message"; text: string } | { kind: "busy" } | null;
 
 type Row = {
   key: string;
@@ -71,7 +78,7 @@ async function loadRows(state: RankingState): Promise<ListResponse<Row>> {
       })),
     };
   }
-  const { items, total } = await getChannels({ ...params, minVideos: 5 });
+  const { items, total } = await getChannels({ ...params, minVideos: MIN_VIDEOS });
   return {
     total,
     items: items.map((c) => ({
@@ -134,6 +141,16 @@ export default function RankingsPage() {
     update({ page: next });
   };
 
+  // A link in the search that can't be searched for (wrong kind, a lookup running or failed).
+  const [notice, setNotice] = useState<Notice>(null);
+  // "Clear search" empties the field too, also when the URL has no search to clear.
+  const [clears, setClears] = useState(0);
+  const clearSearch = () => {
+    setClears((n) => n + 1);
+    update({ q: "" });
+  };
+  const message = notice?.kind === "message" ? notice.text : null;
+
   // A new column keeps the current order; the selected column's header flips it.
   const sortBy = (key: string) => update(key === sort ? { order: order === "desc" ? "asc" : "desc" } : { sort: key });
 
@@ -144,16 +161,23 @@ export default function RankingsPage() {
         aria-label="Rankings"
         className="relative mt-8 rounded-[2rem] border border-navy/15 bg-white px-4 py-8 sm:px-8 md:mt-0"
       >
-        <Controls state={state} update={update} />
+        <Controls state={state} update={update} onNotice={setNotice} clears={clears} />
 
         <p role="status" className="sr-only">
-          {result.status === "loading" ? "Loading rankings…" : ""}
+          {notice?.kind === "busy" ? LOOKING_UP : result.status === "loading" ? "Loading rankings…" : ""}
         </p>
         <p ref={resultsRef} tabIndex={-1} aria-live="polite" className="mt-6 scroll-mt-24 text-ink">
-          {result.status === "success" && result.data.total > 0 && resultsLine(state, result.data.total)}
+          {!message && result.status === "success" && result.data.total > 0 && resultsLine(state, result.data.total)}
         </p>
 
-        {result.status === "error" && !result.stale ? (
+        {message ? (
+          <div className={MESSAGE_BOX}>
+            <p aria-live="polite">{message}</p>
+            <button type="button" onClick={clearSearch} className={`mt-3 ${OUTLINED_BUTTON}`}>
+              Clear search
+            </button>
+          </div>
+        ) : result.status === "error" && !result.stale ? (
           <div className={MESSAGE_BOX}>
             <p>We couldn’t load the rankings.</p>
             <button type="button" onClick={result.retry} className={`mt-3 ${OUTLINED_BUTTON}`}>
@@ -161,11 +185,11 @@ export default function RankingsPage() {
             </button>
           </div>
         ) : result.status === "success" && !result.stale && result.data.total === 0 ? (
-          <NoMatch state={state} onClear={() => update({ q: "" })} />
+          <NoMatch state={state} onClear={clearSearch} />
         ) : (
           <div
-            aria-busy={result.status !== "success" || result.stale}
-            className={result.stale ? "opacity-60 transition-opacity" : undefined}
+            aria-busy={result.status !== "success" || result.stale || notice?.kind === "busy"}
+            className={result.stale || notice?.kind === "busy" ? "opacity-60 transition-opacity" : undefined}
           >
             {/* Both are rendered and CSS picks one, so the first paint already fits the screen. */}
             <div className="hidden lg:block">
@@ -177,21 +201,28 @@ export default function RankingsPage() {
           </div>
         )}
 
-        {result.status === "success" && <Pagination page={page} pageCount={pageCount} onChange={changePage} />}
+        {!message && result.status === "success" && (
+          <Pagination page={page} pageCount={pageCount} onChange={changePage} />
+        )}
       </section>
     </div>
   );
 }
 
+/** The search is a video ID (Videos) or a channel ID (Channels), as a pasted link leaves it. */
+const isLinkId = (state: RankingState) => (state.view === "videos" ? isVideoId(state.q) : isChannelId(state.q));
+
 function resultsLine(state: RankingState, total: number): string {
   const from = (state.page - 1) * PAGE_SIZE + 1;
   const to = Math.min(total, state.page * PAGE_SIZE);
   const label = categoryLabel(state.category)?.toLowerCase();
+  const s = total === 1 ? "" : "s";
   const things =
     state.view === "videos"
-      ? `${label ? `${label} ` : ""}videos`
-      : `channels${label ? ` with ${label} videos` : ""}`;
-  const matching = state.q ? ` matching “${state.q}”` : "";
+      ? `${label ? `${label} ` : ""}video${s}`
+      : `channel${s}${label ? ` with ${label} videos` : ""}`;
+  // A pasted link is searched by its ID, which means nothing to read.
+  const matching = isLinkId(state) ? " for this link" : state.q ? ` matching “${state.q}”` : "";
   return `Showing ${formatCount(from)}–${formatCount(to)} of ${formatCount(total)} ${things}${matching}`;
 }
 
@@ -250,9 +281,13 @@ function Hero() {
 function Controls({
   state,
   update,
+  onNotice,
+  clears,
 }: {
   state: RankingState;
   update: (change: Partial<RankingState>, how?: "push" | "replace") => void;
+  onNotice: (notice: Notice) => void;
+  clears: number;
 }) {
   const onSearch = useCallback((q: string) => update({ q }, "replace"), [update]);
   return (
@@ -266,7 +301,7 @@ function Controls({
           onChange={(view) => update({ view })}
           className="shrink-0"
         />
-        <SearchBox value={state.q} view={state.view} onSearch={onSearch} />
+        <SearchBox value={state.q} view={state.view} onSearch={onSearch} onNotice={onNotice} clears={clears} />
       </div>
 
       {/* Chips from `sm`, a select below. CSS picks, so nothing flashes on load. */}
@@ -359,14 +394,40 @@ function OrderButton({
   );
 }
 
-/** Search as you type (after a 300 ms pause, or at once on Enter). Follows the URL on Back. */
-function SearchBox({ value, view, onSearch }: { value: string; view: View; onSearch: (q: string) => void }) {
+/**
+ * Search as you type (after a 300 ms pause, or at once on Enter). Follows the URL on Back.
+ * A link is searched for by its ID (plan 007): a video link with Videos, a channel link with
+ * Channels. A handle, `/c/` or `/user/` link is looked up first, when pasted or on Enter, as it
+ * may ask YouTube. Anything it can't search for goes to `onNotice` instead.
+ */
+function SearchBox({
+  value,
+  view,
+  onSearch,
+  onNotice,
+  clears,
+}: {
+  value: string;
+  view: View;
+  onSearch: (q: string) => void;
+  onNotice: (notice: Notice) => void;
+  clears: number;
+}) {
   const [text, setText] = useState(value);
   const [seen, setSeen] = useState(value);
   // Searches sent to the URL that it hasn't caught up with yet. When the URL reaches one, that's
   // our own echo and the field keeps what was typed since; any other URL value (Back, "Clear
   // search") replaces the field. Without this, letters typed while the URL caught up were lost.
   const [pending, setPending] = useState<string[]>([]);
+  // The channel link being looked up, and whether the last change was a paste.
+  const [linkToFind, setLinkToFind] = useState<string | null>(null);
+  const pasted = useRef(false);
+  const [seenClears, setSeenClears] = useState(clears);
+  if (clears !== seenClears) {
+    setSeenClears(clears);
+    setText("");
+    setLinkToFind(null);
+  }
   if (value !== seen) {
     setSeen(value);
     const echo = pending.indexOf(value);
@@ -379,6 +440,43 @@ function SearchBox({ value, view, onSearch }: { value: string; view: View; onSea
   }
   const latest = pending.at(-1) ?? value;
 
+  const trimmed = text.trim();
+  const loadChannel = useCallback(
+    () => (linkToFind ? lookupChannel(linkToFind) : Promise.resolve(null)),
+    [linkToFind],
+  );
+  const found = useApi(loadChannel);
+  const foundNow = linkToFind === trimmed && found.status !== "loading" && !found.stale;
+
+  // What to search for (null: nothing), or what to say instead.
+  const entry = readSearchInput(trimmed);
+  let target: string | null = null;
+  let message: string | null = null;
+  let busy = false;
+  if (entry.kind === "empty") target = "";
+  else if (entry.kind === "name") target = trimmed.slice(0, MAX_QUERY);
+  else if (entry.kind === "badLink") message = "That doesn’t look like a YouTube link or video ID.";
+  else if (view === "videos") {
+    if (entry.kind === "video") target = entry.id;
+    else message = "That’s a channel link. Switch to Channels to find a channel.";
+  } else if (entry.kind === "video") {
+    message = "That’s a video link. To find a channel, paste a channel’s link or type its name.";
+  } else if (entry.kind === "channel") {
+    target = entry.id; // its ID is in the link: no lookup
+  } else if (linkToFind !== trimmed) {
+    message = PRESS_ENTER;
+  } else if (!foundNow) {
+    busy = true;
+  } else if (found.status === "error") {
+    message = lookupErrorText(found.error);
+  } else if (found.status === "success" && found.data) {
+    target = found.data.channelId;
+  }
+
+  useEffect(() => {
+    onNotice(message ? { kind: "message", text: message } : busy ? { kind: "busy" } : null);
+  }, [message, busy, onNotice]);
+
   const search = useCallback(
     (q: string) => {
       setPending((sent) => [...sent, q]);
@@ -388,16 +486,17 @@ function SearchBox({ value, view, onSearch }: { value: string; view: View; onSea
   );
 
   useEffect(() => {
-    const q = text.trim().slice(0, MAX_QUERY);
-    if (q === latest) return;
-    const timer = setTimeout(() => search(q), 300);
+    if (target === null || target === latest) return;
+    const timer = setTimeout(() => search(target), 300);
     return () => clearTimeout(timer);
-  }, [text, latest, search]);
+  }, [target, latest, search]);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    const q = text.trim().slice(0, MAX_QUERY);
-    if (q !== latest) search(q);
+    if (view === "channels" && entry.kind === "channelPage") {
+      if (linkToFind !== trimmed) setLinkToFind(trimmed);
+      else if (found.status === "error") found.retry();
+    } else if (target !== null && target !== latest) search(target);
   };
 
   const label = view === "videos" ? "Search videos" : "Search channels";
@@ -418,9 +517,19 @@ function SearchBox({ value, view, onSearch }: { value: string; view: View; onSea
         id="rankings-search"
         type="search"
         value={text}
-        maxLength={MAX_QUERY}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={view === "videos" ? "Title or channel…" : "Channel name…"}
+        maxLength={500}
+        onPaste={() => {
+          pasted.current = true;
+        }}
+        onChange={(e) => {
+          const next = e.target.value;
+          setText(next);
+          // A pasted handle link is looked up at once; a typed one waits for Enter.
+          const lookUp = pasted.current && view === "channels" && readSearchInput(next).kind === "channelPage";
+          pasted.current = false;
+          setLinkToFind(lookUp ? next.trim() : null);
+        }}
+        placeholder={view === "videos" ? "Title, channel, or video link…" : "Channel name or link…"}
         autoComplete="off"
         className="h-12 w-full rounded-full border-2 border-navy bg-white pr-5 pl-12 text-navy placeholder:text-ink/70 focus:shadow-[0_0_0_5px_var(--color-sunny)] focus:outline-none"
       />
@@ -431,16 +540,54 @@ function SearchBox({ value, view, onSearch }: { value: string; view: View; onSea
 function NoMatch({ state, onClear }: { state: RankingState; onClear: () => void }) {
   const label = categoryLabel(state.category)?.toLowerCase();
   const things = `${label ? `${label} ` : ""}${VIEWS[state.view].noun}`;
+  // A pasted link (searched by its ID) that isn't ranked: say why. With a category, the category may hide it.
+  const linked = !state.category && isLinkId(state);
   if (!state.q) return <p className={MESSAGE_BOX}>No {things} yet.</p>;
   return (
     <div className={MESSAGE_BOX}>
-      <p>
-        No {things} match “{state.q}”.
-      </p>
+      {linked && state.view === "videos" ? (
+        <p>
+          This video isn’t in our dataset.{" "}
+          <TextLink href={videoHref(state.q)}>Check it</TextLink>
+        </p>
+      ) : linked ? (
+        <UnrankedChannel id={state.q} />
+      ) : (
+        <p>
+          No {things} match “{state.q}”.
+        </p>
+      )}
       <button type="button" onClick={onClear} className={`mt-3 ${OUTLINED_BUTTON}`}>
         Clear search
       </button>
     </div>
+  );
+}
+
+/** Why a linked channel isn't ranked: not in the dataset, or too few videos. A channel-ID lookup never asks YouTube. */
+function UnrankedChannel({ id }: { id: string }) {
+  const load = useCallback(() => lookupChannel(`https://www.youtube.com/channel/${id}`), [id]);
+  const found = useApi(load);
+  if (found.status === "loading") return <p>{LOOKING_UP}</p>;
+  if (found.status === "error") return <p>No channels match “{id}”.</p>;
+  const { name, inDataset, videoCount } = found.data;
+  if (!inDataset) return <p>{name ?? "This channel"} isn’t in our dataset yet.</p>;
+  if (videoCount < MIN_VIDEOS) {
+    return (
+      <p>
+        {name} has fewer than {MIN_VIDEOS} videos in our dataset, so it isn’t ranked.{" "}
+        <TextLink href={channelHref(id)}>See its page</TextLink>
+      </p>
+    );
+  }
+  return <p>No channels match “{id}”.</p>;
+}
+
+function TextLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link href={href} className="font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny">
+      {children}&nbsp;<span aria-hidden="true">→</span>
+    </Link>
   );
 }
 

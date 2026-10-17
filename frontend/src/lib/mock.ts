@@ -384,7 +384,11 @@ function rankList<T extends Ranked>(
   // Calmest first: reversed, ranks counted from the calm end (1 = the calmest).
   const calmFirst = withRanks([...withValue].reverse());
   const ordered = [...(order === "asc" ? calmFirst : ranked), ...unranked];
-  const matching = q ? ordered.filter((item) => names(item).some((name) => fold(name).includes(q))) : ordered;
+  // A name matches in part; an ID (from a pasted link) exactly, as in the backend.
+  const id = String(params.q ?? "").trim();
+  const matching = q
+    ? ordered.filter((item) => item.id === id || names(item).some((name) => fold(name).includes(q)))
+    : ordered;
   const offset = Number(params.offset ?? 0);
   const limit = Number(params.limit ?? 20);
   return { items: matching.slice(offset, offset + limit), total: matching.length };
@@ -397,20 +401,21 @@ function rankList<T extends Ranked>(
  */
 function channelLookup(url: string): ChannelLookup {
   const byId = url.match(/\/channel\/(UC[\w-]{22})/);
-  const video = url.match(/(?:v=|youtu\.be\/|shorts\/)([\w-]{11})/);
-  const known = (id: string | undefined) => channels.find((c) => c.id === id);
+  const found = (channel: ChannelSummary) => ({
+    channelId: channel.id,
+    name: channel.name,
+    inDataset: true,
+    videoCount: channel.videoCount,
+  });
   if (byId) {
-    const channel = known(byId[1]);
-    return { channelId: byId[1], name: channel?.name ?? null, inDataset: Boolean(channel) };
+    const channel = channels.find((c) => c.id === byId[1]);
+    return channel ? found(channel) : { channelId: byId[1], name: null, inDataset: false, videoCount: 0 };
   }
   if (/@missing/i.test(url)) throw new ApiError(404, "Channel not found");
   if (/@busy/i.test(url)) throw new ApiError(429, "Too many requests");
-  const channel = /@zippy/i.test(url)
-    ? channels[0]
-    : known(allVideos().find((v) => v.id === video?.[1])?.channelId);
-  if (channel) return { channelId: channel.id, name: channel.name, inDataset: true };
-  if (!video && !/youtube\.com\/(@|c\/|user\/)/i.test(url)) throw new ApiError(422, "Not a YouTube link");
-  return { channelId: "UCmockFarawayFriends0000", name: "Faraway Friends", inDataset: false };
+  if (!/youtube\.com\/(@|c\/|user\/)/i.test(url)) throw new ApiError(422, "Not a YouTube channel link");
+  if (/@zippy/i.test(url)) return found(channels[0]);
+  return { channelId: "UCmockFarawayFriends0000", name: "Faraway Friends", inDataset: false, videoCount: 0 };
 }
 
 export async function mockRequest(method: Method, path: string, params: Params): Promise<unknown> {

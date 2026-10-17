@@ -123,6 +123,7 @@ class ChannelFound(ApiModel):
     channel_id: str
     name: str | None  # None when we didn't need to ask YouTube and don't have the channel
     in_dataset: bool
+    video_count: int  # its videos in the dataset (the rankings list channels with 5 or more)
 
 
 class Analysis(ApiModel):
@@ -376,7 +377,10 @@ def create_app(
         except TooManyRequests:
             raise HTTPException(status_code=429, detail="Too many requests") from None
         return ChannelFound(
-            channel_id=found.channel_id, name=found.name, in_dataset=found.in_dataset
+            channel_id=found.channel_id,
+            name=found.name,
+            in_dataset=found.in_dataset,
+            video_count=found.video_count,
         )
 
     @app.get(

@@ -172,6 +172,15 @@ def test_search_channels_by_name(client: TestClient) -> None:
     assert channels(client, q="cafe") == ([], 0)  # a video title, not a channel name
 
 
+def test_search_matches_an_exact_id_and_keeps_its_rank(client: TestClient) -> None:
+    # A pasted link is searched by its ID; vid-2's title and chan-n's name don't contain it.
+    everything = dict(videos(client)[0])
+    assert videos(client, q="vid-2") == ([("vid-2", everything["vid-2"])], 1)
+    assert videos(client, q="vid-2", category="narrative") == ([], 0)
+    by_channel = dict(channels(client)[0])
+    assert channels(client, q="chan-n") == ([("chan-n", by_channel["chan-n"])], 1)
+
+
 def test_search_with_category(client: TestClient) -> None:
     found, total = videos(client, q="zoe", category="narrative")
     assert total == 2

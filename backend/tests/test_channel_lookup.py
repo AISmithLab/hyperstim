@@ -31,9 +31,10 @@ DATASET_CHANNEL = "UCdddddddddddddddddddddd"
             "https://www.youtube.com/user/kitkate",
             Link("page", "https://www.youtube.com/user/kitkate"),
         ),
-        ("https://www.youtube.com/watch?v=Bfy4GDe4-gI&t=3", Link("video", "Bfy4GDe4-gI")),
-        ("https://youtu.be/Bfy4GDe4-gI", Link("video", "Bfy4GDe4-gI")),
-        ("youtube.com/shorts/Bfy4GDe4-gI", Link("video", "Bfy4GDe4-gI")),
+        # Video links aren't taken (plan 008).
+        ("https://www.youtube.com/watch?v=Bfy4GDe4-gI&t=3", None),
+        ("https://youtu.be/Bfy4GDe4-gI", None),
+        ("youtube.com/shorts/Bfy4GDe4-gI", None),
         ("kit and kate", None),
         ("https://example.com/@KitAndKate", None),
         ("https://www.youtube.com/channel/nope", None),
@@ -67,17 +68,11 @@ def test_channel_link_needs_no_youtube(real_ids: TestClient, pipeline: FakePipel
         "channelId": DATASET_CHANNEL,
         "name": f"Channel {DATASET_CHANNEL}",
         "inDataset": True,
+        "videoCount": 3,
     }
     # Not in the dataset: no name, and still no YouTube call.
     body = lookup(real_ids, f"https://www.youtube.com/channel/{CHANNEL}").json()
-    assert body == {"channelId": CHANNEL, "name": None, "inDataset": False}
-    assert pipeline.channel_calls == []
-
-
-def test_dataset_video_gives_its_channel(real_ids: TestClient, pipeline: FakePipeline) -> None:
-    body = lookup(real_ids, "https://youtu.be/vidvidvid01").json()
-    assert body["channelId"] == DATASET_CHANNEL
-    assert body["inDataset"] is True
+    assert body == {"channelId": CHANNEL, "name": None, "inDataset": False, "videoCount": 0}
     assert pipeline.channel_calls == []
 
 
@@ -87,7 +82,12 @@ def test_handle_asks_youtube_once_and_counts_toward_the_limit(
     client = make_client(dataset_path, limit_per_ip=1)
     pipeline.links["https://www.youtube.com/@KitAndKate"] = (CHANNEL, "Kit and Kate")
     body = lookup(client, "https://www.youtube.com/@KitAndKate").json()
-    assert body == {"channelId": CHANNEL, "name": "Kit and Kate", "inDataset": False}
+    assert body == {
+        "channelId": CHANNEL,
+        "name": "Kit and Kate",
+        "inDataset": False,
+        "videoCount": 0,
+    }
     # Cached: no second call, and it doesn't count again.
     assert lookup(client, "youtube.com/@KitAndKate/videos").status_code == 200
     assert pipeline.channel_calls == ["https://www.youtube.com/@KitAndKate"]
@@ -96,28 +96,8 @@ def test_handle_asks_youtube_once_and_counts_toward_the_limit(
     assert client.post("/api/analyses/aaaaaaaaaaa").status_code == 429
 
 
-def test_video_link_uses_the_videos_channel(
-    dataset_path: Path, make_client: Callable[..., TestClient], pipeline: FakePipeline
-) -> None:
-    client = make_client(dataset_path)
-    pipeline.links["https://www.youtube.com/watch?v=Bfy4GDe4-gI"] = ("chan-b", "Channel chan-b")
-    body = lookup(client, "https://youtu.be/Bfy4GDe4-gI").json()
-    # chan-b is in the dataset: its name from there.
-    assert body == {"channelId": "chan-b", "name": "Channel chan-b", "inDataset": True}
-
-
-def test_video_checked_live_gives_its_channel_without_asking_youtube(
-    client: TestClient, pipeline: FakePipeline
-) -> None:
-    pipeline.channels["ccccccccccc"] = "chan-a"
-    client.post("/api/analyses/ccccccccccc")
-    client.app.state.analyzer.run_next()  # type: ignore[attr-defined]
-    body = lookup(client, "https://youtu.be/ccccccccccc").json()
-    assert body == {"channelId": "chan-a", "name": "Channel chan-a", "inDataset": True}
-    assert pipeline.channel_calls == []
-
-
 def test_unknown_channel_and_bad_links(client: TestClient) -> None:
     assert lookup(client, "https://www.youtube.com/@Nobody").status_code == 404
     assert lookup(client, "kit and kate").status_code == 422
+    assert lookup(client, "https://youtu.be/Bfy4GDe4-gI").status_code == 422
     assert client.get("/api/channel-lookup").status_code == 422

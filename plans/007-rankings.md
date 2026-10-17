@@ -20,7 +20,12 @@ Build `/rankings`: every video or channel in the dataset, ranked by the overall 
   - A count of 0 is a value (0, plan 004) _(human decision, 2026-10-16)_, so those rows are ranked, at the calm end. **Equal values share a rank** (the first one's: 1, 2, 2, 4), so the thousands of videos tied at 0 don't get arbitrary ranks; calmest first, they are all −1 _(human decision, 2026-10-16)_.
   - Ties are listed by ID, so the order is stable (same rule as plan 002). With Overall, all categories, most intense first, the top 3 match the home card.
 - **Colour-coded numbers** (**new**, the *score cell*). Each score is a navy bold number on a rounded tile. The tile's background is the score scale colour the score meter uses for that score (`filledSegments`: `sky-blue`, `leaf`, `scale-low`, `scale-mid`, `scale-high`) at 50 %. At 50 %, navy text has a contrast of at least 6.3 : 1 on every colour (checked). Full-strength colours fail on `leaf` and `scale-high`. The number carries the value, so colour is never the only cue. Empty values show a muted "–" on no tile, with the reason for screen readers.
-- **Search:** one search input at the top of the card. It matches any part of the name, ignoring case and accents. For videos it searches the title and the channel name (typing a channel's name lists its videos). For channels it searches the name. Results update as the user types (300 ms debounce) and the list goes back to page 1. 1–100 characters; the field is trimmed.
+- **Search:** one search input at the top of the card. It matches any part of the name, ignoring case and accents. For videos it searches the title and the channel name (typing a channel's name lists its videos). For channels it searches the name. Results update as the user types (300 ms debounce) and the list goes back to page 1. 1–100 characters; the field is trimmed. The field itself takes up to 500, so long links fit.
+- **Links in the search, as in the compare picker** _(human decision, 2026-10-17)_. The same input rules as plan 008, read by the same helper (`readSearchInput`):
+  - **Videos:** a YouTube video link or ID shows that video's row, with its real rank. The URL keeps the ID (`q=<videoId>`), so the link can be shared. Not in the rankings: “This video isn’t in our dataset. [Check it →]” (its video page runs the live check; checked videos never join the rankings, plan 004). With a category picked, it's the usual no-match message, since the category may hide it.
+  - **Channels:** a channel link shows that channel's row (`q=<channelId>`). A `/channel/UC…` link needs no lookup. A handle, `/c/` or `/user/` link is looked up with `GET /api/channel-lookup` (plan 008); because that may ask YouTube and counts toward the per-IP limit, it runs when the link is pasted or on Enter, not while typing. Not in the dataset: “{Name} isn’t in our dataset yet.” These two come from a channel-ID lookup (no YouTube request) when a `UC…` search finds nothing with all categories, so they also show from a shared link. In the dataset with fewer than 5 videos (the lookup's `videoCount`): “{Name} has fewer than 5 videos in our dataset, so it isn’t ranked. [See its page →]” The lookup's other messages are as in plan 008.
+  - **Wrong kind of link:** a channel link with Videos selected: “That’s a channel link. Switch to Channels to find a channel.” A video link with Channels selected: “That’s a video link. To find a channel, paste a channel’s link or type its name.” Anything else that looks like a link: “That doesn’t look like a YouTube link or video ID.” These take the table's place in the message box, with "Clear search", which also empties the field.
+  - The table filters as you type, so there is no suggestion list here.
 - **Category filter:** "All" (the default), then the dataset's categories (Music, Narrative, Play & activity, Educational, Gaming), as chips. The five are fixed in the frontend (`lib/categories.ts`, keys `music`, `narrative`, `play`, `educational`, `gaming`, also used in the URL and the API), like the 12 measurements, so the chips show without waiting for the backend (`STYLE.md`; a select below `sm`). Only one can be picked, as with the measurement picker (plan 005). A channel is listed under a category if at least one of its videos is in it. Its scores stay whole-channel scores, the same numbers as on its channel page; the filter only picks which channels are listed _(human decision)_.
 - **Channels listed:** the ones with ≥ 5 scored videos (512), as on the home card, so the two agree _(human decision)_.
 - **Paging on the server:** 25 rows per page, fetched with `offset` + `limit`, so a page never loads the whole dataset. A numbered page control sits under the table (**new**, see **Design**). Changing the page moves focus to the results line above the table and scrolls it into view (instantly with reduced motion), so keyboard users start at the new rows.
@@ -114,6 +119,7 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 - Loading (first): skeleton rows/cards, `aria-busy`, sr-only "Loading rankings…".
 - Loading (later): current rows dimmed, `aria-busy`; the results line updates when the new page arrives.
 - No match (search or filter): message box "No {videos} match “{q}”." (with a category: "No {music} {videos} match …") and a "Clear search" outlined button.
+- A link in the search: looking a channel up (sr-only "Looking up this channel…", rows dimmed); the link messages (see **Decisions**, Links in the search) in the message box, each with "Clear search".
 - Page past the end (from an old link): goes to the last page.
 - Error: message box "We couldn’t load the rankings." + "Try again", as on the other pages.
 
@@ -125,12 +131,13 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 | Meta description | Every video and channel in our dataset, ranked by how intense its production is. |
 | H1 | Stimulation rankings |
 | Intro | Videos and channels in our dataset, ranked by how intense their production is. Then, on its own line _(human decision)_: [What the measurements mean →](/how-it-works) (no counts: the results line has them, and needs no extra request; no sentence on the 5-video minimum _(human decision)_) |
-| Search label (sr-only) / placeholder | Search videos / Title or channel… · Search channels / Channel name… (short enough for 320 px) |
+| Search label (sr-only) / placeholder | Search videos / Title, channel, or video link… · Search channels / Channel name or link… (short enough for 320 px) |
+| Link messages | This video isn’t in our dataset. Check it → · {Name} isn’t in our dataset yet. · {Name} has fewer than 5 videos in our dataset, so it isn’t ranked. See its page → · That’s a channel link. Switch to Channels to find a channel. · That’s a video link. To find a channel, paste a channel’s link or type its name. · That doesn’t look like a YouTube link or video ID. · the lookup's errors as in plan 008 |
 | View control `aria-label` | Show ranking of · Videos · Channels |
 | Category label | Category · All · Music · Narrative · Play & activity · Educational · Gaming |
 | Rank by (below `lg`) | Rank by · Overall · {12 names} |
 | Order button | ⇅ Most intense first / ⇅ Calmest first (`aria-label` “Order: …”) |
-| Results line (`aria-live="polite"`) | Showing {26}–{50} of {5,699} {music} videos (the criterion is left out: the selected header shows it _(human decision)_); channels: “… of {120} channels with {music} videos …”; with search: “… matching “{q}” …” |
+| Results line (`aria-live="polite"`) | Showing {26}–{50} of {5,699} {music} videos (the criterion is left out: the selected header shows it _(human decision)_); channels: “… of {120} channels with {music} videos …”; with search: “… matching “{q}” …”; a link (its ID): “… for this link”; one row: “1 video” / “1 channel” |
 | Table caption (sr-only) | {Videos}, ranked by {Overall}, {most intense first} |
 | Sort button | the column's name; the header's `aria-sort` tells the current order |
 | Rank “–” (sr-only) | Not ranked |
@@ -154,6 +161,7 @@ GET /api/channels?sort=…&order=…&category=…&q=…&minVideos=5&offset=0&lim
   → { items: [{ id, name, videoCount, rank, score, features }], total }
 ```
 
+- `q` that is exactly a row's ID (an 11-character video ID, or a `UC…` channel ID) also matches that row (links in the search, 2026-10-17).
 - `sort` defaults to `score` and `order` to `desc`. `category` is a key from `lib/categories.ts` (`play` = the dataset's “play & activity”); empty = all; an unknown key → 422. `q` 1–100 characters. `offset` ≥ 0, `limit` 1–100 (default 20). Anything else → 422.
 - **Breaking change:** `sort=score_desc|score_asc` becomes `sort=score&order=desc|asc`. The home card is updated in the same change.
 - 25 rows × 12 features ≈ 10 KB per page.
@@ -163,7 +171,7 @@ GET /api/channels?sort=…&order=…&category=…&q=…&minVideos=5&offset=0&lim
 - `Video` gains `category` (the API key: the dataset's “play & activity” is `play`; an unknown category stops the load); `Channel` gains `categories` (the set of its videos' categories).
 - A count of 0 on a per-minute feature ranks as percentile 0, as the API sends it (plan 004, `dataset.py`) _(human decision, 2026-10-16)_. The six keys match the frontend's `perMin`/`cutsPerMin` units, and a test checks this.
 - At startup, for each of the 13 criteria (score + 12), the videos and the channels are pre-sorted once: most intense first, ties by ID, no-value rows last. A request filters by category (O(n), fine for 16k rows), numbers the ranks (equal values share one), applies the search, reverses for `asc` and counts its ranks from the calm end (no-value rows stay last), and slices. One helper (`ranking.py`) serves both videos and channels. A feature ranks by its percentile (for a channel, the mean percentile shown in its tile).
-- Search: compare `casefold()` + accents removed (NFKD, combining marks dropped), precomputed per row.
+- Search: compare `casefold()` + accents removed (NFKD, combining marks dropped), precomputed per row. A `q` equal to a row's ID (case kept) also matches it.
 - Tests (synthetic fixture): each criterion's order and tie-break; equal values share a rank, also in `asc`; `asc` is the reverse; no-value rows last and unranked in both orders; category filter for videos, and channels with ≥ 1 video in the category; search ignores case and accents, keeps ranks, and matches a video's channel name; `offset`/`limit`/`total`; `minVideos`; bad params → 422.
 
 ## Steps
@@ -176,6 +184,10 @@ Order: the frontend first (steps 2–5, on mock data) and a review of it; then t
 4. **Page.** `/rankings` (`useSearchParams` inside `Suspense`, as on `/channel`) with the table, cards, controls, and all states; the home card's link carries the view.
 5. **Tests.** Header click sorts and the second click flips (`aria-sort`); rank by select + order button below `lg`; view switch keeps search/category/criterion and resets the page; search debounce, page reset, and the replace-vs-push history rule; category chips/select; paging moves focus to the results line; stale responses ignored; cell colours follow `filledSegments`; empty cells read their reason; each state renders.
 6. **Review.** Screenshots at 360 and 1280 px (plus 320, 768, 1024, 1920, keyboard-only) next to the home card, compared with `STYLE.md`; run against the real backend (search speed, last page). Stop for review.
+7. **Links in the search** (2026-10-17, with plan 008 step 6).
+   - Backend: `q` matches an exact ID; tests (video ID, channel ID, keeps the rank, respects the category).
+   - Frontend: `SearchBox` reads the input with `readSearchInput`; a link goes to the URL as its ID; a handle link is looked up on paste or Enter; the link messages; the new placeholders. Mocks and tests (each link kind and message, the lookup only on paste or Enter).
+   - Screenshots at 360 and 1280 px against the real backend. Stop for review.
 
 ## Review decisions
 

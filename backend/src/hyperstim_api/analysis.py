@@ -202,18 +202,15 @@ class ResearchPipeline:
             raise AnalysisError("failed", f"YouTube Data API: {exc}") from exc
 
     def channel(self, url: str) -> tuple[str, str]:
-        """The channel ID and name behind a channel page or video link (compare page, plan 008).
+        """The channel ID and name behind a channel page link (compare page, plan 008).
 
         Runs on the request's thread, not the worker's, so it doesn't go through `_run`.
         """
         cmd = [sys.executable, "-m", "yt_dlp", "--no-warnings", "--skip-download"]
         if self._cookies:
             cmd += ["--cookies", str(self._cookies)]
-        if "/watch?" in url:
-            cmd += ["--remote-components", "ejs:github", "--print", "%(.{channel_id,channel})j"]
-        else:
-            # A channel page: its own details, none of its videos.
-            cmd += ["--flat-playlist", "--playlist-items", "0", "-J"]
+        # Its own details, none of its videos.
+        cmd += ["--flat-playlist", "--playlist-items", "0", "-J"]
         cmd.append(url)
         path = f"{Path(sys.executable).parent}{os.pathsep}{os.environ.get('PATH', '')}"
         try:
@@ -320,7 +317,7 @@ def parse_lookup(video_id: str, out: str) -> VideoInfo:
 
 
 def parse_channel(out: str) -> tuple[str, str]:
-    """yt-dlp's JSON for a channel page or video → the channel's ID and name."""
+    """yt-dlp's JSON for a channel page → the channel's ID and name."""
     lines = out.strip().splitlines()
     try:
         info = json.loads(lines[-1]) if lines else None

@@ -77,7 +77,7 @@ The privacy policy (`/privacy`, plan 009) promises what the server keeps; keep t
 
 ## Channel lookup
 
-`GET /api/channel-lookup?url=…` (`src/hyperstim_api/channel_lookup.py`) finds the channel behind a YouTube channel link (`/channel/UC…`, `/@handle`, `/c/…`, `/user/…`) or video link, and says whether it's in the dataset; the compare page uses it. A channel ID, a dataset video or a video already checked live is answered from what we have. Anything else asks YouTube with yt-dlp (under a second for a channel page, about 5 s for a video), is cached in memory for a day, and counts toward the same per-IP limit as new live analyses (`ANALYSIS_LIMIT_PER_IP`).
+`GET /api/channel-lookup?url=…` (`src/hyperstim_api/channel_lookup.py`) finds the channel behind a YouTube channel link (`/channel/UC…`, `/@handle`, `/c/…`, `/user/…`; not video links), and says whether it's in the dataset; the compare page and the rankings search use it. A `/channel/UC…` link is answered from what we have. A handle, `/c/` or `/user/` link asks YouTube with yt-dlp (under a second), is cached in memory for a day, and counts toward the same per-IP limit as new live analyses (`ANALYSIS_LIMIT_PER_IP`).
 - Needs ffmpeg/ffprobe and deno on the server (see Prerequisites); `deno` must be on the service's `PATH`.
 - The progress estimate uses typical step durations (`TYPICAL_S` in `analysis.py`); each finished analysis logs its step times, so re-time them if the server changes.
 

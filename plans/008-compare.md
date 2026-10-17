@@ -2,7 +2,7 @@
 
 **Area:** Compare page (`/compare`). The "Compare with…" links on the video and channel pages are recorded in plans 004 and 005.
 
-**Status:** built, in review (2026-10-16).
+**Status:** built, in review (2026-10-16). Change planned (2026-10-17): channel links only in the channel field, found channels offered by name, thumbnails in the video suggestions, and clearer field text (step 6).
 
 ## Goal
 
@@ -16,17 +16,18 @@ Build `/compare`: two videos, or two channels, side by side, showing **where the
 - **Two slots, A and B**, each with a fixed colour: A is a soft coral and B a soft blue (plan 001's `#FDA28C` / `#9FBBF5`, as the new tokens `side-a` / `side-b`). Colour is never the only cue: each slot, headline and table column also carries an "A" or "B" badge (a circle in its colour, navy letter; at the top of a slot as large as the × beside it _(human decision)_).
 - **"vs." between the two slots** _(human decision)_, in grey body text like the intro _(human decision)_, also while picking: centred between the two items once both are in, level with the fields while picking, and between the stacked pickers on phones.
 - **The picker: one field per empty slot** that takes both kinds of input, so visitors never need to know what's in our dataset:
-  - **Typing a name** lists matches from the dataset as they type (300 ms debounce). The list shows about 6 at a time and **scrolls** _(human decision, 2026-10-16)_; more load as it nears the end (20 per request, `offset` paging), so typing stays fast however many match. Arrow keys move through what's loaded and load more at the end. For videos it shows title and channel; for channels, the name and "{N} videos". No scores in the list _(human decision)_. It's an ARIA combobox with a listbox: arrow keys, Enter, Escape. No library.
+  - **Typing a name** lists matches from the dataset as they type (300 ms debounce). The list shows about 6 at a time and **scrolls** _(human decision, 2026-10-16)_; more load as it nears the end (20 per request, `offset` paging), so typing stays fast however many match. Arrow keys move through what's loaded and load more at the end. For videos it shows the thumbnail (`mq`, 64 × 36 px, 48 × 27 px with a 2-line title below `sm`, lazy-loaded, from our backend as everywhere, plan 009) in front of the title and channel _(human decision, 2026-10-17)_; the "Use this video" option has none. For channels, the name and "{N} videos". No scores in the list _(human decision)_. It's an ARIA combobox with a listbox: arrow keys, Enter, Escape. No library.
   - **Pasting a YouTube link or ID** (videos only) offers that video as the first option, "Use this video". If the video is in the dataset or was checked before, it loads straight away. Otherwise the live check starts in that slot (see **Live check in a slot**).
   - **No match:** "No videos in our dataset match “{q}”. Paste a YouTube link to check any video." For channels: "No channels in our dataset match “{q}”."
-  - **A channel link in video mode:** "That’s a channel link. Switch to Channels to compare channels." In channel mode, links are looked up (see **Channel links**).
+  - **The field says which links it takes** _(human decision, 2026-10-17: "YouTube link" didn't say whether a video or a channel link)_: a video link in the video field, a channel link in the channel field (see **Copy**).
+  - **A channel link in video mode:** "That’s a channel link. Switch to Channels to compare channels." In channel mode, channel links are looked up (see **Channel links**).
   - **The other slot's item is left out** of the suggestions; pasting its link says “That video is already in the other slot.” A URL with the same ID twice keeps only A.
   - **Search fails:** “We couldn’t search right now. Please try again in a moment.”
-- **Channel links in the channel picker** _(human decision, 2026-10-16)_. The channel field also takes YouTube links, so a parent can paste whatever they have:
+- **Channel links in the channel picker** _(human decision, 2026-10-16)_. The channel field also takes channel links:
   - **Channel links:** `youtube.com/channel/UC…`, `youtube.com/@handle`, and the older `/c/…` and `/user/…` forms.
-  - **Video links** (any form the check field takes): the video's channel is used.
-  - A pasted link is offered as one option, "Use this channel's link". Picking it looks the channel up ("Looking up this channel…" under the field, usually under a second, a few seconds when YouTube has to be asked).
-  - **In our dataset:** the slot fills with that channel, as if it had been picked from the list.
+  - **No video links** _(human decision, 2026-10-17: pasting a video and getting its channel's comparison is confusing)_. A video link says: “That’s a video link. To compare channels, paste a channel’s link or type its name.” No option is offered. A bare 11-character text stays a name search here, since channel names can look like IDs. A link that is neither: “That doesn’t look like a YouTube channel link.”
+  - **The channel is looked up first, and offered by its name** _(human decision, 2026-10-17: "Use this channel's link" didn't say which channel)_. A pasted link is looked up at once; a typed one when Enter is pressed (until then the list says “Press Enter to look up this channel.”), since a handle lookup may ask YouTube and counts toward the per-IP limit. While it runs: “Looking up this channel…” under the field (usually under a second, a few seconds when YouTube has to be asked).
+  - **In our dataset:** the channel is offered as the one option, as a search result looks: its name and "{N} videos". Picking it fills the slot.
   - **Not in our dataset:** the field stays, with the message “{Channel name} isn’t in our dataset yet. Checking a whole channel is coming soon. For now, pick a channel from our dataset.” The name is shown when the lookup found it; otherwise it says “This channel”.
   - **Can't be found** (removed, private, not a channel): “We couldn’t find a YouTube channel for that link.”
 - **Searching channels** lists every channel that has a channel page (`minVideos=1`), not only the ≥ 5 shown in the rankings, because a parent may look for a small channel. Its score still averages fewer videos, as on its own page.
@@ -162,15 +163,17 @@ DOM order: H1 + intro → view control → slot A → “vs.” → slot B → s
 | Intro | Videos: Put two videos side by side and see where their production differs. · Channels: Put two channels side by side and see where their production differs. |
 | View control `aria-label` | Compare · Videos · Channels |
 | Slot heading (sr-only H2) | Video A / Video B · Channel A / Channel B |
-| Picker label | Videos: Video name or YouTube link · Channels: Channel name or YouTube link |
-| Picker placeholder | Title, channel, or link… · Channel name, or link… |
-| Picker hint | Videos: Search our dataset, or paste a link to check any video. · Channels: Search our dataset, or paste a channel or video link. |
-| Link option | Use this video: {ID} · Channels: Use this channel’s link |
+| Picker label | Videos: Video name or video link · Channels: Channel name or channel link |
+| Picker placeholder | Title, channel, or video link… · Channel name or link… |
+| Picker hint | Videos: Search our dataset, or paste a YouTube video link to check any video. · Channels: Search our dataset, or paste a YouTube channel link. |
+| Link option | Use this video: {ID} · Channels: {Channel name} / {N} videos |
+| Typed channel link (in the list) | Press Enter to look up this channel. |
 | Channel lookup (under the field) | Looking up this channel… · {Name} isn’t in our dataset yet. Checking a whole channel is coming soon. For now, pick a channel from our dataset. · We couldn’t find a YouTube channel for that link. · You’ve looked up or checked several new videos and channels in the last hour. Please try again later, or pick a channel from our dataset. · We couldn’t look up that link. Please try again in a moment. · That channel is already in the other slot. |
 | Loading more (in the list) | Loading more… |
-| No match | No videos in our dataset match “{q}”. Paste a YouTube link to check any video. · No channels in our dataset match “{q}”. You can also paste a channel or video link. |
+| No match | No videos in our dataset match “{q}”. Paste a YouTube video link to check any video. · No channels in our dataset match “{q}”. You can also paste a channel’s link. |
 | Channel link in video mode | That’s a channel link. Switch to Channels to compare channels. |
-| Invalid link | That doesn’t look like a YouTube link or video ID. (as the check field) |
+| Video link in channel mode | That’s a video link. To compare channels, paste a channel’s link or type its name. |
+| Invalid link | That doesn’t look like a YouTube link or video ID. (as the check field) · Channels: That doesn’t look like a YouTube channel link. |
 | Suggestions count (sr-only, live) | {20} suggestions(, more as you scroll) |
 | Slot button | × (`aria-label` “Remove video A”) |
 | Between the slots (`aria-hidden`) | vs. |
@@ -203,15 +206,16 @@ GET /api/channels/{id}     a filled channel slot (includes its videos for the ch
 Channel links _(human decision, 2026-10-16)_:
 
 ```
-GET /api/channel-lookup?url=<YouTube channel or video link>
-  → 200 { channelId, name: string | null, inDataset: boolean }
+GET /api/channel-lookup?url=<YouTube channel link>
+  → 200 { channelId, name: string | null, inDataset: boolean,
+          videoCount: number }   // its videos in the dataset, 0 if not in it (the option's "{N} videos"; plan 007's 5-video rule)
   → 404  no channel found for the link (removed, private, unknown handle)
-  → 422  not a YouTube channel or video link
+  → 422  not a YouTube channel link (video links included, human decision, 2026-10-17)
   → 429  too many lookups from this IP address
 ```
 
-- Fast paths, no YouTube request: a `/channel/UC…` link (`inDataset` from the dataset; `name` from the dataset, else null); a video in the dataset or already checked live (its stored channel).
-- Otherwise the backend asks YouTube through yt-dlp, as the live check's look-up step does (a handle, `/c/`, `/user/`, or a video we don't have). Results are cached in memory for a day. **A lookup that asks YouTube counts toward the live check's per-IP limit** (`ANALYSIS_LIMIT_PER_IP`, plan 004), sharing its count _(human decision, 2026-10-16)_; fast paths don't count. Over the limit: 429, and the field says “You’ve looked up or checked several new videos and channels in the last hour. Please try again later, or pick a channel from our dataset.”
+- Fast path, no YouTube request: a `/channel/UC…` link (`inDataset` from the dataset; `name` from the dataset, else null).
+- Otherwise the backend asks YouTube through yt-dlp, as the live check's look-up step does (a handle, `/c/` or `/user/`). Results are cached in memory for a day. **A lookup that asks YouTube counts toward the live check's per-IP limit** (`ANALYSIS_LIMIT_PER_IP`, plan 004), sharing its count _(human decision, 2026-10-16)_; fast paths don't count. Over the limit: 429, and the field says “You’ve looked up or checked several new videos and channels in the last hour. Please try again later, or pick a channel from our dataset.”
 
 Suggestions come in score order, not by closeness of match. The list is short and ranked by Overall, as on the rankings page.
 
@@ -245,6 +249,14 @@ The frontend is built against mock data, then reviewed. There is no backend step
    - Two real previews: playing one pauses the other.
    - A run against the real backend, including a live check in slot B.
    - Stop for review.
+6. **Channel links only** (2026-10-17).
+   - Backend: `parse_link` takes channel links only; a video link → 422. The video fast path goes (`_known_video`, the lookup's use of the analyzer). Tests and `backend/README.md` updated.
+   - Picker: a video link or ID in channel mode shows the video-link message and offers no option; the new label, placeholder and hint. Mock and tests updated.
+   - Picker: a channel link is looked up on paste or Enter and offered by its name and video count (tests: paste looks up, typing doesn't, Enter does; the option fills the slot).
+   - Picker: thumbnails in the video suggestions. `STYLE.md`'s compare picker entry gains the thumbnail (`w-16 aspect-video rounded object-cover`, `bg-navy/10` while loading or missing, `aria-hidden`/empty `alt`, `gap-3` to the text). Screenshot at 320 px too, where titles get the least room.
+   - The link helpers move into `lib/youtube.ts` as one `readSearchInput` (a name, a video ID, a channel ID, a channel page link, or a link we can't use), shared with the rankings search (plan 007). The lookup's messages move to `lib/lookup-text.ts`, shared too.
+   - Backend: the lookup returns `videoCount`.
+   - Screenshots of both fields at 360 and 1280 px. Stop for review.
 
 ## Review decisions
 
