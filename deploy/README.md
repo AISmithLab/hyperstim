@@ -61,6 +61,17 @@ All of these except `releases/`, `data/` and `releases.log` are written by `setu
 
 The service runs as its own system user, so it can't read anyone's home folder or credentials, and its sandbox (`service.template`) lets it write only to `data/`. Root owns everything the service user must not change.
 
+## Renaming the repo
+
+The site's path is the repo's name (`<domain>/<repo-name>/`), so renaming the repo moves the site. It was renamed once: `hyperstimulation-website` → `hyperstim` (2026-10-17, plan 010). This repo never writes the name; it lives in:
+
+1. GitHub: the repo name, and the Actions variable `NEXT_PUBLIC_BASE_PATH` (`/<new-name>`).
+2. Each clone: `git remote set-url origin git@github.com:<owner>/<new-name>.git` (GitHub redirects the old URL, but don't rely on it).
+3. The prod clone: run `sudo deploy/setup.sh` from an updated clone; it points the prod clone at the new URL.
+4. A new release (`hyperstim-release`), so the frontend is built under the new path.
+
+The old address then returns 404: GitHub doesn't redirect a renamed repo's Pages. Links elsewhere (other sites, papers, posts) need updating by hand. If something still points at the old name, it's one of the places above.
+
 ## Day to day
 
 - **Logs:** `journalctl -u <service>`; releases in `<prod-dir>/releases.log`.
