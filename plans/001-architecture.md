@@ -17,7 +17,7 @@ plans/      numbered plans
 
 ## Frontend
 
-- Next.js App Router, TypeScript, Tailwind, `output: "export"`. Deployed by a GitHub Actions workflow on push to `main`.
+- Next.js App Router, TypeScript, Tailwind, `output: "export"`. Deployed by a GitHub Actions workflow when a release tag is pushed, so `main` is the latest dev version and the live site can be behind it (plan 010) _(human decision, 2026-10-17)_.
 - Backend URL injected at build time via `NEXT_PUBLIC_API_BASE` (GitHub Actions variable), not hard-coded.
 - Served as a GitHub Pages project page, so the app uses `basePath` = `/<repo-name>` (set from env so it can change).
 - Pages:
@@ -85,7 +85,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
 
 ## Backend
 
-- FastAPI + uvicorn, run as a systemd service behind the existing nginx (TLS). Deployment files live only on the server.
+- FastAPI + uvicorn, run as a systemd service behind the existing nginx (TLS). Deployment files live only on the server. Prod runs from its own clone at the release tag, separate from the dev checkout (plan 010) _(human decision, 2026-10-17)_.
 - Config via env (`.env` on server, `.env.example` in repo): dataset path, pipeline path, allowed CORS origin, rate limits.
 - Endpoints (v1):
   - `GET /api/videos` — list with search, filters, sort, pagination (powers rankings + search).

@@ -3,6 +3,7 @@
 #
 #   ./dev.sh          backend + frontend, the frontend using the real backend
 #   ./dev.sh --mock   frontend only, with mock data
+#   ./dev.sh --install-tools   install the pinned system tools (tools.env): ffmpeg, uv, deno, nvm + Node
 #
 # Ports: BACKEND_PORT (default 8000), FRONTEND_PORT (default 3000).
 # The settings that must match the ports are passed as environment variables and
@@ -17,8 +18,9 @@ MOCK=0
 case "${1:-}" in
   "") ;;
   --mock) MOCK=1 ;;
+  --install-tools) exec "$ROOT/scripts/install-tools.sh" dev ;;
   -h | --help)
-    sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'
+    sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
     exit 0
     ;;
   *)
@@ -110,6 +112,7 @@ if [ "$MOCK" = 0 ]; then
       CORS_ORIGIN="http://localhost:$FRONTEND_PORT" \
       ANALYSIS_DIR=analysis \
       ANALYSIS_LIMIT_PER_IP=0 \
+      ANALYSIS_LIMIT_PER_DAY=0 \
       uv run "${env_file[@]+"${env_file[@]}"}" \
       uvicorn --factory hyperstim_api.main:create_app \
       --host 127.0.0.1 --port "$BACKEND_PORT" --reload 2>&1 | prefix backend

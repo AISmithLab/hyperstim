@@ -36,9 +36,11 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
+      - id: tools
+        run: grep '^UV_VERSION=' ../tools.env | sed 's/^UV_VERSION=/uv=/' >> "$GITHUB_OUTPUT"
       - uses: astral-sh/setup-uv@v6
         with:
-          version: "0.13.0"
+          version: ${{ steps.tools.outputs.uv }}
           enable-cache: true
           cache-dependency-glob: backend/uv.lock
       - run: uv sync --locked

@@ -185,6 +185,8 @@ def env(monkeypatch: pytest.MonkeyPatch) -> pytest.MonkeyPatch:
     monkeypatch.delenv("YTDLP_COOKIES", raising=False)
     monkeypatch.delenv("YOUTUBE_API_KEY", raising=False)
     monkeypatch.delenv("ANALYSIS_LIMIT_PER_IP", raising=False)
+    monkeypatch.delenv("ANALYSIS_LIMIT_PER_DAY", raising=False)
+    monkeypatch.delenv("API_DOCS", raising=False)
     return monkeypatch
 
 
@@ -196,6 +198,8 @@ def test_settings_from_env(env: pytest.MonkeyPatch) -> None:
     assert settings.ytdlp_cookies is None
     assert settings.youtube_api_key is None  # no made-for-kids check
     assert settings.analysis_limit_per_ip == 5  # unset: limited all the same
+    assert settings.analysis_limit_per_day == 100
+    assert settings.api_docs
 
 
 def test_settings_require_analysis_dir(env: pytest.MonkeyPatch) -> None:
@@ -207,18 +211,38 @@ def test_settings_require_analysis_dir(env: pytest.MonkeyPatch) -> None:
 def test_settings_optional_analysis_values(env: pytest.MonkeyPatch) -> None:
     env.setenv("YTDLP_COOKIES", "/secret/cookies.txt")
     env.setenv("ANALYSIS_LIMIT_PER_IP", "0")
+    env.setenv("ANALYSIS_LIMIT_PER_DAY", "0")
+    env.setenv("API_DOCS", "0")
     env.setenv("YOUTUBE_API_KEY", " key ")
     settings = load_settings()
     assert settings.ytdlp_cookies == Path("/secret/cookies.txt")
     assert settings.youtube_api_key == "key"
     assert settings.analysis_limit_per_ip == 0
+    assert settings.analysis_limit_per_day == 0
+    assert not settings.api_docs
 
 
+@pytest.mark.parametrize("name", ["ANALYSIS_LIMIT_PER_IP", "ANALYSIS_LIMIT_PER_DAY"])
 @pytest.mark.parametrize("raw", ["-1", "five", "2.5"])
-def test_settings_reject_a_bad_limit(env: pytest.MonkeyPatch, raw: str) -> None:
-    env.setenv("ANALYSIS_LIMIT_PER_IP", raw)
-    with pytest.raises(RuntimeError, match="ANALYSIS_LIMIT_PER_IP"):
+def test_settings_reject_a_bad_limit(env: pytest.MonkeyPatch, name: str, raw: str) -> None:
+    env.setenv(name, raw)
+    with pytest.raises(RuntimeError, match=name):
         load_settings()
+
+
+@pytest.mark.parametrize("raw", ["yes", "true", "2"])
+def test_settings_reject_a_bad_flag(env: pytest.MonkeyPatch, raw: str) -> None:
+    env.setenv("API_DOCS", raw)
+    with pytest.raises(RuntimeError, match="API_DOCS"):
+        load_settings()
+
+
+@pytest.mark.parametrize("path", ["/docs", "/redoc", "/openapi.json"])
+def test_api_docs_can_be_turned_off(
+    dataset_path: Path, make_client: Callable[..., TestClient], path: str
+) -> None:
+    assert make_client(dataset_path).get(path).status_code == 200
+    assert make_client(dataset_path, api_docs=False).get(path).status_code == 404
 
 
 DETAIL_IDS = ("aaaaaaaaaa1", "aaaaaaaaaa2", "aaaaaaaaaa3")

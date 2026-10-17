@@ -4,9 +4,11 @@ FastAPI app that serves the website's data API from the dataset in `data/`, plus
 
 ## Prerequisites
 
-- [uv](https://docs.astral.sh/uv/getting-started/installation/). It installs the pinned Python (`.python-version`) and all Python dependencies, including dev tools.
+`./dev.sh --install-tools` at the repo root installs all of them, at the versions in `../tools.env`:
+
+- [uv](https://docs.astral.sh/uv/). It installs the pinned Python (`.python-version`) and all Python dependencies, including dev tools.
 - For the pipeline only (live analysis, not needed for the data API or tests):
-  - **ffmpeg + ffprobe 6.1.1**, the version the dataset was extracted with (Ubuntu 24.04: `apt install ffmpeg`).
+  - **ffmpeg + ffprobe 6.1.1**, the version the dataset was extracted with (Ubuntu 24.04's package).
   - **[deno](https://deno.com/)**, the JavaScript runtime yt-dlp uses for YouTube (`--remote-components ejs:github`).
 
 ## Setup
@@ -27,8 +29,12 @@ See `.env.example`.
 | `CORS_ORIGIN` | The one origin allowed to call the API (the frontend's URL). |
 | `ANALYSIS_DIR` | Folder for live analyses: one JSON result per video, plus the running video's temporary clip. Outside the repo on the server (locally `analysis/`, git-ignored). |
 | `ANALYSIS_LIMIT_PER_IP` | New live analyses one IP address may start per hour; `0` = no limit (local development). Optional, default 5. |
+| `ANALYSIS_LIMIT_PER_DAY` | New live analyses all visitors together may start in 24 hours (over it: `503 Busy`, like a full queue); `0` = no limit (local development). Optional, default 100. Survives a restart. |
+| `API_DOCS` | `1` = serve the API docs (`/docs`, `/redoc`, `/openapi.json`), `0` = off (production). Optional, default 1. |
 | `YOUTUBE_API_KEY` | YouTube Data API key for the live analysis's made-for-kids check (1 quota unit per new video). Empty = no check, for local development; always set it on the server. Never commit it. |
 | `YTDLP_COOKIES` | Optional cookies file for yt-dlp, if YouTube asks for one. Never commit it. |
+
+Prod (on the server, from a release tag) is set up and updated as described in [`../deploy/README.md`](../deploy/README.md).
 
 ## Commands
 
@@ -61,7 +67,7 @@ A video that isn't in the dataset is analyzed on request (`POST /api/analyses/{i
 - One video at a time, in a background thread of the API process; up to 10 more wait in a queue. **Run the API as a single process** (no `--workers`).
 - Measuring uses at most 4 cores (`MEASURE_CORES` in `analysis.py`; more barely help, since most of the work is single-threaded), leaving the rest of the server free.
 - Each video's state is `ANALYSIS_DIR/<id>.json`. Results are kept until the file is deleted; videos waiting or running when the API stopped start again at the next start.
-- The per-IP limit sees the visitor's address only if uvicorn trusts the reverse proxy: on the server, run it with `--proxy-headers --forwarded-allow-ips <proxy address>`. The counts are kept in memory only.
+- The per-IP limit sees the visitor's address only if uvicorn trusts the reverse proxy: on the server, run it with `--proxy-headers --forwarded-allow-ips <proxy address>`. Its counts are kept in memory only; the daily limit (`ANALYSIS_LIMIT_PER_DAY`) is counted again from `ANALYSIS_DIR` at each start.
 
 ## Thumbnails
 
@@ -78,7 +84,7 @@ The privacy policy (`/privacy`, plan 009) promises what the server keeps; keep t
 ## Channel lookup
 
 `GET /api/channel-lookup?url=…` (`src/hyperstim_api/channel_lookup.py`) finds the channel behind a YouTube channel link (`/channel/UC…`, `/@handle`, `/c/…`, `/user/…`; not video links), and says whether it's in the dataset; the compare page and the rankings search use it. A `/channel/UC…` link is answered from what we have. A handle, `/c/` or `/user/` link asks YouTube with yt-dlp (under a second), is cached in memory for a day, and counts toward the same per-IP limit as new live analyses (`ANALYSIS_LIMIT_PER_IP`).
-- Needs ffmpeg/ffprobe and deno on the server (see Prerequisites); `deno` must be on the service's `PATH`.
+- Needs ffmpeg/ffprobe and deno (see Prerequisites); `deno` must be on the API's `PATH`. On the server, `deploy/setup.sh` takes care of both.
 - The progress estimate uses typical step durations (`TYPICAL_S` in `analysis.py`); each finished analysis logs its step times, so re-time them if the server changes.
 
 ## Pipeline

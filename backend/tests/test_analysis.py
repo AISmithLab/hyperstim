@@ -216,6 +216,52 @@ def test_a_full_queue_does_not_count_toward_the_limit(tmp_path: Path) -> None:
     analyzer.start(live(50), "ip-a")  # the 11th counted; the refused one didn't
 
 
+def test_limit_per_day(dataset: Path, make_client: Callable[..., TestClient]) -> None:
+    client = make_client(dataset, limit_per_ip=0, limit_per_day=2)
+    assert client.post(f"/api/analyses/{live(1)}").status_code == 202
+    assert client.post(f"/api/analyses/{live(2)}").status_code == 202
+    over = client.post(f"/api/analyses/{live(3)}")
+    assert (over.status_code, over.json()) == (503, {"detail": "Busy"})
+    assert client.post(f"/api/analyses/{live(1)}").status_code == 200  # joining doesn't count
+
+
+def test_limit_per_day_counts_all_ips_within_a_day(tmp_path: Path) -> None:
+    now = [100_000.0]
+    analyzer = Analyzer(tmp_path, FakePipeline(), 0, limit_per_day=2, clock=lambda: now[0])
+    analyzer.start(live(1), "ip-a")
+    analyzer.start(live(2), "ip-b")
+    with pytest.raises(Busy):
+        analyzer.start(live(3), "ip-c")
+    now[0] += 24 * 3600 - 1
+    with pytest.raises(Busy):
+        analyzer.start(live(3), "ip-c")
+    now[0] += 1
+    analyzer.start(live(3), "ip-c")
+
+
+def test_limit_per_day_survives_a_restart(tmp_path: Path) -> None:
+    now = [100_000.0]
+    first = Analyzer(tmp_path, FakePipeline(), 0, limit_per_day=2, clock=lambda: now[0])
+    first.start(live(1), "ip-a")
+    now[0] += 60
+    first.start(live(2), "ip-a")
+    again = Analyzer(tmp_path, FakePipeline(), 0, limit_per_day=2, clock=lambda: now[0])
+    with pytest.raises(Busy):
+        again.start(live(3), "ip-a")
+    now[0] += 24 * 3600 - 59  # the first one is out of the day
+    again.start(live(3), "ip-a")
+
+
+def test_over_the_day_limit_does_not_count_toward_the_ip_limit(tmp_path: Path) -> None:
+    now = [100_000.0]
+    analyzer = Analyzer(tmp_path, FakePipeline(), 1, limit_per_day=1, clock=lambda: now[0])
+    analyzer.start(live(1), "ip-a")
+    with pytest.raises(Busy):
+        analyzer.start(live(2), "ip-b")
+    now[0] += 24 * 3600
+    analyzer.start(live(2), "ip-b")  # ip-b's refused request didn't use its hourly one
+
+
 @pytest.mark.parametrize(
     ("step", "code"),
     [

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 DEFAULT_LIMIT_PER_IP = 5  # new analyses per IP per hour when ANALYSIS_LIMIT_PER_IP is unset
+DEFAULT_LIMIT_PER_DAY = 100  # new analyses in 24 hours when ANALYSIS_LIMIT_PER_DAY is unset
 
 
 @dataclass(frozen=True)
@@ -15,6 +16,8 @@ class Settings:
     ytdlp_cookies: Path | None = None
     youtube_api_key: str | None = None  # None = no made-for-kids check
     analysis_limit_per_ip: int = DEFAULT_LIMIT_PER_IP  # 0 = no limit
+    analysis_limit_per_day: int = DEFAULT_LIMIT_PER_DAY  # 0 = no limit
+    api_docs: bool = True  # /docs, /redoc, /openapi.json
 
 
 def _required(name: str) -> str:
@@ -24,10 +27,10 @@ def _required(name: str) -> str:
     return value
 
 
-def _limit(name: str) -> int:
+def _limit(name: str, default: int) -> int:
     raw = os.environ.get(name, "").strip()
     if not raw:
-        return DEFAULT_LIMIT_PER_IP
+        return default
     try:
         value = int(raw)
     except ValueError:
@@ -35,6 +38,15 @@ def _limit(name: str) -> int:
     if value < 0:
         raise RuntimeError(f"Environment variable {name} must be a whole number ≥ 0, got {raw!r}.")
     return value
+
+
+def _flag(name: str, default: bool) -> bool:
+    raw = os.environ.get(name, "").strip()
+    if not raw:
+        return default
+    if raw not in ("0", "1"):
+        raise RuntimeError(f"Environment variable {name} must be 0 or 1, got {raw!r}.")
+    return raw == "1"
 
 
 def load_settings() -> Settings:
@@ -45,5 +57,7 @@ def load_settings() -> Settings:
         analysis_dir=Path(_required("ANALYSIS_DIR")),
         ytdlp_cookies=Path(cookies) if cookies else None,
         youtube_api_key=os.environ.get("YOUTUBE_API_KEY", "").strip() or None,
-        analysis_limit_per_ip=_limit("ANALYSIS_LIMIT_PER_IP"),
+        analysis_limit_per_ip=_limit("ANALYSIS_LIMIT_PER_IP", DEFAULT_LIMIT_PER_IP),
+        analysis_limit_per_day=_limit("ANALYSIS_LIMIT_PER_DAY", DEFAULT_LIMIT_PER_DAY),
+        api_docs=_flag("API_DOCS", default=True),
     )

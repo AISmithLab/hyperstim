@@ -47,6 +47,7 @@ Before committing, check `git diff --staged` for anything above.
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests before commit.
 - Commit messages: imperative, describe the why. Do not commit or push unless asked.
+- Releasing to prod is only through `hyperstim-release` (`release.sh`, plan 010), and only when asked. Backend API changes stay additive within a release, so the live frontend keeps working while the two deploy.
 
 ## Dev environment
 

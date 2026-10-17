@@ -238,6 +238,7 @@ def create_app(
         settings.analysis_dir,
         pipeline,
         settings.analysis_limit_per_ip,
+        settings.analysis_limit_per_day,
     )
 
     @asynccontextmanager
@@ -248,7 +249,14 @@ def create_app(
 
     lookup = ChannelLookup(dataset, analyzer, pipeline)
 
-    app = FastAPI(title="HyperStim API", lifespan=lifespan)
+    docs = settings.api_docs  # off in prod: no need to hand out a map of the API
+    app = FastAPI(
+        title="HyperStim API",
+        lifespan=lifespan,
+        docs_url="/docs" if docs else None,
+        redoc_url="/redoc" if docs else None,
+        openapi_url="/openapi.json" if docs else None,
+    )
     app.state.analyzer = analyzer
     app.add_middleware(
         CORSMiddleware, allow_origins=[settings.cors_origin], allow_methods=["GET", "POST"]
@@ -304,7 +312,7 @@ def create_app(
         responses={
             200: {"description": "Already done or running", "model": Analysis},
             429: {"description": "Too many new analyses from this IP address"},
-            503: {"description": "The queue is full"},
+            503: {"description": "The queue is full, or the day's new analyses are used up"},
         },
     )
     def start_analysis(video_id: VideoId, request: Request, response: Response) -> Analysis:

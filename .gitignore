@@ -43,3 +43,4 @@ __pycache__/
 .ruff_cache/
 /backend/pipeline/output/
 /backend/analysis/
+/deploy/server.env

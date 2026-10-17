@@ -41,6 +41,7 @@ STEP_CAP = 0.9  # within a step, the bar stops at this share of it until the ste
 MAX_QUEUE = 10  # videos waiting, not counting the one being analyzed
 MIN_DURATION_S = 90  # the clip starts at 0:30; the old live API had the same minimum
 LIMIT_WINDOW_S = 3600
+DAY_S = 24 * 3600
 
 PIPELINE_DIR = Path(__file__).resolve().parents[2] / "pipeline"
 DOWNLOAD_SCRIPT = PIPELINE_DIR / "58_download_clips_v2.py"
@@ -67,7 +68,7 @@ class AnalysisError(Exception):
 
 
 class Busy(Exception):
-    """The queue is full."""
+    """The queue is full, or the day's new analyses (all visitors together) are used up."""
 
 
 class TooManyRequests(Exception):
@@ -370,12 +371,14 @@ class Analyzer:
         directory: Path,
         pipeline: Pipeline,
         limit_per_ip: int,
+        limit_per_day: int = 0,
         clock: Callable[[], float] = time.time,
     ) -> None:
         self._dir = directory
         self._work = directory / "work"  # one temporary folder per running video
         self._pipeline = pipeline
         self._limit = limit_per_ip
+        self._limit_per_day = limit_per_day
         self.clock = clock
         self._lock = threading.Lock()
         self._wake = threading.Condition(self._lock)
@@ -383,6 +386,7 @@ class Analyzer:
         self._queue: deque[str] = deque()
         self._running: str | None = None
         self._requests: dict[str, deque[float]] = {}  # IP -> its new analyses in the window
+        self._started: deque[float] = deque()  # new analyses in the last 24 hours, all IPs
         self._stopping = False
         self._thread: threading.Thread | None = None
         directory.mkdir(parents=True, exist_ok=True)
@@ -400,8 +404,12 @@ class Analyzer:
             self._records[record.id] = record
             if record.status not in ("done", "failed"):
                 unfinished.append(record)
-        # Waiting or running when the API stopped: start again, in the order requested.
+        # So a restart (each release) doesn't reset the day's count.
         now = self.clock()
+        self._started.extend(
+            sorted(r.requested_at for r in self._records.values() if now - r.requested_at < DAY_S)
+        )
+        # Waiting or running when the API stopped: start again, in the order requested.
         for record in sorted(unfinished, key=lambda r: r.requested_at):
             self._save(replace(record, status="queued", status_since=now))
             self._queue.append(record.id)
@@ -426,16 +434,22 @@ class Analyzer:
     def start(self, video_id: str, ip: str) -> tuple[Record, bool]:
         """Queue the video unless it is stored or running; True if newly queued.
 
-        Raises Busy when the queue is full, TooManyRequests when the IP is over its limit.
+        Raises Busy when the queue is full or the day's limit is used up, TooManyRequests when
+        the IP is over its limit.
         """
         with self._lock:
             record = self._records.get(video_id)
             if record is not None and record.status != "failed":
                 return record, False
+            now = self.clock()
+            while self._started and now - self._started[0] >= DAY_S:
+                self._started.popleft()
             if len(self._queue) >= MAX_QUEUE:
                 raise Busy
+            if self._limit_per_day and len(self._started) >= self._limit_per_day:
+                raise Busy
             self._count_request(ip)
-            now = self.clock()
+            self._started.append(now)
             record = Record(id=video_id, status="queued", status_since=now, requested_at=now)
             self._save(record)
             self._queue.append(video_id)

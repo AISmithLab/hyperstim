@@ -4,7 +4,7 @@ Next.js (App Router, static export) + Tailwind CSS. Deployed to GitHub Pages; ta
 
 ## Prerequisites
 
-- [nvm](https://github.com/nvm-sh/nvm); the Node version is pinned in `.nvmrc`.
+- [nvm](https://github.com/nvm-sh/nvm); the Node version is pinned in `.nvmrc`. `./dev.sh --install-tools` at the repo root installs both.
 
 ## Setup
 

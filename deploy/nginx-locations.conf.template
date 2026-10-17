@@ -1,0 +1,20 @@
+# The prod API under /v2/ (plan 010), included in the API host's server block.
+# /v2/api/... goes to the service's /api/...; anything else under /v2/ is 404.
+
+location /v2/api/ {
+    limit_req zone=${SERVICE}_api burst=30 nodelay;
+    include ${PROD_DIR}/nginx-proxy.conf;
+    proxy_pass http://127.0.0.1:${PORT}/api/;
+}
+
+# Each thumbnail request makes us fetch from YouTube: its own limit, two rankings
+# pages (25 thumbnails each) at once.
+location /v2/api/thumbnails/ {
+    limit_req zone=${SERVICE}_thumbs burst=50 nodelay;
+    include ${PROD_DIR}/nginx-proxy.conf;
+    proxy_pass http://127.0.0.1:${PORT}/api/thumbnails/;
+}
+
+location /v2/ {
+    return 404;
+}
