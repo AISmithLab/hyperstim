@@ -21,11 +21,11 @@ It installs missing dependencies, prefixes each line of output with `[backend]` 
 
 ## Release
 
-`main` is the latest dev version; prod (the site on GitHub Pages and the API on our server) runs the latest release tag (`vYYYY.MM.DD`, then `.1`, `.2` the same day). One command releases both, on the server, from any clone of this repo:
+`main` is the latest dev version; prod (the site on GitHub Pages and the API on our server) runs the latest release tag (`vYYYY.MM.DD.1`, then `.2`, `.3` the same day). One command releases both, on the server, from any clone of this repo:
 
 ```sh
-hyperstim-release              # release the latest main on GitHub
-hyperstim-release v2026.10.16  # roll back: release an older tag again, under a new tag
+hyperstim-release                # release the latest main on GitHub
+hyperstim-release v2026.10.17.1  # roll back: release an older tag again, under a new tag
 ```
 
 It releases what's on GitHub's `main`, not your clone's branch or uncommitted changes. It stops unless CI passed on that commit; then it installs and tests the backend in a fresh checkout, switches the service over and checks `/api/health` (going back to the previous release if it doesn't answer), and only then pushes the tag, which deploys the frontend. You need to be in the server's release group and able to push to GitHub. The server's one-time setup: [`deploy/README.md`](deploy/README.md).

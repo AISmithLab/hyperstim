@@ -79,8 +79,9 @@ if [ -n "$LATEST" ] && [ "$(git -C "$ROOT" rev-parse "$LATEST^{commit}")" = "$CO
   fail "$(git -C "$ROOT" log -1 --format='%h %s' "$COMMIT") is already the latest release ($LATEST)."
 fi
 
-TAG="v$(date +%Y.%m.%d)"
-n=0
+# Numbered from .1 each day: vYYYY.MM.DD.1, .2, …
+n=1
+TAG="v$(date +%Y.%m.%d).$n"
 while git -C "$ROOT" rev-parse --quiet --verify "refs/tags/$TAG" >/dev/null; do
   n=$((n + 1))
   TAG="v$(date +%Y.%m.%d).$n"
