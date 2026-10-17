@@ -110,7 +110,7 @@ point_current_at() {
 
 healthy() {
   for _ in $(seq 30); do
-    curl -fsS -o /dev/null "http://127.0.0.1:$PORT/api/health" && return 0
+    curl -fs -o /dev/null "http://127.0.0.1:$PORT/api/health" && return 0 # quiet while it starts
     sleep 1
   done
   return 1
@@ -163,7 +163,10 @@ for _ in $(seq 90); do
     "completed success "*)
       log "$TAG" "done"
       owner="${REPO%%/*}"
-      say "Released $TAG: https://${owner,,}.github.io/${REPO#*/}/"
+      site="https://${owner,,}.github.io/${REPO#*/}/"
+      # Where it ends up: the owner's Pages may redirect to a custom domain.
+      site="$(curl -fsSL -o /dev/null -w '%{url_effective}' "$site" || echo "$site")"
+      say "Released $TAG: $site"
       exit 0
       ;;
     completed*)

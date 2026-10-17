@@ -14,7 +14,7 @@ A lightweight release with one command: `main` is the latest dev version, prod r
   |---|---|---|
   | Frontend | `next dev` (`./dev.sh`, plan 003) | GitHub Pages, built from a release tag |
   | Backend | any dev checkout, `uvicorn --reload`, localhost only _(human decision, 2026-10-17)_ | the prod instance (below) at the release commit, always-on systemd service behind nginx |
-  | Config | `.env` / `.env.local` (dev values) | the instance's `env` file (analysis limits on, `YOUTUBE_API_KEY` set, `CORS_ORIGIN` = Pages origin); Actions variables for the frontend |
+  | Config | `.env` / `.env.local` (dev values) | the instance's `env` file (analysis limits on, `YOUTUBE_API_KEY` set, `CORS_ORIGIN` = the site's origin: the org's Pages custom domain, which `<owner>.github.io` redirects to); Actions variables for the frontend |
   | Data | `backend/analysis/` | the instance's `data/` |
 
 - **Releases are tags** with the date: `vYYYY.MM.DD`, then `vYYYY.MM.DD.1`, `.2` for more releases the same day. One tag releases frontend and backend together (they share the API contract).
