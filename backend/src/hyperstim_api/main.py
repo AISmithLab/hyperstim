@@ -7,7 +7,6 @@ from typing import Annotated
 
 from fastapi import FastAPI, HTTPException, Path, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
@@ -26,7 +25,7 @@ from hyperstim_api.channel_lookup import ChannelLookup, NotALink, NotFound
 from hyperstim_api.config import Settings, load_settings
 from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video, load_dataset
 from hyperstim_api.ranking import CRITERIA, Order, Ranked
-from hyperstim_api.thumbnails import Size, Thumbnails, Unavailable
+from hyperstim_api.thumbnails import Fetch, Size, Unavailable, fetch_from_youtube
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
 VideoId = Annotated[str, Path(pattern=VIDEO_ID_PATTERN)]
@@ -217,10 +216,15 @@ def analysis(record: Record, queue_position: int | None, now: float) -> Analysis
 def create_app(
     settings: Settings | None = None,
     pipeline: Pipeline | None = None,
-    thumbnails: Thumbnails | None = None,
+    fetch_thumbnail: Fetch = fetch_from_youtube,
 ) -> FastAPI:
-    """The app; `pipeline` and `thumbnails` replace the research scripts and YouTube in tests."""
+    """The app; `pipeline` and `fetch_thumbnail` stand in for the research scripts and YouTube
+    in tests."""
     logging.basicConfig(level=logging.INFO)
+    # uvicorn's access log has a line with the visitor's IP for every request, kept as long as
+    # the server keeps its output. The reverse proxy already logs requests for 14 days, as the
+    # privacy policy says (plan 009), so this copy is off without needing `--no-access-log`.
+    logging.getLogger("uvicorn.access").disabled = True
     settings = settings or load_settings()
     dataset = load_dataset(settings.dataset_path)
     if pipeline is None:
@@ -242,7 +246,6 @@ def create_app(
         analyzer.stop_worker()
 
     lookup = ChannelLookup(dataset, analyzer, pipeline)
-    thumbnails = thumbnails or Thumbnails(settings.thumbnail_dir)
 
     app = FastAPI(title="HyperStim API", lifespan=lifespan)
     app.state.analyzer = analyzer
@@ -378,26 +381,26 @@ def create_app(
 
     @app.get(
         "/api/thumbnails/{video_id}",
-        response_class=FileResponse,
         responses={
             200: {"content": {"image/jpeg": {}}},
             404: {"description": "Not a video we know, or YouTube has no thumbnail"},
             502: {"description": "YouTube couldn't be reached"},
         },
     )
-    def thumbnail(video_id: VideoId, size: Size = "hq") -> FileResponse:
+    def thumbnail(video_id: VideoId, size: Size = "hq") -> Response:
         """A video's YouTube thumbnail, served by us so visitors' browsers don't contact YouTube.
-        Only for videos in the dataset or requested for live analysis."""
+        Only for videos in the dataset or requested for live analysis. Fetched from YouTube each
+        time, not stored; the visitor's browser keeps it for a day."""
         if video_id not in dataset.videos_by_id and analyzer.snapshot(video_id) is None:
             raise HTTPException(status_code=404, detail="Video not found")
         try:
-            path = thumbnails.get(video_id, size)
+            image = fetch_thumbnail(video_id, size)
         except Unavailable:
             raise HTTPException(status_code=502, detail="YouTube unavailable") from None
-        if path is None:
+        if image is None:
             raise HTTPException(status_code=404, detail="No thumbnail")
-        return FileResponse(
-            path, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=86400"}
+        return Response(
+            image, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=86400"}
         )
 
     @app.get("/api/channels/{channel_id}", responses={404: {"description": "Channel not found"}})

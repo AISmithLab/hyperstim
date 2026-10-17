@@ -11,7 +11,7 @@ from hyperstim_api.config import Settings
 from hyperstim_api.dataset import REQUIRED_COLUMNS
 from hyperstim_api.main import create_app
 from hyperstim_api.scoring import FEATURES
-from hyperstim_api.thumbnails import Thumbnails
+from hyperstim_api.thumbnails import Fetch
 
 ORIGIN = "http://localhost:3000"
 
@@ -135,18 +135,19 @@ def make_client(
         path: Path,
         analysis_dir: Path | None = None,
         limit_per_ip: int = 5,
-        thumbnails: Thumbnails | None = None,
+        fetch_thumbnail: Fetch | None = None,
     ) -> TestClient:
         settings = Settings(
             dataset_path=path,
             cors_origin=ORIGIN,
             analysis_dir=analysis_dir or tmp_path_factory.mktemp("analyses"),
-            thumbnail_dir=tmp_path_factory.mktemp("thumbnails"),
             analysis_limit_per_ip=limit_per_ip,
         )
         # Not used as a context manager, so the worker thread doesn't start: tests run
         # the queue themselves with `analyzer.run_next()`.
-        client = TestClient(create_app(settings, pipeline, thumbnails))
+        client = TestClient(
+            create_app(settings, pipeline, fetch_thumbnail or (lambda video_id, size: None))
+        )
         clients.append(client)
         return client
 

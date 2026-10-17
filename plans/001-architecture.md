@@ -93,7 +93,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
   - `GET /api/meta` — filter options, dataset size, last-updated date.
   - `POST /api/analyze` (YouTube link or video ID only), `GET /api/analyze/{job_id}` — live analysis (same contract as today's API, cleaned up).
   - `GET /api/health`.
-  - `GET /api/thumbnails/{id}` — a known video's YouTube thumbnail, fetched and cached by the backend so visitors' browsers never contact YouTube before they press play _(human decision, 2026-10-16, plan 009)_.
+  - `GET /api/thumbnails/{id}` — a known video's YouTube thumbnail, fetched by the backend on each request (nothing stored _(human decision, 2026-10-17)_) so visitors' browsers never contact YouTube before they press play _(human decision, 2026-10-16, plan 009)_.
 - Data exposure: the API returns video IDs, public metadata, and scores/features only. Downloaded clips are never served, never committed, and are deleted once analysis finishes; playback on the site uses YouTube embeds.
 - Data: dataset loaded into memory at startup from a file outside the repo (5k rows is small). Analysis results stored as plain JSON files, one per video, so they survive restarts _(human decision, plan 004: plain files are enough for this lightweight task)_. Analysis runs the existing pipeline via its configured path (not vendored into this repo).
 - Tests: pytest for endpoints with a small synthetic fixture dataset.

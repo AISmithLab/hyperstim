@@ -12,7 +12,6 @@ class Settings:
     dataset_path: Path
     cors_origin: str
     analysis_dir: Path
-    thumbnail_dir: Path
     ytdlp_cookies: Path | None = None
     youtube_api_key: str | None = None  # None = no made-for-kids check
     analysis_limit_per_ip: int = DEFAULT_LIMIT_PER_IP  # 0 = no limit
@@ -44,7 +43,6 @@ def load_settings() -> Settings:
         dataset_path=Path(_required("DATASET_PATH")),
         cors_origin=_required("CORS_ORIGIN").rstrip("/"),
         analysis_dir=Path(_required("ANALYSIS_DIR")),
-        thumbnail_dir=Path(_required("THUMBNAIL_DIR")),
         ytdlp_cookies=Path(cookies) if cookies else None,
         youtube_api_key=os.environ.get("YOUTUBE_API_KEY", "").strip() or None,
         analysis_limit_per_ip=_limit("ANALYSIS_LIMIT_PER_IP"),

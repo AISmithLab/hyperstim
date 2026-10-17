@@ -109,7 +109,6 @@ if [ "$MOCK" = 0 ]; then
     DATASET_PATH=data/videos.tsv \
       CORS_ORIGIN="http://localhost:$FRONTEND_PORT" \
       ANALYSIS_DIR=analysis \
-      THUMBNAIL_DIR=thumbnails \
       ANALYSIS_LIMIT_PER_IP=0 \
       uv run "${env_file[@]+"${env_file[@]}"}" \
       uvicorn --factory hyperstim_api.main:create_app \

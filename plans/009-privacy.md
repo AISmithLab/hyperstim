@@ -12,11 +12,11 @@ Build `/privacy`: a short policy, in plain words, that says exactly what the sit
 |---|---|---|
 | GitHub Pages (hosts the pages) | IP address, browser, pages requested, in GitHub's own logs | GitHub's policy |
 | Fonts | Self-hosted at build (`next/font`), so no request goes to Google Fonts | – |
-| Our server (API) | Reverse proxy access and error logs: IP, time, URL requested, browser. The API itself logs no IPs (uvicorn's access log off, see **Logs**) | 14 days |
+| Our server (API) | Reverse proxy access and error logs: IP, time, URL requested, browser. The API itself logs no IPs (uvicorn's access log off in the app, see **Logs**) | 14 days |
 | Live check, rate limit | IP address, in memory only, to allow 5 new checks per hour | ≤ 1 hour, never written to disk |
 | Live check, results | Video ID, public video details, results. Nothing about who asked | Until removed by hand (plan 004) |
 | Live check, the clip | Downloaded to our server for analysis | Deleted when the analysis finishes |
-| YouTube thumbnails | Served by our server (see **Thumbnails**), so YouTube never sees the visitor | Cached up to 30 days |
+| YouTube thumbnails | Fetched by our server on each request (see **Thumbnails**), so YouTube never sees the visitor | Not stored on the server; the visitor's browser keeps each for a day |
 | YouTube player | Loads only after "Play video" is clicked. Privacy-enhanced mode (`youtube-nocookie.com`). Once playing, YouTube may set cookies and local storage | Google's policy |
 | Cookies, local storage | None set by us | – |
 | Contact form (Google Form, linked) | What the visitor writes: reply email, request, optional IP/time | Deleted once the request is handled |
@@ -44,15 +44,15 @@ Build `/privacy`: a short policy, in plain words, that says exactly what the sit
   - Not legal advice: if the team belongs to an institution, its privacy office should read the final text.
 - **Logs** (checked on the server; details stay off the repo). The policy promises 14 days, so every log with visitor IPs must keep to that:
   - Reverse proxy access/error logs: already rotated daily and deleted after 14 days. No change.
-  - This repo's backend: run uvicorn with `--no-access-log` in production. The reverse proxy already logs each request, so a second log only adds a copy without rotation. The app's own log lines contain no IPs (checked). Documented in `backend/README.md`.
+  - This repo's backend: uvicorn's access log is turned off in the app itself, not by a `--no-access-log` flag on the server _(human decision, 2026-10-17: off by default)_; also off locally. The reverse proxy already logs each request, so it would only add a second copy, kept as long as the server keeps the service's output. The app's own log lines contain no IPs (checked). Tested; documented in `backend/README.md`.
   - The old site's live-analysis API is out of scope: this site runs on this repo's backend only _(human decision)_.
 - **Thumbnails through our backend** _(human decision: no third party sees the visitor before they press play; also one fewer outside dependency)_. Changes plans 004 and 005, which loaded thumbnails from YouTube's image server.
-  - `GET /api/thumbnails/{video_id}?size=hq|mq`: the backend fetches the image from YouTube once, stores it in `THUMBNAIL_DIR` (new required env var, outside the repo; locally the git-ignored `backend/thumbnails/`), and serves it with a long cache header (1 day) so browsers reuse it. The request to YouTube comes from our server, with no visitor data.
+  - `GET /api/thumbnails/{video_id}?size=hq|mq`: the backend fetches the image from YouTube on each request and stores nothing _(human decision, 2026-10-17: no prefetching, no server cache)_; the response has a 1-day cache header so the visitor's browser reuses it. The request to YouTube comes from our server, with no visitor data.
   - Only for videos the site knows (in the dataset or with a stored analysis); anything else is 404 without asking YouTube, so the endpoint can't be used to fetch arbitrary images. Unknown sizes: 422 (FastAPI's validation error).
-  - Cached files are refetched after 30 days (YouTube's API terms limit keeping its data longer; we use its API for the made-for-kids check). Files past 30 days are deleted by an hourly sweep, even if never asked for again. If YouTube has no thumbnail: 404, remembered for a day so it doesn't cost a request per page view; YouTube unreachable: 502, not remembered. Either way the frontend shows the image's grey box.
+  - If YouTube has no thumbnail: 404; YouTube unreachable: 502. Either way the frontend shows the image's grey box.
   - Frontend: `thumbnailUrl` moves from `lib/youtube.ts` to `lib/api.ts` (the one place that talks to the backend) and points to the endpoint (through `NEXT_PUBLIC_API_BASE`); every user (`YouTubePlayer`, `TimeChart`, `VideoStrip`) is unchanged otherwise.
-  - Speed: one fewer outside host to connect to, but the images now come from our one server instead of Google's worldwide network, so first loads far from the server may be a bit slower. The browser cache covers repeat views.
-  - Tests: dataset/live/unknown ID, bad sizes and IDs, cache hit (no second fetch), refetch after 30 days, a missing thumbnail remembered for a day, YouTube down → 502, the sweep.
+  - Speed: one fewer outside host for the browser to connect to, but each image now goes through our one server (the fetch from YouTube takes about 40–90 ms), so first loads, especially far from the server, are a bit slower. The browser cache covers repeat views.
+  - Tests: dataset/live/unknown ID, bad sizes and IDs, fetched on every request (nothing stored), a missing thumbnail → 404, YouTube down → 502.
 - **Contact form** _(human decision: a Google Form)_: https://forms.gle/oLbWLgE8sT6zHhLR9, title "HyperStim? Support", a general contact form that also takes privacy requests _(human decision)_. Linked from the policy as "contact us" _(human decision)_, from the policy only, no footer link _(human decision)_; not embedded (no Google code on our pages); no Google sign-in; responses go to a team account checked at least weekly; each response deleted once handled. Fields:
 
   | Field | Type, required | Description shown in the form |
@@ -91,7 +91,7 @@ A cookieless analytics tool (self-hosted or EU-hosted) would avoid points 1–5:
 
 1. ~~Answer the open questions.~~ The copy is reviewed on the built page _(human decision: no separate copy review in the plan)_; the text lives in `PrivacyPage.tsx`.
 2. ~~Build `/privacy`~~ (page, sections, anchors, kid); tests: headings and anchors in order, the contact link, the stated retention times (logs, the rate-limit count).
-3. ~~Backend: the thumbnail endpoint~~ (`thumbnails.py`, `THUMBNAIL_DIR` in `.env.example`, README, `dev.sh`); the README's **Privacy** section (`--no-access-log`, 14-day proxy logs).
+3. ~~Backend: the thumbnail endpoint~~ (`thumbnails.py`, README); the README's **Privacy** section (access log off, 14-day proxy logs).
 4. ~~Update 001~~ (privacy page, no banner until analytics, the policy-stays-true rule, the thumbnail endpoint), 004 and 005 (thumbnails from our backend).
 5. ~~Lint, type check, tests, build; screenshots at 360, 768, 1280, 1920 px.~~
 
