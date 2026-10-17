@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from hyperstim_api.thumbnails import Size, Unavailable
+from hyperstim_api.thumbnails import KEEP_S, MISSING_S, Size, ThumbnailCache, Unavailable
 from tests.conftest import video_row, write_dataset
 
 KNOWN = "data0000000"
@@ -45,7 +45,7 @@ def client(
     return make_client(dataset, fetch_thumbnail=youtube)
 
 
-def test_serves_a_dataset_videos_thumbnail_fetched_each_time(
+def test_serves_a_dataset_videos_thumbnail_fetched_once(
     client: TestClient, youtube: FakeYouTube
 ) -> None:
     for _ in range(2):
@@ -55,7 +55,7 @@ def test_serves_a_dataset_videos_thumbnail_fetched_each_time(
         assert response.headers["content-type"] == "image/jpeg"
         assert response.headers["cache-control"] == "public, max-age=86400"
     assert client.get(f"/api/thumbnails/{KNOWN}?size=mq").content == b"mq-image"
-    assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "hq"), (KNOWN, "mq")]  # nothing stored
+    assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "mq")]  # the second hq came from the cache
 
 
 def test_serves_a_live_checked_video_but_no_unknown_one(
@@ -83,3 +83,61 @@ def test_youtube_down_is_a_502(client: TestClient, youtube: FakeYouTube) -> None
     assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 502
     youtube.down = False
     assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 200
+
+
+DAY = 24 * 3600
+
+
+@pytest.fixture
+def cache(tmp_path: Path, youtube: FakeYouTube) -> ThumbnailCache:
+    return ThumbnailCache(tmp_path / "thumbs", youtube, clock=lambda: 1_000_000.0)
+
+
+def test_cache_keeps_an_image_for_30_days(cache: ThumbnailCache, youtube: FakeYouTube) -> None:
+    start = cache.clock()
+    assert cache.get(KNOWN, "hq") == b"hq-image"
+    youtube.images[(KNOWN, "hq")] = b"new-image"
+    cache.clock = lambda: start + KEEP_S - 1
+    assert cache.get(KNOWN, "hq") == b"hq-image"
+    cache.clock = lambda: start + KEEP_S
+    assert cache.get(KNOWN, "hq") == b"new-image"
+    assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "hq")]
+
+
+def test_cache_survives_a_restart(tmp_path: Path, youtube: FakeYouTube) -> None:
+    ThumbnailCache(tmp_path, youtube).get(KNOWN, "hq")
+    assert ThumbnailCache(tmp_path, youtube).get(KNOWN, "hq") == b"hq-image"
+    assert youtube.calls == [(KNOWN, "hq")]
+
+
+def test_cache_remembers_a_missing_thumbnail_for_a_day(
+    cache: ThumbnailCache, youtube: FakeYouTube
+) -> None:
+    start = cache.clock()
+    assert cache.get(UNKNOWN, "hq") is None
+    assert cache.get(UNKNOWN, "hq") is None
+    youtube.images[(UNKNOWN, "hq")] = b"late-image"
+    cache.clock = lambda: start + MISSING_S
+    assert cache.get(UNKNOWN, "hq") == b"late-image"
+    assert youtube.calls == [(UNKNOWN, "hq"), (UNKNOWN, "hq")]
+
+
+def test_cache_serves_a_stale_image_while_youtube_is_down(
+    cache: ThumbnailCache, youtube: FakeYouTube
+) -> None:
+    start = cache.clock()
+    cache.get(KNOWN, "hq")
+    youtube.down = True
+    cache.clock = lambda: start + KEEP_S + DAY
+    assert cache.get(KNOWN, "hq") == b"hq-image"
+    with pytest.raises(Unavailable):
+        cache.get(KNOWN, "mq")  # nothing cached to fall back on
+
+
+def test_cache_holds_only_finished_images(tmp_path: Path, youtube: FakeYouTube) -> None:
+    cache = ThumbnailCache(tmp_path, youtube)
+    cache.get(KNOWN, "hq")
+    cache.get(KNOWN, "mq")
+    cache.get(UNKNOWN, "hq")
+    names = sorted(p.name for p in tmp_path.iterdir())
+    assert names == [f"{KNOWN}_hq.jpg", f"{KNOWN}_mq.jpg", f"{UNKNOWN}_hq.missing"]  # no .tmp

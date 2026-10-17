@@ -25,7 +25,7 @@ from hyperstim_api.channel_lookup import ChannelLookup, NotALink, NotFound
 from hyperstim_api.config import Settings, load_settings
 from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video, load_dataset
 from hyperstim_api.ranking import CRITERIA, Order, Ranked
-from hyperstim_api.thumbnails import Fetch, Size, Unavailable, fetch_from_youtube
+from hyperstim_api.thumbnails import Fetch, Size, ThumbnailCache, Unavailable, fetch_from_youtube
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
 VideoId = Annotated[str, Path(pattern=VIDEO_ID_PATTERN)]
@@ -248,6 +248,7 @@ def create_app(
         analyzer.stop_worker()
 
     lookup = ChannelLookup(dataset, analyzer, pipeline)
+    thumbnails = ThumbnailCache(settings.thumbnail_dir, fetch_thumbnail)
 
     docs = settings.api_docs  # off in prod: no need to hand out a map of the API
     app = FastAPI(
@@ -401,12 +402,12 @@ def create_app(
     )
     def thumbnail(video_id: VideoId, size: Size = "hq") -> Response:
         """A video's YouTube thumbnail, served by us so visitors' browsers don't contact YouTube.
-        Only for videos in the dataset or requested for live analysis. Fetched from YouTube each
-        time, not stored; the visitor's browser keeps it for a day."""
+        Only for videos in the dataset or requested for live analysis. Cached on the server for
+        30 days; the visitor's browser keeps it for a day."""
         if video_id not in dataset.videos_by_id and analyzer.snapshot(video_id) is None:
             raise HTTPException(status_code=404, detail="Video not found")
         try:
-            image = fetch_thumbnail(video_id, size)
+            image = thumbnails.get(video_id, size)
         except Unavailable:
             raise HTTPException(status_code=502, detail="YouTube unavailable") from None
         if image is None:

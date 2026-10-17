@@ -28,7 +28,7 @@ plans/      numbered plans
   - `/how-it-works` Method explained for a general audience (features → categories → score).
   - `/about` Team, paper, contact. **Delayed** _(human decision, 2026-10-16)_: not built for now, and not linked from the header or footer until it is.
   - `/faq` Accordion of common questions.
-  - `/privacy` Privacy policy (plan 009): what we store, why, and for how long; GitHub Pages and YouTube; no analytics or cookies from us. Embeds use `youtube-nocookie.com`. **The policy must stay true:** a change to what the site or backend stores, logs, or loads from third parties updates the policy in the same change _(human decision, 2026-10-16, plan 009)_.
+  - `/privacy` Privacy policy (plan 009): what we store, why, and for how long; GitHub Pages and YouTube; no analytics or cookies from us. Embeds use `youtube-nocookie.com`. **The policy must stay true:** every change is checked against it; a change to what the site or backend stores, logs, or loads from third parties that the policy would have to reflect is agreed with the team before it's built, and then updates the policy in the same change _(human decision, 2026-10-16, plan 009; agreed first: 2026-10-17)_.
 - Shared layout on every page (in the root layout):
   - Header: site name/logo (links home) and nav (Home, Rankings, Compare, How it works, FAQ; About once it exists _(human decision, 2026-10-16)_), with the current page marked.
   - No cookie banner while the site stores nothing on the visitor's device _(human decision, 2026-10-16, plan 009: the rules require one only once analytics are added)_. YouTube players load only after "Play video" is clicked (plan 004). The banner (Accept / Reject of equal weight) and a "Cookie settings" footer link come with analytics; plan 009 has the plan for it.
@@ -93,7 +93,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
   - `GET /api/meta` — filter options, dataset size, last-updated date.
   - `POST /api/analyze` (YouTube link or video ID only), `GET /api/analyze/{job_id}` — live analysis (same contract as today's API, cleaned up).
   - `GET /api/health`.
-  - `GET /api/thumbnails/{id}` — a known video's YouTube thumbnail, fetched by the backend on each request (nothing stored _(human decision, 2026-10-17)_) so visitors' browsers never contact YouTube before they press play _(human decision, 2026-10-16, plan 009)_.
+  - `GET /api/thumbnails/{id}` — a known video's YouTube thumbnail, fetched by the backend and cached for 30 days _(human decision, 2026-10-17, plan 009)_ so visitors' browsers never contact YouTube before they press play _(human decision, 2026-10-16, plan 009)_.
 - Data exposure: the API returns video IDs, public metadata, and scores/features only. Downloaded clips are never served, never committed, and are deleted once analysis finishes; playback on the site uses YouTube embeds.
 - Data: dataset loaded into memory at startup from a file outside the repo (5k rows is small). Analysis results stored as plain JSON files, one per video, so they survive restarts _(human decision, plan 004: plain files are enough for this lightweight task)_. Analysis runs the existing pipeline via its configured path (not vendored into this repo).
 - Tests: pytest for endpoints with a small synthetic fixture dataset.

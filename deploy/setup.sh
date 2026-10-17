@@ -76,7 +76,7 @@ for login in $RELEASERS; do
 done
 install -d -m 755 -o "$SERVICE_USER" -g "$SERVICE_USER" \
   "$PROD_DIR/repo" "$PROD_DIR/releases" "$PROD_DIR/uv" "$PROD_DIR/data"
-install -d -m 700 -o "$SERVICE_USER" -g "$SERVICE_USER" "$PROD_DIR/data/analysis"
+install -d -m 700 -o "$SERVICE_USER" -g "$SERVICE_USER" "$PROD_DIR/data/analysis" "$PROD_DIR/data/thumbnails"
 [ -e "$PROD_DIR/releases.log" ] || install -m 644 -o "$SERVICE_USER" -g "$SERVICE_USER" /dev/null "$PROD_DIR/releases.log"
 
 # --- The clone --------------------------------------------------------------------------

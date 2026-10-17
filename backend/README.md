@@ -28,8 +28,9 @@ See `.env.example`.
 | `DATASET_PATH` | Dataset TSV (`data/videos.tsv`); its `videos.meta.json` must sit next to it. |
 | `CORS_ORIGIN` | The one origin allowed to call the API (the frontend's URL). |
 | `ANALYSIS_DIR` | Folder for live analyses: one JSON result per video, plus the running video's temporary clip. Outside the repo on the server (locally `analysis/`, git-ignored). |
-| `ANALYSIS_LIMIT_PER_IP` | New live analyses one IP address may start per hour; `0` = no limit (local development). Optional, default 5. |
-| `ANALYSIS_LIMIT_PER_DAY` | New live analyses all visitors together may start in 24 hours (over it: `503 Busy`, like a full queue); `0` = no limit (local development). Optional, default 100. Survives a restart. |
+| `THUMBNAIL_DIR` | Folder for cached video thumbnails, one file per video and size. Outside the repo on the server (locally `thumbnails/`, git-ignored). |
+| `ANALYSIS_LIMIT_PER_IP` | New live analyses one IP address may start per hour; `0` = no limit (local development). Optional, default 20. |
+| `ANALYSIS_LIMIT_PER_DAY` | New live analyses all visitors together may start in 24 hours (over it: `503 Busy`, like a full queue); `0` = no limit (local development). Optional, default 1000. Survives a restart. |
 | `API_DOCS` | `1` = serve the API docs (`/docs`, `/redoc`, `/openapi.json`), `0` = off (production). Optional, default 1. |
 | `YOUTUBE_API_KEY` | YouTube Data API key for the live analysis's made-for-kids check (1 quota unit per new video). Empty = no check, for local development; always set it on the server. Never commit it. |
 | `YTDLP_COOKIES` | Optional cookies file for yt-dlp, if YouTube asks for one. Never commit it. |
@@ -71,7 +72,7 @@ A video that isn't in the dataset is analyzed on request (`POST /api/analyses/{i
 
 ## Thumbnails
 
-`GET /api/thumbnails/{id}?size=hq|mq` (`src/hyperstim_api/thumbnails.py`) serves a video's YouTube thumbnail (`hq` 480×360, `mq` 320×180), so visitors' browsers don't contact YouTube before they press play (the privacy policy says so; plan 009). Only for videos in the dataset or requested for live analysis; anything else is 404. The server fetches the image from YouTube on each request and stores nothing; the response tells the visitor's browser to keep it for a day. A thumbnail YouTube doesn't have is 404; YouTube unreachable is 502.
+`GET /api/thumbnails/{id}?size=hq|mq` (`src/hyperstim_api/thumbnails.py`) serves a video's YouTube thumbnail (`hq` 480×360, `mq` 320×180), so visitors' browsers don't contact YouTube before they press play (the privacy policy says so; plan 009). Only for videos in the dataset or requested for live analysis; anything else is 404. The server fetches each image from YouTube once and keeps it in `THUMBNAIL_DIR` for 30 days (then fetches it again), so YouTube sees at most one request per video and size in that time however often it's shown; the response tells the visitor's browser to keep it for a day. A thumbnail YouTube doesn't have is 404, remembered for a day. YouTube unreachable is 502, unless an older copy is cached, which is served instead.
 
 ## Privacy
 
@@ -79,7 +80,7 @@ The privacy policy (`/privacy`, plan 009) promises what the server keeps; keep t
 
 - uvicorn's access log is off in the app (`create_app`), so no flag is needed. The reverse proxy already logs every request (deleted after 14 days); uvicorn's would be a second copy with visitors' IPs, kept as long as the server keeps the service's output. The app's own log lines contain no IPs.
 - The reverse proxy's access and error logs are deleted after 14 days.
-- A change to what the backend stores or logs updates the policy in the same change.
+- Check every change to what the backend stores or logs against the policy; one the policy would have to reflect is agreed with the team first, then updates the policy in the same change (`CLAUDE.md`).
 
 ## Channel lookup
 

@@ -143,6 +143,7 @@ def make_client(
             dataset_path=path,
             cors_origin=ORIGIN,
             analysis_dir=analysis_dir or tmp_path_factory.mktemp("analyses"),
+            thumbnail_dir=tmp_path_factory.mktemp("thumbnails"),
             analysis_limit_per_ip=limit_per_ip,
             analysis_limit_per_day=limit_per_day,
             api_docs=api_docs,

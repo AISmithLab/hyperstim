@@ -32,6 +32,11 @@ This repo is public. Never commit:
 
 Before committing, check `git diff --staged` for anything above.
 
+## Privacy policy
+
+- The privacy policy (`/privacy`, plan 009) must always match what the site and backend actually do: what they store, log, keep and for how long, and which third parties they load from or send data to.
+- Check every change against it. If a change would make the policy untrue or need a policy change, stop and confirm with the user before building it; then update the policy (and plan 009) in the same change.
+
 ## Engineering
 
 - Production quality, but keep it simple and maintainable. Prefer few dependencies and boring, well-known tools. No abstraction until there are two real uses for it.

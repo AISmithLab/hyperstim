@@ -1,5 +1,4 @@
 # Shared by the /v2/ locations (plan 010).
-limit_req_status 429;
 limit_conn ${SERVICE}_conn 20;
 limit_conn_status 429;
 client_max_body_size 16k;

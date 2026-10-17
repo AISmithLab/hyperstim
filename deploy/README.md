@@ -47,17 +47,17 @@ In the cloud provider's security group for the server, allow only SSH (22) and H
   repo/                        clone of this repo; fetches from GitHub without a login (service user)
   releases/<tag>/              one checkout per release, with its own .venv (last 5 kept)
   releases/current -> <tag>    what the service runs
-  data/                        the service's only writable folder: analysis/, caches (service user)
+  data/                        the service's only writable folder: analysis/, thumbnails/, caches (service user)
   bin/                         uv and deno at the versions in tools.env
   uv/                          uv's Python and cache (service user)
   env                          the API's settings and secrets (readable by the service only)
   instance.env                 what release.sh needs: service user, service name, port
   <service>.service            systemd unit, linked into systemd
-  nginx-*.conf                 rate-limit zones and the /v2/ locations, included by nginx
+  nginx-*.conf                 per-IP connection cap and the /v2/ locations, included by nginx
   releases.log                 one line per release: time, who, tag, commit, result
 ```
 
-All of these except `releases/`, `data/` and `releases.log` are written by `setup.sh` from the templates here (`*.template`) and `server.env`; edit those, not the files on the server. Outside `<prod-dir>`, `setup.sh` adds only a symlink for the unit and one for the nginx zones, one `include` line in the nginx site file (with a backup next to the instance), `/etc/sudoers.d/<service>`, and `/usr/local/bin/hyperstim-release`.
+All of these except `releases/`, `data/` and `releases.log` are written by `setup.sh` from the templates here (`*.template`) and `server.env`; edit those, not the files on the server. Outside `<prod-dir>`, `setup.sh` adds only a symlink for the unit and one for the nginx connection cap, one `include` line in the nginx site file (with a backup next to the instance), `/etc/sudoers.d/<service>`, and `/usr/local/bin/hyperstim-release`.
 
 The service runs as its own system user, so it can't read anyone's home folder or credentials, and its sandbox (`service.template`) lets it write only to `data/`. Root owns everything the service user must not change.
 

@@ -14,7 +14,7 @@ A lightweight release with one command: `main` is the latest dev version, prod r
   |---|---|---|
   | Frontend | `next dev` (`./dev.sh`, plan 003) | GitHub Pages, built from a release tag |
   | Backend | any dev checkout, `uvicorn --reload`, localhost only _(human decision, 2026-10-17)_ | the prod instance (below) at the release commit, always-on systemd service behind nginx |
-  | Config | `.env` / `.env.local` (dev values) | the instance's `env` file (rate limits on, `YOUTUBE_API_KEY` set, `CORS_ORIGIN` = Pages origin); Actions variables for the frontend |
+  | Config | `.env` / `.env.local` (dev values) | the instance's `env` file (analysis limits on, `YOUTUBE_API_KEY` set, `CORS_ORIGIN` = Pages origin); Actions variables for the frontend |
   | Data | `backend/analysis/` | the instance's `data/` |
 
 - **Releases are tags** with the date: `vYYYY.MM.DD`, then `vYYYY.MM.DD.1`, `.2` for more releases the same day. One tag releases frontend and backend together (they share the API contract).
@@ -34,7 +34,7 @@ A lightweight release with one command: `main` is the latest dev version, prod r
 - **`.github/workflows/deploy.yml`:** on push of tags `v*`; `npm ci`, `npm run build` with `NEXT_PUBLIC_API_BASE` and `NEXT_PUBLIC_BASE_PATH` from Actions variables, then the official Pages actions (`configure-pages`, `upload-pages-artifact`, `deploy-pages`). CI already ran the checks on that commit.
 - **The prod API is served under `/v2/` on the existing API domain**, next to the old API on `/api/` (the old site still uses it until it's retired, 001 migration step 4) _(human decision, 2026-10-17)_. nginx maps `/v2/api/…` to the service's `/api/…`, so the frontend only needs `NEXT_PUBLIC_API_BASE=https://<api-host>/v2`; no code change.
 - **The first release goes to this repo's Pages; the old site is deployed elsewhere and isn't affected** _(human decision, 2026-10-17)_.
-- **The YouTube API key is the one dev uses** _(human decision, 2026-10-17)_; dev and prod share its quota (10,000 units/day; a new analysis costs 1, prod caps at 100/day). In Google Cloud, restrict the key to the YouTube Data API and to the server's IP (dev and prod both run there).
+- **The YouTube API key is the one dev uses** _(human decision, 2026-10-17)_; dev and prod share its quota (10,000 units/day; a new analysis costs 1, prod caps at 1,000/day). In Google Cloud, restrict the key to the YouTube Data API and to the server's IP (dev and prod both run there).
 
 ### The prod instance
 
@@ -51,7 +51,7 @@ Everything of the instance sits in one directory `<prod-dir>` on the server, so 
   env                        prod config and secrets (readable by the service only)
   instance.env               what release.sh needs
   <service>.service          systemd unit, linked into systemd with `systemctl link`
-  nginx-*.conf               rate-limit zones and the /v2/ locations, included by nginx
+  nginx-*.conf               per-IP connection cap and the /v2/ locations, included by nginx
   releases.log               one line per release: time, who, tag, commit, result
 ```
 
@@ -63,13 +63,13 @@ Everything of the instance sits in one directory `<prod-dir>` on the server, so 
 
 ## Protection against abuse
 
-The API URL is public once the site is (the browser calls it), and CORS stops only other websites' pages, not scripts. So all protection is on the server. Already in the app: per-IP limit on new analyses (5/hour), a queue of 10, one analysis at a time on at most 4 cores, the made-for-kids check, thumbnails only for known videos, capped query parameters.
+The API URL is public once the site is (the browser calls it), and CORS stops only other websites' pages, not scripts. So all protection is on the server. Already in the app: per-IP limit on new analyses (20/hour _(human decision, 2026-10-17: too strict)_), a queue of 10, one analysis at a time on at most 4 cores, the made-for-kids check, thumbnails only for known videos, capped query parameters.
 
 Added in prod:
 
 - **Only nginx is reachable from outside:** uvicorn listens on `127.0.0.1`; nginx proxies only `/v2/api/`.
-- **nginx limits per IP** (`limit_req`, `limit_conn`): `/v2/api/` 10 requests/s with a burst of 30 _(human decision, 2026-10-17)_; `/v2/api/thumbnails/` its own limit, 5/s with a burst of 50, i.e. two rankings pages at once (each request makes us fetch from YouTube) _(human decision, 2026-10-17: 2/s with a burst of 20 refused part of a 25-thumbnail page)_; small request bodies, short timeouts. Over the limit → 429.
-- **A daily cap on new analyses across all visitors** (`ANALYSIS_LIMIT_PER_DAY`, env var, 0 = off for dev; prod 100 _(human decision, 2026-10-17)_), so many IPs together can't use up the YouTube API quota or get the server's IP blocked by YouTube for heavy downloading. Over the cap → the same "busy" answer as a full queue.
+- **nginx: no request-rate limits** _(human decision, 2026-10-17: too strict)_, for the API and thumbnails alike. Kept: at most 20 connections at once per IP (`limit_conn`, over it → 429), small request bodies, short timeouts. Risk taken: each thumbnail request makes us fetch from YouTube, so one script could make the server hammer YouTube; add a thumbnail rate limit back if that shows up.
+- **A daily cap on new analyses across all visitors** (`ANALYSIS_LIMIT_PER_DAY`, env var, 0 = off for dev; prod 1,000 _(human decision, 2026-10-17: too strict)_), so many IPs together can't use up the YouTube API quota or get the server's IP blocked by YouTube for heavy downloading. Over the cap → the same "busy" answer as a full queue.
 - **API docs off in prod** (`/docs`, `/redoc`, `/openapi.json`), via an env var; on in dev.
 - **systemd hardening** for the service (the pipeline parses downloaded videos with ffmpeg, so limit the damage if one is malicious): own user, `NoNewPrivileges`, `ProtectSystem=strict`, `ProtectHome`, `PrivateTmp`, write access only to `data/`, `MemoryMax` and `CPUQuota`.
 - **Firewall:** only SSH and 80/443 open to the internet, set in the cloud provider's security group.
@@ -90,7 +90,7 @@ Not now (add if abuse shows up): fail2ban on repeated 429s; a CDN or bot-check i
 5. Write `deploy.yml`, `release.sh`, the `deploy/` templates, `server.env.example`, `setup.sh` and a short guide; `tools.env`, `scripts/install-tools.sh`, `./dev.sh --install-tools`; git-ignore `deploy/server.env`. Run `setup.sh` on our server over the setup done by hand so far (it should change nothing but add `hyperstim-release`).
 6. Docs: root `README.md` "Release" section (who can release, `hyperstim-release`, rollback) and `--install-tools`; `backend/README.md` links to `deploy/README.md`; `CLAUDE.md` gets one line on releasing.
 7. Update 001: frontend deployed on a release tag; prod backend runs from its own instance (done).
-8. Check: 429s from nginx at the limits; docs 404 in prod; first release end to end; a failing backend test leaves the service untouched; an unhealthy backend rolls back and pushes no tag; rollback to an older tag; a release from another clone, on a feature branch with uncommitted edits, still releases `origin/main`.
+8. Check: 429 from nginx above 20 connections per IP; docs 404 in prod; first release end to end; a failing backend test leaves the service untouched; an unhealthy backend rolls back and pushes no tag; rollback to an older tag; a release from another clone, on a feature branch with uncommitted edits, still releases `origin/main`.
 
 ## Open questions
 
