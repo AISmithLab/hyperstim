@@ -32,6 +32,7 @@ plans/      numbered plans
 - Shared layout on every page (in the root layout):
   - Header: site name/logo (links home) and nav (Home, Rankings, Compare, How it works, FAQ; About once it exists _(human decision, 2026-10-16)_), with the current page marked.
   - No cookie banner while the site stores nothing on the visitor's device _(human decision, 2026-10-16, plan 009: the rules require one only once analytics are added)_. YouTube players load only after "Play video" is clicked (plan 004). The banner (Accept / Reject of equal weight) and a "Cookie settings" footer link come with analytics; plan 009 has the plan for it.
+  - Site icon (browser tab, bookmarks, home screen): the logo's "H" _(human decision, 2026-10-17: without one, browsers showed the default icon of the domain the site is served from)_. Next.js metadata files `src/app/icon.png` and `apple-icon.png`, so every page declares it under the site's base path; how it's made is in `STYLE.md`.
   - Footer: links to Privacy policy, FAQ (About us once it exists _(human decision, 2026-10-16)_); plus a contact email, the project's GitHub repo, and a copyright line.
 - Data fetched client-side from the backend with small typed hooks; static text pages need no backend.
 - Responsive (RWD), mobile-first with Tailwind's default breakpoints; supported from 320 px phones up to wide desktop monitors:
