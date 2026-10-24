@@ -34,6 +34,9 @@ fail() {
   exit 1
 }
 
+# The commit-msg hook checks commit messages (CLAUDE.md, plan 010).
+git -C "$ROOT" config core.hooksPath .githooks
+
 # --- Prerequisites -----------------------------------------------------------
 
 if [ "$MOCK" = 0 ]; then

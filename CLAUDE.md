@@ -51,7 +51,22 @@ Before committing, check `git diff --staged` for anything above.
   - Before handing back UI work, screenshot the changed parts next to their neighbours at phone (360 px) and desktop (1280 px) widths and compare them against `STYLE.md`.
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests before commit.
-- Commit messages: imperative, describe the why. Do not commit or push unless asked.
+- Do not commit or push unless asked.
+- **Commit messages follow Conventional Commits**; `release.sh` takes the next version and the release notes from them (plan 010). Format: `<type>[!]: <subject> (plan NNN)`, then an optional body after a blank line. The `commit-msg` hook in `.githooks/` checks the format.
+  - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
+  - **Type**, by what the change means for the live site (pick the first that fits; split the commit if it's two things):
+    - `feat`: something visitors can see or use that's new or changed: pages, features, text, API endpoints. → minor version.
+    - `fix`: the site or API didn't work as intended, including security fixes (also a dependency upgrade done for one). → patch.
+    - `perf`: faster or lighter, same behaviour. `refactor`: code change with no visible change. `style`: formatting only.
+    - `test`: tests only. `docs`: plans, READMEs, `STYLE.md`, `CLAUDE.md`, code comments. `build`: dependencies, build config, dev scripts. `ci`: CI, release and server setup (`.github/`, `release.sh`, `deploy/`). `chore`: anything else.
+  - **Breaking:** add `!` after the type and a body line `BREAKING CHANGE: <what stops working, and what to do instead>` when a page URL or shareable link stops working (removed, or moved without a redirect), or scores or measurements change meaning so they can't be compared with earlier ones. → major version. Redesigns, new text and new pages are not breaking.
+  - Examples:
+    - `feat: Add the compare page for two videos or two channels (plan 008)`
+    - `fix: Show a count of 0 as 0 and silent clips as "No sound" (plan 004)`
+    - `fix: Upgrade Next.js to 16.4.2 for its security fixes`
+    - `docs: Record human decisions in place in plans`
+    - `ci: Number release tags from .1 each day (plan 010)`
+    - `feat!: Score videos with the v3 feature set (plan 002)` + body `BREAKING CHANGE: scores are not comparable with earlier releases.`
 - Releasing to prod is only through `hyperstim-release` (`release.sh`, plan 010). Backend API changes stay additive within a release, so the live frontend keeps working while the two deploy.
 - **Never launch a release yourself.** A release is started manually by the team, or by you only when explicitly told to release in that request. Finishing, merging, or pushing work is not a request to release; neither is an earlier approval.
 

@@ -2,7 +2,7 @@
 # Release to prod (plan 010): the backend first, then the tag that deploys the frontend.
 #
 #   hyperstim-release          release the latest main on GitHub
-#   hyperstim-release <ref>    release an older commit or tag of main (a rollback), under a new tag
+#   hyperstim-release <ref>    release an older commit or tag of main (a rollback), under the next patch version
 #
 # On the server, run it as `hyperstim-release` (installed by deploy/setup.sh) from any clone
 # of this repo. Needs: membership in the release group, and push access to GitHub.
@@ -74,20 +74,34 @@ git -C "$ROOT" fetch --quiet --tags origin || fail "couldn't fetch from GitHub: 
 COMMIT="$(git -C "$ROOT" rev-parse --verify --quiet "$TARGET^{commit}")" || fail "unknown commit or tag: $TARGET"
 git -C "$ROOT" merge-base --is-ancestor "$COMMIT" origin/main || fail "$TARGET is not on main."
 
-LATEST="$(git -C "$ROOT" tag -l 'v*' --sort=-v:refname | head -n 1)"
-if [ -n "$LATEST" ] && [ "$(git -C "$ROOT" rev-parse "$LATEST^{commit}")" = "$COMMIT" ]; then
+# The highest version tag vX.Y.Z. (A major under 1000 skips the old date tags, vYYYY.MM.DD, that
+# a clone may still have: they were renamed to versions.)
+versions() { grep -E '^v[0-9]{1,3}\.[0-9]+\.[0-9]+$' | sort -V || true; }
+LATEST="$(git -C "$ROOT" tag -l 'v*' | versions | tail -n 1)"
+[ -n "$LATEST" ] || fail "no release tag vX.Y.Z found."
+[ "$(git -C "$ROOT" rev-parse "$LATEST^{commit}")" != "$COMMIT" ] ||
   fail "$(git -C "$ROOT" log -1 --format='%h %s' "$COMMIT") is already the latest release ($LATEST)."
+
+# The bump and the release notes come from the commit messages since the latest release (plan 010).
+# A rollback (a commit the latest release already has) is a patch.
+if git -C "$ROOT" merge-base --is-ancestor "$COMMIT" "$LATEST"; then
+  was="$(git -C "$ROOT" tag --points-at "$COMMIT" -l 'v*' | versions | tail -n 1)"
+  BUMP=patch
+  NOTES="Roll back to ${was:-$(git -C "$ROOT" rev-parse --short "$COMMIT")}."
+else
+  out="$(cd "$ROOT" && scripts/release-notes.sh "$LATEST..$COMMIT")"
+  BUMP="${out%%$'\n'*}"
+  NOTES="${out#*$'\n'}"
 fi
+IFS=. read -r major minor patch <<<"${LATEST#v}"
+case "$BUMP" in
+  major) TAG="v$((major + 1)).0.0" ;;
+  minor) TAG="v$major.$((minor + 1)).0" ;;
+  *) TAG="v$major.$minor.$((patch + 1))" ;;
+esac
 
-# Numbered from .1 each day: vYYYY.MM.DD.1, .2, …
-n=1
-TAG="v$(date +%Y.%m.%d).$n"
-while git -C "$ROOT" rev-parse --quiet --verify "refs/tags/$TAG" >/dev/null; do
-  n=$((n + 1))
-  TAG="v$(date +%Y.%m.%d).$n"
-done
-
-say "Releasing $(git -C "$ROOT" log -1 --format='%h %s' "$COMMIT") as $TAG"
+say "Releasing $(git -C "$ROOT" log -1 --format='%h %s' "$COMMIT") as $TAG ($BUMP after $LATEST)"
+printf '%s\n\n' "$NOTES"
 
 # CI (ci.yml) must have passed on the commit: both jobs, frontend and backend.
 checks="$(github "commits/$COMMIT/check-runs?per_page=100")" ||
@@ -139,8 +153,10 @@ if ! healthy; then
   fail "the new backend didn't answer /api/health; $back. No tag was pushed."
 fi
 
-# Keep the newest releases (by name: tags sort by date).
-for old in $(as_service ls -1 "$REL" | grep '^v' | sort -V | head -n "-$KEEP"); do
+# Keep the newest releases, by when they were checked out (a worktree's .git file is written once),
+# not by name: the checkouts from before the versions are named by date.
+for old in $(as_service sh -c 'stat -c "%Y %n" "$1"/v*/.git' sh "$REL" | sort -n | head -n "-$KEEP" | cut -d' ' -f2-); do
+  old="$(basename "$(dirname "$old")")"
   [ "$old" = "$(as_service readlink "$REL/current")" ] ||
     as_service git -C "$PROD_DIR/repo" worktree remove --force "$REL/$old"
 done
@@ -148,7 +164,8 @@ done
 # --- Frontend ---------------------------------------------------------------------------
 
 say "Frontend: pushing $TAG (starts the Pages deploy)"
-git -C "$ROOT" tag -a "$TAG" -m "Release $TAG" "$COMMIT"
+# The notes are the tag's message; the Release page workflow shows them on GitHub.
+git -C "$ROOT" tag -a --cleanup=whitespace -F - "$TAG" "$COMMIT" <<<"$NOTES"
 if ! git -C "$ROOT" push --quiet origin "refs/tags/$TAG"; then
   log "$TAG" "push-failed"
   fail "the backend is live, but pushing $TAG failed; push it to deploy the frontend: git push origin $TAG"
