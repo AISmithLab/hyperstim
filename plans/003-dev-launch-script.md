@@ -18,12 +18,12 @@ One command that starts the backend and the frontend together for local developm
 - **Ports:** backend 8000, frontend 3000; overridable with `BACKEND_PORT` / `FRONTEND_PORT`.
 - **Settings are passed as environment variables, not by editing `.env` files.** The script sets `DATASET_PATH`, `CORS_ORIGIN` (= the frontend's URL), `NEXT_PUBLIC_API_BASE` (= the backend's URL), and an empty `NEXT_PUBLIC_API_MOCK`. These override `.env` / `.env.local`, so the ports always match and a leftover `NEXT_PUBLIC_API_MOCK=1` doesn't silently show mock data.
 - **Mock mode:** `./dev.sh --mock` starts only the frontend with mock data (no backend needed).
-- **Docs:** root `README.md` gets a "Run locally" section; the frontend/backend READMEs keep their per-app commands.
+- **Docs:** `DEVELOPMENT.md` gets a "Run locally" section _(human decision, 2026-10-24: moved there from the root `README.md`, plan 001)_; the frontend/backend READMEs keep their per-app commands.
 
 ## Steps
 
 1. Write `dev.sh` (executable).
-2. Update `README.md`.
+2. Update `DEVELOPMENT.md`.
 3. Check: normal start, `--mock`, port already in use, Ctrl+C stops both, port overrides.
 
 ## Open questions

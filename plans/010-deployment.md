@@ -104,7 +104,7 @@ Not now (add if abuse shows up): fail2ban on repeated 429s; a CDN or bot-check i
 3. **Server setup:** copy `deploy/server.env.example` to `deploy/server.env`, fill it in, run `sudo deploy/setup.sh` (`deploy/README.md`). What it sets up: service user and release group, `<prod-dir>` layout, `bin/` tools, clone, `env`, systemd unit (`Restart=always`, enabled at boot, `--proxy-headers`, no `--reload`, single process), nginx files included from the API site, sudoers rule, `hyperstim-release`.
 4. Backend: `ANALYSIS_LIMIT_PER_DAY` and the docs switch, with tests; `.env.example` and `backend/README.md` updated.
 5. Write `deploy.yml`, `release.sh`, the `deploy/` templates, `server.env.example`, `setup.sh` and a short guide; `tools.env`, `scripts/install-tools.sh`, `./dev.sh --install-tools`; git-ignore `deploy/server.env`. Run `setup.sh` on our server over the setup done by hand so far (it should change nothing but add `hyperstim-release`).
-6. Docs: root `README.md` "Release" section (who can release, `hyperstim-release`, rollback) and `--install-tools`; `backend/README.md` links to `deploy/README.md`; `CLAUDE.md` gets one line on releasing.
+6. Docs: `DEVELOPMENT.md` "Release" section _(human decision, 2026-10-24: moved there from the root `README.md`, plan 001)_ (who can release, `hyperstim-release`, rollback) and `--install-tools`; `backend/README.md` links to `deploy/README.md`; `CLAUDE.md` gets one line on releasing.
 7. Update 001: frontend deployed on a release tag; prod backend runs from its own instance (done).
 8. Check: 429 from nginx above 20 connections per IP; docs 404 in prod; first release end to end; a failing backend test leaves the service untouched; an unhealthy backend rolls back and pushes no tag; rollback to an older tag; a release from another clone, on a feature branch with uncommitted edits, still releases `origin/main`.
 
@@ -114,7 +114,7 @@ Not now (add if abuse shows up): fail2ban on repeated 429s; a CDN or bot-check i
    3. `release.sh`: latest release = highest `vX.Y.Z` tag; bump and notes from the commits in `<latest>..<commit>`, by `scripts/release-notes.sh`; prune checkouts by time.
    4. `.github/workflows/release-page.yml`.
    5. Once on `main`, replace the old tags with `v1.0.0` (above): Deploy disabled, tags pushed and deleted, Deploy enabled, Release page workflow run for `v1.0.0`.
-   6. Docs: root `README.md` Release section (version scheme, where the notes are, rollback example). `deploy.yml`, `ci.yml` (Sonar's `--match 'v*'`) and the Pages environment's `v*` rule need no change.
+   6. Docs: `DEVELOPMENT.md` Release section (moved from the root `README.md`, plan 001) (version scheme, where the notes are, rollback example). `deploy.yml`, `ci.yml` (Sonar's `--match 'v*'`) and the Pages environment's `v*` rule need no change.
    7. Check: a release with only `fix` commits bumps patch, with a `feat` minor, with `!` major; a rollback bumps patch; the tag message and the Release page list the grouped commits; the hook rejects `Add x` and accepts `feat: Add x (plan 010)`.
 
 ### Commit messages (the text for `CLAUDE.md`)

@@ -13,7 +13,21 @@ frontend/   Next.js app (static export → GitHub Pages)
 backend/    FastAPI app (runs on our server)
 plans/      numbered plans
 .github/workflows/   CI (plan 012) + Pages deploy
+README.md, DEVELOPMENT.md   repo front page, developer guide (below)
 ```
+
+### README and developer guide _(human decision, 2026-10-24: the README read like a developer guide)_
+
+- **`README.md` is for anyone who lands on the repo** (parents, researchers, developers): what the site is, not how to work on it.
+  1. `# HyperStim?`, the site's name _(human decision, 2026-10-24)_, the SonarQube Cloud badges (quality gate, coverage, reliability rating; each links to the project's new-code summary) and the Deploy workflow's status badge _(human decision, 2026-10-24)_, and a one-line pitch: how stimulating are kids' YouTube videos?
+  2. **What it is:** one paragraph: a platform that helps parents understand how stimulating children's videos are by analyzing audiovisual features (rapid scene changes, bright colors, loud sounds), so they can explore and compare videos and make more informed decisions about what their children watch. The name links to the live site _(human decision, 2026-10-24: better framing)_.
+  3. **What you can do:** check any video by its link; rankings of videos and channels; compare two videos or channels; how it works. One line each, linking to the site's pages.
+  4. **What the score is and isn't:** production style only, measured from a 5-minute clip; it doesn't judge content, educational value or age appropriateness. Same copy limits as the site (plan 006): no claims about effects on children.
+  5. **How it's built:** 2–3 lines (static Next.js site on GitHub Pages; Python/FastAPI API with the video dataset and the analysis pipeline), linking to `DEVELOPMENT.md`.
+  6. **Privacy** (link to the policy) and **License** (Apache 2.0, link to `LICENSE`).
+- **No numbers that go stale** (video count, dates) and **no link to the research** _(human decision, 2026-10-24)_.
+- **`DEVELOPMENT.md` is the developer entry point:** the old README's content, moved unchanged (repo map, "Run locally" from plan 003, "Release" from plan 010). It links to the `frontend/`, `backend/` and `deploy/` READMEs.
+- **Plan 010's pending switch to semantic-version tags** also changes the "Release" section: whichever change lands second updates it in `DEVELOPMENT.md` _(human decision, 2026-10-24)_.
 
 ## Frontend
 

@@ -1,35 +1,35 @@
-# HyperStimulation website
+# HyperStim?
 
-Website for the HyperStimulation project: how stimulating are children’s videos?
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=coverage)](https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim)
+[![Deploy](https://github.com/AISmithLab/hyperstim/actions/workflows/deploy.yml/badge.svg)](https://github.com/AISmithLab/hyperstim/actions/workflows/deploy.yml)
 
-- [`frontend/`](frontend/README.md): Next.js static site (GitHub Pages)
-- [`backend/`](backend/README.md): Python API (FastAPI) with the video dataset and analysis pipeline
-- [`deploy/`](deploy/README.md): prod setup on the server and GitHub Pages
-- [`plans/`](plans/): numbered design and implementation plans
+How stimulating are kids’ YouTube videos?
 
-## Run locally
+## What it is
 
-Install the tools once (nvm + Node, uv, and for live analysis ffmpeg and deno, at the versions in `tools.env`; uses `apt` or Homebrew), then start both apps:
+[HyperStim?](https://aismithlab.com/hyperstim/) is a platform that helps parents understand how stimulating children's videos are by analyzing audiovisual features such as rapid scene changes, bright colors, and loud sounds. Parents can explore and compare videos to make more informed decisions about what their children watch.
 
-```sh
-./dev.sh --install-tools   # once, and after tools.env changes
-./dev.sh          # backend on :8000 and frontend on :3000, using the real backend
-./dev.sh --mock   # frontend only, with mock data
-```
+## What you can do
 
-It installs missing dependencies, prefixes each line of output with `[backend]` or `[frontend]`, and stops both apps on Ctrl+C or when either one exits. Change the ports with `BACKEND_PORT` / `FRONTEND_PORT`. The settings that must match the ports or suit local development (`NEXT_PUBLIC_API_BASE`, `NEXT_PUBLIC_API_MOCK`, `CORS_ORIGIN`, `DATASET_PATH`, `ANALYSIS_DIR`, `THUMBNAIL_DIR`, and `ANALYSIS_LIMIT_PER_IP=0`, `ANALYSIS_LIMIT_PER_DAY=0`: no limits on live analyses) are set by the script for that run and override `backend/.env` and `frontend/.env.local`; everything else in those files still applies. To run one app on its own, see its README.
+- **[Check a video](https://aismithlab.com/hyperstim/):** paste a YouTube link and get its score.
+- **[Rankings](https://aismithlab.com/hyperstim/rankings/):** the most and least stimulating videos and channels.
+- **[Compare](https://aismithlab.com/hyperstim/compare/):** put two videos or two channels side by side.
+- **[How it works](https://aismithlab.com/hyperstim/how-it-works/):** what we measure and what the score means.
 
-`./dev.sh` also turns on the `commit-msg` hook that checks commit messages; without it, run `git config core.hooksPath .githooks` once.
+## What the score is and isn’t
 
-## Release
+We measure production style only, from a 5-minute clip of the video. We don’t judge a video’s content, educational value, or age appropriateness.
 
-`main` is the latest dev version; prod (the site on GitHub Pages and the API on our server) runs the latest release tag, a version `vMAJOR.MINOR.PATCH`. One command releases both, on the server, from any clone of this repo:
+## How it’s built
 
-```sh
-hyperstim-release          # release the latest main on GitHub
-hyperstim-release v1.2.0   # roll back: release an older tag again, under the next patch version
-```
+A static Next.js site on GitHub Pages, and a Python (FastAPI) API that serves the video dataset and analyzes new videos. To run it or work on it, see [`DEVELOPMENT.md`](DEVELOPMENT.md).
 
-The version and the release notes come from the commit messages since the last release, which follow Conventional Commits (see "Commit messages" in [`CLAUDE.md`](CLAUDE.md)): a breaking change (`feat!:`) bumps the major version, a `feat:` the minor, anything else the patch. The notes are the tag's message and appear on the repo's [Releases](../../releases) page.
+## Privacy
 
-It releases what's on GitHub's `main`, not your clone's branch or uncommitted changes. It stops unless CI passed on that commit (this includes SonarQube Cloud's quality gate, [plan 012](plans/012-code-quality.md)); then it installs and tests the backend in a fresh checkout, switches the service over and checks `/api/health` (going back to the previous release if it doesn't answer), and only then pushes the tag, which deploys the frontend. You need to be in the server's release group and able to push to GitHub. The server's one-time setup: [`deploy/README.md`](deploy/README.md).
+What the site stores and who it shares data with: [privacy policy](https://aismithlab.com/hyperstim/privacy/).
+
+## License
+
+[Apache 2.0](LICENSE).
