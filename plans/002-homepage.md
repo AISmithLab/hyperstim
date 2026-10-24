@@ -77,9 +77,8 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Where | Text |
 |---|---|
 | H1 | How stimulating are the videos **your child watches?** (bold part = marker highlight) |
-| Intro, paragraph 1 | Ever wondered if your child’s favorite videos might be overstimulating? _(human decision, 2026-10-17: name stimulation and parents)_ |
-| Intro, paragraph 2, first sentence | ***HyperStim?*** (bold italic, the site’s name as in the logo) helps parents see how stimulating children’s videos are: how fast they cut, how loud they get, how bright their colors are, and more. _(human decision, 2026-10-17: name bold, and don’t limit it to three measurements; was: “*HyperStim?* measures the production style of children’s videos: how fast they cut, how loud they get, and how saturated the colors are.”, in paragraph 1)_ |
-| Intro, paragraph 2, second sentence | See how any video compares with {N} other kids’ videos. _(human decision, 2026-10-17: in the same paragraph; was: its own paragraph)_ _(was: “… with {N} others in our research dataset.”; before that one paragraph with paragraph 1 and “more than {N}”)_ |
+| Intro, paragraph 1 | From rapid scene changes to bright colors and loud sounds, children’s videos vary in how stimulating they are. _(human decision, 2026-10-24: replaces the question and the name; the site’s name isn’t in the intro)_ |
+| Intro, paragraph 2 | Explore and compare {N} videos to better understand what your child is watching. _(human decision, 2026-10-24: two paragraphs; {N} is the real count, not “thousands of”)_ |
 | `{N}` | Video count from `/api/meta`, rounded down to whole thousands as “{n}k+” (10,412 → “10k+”); below 1,000, the exact count. Before it loads or if it fails: “thousands of”. _(was: “more than 5,400”, rounded down to the nearest 100)_ |
 | Illustration alt | (empty, decorative) |
 

@@ -29,14 +29,13 @@ export default function Hero() {
       </div>
 
       <div className="max-w-prose text-lg md:col-start-1 md:row-start-2 md:self-start">
-        <p>Ever wondered if your child’s favorite videos might be overstimulating?</p>
+        <p>
+          From rapid scene changes to bright colors and loud sounds, children’s videos vary in how
+          stimulating they are.
+        </p>
         <p className="mt-4">
-          <b>
-            <i>HyperStim?</i>
-          </b>{" "}
-          helps parents see how stimulating children’s videos are: how fast they cut, how loud they
-          get, how bright their colors are, and more. See how any video compares with <DatasetCount />{" "}
-          other kids’ videos.
+          Explore and compare <DatasetCount /> videos to better understand what your child is
+          watching.
         </p>
       </div>
     </section>
