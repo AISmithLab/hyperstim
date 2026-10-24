@@ -54,7 +54,7 @@ export default function VideoStrip({
     const el = list.current;
     const card = marked ? el?.querySelector<HTMLElement>(`[data-card="${marked}"]`) : null;
     if (!el || !card) return;
-    el.scrollTo?.({ left: card.offsetLeft - parseFloat(getComputedStyle(el).paddingLeft || "0"), behavior: scrollBehavior() });
+    el.scrollTo?.({ left: card.offsetLeft - Number.parseFloat(getComputedStyle(el).paddingLeft || "0"), behavior: scrollBehavior() });
   }, [marked]);
 
   const page = (direction: 1 | -1) => {

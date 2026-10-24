@@ -1,6 +1,6 @@
 """Copy the video dataset from a checkout of the research repo into data/.
 
-Usage: uv run python scripts/import_dataset.py <research-repo-dir> [--out data]
+Usage: uv run python scripts/import_dataset.py <research-repo-dir>
 
 Reads (never writes) these files of the research repo:
   runs/feature-set-v11/features-contemporary-v11.tsv  the videos and their 12 features
@@ -31,6 +31,8 @@ CATEGORIES_TSV = "data/contemporary-v2-categories.tsv"
 CORPUS_TSV = "data/contemporary-v2-corpus.tsv"
 FIGURES_MD = "data/contemporary-v2-figures-of-record.md"
 EXTRACTOR = "code/pipeline/04_extract_features_v2.py"
+
+OUT_DIR = Path(__file__).resolve().parents[1] / "data"
 
 EXPECTED_CACHE_VERSION = 11
 # Same label the research analysis uses (code/analysis/frame.py).
@@ -87,8 +89,9 @@ def cache_version(path: Path) -> int:
 
 
 def git_commit(repo: Path) -> str:
+    # The repo is the working directory, not an argument, so it can't be read as a git option.
     out = subprocess.run(
-        ["git", "-C", str(repo), "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+        ["git", "rev-parse", "HEAD"], cwd=repo, capture_output=True, text=True, check=True
     )
     return out.stdout.strip()
 
@@ -162,7 +165,6 @@ def main() -> None:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("research_repo", type=Path)
-    parser.add_argument("--out", type=Path, default=Path(__file__).resolve().parents[1] / "data")
     args = parser.parse_args()
 
     try:
@@ -170,13 +172,13 @@ def main() -> None:
     except CheckFailed as err:
         sys.exit(f"Check failed: {err}")
 
-    args.out.mkdir(parents=True, exist_ok=True)
-    with (args.out / "videos.tsv").open("w", newline="", encoding="utf-8") as fh:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    with (OUT_DIR / "videos.tsv").open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, OUT_COLUMNS, delimiter="\t", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
-    (args.out / "videos.meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {len(rows)} videos to {args.out / 'videos.tsv'} ({meta['categories']})")
+    (OUT_DIR / "videos.meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+    print(f"Wrote {len(rows)} videos to {OUT_DIR / 'videos.tsv'} ({meta['categories']})")
 
 
 if __name__ == "__main__":

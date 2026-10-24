@@ -24,7 +24,7 @@ function parseChannelLink(text: string): ChannelLink | null {
 }
 
 /** Text that is meant as a link rather than a name. */
-const LOOKS_LIKE_LINK = /^https?:\/\/|youtu\.?be|youtube\./i;
+const LOOKS_LIKE_LINK = /(?:^https?:\/\/)|youtu\.?be|youtube\./i;
 
 /** What a search field holds (compare picker, plan 008; rankings search, plan 007). */
 export type SearchInput =
