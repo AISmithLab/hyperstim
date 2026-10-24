@@ -21,6 +21,7 @@ dev = [
     "httpx2>=2.13.1",
     "mypy>=1.13",
     "pytest>=8.3",
+    "pytest-cov>=7.1.0",
     "ruff>=0.8",
 ]
 
@@ -42,3 +43,14 @@ files = ["src", "scripts", "tests"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+# Used by `uv run pytest --cov` (CI); SonarQube Cloud reads coverage.xml (plan 012).
+[tool.coverage.run]
+source = ["src", "scripts"]
+branch = true
+
+[tool.coverage.report]
+skip_empty = true
+
+[tool.coverage.xml]
+output = "coverage.xml"

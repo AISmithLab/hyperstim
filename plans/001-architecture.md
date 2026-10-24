@@ -12,7 +12,7 @@ Replace the old static site (vanilla HTML/JS, dataset baked into a ~10 MB JS fil
 frontend/   Next.js app (static export → GitHub Pages)
 backend/    FastAPI app (runs on our server)
 plans/      numbered plans
-.github/workflows/   CI + Pages deploy
+.github/workflows/   CI (plan 012) + Pages deploy
 ```
 
 ## Frontend

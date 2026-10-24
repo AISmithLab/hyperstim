@@ -24,7 +24,11 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
-      - run: npm test
+      - run: npm run test:coverage
+      - uses: actions/upload-artifact@v7
+        with:
+          name: coverage-frontend
+          path: frontend/coverage/lcov.info
       - run: npm run build
         env:
           NEXT_PUBLIC_API_MOCK: "1"
@@ -47,4 +51,39 @@ jobs:
       - run: uv run ruff check
       - run: uv run ruff format --check
       - run: uv run mypy
-      - run: uv run pytest
+      - run: uv run pytest --cov --cov-report=xml
+      - uses: actions/upload-artifact@v7
+        with:
+          name: coverage-backend
+          path: backend/coverage.xml
+
+  # SonarQube Cloud analysis with both coverage reports (plan 012). Skipped for PRs
+  # from forks, which get no secrets.
+  sonar:
+    needs: [frontend, backend]
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history, so Sonar can tell new code from old.
+          fetch-depth: 0
+      - uses: actions/download-artifact@v8
+        with:
+          name: coverage-frontend
+          path: frontend/coverage
+      - uses: actions/download-artifact@v8
+        with:
+          name: coverage-backend
+          path: backend
+      # Vitest writes paths relative to frontend/; Sonar resolves them from the repo root.
+      - run: sed -i 's|^SF:|SF:frontend/|' frontend/coverage/lcov.info
+      # The latest release tag is the Sonar version, so "new code" is everything since that
+      # release (New Code setting "Previous version").
+      - id: release
+        run: echo "tag=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || echo none)" >> "$GITHUB_OUTPUT"
+      - uses: SonarSource/sonarqube-scan-action@v8.3.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: -Dsonar.projectVersion=${{ steps.release.outputs.tag }}

@@ -46,6 +46,7 @@ Prod (on the server, from a release tag) is set up and updated as described in [
 | `uv run ruff format` | Format (CI runs `ruff format --check`) |
 | `uv run mypy` | Type check |
 | `uv run pytest` | Tests |
+| `uv run pytest --cov --cov-report=xml` | Tests with coverage, report in `coverage.xml` (CI runs this) |
 
 ## Dataset
 

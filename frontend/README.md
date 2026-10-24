@@ -36,6 +36,7 @@ See `.env.example`. All are read at build time.
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript |
 | `npm test` | Vitest unit tests |
+| `npm run test:coverage` | Tests with coverage, report in `coverage/` (CI runs this) |
 | `npm run build` | Static export to `out/` |
 | `npm run images` | Convert art to WebP (runs automatically before `dev` and `build`) |
 

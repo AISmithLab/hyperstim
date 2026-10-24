@@ -10,5 +10,12 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
+    // Used by `npm run test:coverage` (CI); lcov is what SonarQube Cloud reads (plan 012).
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: ["src/**/*.test.{ts,tsx}"],
+      reporter: ["text-summary", "lcov"],
+    },
   },
 });
