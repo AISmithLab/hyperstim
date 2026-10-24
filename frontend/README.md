@@ -44,6 +44,8 @@ See `.env.example`. All are read at build time.
 
 Originals from the team live in `art/` (including unused ones). Only images listed in `art/used.json` are converted to WebP into `public/images/` (git-ignored), at 2× the given display width. To use a new image, add a line to `used.json` and reference it as `asset("/images/<name>.webp")`.
 
+The link-preview image, `public/og-image.png` (1200 × 630, opaque PNG), is committed: `art/Logo.png` centred above `art/kid_1.png` on white, both scaled to fit with margins so a square crop still shows the kid. Recompose it if either changes; its size and alt text are in `src/lib/site.ts` (plan 011).
+
 ## Styles
 
 How the site looks (rules, and the classes for each card, control and popover) is in [`design/STYLE.md`](design/STYLE.md). Colour and font values are Tailwind tokens in `src/app/globals.css`.

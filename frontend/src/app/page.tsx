@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import CheckVideoCard from "@/components/home/CheckVideoCard";
 import Hero from "@/components/home/Hero";
 import RankingsCard from "@/components/home/RankingsCard";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "HyperStim? - How stimulating are kids’ videos?",
+export const metadata: Metadata = pageMetadata({
+  title: "HyperStim? How stimulating are the videos your child watches?",
   description:
-    "Compare how stimulating children’s YouTube videos are: a 0–100 score for fast cuts, loud sound, bright colors, and more, made for parents.",
-  alternates: { canonical: "/" },
-};
+    "Discover how stimulating your child’s favorite videos are. Compare thousands of children’s videos based on scene changes, colors, sounds, and more.",
+  path: "",
+});
 
 export default function HomePage() {
   return (
