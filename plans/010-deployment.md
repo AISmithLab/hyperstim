@@ -28,17 +28,7 @@ A lightweight release with one command: `main` is the latest dev version, prod r
   Not breaking: redesigns, new or reworded text, new pages, removed features whose URLs still answer. The API isn't public (CORS allows only our site), so API changes aren't breaking for outsiders; within the site they stay additive regardless (below).
 - **Release notes** _(human decision, 2026-10-24)_: `release.sh` writes the commits since the last release into the annotated tag's message, grouped: Breaking changes, Features, Fixes, Other (subjects only; `docs`/`chore`/`ci`/`test`/`build`/`style`/`refactor`/`perf` under Other). A rollback's notes say "Roll back to vX.Y.Z".
 - **GitHub Release pages** _(human decision, 2026-10-24)_: a new workflow `.github/workflows/release-page.yml`, on push of `v*` tags, creates a GitHub Release titled with the tag and with the tag's message as its notes (read through GitHub's API with the runner's `gh`, so the server still needs only git, curl and uv; the workflow gets `contents: write`). It can also be run by hand for a tag (Actions → Release page → Run workflow), for the renamed old tags: a tag push runs the workflows of the tagged commit, and the old commits don't have this one. No privacy change: these pages are on the repo, not the site.
-- **The date-tag releases are renamed to versions** _(human decision, 2026-10-24)_, bumped by the same rules from what each shipped, so there's one scheme and tags sort by version:
-
-  | Old tag | New tag | Why |
-  |---|---|---|
-  | `v2026.10.17` | `v1.0.0` | first public release |
-  | `v2026.10.17.1` | `v1.1.0` | site icon (feature) |
-  | `v2026.10.17.2` | `v1.2.0` | Google Analytics with cookie banner (feature) |
-  | `v2026.10.17.3` | `v1.3.0` | sitemap, canonical URLs, Search Console (feature) |
-  | `v2026.10.17.4` | `v1.4.0` | homepage says who it's for (feature) |
-
-  The new tags are annotated, on the same commits, with notes in the same format, grouped by hand (the old commit messages have no types); `v1.0.0`'s notes say "First public release." The old tags are then deleted on GitHub. That changes nothing live: Pages keeps the deployed site, and the server's `releases/v2026.10.17.4/` keeps running until the next release replaces it. While pushing the new tags, the Deploy workflow is disabled (Actions → Deploy → `⋯` → Disable workflow, or `gh workflow disable deploy.yml`), so they don't redeploy old commits; it's enabled again afterwards the same way. Then the Release page workflow is run for each, oldest first, so `v1.4.0` ends up as "Latest". This happens once the change is on `main` (a workflow can only be run by hand from the default branch).
+- **Versions start at `v1.0.0`, the release that was live on 2026-10-24** (`bdd054b`, date tag `v2026.10.17.4`) _(human decision, 2026-10-24: the old commits don't follow the message format, so bumping each old release from them, to `v1.1.0` … `v1.4.0`, gave minor versions some of them weren't worth)_. Its tag's notes say "First public release."; the five date tags and the briefly used `v1.0.0` … `v1.4.0` (with their Release pages) are deleted. That changes nothing live: Pages keeps the deployed site, and the server's `releases/v2026.10.17.4/` keeps running until the next release replaces it. The Deploy workflow is disabled (Actions → Deploy → `⋯` → Disable workflow) while the tag is pushed, so it doesn't redeploy, and enabled again afterwards; then the Release page workflow is run by hand for `v1.0.0` (a tag push runs the workflows of the tagged commit, and that commit doesn't have it).
 - **What is released: the latest `main` on GitHub** (`origin/main`) by default, whatever branch or uncommitted changes the local checkout has. No branch or working-tree checks.
 - **Backend changes stay additive** (new fields/endpoints) within a release, so the old frontend keeps working for the minute between the backend and frontend deploys.
 - **Only git, curl and uv needed** (no `gh`) _(human decision, 2026-10-17)_. GitHub's API is read without a login (public repo).
@@ -123,7 +113,7 @@ Not now (add if abuse shows up): fail2ban on repeated 429s; a CDN or bot-check i
    2. `.githooks/commit-msg` (bash, no dependency) rejects a subject that doesn't match `<type>[!]: <subject>` (git's own `Merge …` and `Revert "…"` subjects pass); `./dev.sh` sets `git config core.hooksPath .githooks` once per clone. CI doesn't check: a bad message already on `main` can't be fixed, and `release.sh` counts it as a patch.
    3. `release.sh`: latest release = highest `vX.Y.Z` tag; bump and notes from the commits in `<latest>..<commit>`, by `scripts/release-notes.sh`; prune checkouts by time.
    4. `.github/workflows/release-page.yml`.
-   5. Once on `main`, rename the old tags (table above): Deploy disabled, new tags pushed, old tags deleted, Deploy enabled, Release page workflow run for each new tag.
+   5. Once on `main`, replace the old tags with `v1.0.0` (above): Deploy disabled, tags pushed and deleted, Deploy enabled, Release page workflow run for `v1.0.0`.
    6. Docs: root `README.md` Release section (version scheme, where the notes are, rollback example). `deploy.yml`, `ci.yml` (Sonar's `--match 'v*'`) and the Pages environment's `v*` rule need no change.
    7. Check: a release with only `fix` commits bumps patch, with a `feat` minor, with `!` major; a rollback bumps patch; the tag message and the Release page list the grouped commits; the hook rejects `Add x` and accepts `feat: Add x (plan 010)`.
 
