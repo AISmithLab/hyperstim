@@ -1,10 +1,21 @@
+import io
+import urllib.error
+import urllib.request
 from collections.abc import Callable
+from email.message import Message
 from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 
-from hyperstim_api.thumbnails import KEEP_S, MISSING_S, Size, ThumbnailCache, Unavailable
+from hyperstim_api.thumbnails import (
+    KEEP_S,
+    MISSING_S,
+    Size,
+    ThumbnailCache,
+    Unavailable,
+    fetch_from_youtube,
+)
 from tests.conftest import video_row, write_dataset
 
 KNOWN = "data0000000"
@@ -141,3 +152,54 @@ def test_cache_holds_only_finished_images(tmp_path: Path, youtube: FakeYouTube) 
     cache.get(UNKNOWN, "hq")
     names = sorted(p.name for p in tmp_path.iterdir())
     assert names == [f"{KNOWN}_hq.jpg", f"{KNOWN}_mq.jpg", f"{UNKNOWN}_hq.missing"]  # no .tmp
+
+
+# fetch_from_youtube, with YouTube's image server faked
+
+
+class FakeResponse(io.BytesIO):
+    def __enter__(self) -> "FakeResponse":
+        return self
+
+    def __exit__(self, *args: object) -> None:
+        self.close()
+
+
+def http_error(code: int) -> urllib.error.HTTPError:
+    return urllib.error.HTTPError("https://i.ytimg.com/", code, "error", Message(), None)
+
+
+def test_fetch_from_youtube_returns_the_image(monkeypatch: pytest.MonkeyPatch) -> None:
+    urls: list[str] = []
+
+    def fake(url: str, timeout: float) -> FakeResponse:
+        urls.append(url)
+        return FakeResponse(b"jpeg")
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake)
+    assert fetch_from_youtube(KNOWN, "mq") == b"jpeg"
+    assert urls == [f"https://i.ytimg.com/vi/{KNOWN}/mqdefault.jpg"]
+
+
+@pytest.mark.parametrize(
+    ("error", "result"),
+    [
+        (http_error(404), None),
+        (http_error(500), Unavailable),
+        (http_error(429), Unavailable),
+        (urllib.error.URLError("no route"), Unavailable),
+        (TimeoutError("timed out"), Unavailable),
+    ],
+)
+def test_fetch_from_youtube_errors(
+    monkeypatch: pytest.MonkeyPatch, error: Exception, result: type[Exception] | None
+) -> None:
+    def fake(url: str, timeout: float) -> FakeResponse:
+        raise error
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake)
+    if result is None:
+        assert fetch_from_youtube(KNOWN, "hq") is None
+    else:
+        with pytest.raises(result):
+            fetch_from_youtube(KNOWN, "hq")
