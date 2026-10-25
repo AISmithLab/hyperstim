@@ -14,7 +14,8 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/**/*.test.{ts,tsx}"],
+      // mock.ts is the dev-only fake backend (NEXT_PUBLIC_API_MOCK=1), not site code.
+      exclude: ["src/**/*.test.{ts,tsx}", "src/lib/mock.ts"],
       reporter: ["text-summary", "lcov"],
     },
   },
