@@ -1,6 +1,7 @@
 # 014 — Usage insights
 
 **Area:** What the site counts about how it's used (nothing about who uses it), and where those numbers are kept for the team.
+**Branch:** based on `013-growing-dataset` _(human decision, 2026-10-26)_: the counting hooks sit in the API code that plan 013 changes (its dataset store), so 013 merges first.
 
 ## Goal
 
