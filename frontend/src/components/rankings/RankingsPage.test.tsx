@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   ApiError,
   getChannels,
+  getMeta,
   getVideos,
   lookupChannel,
   type ListParams,
@@ -44,6 +45,7 @@ vi.mock("@/lib/api", async (importOriginal) => ({
   getVideos: vi.fn(),
   getChannels: vi.fn(),
   lookupChannel: vi.fn(),
+  getMeta: vi.fn(),
 }));
 
 const KEYS = FEATURE_GROUPS.flatMap((g) => g.keys);
@@ -79,6 +81,7 @@ function list<T>(make: (n: number) => T, total: number) {
   return async ({ offset = 0, limit }: ListParams) => ({
     items: Array.from({ length: Math.max(0, Math.min(limit, total - offset)) }, (_, i) => make(offset + i + 1)),
     total,
+    asOf: "2026-10-26T00:00:00Z",
   });
 }
 
@@ -105,9 +108,45 @@ beforeEach(() => {
   vi.mocked(getVideos).mockReset().mockImplementation(list(video, 60));
   vi.mocked(getChannels).mockReset().mockImplementation(list(channel, 30));
   vi.mocked(lookupChannel).mockReset();
+  vi.mocked(getMeta).mockReset().mockResolvedValue({
+    videoCount: 16402,
+    channelCount: 542,
+    updatedAt: "2026-10-26",
+    addedLast7Days: 1043,
+    channelCount7DaysAgo: 540,
+    lastAddedAt: "2026-10-26T10:00:00Z",
+    referenceCount: 16375,
+    channelsCheckedAt: null,
+  });
 });
 
 describe("RankingsPage", () => {
+  it("has no growing count; the results line is the count", async () => {
+    open();
+    expect(await screen.findByText(/^Showing 1–25 of 60 videos$/)).toBeInTheDocument();
+    expect(screen.queryByTestId("rolling-number")).not.toBeInTheDocument();
+    expect(getMeta).not.toHaveBeenCalled();
+  });
+
+  it("asks for the dataset as it was at the first list, so rows don't shift while browsing", async () => {
+    const versions = ["2026-10-26T10:00:00Z", "2026-10-26T10:05:00Z"];
+    vi.mocked(getVideos).mockImplementation(async (params) => ({
+      ...(await list(video, 60)(params)),
+      asOf: params.asOf ?? versions[vi.mocked(getVideos).mock.calls.length > 1 ? 1 : 0],
+    }));
+    const user = userEvent.setup();
+    open();
+    await screen.findByRole("table");
+    expect(lastCall(vi.mocked(getVideos))?.asOf).toBeUndefined();
+    await user.click(within(screen.getByRole("navigation", { name: "Pages" })).getByRole("button", { name: "Next page" }));
+    await screen.findByText("Showing 26–50 of 60 videos");
+    expect(lastCall(vi.mocked(getVideos))).toMatchObject({ offset: 25, asOf: versions[0] });
+    // Sorting, filtering and switching to channels keep it too.
+    await user.click(screen.getByRole("button", { name: "Channels" }));
+    await waitFor(() => expect(getChannels).toHaveBeenCalled());
+    expect(lastCall(vi.mocked(getChannels))).toMatchObject({ asOf: versions[0] });
+  });
+
   it("shows the first page of videos ranked by Overall", async () => {
     open();
 
@@ -195,7 +234,7 @@ describe("RankingsPage", () => {
   });
 
   it("shows a dash for rows without a rank", async () => {
-    vi.mocked(getVideos).mockImplementation(async () => ({ items: [{ ...video(1), rank: null }], total: 1 }));
+    vi.mocked(getVideos).mockImplementation(async () => ({ items: [{ ...video(1), rank: null }], total: 1, asOf: "2026-10-26T00:00:00Z" }));
     open();
 
     await screen.findByRole("table");
@@ -345,7 +384,7 @@ describe("RankingsPage", () => {
 
   it("shows a message with a clear button when nothing matches", async () => {
     const user = userEvent.setup();
-    vi.mocked(getVideos).mockResolvedValue({ items: [], total: 0 });
+    vi.mocked(getVideos).mockResolvedValue({ items: [], total: 0, asOf: "2026-10-26T00:00:00Z" });
     open("q=xyz&category=gaming");
 
     expect(await screen.findByText("No gaming videos match “xyz”.")).toBeInTheDocument();
@@ -358,7 +397,7 @@ describe("RankingsPage", () => {
   describe("links in the search", () => {
     const VIDEO_ID = "dQw4w9WgXcQ";
     const CHANNEL_ID = "UCbCmjCuTUZos6Inko4u57UQ";
-    const nothing = { items: [], total: 0 };
+    const nothing = { items: [], total: 0, asOf: "2026-10-26T00:00:00Z" };
 
     it("searches a pasted video link by its ID, and keeps the link in the field", async () => {
       const user = userEvent.setup();

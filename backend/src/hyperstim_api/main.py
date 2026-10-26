@@ -1,6 +1,7 @@
 """FastAPI app. Run with: uvicorn --factory hyperstim_api.main:create_app"""
 
 import logging
+import time
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Annotated
@@ -23,8 +24,9 @@ from hyperstim_api.analysis import (
 )
 from hyperstim_api.channel_lookup import ChannelLookup, NotALink, NotFound
 from hyperstim_api.config import Settings, load_settings
-from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video, load_dataset
+from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video
 from hyperstim_api.ranking import CRITERIA, Order, Ranked
+from hyperstim_api.reload import DatasetStore
 from hyperstim_api.thumbnails import Fetch, Size, ThumbnailCache, Unavailable, fetch_from_youtube
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
@@ -39,6 +41,13 @@ CategoryKey = Annotated[str, Query(pattern=f"^({'|'.join(CATEGORIES.values())})?
 Search = Annotated[str | None, Query(min_length=1, max_length=100)]
 Offset = Annotated[int, Query(ge=0, le=1_000_000)]
 Limit = Annotated[int, Query(ge=1, le=100)]
+# The dataset's version a list page was first shown at (plan 013): later pages, sorts and
+# searches answer as the dataset was then, so rows don't shift while a visitor browses.
+AsOf = Annotated[
+    str | None,
+    Query(alias="asOf", pattern=r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$"),
+]
+WEEK_S = 7 * 24 * 3600
 
 
 class ApiModel(BaseModel):
@@ -53,6 +62,12 @@ class Meta(ApiModel):
     video_count: int
     channel_count: int
     updated_at: str
+    # Growth (plan 013). Counts in the past week are over the last 7 x 24 hours.
+    added_last_7_days: int
+    channel_count_7_days_ago: int
+    last_added_at: str | None  # UTC, ISO 8601; None: nothing added yet
+    reference_count: int  # the videos every score is compared with
+    channels_checked_at: str | None  # the collector's last full run of discovery's searches
 
 
 class VideoSummary(ApiModel):
@@ -112,11 +127,13 @@ class ChannelDetail(ApiModel):
 class VideoList(ApiModel):
     items: list[RankedVideo]
     total: int  # rows matching the category and search
+    as_of: str  # the dataset's version this list is from; send it back as `asOf`
 
 
 class ChannelList(ApiModel):
     items: list[RankedChannel]
     total: int
+    as_of: str
 
 
 class ChannelFound(ApiModel):
@@ -227,7 +244,7 @@ def create_app(
     # privacy policy says (plan 009), so this copy is off without needing `--no-access-log`.
     logging.getLogger("uvicorn.access").disabled = True
     settings = settings or load_settings()
-    dataset = load_dataset(settings.dataset_path)
+    store = DatasetStore(settings.dataset_path, settings.collected_dir, settings.collected_reload_s)
     if pipeline is None:
         pipeline = ResearchPipeline(settings.ytdlp_cookies, settings.youtube_api_key)
         if settings.youtube_api_key is None:
@@ -244,10 +261,12 @@ def create_app(
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         analyzer.start_worker()
+        store.start()
         yield
+        store.stop()
         analyzer.stop_worker()
 
-    lookup = ChannelLookup(dataset, analyzer, pipeline)
+    lookup = ChannelLookup(lambda: store.current, analyzer, pipeline)
     thumbnails = ThumbnailCache(settings.thumbnail_dir, fetch_thumbnail)
 
     docs = settings.api_docs  # off in prod: no need to hand out a map of the API
@@ -259,6 +278,7 @@ def create_app(
         openapi_url="/openapi.json" if docs else None,
     )
     app.state.analyzer = analyzer
+    app.state.datasets = store
     app.add_middleware(
         CORSMiddleware, allow_origins=[settings.cors_origin], allow_methods=["GET", "POST"]
     )
@@ -269,10 +289,17 @@ def create_app(
 
     @app.get("/api/meta")
     def meta() -> Meta:
+        dataset = store.current
+        week_ago = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(time.time() - WEEK_S))
         return Meta(
             video_count=len(dataset.videos),
             channel_count=dataset.channel_count,
             updated_at=dataset.updated_at,
+            added_last_7_days=dataset.added_since(week_ago),
+            channel_count_7_days_ago=dataset.channel_count_at(week_ago),
+            last_added_at=dataset.last_added_at(),
+            reference_count=dataset.reference_count,
+            channels_checked_at=store.channels_checked_at,
         )
 
     @app.get("/api/videos")
@@ -283,14 +310,22 @@ def create_app(
         q: Search = None,
         offset: Offset = 0,
         limit: Limit = 20,
+        as_of: AsOf = None,
     ) -> VideoList:
-        """Videos ranked by `sort`, searched by title and channel name."""
-        page, total = dataset.ranked_videos(sort, order, category or None, q, offset, limit)
-        return VideoList(items=[ranked_video(r) for r in page], total=total)
+        """Videos ranked by `sort`, searched by title and channel name; as the dataset was at
+        `asOf` if given."""
+        dataset = store.current
+        page, total = dataset.ranked_videos(sort, order, category or None, q, offset, limit, as_of)
+        return VideoList(
+            items=[ranked_video(r) for r in page],
+            total=total,
+            as_of=dataset.current(as_of) or dataset.version,
+        )
 
     @app.get("/api/videos/{video_id}", responses={404: {"description": "Video not found"}})
     def video(video_id: VideoId) -> VideoDetail:
         """A dataset video, or one analyzed live (scored against the dataset)."""
+        dataset = store.current
         v = dataset.videos_by_id.get(video_id)
         if v is None:
             found = analyzer.snapshot(video_id)
@@ -318,7 +353,7 @@ def create_app(
     )
     def start_analysis(video_id: VideoId, request: Request, response: Response) -> Analysis:
         """Start the live analysis of a video, or join it if it is stored or running."""
-        if video_id in dataset.videos_by_id:
+        if video_id in store.current.videos_by_id:
             response.status_code = 200
             return Analysis(
                 status="done",
@@ -356,13 +391,20 @@ def create_app(
         offset: Offset = 0,
         limit: Limit = 20,
         min_videos: Annotated[int, Query(alias="minVideos", ge=1, le=1000)] = 5,
+        as_of: AsOf = None,
     ) -> ChannelList:
         """Channels ranked by `sort` (whole-channel scores), listed under a category when at
-        least one of their videos is in it; searched by name."""
+        least one of their videos is in it; searched by name. As the dataset was at `asOf` if
+        given."""
+        dataset = store.current
         page, total = dataset.ranked_channels(
-            sort, order, category or None, q, offset, limit, min_videos
+            sort, order, category or None, q, offset, limit, min_videos, as_of
         )
-        return ChannelList(items=[ranked_channel(r) for r in page], total=total)
+        return ChannelList(
+            items=[ranked_channel(r) for r in page],
+            total=total,
+            as_of=dataset.current(as_of) or dataset.version,
+        )
 
     @app.get(
         "/api/channel-lookup",
@@ -404,7 +446,7 @@ def create_app(
         """A video's YouTube thumbnail, served by us so visitors' browsers don't contact YouTube.
         Only for videos in the dataset or requested for live analysis. Cached on the server for
         30 days; the visitor's browser keeps it for a day."""
-        if video_id not in dataset.videos_by_id and analyzer.snapshot(video_id) is None:
+        if video_id not in store.current.videos_by_id and analyzer.snapshot(video_id) is None:
             raise HTTPException(status_code=404, detail="Video not found")
         try:
             image = thumbnails.get(video_id, size)
@@ -418,7 +460,7 @@ def create_app(
 
     @app.get("/api/channels/{channel_id}", responses={404: {"description": "Channel not found"}})
     def channel(channel_id: ChannelId) -> ChannelDetail:
-        c = dataset.channels_by_id.get(channel_id)
+        c = store.current.channels_by_id.get(channel_id)
         if c is None:
             raise HTTPException(status_code=404, detail="Channel not found")
         return channel_detail(c)

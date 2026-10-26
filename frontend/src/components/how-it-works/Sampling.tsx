@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import LatestScan from "./LatestScan";
 import { Section, StepArrow } from "./parts";
 
 // Step 3, "We compare it with our dataset": how its videos were picked (diagram E). It describes
@@ -57,7 +58,7 @@ function Years({ rows }: { rows: Row[] }) {
 }
 
 /** A step's picture box. Its drawing is decorative; its ✓ list is read out. */
-function Picture({ drawing, checks, note }: { drawing: ReactNode; checks?: string[]; note?: string }) {
+function Picture({ drawing, checks, note }: { drawing: ReactNode; checks?: string[]; note?: ReactNode }) {
   return (
     <div className="mt-3 flex min-h-36 flex-1 flex-col justify-center gap-2 rounded-2xl bg-sky px-4 py-3">
       <div aria-hidden="true">{drawing}</div>
@@ -89,7 +90,7 @@ const STEPS: { title: string; picture: ReactNode }[] = [
       <Picture
         drawing={<SearchIcon />}
         checks={["10K+ subscribers", "100+ videos"]}
-        note="(at our latest scan, August 2026)"
+        note={<LatestScan />}
       />
     ),
   },
@@ -108,7 +109,7 @@ const STEPS: { title: string; picture: ReactNode }[] = [
   },
   {
     title: "Our dataset",
-    picture: <Picture drawing={<Years rows={DATASET} />} />,
+    picture: <Picture drawing={<Years rows={DATASET} />} note="We keep adding videos." />,
   },
 ];
 

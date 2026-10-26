@@ -48,6 +48,12 @@ describe("api client", () => {
     expect(call()[0]).toBe("/api/videos?sort=score&order=desc&offset=0&limit=20");
   });
 
+  it("asks for a list as of an earlier version", async () => {
+    reply(200, { total: 0, items: [], asOf: "2026-10-26T10:00:00Z" });
+    await getVideos({ sort: "score", order: "desc", limit: 20, asOf: "2026-10-26T10:00:00Z" });
+    expect(call()[0]).toBe("/api/videos?sort=score&order=desc&limit=20&asOf=2026-10-26T10%3A00%3A00Z");
+  });
+
   it("encodes the search text in the query", async () => {
     reply(200, { total: 0, items: [] });
     await getChannels({ sort: "score", order: "asc", q: "Zoë & co", limit: 10, minVideos: 5 });

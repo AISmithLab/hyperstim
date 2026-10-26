@@ -5,6 +5,16 @@ export type Meta = {
   channelCount: number;
   /** ISO date */
   updatedAt: string;
+  /** Videos added in the last 7 × 24 hours (plan 013). */
+  addedLast7Days: number;
+  /** Channels in the dataset 7 × 24 hours ago. */
+  channelCount7DaysAgo: number;
+  /** When the last video was added (UTC, ISO 8601); null before any. */
+  lastAddedAt: string | null;
+  /** The videos every score is compared with (the reference set, plan 013). */
+  referenceCount: number;
+  /** When the collector last ran all of its channel searches (ISO date); null before it has. */
+  channelsCheckedAt: string | null;
 };
 
 export type VideoSummary = {
@@ -85,6 +95,12 @@ export type ListResponse<T> = {
   items: T[];
   /** Items matching the category and search. */
   total: number;
+  /**
+   * The dataset's version the list is from (UTC, ISO 8601). Sent back as `asOf`, later pages,
+   * sorts and searches show the dataset as it was then, so rows don't shift while a visitor
+   * browses (plan 013).
+   */
+  asOf: string;
 };
 
 /** What a ranking is sorted by: the overall score or one of the 12 feature keys. */
@@ -100,6 +116,8 @@ export type ListParams = {
   q?: string;
   offset?: number;
   limit: number;
+  /** A list's `asOf`: answer as the dataset was then. */
+  asOf?: string;
 };
 
 /** The channel behind a YouTube channel or video link (compare page). */

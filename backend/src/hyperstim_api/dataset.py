@@ -1,9 +1,17 @@
-"""The video dataset, loaded into memory once at startup and ranked."""
+"""The video dataset, loaded into memory and ranked.
+
+It is the reference set (`data/videos.tsv`, v2's 16,375 videos), which defines every
+percentile and score, plus the videos the collector added since and minus the ones it took
+out (plan 013). Added videos are scored against the reference set like live checks, so a
+video's score never changes as the dataset grows. Removed videos stay in memory with the
+time they were removed, so a list can be shown as it was at an earlier time (`as_of`).
+"""
 
 import csv
 import json
 import logging
-from dataclasses import dataclass
+from collections.abc import Iterable
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 from hyperstim_api import scoring
@@ -62,6 +70,15 @@ class Video:
     score: float  # percentile of its composite among the dataset's, unrounded
     features: tuple[Feature, ...]  # the 12, in scoring.FEATURES order
     published_at: str | None  # ISO date; None for a video analyzed live
+    added_at: str | None = None  # UTC, ISO 8601, when the collector added it; None: reference set
+    removed_at: str | None = None  # when the collector took it out (offline); None: in
+
+    def visible(self, as_of: str | None) -> bool:
+        """In the dataset now (`as_of` None), or at the time `as_of` (UTC, ISO 8601)."""
+        if as_of is None:
+            return self.removed_at is None
+        added = self.added_at is None or self.added_at <= as_of
+        return added and (self.removed_at is None or self.removed_at > as_of)
 
 
 @dataclass(frozen=True)
@@ -80,19 +97,37 @@ class Channel:
 
 @dataclass(frozen=True)
 class Dataset:
-    videos: tuple[Video, ...]  # highest score first; ties by id
+    videos: tuple[Video, ...]  # in the dataset now; highest score first, ties by id
     channels: tuple[Channel, ...]  # highest score first; ties by id
     updated_at: str  # ISO date
-    videos_by_id: dict[str, Video]
+    videos_by_id: dict[str, Video]  # also removed ones, so their pages keep working
     channels_by_id: dict[str, Channel]
-    pools: scoring.Pools  # the dataset's sorted values per feature
-    composite_pool: list[float]  # the dataset's composites, sorted
-    video_ranking: Ranking[Video]
+    pools: scoring.Pools  # the reference set's sorted values per feature
+    composite_pool: list[float]  # the reference set's composites, sorted
+    video_ranking: Ranking[Video]  # over every video, removed ones too (for `as_of`)
     channel_ranking: Ranking[Channel]
+    version: str = ""  # UTC time of the last addition or removal, else the reference set's date
+    reference_count: int = 0
+    all_videos: tuple[Video, ...] = ()
+    _channels_at: dict[str, Ranking[Channel]] = field(default_factory=dict, compare=False)
 
     @property
     def channel_count(self) -> int:
         return len(self.channels)
+
+    def current(self, as_of: str | None) -> str | None:
+        """`as_of` for a list, None when it's not before the latest change."""
+        return None if as_of is None or as_of >= self.version else as_of
+
+    def added_since(self, since: str) -> int:
+        """Videos in the dataset now that were added at or after `since`."""
+        return sum(1 for v in self.videos if v.added_at is not None and v.added_at >= since)
+
+    def channel_count_at(self, as_of: str) -> int:
+        return len({v.channel_id for v in self.all_videos if v.visible(as_of)})
+
+    def last_added_at(self) -> str | None:
+        return max((v.added_at for v in self.all_videos if v.added_at), default=None)
 
     def ranked_videos(
         self,
@@ -102,10 +137,18 @@ class Dataset:
         query: str | None,
         offset: int,
         limit: int,
+        as_of: str | None = None,
     ) -> tuple[list[Ranked[Video]], int]:
-        """A page of videos by `sort` (score or a feature), ranked within `category`."""
+        """A page of videos by `sort` (score or a feature), ranked within `category`; as the
+        dataset was at `as_of` if given."""
+        as_of = self.current(as_of)
         return self.video_ranking.page(
-            sort, order, lambda v: category is None or v.category == category, query, offset, limit
+            sort,
+            order,
+            lambda v: v.visible(as_of) and (category is None or v.category == category),
+            query,
+            offset,
+            limit,
         )
 
     def ranked_channels(
@@ -117,9 +160,13 @@ class Dataset:
         offset: int,
         limit: int,
         min_videos: int,
+        as_of: str | None = None,
     ) -> tuple[list[Ranked[Channel]], int]:
-        """A page of channels with `min_videos`+ videos and at least one in `category`."""
-        return self.channel_ranking.page(
+        """A page of channels with `min_videos`+ videos and at least one in `category`; as the
+        dataset was at `as_of` if given."""
+        as_of = self.current(as_of)
+        ranking = self.channel_ranking if as_of is None else self._channel_ranking_at(as_of)
+        return ranking.page(
             sort,
             order,
             lambda c: (
@@ -129,6 +176,17 @@ class Dataset:
             offset,
             limit,
         )
+
+    def _channel_ranking_at(self, as_of: str) -> Ranking[Channel]:
+        """Channels as they were at `as_of`, from the videos in the dataset then. Scores never
+        change, so this is exactly what a visitor saw at that time."""
+        ranking = self._channels_at.get(as_of)
+        if ranking is None:
+            if len(self._channels_at) >= 16:
+                self._channels_at.clear()
+            ranking = Ranking(_channels(v for v in self.all_videos if v.visible(as_of)), _names)
+            self._channels_at[as_of] = ranking
+        return ranking
 
     def score_video(
         self, id: str, title: str, channel_id: str, channel: str, features: scoring.Features
@@ -209,6 +267,20 @@ def _channel(members: list[Video]) -> Channel:
     )
 
 
+def _channels(videos: Iterable[Video]) -> list[Channel]:
+    """Channels from their videos (in score order), highest score first."""
+    by_channel: dict[str, list[Video]] = {}
+    for video in videos:
+        by_channel.setdefault(video.channel_id, []).append(video)
+    channels = [_channel(members) for members in by_channel.values()]
+    channels.sort(key=lambda c: (-c.score, c.id))
+    return channels
+
+
+def _names(c: Channel) -> tuple[str]:
+    return (c.name,)
+
+
 def _category(path: Path, raw: str) -> str:
     key = CATEGORIES.get(raw.strip())
     if key is None:
@@ -225,7 +297,8 @@ def _float(raw: str | None) -> float | None:
     return float(raw) if raw else None
 
 
-def load_dataset(path: Path) -> Dataset:
+def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
+    """The reference set at `path`, plus the collector's files in `collected_dir` if given."""
     with path.open(newline="", encoding="utf-8") as fh:
         reader = csv.DictReader(fh, delimiter="\t")
         missing = [c for c in REQUIRED_COLUMNS if c not in (reader.fieldnames or [])]
@@ -264,30 +337,82 @@ def load_dataset(path: Path) -> Dataset:
         )
         assert video is not None  # every kept row has a feature value
         videos.append(video)
+    reference_count = len(videos)
+    if collected_dir is not None:
+        videos = _with_collected(videos, collected_dir, pools, composite_pool)
     videos.sort(key=lambda v: (-v.score, v.id))
-
-    by_channel: dict[str, list[Video]] = {}
-    for video in videos:
-        by_channel.setdefault(video.channel_id, []).append(video)
-    channels = [_channel(members) for members in by_channel.values()]
-    channels.sort(key=lambda c: (-c.score, c.id))
-
+    current = [v for v in videos if v.removed_at is None]
+    channels = _channels(current)
     meta = json.loads(meta_path(path).read_text(encoding="utf-8"))
+    # The reference set's date stands for "nothing added or removed yet".
+    version = max(
+        (t for v in videos for t in (v.added_at, v.removed_at) if t is not None),
+        default=f"{meta['featuresDate']}T00:00:00Z",
+    )
     log.info(
-        "Loaded %d videos, %d channels from %s (%d rows skipped: no ID or no feature values)",
-        len(videos),
+        "Loaded %d videos (%d in the reference set, %d removed), %d channels from %s "
+        "(%d rows skipped: no ID or no feature values)",
+        len(current),
+        reference_count,
+        len(videos) - len(current),
         len(channels),
         path,
         skipped,
     )
     return Dataset(
-        videos=tuple(videos),
+        videos=tuple(current),
         channels=tuple(channels),
-        updated_at=meta["featuresDate"],
+        updated_at=max(meta["featuresDate"], version[:10]),
         videos_by_id={v.id: v for v in videos},
         channels_by_id={c.id: c for c in channels},
         pools=pools,
         composite_pool=composite_pool,
         video_ranking=Ranking(videos, lambda v: (v.title, v.channel)),
-        channel_ranking=Ranking(channels, lambda c: (c.name,)),
+        channel_ranking=Ranking(channels, _names),
+        version=version,
+        reference_count=reference_count,
+        all_videos=tuple(videos),
     )
+
+
+def collected_files(directory: Path) -> list[Path]:
+    """The collector's files the dataset is built from (plan 013): `<year>.tsv`, `removed.tsv`."""
+    files = [*directory.glob("[0-9][0-9][0-9][0-9].tsv"), directory / "removed.tsv"]
+    return sorted(p for p in files if p.is_file())
+
+
+def _with_collected(
+    videos: list[Video], directory: Path, pools: scoring.Pools, composite_pool: list[float]
+) -> list[Video]:
+    """The reference videos plus the collector's added ones (scored against the reference
+    set), with the removed ones marked."""
+    by_id = {v.id: v for v in videos}
+    removed: dict[str, str] = {}
+    for path in collected_files(directory):
+        with path.open(newline="", encoding="utf-8") as fh:
+            rows = list(csv.DictReader(fh, delimiter="\t"))
+        if path.name == "removed.tsv":
+            removed.update((r["video_id"], r["removed_at"]) for r in rows)
+            continue
+        for row in rows:
+            video_id = row["video_id"].strip()
+            if not video_id or video_id in by_id:
+                continue
+            raw = row["category"].strip()
+            video = _video(
+                video_id,
+                row["title"],
+                row["channel_id"],
+                row["channel_title"],
+                _category(path, raw) if raw else None,  # none: no keyword placed it
+                row["published_at"].strip() or None,
+                {name: _float(row[name]) for name in scoring.FEATURES},
+                pools,
+                composite_pool,
+            )
+            if video is not None:
+                by_id[video_id] = replace(video, added_at=row["added_at"])
+    for video_id, removed_at in removed.items():
+        if video_id in by_id:
+            by_id[video_id] = replace(by_id[video_id], removed_at=removed_at)
+    return list(by_id.values())

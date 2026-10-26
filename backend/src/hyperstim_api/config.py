@@ -19,6 +19,8 @@ class Settings:
     analysis_limit_per_ip: int = DEFAULT_LIMIT_PER_IP  # 0 = no limit
     analysis_limit_per_day: int = DEFAULT_LIMIT_PER_DAY  # 0 = no limit
     api_docs: bool = True  # /docs, /redoc, /openapi.json
+    collected_dir: Path | None = None  # the collector's files (plan 013); None: reference set only
+    collected_reload_s: int = 300  # how often to look for new ones
 
 
 def _required(name: str) -> str:
@@ -52,6 +54,7 @@ def _flag(name: str, default: bool) -> bool:
 
 def load_settings() -> Settings:
     cookies = os.environ.get("YTDLP_COOKIES", "").strip()
+    collected = os.environ.get("COLLECTED_DIR", "").strip()
     return Settings(
         dataset_path=Path(_required("DATASET_PATH")),
         cors_origin=_required("CORS_ORIGIN").rstrip("/"),
@@ -62,4 +65,6 @@ def load_settings() -> Settings:
         analysis_limit_per_ip=_limit("ANALYSIS_LIMIT_PER_IP", DEFAULT_LIMIT_PER_IP),
         analysis_limit_per_day=_limit("ANALYSIS_LIMIT_PER_DAY", DEFAULT_LIMIT_PER_DAY),
         api_docs=_flag("API_DOCS", default=True),
+        collected_dir=Path(collected) if collected else None,
+        collected_reload_s=_limit("COLLECTED_RELOAD_S", 300) or 300,
     )

@@ -1,5 +1,8 @@
+"use client";
+
+import RollingNumber from "@/components/RollingNumber";
 import { asset } from "@/lib/asset";
-import DatasetCount from "./DatasetCount";
+import { useGrowth } from "@/lib/use-growth";
 
 export default function Hero() {
   return (
@@ -33,11 +36,62 @@ export default function Hero() {
           From rapid scene changes to bright colors and loud sounds, children’s videos vary in how
           stimulating they are.
         </p>
-        <p className="mt-4">
-          Explore and compare <DatasetCount /> videos to better understand what your child is
-          watching.
-        </p>
+        <DatasetLine />
       </div>
     </section>
+  );
+}
+
+/**
+ * The dataset's size, growing while the page is open (plan 013; see STYLE.md, Growing counts). The
+ * sentence and the pill are there from the first paint, with skeleton bars for the numbers, which then
+ * count up; only if the counts can't be had does the sentence say "thousands of" instead.
+ */
+function DatasetLine() {
+  const growth = useGrowth();
+  if (growth === "failed") {
+    return <p className="mt-4">Explore and compare thousands of videos to better understand what your child is watching.</p>;
+  }
+  const ready = growth !== "loading";
+  return (
+    <>
+      <p className="mt-4" aria-busy={!ready}>
+        Explore and compare{" "}
+        <b className="font-bold text-navy">
+          {ready ? <RollingNumber value={growth.videos} from={growth.from.videos} /> : <Room digits="00,000" />}
+        </b>{" "}
+        videos from{" "}
+        <b className="font-bold text-navy">
+          {ready ? <RollingNumber value={growth.channels} from={growth.from.channels} /> : <Room digits="000" />}
+        </b>{" "}
+        channels to better understand what your child is watching.
+      </p>
+      {!ready ? (
+        <p className="mt-3">
+          <span className={PILL}>
+            +<Room digits="00" /> videos in the past week
+          </span>
+        </p>
+      ) : (
+        growth.pastWeek > 0 && (
+          <p className="mt-3">
+            <span className={PILL}>
+              +<RollingNumber value={growth.pastWeek} from={growth.from.pastWeek} /> videos in the past week
+            </span>
+          </p>
+        )
+      )}
+    </>
+  );
+}
+
+const PILL = "inline-block rounded-full bg-sky px-3 py-0.5 text-sm font-bold whitespace-nowrap text-navy";
+
+/** A skeleton bar where a number will be, as wide as `digits`, so nothing moves when it comes. */
+function Room({ digits }: { digits: string }) {
+  return (
+    <span aria-hidden="true" className="animate-pulse rounded bg-gray-200 text-transparent tabular-nums">
+      {digits}
+    </span>
   );
 }

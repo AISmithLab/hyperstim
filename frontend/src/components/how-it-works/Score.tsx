@@ -9,7 +9,7 @@ const RING = ["border-sky-blue", "border-leaf", "border-scale-low", "border-scal
 export default function Score() {
   return (
     <Section id="score" title="You get a score" step={4}>
-      <Lead>A score of 74 means a video is more intense than 74 of every 100 videos in our dataset.</Lead>
+      <Lead>A score of 74 means a video is more intense than 74 of every 100 videos we compare with.</Lead>
       <LineUp />
     </Section>
   );

@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMeta, type Meta } from "@/lib/api";
 import { FEATURE_GROUPS, FEATURE_INFO, featureSlug } from "@/lib/features";
 import { videoHref } from "@/lib/routes";
 import HowItWorks from "./HowItWorks";
@@ -8,6 +9,25 @@ import { MARKERS } from "./WhatWeMeasure";
 
 const push = vi.fn();
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
+vi.mock("@/lib/api", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/api")>()),
+  getMeta: vi.fn(),
+}));
+
+const meta = (channelsCheckedAt: string | null): Meta => ({
+  videoCount: 16402,
+  channelCount: 542,
+  updatedAt: "2026-10-26",
+  addedLast7Days: 1043,
+  channelCount7DaysAgo: 540,
+  lastAddedAt: "2026-10-26T10:00:00Z",
+  referenceCount: 16375,
+  channelsCheckedAt,
+});
+
+beforeEach(() => {
+  vi.mocked(getMeta).mockReset().mockResolvedValue(meta(null));
+});
 
 const KEYS = FEATURE_GROUPS.flatMap((g) => g.keys);
 
@@ -42,12 +62,34 @@ describe("HowItWorks", () => {
     }
   });
 
+  it("dates the channel search from the latest scan, v2's until there is one", async () => {
+    vi.mocked(getMeta).mockResolvedValue(meta("2026-10-31"));
+    render(<HowItWorks />);
+    expect(await screen.findByText("(at our latest scan, October 2026)")).toBeInTheDocument();
+    expect(screen.getByText("We keep adding videos.")).toBeInTheDocument();
+  });
+
+  it("says v2's scan date while the latest is unknown", async () => {
+    render(<HowItWorks />);
+    expect(screen.getByText("(at our latest scan, August 2026)")).toBeInTheDocument();
+    await screen.findByText("(at our latest scan, August 2026)");
+  });
+
+  it("says scores compare with a fixed set, and how videos are picked", () => {
+    render(<HowItWorks />);
+    expect(
+      screen.getByText("A score of 74 means a video is more intense than 74 of every 100 videos we compare with."),
+    ).toBeInTheDocument();
+    expect(screen.getByText("How do you choose the channels and videos?")).toBeInTheDocument();
+    expect(screen.getByText(/compared with the same set of 16,375 videos from 2015 to August 2026/)).toBeInTheDocument();
+  });
+
   it("opens every common question", async () => {
     const user = userEvent.setup();
     const { container } = render(<HowItWorks />);
     const questions = container.querySelector("#questions")!;
     const items = within(questions as HTMLElement).getAllByRole("group");
-    expect(items).toHaveLength(6);
+    expect(items).toHaveLength(8);
     for (const item of items) {
       expect(item).not.toHaveAttribute("open");
       await user.click(item.querySelector("summary")!);

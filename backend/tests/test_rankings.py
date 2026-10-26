@@ -193,7 +193,7 @@ def test_offset_and_limit(client: TestClient) -> None:
     assert [(v["id"], v["rank"]) for v in body["items"]] == everything[2:4]
     assert body["total"] == 6
     beyond = client.get("/api/videos", params={"offset": 50}).json()
-    assert beyond == {"items": [], "total": 6}
+    assert beyond == {"items": [], "total": 6, "asOf": "2026-09-01T00:00:00Z"}
 
 
 def test_unknown_category_in_the_dataset_is_an_error(

@@ -143,7 +143,7 @@ beforeEach(() => {
       const items = Object.values(videos)
         .filter((v) => v.title.toLowerCase().includes((q ?? "").toLowerCase()))
         .map(ranked);
-      return { items, total: items.length };
+      return { items, total: items.length, asOf: "2026-10-26T00:00:00Z" };
     });
   vi.mocked(getChannels)
     .mockReset()
@@ -151,7 +151,7 @@ beforeEach(() => {
       const items = Object.values(channels)
         .filter((c) => c.name.toLowerCase().includes((q ?? "").toLowerCase()))
         .map(rankedChannel);
-      return { items, total: items.length };
+      return { items, total: items.length, asOf: "2026-10-26T00:00:00Z" };
     });
   vi.mocked(startAnalysis).mockReset().mockResolvedValue({
     status: "download",
@@ -232,6 +232,7 @@ describe("ComparePage", () => {
         ranked({ ...videos[VIDEO_B], id: `more${String(offset + i).padStart(7, "0")}`, title: `Walk ${offset + i}` }),
       ),
       total: 45,
+      asOf: "2026-10-26T00:00:00Z",
     }));
     const user = userEvent.setup();
     open();
@@ -247,7 +248,15 @@ describe("ComparePage", () => {
     });
     fireEvent.scroll(list);
     await waitFor(() => expect(within(list).getAllByRole("option")).toHaveLength(40));
-    expect(getVideos).toHaveBeenLastCalledWith({ sort: "score", order: "desc", q: "walk", offset: 20, limit: 20 });
+    // As of the first list's version, so rows don't shift while browsing (plan 013).
+    expect(getVideos).toHaveBeenLastCalledWith({
+      sort: "score",
+      order: "desc",
+      q: "walk",
+      offset: 20,
+      limit: 20,
+      asOf: "2026-10-26T00:00:00Z",
+    });
   });
 
   it("looks up a pasted channel link and offers the channel by its name", async () => {

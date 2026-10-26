@@ -73,7 +73,7 @@ def parse_link(text: str) -> Link | None:
 class ChannelLookup:
     def __init__(
         self,
-        dataset: Dataset,
+        dataset: Callable[[], Dataset],  # the current one; it's reloaded as it grows
         analyzer: Analyzer,
         pipeline: Pipeline,
         clock: Callable[[], float] = time.time,
@@ -107,7 +107,7 @@ class ChannelLookup:
         return self._found(channel_id, name)
 
     def _found(self, channel_id: str, name: str | None) -> Found:
-        channel = self._dataset.channels_by_id.get(channel_id)
+        channel = self._dataset().channels_by_id.get(channel_id)
         if channel is not None:
             return Found(channel_id, channel.name, True, channel.video_count)
         return Found(channel_id, name or None, False, 0)

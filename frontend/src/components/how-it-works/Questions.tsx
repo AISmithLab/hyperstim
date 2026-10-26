@@ -9,7 +9,7 @@ import { H2, TEXT_LINK } from "./parts";
 const QUESTIONS: [string, ReactNode][] = [
   [
     "What does a high score mean?",
-    "A high score means a video is more intensely produced than most videos in our dataset. We measure production style only. We don’t judge a video’s content, educational value, or age appropriateness.",
+    "A high score means a video is more intensely produced than most videos we compare with. We measure production style only. We don’t judge a video’s content, educational value, or age appropriateness.",
   ],
   [
     "This video looks really intense. Why is its score low?",
@@ -22,6 +22,14 @@ const QUESTIONS: [string, ReactNode][] = [
   [
     "How is a channel’s score worked out?",
     "It’s the average of its videos’ scores in our dataset.",
+  ],
+  [
+    "How do you choose the channels and videos?",
+    "We look for kids’ channels on YouTube that have at least 10,000 subscribers and more than 100 videos, leaving out channels YouTube makes automatically. From each channel, we pick videos at random from everything it has uploaded since 2015, so every video has the same chance, popular or not. Every video we pick must be made for kids, 2 to 60 minutes long, not a Short, and still online. We keep adding new channels and videos.",
+  ],
+  [
+    "Do scores change as the dataset grows?",
+    "No. Every video is compared with the same set of 16,375 videos from 2015 to August 2026, so its score stays the same. If we ever update that set, we’ll say so.",
   ],
   ["Can I check a video that isn’t on YouTube?", "Not yet. For now, we can only check YouTube videos."],
   [

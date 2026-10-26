@@ -391,8 +391,11 @@ function rankList<T extends Ranked>(
     : ordered;
   const offset = Number(params.offset ?? 0);
   const limit = Number(params.limit ?? 20);
-  return { items: matching.slice(offset, offset + limit), total: matching.length };
+  // The mock data never changes, so every list is from the same version.
+  return { items: matching.slice(offset, offset + limit), total: matching.length, asOf: MOCK_VERSION };
 }
+
+const MOCK_VERSION = "2026-09-30T00:00:00Z";
 
 /**
  * Channel links: `/channel/<mock ID>` and a mock video's link find their channel; `@zippy`
@@ -424,7 +427,16 @@ export async function mockRequest(method: Method, path: string, params: Params):
   const category = String(params.category ?? "");
   switch (path) {
     case "/api/meta":
-      return { videoCount: allVideos().length, channelCount: channels.length, updatedAt: "2026-09-30" } satisfies Meta;
+      return {
+        videoCount: allVideos().length,
+        channelCount: channels.length,
+        updatedAt: "2026-09-30",
+        addedLast7Days: 3,
+        channelCount7DaysAgo: channels.length - 1,
+        lastAddedAt: MOCK_VERSION,
+        referenceCount: allVideos().length - 3,
+        channelsCheckedAt: "2026-09-29",
+      } satisfies Meta;
     case "/api/videos":
       return rankList(
         allVideos().filter((v) => !category || v.category === category),

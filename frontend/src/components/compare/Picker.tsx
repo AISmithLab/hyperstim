@@ -44,13 +44,18 @@ const LOOKUP = {
 
 const videoCount = (n: number) => (n === 1 ? "1 video" : `${n.toLocaleString("en-US")} videos`);
 
-async function search(view: View, q: string, offset: number): Promise<Page> {
-  const params = { sort: "score", order: "desc" as const, q, offset, limit: PAGE };
+/** The dataset's version the picker's first list was from (as on the rankings page, plan 013). */
+type Pin = { asOf?: string };
+
+async function search(view: View, q: string, offset: number, pin: Pin): Promise<Page> {
+  const params = { sort: "score", order: "desc" as const, q, offset, limit: PAGE, asOf: pin.asOf };
   if (view === "videos") {
-    const { items, total } = await getVideos(params);
+    const { items, total, asOf } = await getVideos(params);
+    pin.asOf ??= asOf;
     return { total, items: items.map((v) => ({ id: v.id, name: v.title, detail: v.channel, thumb: v.id })) };
   }
-  const { items, total } = await getChannels({ ...params, minVideos: 1 });
+  const { items, total, asOf } = await getChannels({ ...params, minVideos: 1 });
+  pin.asOf ??= asOf;
   return {
     total,
     items: items.map((c) => ({
@@ -115,8 +120,9 @@ export default function Picker({
   }, [trimmed, searchable]);
 
   // While a new search runs, the last results stay (dimmed); an older response never wins.
+  const pin = useRef<Pin>({});
   const load = useCallback(
-    () => (query ? search(view, query, 0) : Promise.resolve<Page>({ items: [], total: 0 })),
+    () => (query ? search(view, query, 0, pin.current) : Promise.resolve<Page>({ items: [], total: 0 })),
     [view, query],
   );
   const first = useApi(load);
@@ -134,7 +140,7 @@ export default function Picker({
     const forQuery = query;
     const kept = more.query === query ? more.items : [];
     setMore({ query: forQuery, items: kept, loading: true });
-    search(view, forQuery, offset).then(
+    search(view, forQuery, offset, pin.current).then(
       (page) =>
         setMore((old) => (old.query === forQuery ? { query: forQuery, items: [...kept, ...page.items], loading: false } : old)),
       () => setMore((old) => (old.query === forQuery ? { ...old, loading: false } : old)),

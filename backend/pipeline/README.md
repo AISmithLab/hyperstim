@@ -1,11 +1,12 @@
 # Analysis pipeline
 
-Copied from the research repo (`AISmithLab/HyperStimulation`, `code/pipeline/`, commit `87acb4a`), which produced the dataset in `../data/`. Only the two scripts needed for live analysis are here. Keep them identical to the research versions, so a live video's features are measured exactly like the dataset's; list every change below.
+Copied from the research repo (`AISmithLab/HyperStimulation`, `code/pipeline/`, commit `87acb4a`), which produced the dataset in `../data/`. Only the scripts needed for live analysis and the collector (plan 013) are here. Keep them identical to the research versions, so a live video's features are measured exactly like the dataset's; list every change below.
 
 | File | What it does | Changes from the research version |
 |---|---|---|
 | `58_download_clips_v2.py` | Downloads one clip per manifest row with yt-dlp: from 0:30, 5 minutes, ≤ 360p (format 18), source frame rate. | `--clips-dir` is required (its default was a server path). |
 | `04_extract_features_v2.py` | Computes the 12 features from a clip. `CACHE_VERSION 11`. | None. |
+| `63_classify_categories.py` | v2's category classifier: title, then tags, then description, matched against one keyword set (commit `615cfad`). The collector imports its `classify()`; a video no keyword places gets no category. | None. |
 | `config.yaml` | Output and clip folders, read by `04_extract_features_v2.py`. | Only those two keys; the research config also holds collection settings. |
 
 Python dependencies are in `../pyproject.toml` at the research pipeline's exact pins; ffmpeg/ffprobe 6.1.1 and deno are system tools (see `../README.md`). Both scripts read a manifest TSV with at least a `video_id` column.

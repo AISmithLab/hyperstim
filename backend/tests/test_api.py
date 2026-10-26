@@ -32,6 +32,11 @@ def test_meta(client: TestClient) -> None:
         "videoCount": N,
         "channelCount": 3,
         "updatedAt": "2026-09-01",
+        "addedLast7Days": 0,
+        "channelCount7DaysAgo": 3,
+        "lastAddedAt": None,
+        "referenceCount": N,
+        "channelsCheckedAt": None,
     }
 
 

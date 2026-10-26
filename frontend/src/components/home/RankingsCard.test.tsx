@@ -21,8 +21,8 @@ const video = (n: number, score: number): RankedVideo => ({
 });
 
 // 120 videos in the dataset; the API returns the 3 at each end.
-const videosDesc = { items: [video(1, 96.6), video(2, 90.1), video(3, 85.4)], total: 120 };
-const videosAsc = { items: [video(120, 3.2), video(119, 5.5), video(118, 7.9)], total: 120 };
+const videosDesc = { items: [video(1, 96.6), video(2, 90.1), video(3, 85.4)], total: 120, asOf: "2026-10-26T00:00:00Z" };
+const videosAsc = { items: [video(120, 3.2), video(119, 5.5), video(118, 7.9)], total: 120, asOf: "2026-10-26T00:00:00Z" };
 
 const channel = (name: string, score: number): RankedChannel => ({
   id: `id-${name}`,
@@ -32,8 +32,8 @@ const channel = (name: string, score: number): RankedChannel => ({
   rank: null,
   features: [],
 });
-const channelsDesc = { items: [channel("Loud", 88), channel("Busy", 80), channel("Zippy", 75)], total: 40 };
-const channelsAsc = { items: [channel("Calm", 9), channel("Slow", 12), channel("Soft", 15)], total: 40 };
+const channelsDesc = { items: [channel("Loud", 88), channel("Busy", 80), channel("Zippy", 75)], total: 40, asOf: "2026-10-26T00:00:00Z" };
+const channelsAsc = { items: [channel("Calm", 9), channel("Slow", 12), channel("Soft", 15)], total: 40, asOf: "2026-10-26T00:00:00Z" };
 
 beforeEach(() => {
   vi.mocked(getVideos)
@@ -112,7 +112,7 @@ describe("RankingsCard", () => {
   it("shows plain ranks and no gap row when both ends meet", async () => {
     const v = [1, 2, 3, 4].map((n) => video(n, 100 - n * 10));
     vi.mocked(getVideos).mockImplementation(async ({ order }) =>
-      order === "desc" ? { items: v.slice(0, 3), total: 4 } : { items: [v[3], v[2], v[1]], total: 4 },
+      order === "desc" ? { items: v.slice(0, 3), total: 4, asOf: "2026-10-26T00:00:00Z" } : { items: [v[3], v[2], v[1]], total: 4, asOf: "2026-10-26T00:00:00Z" },
     );
     render(<RankingsCard />);
 
@@ -142,7 +142,7 @@ describe("RankingsCard", () => {
   });
 
   it("shows a message when there are no rankings", async () => {
-    vi.mocked(getVideos).mockResolvedValue({ items: [], total: 0 });
+    vi.mocked(getVideos).mockResolvedValue({ items: [], total: 0, asOf: "2026-10-26T00:00:00Z" });
     render(<RankingsCard />);
 
     expect(await screen.findByText("No rankings yet.")).toBeInTheDocument();
@@ -160,7 +160,7 @@ describe("joinEnds", () => {
     href: "",
   });
   const ranks = (top: RankedVideo[], bottom: RankedVideo[], total: number) =>
-    joinEnds({ items: top, total }, { items: bottom, total }, toRow).map((r) => r.rank);
+    joinEnds({ items: top, total, asOf: "2026-10-26T00:00:00Z" }, { items: bottom, total, asOf: "2026-10-26T00:00:00Z" }, toRow).map((r) => r.rank);
 
   it("drops items from the bottom that are already in the top", () => {
     const [a, b, c, d] = [video(1, 90), video(2, 80), video(3, 70), video(4, 60)];

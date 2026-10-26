@@ -53,7 +53,14 @@ const sortName = (sort: string) => (sort === "score" ? "Overall" : FEATURE_INFO[
 const orderName = (order: Order) => (order === "desc" ? "most intense first" : "calmest first");
 const formatCount = (n: number) => n.toLocaleString("en-US");
 
-async function loadRows(state: RankingState): Promise<ListResponse<Row>> {
+/**
+ * The dataset's version this page showed first (plan 013): later pages, sorts and searches ask for
+ * the dataset as it was then, so rows don't appear or shift while a visitor browses. A new page
+ * load starts with the current version.
+ */
+export type Pin = { asOf?: string };
+
+async function loadRows(state: RankingState, pin: Pin): Promise<ListResponse<Row>> {
   const params = {
     sort: state.sort,
     order: state.order,
@@ -61,11 +68,14 @@ async function loadRows(state: RankingState): Promise<ListResponse<Row>> {
     q: state.q,
     offset: (state.page - 1) * PAGE_SIZE,
     limit: PAGE_SIZE,
+    asOf: pin.asOf,
   };
   if (state.view === "videos") {
-    const { items, total } = await getVideos(params);
+    const { items, total, asOf } = await getVideos(params);
+    pin.asOf ??= asOf;
     return {
       total,
+      asOf,
       items: items.map((v) => ({
         key: v.id,
         rank: v.rank,
@@ -78,9 +88,11 @@ async function loadRows(state: RankingState): Promise<ListResponse<Row>> {
       })),
     };
   }
-  const { items, total } = await getChannels({ ...params, minVideos: MIN_VIDEOS });
+  const { items, total, asOf } = await getChannels({ ...params, minVideos: MIN_VIDEOS });
+  pin.asOf ??= asOf;
   return {
     total,
+    asOf,
     items: items.map((c) => ({
       key: c.id,
       rank: c.rank,
@@ -109,8 +121,9 @@ export default function RankingsPage() {
   );
 
   const { view, sort, order, category, q, page } = state;
+  const pin = useRef<Pin>({});
   const load = useCallback(
-    () => loadRows({ view, sort, order, category, q, page }),
+    () => loadRows({ view, sort, order, category, q, page }, pin.current),
     [view, sort, order, category, q, page],
   );
   const result = useApi(load);
@@ -217,12 +230,12 @@ function resultsLine(state: RankingState, total: number): string {
   const to = Math.min(total, state.page * PAGE_SIZE);
   const label = categoryLabel(state.category)?.toLowerCase();
   const s = total === 1 ? "" : "s";
+  // A pasted link is searched by its ID, which means nothing to read.
+  const matching = isLinkId(state) ? " for this link" : state.q ? ` matching “${state.q}”` : "";
   const things =
     state.view === "videos"
       ? `${label ? `${label} ` : ""}video${s}`
       : `channel${s}${label ? ` with ${label} videos` : ""}`;
-  // A pasted link is searched by its ID, which means nothing to read.
-  const matching = isLinkId(state) ? " for this link" : state.q ? ` matching “${state.q}”` : "";
   return `Showing ${formatCount(from)}–${formatCount(to)} of ${formatCount(total)} ${things}${matching}`;
 }
 

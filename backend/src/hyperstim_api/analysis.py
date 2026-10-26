@@ -57,6 +57,10 @@ MEASURE_TIMEOUT_S = 10 * 60
 # 8-core server (2026-10-14), 1 core 32 s, 2 28 s, 4 26 s, 8 26 s per video. So 4, leaving
 # the rest to other work on the server.
 MEASURE_CORES = 4
+# When YouTube blocks our IP, every request says so. The collector (plan 013) reads this file,
+# written here with the time, and pauses its downloads.
+BLOCK_MARKER = "youtube-blocked"
+BLOCKED = "blocked by YouTube"
 
 
 class AnalysisError(Exception):
@@ -132,9 +136,15 @@ class Pipeline(Protocol):
 class ResearchPipeline:
     """The research scripts, run as subprocesses exactly as `pipeline/README.md` shows."""
 
-    def __init__(self, cookies: Path | None = None, youtube_api_key: str | None = None) -> None:
+    def __init__(
+        self,
+        cookies: Path | None = None,
+        youtube_api_key: str | None = None,
+        measure_cores: int = MEASURE_CORES,
+    ) -> None:
         self._cookies = cookies
         self._api_key = youtube_api_key  # None: the made-for-kids check is off
+        self._cores = measure_cores  # the collector measures on 1 (plan 013)
         self._proc: subprocess.Popen[str] | None = None
         self._cancelled = False
 
@@ -150,6 +160,8 @@ class ResearchPipeline:
         try:
             out = self._run(cmd, LOOKUP_TIMEOUT_S)
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            if isinstance(exc, subprocess.CalledProcessError) and "not a bot" in (exc.stderr or ""):
+                raise AnalysisError("unavailable", BLOCKED) from exc
             raise AnalysisError("unavailable", _stderr_tail(exc)) from exc
         return parse_lookup(video_id, out)
 
@@ -182,8 +194,8 @@ class ResearchPipeline:
         derive = [sys.executable, str(EXTRACT_SCRIPT), "derive", "--manifest", str(manifest)]
         derive += ["--cache-dir", str(cache), "--out", str(out)]
         try:
-            self._run(extract, deadline - time.monotonic(), MEASURE_CORES)
-            self._run(derive, deadline - time.monotonic(), MEASURE_CORES)
+            self._run(extract, deadline - time.monotonic(), self._cores)
+            self._run(derive, deadline - time.monotonic(), self._cores)
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
             raise AnalysisError("failed", _stderr_tail(exc)) from exc
         failures = cache / "failures.tsv"  # extract notes a clip it couldn't measure here
@@ -525,6 +537,8 @@ class Analyzer:
             if isinstance(exc, AnalysisError):
                 log.warning("Analysis of %s failed (%s): %s", video_id, exc.code, exc)
                 code: ErrorCode = exc.code
+                if str(exc) == BLOCKED:
+                    (self._dir / BLOCK_MARKER).write_text(f"{self.clock()}\n", encoding="utf-8")
             else:
                 log.exception("Analysis of %s failed", video_id)
                 code = "failed"
