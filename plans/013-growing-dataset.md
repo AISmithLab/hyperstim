@@ -55,7 +55,7 @@ The collector always works on the highest-priority job first:
 
 ### 3. New channels
 
-- **Re-run v2's discovery every week** _(human decision, 2026-10-26)_: the same 36 queries (one page each, as v2) and the same rules (≥ 10K subscribers, > 100 videos, not "- Topic"), tier from subscribers at discovery. A search costs 100 quota units, so the queries are spread out: 5–6 a day, each query once a week (~550 units/day, see 7). New channels that pass are added automatically; the date each channel joined is recorded. (Daily would fit the quota, but search results barely change from day to day.)
+- **Re-run v2's discovery every week** _(human decision, 2026-10-26)_: the same 36 queries (one page each, as v2) and the same rules (≥ 10K subscribers, > 100 videos, not "- Topic"), tier from subscribers at discovery. A search costs 100 quota units, so the queries are spread out: 6 a day, so all 36 run every 6 days, each query at least weekly (~600 units/day, see 7). New channels that pass are added automatically; the date each channel joined is recorded. (Daily would fit the quota, but search results barely change from day to day.)
   - **Near misses, monthly:** channels the searches found but that were under 10K subscribers or 100 videos are re-checked once a month with `channels.list` (1 unit per 50 channels), so a channel that grows past the bar is added even if search stops showing it.
 - **Discovery is the only way in** _(human decision, 2026-10-26)_. Channels people check on the site are never added; that would make the dataset lean towards what our visitors watch.
 - **What people look up, as a guide for what to expand next** _(human decision, 2026-10-26: keep track of it)_: counted and kept on the server for the team (plan 014: live checks, channel lookups and searches for things we don't have). It's for us to read, e.g. to add a search query that finds such channels; it never adds anything by itself.
@@ -84,7 +84,8 @@ Today a score is a percentile within the dataset. If that dataset grows every da
 - **One download at a time, never at the same time as a live check**: before each download the collector looks in `ANALYSIS_DIR` for a waiting or running live job and waits. Measuring runs on **at most 1 core** _(human decision, 2026-10-26: the server also runs other research and the site)_, at low priority (systemd `CPUQuota=100%`, `Nice=10`, low `CPUWeight`, so anything else on the server goes first). Measured on this server: a full 5-minute clip takes ~29 s on one core at `nice 10` and ~200 MB of memory, so 150 a day is ~75 minutes of one core a day (~5 % of a core on average). Downloads use the network, not CPU.
 - **Clips are kept on the clips volume** _(human decision, 2026-10-26)_, in their own folder, next to the v2 clips and never inside or mixed with them: `clips/` for the mp4s and `cache/` for the pipeline's per-clip `.npz` files. The path is set on the server (`COLLECTOR_CLIPS_DIR` in `server.env`, never in the repo); `setup.sh` creates the folder for the service user and the systemd unit may write only there and in `data/`. Keeping them means a future feature set can be measured again without downloading, which is the scarce part. Size: ~13 MB a clip (v2: 212 GB for 16,375), so ~2 GB a day at 150/day, ~0.7 TB a year; the volume has ~1.7 TB free, so `status` shows the free space and the collector pauses below 50 GB. Live checks' clips are still deleted after measuring (unchanged; the privacy policy says so). These clips are never served or committed, like all clips.
 - **No cookies, no proxies** (the research rule: signing in risks the account and is a human decision; a proxy would be a third party).
-- **Provenance per video**: rule version, `r`, the cut-off `t` when it was picked, downloaded format, yt-dlp and ffmpeg versions, pipeline commit, measured date. Kept in the database and `collected.tsv`; the API exposes only `added_at`.
+- **Provenance per video**: rule version, `r`, the cut-off `t` when it was picked, whether it was measured by the collector or taken over from a live check, yt-dlp and ffmpeg versions, pipeline commit (with "+changes" if the pipeline folder had uncommitted changes), `CACHE_VERSION`, added date. Kept in the database and the exported files; the API exposes only `added_at`.
+- **The cut-off `t`** is the highest number the sampling has checked. v2's picks don't count towards it, also when they're taken out later: their numbers played no part in how they were picked.
 - **Live results are reused**: if a picked video was already checked live (same pipeline version), its features are taken over without downloading again. A live check never puts a video into the dataset by itself, though: that would bias the sample towards what visitors check.
 - **Dev:** off unless `COLLECTOR_*` env vars are set; without `collected.tsv` the API serves the fixed dataset exactly as today.
 
@@ -161,7 +162,8 @@ Two separate limits: the **Data API quota** (listing uploads, video details, cha
 
 - `backend/data/collected/<year>.tsv`: the added videos, in the order they were added, one file per year of adding (~45 KB a day, ~16 MB a year). Same columns as `videos.tsv`, plus `added_at` and the provenance (6).
 - `backend/data/collected/removed.tsv`: videos taken out (5), with the date.
-- `backend/data/collected/CHANGELOG.tsv`: one line a day: date, videos added, removed, channels added, totals.
+- `backend/data/collected/CHANGELOG.tsv`: one line a day with a change: date, videos added, removed, channels that got their first video, and the totals (videos, channels) at the end of the day. Written by the collector with the other files; the release notes read its last line.
+- `backend/data/collected/meta.json`: the date of the last full discovery run (How it works ③).
 
 **The daily commit:**
 
@@ -229,6 +231,17 @@ By hand (the team), in order:
 | Step 7 | you | Review the home and rankings pages (screenshots), the How it works copy (score lead, two common questions) and the privacy policy sentence (plan 014). |
 | Step 8 | you | `hyperstim-release` (Claude never releases). |
 | After | you | Check the first daily `data:` commit on GitHub and the counts on the live site. |
+
+## Review decisions
+
+Decisions made while building (2026-10-26), each in its spot above where it fits there:
+
+- **Lists answer as of a version**: every list answer carries `asOf`, the time of the dataset's last addition or removal; before any, the reference set's date (`2026-09-01T00:00:00Z`), so a page can pin itself from the very first answer.
+- **The count-up is shared**: `ScoreGauge`'s count-up moved into `lib/motion.ts` (`useCountUp`), used by the gauge and the new rolling number (`components/RollingNumber.tsx`). Each digit is a strip of 0–9 twice, so 9 → 0 keeps rolling up; the pill fades in with a delay matching the count-up.
+- **Pinning**: on the rankings page one pin is shared by the Videos and Channels views; each compare picker keeps its own.
+- **How it works ③**: before the first full discovery run the scan date shows v2's (August 2026). On the rankings page the count line sits between the intro and the "What the measurements mean" link.
+- **The first offline check takes out a few hundred v2 videos** (deleted or private since August), so the count dips below 16,375 for a couple of days before additions overtake it. This happens in the local run, before production.
+- **Not yet built, for the deployment (step 5)**: the collector's systemd unit, the data bot's user, clone, key and timer, and the `setup.sh` / `server.env.example` / `deploy/README.md` changes. They change the server's users and permissions, so they're done with the team at go-live. Built and tested: `scripts/commit-data.sh` (the daily commit), `scripts/check-data-commits.sh` (CI and `release.sh`), the `data` type in `release-notes.sh` and the hook.
 
 ## Open questions
 
