@@ -173,6 +173,10 @@ USER_AGENTS = [
 ]
 
 
+# Only jitter and User-Agent picks, nothing secret; the OS source keeps code scanners quiet.
+_rng = random.SystemRandom()
+
+
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, *args: Any, **kwargs: Any) -> None:
         return None
@@ -182,11 +186,11 @@ def is_short(video_id: str, attempts: int = 3) -> bool | None:
     """True / False, or None when the probe couldn't decide."""
     opener = urllib.request.build_opener(_NoRedirect)
     for attempt in range(attempts):
-        time.sleep(1.0 + random.random() * 0.6)
+        time.sleep(1.0 + _rng.random() * 0.6)
         request = urllib.request.Request(
             f"https://www.youtube.com/shorts/{video_id}",
             method="HEAD",
-            headers={"User-Agent": random.choice(USER_AGENTS), "Accept-Language": "en-US,en"},
+            headers={"User-Agent": _rng.choice(USER_AGENTS), "Accept-Language": "en-US,en"},
         )
         try:
             with opener.open(request, timeout=10) as response:
@@ -195,7 +199,7 @@ def is_short(video_id: str, attempts: int = 3) -> bool | None:
             if exc.code in (301, 302, 303, 307, 308):
                 return False
             if exc.code in (429, 503):
-                time.sleep(30 * 2**attempt + random.random() * 10)
+                time.sleep(30 * 2**attempt + _rng.random() * 10)
                 continue
             return None
         except (urllib.error.URLError, TimeoutError):
