@@ -22,9 +22,14 @@ describe("PrivacyPage", () => {
     }
   });
 
-  it("states the log retention the backend keeps to", () => {
+  it("says in general that we keep logs and count how the site is used", () => {
     render(<PrivacyPage />);
-    expect(screen.getByText(/delete them after 14 days/)).toBeInTheDocument();
+    // Logs and usage counts (plan 014): said in general, not what exactly is logged or counted.
+    expect(
+      screen.getByText(
+        "Our server keeps technical logs to keep the site running and safe, and counts how the site is used to improve it. Neither is used to identify you.",
+      ),
+    ).toBeInTheDocument();
   });
 
   describe("changing the cookie choice", () => {

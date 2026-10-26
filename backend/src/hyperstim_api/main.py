@@ -28,6 +28,7 @@ from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video
 from hyperstim_api.ranking import CRITERIA, Order, Ranked
 from hyperstim_api.reload import DatasetStore
 from hyperstim_api.thumbnails import Fetch, Size, ThumbnailCache, Unavailable, fetch_from_youtube
+from hyperstim_api.usage import UsageLog
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
 VideoId = Annotated[str, Path(pattern=VIDEO_ID_PATTERN)]
@@ -271,9 +272,23 @@ def create_app(
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         analyzer.start_worker()
         store.start()
+        if usage is not None:
+            usage.start()
         yield
+        if usage is not None:
+            usage.stop()
         store.stop()
         analyzer.stop_worker()
+
+    usage = UsageLog(settings.usage_dir) if settings.usage_dir else None
+
+    def count(kind: str, key: str, extra: str = "") -> None:
+        if usage is not None:
+            usage.count(kind, key, extra)
+
+    def count_search(request: Request, kind: str, q: str | None, offset: int, total: int) -> None:
+        if usage is not None and q and offset == 0:
+            usage.search(request.client.host if request.client else "", kind, q, total > 0)
 
     lookup = ChannelLookup(lambda: store.current, analyzer, pipeline)
     thumbnails = ThumbnailCache(settings.thumbnail_dir, fetch_thumbnail)
@@ -288,6 +303,7 @@ def create_app(
     )
     app.state.analyzer = analyzer
     app.state.datasets = store
+    app.state.usage = usage
     app.add_middleware(
         CORSMiddleware, allow_origins=[settings.cors_origin], allow_methods=["GET", "POST"]
     )
@@ -313,6 +329,7 @@ def create_app(
 
     @app.get("/api/videos")
     def videos(
+        request: Request,
         sort: SortKey = "score",
         order: Order = "desc",
         category: CategoryKey = "",
@@ -330,6 +347,7 @@ def create_app(
         page, total = dataset.ranked_videos(
             sort, order, category or None, q, offset, limit, as_of, (added_from, added_before)
         )
+        count_search(request, "search_videos", q, offset, total)
         return VideoList(
             items=[ranked_video(r) for r in page],
             total=total,
@@ -354,6 +372,7 @@ def create_app(
                 )
         if v is None:
             raise HTTPException(status_code=404, detail="Video not found")
+        count("video_view", video_id, "dataset" if video_id in dataset.videos_by_id else "live")
         return video_detail(v, v.channel_id in dataset.channels_by_id)
 
     @app.post(
@@ -368,6 +387,7 @@ def create_app(
     def start_analysis(video_id: VideoId, request: Request, response: Response) -> Analysis:
         """Start the live analysis of a video, or join it if it is stored or running."""
         if video_id in store.current.videos_by_id:
+            count("live_check", video_id, "in_dataset")
             response.status_code = 200
             return Analysis(
                 status="done",
@@ -383,6 +403,7 @@ def create_app(
             raise HTTPException(status_code=503, detail="Busy") from None
         except TooManyRequests:
             raise HTTPException(status_code=429, detail="Too many requests") from None
+        count("live_check", video_id, "new" if created else "repeat")
         if not created:
             response.status_code = 200
         found = analyzer.snapshot(video_id)
@@ -398,6 +419,7 @@ def create_app(
 
     @app.get("/api/channels")
     def channels(
+        request: Request,
         sort: SortKey = "score",
         order: Order = "desc",
         category: CategoryKey = "",
@@ -424,6 +446,7 @@ def create_app(
             as_of,
             (added_from, added_before),
         )
+        count_search(request, "search_channels", q, offset, total)
         return ChannelList(
             items=[ranked_channel(r) for r in page],
             total=total,
@@ -451,6 +474,7 @@ def create_app(
             raise HTTPException(status_code=404, detail="Channel not found") from None
         except TooManyRequests:
             raise HTTPException(status_code=429, detail="Too many requests") from None
+        count("channel_lookup", found.channel_id, "in" if found.in_dataset else "not_in")
         return ChannelFound(
             channel_id=found.channel_id,
             name=found.name,
@@ -487,6 +511,7 @@ def create_app(
         c = store.current.channels_by_id.get(channel_id)
         if c is None:
             raise HTTPException(status_code=404, detail="Channel not found")
+        count("channel_view", channel_id)
         return channel_detail(c)
 
     return app

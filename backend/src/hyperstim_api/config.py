@@ -21,6 +21,7 @@ class Settings:
     api_docs: bool = True  # /docs, /redoc, /openapi.json
     collected_dir: Path | None = None  # the collector's files (plan 013); None: reference set only
     collected_reload_s: int = 300  # how often to look for new ones
+    usage_dir: Path | None = None  # daily usage counts (plan 014); None: not counted
 
 
 def _required(name: str) -> str:
@@ -55,6 +56,7 @@ def _flag(name: str, default: bool) -> bool:
 def load_settings() -> Settings:
     cookies = os.environ.get("YTDLP_COOKIES", "").strip()
     collected = os.environ.get("COLLECTED_DIR", "").strip()
+    usage = os.environ.get("USAGE_DIR", "").strip()
     return Settings(
         dataset_path=Path(_required("DATASET_PATH")),
         cors_origin=_required("CORS_ORIGIN").rstrip("/"),
@@ -67,4 +69,5 @@ def load_settings() -> Settings:
         api_docs=_flag("API_DOCS", default=True),
         collected_dir=Path(collected) if collected else None,
         collected_reload_s=_limit("COLLECTED_RELOAD_S", 300) or 300,
+        usage_dir=Path(usage) if usage else None,
     )

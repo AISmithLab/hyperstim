@@ -36,6 +36,7 @@ See `.env.example`.
 | `YTDLP_COOKIES` | Optional cookies file for yt-dlp, if YouTube asks for one. Never commit it. |
 | `COLLECTED_DIR` | The collector's exported files, added to the dataset and reloaded when they change (see **Growing dataset**). Optional; unset = `DATASET_PATH` only. |
 | `COLLECTED_RELOAD_S` | Seconds between looks at `COLLECTED_DIR`. Optional, default 300. |
+| `USAGE_DIR` | Folder for the daily usage counts (see **Usage numbers**). Optional; unset = nothing counted. Outside the repo on the server (locally `usage/`, git-ignored). |
 | `COLLECTOR_DATA_DIR`, `COLLECTOR_CLIPS_DIR`, `COLLECT_PER_DAY`, `COLLECTOR_UNITS_PER_DAY` | The collector's settings (see **Growing dataset**); the API doesn't read them. |
 
 Prod (on the server, from a release tag) is set up and updated as described in [`../deploy/README.md`](../deploy/README.md).
@@ -81,6 +82,22 @@ uv run --env-file .env python -m hyperstim_api.collector status                 
 - **Data API:** it shares the site's key and stops at `COLLECTOR_UNITS_PER_DAY` (7,000 of the 10,000 a day), leaving the rest for live checks.
 - **Categories:** v2's keyword classifier (`pipeline/63_classify_categories.py`); a video no keyword places has no category.
 - **Disk:** about 13 MB a clip; it pauses below 50 GB free.
+
+## Usage numbers
+
+With `USAGE_DIR` set, the API counts what visitors do (plan 014): one file a day, `USAGE_DIR/<YYYY-MM-DD>.tsv` (UTC), columns `kind`, `key`, `extra`, `count`, rewritten every minute. Nothing about who: no IP, cookie or visitor ID.
+
+| `kind` | `key` | `extra` |
+|---|---|---|
+| `video_view` | video ID | `dataset` or `live` |
+| `channel_view` | channel ID | |
+| `live_check` | video ID | `new`, `repeat` (already checked for someone) or `in_dataset` |
+| `channel_lookup` | channel ID (a pasted channel link) | `in` or `not_in` the dataset |
+| `search_videos`, `search_channels` | the search text (lower-cased, ≤ 80 characters) | `found` or `nothing` |
+
+A search counts once its visitor stops typing for 10 seconds (each IP's last search is held in memory for that long, never written), so half-typed words aren't counted. Counts are rough: scripts and crawlers count too.
+
+To answer a question, combine them with the other files on the server: the live checks' results in `ANALYSIS_DIR/<id>.json` (title, channel, measurements), the collector's `collector.db` and `status` (growth, channels, health) and the dataset. Examples: most checked videos we don't have, by channel, last 30 days; searches that found nothing; videos added per week; the share of the dataset from the 100 busiest channels.
 
 ## Live analysis
 

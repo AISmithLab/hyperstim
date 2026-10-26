@@ -139,6 +139,7 @@ def make_client(
         api_docs: bool = True,
         fetch_thumbnail: Fetch | None = None,
         collected_dir: Path | None = None,
+        usage_dir: Path | None = None,
     ) -> TestClient:
         settings = Settings(
             dataset_path=path,
@@ -149,6 +150,7 @@ def make_client(
             analysis_limit_per_day=limit_per_day,
             api_docs=api_docs,
             collected_dir=collected_dir,
+            usage_dir=usage_dir,
         )
         # Not used as a context manager, so the worker thread doesn't start: tests run
         # the queue themselves with `analyzer.run_next()`.

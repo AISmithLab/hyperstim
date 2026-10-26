@@ -44,6 +44,7 @@ __pycache__/
 /backend/pipeline/output/
 /backend/analysis/
 /backend/thumbnails/
+/backend/usage/
 /backend/.coverage
 /backend/coverage.xml
 /deploy/server.env

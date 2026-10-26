@@ -6,7 +6,7 @@ import { asset } from "@/lib/asset";
 // backend stores, logs, or loads from other companies is agreed first, then updates this page in the
 // same change (CLAUDE.md).
 
-export const LAST_UPDATED = "October 17, 2026";
+export const LAST_UPDATED = "October 26, 2026";
 export const CONTACT_URL = "https://forms.gle/oLbWLgE8sT6zHhLR9";
 const GITHUB_PRIVACY = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement";
 const GOOGLE_PRIVACY = "https://policies.google.com/privacy";
@@ -26,9 +26,8 @@ export default function PrivacyPage() {
               details, and logs which pages are requested. See <External href={GITHUB_PRIVACY}>GitHub’s privacy statement</External>.
             </p>
             <p>
-              We log each request for scores and video details: your IP address, the time, the address requested, and
-              your browser. We use these logs to keep the site running and safe from abuse, and delete them after 14
-              days.
+              Our server keeps technical logs to keep the site running and safe, and counts how the site is used
+              to improve it. Neither is used to identify you.
             </p>
             <p>
               If you accept when the site asks, we also use Google Analytics to count visits and see which pages are
