@@ -112,11 +112,19 @@ describe("VideoPage", () => {
     expect(kid).toHaveClass("-translate-y-[92.1%]");
   });
 
+  it("shows the channel as a pill link", async () => {
+    open(ID);
+    const link = await screen.findByRole("link", { name: "Wheelie Friends TV" });
+    expect(screen.getByText("Wheelie Friends TV")).toHaveClass("rounded-full", "bg-sky");
+    expect(link).toHaveClass("min-h-11");
+  });
+
   it("names a channel we don't have without linking it", async () => {
     vi.mocked(getVideo).mockResolvedValue({ ...video(), channelInDataset: false });
     open(ID);
     expect(await screen.findByText("Wheelie Friends TV")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Wheelie Friends TV" })).not.toBeInTheDocument();
+    expect(screen.getByText("Wheelie Friends TV")).not.toHaveClass("rounded-full");
   });
 
   it("shows the value with the description in the info popover", async () => {

@@ -122,14 +122,19 @@ function Result({ video }: { video: VideoDetail }) {
             </h1>
             {/* The compare link shares the channel's line, so it stays clear of the kid below. */}
             <p className="mt-1 flex flex-wrap items-center gap-x-5">
-              <span className="min-w-0 truncate font-bold text-navy">
+              <span className="max-w-full min-w-0">
                 {/* A live-checked video's channel may have no page here. */}
                 {video.channelInDataset ? (
-                  <Link href={channelHref(video.channelId)} className="hover:underline">
-                    {video.channel}
+                  <Link
+                    href={channelHref(video.channelId)}
+                    className="group inline-flex min-h-11 max-w-full items-center sm:-my-2.5"
+                  >
+                    <span className="truncate rounded-full bg-sky px-3 py-0.5 text-sm font-bold text-navy group-hover:bg-mint">
+                      {video.channel}
+                    </span>
                   </Link>
                 ) : (
-                  video.channel
+                  <span className="block truncate text-sm text-ink">{video.channel}</span>
                 )}
               </span>
               <Link href={compareHref({ a: video.id })} className={`${TEXT_LINK} text-sm sm:-my-2.5`}>
