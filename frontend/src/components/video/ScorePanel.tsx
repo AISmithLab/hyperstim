@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 import InfoTip from "@/components/InfoTip";
 import type { Feature } from "@/lib/api";
 import Measurements from "./Measurements";
@@ -14,7 +14,7 @@ const GAUGE = "mx-auto w-full max-w-48 lg:max-w-none lg:self-center";
 
 /**
  * The gauge and the 12 measurements in a section card. `scoreInfo` is the score's popover text;
- * `kid` peeks over the top edge; `className` sets the space above it.
+ * `kid` peeks over the top edge; `className` sets the space above it; `ref` is the card.
  */
 export default function ScorePanel({
   score,
@@ -23,6 +23,7 @@ export default function ScorePanel({
   scoreInfo,
   kid,
   className,
+  ref,
 }: {
   score: number;
   features: Feature[];
@@ -30,9 +31,10 @@ export default function ScorePanel({
   scoreInfo: ReactNode;
   kid: ReactNode;
   className: string;
+  ref?: Ref<HTMLElement>;
 }) {
   return (
-    <section aria-labelledby="score-heading" className={`${PANEL_CARD} ${className}`}>
+    <section ref={ref} aria-labelledby="score-heading" className={`${PANEL_CARD} ${className}`}>
       {kid}
       <h2 id="score-heading" className="sr-only">
         Stimulation score

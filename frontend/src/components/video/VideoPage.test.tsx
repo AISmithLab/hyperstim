@@ -75,6 +75,43 @@ describe("VideoPage", () => {
     await waitFor(() => expect(document.title).toBe("Tiny Trucks Race - HyperStim?"));
   });
 
+  it("moves the player under the title on play, and × puts the preview back", async () => {
+    const user = userEvent.setup();
+    const { container } = open(ID);
+    const header = ".grid-cols-\\[2fr_1fr\\]";
+    const play = await screen.findByRole("button", { name: "Play video: Tiny Trucks Race" });
+    expect(container.querySelector(header)).not.toBeNull();
+    await user.click(play);
+
+    const frame = screen.getByTitle("Tiny Trucks Race");
+    expect(frame).toHaveFocus();
+    // Only the cover over the player, until it has loaded.
+    expect(container.querySelector('img[src^="/api/thumbnails/"]:not([data-cover])')).toBeNull();
+    // Under the title and channel line, not in the header's 1/3 column.
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading.compareDocumentPosition(frame) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(container.querySelector(header)).toBeNull();
+
+    await user.click(screen.getByRole("button", { name: "Close video" }));
+    expect(container.querySelector("iframe")).toBeNull();
+    expect(container.querySelector('img[src^="/api/thumbnails/"]')).not.toBeNull();
+    expect(screen.getByRole("button", { name: "Play video: Tiny Trucks Race" })).toHaveFocus();
+    expect(screen.queryByRole("button", { name: "Close video" })).not.toBeInTheDocument();
+    expect(container.querySelector(header)).not.toBeNull();
+  });
+
+  it("ducks the kid behind the panel while the video plays", async () => {
+    const user = userEvent.setup();
+    const { container } = open(ID);
+    await user.click(await screen.findByRole("button", { name: "Play video: Tiny Trucks Race" }));
+    const kid = container.querySelector("img[data-kid]");
+    expect(kid).toHaveClass("translate-y-0", "[clip-path:inset(0_0_100%_0)]");
+    expect(container.querySelector("img[data-cover]")).not.toBeNull();
+
+    await user.click(screen.getByRole("button", { name: "Close video" }));
+    expect(kid).toHaveClass("-translate-y-[92.1%]");
+  });
+
   it("names a channel we don't have without linking it", async () => {
     vi.mocked(getVideo).mockResolvedValue({ ...video(), channelInDataset: false });
     open(ID);

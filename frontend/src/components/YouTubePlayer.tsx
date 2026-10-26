@@ -6,6 +6,8 @@ import { thumbnailUrl } from "@/lib/api";
 const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
 /** The player's "playing" state in the embed's message API. */
 const PLAYING = 1;
+/** How long the thumbnail stays over the player after its page has loaded, while it draws, in ms. */
+const COVER_MS = 400;
 
 /** Controls a player from outside: pausing it does nothing until it has been started. */
 export type PlayerHandle = { pause: () => void };
@@ -18,19 +20,33 @@ export type PlayerHandle = { pause: () => void };
  * With `onPlay`, the player also reports when it starts playing (also after a pause), and `ref`
  * can pause it, through the embed's message API; no script is loaded from YouTube. The compare
  * page uses this to play one video at a time.
+ *
+ * With `onStart`, the parent owns the playing state instead: the click calls `onStart`, and
+ * `playing` shows the player (the video page moves it to a larger spot). With `cover`, the thumbnail
+ * stays over the player until it has loaded, then fades out, so the box isn't black meanwhile.
  */
 export default function YouTubePlayer({
   id,
   title,
   onPlay,
   ref,
+  playing: playingProp,
+  onStart,
+  cover = false,
 }: {
   id: string;
   title: string;
   onPlay?: () => void;
   ref?: Ref<PlayerHandle>;
+  playing?: boolean;
+  onStart?: () => void;
+  cover?: boolean;
 }) {
-  const [playing, setPlaying] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const coverTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(coverTimer.current), []);
+  const playing = playingProp ?? started;
   const frame = useRef<HTMLIFrameElement>(null);
   const controlled = onPlay !== undefined;
   // The latest callback, so a new function from the parent doesn't count as a new start.
@@ -80,15 +96,31 @@ export default function YouTubePlayer({
   return (
     <div className="@container relative aspect-video w-full overflow-hidden rounded-2xl bg-navy/10">
       {playing ? (
-        <iframe
-          ref={frame}
-          src={`${PLAYER_ORIGIN}/embed/${videoId}?autoplay=1${api}`}
-          title={title}
-          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-          allowFullScreen
-          onLoad={controlled ? () => send({ event: "listening", id: videoId, channel: "widget" }) : undefined}
-          className="absolute inset-0 size-full"
-        />
+        <>
+          <iframe
+            ref={frame}
+            src={`${PLAYER_ORIGIN}/embed/${videoId}?autoplay=1${api}`}
+            title={title}
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+            onLoad={() => {
+              if (controlled) send({ event: "listening", id: videoId, channel: "widget" });
+              if (cover) coverTimer.current = setTimeout(() => setLoaded(true), COVER_MS);
+            }}
+            className="absolute inset-0 size-full"
+          />
+          {cover && (
+            // eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization
+            <img
+              src={thumbnailUrl(id)}
+              alt=""
+              width={480}
+              height={360}
+              data-cover=""
+              className={`pointer-events-none absolute inset-0 size-full object-cover motion-safe:transition-opacity motion-safe:duration-300 ${loaded ? "opacity-0" : ""}`}
+            />
+          )}
+        </>
       ) : (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization */}
@@ -102,7 +134,7 @@ export default function YouTubePlayer({
           <div className="absolute inset-0 flex items-center justify-center bg-navy/20">
             <button
               type="button"
-              onClick={() => setPlaying(true)}
+              onClick={() => (onStart ? onStart() : setStarted(true))}
               // Icon only in a small preview; with its label from 20rem wide.
               className="flex size-12 items-center justify-center rounded-full bg-primary font-bold text-white hover:bg-navy @xs:w-auto @xs:gap-2 @xs:px-6"
             >

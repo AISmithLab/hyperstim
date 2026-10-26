@@ -22,6 +22,39 @@ describe("YouTubePlayer", () => {
   });
 });
 
+describe("YouTubePlayer with onStart", () => {
+  it("leaves the playing state to its parent", async () => {
+    const user = userEvent.setup();
+    const onStart = vi.fn();
+    const { container, rerender } = render(<YouTubePlayer id="dQw4w9WgXcQ" title="Snail time" onStart={onStart} />);
+
+    await user.click(screen.getByRole("button", { name: "Play video: Snail time" }));
+    expect(onStart).toHaveBeenCalledTimes(1);
+    expect(container.querySelector("iframe")).toBeNull();
+
+    rerender(<YouTubePlayer id="dQw4w9WgXcQ" title="Snail time" playing />);
+    expect(screen.getByTitle("Snail time")).toHaveFocus();
+  });
+});
+
+describe("YouTubePlayer with cover", () => {
+  it("keeps the thumbnail over the player until it has loaded", () => {
+    vi.useFakeTimers();
+    const { container } = render(<YouTubePlayer id="dQw4w9WgXcQ" title="Snail time" playing cover />);
+    const cover = container.querySelector("img[data-cover]");
+    expect(cover).toHaveAttribute("src", "/api/thumbnails/dQw4w9WgXcQ?size=hq");
+    expect(cover).not.toHaveClass("opacity-0");
+
+    act(() => {
+      screen.getByTitle("Snail time").dispatchEvent(new Event("load"));
+    });
+    expect(cover).not.toHaveClass("opacity-0");
+    act(() => vi.advanceTimersByTime(400));
+    expect(cover).toHaveClass("opacity-0", "pointer-events-none");
+    vi.useRealTimers();
+  });
+});
+
 describe("YouTubePlayer with onPlay", () => {
   it("reports each start, and pauses through the embed's message API", async () => {
     const user = userEvent.setup();
