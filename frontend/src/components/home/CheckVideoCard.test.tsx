@@ -42,10 +42,13 @@ describe("CheckVideoCard", () => {
     expect(push).toHaveBeenCalledWith("/video?id=dQw4w9WgXcQ");
   });
 
-  it("describes the input with the length hint", () => {
+  it("has no length hint: a check takes about the same time for any length", async () => {
+    const user = userEvent.setup();
     render(<CheckVideoCard />);
-    expect(screen.getByLabelText("YouTube link or video ID")).toHaveAccessibleDescription(
-      /Works best with children’s videos up to 15 minutes\./,
-    );
+    const input = screen.getByLabelText("YouTube link or video ID");
+    expect(screen.queryByText(/minutes/)).not.toBeInTheDocument();
+    // The input is described by its error only.
+    await user.type(input, "not a link{Enter}");
+    expect(input).toHaveAccessibleDescription("That doesn’t look like a YouTube link or video ID.");
   });
 });

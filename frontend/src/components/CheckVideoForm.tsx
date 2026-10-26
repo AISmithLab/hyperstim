@@ -47,7 +47,7 @@ export default function CheckVideoForm({ className = "" }: { className?: string 
             if (error) setError(null);
           }}
           aria-invalid={error ? true : undefined}
-          aria-describedby={`${id}-hint ${id}-error`}
+          aria-describedby={`${id}-error`}
           className="h-12 w-full min-w-0 rounded-full border-2 border-navy bg-white px-5 text-navy placeholder:text-ink/70 focus:shadow-[0_0_0_5px_var(--color-sunny)] focus:outline-none aria-invalid:border-error md:flex-1"
         />
         <button
@@ -57,10 +57,8 @@ export default function CheckVideoForm({ className = "" }: { className?: string 
           Check video <span aria-hidden="true">→</span>
         </button>
       </div>
-      <p id={`${id}-hint`} className="mt-2 text-sm">
-        Works best with children’s videos up to 15 minutes.
-      </p>
-      <p id={`${id}-error`} aria-live="polite" className="mt-1 min-h-6 font-semibold text-error">
+      {/* Always there (a live region), but takes no room until there's an error. */}
+      <p id={`${id}-error`} aria-live="polite" className={error ? "mt-2 font-semibold text-error" : undefined}>
         {error}
       </p>
     </form>

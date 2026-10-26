@@ -59,7 +59,7 @@ function PasteLink() {
     >
       <Lead>Paste any YouTube video made for kids.</Lead>
       {/* From lg, its field is as long as the home card's at full width (a 411 px form). */}
-      <div className="mt-6 rounded-2xl bg-butter px-5 pt-5 pb-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:w-[28.25rem]">
+      <div className="mt-6 rounded-2xl bg-butter p-5 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:w-[28.25rem]">
         <CheckVideoForm />
       </div>
     </Section>
