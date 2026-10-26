@@ -232,11 +232,14 @@ function resultsLine(state: RankingState, total: number): string {
   const s = total === 1 ? "" : "s";
   // A pasted link is searched by its ID, which means nothing to read.
   const matching = isLinkId(state) ? " for this link" : state.q ? ` matching “${state.q}”` : "";
+  // Channels: the 5-video minimum is said, so the count adds up with the home page's (plan 013).
   const things =
     state.view === "videos"
-      ? `${label ? `${label} ` : ""}video${s}`
-      : `channel${s}${label ? ` with ${label} videos` : ""}`;
-  return `Showing ${formatCount(from)}–${formatCount(to)} of ${formatCount(total)} ${things}${matching}`;
+      ? `${label ? `${label} ` : ""}video${s}${matching}`
+      : label
+        ? `channel${s} with ${label} videos${matching} (${MIN_VIDEOS}+ videos each)`
+        : `channel${s} with ${MIN_VIDEOS}+ videos${matching}`;
+  return `Showing ${formatCount(from)}–${formatCount(to)} of ${formatCount(total)} ${things}`;
 }
 
 /** The Suspense fallback: the page's top, before its state is read from the URL. */

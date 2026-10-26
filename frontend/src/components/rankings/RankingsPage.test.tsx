@@ -128,6 +128,11 @@ describe("RankingsPage", () => {
     expect(getMeta).not.toHaveBeenCalled();
   });
 
+  it("says the channels' 5-video minimum, so the count adds up with the home page's", async () => {
+    open("view=channels");
+    expect(await screen.findByText("Showing 1–25 of 30 channels with 5+ videos")).toBeInTheDocument();
+  });
+
   it("asks for the dataset as it was at the first list, so rows don't shift while browsing", async () => {
     const versions = ["2026-10-26T10:00:00Z", "2026-10-26T10:05:00Z"];
     vi.mocked(getVideos).mockImplementation(async (params) => ({
@@ -257,7 +262,7 @@ describe("RankingsPage", () => {
     expect(within(table()).getByRole("link", { name: "Channel 1" })).toHaveAttribute("href", "/channel?id=UCchan1");
     expect(within(table()).getAllByText("12 videos")).toHaveLength(25);
     expect(
-      screen.getByText("Showing 1–25 of 30 channels with music videos matching “zip”"),
+      screen.getByText("Showing 1–25 of 30 channels with music videos matching “zip” (5+ videos each)"),
     ).toBeInTheDocument();
   });
 
