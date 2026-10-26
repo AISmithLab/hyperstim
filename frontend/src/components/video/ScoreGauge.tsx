@@ -23,7 +23,7 @@ function point(score: number, r: number): [number, number] {
 
 /**
  * Half-circle dial with a needle for a 0–100 score (see STYLE.md, Score gauge); fills its
- * container's width. `children` (e.g. an info button) sit after the number.
+ * container's width. `children` (e.g. an info button) sit to the right of the centred number.
  */
 export default function ScoreGauge({ score, children }: { score: number; children?: ReactNode }) {
   const rounded = Math.round(score);
@@ -64,7 +64,8 @@ export default function ScoreGauge({ score, children }: { score: number; childre
         <span>calm</span>
         <span>intense</span>
       </div>
-      <div className="mt-1 flex items-center gap-1">
+      {/* The number is centred under the dial; the info button hangs to its right. */}
+      <div className="relative mt-1">
         <p className="font-hand font-semibold text-navy">
           <span aria-hidden="true" className="text-5xl tabular-nums">
             {Math.round(shown)}
@@ -75,7 +76,7 @@ export default function ScoreGauge({ score, children }: { score: number; childre
           </span>
           <span className="sr-only">Stimulation score {rounded} out of 100</span>
         </p>
-        {children}
+        {children && <div className="absolute top-1/2 left-full ml-1 -translate-y-1/2">{children}</div>}
       </div>
     </div>
   );

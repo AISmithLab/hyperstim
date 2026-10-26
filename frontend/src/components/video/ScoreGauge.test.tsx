@@ -31,6 +31,19 @@ describe("ScoreGauge", () => {
     expect(screen.getByText("87")).toHaveAttribute("aria-hidden", "true");
   });
 
+  it("puts its children after the number, outside the number's centring", () => {
+    mockReducedMotion(true);
+    render(
+      <ScoreGauge score={100}>
+        <button type="button">About</button>
+      </ScoreGauge>,
+    );
+    const number = screen.getByText("100", { selector: "span" });
+    const button = screen.getByRole("button", { name: "About" });
+    expect(number.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(button.parentElement).toHaveClass("absolute", "left-full");
+  });
+
   it("shows the final value at once with reduced motion", () => {
     mockReducedMotion(true);
     const { container } = render(<ScoreGauge score={50} />);
