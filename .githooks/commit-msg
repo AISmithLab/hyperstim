@@ -4,7 +4,7 @@
 set -euo pipefail
 
 subject="$(grep -v '^#' "$1" | grep -m 1 . || true)"
-types='feat|fix|perf|refactor|style|test|docs|build|ci|chore'
+types='feat|fix|perf|refactor|style|test|docs|build|ci|chore|data'
 
 # git's own subjects (merge, revert, fixup/squash for a later rebase) pass as they are.
 [[ $subject =~ ^(Merge |Revert \"|fixup! |squash! |amend! ) ]] && exit 0

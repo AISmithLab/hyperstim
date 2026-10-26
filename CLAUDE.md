@@ -32,7 +32,7 @@ This repo is public. Never commit:
 
 - Secrets, tokens, cookies, API keys, or `.env` files (commit `.env.example` with placeholder values only).
 - Server details: hostnames, IPs, ports, usernames, absolute paths on the server, systemd/nginx files with real values. Use env vars and placeholders.
-- Research data that is not cleared for release (unpublished results, other research code). Cleared and committed: the video dataset in `backend/data/` (IDs, public metadata, features) and the pipeline parts in `backend/pipeline/`.
+- Research data that is not cleared for release (unpublished results, other research code). Cleared and committed: the video dataset in `backend/data/` (IDs, public metadata, features; the reference set and the videos added since in `backend/data/collected/`, plan 013) and the pipeline parts in `backend/pipeline/`.
 - Downloaded video clips. They are also never served by the backend; the site exposes only video IDs, public metadata, and scores.
 - Notes about third-party sites used as design inspiration. Describe design intent in our own words only.
 
@@ -65,6 +65,7 @@ Before committing, check `git diff --staged` for anything above.
     - `fix`: the site or API didn't work as intended, including security fixes (also a dependency upgrade done for one). → patch.
     - `perf`: faster or lighter, same behaviour. `refactor`: code change with no visible change. `style`: formatting only.
     - `test`: tests only. `docs`: plans, READMEs, `STYLE.md`, `CLAUDE.md`, code comments. `build`: dependencies, build config, dev scripts. `ci`: CI, release and server setup (`.github/`, `release.sh`, `deploy/`). `chore`: anything else.
+    - `data`: only the server's daily commit of the collected dataset (`backend/data/collected/`, plan 013); never used by hand. Not listed in the release notes and no version bump; CI and `release.sh` reject a `data:` commit that changes any other file.
   - **Breaking:** add `!` after the type and a body line `BREAKING CHANGE: <what stops working, and what to do instead>` when a page URL or shareable link stops working (removed, or moved without a redirect), or scores or measurements change meaning so they can't be compared with earlier ones. → major version. Redesigns, new text and new pages are not breaking.
   - Examples:
     - `feat: Add the compare page for two videos or two channels (plan 008)`

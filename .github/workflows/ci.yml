@@ -40,6 +40,14 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the data-commit check reads the pushed commits
+      # The server's daily data: commits may change only the dataset files (plan 013).
+      - run: |
+          if [ "${{ github.event_name }}" = push ]; then range="${{ github.event.before }}..${{ github.sha }}"
+          else range="${{ github.event.pull_request.base.sha }}..${{ github.sha }}"; fi
+          scripts/check-data-commits.sh "$range"
+        working-directory: .
       - id: tools
         run: grep '^UV_VERSION=' ../tools.env | sed 's/^UV_VERSION=/uv=/' >> "$GITHUB_OUTPUT"
       - uses: astral-sh/setup-uv@v6

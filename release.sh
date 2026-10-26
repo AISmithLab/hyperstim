@@ -89,9 +89,14 @@ if git -C "$ROOT" merge-base --is-ancestor "$COMMIT" "$LATEST"; then
   BUMP=patch
   NOTES="Roll back to ${was:-$(git -C "$ROOT" rev-parse --short "$COMMIT")}."
 else
+  # The daily data commits (plan 013) may only touch the dataset files.
+  (cd "$ROOT" && scripts/check-data-commits.sh "$LATEST..$COMMIT") ||
+    fail "a data: commit since $LATEST changes more than the dataset files (above)."
   out="$(cd "$ROOT" && scripts/release-notes.sh "$LATEST..$COMMIT")"
   BUMP="${out%%$'\n'*}"
   NOTES="${out#*$'\n'}"
+  [ "$BUMP" != none ] ||
+    fail "only data: commits since $LATEST: nothing to release (the site already serves new videos)."
 fi
 IFS=. read -r major minor patch <<<"${LATEST#v}"
 case "$BUMP" in
