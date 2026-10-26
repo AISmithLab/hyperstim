@@ -22,7 +22,7 @@ Daily totals, counted by our server **as part of what it already does for each v
 |---|---|
 | Open a video's page (or put it on one side of a compare) | the video's ID, whether it's in the dataset, how many times |
 | Open a channel's page | the channel's ID, how many times |
-| Ask for a live check of a video (new, or already checked by someone else) | the video's ID, its channel, whether that channel is in the dataset, how many times |
+| Ask for a live check of a video | the video's ID; whether it's new, already checked for someone else, or in the dataset; how many times. Its channel and results are in the live check's own file (`ANALYSIS_DIR/<id>.json`), joined when reading. |
 | Paste a channel link (compare, rankings search) | the channel's ID, whether it's in the dataset, how many times |
 | Search by name (rankings, compare) | the search text, videos or channels, whether anything was found, how many times |
 
