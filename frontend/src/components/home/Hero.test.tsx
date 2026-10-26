@@ -1,11 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getMeta, type Meta } from "@/lib/api";
+import { getMeta, getVideos, type Meta } from "@/lib/api";
 import Hero from "./Hero";
 
 vi.mock("@/lib/api", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/api")>()),
   getMeta: vi.fn(),
+  getVideos: vi.fn(),
 }));
 
 const meta = (changes: Partial<Meta> = {}): Meta => ({
@@ -27,7 +28,11 @@ function readable(element: Element | null): string {
   return copy.textContent!.replace(/\s+/g, " ").trim();
 }
 
+const pastWeek = (total: number) =>
+  vi.mocked(getVideos).mockResolvedValue({ items: [], total, asOf: "2026-10-26T10:00:00Z" });
+
 beforeEach(() => {
+  pastWeek(1043);
   // Reduced motion: the numbers show at once.
   vi.stubGlobal("matchMedia", (query: string) => ({ matches: query.includes("reduced-motion"), media: query }));
 });
@@ -36,16 +41,19 @@ describe("Hero", () => {
   it("says how many videos and channels, and how many were added in the past week", async () => {
     vi.mocked(getMeta).mockResolvedValue(meta());
     render(<Hero />);
-    const pill = await screen.findByText(/\+.*in the past week/, { selector: "span.rounded-full" });
+    const pill = await screen.findByRole("link", { name: /in the past week/ });
     expect(readable(pill)).toBe("+1,043 videos in the past week");
     expect(pill).toHaveClass("bg-sky", "text-navy", "rounded-full");
+    // It opens the rankings with the videos it counts.
+    expect(pill).toHaveAttribute("href", expect.stringMatching(/^\/rankings\?q=added%3A%3E\d{4}-\d{2}-\d{2}$/));
     expect(readable(screen.getByText(/channels to better/))).toBe(
       "Explore and compare 16,402 videos from 542 channels to better understand what your child is watching.",
     );
   });
 
   it("leaves the pill out when nothing was added in the past week", async () => {
-    vi.mocked(getMeta).mockResolvedValue(meta({ addedLast7Days: 0 }));
+    vi.mocked(getMeta).mockResolvedValue(meta());
+    pastWeek(0);
     render(<Hero />);
     expect(readable(await screen.findByText(/channels to better/))).toContain("16,402 videos from 542 channels");
     expect(screen.queryByText(/in the past week/)).not.toBeInTheDocument();

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMeta, type Meta } from "./api";
+import { getMeta, getVideos, type Meta } from "./api";
+import { pastWeek } from "./search-filters";
 
 /** How often an open page asks whether videos were added, while it's visible. */
 export const POLL_MS = 60_000;
@@ -9,8 +10,10 @@ export const POLL_MS = 60_000;
 export type Growth = {
   videos: number;
   channels: number;
-  /** Videos added in the past week (the last 7 × 24 hours). */
+  /** Videos added in the past week: the last 7 days, today included, in the visitor's time zone. */
   pastWeek: number;
+  /** The rankings' search for those videos, e.g. `added:>2026-10-19`. */
+  pastWeekQuery: string;
   /** Where the first count-up starts: the counts a week ago. */
   from: { videos: number; channels: number; pastWeek: number };
 };
@@ -24,15 +27,17 @@ export type GrowthState = Growth | "loading" | "failed";
  * out, or the past week moving on, shows at the next page load.
  */
 export function useGrowth(): GrowthState {
-  const [first, setFirst] = useState<Meta | "loading" | "failed">("loading");
+  const [first, setFirst] = useState<(Meta & { week: number; query: string }) | "loading" | "failed">("loading");
   const [latest, setLatest] = useState<{ videos: number; channels: number } | null>(null);
 
   useEffect(() => {
     let alive = true;
-    getMeta().then(
-      (meta) => {
+    // The pill counts what its link lists: the rankings' total for the same filter.
+    const week = pastWeek();
+    Promise.all([getMeta(), getVideos({ sort: "score", order: "desc", limit: 1, addedFrom: week.from })]).then(
+      ([meta, added]) => {
         if (!alive) return;
-        setFirst(meta);
+        setFirst({ ...meta, week: added.total, query: week.query });
         setLatest({ videos: meta.videoCount, channels: meta.channelCount });
       },
       () => alive && setFirst("failed"), // the page shows its text without numbers
@@ -61,9 +66,10 @@ export function useGrowth(): GrowthState {
   return {
     videos: latest.videos,
     channels: latest.channels,
-    pastWeek: first.addedLast7Days + (latest.videos - first.videoCount),
+    pastWeek: first.week + (latest.videos - first.videoCount),
+    pastWeekQuery: first.query,
     from: {
-      videos: Math.max(0, first.videoCount - first.addedLast7Days),
+      videos: Math.max(0, first.videoCount - first.week),
       channels: Math.min(first.channelCount7DaysAgo, first.channelCount),
       pastWeek: 0,
     },

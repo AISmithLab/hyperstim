@@ -254,7 +254,7 @@ describe("RankingsPage", () => {
 
     await user.click(screen.getByRole("button", { name: "Channels" }));
 
-    expect(lastCall(url.push)).toBe("/rankings?view=channels&sort=lufs&category=music&q=zip");
+    expect(lastCall(url.push)).toBe("/rankings?view=channels&sort=lufs&q=category%3Amusic+zip");
     await screen.findByRole("table", { name: "Channels, ranked by Audio intensity, most intense first" });
     expect(getChannels).toHaveBeenLastCalledWith(
       expect.objectContaining({ sort: "lufs", category: "music", q: "zip", offset: 0, minVideos: 5 }),
@@ -318,9 +318,77 @@ describe("RankingsPage", () => {
     expect(screen.getByRole("button", { name: "All" })).toHaveAttribute("aria-pressed", "true");
 
     await user.click(screen.getByRole("button", { name: "Play & activity" }));
-    expect(lastCall(url.push)).toBe("/rankings?category=play");
+    expect(lastCall(url.push)).toBe("/rankings?q=category%3Aplay");
     expect(screen.getByRole("button", { name: "Play & activity" })).toHaveAttribute("aria-pressed", "true");
     expect(await screen.findByText(/of 60 play & activity videos/)).toBeInTheDocument();
+  });
+
+  describe("search filters", () => {
+    it("puts a picked category into the search box, highlighted", async () => {
+      const user = userEvent.setup();
+      open("q=peppa");
+      await screen.findByRole("table");
+      await user.click(screen.getByRole("button", { name: "Music" }));
+      expect(lastCall(url.push)).toBe("/rankings?q=category%3Amusic+peppa");
+      url.navigate("/rankings?q=category%3Amusic+peppa");
+      await waitFor(() => expect(screen.getByRole("searchbox")).toHaveValue("category:music peppa"));
+      expect(document.querySelector("mark")).toHaveTextContent("category:music");
+    });
+
+    it("adds a picked category after the filters already there, and changes it in place", async () => {
+      const user = userEvent.setup();
+      open("q=added%3A%3E2026-10-19"); // as the home page's pill links
+      await screen.findByRole("table");
+      await user.click(screen.getByRole("button", { name: "Music" }));
+      expect(lastCall(url.push)).toBe("/rankings?q=added%3A%3E2026-10-19+category%3Amusic");
+      url.navigate(lastCall(url.push)!);
+      await waitFor(() => expect(screen.getByRole("searchbox")).toHaveValue("added:>2026-10-19 category:music"));
+      await user.click(screen.getByRole("button", { name: "Gaming" }));
+      expect(lastCall(url.push)).toBe("/rankings?q=added%3A%3E2026-10-19+category%3Agaming");
+      await user.click(screen.getByRole("button", { name: "All" }));
+      expect(lastCall(url.push)).toBe("/rankings?q=added%3A%3E2026-10-19");
+    });
+
+    it("picks the chip and filters by date when typed", async () => {
+      const user = userEvent.setup();
+      open();
+      await screen.findByRole("table");
+      await user.type(screen.getByRole("searchbox"), "category:gaming added:>2026-10-19 zip");
+      await waitFor(() => expect(url.replace).toHaveBeenCalled());
+      expect(lastCall(url.replace)).toBe("/rankings?q=category%3Agaming+added%3A%3E2026-10-19+zip");
+      url.navigate(lastCall(url.replace)!);
+      await waitFor(() =>
+        expect(lastCall(vi.mocked(getVideos))).toMatchObject({
+          q: "zip",
+          category: "gaming",
+          addedFrom: new Date(2026, 9, 20).toISOString().replace(".000Z", "Z"),
+        }),
+      );
+      expect(screen.getByRole("button", { name: "Gaming" })).toHaveAttribute("aria-pressed", "true");
+      expect(await screen.findByText(/of 60 gaming videos added after October 19(, 2026)? matching “zip”/)).toBeInTheDocument();
+      expect(document.querySelectorAll("mark")).toHaveLength(2);
+    });
+
+    it("says what's wrong with a filter instead of searching", async () => {
+      const user = userEvent.setup();
+      open();
+      await screen.findByRole("table");
+      await user.type(screen.getByRole("searchbox"), "added:yesterday");
+      expect(await screen.findByText(/“added:yesterday” isn’t a date filter/)).toBeInTheDocument();
+      expect(url.replace).not.toHaveBeenCalled();
+      expect(document.querySelector("mark")).toBeNull();
+    });
+
+    it("says when nothing was added in the window", async () => {
+      vi.mocked(getVideos).mockResolvedValue({ items: [], total: 0, asOf: "2026-10-26T00:00:00Z" });
+      open("q=added%3A2026-10-20");
+      expect(await screen.findByText(/^No videos added on October 20(, 2026)?\.$/)).toBeInTheDocument();
+    });
+
+    it("explains the filters next to the box", () => {
+      open();
+      expect(screen.getByRole("button", { name: "How to search" })).toBeInTheDocument();
+    });
   });
 
   it("uses a category select below sm", async () => {
@@ -330,7 +398,7 @@ describe("RankingsPage", () => {
 
     await user.selectOptions(screen.getByRole("combobox", { name: "Category" }), "gaming");
 
-    expect(lastCall(url.push)).toBe("/rankings?category=gaming");
+    expect(lastCall(url.push)).toBe("/rankings?q=category%3Agaming");
   });
 
   it("pages through the results and moves focus to the results line", async () => {
@@ -395,8 +463,9 @@ describe("RankingsPage", () => {
     expect(await screen.findByText("No gaming videos match “xyz”.")).toBeInTheDocument();
     expect(screen.queryByRole("navigation", { name: "Pages" })).not.toBeInTheDocument();
 
+    // The box holds the category filter too, so clearing it shows everything.
     await user.click(screen.getByRole("button", { name: "Clear search" }));
-    expect(lastCall(url.push)).toBe("/rankings?category=gaming");
+    expect(lastCall(url.push)).toBe("/rankings");
   });
 
   describe("links in the search", () => {

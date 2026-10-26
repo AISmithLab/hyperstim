@@ -211,3 +211,26 @@ def test_without_a_collected_folder_the_dataset_is_the_reference_set(
     assert len(store.current.videos) == len(VIDEOS)
     assert not store.reload_if_changed()
     assert store.channels_checked_at is None
+
+
+def test_lists_show_only_what_was_added_in_a_window(grown_client: TestClient) -> None:
+    def get(path: str, **params: str) -> dict[str, Any]:
+        body: dict[str, Any] = grown_client.get(path, params={"limit": 100, **params}).json()
+        return body
+
+    everything = {item["id"]: item["rank"] for item in get("/api/videos")["items"]}
+    added = get("/api/videos", addedFrom="2026-10-21T00:00:00Z")
+    assert ids(added) == ["new-mid"] and added["total"] == 1
+    assert added["items"][0]["rank"] == everything["new-mid"]  # the rank among all videos
+    both = get("/api/videos", addedFrom=T1, addedBefore="2026-10-21T10:00:01Z")
+    assert sorted(ids(both)) == ["new-high", "new-mid"]
+    # The reference set counts as added on its date.
+    reference = get("/api/videos", addedBefore="2026-09-02T00:00:00Z")
+    assert reference["total"] == len(VIDEOS) - 1  # vid-b5 was removed
+    # Channels: when their first video was added, so only channels new to the dataset.
+    channels = get("/api/channels", minVideos="1", addedFrom="2026-10-01T00:00:00Z")
+    assert ids(channels) == ["chan-d"]
+
+
+def test_added_must_be_a_utc_timestamp(grown_client: TestClient) -> None:
+    assert grown_client.get("/api/videos", params={"addedFrom": "2026-10-20"}).status_code == 422

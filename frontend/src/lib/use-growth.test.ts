@@ -1,11 +1,12 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { getMeta, type Meta } from "./api";
+import { getMeta, getVideos, type Meta } from "./api";
 import { POLL_MS, useGrowth } from "./use-growth";
 
 vi.mock("./api", async (importOriginal) => ({
   ...(await importOriginal<typeof import("./api")>()),
   getMeta: vi.fn(),
+  getVideos: vi.fn(),
 }));
 
 const meta = (videoCount: number, channelCount: number, changes: Partial<Meta> = {}): Meta => ({
@@ -26,6 +27,8 @@ beforeEach(() => {
   vi.useFakeTimers({ shouldAdvanceTime: true });
   visibility = "visible";
   vi.spyOn(document, "visibilityState", "get").mockImplementation(() => visibility);
+  // The past week's videos, as the rankings list them.
+  vi.mocked(getVideos).mockReset().mockResolvedValue({ items: [], total: 1043, asOf: "2026-10-26T10:00:00Z" });
 });
 
 afterEach(() => {
@@ -49,8 +52,10 @@ describe("useGrowth", () => {
       videos: 16402,
       channels: 542,
       pastWeek: 1043,
+      pastWeekQuery: expect.stringMatching(/^added:>\d{4}-\d{2}-\d{2}$/),
       from: { videos: 15359, channels: 540, pastWeek: 0 },
     });
+    expect(getVideos).toHaveBeenCalledWith(expect.objectContaining({ limit: 1, addedFrom: expect.any(String) }));
   });
 
   it("only goes up while the page is open, and the past week grows with it", async () => {

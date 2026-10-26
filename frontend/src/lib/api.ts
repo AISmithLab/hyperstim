@@ -118,6 +118,9 @@ export type ListParams = {
   limit: number;
   /** A list's `asOf`: answer as the dataset was then. */
   asOf?: string;
+  /** Only rows added from this UTC time (inclusive) and before this one (plan 007, search filters). */
+  addedFrom?: string;
+  addedBefore?: string;
 };
 
 /** The channel behind a YouTube channel or video link (compare page). */

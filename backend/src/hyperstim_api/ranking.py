@@ -79,8 +79,10 @@ class Ranking[T: Rankable]:
         query: str | None,
         offset: int,
         limit: int,
+        show: Callable[[T], bool] | None = None,
     ) -> tuple[list[Ranked[T]], int]:
-        """One page of the rows `keep` selects and `query` matches, and their count."""
+        """One page of the rows `keep` selects and `query` matches, and their count. Like
+        `query`, `show` only hides rows: the ranks stay those among all `keep` selects."""
         valued: list[tuple[T, float]] = []
         unranked: list[Ranked[T]] = []
         for item, value in self._orders[criterion]:
@@ -102,4 +104,6 @@ class Ranking[T: Rankable]:
         if query:
             q = fold(query)
             rows = [r for r in rows if r.item.id == query or q in self._text[r.item.id]]
+        if show is not None:
+            rows = [r for r in rows if show(r.item)]
         return rows[offset : offset + limit], len(rows)

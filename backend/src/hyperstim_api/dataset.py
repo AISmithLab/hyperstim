@@ -10,12 +10,15 @@ time they were removed, so a list can be shown as it was at an earlier time (`as
 import csv
 import json
 import logging
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 from hyperstim_api import scoring
 from hyperstim_api.ranking import Order, Ranked, Ranking
+
+# When added (UTC, ISO 8601): from (inclusive) and before (exclusive); None = open.
+type Added = tuple[str | None, str | None]
 
 log = logging.getLogger(__name__)
 
@@ -89,6 +92,7 @@ class Channel:
     features: tuple[Feature, ...]  # the 12: mean raw value and mean percentile of its videos
     videos: tuple[Video, ...]  # oldest first; ties by id
     categories: frozenset[str]  # its videos' categories
+    added_at: str | None  # when its first video was added; None: it's in the reference set
 
     @property
     def video_count(self) -> int:
@@ -109,6 +113,7 @@ class Dataset:
     version: str = ""  # UTC time of the last addition or removal, else the reference set's date
     reference_count: int = 0
     all_videos: tuple[Video, ...] = ()
+    reference_at: str = ""  # UTC: when the reference set counts as added (its features date)
     _channels_at: dict[str, Ranking[Channel]] = field(default_factory=dict, compare=False)
 
     @property
@@ -129,6 +134,18 @@ class Dataset:
     def last_added_at(self) -> str | None:
         return max((v.added_at for v in self.all_videos if v.added_at), default=None)
 
+    def _added_in(self, added: Added | None) -> Callable[[Video | Channel], bool] | None:
+        """Whether a video or channel was added in `added`: [from, before), UTC, either open."""
+        if added is None or added == (None, None):
+            return None
+        start, end = added
+
+        def show(item: Video | Channel) -> bool:
+            at = item.added_at or self.reference_at
+            return (start is None or at >= start) and (end is None or at < end)
+
+        return show
+
     def ranked_videos(
         self,
         sort: str,
@@ -138,9 +155,10 @@ class Dataset:
         offset: int,
         limit: int,
         as_of: str | None = None,
+        added: Added | None = None,
     ) -> tuple[list[Ranked[Video]], int]:
         """A page of videos by `sort` (score or a feature), ranked within `category`; as the
-        dataset was at `as_of` if given."""
+        dataset was at `as_of` if given. `added` only hides rows, like `query`."""
         as_of = self.current(as_of)
         return self.video_ranking.page(
             sort,
@@ -149,6 +167,7 @@ class Dataset:
             query,
             offset,
             limit,
+            self._added_in(added),
         )
 
     def ranked_channels(
@@ -161,9 +180,11 @@ class Dataset:
         limit: int,
         min_videos: int,
         as_of: str | None = None,
+        added: Added | None = None,
     ) -> tuple[list[Ranked[Channel]], int]:
         """A page of channels with `min_videos`+ videos and at least one in `category`; as the
-        dataset was at `as_of` if given."""
+        dataset was at `as_of` if given. `added` (when a channel's first video was added) only
+        hides rows, like `query`."""
         as_of = self.current(as_of)
         ranking = self.channel_ranking if as_of is None else self._channel_ranking_at(as_of)
         return ranking.page(
@@ -175,6 +196,7 @@ class Dataset:
             query,
             offset,
             limit,
+            self._added_in(added),
         )
 
     def _channel_ranking_at(self, as_of: str) -> Ranking[Channel]:
@@ -264,6 +286,9 @@ def _channel(members: list[Video]) -> Channel:
         features=tuple(features),
         videos=tuple(sorted(members, key=lambda v: (v.published_at or "", v.id))),
         categories=frozenset(v.category for v in members if v.category is not None),
+        added_at=None
+        if any(v.added_at is None for v in members)
+        else min(v.added_at for v in members if v.added_at is not None),
     )
 
 
@@ -345,9 +370,10 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
     channels = _channels(current)
     meta = json.loads(meta_path(path).read_text(encoding="utf-8"))
     # The reference set's date stands for "nothing added or removed yet".
+    reference_at = f"{meta['featuresDate']}T00:00:00Z"
     version = max(
         (t for v in videos for t in (v.added_at, v.removed_at) if t is not None),
-        default=f"{meta['featuresDate']}T00:00:00Z",
+        default=reference_at,
     )
     log.info(
         "Loaded %d videos (%d in the reference set, %d removed), %d channels from %s "
@@ -372,6 +398,7 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
         version=version,
         reference_count=reference_count,
         all_videos=tuple(videos),
+        reference_at=reference_at,
     )
 
 

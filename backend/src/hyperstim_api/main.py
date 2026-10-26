@@ -47,6 +47,15 @@ AsOf = Annotated[
     str | None,
     Query(alias="asOf", pattern=r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$"),
 ]
+# The search box's `added:` filters (plan 007), as UTC times: from (inclusive), before (exclusive).
+AddedFrom = Annotated[
+    str | None,
+    Query(alias="addedFrom", pattern=r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$"),
+]
+AddedBefore = Annotated[
+    str | None,
+    Query(alias="addedBefore", pattern=r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$"),
+]
 WEEK_S = 7 * 24 * 3600
 
 
@@ -311,11 +320,16 @@ def create_app(
         offset: Offset = 0,
         limit: Limit = 20,
         as_of: AsOf = None,
+        added_from: AddedFrom = None,
+        added_before: AddedBefore = None,
     ) -> VideoList:
         """Videos ranked by `sort`, searched by title and channel name; as the dataset was at
-        `asOf` if given."""
+        `asOf` if given. `addedFrom`/`addedBefore` show only videos added then (the reference
+        set counts as added on its date); like `q`, they don't change the ranks."""
         dataset = store.current
-        page, total = dataset.ranked_videos(sort, order, category or None, q, offset, limit, as_of)
+        page, total = dataset.ranked_videos(
+            sort, order, category or None, q, offset, limit, as_of, (added_from, added_before)
+        )
         return VideoList(
             items=[ranked_video(r) for r in page],
             total=total,
@@ -392,13 +406,23 @@ def create_app(
         limit: Limit = 20,
         min_videos: Annotated[int, Query(alias="minVideos", ge=1, le=1000)] = 5,
         as_of: AsOf = None,
+        added_from: AddedFrom = None,
+        added_before: AddedBefore = None,
     ) -> ChannelList:
         """Channels ranked by `sort` (whole-channel scores), listed under a category when at
         least one of their videos is in it; searched by name. As the dataset was at `asOf` if
-        given."""
+        given. `addedFrom`/`addedBefore` show only channels whose first video was added then."""
         dataset = store.current
         page, total = dataset.ranked_channels(
-            sort, order, category or None, q, offset, limit, min_videos, as_of
+            sort,
+            order,
+            category or None,
+            q,
+            offset,
+            limit,
+            min_videos,
+            as_of,
+            (added_from, added_before),
         )
         return ChannelList(
             items=[ranked_channel(r) for r in page],

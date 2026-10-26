@@ -364,6 +364,7 @@ function rankList<T extends Ranked>(
   items: T[],
   params: Params,
   names: (item: T) => string[],
+  addedAt: (item: T) => string = () => MOCK_REFERENCE,
 ): ListResponse<T & { rank: number | null }> {
   const sort = String(params.sort ?? "score");
   const order = String(params.order ?? "desc") as Order;
@@ -386,9 +387,15 @@ function rankList<T extends Ranked>(
   const ordered = [...(order === "asc" ? calmFirst : ranked), ...unranked];
   // A name matches in part; an ID (from a pasted link) exactly, as in the backend.
   const id = String(params.q ?? "").trim();
-  const matching = q
-    ? ordered.filter((item) => item.id === id || names(item).some((name) => fold(name).includes(q)))
-    : ordered;
+  // `addedFrom`/`addedBefore` only hide rows, like the search.
+  const from = String(params.addedFrom ?? "");
+  const before = String(params.addedBefore ?? "");
+  const matching = ordered.filter(
+    (item) =>
+      (!q || item.id === id || names(item).some((name) => fold(name).includes(q))) &&
+      (!from || addedAt(item) >= from) &&
+      (!before || addedAt(item) < before),
+  );
   const offset = Number(params.offset ?? 0);
   const limit = Number(params.limit ?? 20);
   // The mock data never changes, so every list is from the same version.
@@ -396,6 +403,7 @@ function rankList<T extends Ranked>(
 }
 
 const MOCK_VERSION = "2026-09-30T00:00:00Z";
+const MOCK_REFERENCE = "2026-09-01T00:00:00Z";
 
 /**
  * Channel links: `/channel/<mock ID>` and a mock video's link find their channel; `@zippy`
@@ -442,6 +450,8 @@ export async function mockRequest(method: Method, path: string, params: Params):
         allVideos().filter((v) => !category || v.category === category),
         params,
         (v) => [v.title, v.channel],
+        // The 3 added videos (see meta) are the list's last 3.
+        (v) => (allVideos().slice(-3).some((added) => added.id === v.id) ? MOCK_VERSION : MOCK_REFERENCE),
       );
     case "/api/channels":
       return rankList(allChannels(Number(params.minVideos ?? 5), category), params, (c) => [c.name]);

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import RollingNumber from "@/components/RollingNumber";
 import { asset } from "@/lib/asset";
 import { useGrowth } from "@/lib/use-growth";
@@ -75,9 +76,13 @@ function DatasetLine() {
       ) : (
         growth.pastWeek > 0 && (
           <p className="mt-3">
-            <span className={PILL}>
+            {/* It lists the videos it counts (plan 013). */}
+            <Link
+              href={`/rankings?${new URLSearchParams({ q: growth.pastWeekQuery })}`}
+              className={`${PILL} transition-colors hover:bg-sky-blue/25`}
+            >
               +<RollingNumber value={growth.pastWeek} from={growth.from.pastWeek} /> videos in the past week
-            </span>
+            </Link>
           </p>
         )
       )}

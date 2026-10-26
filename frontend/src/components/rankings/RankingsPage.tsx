@@ -17,7 +17,9 @@ import { channelHref, videoHref } from "@/lib/routes";
 import { useApi } from "@/lib/use-api";
 import { isChannelId, isVideoId, readSearchInput } from "@/lib/youtube";
 import Pagination from "./Pagination";
-import { MAX_QUERY, PAGE_SIZE, parseState, serializeState, type RankingState, type View } from "./state";
+import { filterTokens, parseSearch, type TokenSpan } from "@/lib/search-filters";
+import InfoTip from "@/components/InfoTip";
+import { MAX_QUERY, MAX_TEXT, PAGE_SIZE, parseState, serializeState, type RankingState, type View } from "./state";
 
 // The rankings page (plan 007): every video or channel, ranked by Overall or one measurement.
 
@@ -61,11 +63,14 @@ const formatCount = (n: number) => n.toLocaleString("en-US");
 export type Pin = { asOf?: string };
 
 async function loadRows(state: RankingState, pin: Pin): Promise<ListResponse<Row>> {
+  const search = parseSearch(state.q);
   const params = {
     sort: state.sort,
     order: state.order,
     category: state.category,
-    q: state.q,
+    q: search.words.slice(0, MAX_QUERY),
+    addedFrom: search.added.from,
+    addedBefore: search.added.before,
     offset: (state.page - 1) * PAGE_SIZE,
     limit: PAGE_SIZE,
     asOf: pin.asOf,
@@ -114,7 +119,7 @@ export default function RankingsPage() {
   /** Changes the state (back to page 1 unless a page is given) and writes it to the URL. */
   const update = useCallback(
     (change: Partial<RankingState>, how: "push" | "replace" = "push") => {
-      const query = serializeState({ ...state, page: 1, ...change });
+      const query = serializeState({ ...state, page: 1, ...change }, change.category);
       router[how](query ? `/rankings?${query}` : "/rankings", { scroll: false });
     },
     [state, router],
@@ -222,22 +227,27 @@ export default function RankingsPage() {
   );
 }
 
-/** The search is a video ID (Videos) or a channel ID (Channels), as a pasted link leaves it. */
-const isLinkId = (state: RankingState) => (state.view === "videos" ? isVideoId(state.q) : isChannelId(state.q));
+/** The search words are a video ID (Videos) or a channel ID (Channels), as a pasted link leaves them. */
+const isLinkId = (state: RankingState) => {
+  const { words } = parseSearch(state.q);
+  return state.view === "videos" ? isVideoId(words) : isChannelId(words);
+};
 
 function resultsLine(state: RankingState, total: number): string {
   const from = (state.page - 1) * PAGE_SIZE + 1;
   const to = Math.min(total, state.page * PAGE_SIZE);
   const label = categoryLabel(state.category)?.toLowerCase();
   const s = total === 1 ? "" : "s";
+  const { words, addedText } = parseSearch(state.q);
+  const added = addedText ? ` ${addedText}` : "";
   // A pasted link is searched by its ID, which means nothing to read.
-  const matching = isLinkId(state) ? " for this link" : state.q ? ` matching “${state.q}”` : "";
+  const matching = isLinkId(state) ? " for this link" : words ? ` matching “${words}”` : "";
   // Channels: the 5-video minimum is said, so the count adds up with the home page's (plan 013).
   const things =
     state.view === "videos"
-      ? `${label ? `${label} ` : ""}video${s}${matching}`
-      : label
-        ? `channel${s} with ${label} videos${matching} (${MIN_VIDEOS}+ videos each)`
+      ? `${label ? `${label} ` : ""}video${s}${added}${matching}`
+      : label || added
+        ? `channel${s}${label ? ` with ${label} videos` : ""}${added}${matching} (${MIN_VIDEOS}+ videos each)`
         : `channel${s} with ${MIN_VIDEOS}+ videos${matching}`;
   return `Showing ${formatCount(from)}–${formatCount(to)} of ${formatCount(total)} ${things}`;
 }
@@ -457,36 +467,41 @@ function SearchBox({
   const latest = pending.at(-1) ?? value;
 
   const trimmed = text.trim();
+  const parsed = parseSearch(trimmed);
+  const words = parsed.words;
+  // The search words with the filters put back in front, as the URL keeps them.
+  const withFilters = (q: string) => [...filterTokens(trimmed), q].join(" ").trim().slice(0, MAX_TEXT);
   const loadChannel = useCallback(
     () => (linkToFind ? lookupChannel(linkToFind) : Promise.resolve(null)),
     [linkToFind],
   );
   const found = useApi(loadChannel);
-  const foundNow = linkToFind === trimmed && found.status !== "loading" && !found.stale;
+  const foundNow = linkToFind === words && found.status !== "loading" && !found.stale;
 
   // What to search for (null: nothing), or what to say instead.
-  const entry = readSearchInput(trimmed);
+  const entry = readSearchInput(words);
   let target: string | null = null;
   let message: string | null = null;
   let busy = false;
-  if (entry.kind === "empty") target = "";
-  else if (entry.kind === "name") target = trimmed.slice(0, MAX_QUERY);
+  if (parsed.error) message = parsed.error;
+  else if (entry.kind === "empty") target = withFilters("");
+  else if (entry.kind === "name") target = withFilters(words.slice(0, MAX_QUERY));
   else if (entry.kind === "badLink") message = "That doesn’t look like a YouTube link or video ID.";
   else if (view === "videos") {
-    if (entry.kind === "video") target = entry.id;
+    if (entry.kind === "video") target = withFilters(entry.id);
     else message = "That’s a channel link. Switch to Channels to find a channel.";
   } else if (entry.kind === "video") {
     message = "That’s a video link. To find a channel, paste a channel’s link or type its name.";
   } else if (entry.kind === "channel") {
-    target = entry.id; // its ID is in the link: no lookup
-  } else if (linkToFind !== trimmed) {
+    target = withFilters(entry.id); // its ID is in the link: no lookup
+  } else if (linkToFind !== words) {
     message = PRESS_ENTER;
   } else if (!foundNow) {
     busy = true;
   } else if (found.status === "error") {
     message = lookupErrorText(found.error);
   } else if (found.status === "success" && found.data) {
-    target = found.data.channelId;
+    target = withFilters(found.data.channelId);
   }
 
   useEffect(() => {
@@ -509,68 +524,137 @@ function SearchBox({
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    if (view === "channels" && entry.kind === "channelPage") {
-      if (linkToFind !== trimmed) setLinkToFind(trimmed);
+    if (view === "channels" && entry.kind === "channelPage" && !parsed.error) {
+      if (linkToFind !== words) setLinkToFind(words);
       else if (found.status === "error") found.retry();
     } else if (target !== null && target !== latest) search(target);
   };
 
+  // The filters typed so far are highlighted behind the text, so it's clear they're filters.
+  const inputRef = useRef<HTMLInputElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const syncScroll = () => {
+    if (backdropRef.current && inputRef.current) backdropRef.current.scrollLeft = inputRef.current.scrollLeft;
+  };
+  useEffect(syncScroll, [text]);
+
   const label = view === "videos" ? "Search videos" : "Search channels";
   return (
-    <form role="search" onSubmit={submit} className="relative w-full md:max-w-md">
-      <label htmlFor="rankings-search" className="sr-only">
-        {label}
-      </label>
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 20 20"
-        className="pointer-events-none absolute top-1/2 left-5 size-4 -translate-y-1/2"
-      >
-        <circle cx="8.5" cy="8.5" r="5.5" fill="none" strokeWidth="2.25" className="stroke-navy" />
-        <path d="m12.75 12.75 4.5 4.5" strokeWidth="2.25" strokeLinecap="round" className="stroke-navy" />
-      </svg>
-      <input
-        id="rankings-search"
-        type="search"
-        value={text}
-        maxLength={500}
-        onPaste={() => {
-          pasted.current = true;
-        }}
-        onChange={(e) => {
-          const next = e.target.value;
-          setText(next);
-          // A pasted handle link is looked up at once; a typed one waits for Enter.
-          const lookUp = pasted.current && view === "channels" && readSearchInput(next).kind === "channelPage";
-          pasted.current = false;
-          setLinkToFind(lookUp ? next.trim() : null);
-        }}
-        placeholder={view === "videos" ? "Title, channel, or video link…" : "Channel name or link…"}
-        autoComplete="off"
-        className="h-12 w-full rounded-full border-2 border-navy bg-white pr-5 pl-12 text-navy placeholder:text-ink/70 focus:shadow-[0_0_0_5px_var(--color-sunny)] focus:outline-none"
-      />
+    <form role="search" onSubmit={submit} className="flex w-full items-center gap-1 md:max-w-md">
+      <div className="relative min-w-0 flex-1">
+        <label htmlFor="rankings-search" className="sr-only">
+          {label}
+        </label>
+        {/* Behind the input: its text, transparent, with the filters marked; clipped and scrolled as the input's text is. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-full border-2 border-transparent bg-white">
+          <div
+            ref={backdropRef}
+            className="absolute inset-y-0 right-5 left-12 overflow-hidden leading-[2.75rem] whitespace-pre text-transparent"
+          >
+            <Highlighted text={text} marks={parseSearch(text).tokens} />
+          </div>
+        </div>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 20 20"
+          className="pointer-events-none absolute top-1/2 left-5 size-4 -translate-y-1/2"
+        >
+          <circle cx="8.5" cy="8.5" r="5.5" fill="none" strokeWidth="2.25" className="stroke-navy" />
+          <path d="m12.75 12.75 4.5 4.5" strokeWidth="2.25" strokeLinecap="round" className="stroke-navy" />
+        </svg>
+        <input
+          ref={inputRef}
+          id="rankings-search"
+          type="search"
+          value={text}
+          maxLength={500}
+          onPaste={() => {
+            pasted.current = true;
+          }}
+          onChange={(e) => {
+            const next = e.target.value;
+            setText(next);
+            // A pasted handle link is looked up at once; a typed one waits for Enter.
+            const nextWords = parseSearch(next).words;
+            const lookUp = pasted.current && view === "channels" && readSearchInput(nextWords).kind === "channelPage";
+            pasted.current = false;
+            setLinkToFind(lookUp ? nextWords : null);
+          }}
+          onScroll={syncScroll}
+          onSelect={syncScroll}
+          placeholder={view === "videos" ? "Title, channel, or video link…" : "Channel name or link…"}
+          autoComplete="off"
+          className="relative h-12 w-full rounded-full border-2 border-navy bg-transparent pr-5 pl-12 text-navy placeholder:text-ink/70 focus:shadow-[0_0_0_5px_var(--color-sunny)] focus:outline-none"
+        />
+      </div>
+      <InfoTip id="search-info" label="How to search">
+        <p>Search by title or channel, or paste a YouTube link. Filters:</p>
+        <dl className="mt-2 grid gap-1.5">
+          {SEARCH_FILTERS.map(([filter, meaning]) => (
+            <div key={filter}>
+              <dt className="font-semibold text-navy">{filter}</dt>
+              <dd>{meaning}</dd>
+            </div>
+          ))}
+        </dl>
+      </InfoTip>
     </form>
   );
+}
+
+const SEARCH_FILTERS = [
+  ["category:music", "music, narrative, play, educational or gaming"],
+  ["added:2026-10-20", "added that day"],
+  ["added:>2026-10-20", "added after it (also <, >=, <=)"],
+];
+
+/** The search text with its filters marked (see STYLE.md, Search filters); the text itself is transparent. */
+function Highlighted({ text, marks }: { text: string; marks: TokenSpan[] }) {
+  const parts: ReactNode[] = [];
+  let at = 0;
+  for (const { start, end } of marks) {
+    parts.push(text.slice(at, start));
+    parts.push(
+      <mark key={start} className="rounded-sm bg-sky-blue/25 text-transparent">
+        {text.slice(start, end)}
+      </mark>,
+    );
+    at = end;
+  }
+  parts.push(text.slice(at));
+  return <>{parts}</>;
 }
 
 function NoMatch({ state, onClear }: { state: RankingState; onClear: () => void }) {
   const label = categoryLabel(state.category)?.toLowerCase();
   const things = `${label ? `${label} ` : ""}${VIEWS[state.view].noun}`;
   // A pasted link (searched by its ID) that isn't ranked: say why. With a category, the category may hide it.
-  const linked = !state.category && isLinkId(state);
-  if (!state.q) return <p className={MESSAGE_BOX}>No {things} yet.</p>;
+  const { words, addedText } = parseSearch(state.q);
+  const linked = !state.category && !addedText && isLinkId(state);
+  const filtered = `${things}${addedText ? ` ${addedText}` : ""}`;
+  if (!words) {
+    if (!addedText) return <p className={MESSAGE_BOX}>No {things} yet.</p>;
+    return (
+      <div className={MESSAGE_BOX}>
+        <p>No {filtered}.</p>
+        <button type="button" onClick={onClear} className={`mt-3 ${OUTLINED_BUTTON}`}>
+          Clear search
+        </button>
+      </div>
+    );
+  }
   return (
     <div className={MESSAGE_BOX}>
       {linked && state.view === "videos" ? (
         <p>
           This video isn’t in our dataset.{" "}
-          <TextLink href={videoHref(state.q)}>Check it</TextLink>
+          <TextLink href={videoHref(words)}>Check it</TextLink>
         </p>
       ) : linked ? (
-        <UnrankedChannel id={state.q} />
+        <UnrankedChannel id={words} />
       ) : (
         <p>
-          No {things} match “{state.q}”.
+          No {filtered} match “{words}”.
         </p>
       )}
       <button type="button" onClick={onClear} className={`mt-3 ${OUTLINED_BUTTON}`}>
