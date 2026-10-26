@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
-
-/** Sweep time of the needle on first render, in ms. */
-const DURATION = 1000;
+import type { ReactNode } from "react";
+import { useCountUp } from "@/lib/motion";
 
 // Dial geometry in SVG units: a half circle open at the bottom.
 const CX = 120;
@@ -21,30 +19,6 @@ export function needleAngle(score: number): number {
 function point(score: number, r: number): [number, number] {
   const a = Math.PI - (needleAngle(score) * Math.PI) / 180;
   return [CX + r * Math.cos(a), CY - r * Math.sin(a)];
-}
-
-function prefersReducedMotion(): boolean {
-  return typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-/** Counts from 0 up to `target` with an ease-out, or returns `target` at once with reduced motion. */
-function useCountUp(target: number): number {
-  const [value, setValue] = useState(() => (prefersReducedMotion() ? target : 0));
-  useEffect(() => {
-    // With reduced motion the first frame jumps straight to the target.
-    const duration = prefersReducedMotion() ? 0 : DURATION;
-    let frame = 0;
-    let start: number | undefined;
-    const step = (now: number) => {
-      start ??= now;
-      const t = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
-      setValue(target * (1 - (1 - t) ** 3));
-      if (t < 1) frame = requestAnimationFrame(step);
-    };
-    frame = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frame);
-  }, [target]);
-  return value;
 }
 
 /**
