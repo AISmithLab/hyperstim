@@ -128,6 +128,7 @@ Two separate limits: the **Data API quota** (listing uploads, video details, cha
 
 - **Exact counts, not "16k+"**: a rounded number hides the growth.
 - **Home hero: videos, channels, and the past week** _(human decision, 2026-10-25)_: "Explore and compare **16,402** videos from **542** channels to better understand what your child is watching." and under it, on its own line, the pill "**+1,043 videos in the past week**" _(human decision, 2026-10-26: after the sentence's two numbers, a bare "+1,043" read as unclear)_. The channel count is new on the home page _(human decision, 2026-10-25)_. The pill is on the home page only _(human decision, 2026-10-25)_. It counts the last 7 days (not since Monday), so it never drops to a small number at the start of a week _(human decision, 2026-10-25: counted in days)_, but says "in the past week" _(human decision, 2026-10-26: "the last 7 days" was one number too many)_.
+- **The pill links to the new videos** _(human decision, 2026-10-26)_: `/rankings?q=added:>{the date 7 days ago}`, so the rankings open with `added:>2026-10-19` in the search box and list only the videos added since (plan 007, Search filters). Hover and focus as a text link (underline).
 - **The pill's colour: `bg-sky` with `navy` text** (the pastel blue of How it works ④'s panel, ≥ 6 : 1), `rounded-full`, `text-sm font-bold`, not green _(human decision, 2026-10-25: green would bring in a new colour)_. `STYLE.md` gets it as a surface.
 - **Rankings page: no growing count** _(human decision, 2026-10-26)_. The results line ("Showing 1–25 of 16,402 videos") is the count: it stays put while the visitor is on the page (see No surprises while browsing) and is current at every page load, also when arriving from another page of the site, so it matches the home page's number. For channels it says the 5-video minimum ("… of 510 channels with 5+ videos"; with a category "… of 120 channels with music videos (5+ videos each)"), so it adds up with the home page's channel count, which counts every channel _(human decision, 2026-10-26: 544 on home vs 510 in the rankings looked like a mismatch)_. Plan 007's results line changes with it.
 - **The animation** _(human decision, 2026-10-25: option A on load, option B on arrival, from the options artifact)_:
@@ -245,4 +246,6 @@ Decisions made while building (2026-10-26), each in its spot above where it fits
 
 ## Open questions
 
-None. Usage counts: plan 014.
+- **The pill's number and the link's must agree.** The pill counts the last 7 × 24 hours; the link's `added:>2026-10-19` (dates only) means since midnight 6 days ago, so its list can be shorter or longer. Proposal: the pill counts the same window as its link, the last 7 days including today in the visitor's time zone (one list request, `addedAfter` + `limit=1`, for its total), still saying "in the past week".
+
+Usage counts: plan 014.
