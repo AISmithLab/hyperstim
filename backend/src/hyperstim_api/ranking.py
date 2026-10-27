@@ -110,7 +110,7 @@ class Ranking[T: Rankable]:
             added = None
         if not query and added is None:
             n = len(rows)
-            return [rows.ranked(i, order) for i in range(offset, min(offset + limit, n))], n
+            return [rows.ranked(i, order) for i in range(n)[offset : offset + limit]], n
         match = self._matcher(query, added)
         if keep is None and not query and added is not None:
             # Counted from the sorted add times, so no row is visited past the page.
