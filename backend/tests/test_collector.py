@@ -24,6 +24,24 @@ NOW = 1_793_000_000.0  # 2026-10-26
 CHANNEL = "UC" + "a" * 22
 
 
+# --- the store -----------------------------------------------------------------------------
+
+
+def test_a_transaction_commits_only_a_finished_block(tmp_path: Path) -> None:
+    store = Store(tmp_path / "collector.db")
+    with store.transaction():
+        store.set("a", 1)
+    with pytest.raises(RuntimeError), store.transaction():
+        store.set("b", 1)
+        raise RuntimeError
+    abandoned = store.transaction()
+    abandoned.__enter__()
+    store.set("c", 1)
+    abandoned.gen.close()  # left without __exit__, e.g. dropped mid-block
+    assert (store.get("a"), store.get("b"), store.get("c")) == ("1", "", "")
+    store.close()
+
+
 # --- the sampling rule ---------------------------------------------------------------------
 
 

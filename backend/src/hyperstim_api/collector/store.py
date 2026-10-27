@@ -104,12 +104,13 @@ class Store:
     @contextmanager
     def transaction(self) -> Iterator[None]:
         self.db.execute("BEGIN")
+        done = False
         try:
             yield
-        except BaseException:
-            self.db.execute("ROLLBACK")
-            raise
-        self.db.execute("COMMIT")
+            done = True
+        finally:
+            # Also rolls back when the generator is closed without finishing the block.
+            self.db.execute("COMMIT" if done else "ROLLBACK")
 
     # --- small values --------------------------------------------------------------
 
