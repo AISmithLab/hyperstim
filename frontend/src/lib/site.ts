@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const siteUrl = `${process.env.NEXT_PUBLIC_SITE_ORIGIN || "http://localhost:3000"}${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/`;
 
 /** The fixed pages, relative to siteUrl, as listed in the sitemap (plan 011). */
-export const fixedPages = ["", "rankings/", "compare/", "how-it-works/", "privacy/"];
+export const fixedPages = ["", "rankings/", "compare/", "how-it-works/", "about/", "privacy/"];
 
 /** The link-preview image in `public/`, composed from `art/Logo.png` and `art/kid_1.png`. */
 const shareImage = {
