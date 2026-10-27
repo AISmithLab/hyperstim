@@ -82,6 +82,8 @@ uv run --env-file .env python -m hyperstim_api.collector status                 
 - **Data API:** it shares the site's key and stops at `COLLECTOR_UNITS_PER_DAY` (7,000 of the 10,000 a day), leaving the rest for live checks.
 - **Categories:** v2's keyword classifier (`pipeline/63_classify_categories.py`); a video no keyword places has no category.
 - **Disk:** about 13 MB a clip; it pauses below 50 GB free.
+- **Backup:** once a day it copies `collector.db` to `COLLECTOR_CLIPS_DIR/backups/` (the newest 7 kept).
+- **One collector, on prod** (`deploy/README.md`). A second one would double the downloads from YouTube and pick different videos, so don't run it locally against the real key. Dev reads the copy the data bot commits daily (`COLLECTED_DIR=data/collected`, the default): `git pull` brings in the new videos.
 
 ## Usage numbers
 

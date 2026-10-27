@@ -158,6 +158,15 @@ if ! healthy; then
   fail "the new backend didn't answer /api/health; $back. No tag was pushed."
 fi
 
+# The collector (plan 013) runs the same release. If it doesn't stay up, the API release stands.
+say "Backend: restarting $SERVICE-collector"
+sudo -n systemctl restart "$SERVICE-collector"
+sleep 10
+if ! systemctl is-active --quiet "$SERVICE-collector"; then
+  log "$TAG" "collector-failed"
+  echo "release: the collector didn't stay up (the API is fine; carrying on): journalctl -u $SERVICE-collector" >&2
+fi
+
 # Keep the newest releases, by when they were checked out (a worktree's .git file is written once),
 # not by name: the checkouts from before the versions are named by date.
 for old in $(as_service sh -c 'stat -c "%Y %n" "$1"/v*/.git' sh "$REL" | sort -n | head -n "-$KEEP" | cut -d' ' -f2-); do

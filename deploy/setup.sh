@@ -22,7 +22,8 @@ fail() {
 [ -f "$CONFIG" ] || fail "no deploy/server.env: copy deploy/server.env.example and fill it in."
 . "$CONFIG"
 VARS="PROD_DIR SERVICE SERVICE_USER PORT RELEASE_GROUP RELEASERS NGINX_SITE CORS_ORIGIN
-  YOUTUBE_API_KEY ANALYSIS_LIMIT_PER_IP ANALYSIS_LIMIT_PER_DAY"
+  YOUTUBE_API_KEY ANALYSIS_LIMIT_PER_IP ANALYSIS_LIMIT_PER_DAY COLLECTOR_CLIPS_DIR COLLECT_PER_DAY
+  DATA_USER"
 for name in $VARS; do
   value="${!name:-}"
   [ -n "$value" ] || fail "$name is empty in deploy/server.env."
@@ -31,9 +32,17 @@ for name in $VARS; do
 done
 export YTDLP_COOKIES="${YTDLP_COOKIES:-}"
 [ -f "$NGINX_SITE" ] || fail "NGINX_SITE: no such file: $NGINX_SITE"
+case "$COLLECTOR_CLIPS_DIR" in
+  /home/* | /root/* | /run/user/*) fail "COLLECTOR_CLIPS_DIR can't be in a home folder: the collector's sandbox hides them." ;;
+  /*) ;;
+  *) fail "COLLECTOR_CLIPS_DIR must be an absolute path." ;;
+esac
+[ -d "$(dirname "$COLLECTOR_CLIPS_DIR")" ] || fail "COLLECTOR_CLIPS_DIR: no such folder: $(dirname "$COLLECTOR_CLIPS_DIR")"
 
 CHANGED=() # what this run changed, for the summary
 as_service() { sudo -u "$SERVICE_USER" env HOME="$PROD_DIR/data" PATH="$PROD_DIR/bin:/usr/bin:/bin" "$@"; }
+BOT_HOME="$PROD_DIR/data-bot"
+as_bot() { sudo -u "$DATA_USER" env HOME="$BOT_HOME" PATH=/usr/bin:/bin "$@"; }
 
 # install_file <template> <target> <mode> <owner:group>: render, and install only if it differs.
 install_file() {
@@ -76,8 +85,55 @@ for login in $RELEASERS; do
 done
 install -d -m 755 -o "$SERVICE_USER" -g "$SERVICE_USER" \
   "$PROD_DIR/repo" "$PROD_DIR/releases" "$PROD_DIR/uv" "$PROD_DIR/data"
-install -d -m 700 -o "$SERVICE_USER" -g "$SERVICE_USER" "$PROD_DIR/data/analysis" "$PROD_DIR/data/thumbnails"
+install -d -m 700 -o "$SERVICE_USER" -g "$SERVICE_USER" "$PROD_DIR/data/analysis" "$PROD_DIR/data/thumbnails" \
+  "$PROD_DIR/data/usage" "$PROD_DIR/data/collector" "$PROD_DIR/data/collector/collected"
+install -d -m 700 -o "$SERVICE_USER" -g "$SERVICE_USER" "$COLLECTOR_CLIPS_DIR"
 [ -e "$PROD_DIR/releases.log" ] || install -m 644 -o "$SERVICE_USER" -g "$SERVICE_USER" /dev/null "$PROD_DIR/releases.log"
+
+# --- The data bot (plan 013) -------------------------------------------------------------
+# Commits the collected dataset to GitHub daily, with a deploy key of the repo. Its own user, so
+# the services, which parse downloaded videos, never see the key.
+
+say "Data bot"
+if ! getent passwd "$DATA_USER" >/dev/null; then
+  useradd --system --home-dir "$BOT_HOME" --no-create-home --shell /usr/sbin/nologin "$DATA_USER"
+  CHANGED+=("user $DATA_USER")
+fi
+[ "$(getent passwd "$DATA_USER" | cut -d: -f6)" = "$BOT_HOME" ] || usermod --home "$BOT_HOME" "$DATA_USER"
+install -d -m 700 -o "$DATA_USER" -g "$DATA_USER" "$BOT_HOME" "$BOT_HOME/.ssh"
+if [ ! -f "$BOT_HOME/.ssh/id_ed25519" ]; then
+  as_bot ssh-keygen -q -t ed25519 -N "" -C "hyperstim data bot" -f "$BOT_HOME/.ssh/id_ed25519"
+  CHANGED+=("data bot's SSH key")
+fi
+# GitHub's published host key (docs.github.com, "GitHub's SSH key fingerprints"):
+# SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" |
+  install -m 644 -o "$DATA_USER" -g "$DATA_USER" /dev/stdin "$BOT_HOME/.ssh/known_hosts"
+DATA_REPO="$PROD_DIR/data-repo"
+ssh_url="git@github.com:$(git -C "$ROOT" remote get-url origin | sed -E 's#^.*github\.com[:/]##; s#\.git$##').git"
+if [ ! -e "$DATA_REPO/.git" ]; then
+  install -d -m 755 -o "$DATA_USER" -g "$DATA_USER" "$DATA_REPO"
+  if as_bot git clone --quiet "$ssh_url" "$DATA_REPO"; then
+    CHANGED+=("data bot's clone of $ssh_url")
+  else
+    BOT_KEY_NEEDED=1
+  fi
+elif [ "$(as_bot git -C "$DATA_REPO" remote get-url origin)" != "$ssh_url" ]; then
+  as_bot git -C "$DATA_REPO" remote set-url origin "$ssh_url"
+  CHANGED+=("data bot's origin set to $ssh_url")
+fi
+
+# --- Who reads what -----------------------------------------------------------------------
+# The release group reads the service's results, usage counts and the collector's state (plan
+# 014); the bot reads only the collector's exported files. ACLs, so nobody else gets in; the
+# default (d:) entries cover files made later.
+
+say "Read access"
+for dir in "$PROD_DIR/data/analysis" "$PROD_DIR/data/usage" "$PROD_DIR/data/collector"; do
+  setfacl -R -m "g:$RELEASE_GROUP:rX,d:g:$RELEASE_GROUP:rX" "$dir"
+done
+setfacl -m "u:$DATA_USER:x" "$PROD_DIR/data/collector"
+setfacl -R -m "u:$DATA_USER:rX,d:u:$DATA_USER:rX" "$PROD_DIR/data/collector/collected"
 
 # --- The clone --------------------------------------------------------------------------
 
@@ -107,6 +163,29 @@ systemctl is-enabled --quiet "$SERVICE" || systemctl enable --quiet "$SERVICE"
 if [ "$restart" = 1 ] && systemctl is-active --quiet "$SERVICE"; then
   systemctl restart "$SERVICE"
   CHANGED+=("restarted $SERVICE")
+fi
+
+# The collector (plan 013): enabled here, started by release.sh (the running release may not
+# have it yet). Restarted here only if it's running and its settings changed.
+COLLECTOR="$SERVICE-collector"
+install_file collector.service.template "$PROD_DIR/$COLLECTOR.service" 644 root:root && restart=1
+[ -L "/etc/systemd/system/$COLLECTOR.service" ] || systemctl link --quiet "$PROD_DIR/$COLLECTOR.service"
+systemctl daemon-reload
+systemctl is-enabled --quiet "$COLLECTOR" || systemctl enable --quiet "$COLLECTOR"
+if [ "$restart" = 1 ] && systemctl is-active --quiet "$COLLECTOR"; then
+  systemctl restart "$COLLECTOR"
+  CHANGED+=("restarted $COLLECTOR")
+fi
+
+# The data bot's daily commit: on once its clone exists (that needs the deploy key on GitHub).
+for unit in data.service data.timer; do
+  install_file "$unit.template" "$PROD_DIR/$SERVICE-$unit" 644 root:root || true
+  [ -L "/etc/systemd/system/$SERVICE-$unit" ] || systemctl link --quiet "$PROD_DIR/$SERVICE-$unit"
+done
+systemctl daemon-reload
+if [ -e "$DATA_REPO/.git" ] && ! systemctl is-enabled --quiet "$SERVICE-data.timer"; then
+  systemctl enable --now --quiet "$SERVICE-data.timer"
+  CHANGED+=("daily commit timer on")
 fi
 
 # --- Releasing --------------------------------------------------------------------------
@@ -159,5 +238,10 @@ if [ "${#CHANGED[@]}" = 0 ]; then
 else
   say "Changed:"
   printf '  %s\n' "${CHANGED[@]}"
+fi
+if [ -n "${BOT_KEY_NEEDED:-}" ]; then
+  say "Next: a repo admin adds the data bot's key on GitHub (Settings -> Deploy keys -> Add deploy key,"
+  say "\"Allow write access\" on), then run sudo deploy/setup.sh again. The key:"
+  cat "$BOT_HOME/.ssh/id_ed25519.pub"
 fi
 [ -e "$PROD_DIR/releases/current" ] || say "Next: the first release, with hyperstim-release (see the root README)."

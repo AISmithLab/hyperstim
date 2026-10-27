@@ -22,13 +22,17 @@ Prod is the frontend on GitHub Pages and the backend on our server, both at the 
    sudo deploy/setup.sh
    ```
 
-   It installs the tools in `tools.env`, then sets up the user, group, folders, clone, the API's settings, the systemd service, nginx (under `/v2/` on the API host), the sudo rule for releasing, and the `hyperstim-release` command. It checks nginx and sudoers before using them.
+   It installs the tools in `tools.env`, then sets up the user, group, folders, clone, the API's settings, the systemd services (the API and the collector), the data bot (below), read access for the release group, nginx (under `/v2/` on the API host), the sudo rule for releasing, and the `hyperstim-release` command. It checks nginx and sudoers before using them.
+
+   The first time, it prints the **data bot's key** and stops short of the daily commit: a repo admin adds the key (GitHub → Settings → Deploy keys → Add deploy key, "Allow write access" on), then run `sudo deploy/setup.sh` again. It then clones the repo for the bot and turns the daily commit on.
 
 3. Run it again whenever you change `deploy/server.env` or pull a change to this folder or `tools.env`. It changes only what differs and lists what it changed.
 
 Then make the first release with `hyperstim-release`.
 
 ## GitHub (once, by a repo admin)
+
+0. Settings → Rules → Rulesets → New tag ruleset: target `v*`; restrict creations, updates and deletions; bypass: repository admins only. The data bot's deploy key can push to `main`, so this keeps it from starting a deployment (plan 013).
 
 1. Settings → Pages → Build and deployment: source **GitHub Actions**.
 2. Settings → Environments → `github-pages` → Deployment branches and tags: add the tag rule `v*` (by default only `main` may deploy).
@@ -58,11 +62,20 @@ In the cloud provider's security group for the server, allow only SSH (22) and H
   <service>.service            systemd unit, linked into systemd
   nginx-*.conf                 per-IP connection cap and the /v2/ locations, included by nginx
   releases.log                 one line per release: time, who, tag, commit, result
+  data/collector/              the collector's database and exported files (collected/, which the API reads)
+  data/usage/                  daily usage counts (plan 014)
+  <service>-collector.service  systemd unit of the collector (plan 013)
+  <service>-data.service/.timer  the data bot's daily commit of collected/ to GitHub, at 03:00 UTC
+  data-bot/                    the data bot's home: its SSH key (data bot user)
+  data-repo/                   the data bot's clone, pushed with the deploy key (data bot user)
+<clips-dir>/                   COLLECTOR_CLIPS_DIR: the collector's clips, feature caches and daily database backups (7 kept)
 ```
 
 All of these except `releases/`, `data/` and `releases.log` are written by `setup.sh` from the templates here (`*.template`) and `server.env`; edit those, not the files on the server. Outside `<prod-dir>`, `setup.sh` adds only a symlink for the unit and one for the nginx connection cap, one `include` line in the nginx site file (with a backup next to the instance), `/etc/sudoers.d/<service>`, and `/usr/local/bin/hyperstim-release`.
 
-The service runs as its own system user, so it can't read anyone's home folder or credentials, and its sandbox (`service.template`) lets it write only to `data/`. Root owns everything the service user must not change.
+The service runs as its own system user, so it can't read anyone's home folder or credentials, and its sandbox (`service.template`) lets it write only to `data/`. The collector runs as the same user, on one core at low priority, and may write only to `data/` and the clips folder. Root owns everything the service user must not change.
+
+The data bot is a separate system user (no login, no sudo) with the only key that can push. It runs the released `scripts/commit-data.sh`, reads only `data/collector/collected/`, and may write only to its home and clone. The release group can read `data/analysis/`, `data/usage/` and `data/collector/` (ACLs); nobody else can.
 
 ## Renaming the repo
 
@@ -77,7 +90,8 @@ The old address then returns 404: GitHub doesn't redirect a renamed repo's Pages
 
 ## Day to day
 
-- **Logs:** `journalctl -u <service>`; releases in `<prod-dir>/releases.log`.
+- **Logs:** `journalctl -u <service>`, `-u <service>-collector`, `-u <service>-data`; releases in `<prod-dir>/releases.log`.
+- **The collector's health:** from `<prod-dir>/releases/current/backend`, as the service user: `sudo -u <service-user> sh -c 'set -a; . <prod-dir>/env; .venv/bin/python -m hyperstim_api.collector status'`.
 - **What's live:** `readlink <prod-dir>/releases/current`.
 - **Rollback:** `hyperstim-release <older tag>` releases that commit under a new tag.
 - **A new releaser:** add their login to `RELEASERS` in `server.env` and run `sudo deploy/setup.sh`. They need push access to the GitHub repo and a clone of it on the server.

@@ -1,0 +1,11 @@
+# Runs the daily commit of the collected dataset (plan 013). Written by deploy/setup.sh.
+[Unit]
+Description=HyperStim website: commit the collected dataset daily (prod)
+
+[Timer]
+OnCalendar=*-*-* 03:00:00 UTC
+# A run missed while the server was off happens at the next boot.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

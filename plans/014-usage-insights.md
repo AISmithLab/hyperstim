@@ -57,7 +57,7 @@ Daily totals, counted by our server **as part of what it already does for each v
 1. Review this plan.
 2. **Counting:** the in-memory counter and the daily files, added where the backend already handles these requests; the search chains. Tests (counts, prefix chains, paging not counted, no IP in any file).
 3. **Privacy policy:** the sentence, plan 009's table row, "Last updated".
-4. **Server:** read access for the release group (`setup.sh`, plan 010).
+4. **Server:** read access for the release group (`setup.sh`, plan 010), built with plan 013's deployment (decision 11).
 5. **Docs:** `backend/README.md` ("Usage numbers" guide).
 
 ## Open questions

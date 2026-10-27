@@ -159,7 +159,7 @@ Two separate limits: the **Data API quota** (listing uploads, video details, cha
 - **A reload builds a whole new dataset** off to the side (sorted rankings and ready-made ranks, plan 007) and swaps it in at once; requests keep using the old one until then.
 - **The loaded dataset is kept out of Python's garbage collector** _(human decision, 2026-10-27: its full passes over the dataset's ~474k objects took ~250 ms each, freed nothing, and delayed random requests by 150–190 ms)_: after the first load and after each swap, `gc.freeze()`, so the collector's passes skip it. It costs no memory: the dataset is freed by reference counting when it's replaced (checked: all of it, with nothing left for the collector). Before each swap's freeze, `gc.unfreeze()` and one `gc.collect()` in the reload thread, as a safeguard should the dataset ever hold reference cycles; that one pass (~250 ms) is the only pause left, once per reload.
 - The daily commit is only the record and the backup. A release changes nothing about which videos are served.
-- Dev reads the committed copy (`COLLECTED_DIR` = `backend/data/collected/` in `.env.example`), so a fresh clone shows the dataset as of the last daily commit.
+- **One collector, on prod; dev reads the committed copy** (`COLLECTED_DIR` = `backend/data/collected/` in `.env.example`), so a fresh clone shows the dataset as of the last daily commit, and `git pull` brings in the new videos _(human decision, 2026-10-27: keeps the repo the only link between prod and dev; a second collector would double the load on YouTube and pick different videos)_.
 
 **The files** (append-only, so each day's diff is just the new lines and git stays small):
 
@@ -184,6 +184,47 @@ Two separate limits: the **Data API quota** (listing uploads, video details, cha
 - **A new commit type `data`**: added to `CLAUDE.md`'s commit rules (what it's for: the bot's daily dataset commits only) and to the `commit-msg` hook.
 - `data:` commits **don't bump the version and aren't listed** in the notes. Instead the notes get one line, from the files: "Dataset: 16,375 → 21,402 videos, 542 → 560 channels since v1.3.0." So releases stay about the code, and the growth shows up once per release.
 - With only `data:` commits since the last release, `release.sh` says there's nothing to release and stops (nothing would change on the site anyway).
+
+### 11. On the prod server (step 5)
+
+Added to plan 010's instance by `deploy/setup.sh`, from `server.env`, like the rest of it:
+
+```
+<prod-dir>/
+  data/collector/              COLLECTOR_DATA_DIR: collector.db, collected/ (COLLECTED_DIR)
+  data/usage/                  USAGE_DIR (plan 014)
+  data-repo/                   the data bot's clone (bot user), pushes with the deploy key
+  <service>-collector.service  the collector
+  <service>-data.service/.timer the daily commit
+  env                          gains COLLECTED_DIR, USAGE_DIR and the collector's settings
+<clips-dir>/                   COLLECTOR_CLIPS_DIR (server.env): clips/, cache/, work/, backups/
+```
+
+- **`server.env` gains three values:** `COLLECTOR_CLIPS_DIR` (the existing local folder on the clips volume), `COLLECT_PER_DAY` (150) and `DATA_USER` (the bot's system user). The units budget stays at its default (7,000).
+- **The collector unit** runs `python -m hyperstim_api.collector run` from `releases/current`, as the service user, with the same `env` file and sandbox as the API. It may write only to `data/` and the clips folder; `CPUQuota=100%`, `Nice=10`, `CPUWeight=20`, idle I/O priority, `MemoryMax=2G`. `setup.sh` enables it but doesn't start it; `release.sh` does (the running release may not have the collector yet).
+- **`release.sh` restarts both:** the collector after the API is healthy (and keeps the API if the collector doesn't come up: it says so and logs `collector-failed`). The sudo rule gains `systemctl restart <service>-collector`.
+- **The daily backup** of `collector.db` is done by the collector itself, once a day (SQLite's online backup), into `<clips-dir>/backups/`, keeping 7. On the clips volume, so a lost system disk doesn't take the backups with it. Tests.
+- **The data bot:** its own system user (no login shell, no sudo), home in `<prod-dir>/data-bot/` with an SSH key `setup.sh` makes and prints (GitHub's host key pinned, checked against GitHub's published fingerprint). Its timer runs daily at 03:00 UTC (`Persistent`, so a missed run catches up): `releases/current/scripts/commit-data.sh <prod-dir>/data-repo <prod-dir>/data/collector/collected`, so it runs released code, never unreleased `main`. Sandboxed: it may write only to its home and clone.
+- **Who reads what** (ACLs, so nobody else gets in): the release group reads `data/analysis/`, `data/usage/` and `data/collector/` (plan 014); the bot reads only `data/collector/collected/`. `setup.sh` sets them, also as defaults for new files.
+
+**The handover** (go-live), so nothing is collected twice:
+
+1. Stop the local collector (Claude).
+2. `sudo deploy/setup.sh` (folders, units, bot, key).
+3. Move the local collector's state in and hand the clips folder to the service user, then run `setup.sh` again for the ACLs (the local `COLLECTOR_DATA_DIR` is `<clips-dir>/data`):
+
+   ```sh
+   sudo mv <clips-dir>/data/collector.db* <prod-dir>/data/collector/
+   sudo mv <clips-dir>/data/collected/* <prod-dir>/data/collector/collected/
+   sudo mv <clips-dir>/data/collector.log <prod-dir>/data/collector/local-run.log
+   sudo rmdir <clips-dir>/data/collected <clips-dir>/data
+   sudo chown -R <service-user>: <prod-dir>/data/collector <clips-dir>
+   sudo deploy/setup.sh
+   ```
+4. `hyperstim-release`: the API serves the collected videos, the collector carries on where the local one stopped.
+5. Local `.env`s point `COLLECTED_DIR` back at `backend/data/collected/`; it fills from the bot's first commit, the day after go-live.
+
+**One release instead of two, with no trial period** _(human decision, 2026-10-27)_: the collector, the frontend and `COLLECTED_DIR` go live together in one release.
 
 ### Privacy policy (plan 009)
 
@@ -215,10 +256,10 @@ Build (Claude; each on the plan's branch with lint, type check, tests and build 
 2. **Collector core** (`backend/src/hyperstim_collector/`): Data API client (uploads, metadata, discovery, monthly offline check; daily unit budget, resumable), the sampling rule (tests: nothing leaves as `t` rises, v2 picks kept, new uploads and new channels under `t`, same chance whenever in the year a video comes out), eligibility (v2's checks and Shorts probe), priority queue, SQLite schema.
 3. **Measure and export:** reuse `Pipeline` from `analysis.py`; category via the copied classifier; atomic `collected.tsv` / `removed.tsv`; pacing, block detection and back-off, waiting for live checks; `status` command; the daily commit (bot user, timer, guard rails), `data` type in `release.sh`, `release-notes.sh`, the hook and CI. Tests with a fake downloader.
 4. **API:** load base + collected − removed, score against the reference set, reload on file change without a restart; `asOf` on the list endpoints (tests: page 2 at an earlier time continues page 1 exactly, also across an addition and a removal); `meta` fields; the `youtube-blocked` marker from live analysis. Tests.
-5. **Deploy (plan 010):** systemd unit and `server.env` values, `setup.sh`, `release.sh`, `deploy/README.md`; backups; the data bot's deploy key and the `v*` tag ruleset (by hand, a repo admin).
-6. **First run on the server**, before any frontend change, with the API not yet serving the added videos (`COLLECTED_DIR` unset in prod): list all uploads (3 days of quota), then collect at 150/day for 2 weeks; check the block log, CPU use (1 core), measurement times, and that collected videos' features match a few re-measured v2 videos.
+5. **Deploy (plan 010, decision 11):** _built 2026-10-27._ the collector and data-bot units and timer, `server.env.example`, `env.template`, `setup.sh` (folders, bot user and key, ACLs), the sudo rule, `release.sh` (restart both), the collector's daily backup (tests), `deploy/README.md`, plans 010 and 014. Checked with `shellcheck` and a dry run of `setup.sh`'s rendering. Stop for review.
+6. **First run on the server:** none; no trial period before go-live _(human decision, 2026-10-27)_. The local run on this server since 2026-10-26 already showed downloads and measuring work there.
 7. **Frontend:** exact counts, the count-up and rolling digits, up only (home: videos, channels, pill), polling `meta` while visible, `asOf` in rankings and compare pickers, `api.ts` types, How it works copy and the two common questions; `STYLE.md` gets the count's style; screenshots at 360/1280 px.
-8. **Go live:** set `COLLECTED_DIR` in prod's `server.env`, then a release (frontend and backend together, by the team).
+8. **Go live:** the handover (decision 11), then a release (frontend and backend together, by the team).
 9. **Docs:** `backend/README.md` (collector, env vars, commands), `.env.example`, plans 001/002/006/007/010, `CLAUDE.md`.
 10. **Faster numbers on the home page** (2026-10-27): the count-up at the same speed (1 s for the longest, at least 0.3 s; `RollingNumber` takes a duration, the hero works it out; `STYLE.md` Growing counts); `gc.freeze()` after each load (10, tests: a reload frees the old dataset); plan 007's step 8. Measure on the dev site before and after (time until the numbers settle), screenshots at 360/1280 px. Stop for review.
 
@@ -226,15 +267,14 @@ By hand (the team), in order:
 
 | When | Who | What |
 |---|---|---|
-| Now | you | Review plans 013 and 014; answer 014's open question. |
-| Before step 6 | a repo admin | GitHub → Settings → Rules → Rulesets → New tag ruleset: target `v*`, restrict creations, updates and deletions, bypass: repository admins only. |
-| Before step 6 | you, on the server | Fill the new values in `deploy/server.env` (from `server.env.example`: the clips folder on the clips volume, the pace 150, the data bot's user), then `sudo deploy/setup.sh`. It prints the data bot's public key. |
-| Before step 6 | a repo admin | GitHub → Settings → Deploy keys → Add deploy key: the printed key, "Allow write access" on. |
-| Before step 6 | you | `hyperstim-release`: ships the collector (steps 2–5). Nothing on the site changes yet, since the API doesn't serve the added videos until step 8. |
-| Step 6 (3 days, then 2 weeks) | you | Nothing to do; Claude reports the upload listing, then the trial (blocks, CPU, timing, features). Decide whether to go live. |
-| Step 7 | you | Review the home and rankings pages (screenshots), the How it works copy (score lead, two common questions) and the privacy policy sentence (plan 014). |
-| Step 8 | you | `hyperstim-release` (Claude never releases). |
-| After | you | Check the first daily `data:` commit on GitHub and the counts on the live site. |
+| Done | you | Review plans 013 and 014. |
+| Now | you | Review step 5 (decision 11). |
+| After step 5 is merged | a repo admin | GitHub → Settings → Rules → Rulesets → New tag ruleset: target `v*`, restrict creations, updates and deletions, bypass: repository admins only. |
+| After step 5 is merged | you, on the server | In your clone: `git pull`; add the new values to `deploy/server.env` (from `server.env.example`); `sudo deploy/setup.sh`. It prints the data bot's public key. |
+| Then | a repo admin | GitHub → Settings → Deploy keys → Add deploy key: the printed key, "Allow write access" on. |
+| Then | Claude, then you | Claude stops the local collector; you run the move commands Claude gives (paths from your `server.env`), then `sudo deploy/setup.sh` again. |
+| Then | you | `hyperstim-release` (Claude never releases). |
+| Next day | you | Check the first daily `data:` commit on GitHub and the counts on the live site. |
 
 ## Review decisions
 
@@ -245,7 +285,7 @@ Decisions made while building (2026-10-26), each in its spot above where it fits
 - **Pinning**: on the rankings page one pin is shared by the Videos and Channels views; each compare picker keeps its own.
 - **How it works ③**: before the first full discovery run the scan date shows v2's (August 2026).
 - **The first offline check takes out a few hundred v2 videos** (deleted or private since August), so the count dips below 16,375 for a couple of days before additions overtake it. This happens in the local run, before production.
-- **Not yet built, for the deployment (step 5)**: the collector's systemd unit, the data bot's user, clone, key and timer, and the `setup.sh` / `server.env.example` / `deploy/README.md` changes. They change the server's users and permissions, so they're done with the team at go-live. Built and tested: `scripts/commit-data.sh` (the daily commit), `scripts/check-data-commits.sh` (CI and `release.sh`), the `data` type in `release-notes.sh` and the hook.
+- **The deployment (step 5)** is planned in decision 11. Already built and tested: `scripts/commit-data.sh` (the daily commit), `scripts/check-data-commits.sh` (CI and `release.sh`), the `data` type in `release-notes.sh` and the hook.
 
 ## Open questions
 
