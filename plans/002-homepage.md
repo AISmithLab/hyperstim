@@ -119,7 +119,7 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Where | Text |
 |---|---|
 | Footer nav `aria-label` | Footer |
-| Links | Privacy policy · FAQ _(human decision, 2026-10-16: About us delayed, plan 001)_ |
+| Links | Privacy policy · Cookie settings · GitHub ↗ (plan 015, 2026-10-26; FAQ dropped, About in the header) |
 | Copyright | © {year} HyperStim? _(was: “HyperStim Research Team”; before that “research team”, lower case)_ |
 
 All decorative images (`kid_1`, `sun_1`, `grass_*`, `flower_*`, warning triangle) have `alt=""`.
@@ -230,7 +230,7 @@ None.
 2. Channel ranking: mean score, channels with ≥ 5 scored videos.
 3. Images: originals (incl. unused ones) kept in `frontend/art/`; only used images are converted and shipped.
 4. Footer: no contact email for now; copyright holder “HyperStim?” _(was: “HyperStim Research Team”; before that “HyperStim research team”)_.
-5. Header nav: Home · Rankings · Compare · How it works (About delayed, plan 001 _(human decision, 2026-10-16)_); FAQ only in the footer (overrides 001).
+5. Header nav: Home · Rankings · Compare · How it works · About (plan 015, 2026-10-26); no FAQ link (the questions are on How it works).
 6. Data release: IDs, metadata and features are public; clips never (review decision 6).
 7. Score: average of the 12 percentiles (review decision 7).
 8. Pipeline: copied in, downloader + extractor only (review decisions 8–9).
