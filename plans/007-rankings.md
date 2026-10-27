@@ -183,7 +183,12 @@ GET /api/channels?sort=…&order=…&category=…&q=…&minVideos=5&offset=0&lim
 
 - `Video` gains `category` (the API key: the dataset's “play & activity” is `play`; an unknown category stops the load); `Channel` gains `categories` (the set of its videos' categories).
 - A count of 0 on a per-minute feature ranks as percentile 0, as the API sends it (plan 004, `dataset.py`) _(human decision, 2026-10-16)_. The six keys match the frontend's `perMin`/`cutsPerMin` units, and a test checks this.
-- At startup, for each of the 13 criteria (score + 12), the videos and the channels are pre-sorted once: most intense first, ties by ID, no-value rows last. A request filters by category (O(n), fine for 16k rows), numbers the ranks (equal values share one), applies the search, reverses for `asc` and counts its ranks from the calm end (no-value rows stay last), and slices. One helper (`ranking.py`) serves both videos and channels. A feature ranks by its percentile (for a channel, the mean percentile shown in its tile).
+- At startup (and at each dataset reload, plan 013), for each of the 13 criteria (score + 12), the videos and the channels are pre-sorted once: most intense first, ties by ID, no-value rows last. One helper (`ranking.py`) serves both videos and channels. A feature ranks by its percentile (for a channel, the mean percentile shown in its tile).
+- **Requests cost the same however large the dataset grows** _(human decision, 2026-10-27: the home page's numbers waited on requests that built a row for each of the 16k videos to return 3, and the dataset keeps growing)_:
+  - **The default view is ready-made:** with the load, each criterion's order is also kept for the unfiltered view (every video now, no category, no search, no `asOf`), with its values. A request for it (the home card, the rankings page as it opens) just slices, read backwards for `asc`, and builds only the rows it returns; each row's rank is a binary search on the values (equal values share the first one's rank, in either order).
+  - **The pill's count is looked up, not scanned:** an `addedFrom`/`addedBefore` filter on that view counts its rows from a list of the videos' add times sorted with the load (binary search), and finds its page by walking the ready-made order until it has enough rows.
+  - **Other requests** (category, search, `asOf`) still filter every row, but keep the shared rows rather than building one per row, and rank only the page they return the same way.
+  - Answers are unchanged (same items, ranks, totals); the existing tests stay as they are, plus tests that the ready-made path and the filtering path agree for every criterion, both orders, with ties and no-value rows.
 - Search: compare `casefold()` + accents removed (NFKD, combining marks dropped), precomputed per row. A `q` equal to a row's ID (case kept) also matches it.
 - Tests (synthetic fixture): each criterion's order and tie-break; equal values share a rank, also in `asc`; `asc` is the reverse; no-value rows last and unranked in both orders; category filter for videos, and channels with ≥ 1 video in the category; search ignores case and accents, keeps ranks, and matches a video's channel name; `offset`/`limit`/`total`; `minVideos`; bad params → 422.
 
@@ -201,6 +206,7 @@ Order: the frontend first (steps 2–5, on mock data) and a review of it; then t
    - Backend: `q` matches an exact ID; tests (video ID, channel ID, keeps the rank, respects the category).
    - Frontend: `SearchBox` reads the input with `readSearchInput`; a link goes to the URL as its ID; a handle link is looked up on paste or Enter; the link messages; the new placeholders. Mocks and tests (each link kind and message, the lookup only on paste or Enter).
    - Screenshots at 360 and 1280 px against the real backend. Stop for review.
+8. **Speed** (2026-10-27, with plan 013's garbage collection change): the ready-made default view, the add-time count, and the leaner filtering path (Backend). Tests as there. Measure before and after: the home page's six requests alone and together, and a rankings search. Stop for review.
 
 ## Review decisions
 

@@ -1,14 +1,16 @@
 """Rankings by score or feature, category filter, search and paging (plan 007)."""
 
+import random
 import re
 from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 
 from hyperstim_api.dataset import EVENT_FEATURES
-from hyperstim_api.ranking import CRITERIA, fold
+from hyperstim_api.ranking import CRITERIA, Added, Order, Ranking, fold, rank_value
 from hyperstim_api.scoring import FEATURES
 from tests.conftest import Row, video_row, write_dataset
 
@@ -202,6 +204,113 @@ def test_unknown_category_in_the_dataset_is_an_error(
     path = write_dataset(tmp_path / "videos.tsv", [video_row("vid-1", "c", 1.0, category="x")])
     with pytest.raises(ValueError, match="unknown category"):
         make_client(path)
+
+
+@dataclass(frozen=True)
+class Feat:
+    key: str
+    value: float | None
+    percentile: float | None
+
+
+@dataclass(frozen=True)
+class Item:
+    id: str
+    name: str
+    score: float
+    features: tuple[Feat, ...]
+    added_at: str
+    current: bool
+
+
+def random_items(seed: int) -> list[Item]:
+    """Rows with many ties, missing values, names, add times, and some not in the default view."""
+    rng = random.Random(seed)
+    out = []
+    for i in range(60):
+        feats = []
+        for key in FEATURES:
+            value = rng.choice([None, 0.0, 0.0, *(float(rng.randint(1, 8)) for _ in range(4))])
+            feats.append(Feat(key, value, value))
+        out.append(
+            Item(
+                id=f"r{rng.randint(0, 10**6):07d}-{i}",
+                name=rng.choice(["Cocomelon", "Café", "Blippi", "Zoë"]),
+                score=float(rng.randint(0, 9)),
+                features=tuple(feats),
+                added_at=f"2026-10-{rng.randint(10, 30)}T00:00:00Z",
+                current=rng.random() > 0.2,
+            )
+        )
+    return out
+
+
+def reference_page(
+    rows: list[Item],
+    criterion: str,
+    order: Order,
+    keep: Callable[[Item], bool],
+    query: str | None,
+    offset: int,
+    limit: int,
+    added: Added | None,
+) -> tuple[list[tuple[str, int | None]], int]:
+    """Plan 007's rules, the plain way: rank every kept row, then hide and slice."""
+    kept = [r for r in rows if keep(r)]
+    kept.sort(
+        key=lambda r: (rank_value(r, criterion) is None, -(rank_value(r, criterion) or 0), r.id)
+    )
+    valued = [r for r in kept if rank_value(r, criterion) is not None]
+    if order == "asc":
+        valued.reverse()
+    ranked: list[tuple[Item, int | None]] = []
+    for i, r in enumerate(valued):
+        tied = i > 0 and rank_value(r, criterion) == rank_value(valued[i - 1], criterion)
+        ranked.append((r, ranked[-1][1] if tied else i + 1))
+    ranked += [(r, None) for r in kept if rank_value(r, criterion) is None]
+    if query:
+        ranked = [(r, n) for r, n in ranked if r.id == query or fold(query) in fold(r.name)]
+    if added:
+        start, end = added
+        ranked = [
+            (r, n)
+            for r, n in ranked
+            if (start is None or r.added_at >= start) and (end is None or r.added_at < end)
+        ]
+    return [(r.id, n) for r, n in ranked[offset : offset + limit]], len(ranked)
+
+
+@pytest.mark.parametrize("seed", range(5))
+def test_both_paths_match_the_rules(seed: int) -> None:
+    """The default view (ready-made) and a filtered view give the plain way's pages."""
+    rows = random_items(seed)
+    ranking = Ranking(rows, lambda r: (r.name,), lambda r: r.added_at, lambda r: r.current)
+    in_view: Callable[[Item], bool] = lambda r: r.current  # noqa: E731
+    some: Callable[[Item], bool] = lambda r: r.current and r.name != "Blippi"  # noqa: E731
+    windows: list[Added | None] = [
+        None,
+        ("2026-10-20T00:00:00Z", None),
+        (None, "2026-10-15T00:00:00Z"),
+    ]
+    for criterion in CRITERIA:
+        for order in ("desc", "asc"):
+            for query in (None, "cafe", rows[3].id):
+                for added in windows:
+                    for offset, limit in ((0, 100), (0, 3), (5, 7)):
+                        expected = reference_page(
+                            rows, criterion, order, in_view, query, offset, limit, added
+                        )
+                        page, total = ranking.page(
+                            criterion, order, None, query, offset, limit, added
+                        )
+                        assert ([(r.item.id, r.rank) for r in page], total) == expected
+                        expected = reference_page(
+                            rows, criterion, order, some, query, offset, limit, added
+                        )
+                        page, total = ranking.page(
+                            criterion, order, some, query, offset, limit, added
+                        )
+                        assert ([(r.item.id, r.rank) for r in page], total) == expected
 
 
 def test_fold() -> None:

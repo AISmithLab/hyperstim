@@ -15,10 +15,9 @@ from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 from hyperstim_api import scoring
-from hyperstim_api.ranking import Order, Ranked, Ranking
+from hyperstim_api.ranking import Added, Order, Ranked, Ranking
 
 # When added (UTC, ISO 8601): from (inclusive) and before (exclusive); None = open.
-type Added = tuple[str | None, str | None]
 
 log = logging.getLogger(__name__)
 
@@ -134,18 +133,6 @@ class Dataset:
     def last_added_at(self) -> str | None:
         return max((v.added_at for v in self.all_videos if v.added_at), default=None)
 
-    def _added_in(self, added: Added | None) -> Callable[[Video | Channel], bool] | None:
-        """Whether a video or channel was added in `added`: [from, before), UTC, either open."""
-        if added is None or added == (None, None):
-            return None
-        start, end = added
-
-        def show(item: Video | Channel) -> bool:
-            at = item.added_at or self.reference_at
-            return (start is None or at >= start) and (end is None or at < end)
-
-        return show
-
     def ranked_videos(
         self,
         sort: str,
@@ -160,14 +147,18 @@ class Dataset:
         """A page of videos by `sort` (score or a feature), ranked within `category`; as the
         dataset was at `as_of` if given. `added` only hides rows, like `query`."""
         as_of = self.current(as_of)
+        # Every video now, in every category: the ranking's ready-made default view.
+        default = as_of is None and category is None
         return self.video_ranking.page(
             sort,
             order,
-            lambda v: v.visible(as_of) and (category is None or v.category == category),
+            None
+            if default
+            else lambda v: v.visible(as_of) and (category is None or v.category == category),
             query,
             offset,
             limit,
-            self._added_in(added),
+            added,
         )
 
     def ranked_channels(
@@ -196,7 +187,7 @@ class Dataset:
             query,
             offset,
             limit,
-            self._added_in(added),
+            added,
         )
 
     def _channel_ranking_at(self, as_of: str) -> Ranking[Channel]:
@@ -206,7 +197,8 @@ class Dataset:
         if ranking is None:
             if len(self._channels_at) >= 16:
                 self._channels_at.clear()
-            ranking = Ranking(_channels(v for v in self.all_videos if v.visible(as_of)), _names)
+            channels = _channels(v for v in self.all_videos if v.visible(as_of))
+            ranking = Ranking(channels, _names, _added_at(self.reference_at))
             self._channels_at[as_of] = ranking
         return ranking
 
@@ -393,13 +385,23 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
         channels_by_id={c.id: c for c in channels},
         pools=pools,
         composite_pool=composite_pool,
-        video_ranking=Ranking(videos, lambda v: (v.title, v.channel)),
-        channel_ranking=Ranking(channels, _names),
+        video_ranking=Ranking(
+            videos,
+            lambda v: (v.title, v.channel),
+            _added_at(reference_at),
+            lambda v: v.removed_at is None,
+        ),
+        channel_ranking=Ranking(channels, _names, _added_at(reference_at)),
         version=version,
         reference_count=reference_count,
         all_videos=tuple(videos),
         reference_at=reference_at,
     )
+
+
+def _added_at(reference_at: str) -> Callable[[Video | Channel], str]:
+    """When a video or channel was added; the reference set's rows count as added on its date."""
+    return lambda item: item.added_at or reference_at
 
 
 def collected_files(directory: Path) -> list[Path]:
