@@ -1,6 +1,6 @@
 import { topChannels, topVideos } from "./api";
 import { ANALYZED } from "./backend";
-import { expect, expectNoAxeViolations, expectNoSidewaysScroll, tabTo, test } from "./fixtures";
+import { expect, expectNoAxeViolations, expectNoSidewaysScroll, isPhone, tabTo, test } from "./fixtures";
 
 // Every page, loaded: no accessibility violations and no sideways scroll at 320 px.
 test.describe("every page", () => {
@@ -46,7 +46,7 @@ test("the skip link moves focus to the main content", async ({ page }) => {
 
 test.describe("header", () => {
   test("links to every page and marks the current one", async ({ page }) => {
-    const phone = test.info().project.name === "phone";
+    const phone = isPhone();
     const nav = page.getByRole("navigation", { name: "Main" }).filter({ visible: true });
     // On phones the links are in the menu, which closes after each navigation.
     const openNav = async () => {
@@ -70,7 +70,7 @@ test.describe("header", () => {
   });
 
   test("phone menu opens, closes on Escape and gives focus back", async ({ page }) => {
-    test.skip(test.info().project.name !== "phone", "The menu exists only below the desktop width");
+    test.skip(!isPhone(), "The menu exists only below the desktop width");
     await page.goto("/");
     const menu = page.getByRole("button", { name: "Menu" });
     await tabTo(page, menu);

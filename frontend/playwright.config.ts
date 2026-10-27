@@ -16,10 +16,13 @@ export default defineConfig({
     baseURL: `http://localhost:${SITE_PORT}`,
     trace: "retain-on-failure",
   },
+  // Both engines at both widths: people use Safari on desktops and Chrome on phones too.
+  // Phones at the width STYLE.md checks; tests tell them apart by the name's ending.
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } } },
-    // Safari on iPhones, at the phone width STYLE.md checks.
-    { name: "phone", use: { ...devices["iPhone 13"], viewport: { width: 360, height: 740 } } },
+    { name: "chromium-desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } } },
+    { name: "webkit-desktop", use: { ...devices["Desktop Safari"], viewport: { width: 1280, height: 800 } } },
+    { name: "chromium-phone", use: { ...devices["Pixel 7"], viewport: { width: 360, height: 740 } } },
+    { name: "webkit-phone", use: { ...devices["iPhone 13"], viewport: { width: 360, height: 740 } } },
   ],
   webServer: [
     {

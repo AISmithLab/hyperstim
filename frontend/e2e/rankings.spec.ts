@@ -1,6 +1,6 @@
 import { calmestVideo, topChannels, topVideos } from "./api";
 import type { Page } from "@playwright/test";
-import { expect, tabTo, test } from "./fixtures";
+import { expect, isPhone, tabTo, test } from "./fixtures";
 
 /** The ranked list: a table on wider screens, a list on phones. */
 function results(page: Page, kind: "Videos" | "Channels" = "Videos") {
@@ -68,7 +68,7 @@ test.describe("rankings", () => {
   });
 
   test("a measurement column sorts the list by it", async ({ page }) => {
-    test.skip(test.info().project.name === "phone", "Phones pick the measurement elsewhere");
+    test.skip(isPhone(), "Phones pick the measurement elsewhere");
     await page.goto("/rankings/");
     await page.getByRole("columnheader", { name: "Rapid cutting" }).getByRole("button").click();
     await expect(page.getByRole("table", { name: /ranked by Rapid cutting/ })).toBeVisible();

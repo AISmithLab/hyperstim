@@ -68,6 +68,11 @@ export const test = base.extend<Options & Fixtures>({
 });
 
 /** Fails on any axe-core violation on the page as it is now (contrast included). */
+/** Whether this run is one of the phone-width projects (their layouts differ from desktop). */
+export function isPhone() {
+  return base.info().project.name.endsWith("-phone");
+}
+
 export async function expectNoAxeViolations(page: Page) {
   const { violations } = await new AxeBuilder({ page }).analyze();
   const report = violations.map(

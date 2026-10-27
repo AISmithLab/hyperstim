@@ -1,5 +1,5 @@
 import { channelVideos, topChannels } from "./api";
-import { expect, tabTo, test } from "./fixtures";
+import { expect, isPhone, tabTo, test } from "./fixtures";
 
 function escape(text: string) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
@@ -42,7 +42,7 @@ test.describe("channel", () => {
     const [video] = await channelVideos(request, channel.id);
     await page.goto(`/channel/?id=${channel.id}`);
     const title = new RegExp(escape(video.title));
-    if (test.info().project.name === "phone") {
+    if (isPhone()) {
       // Phones list the videos as cards under the chart, each a link to its page.
       await page.getByRole("link", { name: title }).first().click();
     } else {
