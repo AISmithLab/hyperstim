@@ -2,6 +2,7 @@
 
 import csv
 import json
+import random
 import urllib.parse
 from collections.abc import Callable
 from pathlib import Path
@@ -159,6 +160,14 @@ class Clock:
         return self.now
 
 
+class EvenSpacing(random.Random):
+    """Spaces downloads by the average gap, not a random one, so a test's ticks always line up
+    with the pace (a random gap longer than a tick made tests fail now and then)."""
+
+    def expovariate(self, lambd: float = 1.0) -> float:
+        return 1 / lambd
+
+
 def make_store(path: Path) -> Store:
     store = Store(path / "collector.db")
     store.upsert_channel(id=CHANNEL, title="Channel", status="in", source="v2", listed_at=NOW)
@@ -198,6 +207,7 @@ def make_collector(
         load_classifier(),
         blocked,
         clock=clock,
+        rng=EvenSpacing(),
     )
     collector.low_on_space = lambda: False  # type: ignore[method-assign]
     return collector
