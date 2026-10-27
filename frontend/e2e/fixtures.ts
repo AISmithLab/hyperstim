@@ -80,11 +80,13 @@ export async function expectNoAxeViolations(page: Page) {
 export async function expectNoSidewaysScroll(page: Page) {
   const size = page.viewportSize()!;
   await page.setViewportSize({ width: 320, height: size.height });
-  const overflow = await page.evaluate(
-    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-  );
+  // Polled: charts measure their box in JS and catch up with a resize a frame or so later.
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), {
+      message: "sideways scroll at 320 px (px)",
+    })
+    .toBeLessThanOrEqual(0);
   await page.setViewportSize(size);
-  expect(overflow, "sideways scroll at 320 px (px)").toBeLessThanOrEqual(0);
 }
 
 /**
