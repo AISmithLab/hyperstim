@@ -108,11 +108,13 @@ esac
 say "Releasing $(git -C "$ROOT" log -1 --format='%h %s' "$COMMIT") as $TAG ($BUMP after $LATEST)"
 printf '%s\n\n' "$NOTES"
 
-# CI (ci.yml) must have passed on the commit: both jobs, frontend and backend.
+# CI (ci.yml) must have passed on the commit: all four jobs, including the end-to-end tests and
+# SonarQube's quality gate (plan 012).
 checks="$(github "commits/$COMMIT/check-runs?per_page=100")" ||
   fail "couldn't read CI results from GitHub (a private repo needs GITHUB_TOKEN)."
-ci="$(json "' '.join(sorted(r['name'] + '=' + (r['conclusion'] or r['status']) for r in d['check_runs'] if r['name'] in ('frontend', 'backend')))" <<<"$checks")"
-[ "$ci" = "backend=success frontend=success" ] || fail "CI hasn't passed on this commit: ${ci:-no results yet}."
+ci="$(json "' '.join(sorted(r['name'] + '=' + (r['conclusion'] or r['status']) for r in d['check_runs'] if r['name'] in ('frontend', 'backend', 'e2e', 'sonar')))" <<<"$checks")"
+[ "$ci" = "backend=success e2e=success frontend=success sonar=success" ] ||
+  fail "CI hasn't passed on this commit: ${ci:-no results yet}."
 
 # --- Backend ----------------------------------------------------------------------------
 # Each release gets its own checkout (a worktree of the instance's repo) with its own .venv;
