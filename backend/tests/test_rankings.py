@@ -316,6 +316,7 @@ def test_both_paths_match_the_rules(seed: int) -> None:
 def test_fold() -> None:
     assert fold("Café Crayón") == "cafe crayon"
     assert fold("STRASSE Straße") == "strasse strasse"
+    assert fold("Song  Maddie\tand  Kids") == "song maddie and kids"
 
 
 def test_event_features_match_the_frontend() -> None:

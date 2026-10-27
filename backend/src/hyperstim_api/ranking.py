@@ -8,6 +8,7 @@ counted from the calm end for `asc`), by binary search on the values. A search m
 names, or a row's exact ID (a pasted link, plan 007).
 """
 
+import re
 import unicodedata
 from bisect import bisect_left, bisect_right
 from collections.abc import Callable, Iterable
@@ -51,9 +52,11 @@ def rank_value(item: Rankable, criterion: str) -> float | None:
 
 
 def fold(text: str) -> str:
-    """Case and accents removed, for search: "Café" and "cafe" match."""
+    """Case, accents and repeated spaces removed, for search: "Café  Bar" and "cafe bar"
+    match. Pages show a name's repeated spaces as one, so that's what visitors type."""
     decomposed = unicodedata.normalize("NFKD", text)
-    return "".join(c for c in decomposed if not unicodedata.combining(c)).casefold()
+    plain = "".join(c for c in decomposed if not unicodedata.combining(c)).casefold()
+    return re.sub(r"\s+", " ", plain)
 
 
 @dataclass(frozen=True)
