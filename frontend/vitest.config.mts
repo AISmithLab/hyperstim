@@ -10,12 +10,15 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
+    // The end-to-end tests run with Playwright (`npm run test:e2e`).
+    include: ["src/**/*.test.{ts,tsx}"],
     // Used by `npm run test:coverage` (CI); lcov is what SonarQube Cloud reads (plan 012).
     coverage: {
       provider: "v8",
       include: ["src/**/*.{ts,tsx}"],
       // mock.ts is the dev-only fake backend (NEXT_PUBLIC_API_MOCK=1), not site code.
-      exclude: ["src/**/*.test.{ts,tsx}", "src/lib/mock.ts"],
+      // src/test/ holds test helpers.
+      exclude: ["src/**/*.test.{ts,tsx}", "src/lib/mock.ts", "src/test/**"],
       reporter: ["text-summary", "lcov"],
     },
   },
