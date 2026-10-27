@@ -3,8 +3,14 @@
 Requests read `current` once and use that object throughout, so a reload in between never
 mixes two versions in one answer. A reload builds the new dataset off to the side and then
 swaps it in.
+
+The loaded dataset is kept out of the garbage collector's passes (`gc.freeze`): it is
+hundreds of thousands of objects that never become garbage, and checking them all took a
+quarter of a second, in the middle of random requests. Reference counting still frees an
+old dataset as soon as it's replaced.
 """
 
+import gc
 import json
 import logging
 import threading
@@ -24,6 +30,7 @@ class DatasetStore:
         self._every_s = every_s
         self._signature = self._files()
         self.current: Dataset = load_dataset(dataset_path, collected_dir)
+        _freeze()
         self.channels_checked_at: str | None = self._channels_checked_at()
         self._stop = threading.Event()
         self._thread: threading.Thread | None = None
@@ -64,6 +71,7 @@ class DatasetStore:
         self.current = dataset
         self.channels_checked_at = self._channels_checked_at()
         self._signature = signature
+        _freeze()
         return True
 
     def start(self) -> None:
@@ -83,3 +91,12 @@ class DatasetStore:
                 self.reload_if_changed()
             except Exception:
                 log.exception("Dataset reload failed")
+
+
+def _freeze() -> None:
+    """Exempts everything there is now, the dataset just loaded included, from the garbage
+    collector's passes. Unfrozen and collected first, so anything the last freeze covered that
+    is garbage now can still be found (should the dataset ever hold reference cycles)."""
+    gc.unfreeze()
+    gc.collect()
+    gc.freeze()

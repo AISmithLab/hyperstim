@@ -156,6 +156,8 @@ Two separate limits: the **Data API quota** (listing uploads, video details, cha
 **Live without releases.** The site never waits for the commit:
 
 - The prod API reads the collector's files in the instance's `data/` folder (`COLLECTED_DIR`), reloaded every 5 minutes (6), not the copy in the repo or in the release checkout. A new video is on the site within minutes, with no commit, release or deployment.
+- **A reload builds a whole new dataset** off to the side (sorted rankings and ready-made ranks, plan 007) and swaps it in at once; requests keep using the old one until then.
+- **The loaded dataset is kept out of Python's garbage collector** _(human decision, 2026-10-27: its full passes over the dataset's ~474k objects took ~250 ms each, freed nothing, and delayed random requests by 150–190 ms)_: after the first load and after each swap, `gc.freeze()`, so the collector's passes skip it. It costs no memory: the dataset is freed by reference counting when it's replaced (checked: all of it, with nothing left for the collector). Before each swap's freeze, `gc.unfreeze()` and one `gc.collect()` in the reload thread, as a safeguard should the dataset ever hold reference cycles; that one pass (~250 ms) is the only pause left, once per reload.
 - The daily commit is only the record and the backup. A release changes nothing about which videos are served.
 - Dev reads the committed copy (`COLLECTED_DIR` = `backend/data/collected/` in `.env.example`), so a fresh clone shows the dataset as of the last daily commit.
 

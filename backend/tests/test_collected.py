@@ -3,7 +3,9 @@ reference set, removed ones leave the lists, lists can be read as of an earlier 
 and the API reloads when the collector's files change."""
 
 import csv
+import gc
 import json
+import weakref
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -195,6 +197,21 @@ def test_reload_only_when_the_files_change(dataset_path: Path, collected: Path) 
     assert store.reload_if_changed()
     assert "new-later" in store.current.videos_by_id
     assert "vid-b5" in [v.id for v in store.current.videos]  # no longer removed in the files
+
+
+def test_the_dataset_is_kept_out_of_the_garbage_collector(
+    dataset_path: Path, collected: Path
+) -> None:
+    store = DatasetStore(dataset_path, collected, every_s=60)
+    assert not any(o is store.current for o in gc.get_objects())  # frozen ones aren't listed
+    old = weakref.ref(store.current)
+    write_collected(
+        collected, [collected_row("new-later", "chan-c", 3.0, "2026-10-23T00:00:00Z")], []
+    )
+    assert store.reload_if_changed()
+    assert old() is None  # the replaced dataset is freed, frozen or not
+    assert not any(o is store.current for o in gc.get_objects())
+    gc.unfreeze()
 
 
 def test_a_bad_file_keeps_the_last_good_dataset(dataset_path: Path, collected: Path) -> None:
