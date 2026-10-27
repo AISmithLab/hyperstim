@@ -215,7 +215,7 @@ Added to plan 010's instance by `deploy/setup.sh`, from `server.env`, like the r
 
    ```sh
    sudo mv <clips-dir>/data/collector.db* <prod-dir>/data/collector/
-   sudo mv <clips-dir>/data/collected/* <prod-dir>/data/collector/collected/
+   sudo sh -c 'mv <clips-dir>/data/collected/* <prod-dir>/data/collector/collected/'  # glob as root: setup.sh closed <clips-dir>
    sudo mv <clips-dir>/data/collector.log <prod-dir>/data/collector/local-run.log
    sudo rmdir <clips-dir>/data/collected <clips-dir>/data
    sudo chown -R <service-user>: <prod-dir>/data/collector <clips-dir>
