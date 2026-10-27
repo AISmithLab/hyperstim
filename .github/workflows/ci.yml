@@ -65,6 +65,41 @@ jobs:
           name: coverage-backend
           path: backend/coverage.xml
 
+  # End-to-end tests: the built site against the real backend, in Chromium and WebKit (plan 012).
+  e2e:
+    needs: [frontend, backend]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: frontend/.nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - id: tools
+        run: grep '^UV_VERSION=' ../tools.env | sed 's/^UV_VERSION=/uv=/' >> "$GITHUB_OUTPUT"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ steps.tools.outputs.uv }}
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --locked
+        working-directory: backend
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            frontend/playwright-report/
+            frontend/test-results/
+          retention-days: 14
+
   # SonarQube Cloud analysis with both coverage reports (plan 012). Skipped for PRs
   # from forks, which get no secrets.
   sonar:
