@@ -2,6 +2,8 @@
 
 How to work on HyperStim: what's where, running it locally, and releasing. What the site is: [`README.md`](README.md).
 
+How dev, CI, prod and the outside services fit together, in diagrams: [`ARCHITECTURE.md`](ARCHITECTURE.md).
+
 - [`frontend/`](frontend/README.md): Next.js static site (GitHub Pages)
 - [`backend/`](backend/README.md): Python API (FastAPI) with the video dataset and analysis pipeline
 - [`deploy/`](deploy/README.md): prod setup on the server and GitHub Pages

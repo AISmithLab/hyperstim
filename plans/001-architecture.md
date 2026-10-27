@@ -14,6 +14,7 @@ backend/    FastAPI app (runs on our server)
 plans/      numbered plans
 .github/workflows/   CI (plan 012) + Pages deploy
 README.md, DEVELOPMENT.md   repo front page, developer guide (below)
+ARCHITECTURE.md             diagrams of dev, CI, prod and outside services (below)
 ```
 
 ### README and developer guide _(human decision, 2026-10-24: the README read like a developer guide)_
@@ -27,6 +28,7 @@ README.md, DEVELOPMENT.md   repo front page, developer guide (below)
   6. **Privacy** (link to the policy) and **License** (Apache 2.0, link to `LICENSE`).
 - **No numbers that go stale** (video count, dates) and **no link to the research** _(human decision, 2026-10-24)_.
 - **`DEVELOPMENT.md` is the developer entry point:** the old README's content, moved unchanged (repo map, "Run locally" from plan 003, "Release" from plan 010). It links to the `frontend/`, `backend/` and `deploy/` READMEs.
+- **`ARCHITECTURE.md` maps the system in Mermaid diagrams** _(human decision, 2026-10-27: diagrams rather than prose, so new team members see how dev, CI, prod and the outside services connect; rendered by GitHub and by VS Code with a Mermaid extension)_: the big picture, dev environment, tests and CI, a release, the prod server, the growing dataset, a visitor's request. Each change to these areas updates its diagram; details stay in the plans and READMEs. Linked from `DEVELOPMENT.md`.
 - **Plan 010's pending switch to semantic-version tags** also changes the "Release" section: whichever change lands second updates it in `DEVELOPMENT.md` _(human decision, 2026-10-24)_.
 
 ## Frontend
