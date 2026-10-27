@@ -103,7 +103,6 @@ export default function VideoStrip({
               </div>
               <Link
                 href={videoHref(video.id)}
-                aria-label={`${video.title}, ${formatDate(video.publishedAt)}`}
                 className={`-mx-1.5 mt-1 block rounded-2xl p-1.5 ${video.id === marked ? "bg-sky" : ""}`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization */}

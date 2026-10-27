@@ -282,12 +282,10 @@ describe("ChannelPage on phones", () => {
     await loaded();
     const strip = screen.getByRole("heading", { level: 3, name: "The 4 videos we measured" }).closest("section")!;
     const cards = within(strip).getAllByRole("link");
-    expect(cards.map((a) => a.getAttribute("aria-label"))).toEqual([
-      "Tiny Trucks 1, Feb 3, 2018",
-      "Tiny Trucks 2, May 1, 2020",
-      "Tiny Trucks 3, Sep 6, 2024",
-      "Tiny Trucks 4, Jan 10, 2026",
-    ]);
+    // Named by what they show (date, title, score), so voice control finds them by it.
+    expect(cards.map((a) => a.getAttribute("aria-label"))).toEqual([null, null, null, null]);
+    expect(cards[0]).toHaveAccessibleName(/^Feb 3, 2018\s*Tiny Trucks 1/);
+    expect(cards[3]).toHaveAccessibleName(/^Jan 10, 2026\s*Tiny Trucks 4/);
     expect(cards[0]).toHaveAttribute("href", "/video?id=video000001");
 
     const list = within(strip).getByRole("list");
@@ -313,7 +311,7 @@ describe("ChannelPage on phones", () => {
     layOut(list, 0);
     fireEvent.click(container.querySelector('[data-hit="video000003"]')!);
     expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ left: 320 }));
-    expect(screen.getByRole("link", { name: "Tiny Trucks 3, Sep 6, 2024" })).toHaveClass("bg-sky");
+    expect(screen.getByRole("link", { name: /^Sep 6, 2024\s*Tiny Trucks 3/ })).toHaveClass("bg-sky");
     expect(container.querySelector("[data-popover]")).toHaveTextContent("Tiny Trucks 3");
   });
 });
