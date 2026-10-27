@@ -493,6 +493,27 @@ def test_clips_and_feature_caches_are_kept(
     assert not (tmp_path / "clips" / "work" / first).exists()
 
 
+def test_backs_up_its_database_once_a_day_and_keeps_a_week(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    backups = tmp_path / "clips" / "backups"
+    collector.tick()
+    collector.tick()  # the same day: no second copy
+    assert [p.name for p in backups.iterdir()] == ["collector-2026-10-26.db"]
+    copy = Store(backups / "collector-2026-10-26.db")
+    assert copy.get("seeded") == "yes"
+    assert copy.db.execute("SELECT COUNT(*) FROM uploads").fetchone()[0] == 30
+    copy.close()
+    run(collector, clock, ticks=9)
+    names = sorted(p.name for p in backups.iterdir())
+    assert len(names) == 7
+    assert names[0] == "collector-2026-10-28.db"  # 9 days, the newest 7 kept
+    assert names[-1] == "collector-2026-11-03.db"
+
+
 def test_categories_come_from_v2s_keywords(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:

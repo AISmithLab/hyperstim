@@ -62,6 +62,7 @@ OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
 MAX_BLOCK_WAIT_S = 48 * 3600
 FREE_SPACE_MIN = 50 * 1024**3
+BACKUPS_KEPT = 7  # daily copies of collector.db, in clips_dir/backups
 # The classifier's names → the dataset's category keys (dataset.CATEGORIES).
 CATEGORY_NAMES = {
     "music": "music",
@@ -132,6 +133,7 @@ class Collector:
     def tick(self) -> float:
         """Do what's due; returns the seconds to wait before the next tick."""
         now = self.clock()
+        self.back_up(now)
         out_of_units = self.store.get("out_of_units") == quota_day(now)
         if not out_of_units:
             try:
@@ -450,6 +452,22 @@ class Collector:
             log.warning("Paused: %.0f GB free on the clips volume", free / 1024**3)
             return True
         return False
+
+    # --- backup ----------------------------------------------------------------------
+
+    def back_up(self, now: float) -> None:
+        """Once a day (UTC), a copy of collector.db on the clips volume, so losing the disk it's
+        on doesn't lose the collector's state; the newest few are kept."""
+        day = utc(now)[:10]
+        if self.store.get("backed_up") == day:
+            return
+        folder = self.s.clips_dir / "backups"
+        folder.mkdir(parents=True, exist_ok=True)
+        self.store.backup(folder / f"collector-{day}.db")
+        for old in sorted(folder.glob("collector-*.db"))[:-BACKUPS_KEPT]:
+            old.unlink()
+        self.store.set("backed_up", day)
+        log.info("Backed up collector.db to %s", folder)
 
     # --- export ----------------------------------------------------------------------
 

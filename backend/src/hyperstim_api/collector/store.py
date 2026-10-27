@@ -6,6 +6,7 @@ API units used per day.
 """
 
 import json
+import os
 import sqlite3
 from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
@@ -100,6 +101,18 @@ class Store:
 
     def close(self) -> None:
         self.db.close()
+
+    def backup(self, path: Path) -> None:
+        """A consistent copy of the whole database, made while it's in use (SQLite's online
+        backup), written whole and renamed into place."""
+        tmp = path.with_suffix(path.suffix + ".tmp")
+        tmp.unlink(missing_ok=True)
+        target = sqlite3.connect(tmp)
+        try:
+            self.db.backup(target)
+        finally:
+            target.close()
+        os.replace(tmp, path)
 
     @contextmanager
     def transaction(self) -> Iterator[None]:
