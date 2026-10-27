@@ -49,6 +49,7 @@ Before committing, check `git diff --staged` for anything above.
 - Frontend: Next.js (App Router, TypeScript, static export), Tailwind CSS. No server-side features (no API routes, no SSR, no image optimization).
 - Backend: Python, FastAPI. Config only through environment variables.
 - The frontend talks to the backend only through the typed API client in `frontend/src/lib/api.ts`; the backend's API contract lives in `backend/` and both change together.
+- **Site text is in American English** (color, center, gray, analyze): everything visitors read, including page metadata and messages from the API.
 - Accessibility and responsive design are requirements, not polish: every page must work on phones (from 320 px), tablets, and large desktop screens.
 - Visual style: `frontend/design/STYLE.md` is the single source (look, rules, and the classes for each shared surface and control); colour and font values live only as tokens in `frontend/src/app/globals.css`. It overrides the "Visual style" sections of earlier plans. The mockup (`frontend/design/Design Mockup.png`) sets the overall look only, not text or layout.
   - Read `STYLE.md` before any UI work. New UI reuses its surfaces and controls; plans reference them instead of restating styles.
