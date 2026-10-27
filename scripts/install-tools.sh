@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Install the pinned system tools in tools.env (plan 010). Skips what is already there.
 #
-#   scripts/install-tools.sh dev            ffmpeg, uv, deno, nvm + Node (./dev.sh --install-tools)
+#   scripts/install-tools.sh dev            ffmpeg, uv, deno, nvm + Node, test browsers (./dev.sh --install-tools)
 #   scripts/install-tools.sh server <dir>   OS packages, and uv + deno into <dir> (deploy/setup.sh, as root)
 set -euo pipefail
 
@@ -100,6 +100,16 @@ if [ "$MODE" = dev ]; then
   # shellcheck disable=SC1091
   . "$NVM_DIR/nvm.sh"
   (cd "$ROOT/frontend" && nvm install >/dev/null && echo "Node $(node --version) (frontend/.nvmrc)")
+
+  # The browsers the end-to-end tests run in (plan 012), at the version Playwright's
+  # package-lock.json entry expects, with their OS libraries (apt; none needed on macOS).
+  say "Installing the end-to-end test browsers (Chromium, WebKit)"
+  (
+    cd "$ROOT/frontend"
+    nvm use --silent
+    [ -d node_modules ] || npm ci
+    npx playwright install --with-deps chromium webkit
+  )
   case ":$PATH:" in
     *":$BIN:"*) ;;
     *) echo "Add $BIN to your PATH (e.g. in ~/.bashrc), then open a new shell." >&2 ;;

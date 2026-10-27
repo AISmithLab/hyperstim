@@ -9,7 +9,7 @@ How to work on HyperStim: what's where, running it locally, and releasing. What 
 
 ## Run locally
 
-Install the tools once (nvm + Node, uv, and for live analysis ffmpeg and deno, at the versions in `tools.env`; uses `apt` or Homebrew), then start both apps:
+Install the tools once (nvm + Node, uv, and for live analysis ffmpeg and deno, at the versions in `tools.env`; uses `apt` or Homebrew; plus Chromium and WebKit for the end-to-end tests, with the system libraries they need), then start both apps:
 
 ```sh
 ./dev.sh --install-tools   # once, and after tools.env changes

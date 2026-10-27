@@ -46,7 +46,7 @@ See `.env.example`. All are read at build time.
 What to test and at which level: CLAUDE.md (**Tests**) and [plan 012](../plans/012-code-quality.md).
 
 - **Unit and component tests** (`npm test`): Vitest + Testing Library, next to the code (`*.test.ts(x)`). Each component test file includes an axe accessibility check (`expectNoAxeViolations` from `src/test/axe.ts`).
-- **End-to-end tests** (`npm run test:e2e`): Playwright, in `e2e/`. Needs the backend set up (`uv sync` in `../backend`) and the browsers, once:
+- **End-to-end tests** (`npm run test:e2e`): Playwright, in `e2e/`. Needs the backend set up (`uv sync` in `../backend`) and the browsers, which `./dev.sh --install-tools` installs; by hand:
   ```sh
   npx playwright install --with-deps chromium webkit
   ```

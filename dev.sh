@@ -3,7 +3,8 @@
 #
 #   ./dev.sh          backend + frontend, the frontend using the real backend
 #   ./dev.sh --mock   frontend only, with mock data
-#   ./dev.sh --install-tools   install the pinned system tools (tools.env): ffmpeg, uv, deno, nvm + Node
+#   ./dev.sh --install-tools   install the pinned system tools (tools.env): ffmpeg, uv, deno, nvm + Node,
+#                              and the end-to-end test browsers
 #
 # Ports: BACKEND_PORT (default 8000), FRONTEND_PORT (default 3000).
 # The settings that must match the ports are passed as environment variables and
