@@ -1,6 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import type { ChannelDetail, ChannelVideo, Feature } from "@/lib/api";
+import { expectNoAxeViolations } from "@/test/axe";
 import CompareChart from "./CompareChart";
 
 const push = vi.hoisted(() => vi.fn());
@@ -104,5 +105,12 @@ describe("CompareChart", () => {
     const { container } = renderChart();
     fireEvent.click(q(container, '[data-hit="b-b1"]')!);
     expect(push).toHaveBeenCalledWith(expect.stringContaining("b1"));
+  });
+
+  it("has no accessibility violations, with and without a popover", async () => {
+    const { container } = renderChart();
+    await expectNoAxeViolations();
+    fireEvent.pointerEnter(q(container, '[data-hit="a-a1"]')!, { pointerType: "mouse" });
+    await expectNoAxeViolations();
   });
 });

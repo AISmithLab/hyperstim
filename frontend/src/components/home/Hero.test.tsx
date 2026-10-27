@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getMeta, getVideos, type Meta } from "@/lib/api";
+import { expectNoAxeViolations } from "@/test/axe";
 import Hero from "./Hero";
 
 vi.mock("@/lib/api", async (importOriginal) => ({
@@ -72,5 +73,15 @@ describe("Hero", () => {
     render(<Hero />);
     expect(await screen.findByText(/Explore and compare thousands of videos/)).toBeInTheDocument();
     expect(screen.queryByText(/in the past week/)).not.toBeInTheDocument();
+  });
+
+  it("has no accessibility violations, loading and loaded", async () => {
+    let resolve!: (m: Meta) => void;
+    vi.mocked(getMeta).mockReturnValue(new Promise((r) => (resolve = r)));
+    render(<Hero />);
+    await expectNoAxeViolations();
+    resolve(meta());
+    await screen.findByRole("link", { name: /in the past week/ });
+    await expectNoAxeViolations();
   });
 });

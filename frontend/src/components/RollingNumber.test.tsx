@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import RollingNumber, { COUNT_UP_MS, MIN_COUNT_UP_MS, countUpMs } from "./RollingNumber";
 
 function mockReducedMotion(reduce: boolean) {
@@ -79,6 +80,12 @@ describe("RollingNumber", () => {
     rerender(<RollingNumber value={1000} from={0} />);
     expect(positions()).toEqual([1, 0, 0, 0]);
     expect(screen.getByText("1,000")).toHaveClass("sr-only");
+  });
+
+  it("has no accessibility violations", async () => {
+    mockReducedMotion(true);
+    render(<RollingNumber value={16402} from={0} />);
+    await expectNoAxeViolations();
   });
 });
 

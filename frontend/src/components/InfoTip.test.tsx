@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import InfoTip from "./InfoTip";
 
 function renderTip() {
@@ -71,5 +72,13 @@ describe("InfoTip", () => {
     rect.mockReturnValue({ bottom: window.innerHeight - 50 } as DOMRect);
     await user.click(button);
     expect(popover).toHaveClass("bottom-full");
+  });
+
+  it("has no accessibility violations, closed or open", async () => {
+    const user = userEvent.setup();
+    const { button } = renderTip();
+    await expectNoAxeViolations();
+    await user.click(button);
+    await expectNoAxeViolations();
   });
 });

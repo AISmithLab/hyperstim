@@ -18,6 +18,7 @@ import {
   type VideoDetail,
 } from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
+import { expectNoAxeViolations } from "@/test/axe";
 import ComparePage from "./ComparePage";
 
 // The URL: router calls change it, and the page re-reads it, as in the browser.
@@ -398,5 +399,40 @@ describe("ComparePage", () => {
     expect(document.querySelector('[data-trend="a"]')).toBeInTheDocument();
     // Two videos are too few for a trend.
     expect(document.querySelector('[data-trend="b"]')).toBeNull();
+  });
+
+  it("has no accessibility violations with empty pickers and with suggestions open", async () => {
+    const user = userEvent.setup();
+    open();
+    await expectNoAxeViolations();
+    await user.type(screen.getAllByRole("combobox")[0], "r");
+    const list = await screen.findByRole("listbox");
+    await waitFor(() => expect(within(list).getAllByRole("option")).toHaveLength(2));
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations comparing two videos", async () => {
+    open(`a=${VIDEO_A}&b=${VIDEO_B}`);
+    await screen.findByText(/is more intense overall/);
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations comparing two channels", async () => {
+    open(`view=channels&a=${CHANNEL_A}&b=${CHANNEL_B}`);
+    await screen.findByText(/as intense as each other/);
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations while checking a video, and on slot errors", async () => {
+    const { unmount } = open(`a=${VIDEO_A}&b=${NEW_VIDEO}`);
+    await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "30"));
+    await expectNoAxeViolations();
+    unmount();
+
+    vi.mocked(getChannel).mockRejectedValueOnce(new ApiError(500, "boom"));
+    open(`view=channels&a=${CHANNEL_A}&b=not-a-channel`);
+    await screen.findByText("We couldn’t find this channel.");
+    await screen.findByText("We couldn’t load this channel.");
+    await expectNoAxeViolations();
   });
 });

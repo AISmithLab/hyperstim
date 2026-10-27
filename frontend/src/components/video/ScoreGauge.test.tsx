@@ -1,5 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import ScoreGauge, { needleAngle } from "./ScoreGauge";
 
 function mockReducedMotion(reduce: boolean) {
@@ -59,5 +60,15 @@ describe("ScoreGauge", () => {
     act(() => vi.advanceTimersByTime(1100));
     expect(screen.getByText("50")).toBeInTheDocument();
     expect(container.querySelector("svg")).toHaveAttribute("data-angle", "90");
+  });
+
+  it("has no accessibility violations", async () => {
+    mockReducedMotion(true);
+    render(
+      <ScoreGauge score={86.6}>
+        <button type="button">About</button>
+      </ScoreGauge>,
+    );
+    await expectNoAxeViolations();
   });
 });

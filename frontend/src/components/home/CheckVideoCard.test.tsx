@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import CheckVideoCard from "./CheckVideoCard";
 
 const push = vi.fn();
@@ -50,5 +51,13 @@ describe("CheckVideoCard", () => {
     // The input is described by its error only.
     await user.type(input, "not a link{Enter}");
     expect(input).toHaveAccessibleDescription("That doesn’t look like a YouTube link or video ID.");
+  });
+
+  it("has no accessibility violations, with and without an error", async () => {
+    const user = userEvent.setup();
+    render(<CheckVideoCard />);
+    await expectNoAxeViolations();
+    await user.click(screen.getByRole("button", { name: /check video/i }));
+    await expectNoAxeViolations();
   });
 });

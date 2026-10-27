@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import Footer, { GITHUB_URL } from "./Footer";
 
 describe("Footer", () => {
@@ -27,5 +28,11 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.queryByRole("link", { name: "FAQ" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /about/i })).not.toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    vi.stubEnv("NEXT_PUBLIC_GA_ID", "G-TEST123");
+    render(<Footer />);
+    await expectNoAxeViolations();
   });
 });

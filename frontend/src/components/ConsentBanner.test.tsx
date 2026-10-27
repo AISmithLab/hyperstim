@@ -2,6 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { openConsentSettings, saveChoice } from "@/lib/consent";
+import { expectNoAxeViolations } from "@/test/axe";
 import ConsentBanner from "./ConsentBanner";
 import Footer from "./Footer";
 
@@ -30,6 +31,16 @@ describe("ConsentBanner", () => {
     render(<ConsentBanner />);
     expect(screen.getByRole("region", { name: "Cookies on HyperStim?" })).toBeInTheDocument();
     expect(googleScript()).toBeNull();
+  });
+
+  it("has no accessibility violations", async () => {
+    render(
+      <>
+        <ConsentBanner />
+        <Footer />
+      </>,
+    );
+    await expectNoAxeViolations();
   });
 
   it("has Accept and Reject with the same look", () => {

@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiError, getChannel, type ChannelDetail, type ChannelVideo } from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
+import { expectNoAxeViolations } from "@/test/axe";
 import ChannelPage from "./ChannelPage";
 
 let search = new URLSearchParams();
@@ -245,6 +246,23 @@ describe("ChannelPage", () => {
     await user.click(screen.getByRole("button", { name: "Try again" }));
     expect(await loaded()).toBeInTheDocument();
   });
+
+  it("has no accessibility violations, with and without a video in the panel", async () => {
+    const user = userEvent.setup();
+    open(ID);
+    await loaded();
+    await expectNoAxeViolations();
+    Element.prototype.scrollIntoView = vi.fn();
+    await user.click(screen.getByRole("button", { name: "Tiny Trucks 3, Sep 6, 2024" }));
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations on an error", async () => {
+    vi.mocked(getChannel).mockRejectedValue(new ApiError(500, "down"));
+    open(ID);
+    await screen.findByText("We couldn’t load this channel.");
+    await expectNoAxeViolations();
+  });
 });
 
 describe("ChannelPage on phones", () => {
@@ -313,5 +331,11 @@ describe("ChannelPage on phones", () => {
     expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ left: 320 }));
     expect(screen.getByRole("link", { name: /^Sep 6, 2024\s*Tiny Trucks 3/ })).toHaveClass("bg-sky");
     expect(container.querySelector("[data-popover]")).toHaveTextContent("Tiny Trucks 3");
+  });
+
+  it("has no accessibility violations", async () => {
+    open(ID);
+    await loaded();
+    await expectNoAxeViolations();
   });
 });

@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getChannels, getVideos, type RankedChannel, type RankedVideo } from "@/lib/api";
+import { expectNoAxeViolations } from "@/test/axe";
 import RankingsCard, { joinEnds } from "./RankingsCard";
 
 vi.mock("@/lib/api", () => ({
@@ -147,6 +148,28 @@ describe("RankingsCard", () => {
 
     expect(await screen.findByText("No rankings yet.")).toBeInTheDocument();
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
+
+  it("has no accessibility violations, for videos and channels", async () => {
+    const user = userEvent.setup();
+    render(<RankingsCard />);
+    await screen.findByRole("link", { name: "Video 1" });
+    await expectNoAxeViolations();
+    await user.click(screen.getByRole("button", { name: "Channels" }));
+    await screen.findByRole("link", { name: "Loud" });
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations while loading or on an error", async () => {
+    vi.mocked(getVideos).mockReturnValueOnce(new Promise(() => {}));
+    const { unmount } = render(<RankingsCard />);
+    await expectNoAxeViolations();
+    unmount();
+
+    vi.mocked(getVideos).mockRejectedValueOnce(new Error("down"));
+    render(<RankingsCard />);
+    await screen.findByText("We couldn’t load the rankings.");
+    await expectNoAxeViolations();
   });
 });
 

@@ -11,6 +11,7 @@ import {
   type VideoDetail,
 } from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
+import { expectNoAxeViolations } from "@/test/axe";
 import { GIVE_UP_MS, POLL_MS } from "./LiveAnalysis";
 import VideoPage from "./VideoPage";
 
@@ -198,6 +199,22 @@ describe("VideoPage", () => {
 
     expect(await screen.findByRole("heading", { level: 1, name: "Tiny Trucks Race" })).toBeInTheDocument();
   });
+
+  it("has no accessibility violations, with and without a popover open", async () => {
+    const user = userEvent.setup();
+    open(ID);
+    await user.click(await screen.findByRole("button", { name: "About Rapid cutting" }));
+    await expectNoAxeViolations();
+    await user.keyboard("{Escape}");
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations on an error", async () => {
+    vi.mocked(getVideo).mockRejectedValue(new ApiError(500, "down"));
+    open(ID);
+    await screen.findByText("We couldn’t load this video.");
+    await expectNoAxeViolations();
+  });
 });
 
 function analysis(overrides: Partial<Analysis> = {}): Analysis {
@@ -370,5 +387,19 @@ describe("VideoPage, a video not in the dataset", () => {
     await act(() => vi.advanceTimersByTimeAsync(GIVE_UP_MS + POLL_MS));
     expect(screen.getByText("We couldn’t load this video.", VISIBLE)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations while checking", async () => {
+    vi.mocked(startAnalysis).mockResolvedValue(analysis());
+    open(ID);
+    await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "40"));
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations when the check failed", async () => {
+    vi.mocked(startAnalysis).mockResolvedValue(analysis({ status: "failed", error: "unavailable" }));
+    open(ID);
+    await screen.findByText(/We couldn’t get this video from YouTube/, VISIBLE);
+    await expectNoAxeViolations();
   });
 });

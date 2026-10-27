@@ -2,9 +2,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { OPEN_EVENT } from "@/lib/consent";
+import { expectNoAxeViolations } from "@/test/axe";
 import PrivacyPage, { CONTACT_URL } from "./PrivacyPage";
 
 describe("PrivacyPage", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
   it("has one H1, then the sections with their anchors", () => {
     const { container } = render(<PrivacyPage />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Privacy policy");
@@ -32,9 +35,13 @@ describe("PrivacyPage", () => {
     ).toBeInTheDocument();
   });
 
-  describe("changing the cookie choice", () => {
-    afterEach(() => vi.unstubAllEnvs());
+  it("has no accessibility violations", async () => {
+    vi.stubEnv("NEXT_PUBLIC_GA_ID", "G-TEST123");
+    render(<PrivacyPage />);
+    await expectNoAxeViolations();
+  });
 
+  describe("changing the cookie choice", () => {
     it("reopens the banner from “cookie settings” in Your choices", async () => {
       vi.stubEnv("NEXT_PUBLIC_GA_ID", "G-TEST123");
       const opened = vi.fn();

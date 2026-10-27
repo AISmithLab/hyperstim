@@ -1,6 +1,7 @@
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import Header from "./Header";
 
 const nav = vi.hoisted(() => ({ pathname: "/" }));
@@ -104,5 +105,12 @@ describe("Header", () => {
     expect(screen.getByRole("button", { name: "Menu" })).toHaveFocus();
     await user.keyboard("{Enter}");
     expect(phoneMenu()).toBeVisible();
+  });
+
+  // Closed only: jsdom ignores the `lg:` breakpoints, so with the phone menu open both "Main"
+  // navs count as shown, which a browser never does at one width.
+  it("has no accessibility violations", async () => {
+    render(<Header />);
+    await expectNoAxeViolations();
   });
 });

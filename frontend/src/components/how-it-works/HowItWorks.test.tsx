@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getMeta, type Meta } from "@/lib/api";
 import { FEATURE_GROUPS, FEATURE_INFO, featureSlug } from "@/lib/features";
 import { videoHref } from "@/lib/routes";
+import { expectNoAxeViolations } from "@/test/axe";
 import HowItWorks from "./HowItWorks";
 import { MARKERS } from "./WhatWeMeasure";
 
@@ -105,5 +106,15 @@ describe("HowItWorks", () => {
     await user.type(within(step).getByLabelText("YouTube link or video ID"), "dQw4w9WgXcQ{Enter}");
 
     expect(push).toHaveBeenCalledWith(videoHref("dQw4w9WgXcQ"));
+  });
+
+  it("has no accessibility violations, with the questions closed or open", async () => {
+    const user = userEvent.setup();
+    vi.mocked(getMeta).mockResolvedValue(meta("2026-10-31"));
+    const { container } = render(<HowItWorks />);
+    await screen.findByText("(at our latest scan, October 2026)");
+    await expectNoAxeViolations();
+    for (const summary of container.querySelectorAll("#questions summary")) await user.click(summary);
+    await expectNoAxeViolations();
   });
 });

@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { CONTACT_URL } from "@/components/privacy/PrivacyPage";
+import { expectNoAxeViolations } from "@/test/axe";
 import AboutPage, { ADVISORS, CONTRIBUTORS, LAB_URL } from "./AboutPage";
 
 describe("AboutPage", () => {
@@ -36,5 +37,10 @@ describe("AboutPage", () => {
     const names = [...container.querySelectorAll("p span")].filter((el) => el.textContent === "HyperStim?");
     expect(names).toHaveLength(1);
     expect(names[0]).toHaveClass("font-bold", "italic");
+  });
+
+  it("has no accessibility violations", async () => {
+    render(<AboutPage />);
+    await expectNoAxeViolations();
   });
 });

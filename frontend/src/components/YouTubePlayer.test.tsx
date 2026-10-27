@@ -2,6 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import YouTubePlayer, { type PlayerHandle } from "./YouTubePlayer";
 
 describe("YouTubePlayer", () => {
@@ -19,6 +20,12 @@ describe("YouTubePlayer", () => {
     expect(frame).toHaveAttribute("src", "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1");
     expect(frame).toHaveFocus();
     expect(container.querySelector("img")).toBeNull();
+  });
+
+  // Before Play only: axe can't reach into jsdom's iframe once the player is there.
+  it("has no accessibility violations", async () => {
+    render(<YouTubePlayer id="dQw4w9WgXcQ" title="Snail time" />);
+    await expectNoAxeViolations();
   });
 });
 

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { expectNoAxeViolations } from "@/test/axe";
 import ScoreMeter, { filledSegments } from "./ScoreMeter";
 
 describe("filledSegments", () => {
@@ -19,5 +20,15 @@ describe("ScoreMeter", () => {
     render(<ScoreMeter score={40} size="compact" srLabel="Higher than 40% of videos" />);
     expect(screen.getByText("40")).toHaveAttribute("aria-hidden", "true");
     expect(screen.getByText("Higher than 40% of videos")).toHaveClass("sr-only");
+  });
+
+  it("has no accessibility violations", async () => {
+    render(
+      <>
+        <ScoreMeter score={92.6} />
+        <ScoreMeter score={40} size="compact" srLabel="Higher than 40% of videos" />
+      </>,
+    );
+    await expectNoAxeViolations();
   });
 });

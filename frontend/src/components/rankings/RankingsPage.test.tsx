@@ -13,6 +13,7 @@ import {
   type RankedVideo,
 } from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
+import { expectNoAxeViolations } from "@/test/axe";
 import RankingsPage from "./RankingsPage";
 
 // The URL: router calls change it, and the page re-reads it, as in the browser.
@@ -596,5 +597,24 @@ describe("RankingsPage", () => {
     expect(screen.getByRole("combobox", { name: "Category" }).closest("label")).toHaveClass("sm:hidden");
     expect(orderButton("narrow").parentElement).toHaveClass("lg:hidden");
     expect(orderButton("wide")).toHaveClass("hidden", "lg:flex");
+  });
+
+  it.each(["", "view=channels"])("has no accessibility violations: %j", async (query) => {
+    open(query);
+    await screen.findByText(/^Showing 1–25 of/);
+    await expectNoAxeViolations();
+  });
+
+  it("has no accessibility violations when nothing matches, or on an error", async () => {
+    vi.mocked(getVideos).mockResolvedValueOnce({ items: [], total: 0, asOf: "2026-10-26T00:00:00Z" });
+    const { unmount } = open("q=xyz");
+    await screen.findByText("No videos match “xyz”.");
+    await expectNoAxeViolations();
+    unmount();
+
+    vi.mocked(getVideos).mockRejectedValueOnce(new Error("down"));
+    open();
+    await screen.findByText("We couldn’t load the rankings.");
+    await expectNoAxeViolations();
   });
 });
