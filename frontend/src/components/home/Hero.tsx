@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import RollingNumber from "@/components/RollingNumber";
+import RollingNumber, { countUpMs } from "@/components/RollingNumber";
 import { asset } from "@/lib/asset";
 import { useGrowth } from "@/lib/use-growth";
 
@@ -54,16 +54,33 @@ function DatasetLine() {
     return <p className="mt-4">Explore and compare thousands of videos to better understand what your child is watching.</p>;
   }
   const ready = growth !== "loading";
+  // All three count up at one speed: the longest rise takes the full count-up (plan 013).
+  const rises = ready
+    ? {
+        videos: growth.videos - growth.from.videos,
+        channels: growth.channels - growth.from.channels,
+        pastWeek: growth.pastWeek - growth.from.pastWeek,
+      }
+    : { videos: 0, channels: 0, pastWeek: 0 };
+  const longest = Math.max(rises.videos, rises.channels, rises.pastWeek);
   return (
     <>
       <p className="mt-4" aria-busy={!ready}>
         Explore and compare{" "}
         <b className="font-bold text-navy">
-          {ready ? <RollingNumber value={growth.videos} from={growth.from.videos} /> : <Room digits="00,000" />}
+          {ready ? (
+            <RollingNumber value={growth.videos} from={growth.from.videos} duration={countUpMs(rises.videos, longest)} />
+          ) : (
+            <Room digits="00,000" />
+          )}
         </b>{" "}
         videos from{" "}
         <b className="font-bold text-navy">
-          {ready ? <RollingNumber value={growth.channels} from={growth.from.channels} /> : <Room digits="000" />}
+          {ready ? (
+            <RollingNumber value={growth.channels} from={growth.from.channels} duration={countUpMs(rises.channels, longest)} />
+          ) : (
+            <Room digits="000" />
+          )}
         </b>{" "}
         channels to better understand what your child is watching.
       </p>
@@ -81,7 +98,8 @@ function DatasetLine() {
               href={`/rankings?${new URLSearchParams({ q: growth.pastWeekQuery })}`}
               className={`${PILL} transition-colors hover:bg-sky-blue/25`}
             >
-              +<RollingNumber value={growth.pastWeek} from={growth.from.pastWeek} /> videos in the past week
+              +<RollingNumber value={growth.pastWeek} from={growth.from.pastWeek} duration={countUpMs(rises.pastWeek, longest)} />{" "}
+              videos in the past week
             </Link>
           </p>
         )

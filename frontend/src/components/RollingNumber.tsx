@@ -3,21 +3,41 @@
 import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion, useCountUp } from "@/lib/motion";
 
-/** How long the first count-up takes, in ms. */
-export const COUNT_UP_MS = 1500;
+/** How long the longest first count-up takes, in ms. */
+export const COUNT_UP_MS = 1000;
+/** The shortest count-up, so a small rise still visibly counts. */
+export const MIN_COUNT_UP_MS = 300;
+
+/**
+ * How long a count-up of `rise` takes when counts rise together at one speed (plan 013): the
+ * longest rise takes `COUNT_UP_MS`, the others less in proportion, but at least `MIN_COUNT_UP_MS`.
+ */
+export function countUpMs(rise: number, longest: number): number {
+  if (longest <= 0) return COUNT_UP_MS;
+  return Math.max(MIN_COUNT_UP_MS, (COUNT_UP_MS * rise) / longest);
+}
 
 const format = (n: number) => Math.round(n).toLocaleString("en-US");
 
 /**
  * A count that grows (see STYLE.md, Growing counts): on first render it counts up from `from` to
- * `value`; after that, each rise rolls the digits that change, like a car's odometer. Only for
+ * `value` in `duration` ms; after that, each rise rolls the digits that change, like a car's odometer. Only for
  * numbers that go up. Screen readers get the plain number; the moving digits are hidden from them,
  * and nothing is announced when it changes.
  */
-export default function RollingNumber({ value, from }: { value: number; from: number }) {
-  // The count-up runs once, to the value the page started with; later changes roll.
-  const [start] = useState(() => ({ target: value, from: Math.min(from, value) }));
-  const counted = useCountUp(start.target, start.from, COUNT_UP_MS);
+export default function RollingNumber({
+  value,
+  from,
+  duration = COUNT_UP_MS,
+}: {
+  value: number;
+  from: number;
+  /** How long the first count-up takes, in ms (see `countUpMs`). */
+  duration?: number;
+}) {
+  // The count-up runs once, to the value the page started with, in its duration; later changes roll.
+  const [start] = useState(() => ({ target: value, from: Math.min(from, value), duration }));
+  const counted = useCountUp(start.target, start.from, start.duration);
   const counting = Math.round(counted) < start.target;
   return (
     <span className="whitespace-nowrap tabular-nums">

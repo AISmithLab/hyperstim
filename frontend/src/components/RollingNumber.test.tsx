@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import RollingNumber, { COUNT_UP_MS } from "./RollingNumber";
+import RollingNumber, { COUNT_UP_MS, MIN_COUNT_UP_MS, countUpMs } from "./RollingNumber";
 
 function mockReducedMotion(reduce: boolean) {
   vi.stubGlobal("matchMedia", (query: string) => ({ matches: reduce, media: query }));
@@ -31,6 +31,16 @@ describe("RollingNumber", () => {
     expect(halfway).toBeGreaterThan(15359);
     act(() => vi.advanceTimersByTime(COUNT_UP_MS));
     expect(positions()).toEqual([1, 6, 4, 0, 2]);
+  });
+
+  it("counts up in the duration it's given", () => {
+    vi.useFakeTimers({ toFake: ["requestAnimationFrame", "cancelAnimationFrame", "performance"] });
+    mockReducedMotion(false);
+    render(<RollingNumber value={545} from={542} duration={MIN_COUNT_UP_MS} />);
+    act(() => vi.advanceTimersByTime(MIN_COUNT_UP_MS / 2));
+    expect(shown()).toHaveTextContent(/^54[2-4]$/);
+    act(() => vi.advanceTimersByTime(MIN_COUNT_UP_MS));
+    expect(positions()).toEqual([5, 4, 5]);
   });
 
   it("shows the value at once with reduced motion, and reads it once to screen readers", () => {
@@ -69,5 +79,21 @@ describe("RollingNumber", () => {
     rerender(<RollingNumber value={1000} from={0} />);
     expect(positions()).toEqual([1, 0, 0, 0]);
     expect(screen.getByText("1,000")).toHaveClass("sr-only");
+  });
+});
+
+describe("countUpMs", () => {
+  it("gives the longest rise the full count-up and the others less, at one speed", () => {
+    expect(countUpMs(1000, 1000)).toBe(COUNT_UP_MS);
+    expect(countUpMs(500, 1000)).toBe(COUNT_UP_MS / 2);
+  });
+
+  it("never goes below the floor, so a small rise still counts", () => {
+    expect(countUpMs(3, 1000)).toBe(MIN_COUNT_UP_MS);
+    expect(countUpMs(0, 1000)).toBe(MIN_COUNT_UP_MS);
+  });
+
+  it("gives the full count-up when nothing rises", () => {
+    expect(countUpMs(0, 0)).toBe(COUNT_UP_MS);
   });
 });
