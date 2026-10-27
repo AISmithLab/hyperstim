@@ -1,12 +1,14 @@
 # 012 — Code quality checks
 
-**Area:** CI checks (`ci.yml`), test coverage, and static analysis with SonarQube Cloud.
+**Area:** CI checks (`ci.yml`), testing (levels, tools, what each change must test), test coverage, and static analysis with SonarQube Cloud _(human decision, 2026-10-27: testing added)_.
 
 ## Goal
 
-Show test coverage and SonarQube Cloud's analysis (bugs, code smells, security hotspots, duplication) for every push to `main` and every PR, next to the existing lint, type check, test and build checks.
+Show test coverage and SonarQube Cloud's analysis (bugs, code smells, security hotspots, duplication) for every push to `main` and every PR, next to the existing lint, type check, test and build checks. Set what every change must test, at unit, component and end-to-end level, accessibility included _(human decision, 2026-10-27)_.
 
 ## Decisions
+
+### Static analysis and coverage
 
 - **SonarQube Cloud, free plan for public repos** (the repo is public and Apache 2.0). Organization `aismithlab`, project `AISmithLab_hyperstim`, region sonarcloud.io (default). The keys aren't secret; only the token is.
 - **CI-based analysis instead of Automatic Analysis**, because Automatic Analysis can't import coverage. Automatic Analysis is turned off in the project's settings (done).
@@ -32,6 +34,34 @@ Show test coverage and SonarQube Cloud's analysis (bugs, code smells, security h
   6. `backend/src/hyperstim_api/thumbnails.py`, `fetch_from_youtube` with `urlopen` faked: bytes on success, none on 404, `Unavailable` on other HTTP errors and network errors.
 - **Privacy:** no change. Sonar only reads the repo's code; nothing reaches site visitors or the backend.
 
+### Testing _(human decision, 2026-10-27)_
+
+- **Every new feature and bug fix comes with tests** _(human decision)_. A fix includes a test that fails without the fix. The rule goes into CLAUDE.md (Engineering), with a pointer here.
+- **Three levels** _(human decision)_, each for what it catches best:
+
+  | Level | Tool | Covers |
+  |---|---|---|
+  | Unit | Vitest (frontend), pytest (backend) | Logic and edge cases: scoring, ranking, `api.ts`, formatting, parsing |
+  | Component | Vitest + Testing Library | Rendering and interaction of one component or page section, with `api.ts` mocked; plus an axe check |
+  | End-to-end | Playwright (new dev dependency) | Visitor flows through the built site against the **real backend** _(human decision)_; axe on every page; keyboard paths; reflow |
+
+  Backend endpoint tests stay as they are: pytest with the synthetic fixture dataset (001).
+- **Queries by role and accessible name** (`getByRole('button', { name: … })`) in component and E2E tests, not by class or test ID. A test that can't find an element by role and name has found an accessibility bug. Text the test asserts on comes from the same constant the page uses wherever one exists, so rewording doesn't break tests needlessly.
+- **Accessibility testing:**
+  - Automated: axe-core, called directly in component tests through a small helper, `expectNoAxeViolations` in `frontend/src/test/axe.ts` (`vitest-axe` is unmaintained, and the helper is a few lines). jsdom has no layout, so contrast is off there, and so is `region` (a component alone isn't inside the page's landmarks) and `@axe-core/playwright` in E2E (in a real browser, including contrast). Any violation fails the test. A rule may be turned off for one element only with a comment saying why. Light theme only, as the site has no dark mode _(human decision)_.
+  - Written by hand in E2E: keyboard path through each page's main controls (Tab order, visible focus, Escape closes, focus comes back), and no horizontal scroll at 320 px.
+  - Manual: a new page or a major UI change gets a keyboard and screen reader pass (VoiceOver or NVDA) before handoff, next to the 360/1280 screenshots CLAUDE.md asks for. Noted in the change's plan.
+- **E2E setup:**
+  - Tests in `frontend/e2e/`, run with `npm run test:e2e`. Playwright starts both servers itself, on ports 8100 and 3100 so they don't clash with the dev servers: the backend (`uvicorn`, from `backend/`) and the static site, which it builds for that backend and then serves from `frontend/out/` with Python's `http.server` through uv (no extra server dependency; `trailingSlash: true` makes `/rankings/` resolve to `rankings/index.html` like GitHub Pages). The build's env vars are set in `playwright.config.ts`, so a developer's `.env.local` doesn't leak in.
+  - Consent: the E2E build gets a made-up Google Analytics ID, so the consent banner works as in prod. Tests start with a saved Reject, except the consent tests, which start as a first visit.
+  - Backend data: the committed reference set (`backend/data/videos.tsv`) _(human decision: realistic data, like what visitors see)_ with `COLLECTED_DIR` empty, so the server's daily data commits don't move it. Tests find their videos and channels through the API (e.g. the first in the rankings), not by hard-coded IDs or values, so a research re-import doesn't break them.
+  - No outside network: Playwright fails a test on any request to a host other than the two local servers, except YouTube embeds, which are answered with an empty page. This also checks the privacy policy's promise that nothing loads from YouTube before play (plan 009). Thumbnails (`/api/thumbnails/…`, which the backend would fetch from YouTube) are answered by Playwright with a local image.
+  - Live analysis: CI can't download videos, so E2E covers a known dataset video (the check form goes straight to its page) and an already finished analysis (a result JSON placed in a temporary `ANALYSIS_DIR` before start). The running and failure states stay in component tests.
+  - Browsers: Chromium at 1280 px ("desktop") and WebKit at 360 px ("phone", for Safari on iPhones). Reflow check at 320 px in Chromium.
+- **CI:** a new `e2e` job in `ci.yml`, after `frontend` and `backend`: installs both (`npm ci`, `uv sync --locked`), Playwright's browsers with their system libraries (`npx playwright install --with-deps`, not cached: the system libraries need installing each run anyway), builds the site, runs `npm run test:e2e`, uploads the Playwright report on failure. `release.sh` releases only commits where CI passed, so E2E failures block releases like the Sonar gate. E2E doesn't count toward Sonar coverage.
+- **Existing pages get it too** _(human decision)_: E2E and axe coverage for all current pages and components, not only new work (step 12).
+- **Privacy:** no change. Tests run only in CI and locally; they add nothing to the site or backend and contact no third party.
+
 ## Steps
 
 **In the repo (me):**
@@ -47,6 +77,20 @@ Show test coverage and SonarQube Cloud's analysis (bugs, code smells, security h
 6. Exclude `mock.ts` from coverage (`sonar-project.properties`, `vitest.config.mts`). (done)
 7. Add the tests 1–6 above, one commit each (done). Result: frontend 95% statements / 91% branches, backend 98%; every file in 1–6 at 98–100%.
 8. Check the next CI run: overall and new-code coverage in Sonar are 80% or more.
+
+**Testing (2026-10-27):**
+
+9. Rules in CLAUDE.md (Engineering: tests per feature and fix, the three levels, role queries, manual a11y pass), each pointing here. Testing section in `frontend/README.md` (E2E command, installing browsers with `npx playwright install --with-deps`).
+10. Dev dependencies `@playwright/test`, `@axe-core/playwright`, `axe-core`; `playwright.config.ts` (servers, two projects, outside-network guard, thumbnail route); `test:e2e` script; ESLint and `.gitignore` for Playwright output; lock file updated.
+11. `e2e` job in `ci.yml`.
+
+    Steps 9–11 done.
+12. Existing code:
+    - axe check added to every existing component test file; component tests for components that have none yet where they hold interaction (`CheckVideoForm`, `SegmentedControl`, `Chip`, `Select`, `MeasurementPicker`, `CookieSettings`).
+    - E2E: a spec per page (`home`, `rankings`, `video`, `channel`, `compare`; how it works, privacy and about together in `pages`): home (check a dataset video by link → its page, a finished live check, a bad link, the rankings card), rankings (category, search, calmest first, a measurement column, open a video and a channel), video (score, ⓘ, play and close, links to its channel and compare, a bad ID), channel (score, its videos over the years, a measurement, open a video, compare), compare (two videos by search and by link, remove, two channels), how it works (check field, a question), privacy (cookie settings), about. `site.spec.ts`: every page (12 states) loaded with axe and the 320 px check; skip link, header links and the phone menu, footer, consent, nothing from YouTube before Play. Keyboard paths in each spec.
+    - Any bug these find is fixed in its own `fix:` commit under the plan that owns the page.
+
+    Done (2026-10-27): 31 new component tests, axe in all 25 component test files; 46 E2E tests per browser. They found two bugs, fixed: rankings search missed titles with double spaces (plan 007), and on phones the channel page's video cards had an `aria-label` that left out their visible text, failing WCAG 2.5.3 "label in name" (plan 005).
 
 **For you (team):** Automatic Analysis off and `SONAR_TOKEN` secret set (done). In the project's Administration → New Code, choose "Previous version".
 

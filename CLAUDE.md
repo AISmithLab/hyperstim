@@ -57,7 +57,12 @@ Before committing, check `git diff --staged` for anything above.
   - If a requested style change conflicts with `STYLE.md`, point out the conflict before applying it.
   - Before handing back UI work, screenshot the changed parts next to their neighbours at phone (360 px) and desktop (1280 px) widths and compare them against `STYLE.md`.
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
-- Each change must pass lint, type check, build, and tests before commit.
+- Each change must pass lint, type check, build, and tests (including end-to-end) before commit.
+- **Tests** (plan 012 has the setup and details):
+  - Every new feature and bug fix comes with tests. A fix includes a test that fails without it.
+  - Test at the level that catches the problem, often more than one: **unit** (logic: Vitest, pytest), **component** (one component or page section with `api.ts` mocked: Vitest + Testing Library), **end-to-end** (visitor flows on the built site against the real backend: Playwright, in `frontend/e2e/`). A new page or visitor flow gets an E2E spec.
+  - Find elements by role and accessible name (`getByRole('button', { name: … })`), not by class or test ID.
+  - Accessibility is tested too: an axe check in each component test file and on each page in E2E, and each page's keyboard path and 320 px reflow in E2E. A new page or major UI change also gets a manual keyboard and screen reader pass before handoff.
 - Do not commit or push unless asked.
 - **Commit messages follow Conventional Commits**; `release.sh` takes the next version and the release notes from them (plan 010). Format: `<type>[!]: <subject> (plan NNN)`, then an optional body after a blank line. The `commit-msg` hook in `.githooks/` checks the format.
   - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
