@@ -1,0 +1,60 @@
+import { topChannels, topVideos } from "./api";
+import { expect, test } from "./fixtures";
+
+test.describe("compare", () => {
+  test("two videos picked by search, by keyboard, give a shareable comparison", async ({ page, request }) => {
+    const [v1, v2] = await topVideos(request, 2);
+    await page.goto("/compare/");
+    for (const [slot, video] of [
+      ["Video A", v1],
+      ["Video B", v2],
+    ] as const) {
+      const region = page.getByRole("region", { name: slot });
+      const picker = region.getByRole("combobox", { name: "Video name or video link" });
+      await picker.fill(video.title);
+      await expect(region.getByRole("option").first()).toBeVisible();
+      await picker.press("ArrowDown");
+      await picker.press("Enter");
+      await expect(region.getByRole("link", { name: video.title, exact: true })).toBeVisible();
+    }
+    await expect(page.getByRole("heading", { level: 2, name: "How they compare" })).toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`a=${v1.id}.*b=${v2.id}`));
+
+    await page.reload();
+    await expect(page.getByRole("heading", { level: 2, name: "How they compare" })).toBeVisible();
+  });
+
+  test("a pasted video link fills the slot", async ({ page, request }) => {
+    const [video] = await topVideos(request);
+    await page.goto("/compare/");
+    const region = page.getByRole("region", { name: "Video A" });
+    await region.getByRole("combobox").fill(`https://youtu.be/${video.id}`);
+    await region.getByRole("combobox").press("Enter");
+    await expect(region.getByRole("link", { name: video.title, exact: true })).toBeVisible();
+  });
+
+  test("removing a video puts focus back in its picker", async ({ page, request }) => {
+    const [v1, v2] = await topVideos(request, 2);
+    await page.goto(`/compare/?a=${v1.id}&b=${v2.id}`);
+    const region = page.getByRole("region", { name: "Video A" });
+    await region.getByRole("button", { name: "Remove video A" }).click();
+    await expect(region.getByRole("combobox", { name: "Video name or video link" })).toBeFocused();
+    await expect(page.getByRole("heading", { level: 2, name: "How they compare" })).toHaveCount(0);
+  });
+
+  test("two channels", async ({ page, request }) => {
+    const [c1, c2] = await topChannels(request, 2);
+    await page.goto("/compare/");
+    await page.getByRole("group", { name: "Compare" }).getByRole("button", { name: "Channels" }).click();
+    for (const [slot, channel] of [
+      ["Channel A", c1],
+      ["Channel B", c2],
+    ] as const) {
+      const region = page.getByRole("region", { name: slot });
+      await region.getByRole("combobox").fill(channel.name);
+      await region.getByRole("option", { name: new RegExp(`^${channel.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`) }).first().click();
+      await expect(region.getByRole("link", { name: channel.name, exact: true })).toBeVisible();
+    }
+    await expect(page.getByRole("heading", { level: 2, name: "How they compare" })).toBeVisible();
+  });
+});
