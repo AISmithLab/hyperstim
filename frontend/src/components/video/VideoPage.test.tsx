@@ -76,7 +76,7 @@ describe("VideoPage", () => {
     await waitFor(() => expect(document.title).toBe("Tiny Trucks Race - HyperStim?"));
   });
 
-  it("moves the player under the title on play, and × puts the preview back", async () => {
+  it("moves the player under the title on play, and the shrink button puts the preview back", async () => {
     const user = userEvent.setup();
     const { container } = open(ID);
     const header = ".grid-cols-\\[2fr_1fr\\]";
@@ -92,12 +92,15 @@ describe("VideoPage", () => {
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading.compareDocumentPosition(frame) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(container.querySelector(header)).toBeNull();
+    // The title stays at the left; only the player is centred, at the screen-fitting width.
+    expect(heading.closest(".mx-auto")).not.toHaveClass("max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]");
+    expect(frame.closest(".mx-auto")).toHaveClass("max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]");
 
-    await user.click(screen.getByRole("button", { name: "Close video" }));
+    await user.click(screen.getByRole("button", { name: "Shrink video" }));
     expect(container.querySelector("iframe")).toBeNull();
     expect(container.querySelector('img[src^="/api/thumbnails/"]')).not.toBeNull();
     expect(screen.getByRole("button", { name: "Play video: Tiny Trucks Race" })).toHaveFocus();
-    expect(screen.queryByRole("button", { name: "Close video" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Shrink video" })).not.toBeInTheDocument();
     expect(container.querySelector(header)).not.toBeNull();
   });
 
@@ -109,7 +112,7 @@ describe("VideoPage", () => {
     expect(kid).toHaveClass("translate-y-0", "[clip-path:inset(0_0_100%_0)]");
     expect(container.querySelector("img[data-cover]")).not.toBeNull();
 
-    await user.click(screen.getByRole("button", { name: "Close video" }));
+    await user.click(screen.getByRole("button", { name: "Shrink video" }));
     expect(kid).toHaveClass("-translate-y-[92.1%]");
   });
 

@@ -22,7 +22,7 @@ export type PlayerHandle = { pause: () => void };
  * page uses this to play one video at a time.
  *
  * With `onStart`, the parent owns the playing state instead: the click calls `onStart`, and
- * `playing` shows the player (the video page moves it to a larger spot). With `cover`, the thumbnail
+ * `playing` shows the player (the video page and the channel's video panel move it to a larger spot). With `cover`, the thumbnail
  * stays over the player until it has loaded, then fades out, so the box isn't black meanwhile.
  */
 export default function YouTubePlayer({

@@ -11,17 +11,13 @@ import { channelHref, compareHref } from "@/lib/routes";
 import { parseVideoInput } from "@/lib/youtube";
 import { canAnimate, grow } from "./grow";
 import LiveAnalysis from "./LiveAnalysis";
-import { CheckAnother, CONTAINER, Message, OUTLINED_BUTTON, TEXT_LINK } from "./parts";
+import { CheckAnother, CONTAINER, Message, OUTLINED_BUTTON, PLAYER_WIDTH, ShrinkButton, TEXT_LINK } from "./parts";
 import ScorePanel, { ScorePanelSkeleton } from "./ScorePanel";
 
 // Video metadata on 2/3 of the width, the preview on 1/3.
 const HEADER = "grid grid-cols-[2fr_1fr] items-start gap-4 sm:gap-6";
 // Room above the score panel for the kid peeking over its top edge, from md (it's hidden below).
 const PANEL_GAP = "mt-6 md:mt-20 lg:mt-16 xl:mt-10";
-// While playing: title, channel line and player in one centred column, never wider than the
-// content, and narrow enough that the player's height leaves room for the site header, the title
-// and the top of the score panel (22rem) on short, wide screens.
-const PLAYING_COLUMN = "mx-auto max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]";
 
 /** `/video?id=…`: reads the ID on the client, since a static export can't pre-render it. */
 export default function VideoPage() {
@@ -80,7 +76,8 @@ function VideoState({
 }
 
 function Result({ video }: { video: VideoDetail }) {
-  // Playing, the player grows out of the preview into the column under the title; × shrinks it back.
+  // Playing, the player grows out of the preview into its spot under the title; the shrink button
+  // puts it back.
   const [playing, setPlaying] = useState(false);
   const preview = useRef<HTMLDivElement>(null);
   const player = useRef<HTMLDivElement>(null);
@@ -100,7 +97,7 @@ function Result({ video }: { video: VideoDetail }) {
   };
 
   // After a toggle: grow (or shrink) into the new box, then focus the player, or the preview's play
-  // button after ×, where the visitor started.
+  // button after shrinking, where the visitor started.
   useLayoutEffect(() => {
     if (!toggled.current) return;
     const target = (playing ? player : preview).current;
@@ -109,12 +106,12 @@ function Result({ video }: { video: VideoDetail }) {
     before.current = null;
     if (!from || !target || !panel.current) return focus();
     const dy = from.panelTop - panel.current.getBoundingClientRect().top;
-    grow(from.box, target, thumbnailUrl(video.id), panel.current, dy, focus);
+    grow(from.box, target, thumbnailUrl(video.id), [{ el: panel.current, dx: 0, dy }], focus);
   }, [playing, video.id]);
 
   return (
     <div className={CONTAINER}>
-      <div className={playing ? PLAYING_COLUMN : HEADER}>
+      <div className={playing ? undefined : HEADER}>
         <div className="flex items-end gap-2">
           <div className="min-w-0 flex-1">
             <h1 className="line-clamp-2 font-hand text-[1.375rem] leading-tight font-semibold text-navy sm:text-2xl lg:text-[1.75rem]">
@@ -145,22 +142,13 @@ function Result({ video }: { video: VideoDetail }) {
             </p>
           </div>
           {playing && (
-            // Above the player's top right corner, clear of YouTube's own controls.
-            <button
-              type="button"
-              onClick={() => toggle(false)}
-              aria-label="Close video"
-              className="-mr-2.5 flex size-11 shrink-0 items-center justify-center rounded-full text-navy hover:bg-sky"
-            >
-              <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5 fill-none stroke-current stroke-2">
-                <path d="M5 5l10 10M15 5L5 15" strokeLinecap="round" />
-              </svg>
-            </button>
+            // Above the player, clear of YouTube's own controls.
+            <ShrinkButton onClick={() => toggle(false)} className="-mr-2.5 hover:bg-sky" />
           )}
         </div>
         {/* The preview plays on click; the embedded player links on to YouTube. */}
         {playing ? (
-          <div ref={player} className="mt-4">
+          <div ref={player} className={`mt-4 ${PLAYER_WIDTH}`}>
             <YouTubePlayer id={video.id} title={video.title} playing cover />
           </div>
         ) : (

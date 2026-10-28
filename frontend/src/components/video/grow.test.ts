@@ -39,12 +39,15 @@ describe("grow", () => {
     vi.spyOn(to, "getBoundingClientRect").mockReturnValue(rect(100, 150, 800, 450));
     const done = vi.fn();
 
-    grow(rect(900, 80, 300, 169), to, "/thumb.jpg", panel, 200, done);
+    const still = document.createElement("p");
+    grow(rect(900, 80, 300, 169), to, "/thumb.jpg", [{ el: panel, dx: 0, dy: 200 }, { el: still, dx: 0, dy: 0 }], done);
 
     const ghost = document.body.querySelector<HTMLElement>("div[aria-hidden]")!;
     expect(ghost.querySelector("img")).toHaveAttribute("src", "/thumb.jpg");
     expect(to.style.visibility).toBe("hidden");
-    expect(flights[0].keyframes).toEqual([{ transform: "translateY(200px)" }, { transform: "none" }]);
+    // The panel slides; an element that didn't move doesn't.
+    expect(flights).toHaveLength(2);
+    expect(flights[0].keyframes).toEqual([{ transform: "translate(0px, 200px)" }, { transform: "none" }]);
     expect(flights[1].keyframes).toEqual([
       { left: "900px", top: "80px", width: "300px", height: "169px" },
       { left: "100px", top: "150px", width: "800px", height: "450px" },

@@ -22,14 +22,14 @@ test.describe("video", () => {
     await expect(info).toHaveAttribute("aria-expanded", "false");
   });
 
-  test("Play shows the video large; Close video puts the preview back and focus on it", async ({ page, request }) => {
+  test("Play shows the video large; Shrink video puts the preview back and focus on it", async ({ page, request }) => {
     const [video] = await topVideos(request);
     await page.goto(`/video/?id=${video.id}`);
     const play = page.getByRole("button", { name: /^Play video/ });
     await tabTo(page, play);
     await page.keyboard.press("Enter");
     await expect(page.locator("iframe")).toBeVisible();
-    await page.getByRole("button", { name: "Close video" }).click();
+    await page.getByRole("button", { name: "Shrink video" }).click();
     await expect(page.locator("iframe")).toHaveCount(0);
     await expect(play).toBeFocused();
   });
