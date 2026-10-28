@@ -16,6 +16,7 @@ import urllib.request
 from collections.abc import Callable
 from email.message import Message
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -524,3 +525,68 @@ def test_stopping_an_idle_worker(tmp_path: Path, pipeline: FakePipeline) -> None
     analyzer.start_worker()
     analyzer.stop_worker()
     assert analyzer._thread is not None and not analyzer._thread.is_alive()
+
+
+# --- the download script's tries (pipeline/58_download_clips_v2.py) -------------------------
+
+
+def download_script(monkeypatch: pytest.MonkeyPatch, result: Callable[[list[str]], object]) -> Any:
+    """The download script as a module, with yt-dlp replaced by `result(cmd)`."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("download_clips", DOWNLOAD_SCRIPT)
+    assert spec and spec.loader
+    module: Any = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    monkeypatch.setattr(module.subprocess, "run", lambda cmd, **kw: result(cmd))
+    return module
+
+
+def test_a_failed_try_keeps_yt_dlps_full_output(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    stderr = "[debug] yt-dlp version\nERROR: [youtube] x: Video unavailable\n[debug] more\n"
+    script = download_script(
+        monkeypatch, lambda cmd: subprocess.CompletedProcess(cmd, 1, "progress", stderr)
+    )
+    out = tmp_path / f"{VIDEO}.mp4"
+    status, message = script.attempt(VIDEO, str(out), 30, 300, "18", "", "mweb")
+    assert (status, message) == ("error", "ERROR: [youtube] x: Video unavailable")
+    log = (tmp_path / f"{VIDEO}.mweb.log").read_text()
+    assert "--verbose" in log and "progress" in log and stderr in log
+
+
+def test_an_empty_clip_and_a_timeout_keep_their_output_too(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    out = tmp_path / f"{VIDEO}.mp4"
+
+    def stub(cmd: list[str]) -> subprocess.CompletedProcess[str]:
+        out.write_bytes(b"x" * 262)
+        return subprocess.CompletedProcess(cmd, 0, "", "[ffmpeg] 0 packets\n")
+
+    script = download_script(monkeypatch, stub)
+    assert script.attempt(VIDEO, str(out), 30, 300, "18", "", None) == (
+        "error",
+        "exit 0 but wrote 262 B",
+    )
+    assert "0 packets" in (tmp_path / f"{VIDEO}.default.log").read_text()
+
+    def hang(cmd: list[str]) -> None:
+        raise subprocess.TimeoutExpired(cmd, 300, output=b"half", stderr=b"stalled")
+
+    script = download_script(monkeypatch, hang)
+    assert script.attempt(VIDEO, str(out), 30, 300, "18", "", "android")[0] == "timeout"
+    assert "stalled" in (tmp_path / f"{VIDEO}.android.log").read_text()
+
+
+def test_a_good_try_keeps_no_log(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    out = tmp_path / f"{VIDEO}.mp4"
+
+    def ok(cmd: list[str]) -> subprocess.CompletedProcess[str]:
+        out.write_bytes(b"x" * (MIN_CLIP_BYTES + 1))
+        return subprocess.CompletedProcess(cmd, 0, "", "")
+
+    script = download_script(monkeypatch, ok)
+    assert script.attempt(VIDEO, str(out), 30, 300, "18", "", None)[0] == "ok"
+    assert not list(tmp_path.glob("*.log"))

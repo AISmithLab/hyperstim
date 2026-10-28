@@ -47,7 +47,7 @@ _consecutive = 0
 
 
 def attempt(video_id, out_path, start_s, dur_s, fmt, cookies, client):
-    cmd = ["yt-dlp", "--no-warnings", "--quiet",
+    cmd = ["yt-dlp", "--verbose",
            "-f", fmt,
            "--download-sections", f"*{start_s}-{start_s + dur_s}",
            "--merge-output-format", "mp4",
@@ -68,13 +68,35 @@ def attempt(video_id, out_path, start_s, dur_s, fmt, cookies, client):
         if r.returncode == 0 and os.path.exists(out_path):
             size = os.path.getsize(out_path)
             if size <= MIN_CLIP_BYTES:
+                keep_log(out_path, client, cmd, r.stdout, r.stderr)
                 return "error", f"exit 0 but wrote {size} B"
             return "ok", f"{size/1048576:.1f}MB"
-        return "error", (r.stderr or "").strip()[-180:] or "unknown"
-    except subprocess.TimeoutExpired:
+        keep_log(out_path, client, cmd, r.stdout, r.stderr)
+        return "error", last_error(r.stderr) or "unknown"
+    except subprocess.TimeoutExpired as e:
+        keep_log(out_path, client, cmd, e.stdout, e.stderr)
         return "timeout", "exceeded 5 min"
     except Exception as e:
         return "error", str(e)[:180]
+
+
+def last_error(stderr):
+    """The last ERROR: line (--verbose fills stderr with debug lines), cut to 180 chars."""
+    lines = (stderr or "").strip().splitlines()
+    errors = [line for line in lines if line.startswith("ERROR:")]
+    return (errors or lines or [""])[-1][-180:]
+
+
+def keep_log(out_path, client, cmd, stdout, stderr):
+    """yt-dlp's full output for a failed try (with ffmpeg's), next to the clip:
+    <video_id>.<client>.log. A website change (plan 013): only the message's last 180
+    characters were kept, which couldn't explain a failure."""
+    def text(s):
+        return s.decode(errors="replace") if isinstance(s, bytes) else (s or "")
+    path = f"{os.path.splitext(out_path)[0]}.{client or 'default'}.log"
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(f"$ {' '.join(cmd)}\n\n--- stdout ---\n{text(stdout)}"
+                 f"\n--- stderr ---\n{text(stderr)}")
 
 
 def download(row, a, logw, logf, total, counter):

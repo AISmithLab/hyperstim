@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS uploads (
     -- new | v2 | eligible | ineligible | collected | failed | removed
     state TEXT NOT NULL DEFAULT 'new',
     reason TEXT NOT NULL DEFAULT '',
-    retry_at REAL NOT NULL DEFAULT 0,  -- `new` uploads are not checked before this
+    retry_at REAL NOT NULL DEFAULT 0,  -- `new`: not checked before; `eligible`: not downloaded
     checked_at REAL,
     online_at REAL,                    -- dataset videos: last seen online (monthly check)
     title TEXT NOT NULL DEFAULT '',
@@ -209,11 +209,41 @@ class Store:
         ).fetchall()
         return [str(r["id"]) for r in rows]
 
-    def next_eligible(self) -> Upload | None:
+    def next_eligible(self, now: float) -> Upload | None:
+        """The eligible upload with the lowest number, not waiting for a retry."""
         row = self.db.execute(
-            "SELECT * FROM uploads WHERE state = 'eligible' ORDER BY r LIMIT 1"
+            "SELECT * FROM uploads WHERE state = 'eligible' AND retry_at <= ? ORDER BY r LIMIT 1",
+            (now,),
         ).fetchone()
         return _upload(row) if row else None
+
+    def ready(self, now: float) -> int:
+        """Eligible uploads that can be downloaded now (not waiting for a retry)."""
+        row = self.db.execute(
+            "SELECT COUNT(*) AS n FROM uploads WHERE state = 'eligible' AND retry_at <= ?", (now,)
+        )
+        return int(row.fetchone()["n"])
+
+    def retrying(self, now: float) -> list[float]:
+        """When the uploads waiting for a retry are due, soonest first."""
+        rows = self.db.execute(
+            "SELECT retry_at FROM uploads WHERE state = 'eligible' AND retry_at > ? "
+            "ORDER BY retry_at",
+            (now,),
+        )
+        return [float(r["retry_at"]) for r in rows]
+
+    def requeue_failed(self, below: int) -> int:
+        """Failed uploads with fewer than `below` failed downloads become eligible again, due at
+        once (those given up before failures were retried); returns how many."""
+        before = self.db.total_changes
+        self.db.execute(
+            "UPDATE uploads SET state = 'eligible', retry_at = 0 WHERE state = 'failed' AND "
+            "(SELECT COUNT(*) FROM attempts a WHERE a.video_id = uploads.id "
+            "AND a.outcome = 'failed') < ?",
+            (below,),
+        )
+        return self.db.total_changes - before
 
     def count(self, state: str) -> int:
         row = self.db.execute("SELECT COUNT(*) AS n FROM uploads WHERE state = ?", (state,))
@@ -283,6 +313,14 @@ class Store:
             "INSERT INTO attempts (video_id, at, outcome, message) VALUES (?, ?, ?, ?)",
             (video_id, at, outcome, message[-500:]),
         )
+
+    def failures(self, video_id: str) -> int:
+        """Failed downloads of the video (blocks not counted)."""
+        row = self.db.execute(
+            "SELECT COUNT(*) AS n FROM attempts WHERE video_id = ? AND outcome = 'failed'",
+            (video_id,),
+        )
+        return int(row.fetchone()["n"])
 
     def attempts_since(self, since: float) -> int:
         row = self.db.execute("SELECT COUNT(*) AS n FROM attempts WHERE at >= ?", (since,))

@@ -79,6 +79,7 @@ uv run --env-file .env python -m hyperstim_api.collector status                 
 ```
 
 - **Pace:** `COLLECT_PER_DAY` (150) downloads a day at random intervals. If YouTube blocks downloads ("not a bot"), it waits 6 hours (doubling up to 2 days if blocked again, at half the pace for a week); a block seen by a live check (`ANALYSIS_DIR/youtube-blocked`) pauses it too.
+- **Failed downloads** (not blocks) are tried again 1, 3 and 7 days later, within the daily pace; the 4th failure gives up. Three failures in a row pause downloads for an hour. yt-dlp's full output for each failed download is kept in `COLLECTOR_DATA_DIR/download-logs/<date>/<id>.log` for 30 days; the warning in the log names the file.
 - **Data API:** it shares the site's key and stops at `COLLECTOR_UNITS_PER_DAY` (7,000 of the 10,000 a day), leaving the rest for live checks.
 - **Categories:** v2's keyword classifier (`pipeline/63_classify_categories.py`); a video no keyword places has no category.
 - **Disk:** about 13 MB a clip; it pauses below 50 GB free.

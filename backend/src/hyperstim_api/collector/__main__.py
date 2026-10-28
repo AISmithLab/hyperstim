@@ -21,6 +21,7 @@ from hyperstim_api import scoring
 from hyperstim_api.analysis import ResearchPipeline
 from hyperstim_api.collector import seed as seeding
 from hyperstim_api.collector.collector import (
+    RETRY_AFTER_S,
     Collector,
     Settings,
     export,
@@ -57,6 +58,10 @@ def run(s: Settings) -> None:
     if not store.get("seeded"):
         sys.exit("Seed the collector first: python -m hyperstim_api.collector seed <research-repo>")
     s.provenance = provenance()
+    # Downloads that failed before they were retried (plan 013, decision 7) get their retries.
+    requeued = store.requeue_failed(len(RETRY_AFTER_S) + 1)
+    if requeued:
+        log.info("Trying %d failed downloads again", requeued)
 
     def spend(units: int) -> None:
         day = quota_day(time.time())
@@ -126,6 +131,15 @@ def status(s: Settings) -> str:
     blocked = float(store.get("blocked_until", "0"))
     if blocked > now:
         lines.append(f"Blocked by YouTube: waiting until {utc(blocked)}")
+    paused = float(store.get("paused_until", "0"))
+    if paused > now:
+        lines.append(f"Paused after failed downloads in a row: until {utc(paused)}")
+    retrying = store.retrying(now)
+    lines.append(
+        f"Failed downloads: {len(retrying)} waiting to be tried again"
+        + (f" (next {utc(retrying[0])})" if retrying else "")
+        + f", {states.get('failed', 0)} given up"
+    )
     next_at = float(store.get("next_download_at", "0"))
     lines.append(f"Next download: {utc(max(now, next_at))}")
     if s.clips_dir.exists():

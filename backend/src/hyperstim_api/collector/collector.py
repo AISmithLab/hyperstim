@@ -61,6 +61,11 @@ CANDIDATE_BUFFER = 5  # eligible uploads kept ready for download
 OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
 MAX_BLOCK_WAIT_S = 48 * 3600
+# A failed download (not a block) is tried again after these waits; the next failure gives up.
+RETRY_AFTER_S = (DAY_S, 3 * DAY_S, 7 * DAY_S)
+FAILURES_IN_A_ROW = 3  # then downloads pause, with no change to the pace
+FAILURE_PAUSE_S = 3600
+LOGS_KEPT_S = 30 * DAY_S  # the downloader's output for failed downloads, in download-logs/
 FREE_SPACE_MIN = 50 * 1024**3
 BACKUPS_KEPT = 7  # daily copies of collector.db, in clips_dir/backups
 # The classifier's names → the dataset's category keys (dataset.CATEGORIES).
@@ -134,6 +139,7 @@ class Collector:
         """Do what's due; returns the seconds to wait before the next tick."""
         now = self.clock()
         self.back_up(now)
+        self.prune_logs(now)
         out_of_units = self.store.get("out_of_units") == quota_day(now)
         if not out_of_units:
             try:
@@ -279,7 +285,7 @@ class Collector:
         while True:
             below = self.store.cutoff()
             ids = self.store.next_unchecked(now, sampling.FIRST_YEAR, settled, 50, below)
-            if not ids and self.store.count("eligible") < CANDIDATE_BUFFER:
+            if not ids and self.store.ready(now) < CANDIDATE_BUFFER:
                 ids = self.store.next_unchecked(now, sampling.FIRST_YEAR, settled, 50)
             if not ids:
                 return
@@ -328,6 +334,9 @@ class Collector:
         blocked_until = float(self.store.get("blocked_until", "0"))
         if now < blocked_until:
             return blocked_until - now
+        paused_until = float(self.store.get("paused_until", "0"))
+        if now < paused_until:
+            return paused_until - now
         if self.live_blocked(now):
             return 600
         next_at = float(self.store.get("next_download_at", "0"))
@@ -337,7 +346,7 @@ class Collector:
             return 600
         if self.live_running() or self.low_on_space():
             return 60
-        upload = self.store.next_eligible()
+        upload = self.store.next_eligible(now)
         if upload is None:
             return 60
         self.collect(upload, now)
@@ -359,7 +368,7 @@ class Collector:
                 source = "collector"
                 self.keep_clip(upload.id, work)
         except AnalysisError as exc:
-            self.failed(upload, now, str(exc))
+            self.failed(upload, now, str(exc), self.keep_logs(upload.id, work, now))
             return
         finally:
             shutil.rmtree(work, ignore_errors=True)
@@ -380,9 +389,11 @@ class Collector:
             self.store.log_attempt(upload.id, now, "collected")
         self.export()
         self.store.set("block_wait", 0)
+        self.store.set("failures_in_a_row", 0)
         log.info("Added %s (%s, %s)", upload.id, category or "no category", upload.title[:60])
 
-    def failed(self, upload: Upload, now: float, message: str) -> None:
+    def failed(self, upload: Upload, now: float, message: str, log_file: Path | None) -> None:
+        where = f" (log: {log_file})" if log_file else ""
         if self.probe_block(upload.id):
             wait = min(
                 MAX_BLOCK_WAIT_S, max(BLOCK_WAIT_S, 2 * int(self.store.get("block_wait", "0")))
@@ -394,11 +405,49 @@ class Collector:
             self.store.set("blocked_until", now + wait)
             self.store.set("blocked_at", now)
             self.store.log_attempt(upload.id, now, "blocked", message)
-            log.warning("YouTube is blocking downloads; waiting %.0f h", wait / 3600)
+            self.store.set("failures_in_a_row", 0)
+            log.warning("YouTube is blocking downloads; waiting %.0f h%s", wait / 3600, where)
             return  # the video stays eligible and is tried again
-        self.store.set_state(upload.id, "failed", message[-300:])
-        self.store.log_attempt(upload.id, now, "failed", message)
-        log.warning("Couldn't collect %s: %s", upload.id, message[-200:])
+        # Not a block: try again later, as often as RETRY_AFTER_S allows (plan 013, decision 7).
+        with self.store.transaction():
+            self.store.log_attempt(upload.id, now, "failed", message)
+            failures = self.store.failures(upload.id)
+            if failures > len(RETRY_AFTER_S):
+                self.store.set_state(upload.id, "failed", message[-300:])
+                then = "given up"
+            else:
+                retry_at = now + RETRY_AFTER_S[failures - 1]
+                self.store.set_state(upload.id, "eligible", message[-300:], retry_at=retry_at)
+                then = f"trying again after {utc(retry_at)}"
+        log.warning(
+            "Couldn't collect %s (failure %d, %s): %s%s",
+            upload.id, failures, then, message[-200:], where,
+        )  # fmt: skip
+        in_a_row = int(self.store.get("failures_in_a_row", "0")) + 1
+        if in_a_row >= FAILURES_IN_A_ROW:
+            self.store.set("paused_until", now + FAILURE_PAUSE_S)
+            in_a_row = 0
+            log.warning(
+                "%d failed downloads in a row; pausing %.0f min",
+                FAILURES_IN_A_ROW, FAILURE_PAUSE_S / 60,
+            )  # fmt: skip
+        self.store.set("failures_in_a_row", in_a_row)
+
+    def keep_logs(self, video_id: str, work: Path, now: float) -> Path | None:
+        """The download script's output for each failed try, kept as one file in
+        download-logs/<date>/ (see `prune_logs`)."""
+        tries = sorted((work / "clips").glob(f"{video_id}.*.log"))
+        tries += sorted(work.glob("download-log-*.tsv"))
+        if not tries:
+            return None
+        path = self.s.data_dir / "download-logs" / utc(now)[:10] / f"{video_id}.log"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as out:
+            for one in tries:
+                out.write(f"===== {one.name} =====\n")
+                out.write(one.read_text(encoding="utf-8", errors="replace"))
+                out.write("\n")
+        return path
 
     def keep_clip(self, video_id: str, work: Path) -> None:
         """Keep the clip and its feature cache on the clips volume (plan 013, decision 6)."""
@@ -452,6 +501,13 @@ class Collector:
             log.warning("Paused: %.0f GB free on the clips volume", free / 1024**3)
             return True
         return False
+
+    def prune_logs(self, now: float) -> None:
+        """Delete the days of download logs older than LOGS_KEPT_S."""
+        oldest = utc(now - LOGS_KEPT_S)[:10]
+        for day in (self.s.data_dir / "download-logs").glob("????-??-??"):
+            if day.name < oldest:
+                shutil.rmtree(day, ignore_errors=True)
 
     # --- backup ----------------------------------------------------------------------
 

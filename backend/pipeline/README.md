@@ -4,7 +4,7 @@ Copied from the research repo (`AISmithLab/HyperStimulation`, `code/pipeline/`, 
 
 | File | What it does | Changes from the research version |
 |---|---|---|
-| `58_download_clips_v2.py` | Downloads one clip per manifest row with yt-dlp: from 0:30, 5 minutes, ≤ 360p (format 18), source frame rate. | `--clips-dir` is required (its default was a server path). |
+| `58_download_clips_v2.py` | Downloads one clip per manifest row with yt-dlp: from 0:30, 5 minutes, ≤ 360p (format 18), source frame rate. | `--clips-dir` is required (its default was a server path). yt-dlp runs with `--verbose` (was `--quiet --no-warnings`), and each failed try's full output goes to `<clips-dir>/<video_id>.<client>.log`; the logged message is the last `ERROR:` line (plan 013: the old 180-character tail couldn't explain failures). Neither changes the downloaded clip. |
 | `04_extract_features_v2.py` | Computes the 12 features from a clip. `CACHE_VERSION 11`. | None. |
 | `63_classify_categories.py` | v2's category classifier: title, then tags, then description, matched against one keyword set (commit `615cfad`). The collector imports its `classify()`; a video no keyword places gets no category. | None. |
 | `config.yaml` | Output and clip folders, read by `04_extract_features_v2.py`. | Only those two keys; the research config also holds collection settings. |

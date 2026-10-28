@@ -392,17 +392,135 @@ def test_pace_spreads_downloads_over_the_day(
     assert 10 <= len(collected_ids(collector)) <= 24  # on average 24, never more
 
 
-def test_a_failed_download_is_skipped(
+def failing(pipeline: FakePipeline, video_id: str) -> None:
+    """Every download of the video fails, leaving a log like the download script's."""
+    pipeline.fail[video_id] = ("download", "unavailable")
+
+    def write_log(step: str, vid: str, workdir: Path | None) -> None:
+        if step == "download" and workdir is not None and vid == video_id:
+            (workdir / "clips").mkdir(exist_ok=True)
+            (workdir / "clips" / f"{vid}.mweb.log").write_text("ERROR: empty stream")
+
+    pipeline.during = write_log
+
+
+def test_a_failed_download_is_tried_again_after_1_3_and_7_days_then_given_up(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
     first = by_rank(youtube.uploads[CHANNEL])[0]
-    pipeline.fail[first] = ("download", "unavailable")
+    failing(pipeline, first)
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
-    run(collector, clock, 2, step=3600)
-    assert collector.store.upload(first).state == "failed"  # type: ignore[union-attr]
-    assert len(collected_ids(collector)) == 1
+
+    def tries() -> int:
+        return collector.store.failures(first)
+
+    def upload_state() -> str:
+        return collector.store.upload(first).state  # type: ignore[union-attr]
+
+    collector.tick()
+    assert (tries(), upload_state()) == (1, "eligible")
+    failed_at = NOW
+    for wait, count in ((DAY_S, 2), (3 * DAY_S, 3), (7 * DAY_S, 4)):
+        clock.now = failed_at + wait - 1200  # not yet: other videos go on meanwhile
+        collector.store.set("next_download_at", 0)
+        collector.tick()
+        assert tries() == count - 1
+        clock.now = failed_at + wait
+        collector.store.set("next_download_at", 0)
+        collector.tick()
+        assert tries() == count
+        failed_at = clock.now
+    assert upload_state() == "failed"  # the 4th failure gives up
+    assert len(collected_ids(collector)) == 3
+    clock.now += 30 * DAY_S
+    run(collector, clock, 5, step=3600)
+    assert tries() == 4
+
+
+def test_retries_come_one_per_slot_and_count_towards_the_pace(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()  # checks the uploads; downloads the lowest
+    waiting = by_rank(youtube.uploads[CHANNEL])[1:6]
+    for video_id in waiting:  # five failed a day ago, all due now
+        collector.store.log_attempt(video_id, NOW - DAY_S, "failed")
+        collector.store.set_state(video_id, "eligible", retry_at=NOW)
+    gap = DAY_S / 150
+    for i in range(5):
+        clock.now += gap
+        collector.tick()
+        collector.tick()  # a second tick in the same slot downloads nothing
+        assert collected_ids(collector)[1:] == waiting[: i + 1]
+    collector.s.per_day = 6  # today's 6 slots are used: the 1st download and the 5 retries
+    clock.now += gap
+    collector.tick()
+    assert len(collected_ids(collector)) == 6
+
+
+def test_three_failures_in_a_row_pause_downloads_for_an_hour(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    order = by_rank(youtube.uploads[CHANNEL])
+    for video_id in order[:4]:
+        pipeline.fail[video_id] = ("download", "unavailable")
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    gap = DAY_S / 150
+    for _ in range(3):
+        collector.tick()
+        clock.now += gap
+    assert float(collector.store.get("paused_until")) == NOW + 2 * gap + 3600
+    collector.tick()
+    assert collector.store.attempts_since(0) == 3  # paused
+    clock.now = NOW + 2 * gap + 3600
+    collector.tick()
+    assert collector.store.failures(order[3]) == 1  # the 4th, after the pause
+    clock.now += gap
+    collector.tick()
+    assert collected_ids(collector) == [order[4]]  # the pace is unchanged
+    assert collector.per_day(clock.now) == 150
+    assert collector.store.get("failures_in_a_row") == "0"
+
+
+def test_the_downloaders_output_is_kept_for_30_days(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    failing(pipeline, first)
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    logs = tmp_path / "data" / "download-logs"
+    collector.tick()
+    kept = logs / "2026-10-26" / f"{first}.log"
+    assert "ERROR: empty stream" in kept.read_text()
+    clock.now += 30 * DAY_S
+    collector.tick()
+    assert kept.exists()  # 30 days: still kept
+    clock.now += DAY_S
+    collector.tick()
+    assert not kept.parent.exists()
+    assert (logs / "2026-11-25" / f"{first}.log").exists()  # the retry's, kept
+
+
+def test_downloads_failed_before_retries_are_tried_again(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    store.add_uploads(CHANNEL, [("once0000001", "2024-01-01"), ("four0000001", "2024-01-01")])
+    for video_id, failures in (("once0000001", 1), ("four0000001", 4)):
+        store.set_state(video_id, "failed")
+        for i in range(failures):
+            store.log_attempt(video_id, NOW + i, "failed")
+    store.log_attempt("once0000001", NOW, "blocked")
+    assert store.requeue_failed(4) == 1
+    assert store.upload("once0000001").state == "eligible"  # type: ignore[union-attr]
+    assert store.upload("four0000001").state == "failed"  # type: ignore[union-attr]
+    assert store.requeue_failed(4) == 0
 
 
 def test_a_block_pauses_downloads_and_backs_off(
