@@ -124,8 +124,8 @@ Not now (add if abuse shows up): fail2ban on repeated 429s; a CDN or bot-check i
 > - **Commit messages follow Conventional Commits**; `release.sh` takes the next version and the release notes from them (plan 010). Format: `<type>[!]: <subject> (plan NNN)`, then an optional body after a blank line.
 >   - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
 >   - **Type**, by what the change means for the live site (pick the first that fits; split the commit if it's two things):
->     - `feat`: something visitors can see or use that's new or changed: pages, features, text, API endpoints. → minor version.
->     - `fix`: the site or API didn't work as intended, including security fixes (also a dependency upgrade done for one). → patch.
+>     - `feat`: something new visitors can see or use: pages, features, text, API endpoints. → minor version.
+>     - `fix`: the site or API didn't work as intended, or an existing feature is adjusted to work better (how it behaves, looks or is laid out), including security fixes (also a dependency upgrade done for one). → patch. _(human decision, 2026-10-28: adjusting an existing feature was a `feat`, a minor version)_
 >     - `perf`: faster or lighter, same behaviour. `refactor`: code change with no visible change. `style`: formatting only.
 >     - `test`: tests only. `docs`: plans, READMEs, `STYLE.md`, `CLAUDE.md`, code comments. `build`: dependencies, build config, dev scripts. `ci`: CI, release and server setup (`.github/`, `release.sh`, `deploy/`). `chore`: anything else.
 >   - **Breaking:** add `!` after the type and a body line `BREAKING CHANGE: <what stops working, and what to do instead>` when a page URL or shareable link stops working (removed, or moved without a redirect), or scores or measurements change meaning so they can't be compared with earlier ones. → major version. Redesigns, new text and new pages are not breaking.

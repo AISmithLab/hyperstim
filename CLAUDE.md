@@ -11,6 +11,7 @@ Website for the HyperStimulation project: a Next.js frontend (static, GitHub Pag
   - A change to an area goes into the plan that owns it, also after the plan is done: edit it in place as a human decision (below), with the date. A change that spans areas goes into each affected area's plan; site-wide rules go into 001 or `STYLE.md`.
   - A new plan only for a new area.
 - Commits for a plan go on its own branch, named after the plan file: `NNN-short-title` (e.g. `005-channel-detail` for `plans/005-channel-detail.md`). Later work on the same area reuses that branch, rebased onto `main` first so it has the latest changes.
+  - When asked to commit, put the work on the one branch of the plan it's most about, even if it touches other plans too (the subject names them all: `(plans 004, 005)`); don't split one piece of work across branches.
 - Parallel sessions share one checkout, on whatever branch it is on, so the user can inspect all work in progress there. Uncommitted edits belong to no branch; the branch rule applies only when committing:
   - Small edits to shared files (`CLAUDE.md`, `STYLE.md`, `globals.css`, `api.ts`, READMEs) are fine; only one session at a time changes dependencies (`package.json`, lock files).
   - Never run git commands that touch the whole checkout (`stash`, `reset --hard`, `checkout .`, `restore .`, `clean`, switching branches). Name files explicitly.
@@ -56,6 +57,7 @@ Before committing, check `git diff --staged` for anything above.
   - A new or changed style goes into `STYLE.md` in the same change, and the plan says so.
   - If a requested style change conflicts with `STYLE.md`, point out the conflict before applying it.
   - Before handing back UI work, screenshot the changed parts next to their neighbours at phone (360 px) and desktop (1280 px) widths and compare them against `STYLE.md`.
+  - An artifact page built to review a layout shows it at three screen sizes: phone (360 × 740), tablet (768 × 1024) and desktop (1280 × 800).
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests (including end-to-end) before commit.
 - **Tests** (plan 012 has the setup and details):
@@ -64,11 +66,12 @@ Before committing, check `git diff --staged` for anything above.
   - Find elements by role and accessible name (`getByRole('button', { name: … })`), not by class or test ID.
   - Accessibility is tested too: an axe check in each component test file and on each page in E2E, and each page's keyboard path and 320 px reflow in E2E. A new page or major UI change also gets a manual keyboard and screen reader pass before handoff.
 - Do not commit or push unless asked.
+- When asked for a commit plan, list each commit message in full together with the branch it goes on.
 - **Commit messages follow Conventional Commits**; `release.sh` takes the next version and the release notes from them (plan 010). Format: `<type>[!]: <subject> (plan NNN)`, then an optional body after a blank line. The `commit-msg` hook in `.githooks/` checks the format.
   - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
   - **Type**, by what the change means for the live site (pick the first that fits; split the commit if it's two things):
-    - `feat`: something visitors can see or use that's new or changed: pages, features, text, API endpoints. → minor version.
-    - `fix`: the site or API didn't work as intended, including security fixes (also a dependency upgrade done for one). → patch.
+    - `feat`: something new visitors can see or use: pages, features, text, API endpoints. → minor version.
+    - `fix`: the site or API didn't work as intended, or an existing feature is adjusted to work better (how it behaves, looks or is laid out), including security fixes (also a dependency upgrade done for one). → patch.
     - `perf`: faster or lighter, same behaviour. `refactor`: code change with no visible change. `style`: formatting only.
     - `test`: tests only. `docs`: plans, READMEs, `STYLE.md`, `CLAUDE.md`, code comments. `build`: dependencies, build config, dev scripts. `ci`: CI, release and server setup (`.github/`, `release.sh`, `deploy/`). `chore`: anything else.
     - `data`: only the server's daily commit of the collected dataset (`backend/data/collected/`, plan 013); never used by hand. Not listed in the release notes and no version bump; CI and `release.sh` reject a `data:` commit that changes any other file.
