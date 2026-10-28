@@ -53,6 +53,16 @@ function screenWidth(wide: boolean) {
   }));
 }
 
+/** Stubs where elements are on screen: the panel (a region) and its title at these tops, the rest at 0. */
+function layout(regionTop: number, regionHeight: number, titleTop = regionTop + 20) {
+  const box = (top: number, height: number) => ({ x: 0, y: top, left: 0, top, right: 0, bottom: top + height, width: 0, height, toJSON() {} });
+  return vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+    if (this.getAttribute("role") === "region" && this.tabIndex === -1) return box(regionTop, regionHeight);
+    if (this.id === "video-panel-title") return box(titleTop, 30);
+    return box(0, 0);
+  });
+}
+
 function open(id: string | null) {
   search = new URLSearchParams(id === null ? "" : { id });
   return render(<ChannelPage />);
@@ -159,19 +169,21 @@ describe("ChannelPage", () => {
     expect(thumb.querySelector("img")).toHaveAttribute("loading", "lazy");
     expect(container.querySelector("iframe")).toBeNull();
 
-    const scrollIntoView = vi.fn();
-    Element.prototype.scrollIntoView = scrollIntoView;
+    // The panel opens below the middle of the 768 px screen.
+    const rects = layout(900, 200);
+    const scrollBy = vi.spyOn(window, "scrollBy").mockImplementation(() => {});
     await user.click(thumb);
     const panel = screen.getByRole("region", { name: "Tiny Trucks 3" });
     expect(panel).toHaveFocus();
-    // Scrolled into view (at once: the tests run with reduced motion), not playing yet.
-    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: "auto", block: "nearest" });
+    // Scrolled to the middle of the screen (at once: the tests run with reduced motion), not playing yet.
+    expect(scrollBy).toHaveBeenCalledWith({ top: 900 + 100 - 384, behavior: "auto" });
     expect(panel.querySelector("iframe")).toBeNull();
     expect(within(panel).getByRole("button", { name: "Play video: Tiny Trucks 3" })).toBeInTheDocument();
     expect(within(panel).getByText("Sep 6, 2024")).toBeInTheDocument();
     expect(within(panel).getByText("Overall")).toBeInTheDocument();
     expect(within(panel).getByText("30")).toBeInTheDocument();
-    expect(within(panel).getByRole("link", { name: /Video details/ })).toHaveAttribute("href", "/video?id=video000003");
+    // The title links to the video's page.
+    expect(within(panel).getByRole("link", { name: "Tiny Trucks 3" })).toHaveAttribute("href", "/video?id=video000003");
     expect(thumb).toHaveAttribute("aria-current", "true");
 
     // Changing the measurement keeps the panel and updates its value.
@@ -183,9 +195,60 @@ describe("ChannelPage", () => {
     expect(screen.queryByRole("region", { name: "Tiny Trucks 3" })).not.toBeInTheDocument();
     expect(screen.getByRole("region", { name: "Tiny Trucks 1" })).toHaveFocus();
 
-    await user.click(screen.getByRole("button", { name: "Close" }));
+    await user.click(screen.getByRole("button", { name: "Close video panel" }));
     expect(screen.queryByRole("region", { name: /^Tiny Trucks/ })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tiny Trucks 1, Feb 3, 2018" })).toHaveFocus();
+    rects.mockRestore();
+    scrollBy.mockRestore();
+  });
+
+  it("scrolls up too, to centre a panel that opens above the middle of the screen", async () => {
+    const user = userEvent.setup();
+    open(ID);
+    await loaded();
+    const rects = layout(100, 200);
+    const scrollBy = vi.spyOn(window, "scrollBy").mockImplementation(() => {});
+    await user.click(screen.getByRole("button", { name: "Tiny Trucks 3, Sep 6, 2024" }));
+    expect(screen.getByRole("region", { name: "Tiny Trucks 3" })).toHaveFocus();
+    expect(scrollBy).toHaveBeenCalledWith({ top: 100 + 100 - 384, behavior: "auto" });
+    rects.mockRestore();
+    scrollBy.mockRestore();
+  });
+
+  it("plays the video large under its text with the panel centred, and shrinks it back", async () => {
+    const user = userEvent.setup();
+    open(ID);
+    await loaded();
+    vi.spyOn(window, "scrollBy").mockImplementation(() => {});
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    await user.click(screen.getByRole("button", { name: "Tiny Trucks 3, Sep 6, 2024" }));
+    const panel = screen.getByRole("region", { name: "Tiny Trucks 3" });
+    expect(screen.queryByRole("button", { name: "Shrink video" })).not.toBeInTheDocument();
+
+    // Once playing, the panel is 600 px tall from 500 px down: its middle goes to the screen's.
+    const rects = layout(500, 600);
+    await user.click(within(panel).getByRole("button", { name: "Play video: Tiny Trucks 3" }));
+    const frame = within(panel).getByTitle("Tiny Trucks 3");
+    expect(frame).toHaveFocus();
+    expect(scrollTo).toHaveBeenCalledWith({ top: 500 + 300 - 384, behavior: "instant" });
+    // Under the title, at the screen-fitting width, with the shrink button.
+    const title = within(panel).getByRole("heading", { level: 3 });
+    expect(title.compareDocumentPosition(frame) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(frame.closest(".mx-auto")).toHaveClass("max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]");
+
+    // A tall panel: never scrolled past its title.
+    rects.mockRestore();
+    await user.click(within(panel).getByRole("button", { name: "Shrink video" }));
+    expect(panel.querySelector("iframe")).toBeNull();
+    expect(within(panel).getByRole("button", { name: "Play video: Tiny Trucks 3" })).toHaveFocus();
+    expect(screen.queryByRole("button", { name: "Shrink video" })).not.toBeInTheDocument();
+
+    scrollTo.mockClear();
+    const tall = layout(200, 1200, 220);
+    await user.click(within(panel).getByRole("button", { name: "Play video: Tiny Trucks 3" }));
+    expect(scrollTo).toHaveBeenCalledWith({ top: 220 - 16, behavior: "instant" });
+    tall.mockRestore();
+    vi.restoreAllMocks();
   });
 
   it("shows the same popover for a hovered dot or thumbnail", async () => {
@@ -252,9 +315,11 @@ describe("ChannelPage", () => {
     open(ID);
     await loaded();
     await expectNoAxeViolations();
-    Element.prototype.scrollIntoView = vi.fn();
+    vi.spyOn(window, "scrollBy").mockImplementation(() => {});
+    vi.spyOn(window, "scrollTo").mockImplementation(() => {});
     await user.click(screen.getByRole("button", { name: "Tiny Trucks 3, Sep 6, 2024" }));
     await expectNoAxeViolations();
+    vi.restoreAllMocks();
   });
 
   it("has no accessibility violations on an error", async () => {

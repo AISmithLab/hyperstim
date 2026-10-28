@@ -1,5 +1,5 @@
 import { channelVideos, topChannels } from "./api";
-import { expect, isPhone, tabTo, test } from "./fixtures";
+import { expect, expectNoAxeViolations, isPhone, tabTo, test } from "./fixtures";
 
 function escape(text: string) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
@@ -47,12 +47,49 @@ test.describe("channel", () => {
       await page.getByRole("link", { name: title }).first().click();
     } else {
       // Its thumbnail on the chart (two can share a title), by keyboard: thumbnails overlap,
-      // so a click may land on a neighbour. It opens in the panel under the chart.
+      // so a click may land on a neighbour. It opens in the panel under the chart, whose title links on.
       await page.getByRole("button", { name: title }).first().focus();
       await page.keyboard.press("Enter");
-      await page.getByRole("link", { name: /^Video details/ }).click();
+      await page.getByRole("region", { name: title }).getByRole("link", { name: title }).click();
     }
     await expect(page.getByRole("heading", { level: 1, name: video.title })).toBeVisible();
+  });
+
+  test("plays a video large in the panel, centred on screen, and shrinks it back, by keyboard", async ({ page, request }) => {
+    test.skip(isPhone(), "Phones have no panel: the strip's cards open the video's page");
+    const [channel] = await topChannels(request);
+    const [video] = await channelVideos(request, channel.id);
+    await page.goto(`/channel/?id=${channel.id}`);
+    const title = new RegExp(escape(video.title));
+    await page.getByRole("button", { name: title }).first().focus();
+    await page.keyboard.press("Enter");
+    const panel = page.getByRole("region", { name: title });
+    await expect(panel).toBeFocused();
+
+    const play = panel.getByRole("button", { name: /^Play video/ });
+    await tabTo(page, play);
+    await page.keyboard.press("Enter");
+    const frame = panel.locator("iframe");
+    // Focus moves to the player once it has grown.
+    await expect(frame).toBeFocused();
+    // The panel's middle at the screen's, unless the page ends first.
+    const placed = await page.evaluate(() => {
+      const r = document.querySelector("[aria-labelledby='video-panel-title']")!.getBoundingClientRect();
+      const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
+      return { offset: r.top + r.height / 2 - window.innerHeight / 2, atEnd };
+    });
+    if (!placed.atEnd) expect(Math.abs(placed.offset)).toBeLessThan(2);
+    // The player is wider than the preview was, and under the title.
+    const box = (await frame.boundingBox())!;
+    expect(box.width).toBeGreaterThan(400);
+    expect(box.y).toBeGreaterThan((await panel.getByRole("heading", { level: 3 }).boundingBox())!.y);
+    await expectNoAxeViolations(page);
+
+    await panel.getByRole("button", { name: "Shrink video" }).click();
+    await expect(frame).toHaveCount(0);
+    await expect(play).toBeFocused();
+    await panel.getByRole("button", { name: "Close video panel" }).click();
+    await expect(panel).toHaveCount(0);
   });
 
   test("links to compare", async ({ page, request }) => {

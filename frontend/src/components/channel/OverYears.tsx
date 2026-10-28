@@ -80,7 +80,7 @@ export default function OverYears({ channel }: { channel: ChannelDetail }) {
           {missing === 1 ? "1 video" : `${missing} videos`} {missingNote}
         </p>
       )}
-      {opened && <VideoPanel video={opened} measure={measure} onClose={close} />}
+      {opened && <VideoPanel key={opened.id} video={opened} measure={measure} onClose={close} />}
       {!wide && <VideoStrip videos={videos} measure={measure} marked={marked} onVisible={onVisible} />}
     </section>
   );
