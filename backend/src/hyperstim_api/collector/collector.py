@@ -549,7 +549,13 @@ class Collector:
             video_id = upload.id
             found = details.get(video_id)
             short = None
-            if found is not None and sampling.needs_shorts_probe(found):
+            # Asked only when it's all that's left to settle, so ineligible uploads cost
+            # YouTube no requests.
+            if (
+                found is not None
+                and sampling.needs_shorts_probe(found)
+                and sampling.verdict(found, False) == "eligible"
+            ):
                 short = self.is_short(video_id)
             verdict = sampling.verdict(found, short)
             if verdict == "wait":  # a premiere or stream not over yet

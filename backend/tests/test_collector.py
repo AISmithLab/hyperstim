@@ -783,6 +783,29 @@ def test_floor_downloads_count_towards_the_pace(
     assert collected_ids(collector) == small[:2]
 
 
+def test_the_shorts_probe_is_asked_only_when_its_all_thats_left(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    class Asked(dict[str, bool | None]):
+        def __init__(self) -> None:
+            super().__init__(unused=False)  # not empty, so it's used
+            self.asked: list[str] = []
+
+        def get(self, key: str, default: Any = None) -> Any:
+            self.asked.append(key)
+            return False
+
+    clock = Clock()
+    first, second = by_rank(youtube.uploads[CHANNEL])[:2]
+    youtube.video(first, contentDetails__duration="PT2M30S", status__madeForKids=False)
+    youtube.video(second, contentDetails__duration="PT2M30S")
+    asked = Asked()
+    collector = make_collector(tmp_path, youtube, pipeline, clock, shorts=asked)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    assert asked.asked == [second]
+
+
 def test_status_shows_the_channels_below_the_floor(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
