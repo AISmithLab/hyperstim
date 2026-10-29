@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getChannels, getVideos, type RankedChannel, type RankedVideo } from "@/lib/api";
@@ -49,13 +49,18 @@ beforeEach(() => {
 const rankCells = (table: HTMLElement) =>
   Array.from(table.querySelectorAll("tbody tr"), (row) => row.querySelector("td")?.textContent);
 
+// The table shows while loading too (busy, with empty rows), so wait for the data.
+async function loadedTable(name: string | RegExp) {
+  const table = await screen.findByRole("table", { name });
+  await waitFor(() => expect(table).toHaveAttribute("aria-busy", "false"));
+  return table;
+}
+
 describe("RankingsCard", () => {
   it("shows the 3 most and 3 least stimulating videos in one table", async () => {
     render(<RankingsCard />);
 
-    const table = await screen.findByRole("table", {
-      name: "The 3 most and 3 least stimulating videos",
-    });
+    const table = await loadedTable("The 3 most and 3 least stimulating videos");
     expect(rankCells(table)).toEqual([
       "1",
       "2",
@@ -79,12 +84,12 @@ describe("RankingsCard", () => {
   it("switches to channels", async () => {
     const user = userEvent.setup();
     render(<RankingsCard />);
-    await screen.findByRole("table");
+    await loadedTable(/videos/);
     expect(screen.getByRole("button", { name: "Videos" })).toHaveAttribute("aria-pressed", "true");
 
     await user.click(screen.getByRole("button", { name: "Channels" }));
 
-    const table = screen.getByRole("table", { name: "The 3 most and 3 least stimulating channels" });
+    const table = await loadedTable("The 3 most and 3 least stimulating channels");
     expect(rankCells(table).slice(3)).toEqual([
       "↓ Least stimulating",
       "−33rd least stimulating",
@@ -108,9 +113,9 @@ describe("RankingsCard", () => {
     );
     const user = userEvent.setup();
     render(<RankingsCard />);
-    await screen.findByRole("table");
+    await loadedTable(/videos/);
     await user.click(screen.getByRole("button", { name: "Channels" }));
-    const table = screen.getByRole("table", { name: "The 3 most and 3 least stimulating channels" });
+    const table = await loadedTable("The 3 most and 3 least stimulating channels");
     expect(within(table).getByText("1 video")).toBeInTheDocument();
     for (const [params] of vi.mocked(getChannels).mock.calls)
       expect(params).not.toHaveProperty("minVideos");
@@ -133,7 +138,7 @@ describe("RankingsCard", () => {
     );
     render(<RankingsCard />);
 
-    expect(rankCells(await screen.findByRole("table", { name: /videos/ }))).toEqual(["1", "2", "3", "4"]);
+    expect(rankCells(await loadedTable(/videos/))).toEqual(["1", "2", "3", "4"]);
   });
 
   it("shows a busy table with loading text while loading", () => {

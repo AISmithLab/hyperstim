@@ -364,8 +364,8 @@ describe("RankingsPage", () => {
       open();
       await screen.findByRole("table");
       await user.type(screen.getByRole("searchbox"), "category:gaming added:>2026-10-19 zip");
-      await waitFor(() => expect(url.replace).toHaveBeenCalled());
-      expect(lastCall(url.replace)).toBe("/rankings?q=category%3Agaming+added%3A%3E2026-10-19+zip");
+      // A slow keystroke can send part of the text first.
+      await waitFor(() => expect(lastCall(url.replace)).toBe("/rankings?q=category%3Agaming+added%3A%3E2026-10-19+zip"));
       url.navigate(lastCall(url.replace)!);
       await waitFor(() =>
         expect(lastCall(vi.mocked(getVideos))).toMatchObject({
