@@ -22,7 +22,7 @@ git=(git -C "$CLONE" -c user.name="HyperStim data bot" -c user.email="hyperstim-
 "${git[@]}" checkout --quiet -B main origin/main
 mkdir -p "$CLONE/$DEST"
 files=()
-for f in "$SOURCE"/[0-9][0-9][0-9][0-9].tsv "$SOURCE"/{removed.tsv,CHANGELOG.tsv,meta.json}; do
+for f in "$SOURCE"/[0-9][0-9][0-9][0-9].tsv "$SOURCE"/{removed.tsv,excluded-channels.tsv,CHANGELOG.tsv,meta.json}; do
   [ -f "$f" ] && files+=("$f")
 done
 [ ${#files[@]} -gt 0 ] || exit 0

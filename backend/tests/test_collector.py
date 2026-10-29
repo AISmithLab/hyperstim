@@ -820,7 +820,7 @@ def test_status_shows_the_channels_below_the_floor(
     )
 
 
-# --- fewest videos first (plan 013, decision 2) ---------------------------------------------
+# --- fewest videos first, and the kids share (plan 013, decisions 1 and 2) ------------------
 
 TINY = "UC" + "c" * 22
 
@@ -831,6 +831,15 @@ def waiting(store: Store, channel_id: str, ids: list[str], pick: str = "sample")
     for video_id in ids:
         store.set_state(video_id, "eligible", title="T", channel_title="C")
         store.db.execute("UPDATE uploads SET pick = ? WHERE id = ?", (pick, video_id))
+
+
+def answered(store: Store, channel_id: str, kids: int, not_for_kids: int, prefix: str) -> None:
+    """`kids` uploads checked and found too long (made for kids) and `not_for_kids` not made
+    for kids: the channel's made-for-kids answers, none of them waiting to be downloaded."""
+    ids = [f"{prefix}{i:07d}" for i in range(kids + not_for_kids)]
+    store.add_uploads(channel_id, [(v, "2024-05-01T00:00:00Z") for v in ids])
+    for i, video_id in enumerate(ids):
+        store.set_state(video_id, "ineligible", "duration" if i < kids else "not_for_kids")
 
 
 def level_ids(prefix: str, n: int) -> list[str]:
@@ -874,6 +883,63 @@ def test_downloads_fill_the_fewest_videos_first_one_level_at_a_time(
     assert collected_ids(collector)[-1] == numbers[0]
     within = [v for v in collected_ids(collector) if v in numbers[10:20]]
     assert within == numbers[10:14]  # each channel's own lowest numbers first
+
+
+@pytest.mark.parametrize(
+    ("kids", "answers", "out"),
+    [(1, 20, True), (2, 21, True), (2, 20, False), (3, 30, False), (0, 19, False)],
+)
+def test_a_channel_under_10_percent_made_for_kids_is_left_out(
+    kids: int, answers: int, out: bool
+) -> None:
+    assert sampling.left_out(kids, answers) is out
+
+
+def test_a_left_out_channel_gets_no_downloads_or_floor_and_comes_back(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    store = collector.store
+    small = small_channel(collector, youtube, 10, picks=3)  # unchecked: for the floor
+    # 2 of 22 answers made for kids (9 %); v2's 3 picks don't count, or it'd be 5 of 25.
+    answered(store, SMALL, 1, 20, "nfk")
+    waiting(store, SMALL, ["wait0000001"])
+    collector.tick()
+    assert [r["channel_id"] for r in store.db.execute("SELECT * FROM left_out")] == [SMALL]
+    rows = list(csv.DictReader((tmp_path / "data" / "collected" / "excluded-channels.tsv").open(),
+                               delimiter="\t"))  # fmt: skip
+    assert rows == [{"channel_id": SMALL, "made_for_kids": "2", "answers": "22"}]
+    run(collector, clock, 5, step=3600)
+    assert collected_ids(collector) == []  # nothing downloaded
+    # Its uploads are still checked as the cut-off rises (their answers decide whether it comes
+    # back), but none for the floor.
+    assert {store.upload(v).pick for v in small} == {"sample"}  # type: ignore[union-attr]
+    assert store.below_floor() == []
+    # Those checks found its 10 made for kids: 12 of 32 (37 %). Judged again within a day, it's
+    # back, and its waiting uploads are downloaded.
+    assert store.db.execute("SELECT COUNT(*) FROM left_out").fetchone()[0] == 1
+    clock.now += DAY_S
+    run(collector, clock, 2, step=3600)
+    assert store.db.execute("SELECT COUNT(*) FROM left_out").fetchone()[0] == 0
+    assert collected_ids(collector)
+    assert {store.upload(v).channel_id for v in collected_ids(collector)} == {SMALL}  # type: ignore[union-attr]
+
+
+def test_status_shows_the_channels_left_out(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    from hyperstim_api.collector.__main__ import left_out_line
+
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    small_channel(collector, youtube, 0, picks=2)
+    answered(collector.store, SMALL, 0, 25, "nfk")
+    collector.store.update_left_out()
+    assert left_out_line(collector.store) == (
+        "Left out (under 10 % made for kids, of 20+ answers): 1 channels, 2 of their videos"
+    )
 
 
 # --- the export the API reads --------------------------------------------------------------

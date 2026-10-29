@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from hyperstim_api.collector.sampling import FLOOR, rank
+from hyperstim_api.collector.sampling import FLOOR, left_out, rank
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -80,6 +80,12 @@ CREATE TABLE IF NOT EXISTS attempts (
 );
 CREATE INDEX IF NOT EXISTS attempts_at ON attempts (at);
 CREATE TABLE IF NOT EXISTS units (day TEXT PRIMARY KEY, used INTEGER NOT NULL);
+-- Channels left out for their kids share (decision 1), worked out at each export.
+CREATE TABLE IF NOT EXISTS left_out (
+    channel_id TEXT PRIMARY KEY,
+    kids INTEGER NOT NULL,             -- of its answers, made for kids
+    answers INTEGER NOT NULL           -- checked uploads whose made-for-kids answer is known
+);
 """
 # Columns added since the first release (plan 013, decision 12), added to an older database
 # when it's opened: table -> column -> its definition.
@@ -100,6 +106,14 @@ V2_JOINED = "2026-08-26"
 HAVE_STATES = "('v2', 'measured', 'collected', 'eligible')"  # v2's scan: when v2's channels joined
 # A channel's videos in the dataset (measured ones too: they wait only for a name).
 IN_STATES = "('v2', 'measured', 'collected')"
+KEPT = "NOT IN (SELECT channel_id FROM left_out)"  # a channel not left out: `<id column> {KEPT}`
+# Uploads whose made-for-kids answer is known: those that passed that check (the later checks
+# need it), those that failed it, and the floor's eligible ones put back unchecked (`trimmed`).
+# v2's picks don't count: they were picked for being made for kids.
+ANSWERED = (
+    "state IN ('eligible', 'measured', 'collected', 'failed') OR (state = 'ineligible' "
+    "AND reason IN ('not_for_kids', 'duration', 'short')) OR (state = 'new' AND reason = 'trimmed')"
+)
 
 
 @dataclass(frozen=True)
@@ -271,7 +285,7 @@ class Store:
             f"WHERE state IN {HAVE_STATES} GROUP BY channel_id) "
             "SELECT c.id, COALESCE(h.n, 0) AS have FROM channels c "
             "LEFT JOIN have h ON h.channel_id = c.id "
-            "WHERE c.status = 'in' AND COALESCE(h.n, 0) < ? ORDER BY have, c.id",
+            f"WHERE c.status = 'in' AND c.id {KEPT} AND COALESCE(h.n, 0) < ? ORDER BY have, c.id",
             (FLOOR,),
         ).fetchall()
 
@@ -285,7 +299,7 @@ class Store:
             f"WHERE state IN {HAVE_STATES} GROUP BY channel_id), "
             "floor AS (SELECT c.id, COALESCE(h.n, 0) AS have FROM channels c "
             "LEFT JOIN have h ON h.channel_id = c.id "
-            "WHERE c.status = 'in' AND COALESCE(h.n, 0) < :floor), "
+            f"WHERE c.status = 'in' AND c.id {KEPT} AND COALESCE(h.n, 0) < :floor), "
             "next AS (SELECT u.id, u.channel_id, u.r, f.have, ROW_NUMBER() OVER "
             "(PARTITION BY u.channel_id ORDER BY u.r) AS k FROM uploads u "
             "JOIN floor f ON f.id = u.channel_id WHERE u.state = 'new' AND u.retry_at <= :now "
@@ -305,7 +319,8 @@ class Store:
 
     def trim_floor(self) -> int:
         """The floor's eligible picks beyond a channel's `FLOOR` (its other videos counted),
-        highest numbers first, go back to unchecked; returns how many."""
+        highest numbers first, go back to unchecked; returns how many. They keep `trimmed` as
+        their reason, so their made-for-kids answer still counts."""
         before = self.db.total_changes
         self.db.execute(
             "WITH other AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
@@ -314,7 +329,8 @@ class Store:
             "floor AS (SELECT id, channel_id, ROW_NUMBER() OVER "
             "(PARTITION BY channel_id ORDER BY r) AS k FROM uploads "
             "WHERE state = 'eligible' AND pick = 'floor') "
-            "UPDATE uploads SET state = 'new', pick = 'sample', reason = '', checked_at = NULL "
+            "UPDATE uploads SET state = 'new', pick = 'sample', reason = 'trimmed', "
+            "checked_at = NULL "
             "WHERE id IN (SELECT f.id FROM floor f LEFT JOIN other o "
             "ON o.channel_id = f.channel_id WHERE f.k > ? - COALESCE(o.n, 0))",
             (FLOOR,),
@@ -325,36 +341,55 @@ class Store:
         """The next eligible upload to download, not waiting for a retry: the channels with
         the fewest videos in the dataset first, one level at a time up to `FLOOR` (every
         channel at 1 gets its second before any gets its third), then by number over all
-        (decision 2). Whether it was picked under the cut-off or for the floor doesn't matter."""
+        (decision 2). Whether it was picked under the cut-off or for the floor doesn't matter;
+        left-out channels get none."""
         row = self.db.execute(
             "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
             f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
             "SELECT u.* FROM uploads u LEFT JOIN have h ON h.channel_id = u.channel_id "
-            "WHERE u.state = 'eligible' AND u.retry_at <= ? "
+            f"WHERE u.state = 'eligible' AND u.retry_at <= ? AND u.channel_id {KEPT} "
             "ORDER BY MIN(COALESCE(h.n, 0), ?), u.r LIMIT 1",
             (now, FLOOR),
         ).fetchone()
         return _upload(row) if row else None
 
     def ready(self, now: float, pick: str | None = None) -> int:
-        """Eligible uploads that can be downloaded now (not waiting for a retry); only those
-        picked for `pick` if given."""
+        """Eligible uploads that can be downloaded now (not waiting for a retry, not of a
+        left-out channel); only those picked for `pick` if given."""
         row = self.db.execute(
             "SELECT COUNT(*) AS n FROM uploads WHERE state = 'eligible' AND retry_at <= ? "
-            "AND pick = COALESCE(?, pick)",
+            f"AND pick = COALESCE(?, pick) AND channel_id {KEPT}",
             (now, pick),
         )
         return int(row.fetchone()["n"])
 
+    # --- the kids share (decision 1) -----------------------------------------------
+
+    def update_left_out(self) -> list[sqlite3.Row]:
+        """Works out each channel's kids share from its answers and keeps the channels left
+        out; returns them (`channel_id`, `kids`, `answers`), by ID."""
+        rows = self.db.execute(
+            "SELECT channel_id, SUM(reason != 'not_for_kids') AS kids, COUNT(*) AS answers "
+            f"FROM uploads WHERE {ANSWERED} GROUP BY channel_id ORDER BY channel_id"
+        ).fetchall()
+        out = [r for r in rows if left_out(int(r["kids"]), int(r["answers"]))]
+        with self.transaction():
+            self.db.execute("DELETE FROM left_out")
+            self.db.executemany(
+                "INSERT INTO left_out (channel_id, kids, answers) VALUES (?, ?, ?)",
+                [(r["channel_id"], r["kids"], r["answers"]) for r in out],
+            )
+        return out
+
     def levels(self) -> dict[int, int]:
-        """Channels that are in with fewer than `FLOOR` videos in the dataset: how many have 0,
-        1, …"""
+        """Channels that are in and not left out, with fewer than `FLOOR` videos in the
+        dataset: how many have 0, 1, …"""
         rows = self.db.execute(
             "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
             f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
             "SELECT COALESCE(h.n, 0) AS have, COUNT(*) AS n FROM channels c "
             "LEFT JOIN have h ON h.channel_id = c.id "
-            "WHERE c.status = 'in' AND COALESCE(h.n, 0) < ? GROUP BY 1",
+            f"WHERE c.status = 'in' AND c.id {KEPT} AND COALESCE(h.n, 0) < ? GROUP BY 1",
             (FLOOR,),
         )
         return {int(r["have"]): int(r["n"]) for r in rows}

@@ -5,7 +5,9 @@ picks plus every eligible upload (2015 onwards) whose number is below a cut-off 
 rises, so each eligible upload has the same chance, whenever it came out; plus each channel's
 eligible uploads with the lowest numbers until it has `FLOOR` (its floor: the videos the
 cut-off would take first for it, taken sooner). Eligibility is
-v2's: made for kids, 2-60 minutes, not a Short, online and not blocked in the US.
+v2's: made for kids, 2-60 minutes, not a Short, online and not blocked in the US. A channel
+that marks only a few of its uploads as made for kids is left out, with all its videos
+(`left_out`).
 """
 
 import hashlib
@@ -18,12 +20,21 @@ FIRST_YEAR = 2015  # v2's first year (YouTube Kids' launch)
 SETTLE_S = 24 * 3600  # an upload is checked once it's a day old
 REGION = "US"
 FLOOR = 5  # each channel's lowest-numbered eligible uploads taken until it has this many
+# A channel whose checked uploads are under 10 % made for kids is left out (decision 1),
+# judged once it has 20 answers.
+KIDS_PERCENT_MIN, KIDS_ANSWERS_MIN = 10, 20
 # v2's duration rules (57_enumerate_and_sample.py): <= 60 s is a Short without asking,
 # 60-180 s may be one (asked at /shorts/<id>), > 180 s can't be.
 MIN_DURATION_S, MAX_DURATION_S = 120, 3600
 SHORT_CERTAIN_S, SHORT_POSSIBLE_S = 60, 180
 
 Verdict = Literal["eligible", "gone", "region", "not_for_kids", "duration", "short", "wait"]
+
+
+def left_out(kids: int, answers: int) -> bool:
+    """Whether a channel is left out: `kids` of its `answers` (checked uploads whose
+    made-for-kids answer is known) are made for kids."""
+    return answers >= KIDS_ANSWERS_MIN and kids * 100 < KIDS_PERCENT_MIN * answers  # no float
 
 
 def rank(video_id: str) -> float:
