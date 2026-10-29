@@ -25,6 +25,12 @@ describe("page metadata (plan 011)", () => {
     expect(metadata.twitter).toMatchObject({ card: "summary_large_image" });
   });
 
+  it.each(PAGES)("gives /%s a description short enough for search results", async (page) => {
+    const { description } = await metadataOf(page);
+    expect(description?.length).toBeGreaterThan(0);
+    expect(description?.length).toBeLessThanOrEqual(155);
+  });
+
   it.each(fixedPages)("gives /%s the same preview URL as its canonical URL", async (page) => {
     const metadata = await metadataOf(page);
     expect(metadata.alternates?.canonical).toBe(`/${page}`);

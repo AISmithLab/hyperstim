@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "How it works - HyperStim?",
   description:
-    "How HyperStim? measures the production style of kids’ videos and turns 12 measurements into one score.",
+    "How HyperStim? measures how stimulating kids’ videos are: 12 measurements of scene changes, colors, and sounds, combined into one score.",
   path: "how-it-works/",
 });
 

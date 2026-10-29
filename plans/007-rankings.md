@@ -140,7 +140,7 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 | Where | Text |
 |---|---|
 | `<title>` | Stimulation rankings - HyperStim? |
-| Meta description | Every video and channel in our dataset, ranked by how intense its production is. |
+| Meta description | Which kids’ videos and channels are the most stimulating, or overstimulating? Every one in our dataset, ranked by overall score or any of 12 measurements. _(human decision, 2026-10-29; plan 011, Page descriptions)_ |
 | H1 | Stimulation rankings |
 | Intro | Videos and channels in our dataset, ranked by how intense their production is. Then, on its own line _(human decision)_: [What the measurements mean →](/how-it-works) (no counts: the results line has them, and needs no extra request; no sentence on the 5-video minimum _(human decision)_) |
 | Search label (sr-only) / placeholder | Search videos / Title, channel, or video link… · Search channels / Channel name or link… (short enough for 320 px) |

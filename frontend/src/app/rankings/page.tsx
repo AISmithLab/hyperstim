@@ -5,7 +5,8 @@ import { pageMetadata } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Stimulation rankings - HyperStim?",
-  description: "Every video and channel in our dataset, ranked by how intense its production is.",
+  description:
+    "Which kids’ videos and channels are the most stimulating, or overstimulating? Every one in our dataset, ranked by overall score or any of 12 measurements.",
   path: "rankings/",
 });
 

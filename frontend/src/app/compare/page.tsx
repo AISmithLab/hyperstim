@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Compare - HyperStim?",
   description:
-    "Put two kids’ videos or channels side by side and see where their production differs.",
+    "Is one kids’ video or channel more overstimulating than another? Put two side by side and see how their scene changes, colors, and sounds differ.",
   path: "compare/",
 });
 
