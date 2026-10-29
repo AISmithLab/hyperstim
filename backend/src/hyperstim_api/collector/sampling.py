@@ -2,7 +2,9 @@
 
 Every upload has a fixed random number `rank(video_id)` in [0, 1). The dataset is v2's
 picks plus every eligible upload (2015 onwards) whose number is below a cut-off that only
-rises, so each eligible upload has the same chance, whenever it came out. Eligibility is
+rises, so each eligible upload has the same chance, whenever it came out; plus each channel's
+eligible uploads with the lowest numbers until it has `FLOOR` (its floor: the videos the
+cut-off would take first for it, taken sooner). Eligibility is
 v2's: made for kids, 2-60 minutes, not a Short, online and not blocked in the US.
 """
 
@@ -15,6 +17,7 @@ RULE_VERSION = "v1"
 FIRST_YEAR = 2015  # v2's first year (YouTube Kids' launch)
 SETTLE_S = 24 * 3600  # an upload is checked once it's a day old
 REGION = "US"
+FLOOR = 5  # each channel's lowest-numbered eligible uploads taken until it has this many
 # v2's duration rules (57_enumerate_and_sample.py): <= 60 s is a Short without asking,
 # 60-180 s may be one (asked at /shorts/<id>), > 180 s can't be.
 MIN_DURATION_S, MAX_DURATION_S = 120, 3600

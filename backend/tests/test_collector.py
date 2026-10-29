@@ -205,8 +205,11 @@ def make_collector(
     budget: int = 7000,
     blocked: Callable[[str], bool] = lambda video_id: False,
     shorts: dict[str, bool | None] | None = None,
+    at_floor: bool = True,
 ) -> Collector:
     store = make_store(tmp_path)
+    if at_floor:  # tests of the cut-off: the channel already has its 5, so only `t` picks
+        fill_floor(store, CHANNEL)
 
     def spend(units: int) -> None:
         if store.units_used("day") + units > budget:
@@ -233,6 +236,15 @@ def make_collector(
     )
     collector.low_on_space = lambda: False  # type: ignore[method-assign]
     return collector
+
+
+def fill_floor(store: Store, channel_id: str, n: int = sampling.FLOOR) -> list[str]:
+    """Gives the channel `n` v2 picks (not due for the offline check)."""
+    picks = [f"v2{channel_id[-6:]}{i:03d}" for i in range(n)]
+    store.add_uploads(channel_id, [(v, "2016-01-01T00:00:00Z") for v in picks])
+    for video_id in picks:
+        store.set_state(video_id, "v2", title="Old", channel_title="Channel", online_at=1e12)
+    return picks
 
 
 def uploads(n: int, published: str = "2024-05-01T00:00:00Z") -> list[tuple[str, str]]:
@@ -619,7 +631,7 @@ def test_backs_up_its_database_once_a_day_and_keeps_a_week(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
     backups = tmp_path / "clips" / "backups"
     collector.tick()
@@ -650,6 +662,163 @@ def test_categories_come_from_v2s_keywords(
     assert rows == {first: "gaming", second: None}
 
 
+# --- the floor: at least 5 videos per channel -----------------------------------------------
+
+SMALL = "UC" + "b" * 22
+
+
+def small_channel(
+    collector: Collector, youtube: FakeYouTube, n: int, picks: int = 1, prefix: str = "sml"
+) -> list[str]:
+    """A second channel with `picks` v2 picks and `n` eligible uploads; returns them by number."""
+    store = collector.store
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    fill_floor(store, SMALL, picks)
+    rows = [(f"{prefix}{i:08d}", "2024-05-01T00:00:00Z") for i in range(n)]
+    youtube.uploads[SMALL] = rows
+    for video_id, _ in rows:
+        youtube.video(video_id)
+    store.add_uploads(SMALL, rows)
+    return by_rank(rows)
+
+
+def picks_of(collector: Collector, channel_id: str) -> dict[str, str]:
+    rows = collector.store.db.execute(
+        "SELECT id, pick FROM uploads WHERE channel_id = ? AND state = 'collected'", (channel_id,)
+    )
+    return {r["id"]: r["pick"] for r in rows}
+
+
+def test_a_channel_below_the_floor_is_topped_up_by_its_lowest_numbers_first(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    small = small_channel(collector, youtube, 30)
+    collector.tick()
+    # Only the floor's checks so far: they don't raise the cut-off, and only the 4 it lacks
+    # are kept; the others it checked go back to unchecked.
+    assert collector.store.cutoff() == 0.0
+    waiting = collector.store.db.execute(
+        "SELECT id FROM uploads WHERE state = 'eligible' ORDER BY r"
+    ).fetchall()
+    assert [r["id"] for r in waiting] == small[1:4]
+    run(collector, clock, 4, step=3600)
+    assert collected_ids(collector) == small[:4]  # before any upload of the other channel
+    assert set(picks_of(collector, SMALL).values()) == {"floor"}
+    # Then the cut-off rises over both channels; once it passes the floor's picks nothing
+    # changes: in the end every eligible upload is in, each once.
+    run(collector, clock, 70, step=3600)
+    taken = collected_ids(collector)
+    assert taken[:4] == small[:4]
+    assert sorted(taken) == sorted(small + [v for v, _ in youtube.uploads[CHANNEL]])
+    assert collector.store.cutoff() > max(sampling.rank(v) for v in small[:4])
+    assert {v for v, p in picks_of(collector, SMALL).items() if p == "floor"} == set(small[:4])
+    rows = list(csv.DictReader((tmp_path / "data" / "collected" / "2026.tsv").open(),
+                               delimiter="\t"))  # fmt: skip
+    assert {r["video_id"]: r["pick"] for r in rows}[small[0]] == "floor"
+
+
+def test_a_channel_with_too_few_eligible_uploads_takes_its_next_new_one(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    youtube.uploads[CHANNEL] = []  # nothing for the cut-off to take
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    small = small_channel(collector, youtube, 3, picks=0)
+    run(collector, clock, 5, step=3600)
+    assert collected_ids(collector) == small
+    # A new upload with a number far above the cut-off: taken, as the channel lacks 2.
+    fresh = next(f"new{i:08d}" for i in range(100_000) if sampling.rank(f"new{i:08d}") > 0.9)
+    youtube.uploads[SMALL].insert(0, (fresh, sampling_time(clock.now - 3600)))
+    youtube.video(fresh)
+    collector.store.update_channel(SMALL, listed_at=0)
+    clock.now += DAY_S
+    run(collector, clock, 3, step=3600)
+    assert collected_ids(collector)[-1] == fresh
+    assert collector.store.cutoff() == 0.0
+
+
+def test_a_channel_that_loses_a_video_is_topped_up_again(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    small = small_channel(collector, youtube, 10, picks=sampling.FLOOR)
+    assert collector.store.below_floor() == []
+    gone = f"v2{SMALL[-6:]}000"
+    collector.store.set_state(gone, "removed", "gone")
+    collector.store.add_removed(gone, "2026-10-26T00:00:00Z", "gone")
+    collector.check_candidates(clock.now)
+    collector.tick()
+    assert picks_of(collector, SMALL) == {small[0]: "floor"}
+
+
+def test_with_no_floor_video_ready_the_slot_goes_to_raising_the_cutoff(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    (only,) = small_channel(collector, youtube, 1)
+    failing(pipeline, only)
+    collector.tick()  # the floor's only video: its download fails, it waits a day
+    assert collector.store.failures(only) == 1
+    run(collector, clock, 1, step=3600)
+    clock.now += 3600
+    collector.tick()
+    assert collected_ids(collector) == by_rank(youtube.uploads[CHANNEL])[:1]
+    assert collector.store.cutoff() > 0
+
+
+def test_floor_downloads_count_towards_the_pace(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.s.per_day = 2
+    small = small_channel(collector, youtube, 30)
+    run(collector, clock, 23, step=3600)
+    assert collected_ids(collector) == small[:2]
+
+
+def test_the_shorts_probe_is_asked_only_when_its_all_thats_left(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    class Asked(dict[str, bool | None]):
+        def __init__(self) -> None:
+            super().__init__(unused=False)  # not empty, so it's used
+            self.asked: list[str] = []
+
+        def get(self, key: str, default: Any = None) -> Any:
+            self.asked.append(key)
+            return False
+
+    clock = Clock()
+    first, second = by_rank(youtube.uploads[CHANNEL])[:2]
+    youtube.video(first, contentDetails__duration="PT2M30S", status__madeForKids=False)
+    youtube.video(second, contentDetails__duration="PT2M30S")
+    asked = Asked()
+    collector = make_collector(tmp_path, youtube, pipeline, clock, shorts=asked)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    assert asked.asked == [second]
+
+
+def test_status_shows_the_channels_below_the_floor(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    from hyperstim_api.collector.__main__ import floor_line
+
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    small_channel(collector, youtube, 0)
+    assert floor_line(collector.store) == (
+        "Below the floor of 5: 1 channels lacking 4 videos, 1 of them with every upload checked"
+    )
+
+
 # --- the export the API reads --------------------------------------------------------------
 
 
@@ -657,7 +826,7 @@ def test_export_is_read_by_the_api(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
     run(collector, clock, 3, step=3600)
     folder = tmp_path / "data" / "collected"
@@ -665,6 +834,7 @@ def test_export_is_read_by_the_api(
         rows = list(csv.DictReader(fh, delimiter="\t"))
     assert [r["video_id"] for r in rows] == collected_ids(collector)
     assert rows[0]["ytdlp_version"] == "test" and rows[0]["rule_version"] == "v1"
+    assert {r["pick"] for r in rows} == {"floor"}  # the channel had no videos
     reference = write_dataset(tmp_path / "videos.tsv", [video_row("ref00000001", CHANNEL, 5.0)])
     dataset = load_dataset(reference, folder)
     assert len(dataset.videos) == 4
@@ -734,7 +904,7 @@ def test_offline_videos_are_taken_out(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
     collector.store.add_uploads(
         CHANNEL, [("pick0000001", "2020-01-01"), ("pick0000002", "2020-01-01")]
     )
@@ -1044,6 +1214,7 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
     assert listing == {"UCv2": None, "UCnew": "", "UCnear": None}
     upload = store.upload("vid")
     assert upload is not None and (upload.unsure, upload.api_failures) == (0, 0)
+    assert upload.pick == "sample"  # everything picked before the floor
     store.close()
     assert (
         dict(Store(path).db.execute("SELECT id, full_listing FROM channels").fetchall()) == listing

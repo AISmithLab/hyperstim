@@ -20,7 +20,7 @@ from pathlib import Path
 
 from hyperstim_api import scoring
 from hyperstim_api.analysis import ResearchPipeline
-from hyperstim_api.collector import alerts
+from hyperstim_api.collector import alerts, sampling
 from hyperstim_api.collector import seed as seeding
 from hyperstim_api.collector.collector import (
     RETRY_AFTER_S,
@@ -127,6 +127,7 @@ def status(s: Settings) -> str:
         f"{sum(a >= utc(now - 7 * 86400) for a in added)} in 7 days",
         "Last 24 h: " + (", ".join(f"{k} {v}" for k, v in attempts.items()) or "nothing"),
         f"Cut-off: {store.cutoff():.6f}",
+        floor_line(store),
         f"Data API units today: {store.units_used(quota_day(now))} of {s.units_per_day}",
         f"Pace: {s.per_day}/day x {store.get('pace_factor', '1')}",
     ]
@@ -151,6 +152,26 @@ def status(s: Settings) -> str:
     lines += scores_against_reference(store)
     store.close()
     return "\n".join(lines)
+
+
+def floor_line(store: Store) -> str:
+    """Channels below the floor, the videos they lack, and how many have no upload left to
+    check (fewer than `FLOOR` eligible in all, until new ones come out)."""
+    below = store.below_floor()
+    done = sum(
+        store.db.execute(
+            "SELECT 1 FROM uploads WHERE channel_id = ? AND state = 'new' "
+            "AND published_at >= ? LIMIT 1",
+            (r["id"], f"{sampling.FIRST_YEAR}-01-01"),
+        ).fetchone()
+        is None
+        for r in below
+    )
+    lacking = sum(sampling.FLOOR - r["have"] for r in below)
+    return (
+        f"Below the floor of {sampling.FLOOR}: {len(below)} channels lacking {lacking} videos, "
+        f"{done} of them with every upload checked"
+    )
 
 
 def health(store: Store, now: float) -> list[str]:
