@@ -87,6 +87,19 @@ describe("Hero", () => {
     expect(screen.queryByTestId("rolling-number")).not.toBeInTheDocument();
   });
 
+  it("reads as a sentence before the numbers come, with no placeholder digits in its text", () => {
+    vi.mocked(getMeta).mockReturnValue(new Promise(() => {}));
+    render(<Hero />);
+    const sentence = screen.getByText(/channels to better/);
+    // What crawlers and link previews read from the page as built (plan 011).
+    expect(sentence.textContent!.replace(/\s+/g, " ").trim()).toBe(
+      "Explore and compare thousands of videos from hundreds of channels to better understand what your child is watching.",
+    );
+    expect(readable(sentence)).toBe(sentence.textContent!.replace(/\s+/g, " ").trim());
+    // The bars keep their width from digits drawn by CSS.
+    expect(sentence.querySelectorAll("[data-digits]")).toHaveLength(4);
+  });
+
   it("says “thousands of” if the numbers can't be had", async () => {
     vi.mocked(getMeta).mockRejectedValue(new Error("offline"));
     render(<Hero />);

@@ -59,7 +59,9 @@ function DatasetLine() {
       <>
         <p className="mt-4" aria-busy="true">
           Explore and compare{" "}
+          {/* Until the numbers come, words for those who read text, not bars (plan 011). */}
           <b className="font-bold text-navy">
+            <span className="sr-only">thousands of</span>
             <Room digits="00,000" />
           </b>
           {"\u00a0"}
@@ -69,6 +71,7 @@ function DatasetLine() {
           </span>{" "}
           videos from{" "}
           <b className="font-bold text-navy">
+            <span className="sr-only">hundreds of</span>
             <Room digits="000" />
           </b>
           {"\u00a0"}
@@ -171,11 +174,17 @@ const BADGE_LOOK = "inline-block rounded-full bg-sky px-[7px] text-sm leading-5 
 /** Raised a little, so it reads as a note on the total's digits. */
 const BADGE = `${BADGE_LOOK} align-[0.4em]`;
 
-/** A skeleton bar where a number will be, as wide as `digits`, so nothing moves when it comes. */
+/**
+ * A skeleton bar where a number will be, as wide as `digits`, so nothing moves when it comes. The
+ * digits are drawn by CSS, not text, so readers of the page as built (crawlers, link previews) never
+ * see "00,000" (plan 011, Readers other than people).
+ */
 function Room({ digits }: { digits: string }) {
   return (
-    <span aria-hidden="true" className="animate-pulse rounded bg-gray-200 text-transparent tabular-nums">
-      {digits}
-    </span>
+    <span
+      aria-hidden="true"
+      data-digits={digits}
+      className="animate-pulse rounded bg-gray-200 text-transparent tabular-nums before:content-[attr(data-digits)]"
+    />
   );
 }
