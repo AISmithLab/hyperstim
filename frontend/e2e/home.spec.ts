@@ -53,4 +53,21 @@ test.describe("home", () => {
     // The numbers count up; wait for the final ones.
     await expect(page.getByText(/Explore and compare [\d,]+ videos from [\d,]+ channels/)).toBeVisible();
   });
+
+  test("the new channels badge opens the Channels tab with only those channels, by keyboard", async ({ page }) => {
+    // The test dataset is the reference set alone, added on its date (2026-09-01): two days later,
+    // it's all new in the past week.
+    await page.clock.setFixedTime(new Date("2026-09-03T12:00:00"));
+    await page.goto("/");
+    const badge = page.getByRole("link", { name: /^[\d,]+ channels added in the past week$/ });
+    await expect(page.getByRole("link", { name: /^[\d,]+ videos added in the past week$/ })).toBeVisible();
+    await expect(page.getByText("added in the past week", { exact: true })).toBeVisible();
+    await tabTo(page, badge);
+    const count = (await badge.getAttribute("aria-label"))!.split(" ")[0];
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/rankings\/?\?view=channels&q=added%3A%3E2026-08-27$/);
+    await expect(page.getByRole("button", { name: "Channels" })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("searchbox")).toHaveValue("added:>2026-08-27");
+    await expect(page.getByText(new RegExp(`^Showing 1–25 of ${count} channels`))).toBeVisible();
+  });
 });

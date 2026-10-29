@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getMeta, getVideos, type Meta } from "@/lib/api";
+import { getChannels, getMeta, getVideos, type Meta } from "@/lib/api";
 import { expectNoAxeViolations } from "@/test/axe";
 import Hero from "./Hero";
 
@@ -8,6 +8,7 @@ vi.mock("@/lib/api", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/api")>()),
   getMeta: vi.fn(),
   getVideos: vi.fn(),
+  getChannels: vi.fn(),
 }));
 
 const meta = (changes: Partial<Meta> = {}): Meta => ({
@@ -29,42 +30,60 @@ function readable(element: Element | null): string {
   return copy.textContent!.replace(/\s+/g, " ").trim();
 }
 
-const pastWeek = (total: number) =>
-  vi.mocked(getVideos).mockResolvedValue({ items: [], total, asOf: "2026-10-26T10:00:00Z" });
+const pastWeek = (videos: number, channels: number) => {
+  vi.mocked(getVideos).mockResolvedValue({ items: [], total: videos, asOf: "2026-10-26T10:00:00Z" });
+  vi.mocked(getChannels).mockResolvedValue({ items: [], total: channels, asOf: "2026-10-26T10:00:00Z" });
+};
+
+const KEY = "added in the past week";
 
 beforeEach(() => {
-  pastWeek(1043);
+  pastWeek(1043, 12);
   // Reduced motion: the numbers show at once.
   vi.stubGlobal("matchMedia", (query: string) => ({ matches: query.includes("reduced-motion"), media: query }));
 });
 
 describe("Hero", () => {
-  it("says how many videos and channels, and how many were added in the past week", async () => {
+  it("says how many videos and channels, each with what it gained in the past week", async () => {
     vi.mocked(getMeta).mockResolvedValue(meta());
     render(<Hero />);
-    const pill = await screen.findByRole("link", { name: /in the past week/ });
-    expect(readable(pill)).toBe("+1,043 videos in the past week");
-    expect(pill).toHaveClass("bg-sky", "text-navy", "rounded-full");
-    // It opens the rankings with the videos it counts.
-    expect(pill).toHaveAttribute("href", expect.stringMatching(/^\/rankings\?q=added%3A%3E\d{4}-\d{2}-\d{2}$/));
-    expect(readable(screen.getByText(/channels to better/))).toBe(
-      "Explore and compare 16,402 videos from 542 channels to better understand what your child is watching.",
+    const videos = await screen.findByRole("link", { name: "1,043 videos added in the past week" });
+    const channels = screen.getByRole("link", { name: "12 channels added in the past week" });
+    expect(videos).toHaveClass("bg-sky", "text-navy", "rounded-full");
+    // Each opens the rankings with what it counts: the videos, or the Channels tab.
+    expect(videos).toHaveAttribute("href", expect.stringMatching(/^\/rankings\?q=added%3A%3E\d{4}-\d{2}-\d{2}$/));
+    expect(channels).toHaveAttribute(
+      "href",
+      expect.stringMatching(/^\/rankings\?view=channels&q=added%3A%3E\d{4}-\d{2}-\d{2}$/),
     );
+    expect(readable(screen.getByText(/channels to better/))).toBe(
+      "Explore and compare 16,402 1,043 videos from 542 12 channels to better understand what your child is watching.",
+    );
+    // The key is for the eye; screen readers hear it in each link.
+    expect(screen.getByText(KEY)).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("leaves the pill out when nothing was added in the past week", async () => {
+  it("leaves a badge out when nothing was added, and the key when neither was", async () => {
     vi.mocked(getMeta).mockResolvedValue(meta());
-    pastWeek(0);
+    pastWeek(5, 0);
+    const { unmount } = render(<Hero />);
+    expect(await screen.findByRole("link", { name: /videos added/ })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /channels added/ })).not.toBeInTheDocument();
+    expect(screen.getByText(KEY)).toBeInTheDocument();
+    unmount();
+
+    pastWeek(0, 0);
     render(<Hero />);
     expect(readable(await screen.findByText(/channels to better/))).toContain("16,402 videos from 542 channels");
-    expect(screen.queryByText(/in the past week/)).not.toBeInTheDocument();
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    expect(screen.queryByText(KEY)).not.toBeInTheDocument();
   });
 
-  it("shows the sentence and the pill at once, with room kept for the numbers", () => {
+  it("shows the sentence, badges and key at once, with room kept for the numbers", () => {
     vi.mocked(getMeta).mockReturnValue(new Promise(() => {}));
     render(<Hero />);
     expect(screen.getByText(/channels to better/)).toHaveAttribute("aria-busy", "true");
-    expect(screen.getByText(/in the past week/)).toBeInTheDocument();
+    expect(screen.getByText(KEY)).toBeInTheDocument();
     expect(screen.queryByTestId("rolling-number")).not.toBeInTheDocument();
   });
 
@@ -72,7 +91,7 @@ describe("Hero", () => {
     vi.mocked(getMeta).mockRejectedValue(new Error("offline"));
     render(<Hero />);
     expect(await screen.findByText(/Explore and compare thousands of videos/)).toBeInTheDocument();
-    expect(screen.queryByText(/in the past week/)).not.toBeInTheDocument();
+    expect(screen.queryByText(KEY)).not.toBeInTheDocument();
   });
 
   it("has no accessibility violations, loading and loaded", async () => {
@@ -81,7 +100,7 @@ describe("Hero", () => {
     render(<Hero />);
     await expectNoAxeViolations();
     resolve(meta());
-    await screen.findByRole("link", { name: /in the past week/ });
+    await screen.findByRole("link", { name: /channels added in the past week/ });
     await expectNoAxeViolations();
   });
 });

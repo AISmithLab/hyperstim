@@ -44,71 +44,132 @@ export default function Hero() {
 }
 
 /**
- * The dataset's size, growing while the page is open (plan 013; see STYLE.md, Growing counts). The
- * sentence and the pill are there from the first paint, with skeleton bars for the numbers, which then
- * count up; only if the counts can't be had does the sentence say "thousands of" instead.
+ * The dataset's size and what it gained in the past week, growing while the page is open (plan 013;
+ * see STYLE.md, Growing counts and Growth badge). The sentence, the badges and their key are there
+ * from the first paint, with skeleton bars for the numbers, which then count up; only if the counts
+ * can't be had does the sentence say "thousands of" instead.
  */
 function DatasetLine() {
   const growth = useGrowth();
   if (growth === "failed") {
     return <p className="mt-4">Explore and compare thousands of videos to better understand what your child is watching.</p>;
   }
-  const ready = growth !== "loading";
-  // All three count up at one speed: the longest rise takes the full count-up (plan 013).
-  const rises = ready
-    ? {
-        videos: growth.videos - growth.from.videos,
-        channels: growth.channels - growth.from.channels,
-        pastWeek: growth.pastWeek - growth.from.pastWeek,
-      }
-    : { videos: 0, channels: 0, pastWeek: 0 };
-  const longest = Math.max(rises.videos, rises.channels, rises.pastWeek);
+  if (growth === "loading") {
+    return (
+      <>
+        <p className="mt-4" aria-busy="true">
+          Explore and compare{" "}
+          <b className="font-bold text-navy">
+            <Room digits="00,000" />
+          </b>
+          {"\u00a0"}
+          <span className={BADGE}>
+            <Arrow className="mr-[0.14em]" />
+            <Room digits="000" />
+          </span>{" "}
+          videos from{" "}
+          <b className="font-bold text-navy">
+            <Room digits="000" />
+          </b>
+          {"\u00a0"}
+          <span className={BADGE}>
+            <Arrow className="mr-[0.14em]" />
+            <Room digits="00" />
+          </span>{" "}
+          channels to better understand what your child is watching.
+        </p>
+        <Key />
+      </>
+    );
+  }
+  // All four count up at one speed: the longest rise takes the full count-up (plan 013).
+  const rises = [
+    growth.videos - growth.from.videos,
+    growth.channels - growth.from.channels,
+    growth.pastWeek.videos,
+    growth.pastWeek.channels,
+  ];
+  const longest = Math.max(...rises);
+  const query = new URLSearchParams({ q: growth.pastWeekQuery });
   return (
     <>
-      <p className="mt-4" aria-busy={!ready}>
+      <p className="mt-4">
         Explore and compare{" "}
         <b className="font-bold text-navy">
-          {ready ? (
-            <RollingNumber value={growth.videos} from={growth.from.videos} duration={countUpMs(rises.videos, longest)} />
-          ) : (
-            <Room digits="00,000" />
-          )}
-        </b>{" "}
+          <RollingNumber value={growth.videos} from={growth.from.videos} duration={countUpMs(rises[0], longest)} />
+        </b>
+        <Gain
+          value={growth.pastWeek.videos}
+          duration={countUpMs(rises[2], longest)}
+          noun="videos"
+          href={`/rankings?${query}`}
+        />{" "}
         videos from{" "}
         <b className="font-bold text-navy">
-          {ready ? (
-            <RollingNumber value={growth.channels} from={growth.from.channels} duration={countUpMs(rises.channels, longest)} />
-          ) : (
-            <Room digits="000" />
-          )}
-        </b>{" "}
+          <RollingNumber value={growth.channels} from={growth.from.channels} duration={countUpMs(rises[1], longest)} />
+        </b>
+        <Gain
+          value={growth.pastWeek.channels}
+          duration={countUpMs(rises[3], longest)}
+          noun="channels"
+          href={`/rankings?view=channels&${query}`}
+        />{" "}
         channels to better understand what your child is watching.
       </p>
-      {!ready ? (
-        <p className="mt-3">
-          <span className={PILL}>
-            +<Room digits="00" /> videos in the past week
-          </span>
-        </p>
-      ) : (
-        growth.pastWeek > 0 && (
-          <p className="mt-3">
-            {/* It lists the videos it counts (plan 013). */}
-            <Link
-              href={`/rankings?${new URLSearchParams({ q: growth.pastWeekQuery })}`}
-              className={`${PILL} transition-colors hover:bg-sky-blue/25`}
-            >
-              +<RollingNumber value={growth.pastWeek} from={growth.from.pastWeek} duration={countUpMs(rises.pastWeek, longest)} />{" "}
-              videos in the past week
-            </Link>
-          </p>
-        )
-      )}
+      {(growth.pastWeek.videos > 0 || growth.pastWeek.channels > 0) && <Key />}
     </>
   );
 }
 
-const PILL = "inline-block rounded-full bg-sky px-3 py-0.5 text-sm font-bold whitespace-nowrap text-navy";
+/** A raised badge after a total: what it gained in the past week, linking to the rankings that list them. */
+function Gain({ value, duration, noun, href }: { value: number; duration: number; noun: string; href: string }) {
+  if (value <= 0) return null;
+  // A no-break space, not a margin, so copied text reads "16,402 1,043" and the badge stays with its total.
+  return (
+    <>
+      {"\u00a0"}
+      <Link
+        href={href}
+        aria-label={`${value.toLocaleString("en-US")} ${noun} added in the past week`}
+        className={`${BADGE} transition-colors hover:bg-sky-blue/25`}
+      >
+        <Arrow className="mr-[0.14em]" />
+        <RollingNumber value={value} from={0} duration={duration} />
+      </Link>
+    </>
+  );
+}
+
+/** What the badges mean. Screen readers hear it in each badge's link instead. */
+function Key() {
+  return (
+    <p className="mt-3 text-sm text-ink" aria-hidden="true">
+      <span className={`${BADGE_LOOK} mr-1`}>
+        <Arrow />
+      </span>
+      added in the past week
+    </p>
+  );
+}
+
+/** A small solid "up" triangle, drawn: the body font has no arrow, and a borrowed one looks
+ * different on every device. */
+function Arrow({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 10 12"
+      className={`inline-block h-[0.66em] w-auto overflow-visible align-baseline ${className}`}
+    >
+      <path d="M5 3.2 9 10H1Z" fill="currentColor" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+const BADGE_LOOK = "inline-block rounded-full bg-sky px-[7px] text-sm leading-5 font-bold whitespace-nowrap text-navy";
+/** Raised a little, so it reads as a note on the total's digits. */
+const BADGE = `${BADGE_LOOK} align-[0.4em]`;
 
 /** A skeleton bar where a number will be, as wide as `digits`, so nothing moves when it comes. */
 function Room({ digits }: { digits: string }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMeta, getVideos, type Meta } from "./api";
+import { getChannels, getMeta, getVideos, type Meta } from "./api";
 import { pastWeek } from "./search-filters";
 
 /** How often an open page asks whether videos were added, while it's visible. */
@@ -10,12 +10,12 @@ export const POLL_MS = 60_000;
 export type Growth = {
   videos: number;
   channels: number;
-  /** Videos added in the past week: the last 7 days, today included, in the visitor's time zone. */
-  pastWeek: number;
-  /** The rankings' search for those videos, e.g. `added:>2026-10-19`. */
+  /** Videos and channels added in the past week: the last 7 days, today included, in the visitor's time zone. */
+  pastWeek: { videos: number; channels: number };
+  /** The rankings' search for them, e.g. `added:>2026-10-19`. */
   pastWeekQuery: string;
-  /** Where the first count-up starts: the counts a week ago. */
-  from: { videos: number; channels: number; pastWeek: number };
+  /** Where the first count-up starts: the totals a week ago (the past week's counts start from 0). */
+  from: { videos: number; channels: number };
 };
 
 /** "loading" until the first answer, "failed" if it can't be had. */
@@ -27,17 +27,20 @@ export type GrowthState = Growth | "loading" | "failed";
  * out, or the past week moving on, shows at the next page load.
  */
 export function useGrowth(): GrowthState {
-  const [first, setFirst] = useState<(Meta & { week: number; query: string }) | "loading" | "failed">("loading");
+  const [first, setFirst] = useState<
+    (Meta & { week: { videos: number; channels: number }; query: string }) | "loading" | "failed"
+  >("loading");
   const [latest, setLatest] = useState<{ videos: number; channels: number } | null>(null);
 
   useEffect(() => {
     let alive = true;
-    // The pill counts what its link lists: the rankings' total for the same filter.
+    // Each badge counts what its link lists: the rankings' total for the same filter.
     const week = pastWeek();
-    Promise.all([getMeta(), getVideos({ sort: "score", order: "desc", limit: 1, addedFrom: week.from })]).then(
-      ([meta, added]) => {
+    const added = { sort: "score", order: "desc", limit: 1, addedFrom: week.from } as const;
+    Promise.all([getMeta(), getVideos(added), getChannels(added)]).then(
+      ([meta, videos, channels]) => {
         if (!alive) return;
-        setFirst({ ...meta, week: added.total, query: week.query });
+        setFirst({ ...meta, week: { videos: videos.total, channels: channels.total }, query: week.query });
         setLatest({ videos: meta.videoCount, channels: meta.channelCount });
       },
       () => alive && setFirst("failed"), // the page shows its text without numbers
@@ -66,12 +69,15 @@ export function useGrowth(): GrowthState {
   return {
     videos: latest.videos,
     channels: latest.channels,
-    pastWeek: first.week + (latest.videos - first.videoCount),
+    // What arrives while the page is open is new this week too.
+    pastWeek: {
+      videos: first.week.videos + (latest.videos - first.videoCount),
+      channels: first.week.channels + (latest.channels - first.channelCount),
+    },
     pastWeekQuery: first.query,
     from: {
-      videos: Math.max(0, first.videoCount - first.week),
-      channels: Math.min(first.channelCount7DaysAgo, first.channelCount),
-      pastWeek: 0,
+      videos: Math.max(0, first.videoCount - first.week.videos),
+      channels: Math.max(0, first.channelCount - first.week.channels),
     },
   };
 }
