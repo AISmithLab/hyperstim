@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from hyperstim_api.collector.sampling import FLOOR, left_out, rank
+from hyperstim_api.collector.sampling import FIRST_VIDEOS_PER_DAY, FLOOR, left_out, rank
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -54,7 +54,8 @@ CREATE TABLE IF NOT EXISTS uploads (
     tags TEXT NOT NULL DEFAULT '',
     channel_title TEXT NOT NULL DEFAULT '',
     duration_s INTEGER,
-    pick TEXT NOT NULL DEFAULT 'sample' -- why it was checked: sample (under t) | floor
+    pick TEXT NOT NULL DEFAULT 'sample', -- why it was checked: sample (under t) | floor
+    score REAL                         -- dataset videos: their score, for the download order
 );
 CREATE INDEX IF NOT EXISTS uploads_state_r ON uploads (state, r);
 CREATE INDEX IF NOT EXISTS uploads_channel ON uploads (channel_id);
@@ -99,6 +100,7 @@ ADDED_COLUMNS = {
         "unsure": "INTEGER NOT NULL DEFAULT 0",
         "api_failures": "INTEGER NOT NULL DEFAULT 0",
         "pick": "TEXT NOT NULL DEFAULT 'sample'",  # everything checked before was `sample`
+        "score": "REAL",  # filled in when the collector starts
     },
 }
 V2_JOINED = "2026-08-26"
@@ -107,6 +109,12 @@ HAVE_STATES = "('v2', 'measured', 'collected', 'eligible')"  # v2's scan: when v
 # A channel's videos in the dataset (measured ones too: they wait only for a name).
 IN_STATES = "('v2', 'measured', 'collected')"
 KEPT = "NOT IN (SELECT channel_id FROM left_out)"  # a channel not left out: `<id column> {KEPT}`
+# Each channel with videos in the dataset: how many, and its score as the site ranks it (the
+# mean of its videos' scores).
+HAVE = (
+    "WITH have AS (SELECT channel_id, COUNT(*) AS n, AVG(score) AS score FROM uploads "
+    f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
+)
 # Uploads whose made-for-kids answer is known: those that passed that check (the later checks
 # need it), those that failed it, and the floor's eligible ones put back unchecked (`trimmed`).
 # v2's picks don't count: they were picked for being made for kids.
@@ -338,30 +346,61 @@ class Store:
         return self.db.total_changes - before
 
     def next_eligible(self, now: float) -> Upload | None:
-        """The next eligible upload to download, not waiting for a retry: the channels with
-        the fewest videos in the dataset first, one level at a time up to `FLOOR` (every
-        channel at 1 gets its second before any gets its third), then by number over all
-        (decision 2). Whether it was picked under the cut-off or for the floor doesn't matter;
-        left-out channels get none."""
+        """The next eligible upload to download, not waiting for a retry (decision 2): first
+        the channels with 1 to `FLOOR` - 1 videos in the dataset, highest channel score first;
+        then a channel's first video, while fewer than `FIRST_VIDEOS_PER_DAY` channels got
+        theirs today; then by number over all. Within a channel, its lowest number, whether
+        picked under the cut-off or for the floor; left-out channels get none."""
         row = self.db.execute(
-            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
-            f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
-            "SELECT u.* FROM uploads u LEFT JOIN have h ON h.channel_id = u.channel_id "
-            f"WHERE u.state = 'eligible' AND u.retry_at <= ? AND u.channel_id {KEPT} "
-            "ORDER BY MIN(COALESCE(h.n, 0), ?), u.r LIMIT 1",
-            (now, FLOOR),
+            HAVE + "SELECT u.* FROM uploads u LEFT JOIN have h ON h.channel_id = u.channel_id "
+            f"WHERE u.state = 'eligible' AND u.retry_at <= :now AND u.channel_id {KEPT} "
+            "AND (h.n > 0 OR :first) "
+            "ORDER BY CASE WHEN h.n < :floor THEN 0 WHEN h.n IS NULL THEN 1 ELSE 2 END, "
+            "CASE WHEN h.n < :floor THEN -COALESCE(h.score, -1) END, u.r LIMIT 1",
+            {"now": now, "first": self.first_video_left(now), "floor": FLOOR},
         ).fetchone()
         return _upload(row) if row else None
 
     def ready(self, now: float, pick: str | None = None) -> int:
         """Eligible uploads that can be downloaded now (not waiting for a retry, not of a
-        left-out channel); only those picked for `pick` if given."""
+        left-out channel, not a first video once today's are taken); only those picked for
+        `pick` if given."""
         row = self.db.execute(
             "SELECT COUNT(*) AS n FROM uploads WHERE state = 'eligible' AND retry_at <= ? "
-            f"AND pick = COALESCE(?, pick) AND channel_id {KEPT}",
-            (now, pick),
+            f"AND pick = COALESCE(?, pick) AND channel_id {KEPT} AND (? OR channel_id IN "
+            f"(SELECT channel_id FROM uploads WHERE state IN {IN_STATES}))",
+            (now, pick, self.first_video_left(now)),
         )
         return int(row.fetchone()["n"])
+
+    def first_videos_today(self, now: float) -> int:
+        """Channels that got their first video today (UTC): their first video added today and
+        none of v2's."""
+        row = self.db.execute(
+            "SELECT COUNT(*) FROM (SELECT u.channel_id FROM attempts a "
+            "JOIN uploads u ON u.id = a.video_id WHERE a.outcome = 'collected' "
+            "GROUP BY u.channel_id HAVING MIN(a.at) >= ?) f WHERE NOT EXISTS "
+            "(SELECT 1 FROM uploads v WHERE v.channel_id = f.channel_id AND v.state = 'v2')",
+            (now - now % 86400,),
+        ).fetchone()
+        return int(row[0])
+
+    def first_video_left(self, now: float) -> bool:
+        return self.first_videos_today(now) < FIRST_VIDEOS_PER_DAY
+
+    def set_scores(self, scores: Iterable[tuple[str, float | None]]) -> None:
+        """Dataset videos' scores, where not set yet (they never change)."""
+        self.db.executemany(
+            "UPDATE uploads SET score = ? WHERE id = ? AND score IS NULL",
+            [(score, video_id) for video_id, score in scores],
+        )
+
+    def unscored(self) -> list[sqlite3.Row]:
+        """Added videos without a score: `video_id`, `features` (JSON)."""
+        return self.db.execute(
+            "SELECT c.video_id, c.features FROM collected c JOIN uploads u ON u.id = c.video_id "
+            "WHERE u.score IS NULL"
+        ).fetchall()
 
     # --- the kids share (decision 1) -----------------------------------------------
 

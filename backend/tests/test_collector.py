@@ -11,7 +11,14 @@ from typing import Any
 import pytest
 
 from hyperstim_api.collector import sampling
-from hyperstim_api.collector.collector import DAY_S, QUERIES, Collector, Settings, load_classifier
+from hyperstim_api.collector.collector import (
+    DAY_S,
+    QUERIES,
+    Collector,
+    Settings,
+    load_classifier,
+    scorer,
+)
 from hyperstim_api.collector.sampling import Details
 from hyperstim_api.collector.seed import seed
 from hyperstim_api.collector.store import Store
@@ -846,43 +853,108 @@ def level_ids(prefix: str, n: int) -> list[str]:
     return sorted((f"{prefix}{i:07d}" for i in range(n)), key=sampling.rank)
 
 
-def test_downloads_fill_the_fewest_videos_first_one_level_at_a_time(
+def scored(store: Store, channel_id: str, scores: list[float]) -> None:
+    """Gives the channel v2 picks with these scores."""
+    picks = fill_floor(store, channel_id, len(scores))
+    store.set_scores(zip(picks, scores, strict=True))
+
+
+def score_of(store: Store, video_id: str) -> float | None:
+    row = store.db.execute("SELECT score FROM uploads WHERE id = ?", (video_id,)).fetchone()
+    return None if row[0] is None else float(row[0])
+
+
+def channel_of(store: Store, video_id: str) -> str:
+    return store.upload(video_id).channel_id  # type: ignore[union-attr]
+
+
+def test_downloads_fill_the_channels_on_the_site_highest_score_first(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
     collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL has its 5
+    collector.score = lambda features: 5.0  # every added video scores 5
     store = collector.store
-    for channel_id, picks in ((SMALL, 1), (TINY, 2)):
+    for channel_id in (SMALL, TINY):
         store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
-        fill_floor(store, channel_id, picks)
+    scored(store, SMALL, [30.0])  # 1 video, score 30
+    scored(store, TINY, [50.0, 50.0])  # 2 videos, score 50
     # All picked under the cut-off before the change, CHANNEL's with the lowest numbers.
     numbers = level_ids("lvl", 40)
     waiting(store, CHANNEL, numbers[:10])
     waiting(store, SMALL, numbers[10:20])
     waiting(store, TINY, numbers[20:30], pick="floor")
-
-    def have(channel_id: str) -> int:
-        row = store.db.execute(
-            "SELECT COUNT(*) FROM uploads WHERE channel_id = ? AND state IN ('v2', 'collected')",
-            (channel_id,),
-        ).fetchone()
-        return int(row[0])
-
-    levels = [(have(SMALL), have(TINY))]
-    for _ in range(8):
-        run(collector, clock, 1, step=3600)
-        levels.append((have(SMALL), have(TINY)))
-    # Each download goes to a channel on the lowest level: 1 → 2 first, then both at 2 get
-    # their 3rd before either gets a 4th, and so on to 5.
-    assert levels[1] == (2, 2)
-    for (a, b), (c, d) in zip(levels[:7], levels[1:8], strict=True):
-        assert (c, d) in ((a + 1, b), (a, b + 1))
-        assert (c > a and a <= b) or (d > b and b <= a)
-    assert levels[7] == levels[8] == (5, 5)
+    run(collector, clock, 8, step=3600)
+    # The 2-video channel goes before the 1-video one, as its score is higher, until its own
+    # added videos bring it under 30 (35, then 27.5); then the turn passes, back and forth.
+    assert [channel_of(store, v) for v in collected_ids(collector)] == [
+        TINY, TINY, SMALL, TINY, SMALL, SMALL, SMALL, CHANNEL,
+    ]  # fmt: skip
     # Only then the lowest number over all channels: CHANNEL's.
     assert collected_ids(collector)[-1] == numbers[0]
     within = [v for v in collected_ids(collector) if v in numbers[10:20]]
     assert within == numbers[10:14]  # each channel's own lowest numbers first
+    assert score_of(store, numbers[10]) == 5.0
+
+
+def test_at_most_3_channels_get_their_first_video_a_day(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    clock.now = NOW - NOW % DAY_S + 3600  # 01:00 UTC
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL has its 5
+    store = collector.store
+    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
+    fill_floor(store, SMALL, 1)
+    numbers = level_ids("fst", 20)
+    waiting(store, CHANNEL, numbers[:5])  # the lowest numbers
+    new = [f"UC{i:022d}" for i in range(5)]
+    for channel_id, video_id in zip(new, numbers[5:10], strict=True):
+        store.upsert_channel(id=channel_id, title="C", status="in", source="discovery",
+                             listed_at=NOW)  # fmt: skip
+        waiting(store, channel_id, [video_id], pick="floor")
+    waiting(store, SMALL, numbers[19:])  # a channel on the site: before any first video
+    failing(pipeline, numbers[5])  # a failed first download doesn't use up a slot
+    run(collector, clock, 6, step=3600)
+    taken = collected_ids(collector)
+    assert taken == [numbers[19], *numbers[6:9], numbers[0]]
+    assert store.first_videos_today(clock.now) == 3
+    assert store.ready(clock.now, "floor") == 0  # the 5th waits: no reason to hold up `t`
+    # The next day: the 5th first, and the failed one is tried again once it's due.
+    clock.now += DAY_S - 6 * 3600
+    run(collector, clock, 6, step=3600)
+    assert collected_ids(collector)[5] == numbers[9]
+    assert store.failures(numbers[5]) == 2
+    assert store.first_videos_today(clock.now) == 1
+
+
+def test_the_dataset_videos_scores_are_filled_in_once(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
+    store = collector.store
+    (v2,) = fill_floor(store, CHANNEL, 1)
+    store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    run(collector, clock, 1, step=3600)  # added without a score, as before the change
+    (added,) = collected_ids(collector)
+    assert score_of(store, added) is None
+    collector.score = lambda features: 42.0
+    collector.fill_scores({v2: 70.0})
+    assert score_of(store, v2) == 70.0
+    assert score_of(store, added) == 42.0
+    collector.fill_scores({v2: 10.0})  # a score never changes
+    assert score_of(store, v2) == 70.0
+
+
+def test_added_videos_are_scored_as_the_site_scores_them(tmp_path: Path) -> None:
+    rows = [video_row(f"ref{i:08d}", CHANNEL, float(i)) for i in range(10)]
+    reference = load_dataset(write_dataset(tmp_path / "videos.tsv", rows))
+    score = scorer(reference)
+    for video in reference.videos:
+        features = {f.key: f.value for f in video.features}
+        assert score(features) == video.score
+    assert score(dict.fromkeys(FEATURES)) is None
 
 
 @pytest.mark.parametrize(

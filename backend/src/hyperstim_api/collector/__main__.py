@@ -30,6 +30,7 @@ from hyperstim_api.collector.collector import (
     load_classifier,
     probe_block,
     provenance,
+    scorer,
     utc,
 )
 from hyperstim_api.collector.store import Store
@@ -71,6 +72,7 @@ def run(s: Settings) -> None:
             raise OutOfUnits(f"budget of {s.units_per_day} units")
         store.add_units(day, units)
 
+    reference = load_dataset(Path(_required("DATASET_PATH")))
     pipeline = ResearchPipeline(youtube_api_key=None, measure_cores=1)  # no cookies (plan 013)
     collector = Collector(
         s,
@@ -80,7 +82,9 @@ def run(s: Settings) -> None:
         is_short,
         load_classifier(),
         probe_block,
+        score=scorer(reference),
     )
+    collector.fill_scores({v.id: v.score for v in reference.videos})
     stop = threading.Event()
 
     def on_signal(*_: object) -> None:
@@ -128,6 +132,8 @@ def status(s: Settings) -> str:
         "Last 24 h: " + (", ".join(f"{k} {v}" for k, v in attempts.items()) or "nothing"),
         f"Cut-off: {store.cutoff():.6f}",
         floor_line(store),
+        f"First videos today: {store.first_videos_today(now)} of "
+        f"{sampling.FIRST_VIDEOS_PER_DAY} channels",
         left_out_line(store),
         f"Data API units today: {store.units_used(quota_day(now))} of {s.units_per_day}",
         f"Pace: {s.per_day}/day x {store.get('pace_factor', '1')}",
@@ -173,7 +179,7 @@ def floor_line(store: Store) -> str:
         f"Below the floor of {sampling.FLOOR}: {len(below)} channels lacking {lacking} videos, "
         f"{done} of them with every upload checked"
     )
-    levels = store.levels()  # what the downloads fill first, one level at a time
+    levels = store.levels()  # the downloads fill those with 1 to 4 first, by score
     if levels:
         line += "; in the dataset: " + ", ".join(f"{n} with {k}" for k, n in sorted(levels.items()))
     return line

@@ -37,7 +37,7 @@ from hyperstim_api.collector import sampling
 from hyperstim_api.collector.seed import tier
 from hyperstim_api.collector.store import KEPT, Store, Upload
 from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits, quota_day
-from hyperstim_api.dataset import LEFT_OUT_FILE
+from hyperstim_api.dataset import LEFT_OUT_FILE, Dataset
 
 log = logging.getLogger(__name__)
 
@@ -109,6 +109,17 @@ def load_classifier() -> Callable[[dict[str, str]], str | None]:
     return classify
 
 
+def scorer(reference: Dataset) -> Callable[[dict[str, float | None]], float | None]:
+    """A video's score from its features, against the reference set, as the site scores it;
+    None without a feature value."""
+
+    def score(features: dict[str, float | None]) -> float | None:
+        video = reference.score_video("", "", "", "", features)
+        return video.score if video else None
+
+    return score
+
+
 def api_wait(failures: int) -> float:
     """How long an item or job waits after its `failures`-th Data API error in a row."""
     return API_RETRY_AFTER_S[min(failures, len(API_RETRY_AFTER_S)) - 1]
@@ -140,6 +151,7 @@ class Collector:
         probe_block: Callable[[str], bool],
         clock: Callable[[], float] = time.time,
         rng: random.Random | None = None,
+        score: Callable[[dict[str, float | None]], float | None] = lambda features: None,
     ) -> None:
         self.s = settings
         self.store = store
@@ -150,6 +162,7 @@ class Collector:
         self.probe_block = probe_block  # after a failed download: is YouTube blocking us?
         self.clock = clock
         self.rng = rng or random.Random()
+        self.score = score  # a video's score from its features, against the reference set
 
     # --- the loop --------------------------------------------------------------------
 
@@ -635,6 +648,17 @@ class Collector:
         self.store.set("next_download_at", self.clock() + gap)
         return gap
 
+    def fill_scores(self, reference: dict[str, float]) -> None:
+        """The dataset videos' scores, which the download order goes by (decision 2): v2's
+        picks from the reference set (`reference`: video ID -> score), the added ones scored
+        against it, as the site does."""
+        with self.store.transaction():
+            self.store.set_scores(reference.items())
+            self.store.set_scores(
+                (r["video_id"], self.score(json.loads(r["features"])))
+                for r in self.store.unscored()
+            )
+
     def collect(self, upload: Upload, now: float) -> None:
         """Download, measure and classify the upload, and add it; or, while it lacks a title,
         channel name or date, keep it measured until the repair pass fills the gap (rule 6).
@@ -676,7 +700,7 @@ class Collector:
                 {**self.s.provenance, "measured_by": source},
             )
             self.store.set_state(upload.id, "collected" if complete else "measured",
-                                 online_at=now)  # fmt: skip
+                                 online_at=now, score=self.score(features))  # fmt: skip
             self.store.log_attempt(upload.id, now, "collected")
         self.store.set("block_wait", 0)
         self.store.set("failures_in_a_row", 0)

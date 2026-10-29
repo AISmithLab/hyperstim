@@ -20,6 +20,7 @@ FIRST_YEAR = 2015  # v2's first year (YouTube Kids' launch)
 SETTLE_S = 24 * 3600  # an upload is checked once it's a day old
 REGION = "US"
 FLOOR = 5  # each channel's lowest-numbered eligible uploads taken until it has this many
+FIRST_VIDEOS_PER_DAY = 3  # channels that get their first video in a day (UTC), at most
 # A channel whose checked uploads are under 10 % made for kids is left out (decision 1),
 # judged once it has 20 answers.
 KIDS_PERCENT_MIN, KIDS_ANSWERS_MIN = 10, 20
