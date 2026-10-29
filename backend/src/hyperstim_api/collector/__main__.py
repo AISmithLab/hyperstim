@@ -128,6 +128,7 @@ def status(s: Settings) -> str:
         "Last 24 h: " + (", ".join(f"{k} {v}" for k, v in attempts.items()) or "nothing"),
         f"Cut-off: {store.cutoff():.6f}",
         floor_line(store),
+        left_out_line(store),
         f"Data API units today: {store.units_used(quota_day(now))} of {s.units_per_day}",
         f"Pace: {s.per_day}/day x {store.get('pace_factor', '1')}",
     ]
@@ -168,9 +169,25 @@ def floor_line(store: Store) -> str:
         for r in below
     )
     lacking = sum(sampling.FLOOR - r["have"] for r in below)
-    return (
+    line = (
         f"Below the floor of {sampling.FLOOR}: {len(below)} channels lacking {lacking} videos, "
         f"{done} of them with every upload checked"
+    )
+    levels = store.levels()  # what the downloads fill first, one level at a time
+    if levels:
+        line += "; in the dataset: " + ", ".join(f"{n} with {k}" for k, n in sorted(levels.items()))
+    return line
+
+
+def left_out_line(store: Store) -> str:
+    """The channels left out for their kids share at the last export, and their videos."""
+    channels, videos = store.db.execute(
+        "SELECT (SELECT COUNT(*) FROM left_out), (SELECT COUNT(*) FROM uploads "
+        "WHERE state IN ('v2', 'collected') AND channel_id IN (SELECT channel_id FROM left_out))"
+    ).fetchone()
+    return (
+        f"Left out (under {sampling.KIDS_PERCENT_MIN} % made for kids, of "
+        f"{sampling.KIDS_ANSWERS_MIN}+ answers): {channels} channels, {videos} of their videos"
     )
 
 

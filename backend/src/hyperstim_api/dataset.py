@@ -328,6 +328,14 @@ def _channel_names(path: Path) -> dict[str, str]:
         return {r["channel_id"]: r["channel_title"] for r in csv.DictReader(fh, delimiter="\t")}
 
 
+def _left_out(path: Path) -> set[str]:
+    """The channels the collector left out for their kids share; optional."""
+    if not path.is_file():
+        return set()
+    with path.open(newline="", encoding="utf-8") as fh:
+        return {r["channel_id"] for r in csv.DictReader(fh, delimiter="\t")}
+
+
 def _float(raw: str | None) -> float | None:
     raw = (raw or "").strip()
     return float(raw) if raw else None
@@ -379,6 +387,10 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
     reference_count = len(videos)
     if collected_dir is not None:
         videos = _with_collected(videos, collected_dir, pools, composite_pool, names)
+        # Channels left out for their kids share: never there, reference videos too; the
+        # pools above keep them, so no score moves (plan 013, decision 1).
+        left_out = _left_out(collected_dir / LEFT_OUT_FILE)
+        videos = [v for v in videos if v.channel_id not in left_out]
     videos.sort(key=lambda v: (-v.score, v.id))
     current = [v for v in videos if v.removed_at is None]
     channels = _channels(current)
@@ -427,15 +439,17 @@ def _added_at(reference_at: str) -> Callable[[Video | Channel], str]:
 
 
 NAMES_FILE = "channel-names.tsv"
+LEFT_OUT_FILE = "excluded-channels.tsv"
 
 
 def collected_files(directory: Path) -> list[Path]:
-    """The collector's files the dataset is built from (plan 013): `<year>.tsv`, `removed.tsv`
-    and `channel-names.tsv`."""
+    """The collector's files the dataset is built from (plan 013): `<year>.tsv`, `removed.tsv`,
+    `channel-names.tsv` and `excluded-channels.tsv`."""
     files = [
         *directory.glob("[0-9][0-9][0-9][0-9].tsv"),
         directory / "removed.tsv",
         directory / NAMES_FILE,
+        directory / LEFT_OUT_FILE,
     ]
     return sorted(p for p in files if p.is_file())
 
@@ -456,8 +470,8 @@ def _with_collected(
     by_id = {v.id: v for v in videos}
     removed: dict[str, str] = {}
     for path in collected_files(directory):
-        if path.name == NAMES_FILE:
-            continue  # read with the reference set's names
+        if path.name in (NAMES_FILE, LEFT_OUT_FILE):
+            continue  # read on their own
         with path.open(newline="", encoding="utf-8") as fh:
             rows = list(csv.DictReader(fh, delimiter="\t"))
         if path.name == "removed.tsv":

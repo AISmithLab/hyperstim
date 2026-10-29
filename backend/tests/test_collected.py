@@ -322,3 +322,43 @@ def test_the_committed_reference_set_is_complete() -> None:
     ]
     assert gaps == []
     assert len(rows) == 16_375
+
+
+def test_a_left_out_channel_is_never_there_and_no_score_moves(
+    dataset_path: Path, collected: Path, make_client: Callable[..., TestClient]
+) -> None:
+    """A channel the collector left out for its kids share (plan 013, decision 1): its
+    reference and collected videos are in no list, count or lookup, and the scoring pools keep
+    them, so every other video's score is unchanged."""
+    before = load_dataset(dataset_path, collected)
+    (collected / "excluded-channels.tsv").write_text(
+        "channel_id\tmade_for_kids\tanswers\nchan-a\t1\t40\n"
+    )
+    grown = load_dataset(dataset_path, collected)
+    gone = {"vid-a1", "vid-a2", "vid-a3", "vid-a4", "vid-a5", "new-high"}
+    assert gone.isdisjoint(v.id for v in grown.all_videos)
+    assert gone.isdisjoint(grown.videos_by_id)
+    assert "chan-a" not in grown.channels_by_id
+    assert grown.channel_count == before.channel_count - 1
+    assert grown.pools == before.pools
+    assert grown.reference_count == before.reference_count
+    for video in grown.all_videos:
+        assert video.score == before.videos_by_id[video.id].score
+    client = make_client(dataset_path, collected_dir=collected)
+    assert client.get("/api/meta").json()["videoCount"] == len(before.videos) - len(gone)
+    videos = client.get("/api/videos", params={"limit": 100}).json()
+    assert gone.isdisjoint(ids(videos))
+    channels = client.get("/api/channels", params={"limit": 100}).json()
+    assert "chan-a" not in ids(channels)
+
+
+def test_a_channel_comes_back_when_its_left_out_file_changes(
+    dataset_path: Path, collected: Path
+) -> None:
+    left_out = collected / "excluded-channels.tsv"
+    left_out.write_text("channel_id\tmade_for_kids\tanswers\nchan-c\t0\t25\n")
+    store = DatasetStore(dataset_path, collected, 300)
+    assert "chan-c" not in store.current.channels_by_id
+    left_out.write_text("channel_id\tmade_for_kids\tanswers\n")
+    assert store.reload_if_changed()
+    assert store.current.channels_by_id["chan-c"].video_count == 2

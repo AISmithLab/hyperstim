@@ -35,8 +35,9 @@ from hyperstim_api import scoring
 from hyperstim_api.analysis import BLOCK_MARKER, PIPELINE_DIR, AnalysisError, Pipeline
 from hyperstim_api.collector import sampling
 from hyperstim_api.collector.seed import tier
-from hyperstim_api.collector.store import Store, Upload
+from hyperstim_api.collector.store import KEPT, Store, Upload
 from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits, quota_day
+from hyperstim_api.dataset import LEFT_OUT_FILE
 
 log = logging.getLogger(__name__)
 
@@ -159,7 +160,9 @@ class Collector:
         self.store.set("tick_at", now)  # the alert check's sign that the collector runs
         self.back_up(now)
         self.prune_logs(now)
-        if self.store.get("export_due"):
+        # Also at least daily, so the channels left out for their kids share are judged again
+        # (and at the first start, before any download).
+        if self.store.get("export_due") or now - float(self.store.get("left_out_at", "0")) >= DAY_S:
             self.export()
         if self.store.get("out_of_units") != quota_day(now):
             for job in (
@@ -846,6 +849,7 @@ class Collector:
                 self.store.set("export_failed_since", self.clock())
             log.exception("Export failed; trying again on the next tick")
             return
+        self.store.set("left_out_at", self.clock())  # judged again in a day at the latest
         self.store.set("export_due", "")
         self.store.set("export_failures", 0)
         self.store.set("export_failed_since", "")
@@ -860,9 +864,11 @@ COLUMNS = (
 
 
 def export(store: Store, directory: Path) -> None:
-    """The added videos (one file per year of adding, in the order added), the removed ones and
-    a little metadata, each written whole and renamed into place, for the API to reload."""
+    """The added videos (one file per year of adding, in the order added), the removed ones,
+    the channels left out for their kids share (worked out again here) and a little metadata,
+    each written whole and renamed into place, for the API to reload."""
     directory.mkdir(parents=True, exist_ok=True)
+    left_out = [dict(r) for r in store.update_left_out()]
     by_year: dict[str, list[dict[str, object]]] = {}
     for row in store.collected_rows():
         features = json.loads(row["features"])
@@ -891,6 +897,12 @@ def export(store: Store, directory: Path) -> None:
     _write_tsv(
         directory / "channel-names.tsv", ("channel_id", "channel_title"), channel_names(store)
     )
+    _write_tsv(
+        directory / LEFT_OUT_FILE,
+        ("channel_id", "made_for_kids", "answers"),
+        [{"channel_id": r["channel_id"], "made_for_kids": r["kids"], "answers": r["answers"]}
+         for r in left_out],
+    )  # fmt: skip
     _write_tsv(directory / "CHANGELOG.tsv", CHANGELOG_COLUMNS, changelog(store))
     meta = {"channelsCheckedAt": store.get("channels_checked_at") or None}
     _replace(directory / "meta.json", json.dumps(meta) + "\n")
@@ -912,16 +924,24 @@ CHANGELOG_COLUMNS = ("date", "added", "removed", "channels_added", "videos", "ch
 
 def changelog(store: Store) -> list[dict[str, object]]:
     """One line per UTC day with a change: videos added and removed, channels that got their
-    first video, and the totals at the end of the day (the release notes read the last line)."""
+    first video, and the totals at the end of the day (the release notes read the last line).
+    The channels left out now count as never there, as on the site."""
     channel_of = {
         r["id"]: r["channel_id"]
         for r in store.db.execute(
-            "SELECT id, channel_id FROM uploads WHERE state IN ('v2', 'collected', 'removed')"
+            "SELECT id, channel_id FROM uploads WHERE state IN ('v2', 'collected', 'removed') "
+            f"AND channel_id {KEPT}"
         )
     }
-    collected = {r["video_id"]: r["added_at"] for r in store.collected_rows()}
+    collected = {
+        r["video_id"]: r["added_at"] for r in store.collected_rows() if r["video_id"] in channel_of
+    }
     events = [(at, "add", vid) for vid, at in collected.items()]
-    events += [(r["removed_at"], "remove", r["video_id"]) for r in store.removed_rows()]
+    events += [
+        (r["removed_at"], "remove", r["video_id"])
+        for r in store.removed_rows()
+        if r["video_id"] in channel_of
+    ]
     # The reference set: v2's picks, also the ones removed since.
     visible = Counter(channel_of[v] for v in channel_of if v not in collected)
     videos = sum(visible.values())
