@@ -1,7 +1,8 @@
-"""The repo's data scripts (plan 013): the daily commit (scripts/commit-data.sh) and the
-dataset's size in the release notes (scripts/release-notes.sh), both read from the collector's
-CHANGELOG.tsv."""
+"""The repo's data scripts (plan 013): the daily commit (scripts/commit-data.sh), which also
+draws the README's growth chart, and the dataset's size in the release notes
+(scripts/release-notes.sh), both read from the collector's CHANGELOG.tsv."""
 
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -58,6 +59,29 @@ def collected(tmp_path: Path) -> Path:
     (source / "CHANGELOG.tsv").write_text(CHANGELOG)
     (source / "2026.tsv").write_text("video_id\nabc\n")
     return source
+
+
+def test_the_daily_commit_carries_the_chart(tmp_path: Path, clone: Path) -> None:
+    subprocess.run([str(COMMIT_DATA), str(clone), str(collected(tmp_path))], check=True)
+    files = git(clone, "show", "--name-only", "--format=", "HEAD").split()
+    assert "backend/data/collected/growth.svg" in files
+    assert "backend/data/collected/growth-dark.svg" in files
+    assert "16,725 videos" in git(clone, "show", "HEAD:backend/data/collected/growth.svg")
+
+
+def test_the_data_goes_in_when_the_chart_fails(tmp_path: Path, clone: Path) -> None:
+    # A release without the chart's Python: the script copied alone.
+    lone = tmp_path / "release" / "scripts" / "commit-data.sh"
+    lone.parent.mkdir(parents=True)
+    shutil.copy2(COMMIT_DATA, lone)
+    result = subprocess.run(
+        [str(lone), str(clone), str(collected(tmp_path))], capture_output=True, text=True
+    )
+    assert result.returncode == 0
+    assert "couldn't draw the growth chart" in result.stderr
+    files = git(clone, "show", "--name-only", "--format=", "HEAD").split()
+    assert "backend/data/collected/CHANGELOG.tsv" in files
+    assert "backend/data/collected/growth.svg" not in files
 
 
 def test_the_commit_message_counts_new_channels(tmp_path: Path, clone: Path) -> None:

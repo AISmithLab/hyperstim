@@ -6,6 +6,7 @@ The videos added to the HyperStim dataset since the reference set (16,375 videos
 - `removed.tsv`: videos taken out because they went offline.
 - `excluded-channels.tsv`: channels left out because few of their uploads are made for kids.
 - `CHANGELOG.tsv`: one row a day, the newest first (below).
+- `growth.svg`, `growth-dark.svg`: the chart in the repo's README.
 
 ## CHANGELOG.tsv
 

@@ -63,6 +63,8 @@ uv run python scripts/import_dataset.py <path-to-research-repo-checkout>
 
 The script only reads the research repo, checks the data against its figures of record, and refuses to write if anything is off. Re-run it when the research data changes and commit both files. Video clips are never stored here.
 
+`data/collected/` holds the videos added since (plan 013), committed daily by the data bot (`scripts/commit-data.sh` at the repo root). Before each commit it runs `scripts/growth_chart.py`, which draws `growth.svg` and `growth-dark.svg` (the README's growth chart) from `CHANGELOG.tsv` (its columns: `data/collected/README.md`); to try it locally: `uv run python scripts/growth_chart.py data/collected`.
+
 `data/videos.channel-names.tsv` (`channel_id`, `channel_title`) is ours, not the research repo's: names looked up on YouTube for the reference channels whose videos carry none (plan 013). The API uses a name from it only when a video has no channel name; the site shows the channel's ID where neither has one. The import leaves it alone.
 
 At startup the app scores every video (`src/hyperstim_api/scoring.py`): each of the 12 features is ranked as a percentile within the reference set (`data/videos.tsv`), the 12 percentiles are averaged, and the score is that average's percentile among the reference set's videos (0 = least, 100 = most stimulating). Videos added later and live checks are scored against the same reference set, so a video's score never changes as the dataset grows (plan 013). A channel's score is the mean of its videos' scores.

@@ -18,6 +18,15 @@ How stimulating are kids’ YouTube videos?
 - **[Compare](https://aismithlab.com/hyperstim/compare/):** put two videos or two channels side by side.
 - **[How it works](https://aismithlab.com/hyperstim/how-it-works/):** what we measure and what the score means.
 
+## A growing dataset
+
+We keep adding videos and channels. The chart is redrawn every day from the dataset's [changelog](backend/data/collected/CHANGELOG.tsv).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="backend/data/collected/growth-dark.svg">
+  <img src="backend/data/collected/growth.svg" alt="Line chart of the number of videos and channels in the HyperStim dataset over time, redrawn daily.">
+</picture>
+
 ## What the score is and isn’t
 
 We measure production style only, from a 5-minute clip of the video. We don’t judge a video’s content, educational value, or age appropriateness.

@@ -27,6 +27,11 @@ for f in "$SOURCE"/[0-9][0-9][0-9][0-9].tsv "$SOURCE"/{removed.tsv,excluded-chan
 done
 [ ${#files[@]} -gt 0 ] || exit 0
 cp "${files[@]}" "$CLONE/$DEST/"
+# The README's growth chart (plan 013), drawn from the changelog just copied, with the release's
+# own Python. If it fails, the data still goes in, with yesterday's chart.
+here="$(cd "$(dirname "$0")/.." && pwd)"
+"$here/backend/.venv/bin/python" "$here/backend/scripts/growth_chart.py" "$CLONE/$DEST" ||
+  echo "commit-data: couldn't draw the growth chart" >&2
 "${git[@]}" add -- "$DEST"
 "${git[@]}" diff --cached --quiet && exit 0
 
