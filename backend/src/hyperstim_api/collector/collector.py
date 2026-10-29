@@ -63,6 +63,8 @@ MIN_VIDEOS = 100  # more than this many
 CHANNELS_PER_TICK = 25  # newest-uploads reads per tick, so other work isn't held up
 MAX_PAGES = 200  # pages of a channel's uploads read in one go (50 a page); more on the next tick
 CANDIDATE_BUFFER = 5  # eligible uploads kept ready for download
+FLOOR_CHECKS_PER_MISSING = 3  # a channel below the floor: uploads checked per video it lacks
+FLOOR_BATCHES_PER_TICK = 10  # of 50 uploads, so a channel with few eligible ones can't hold a tick
 OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
 MAX_BLOCK_WAIT_S = 48 * 3600
@@ -505,19 +507,36 @@ class Collector:
 
     def check_candidates(self, now: float) -> None:
         """Check uploads below the cut-off that are new to us (new uploads, new channels) at
-        once, then the next ones by number until a few eligible ones are ready."""
+        once, then those of channels below the floor by number, and when no floor video is
+        ready, the next ones by number until a few eligible ones are ready (plan 013, 2)."""
         settled = utc(now - sampling.SETTLE_S)
+        floor_batches = 0
         while True:
             below = self.store.cutoff()
             ids = self.store.next_unchecked(now, sampling.FIRST_YEAR, settled, 50, below)
-            if not ids and self.store.ready(now) < CANDIDATE_BUFFER:
+            pick = "sample"
+            if not ids and floor_batches < FLOOR_BATCHES_PER_TICK:
+                floor_batches += 1
+                ids = self.store.next_floor_unchecked(
+                    now, sampling.FIRST_YEAR, settled, FLOOR_CHECKS_PER_MISSING, 50
+                )
+                pick = "floor"
+            if (
+                not ids
+                and not self.store.ready(now, "floor")
+                and self.store.ready(now) < CANDIDATE_BUFFER
+            ):
                 ids = self.store.next_unchecked(now, sampling.FIRST_YEAR, settled, 50)
+                pick = "sample"
             if not ids:
                 return
-            self.check(ids, now)
+            self.check(ids, now, pick)
+            if pick == "floor":  # more found than lacking: only the lowest numbers are taken
+                self.store.trim_floor()
 
-    def check(self, ids: list[str], now: float) -> None:
-        """Eligibility of up to 50 uploads, by v2's checks. An answer that can't settle it (the
+    def check(self, ids: list[str], now: float, pick: str = "sample") -> None:
+        """Eligibility of up to 50 uploads, by v2's checks, recording why they were checked
+        (`pick`: the floor's checks don't move the cut-off). An answer that can't settle it (the
         upload missing, no made-for-kids answer, the Shorts probe undecided) is asked again
         after 1, 3 and 7 days; the 4th such answer is final (rule 2)."""
         uploads = [u for u in map(self.store.upload, ids) if u is not None]
@@ -555,6 +574,7 @@ class Collector:
                 "checked_at": now,
                 "api_failures": 0,
                 "unsure": upload.unsure + 1 if unsure else 0,
+                "pick": pick,
             }
             if found is not None:
                 fields.update(
@@ -828,7 +848,7 @@ class Collector:
 
 COLUMNS = (
     "video_id", "title", "channel_id", "channel_title", "category", "published_at",
-    "duration_s", *scoring.FEATURES, "added_at", "r", "cutoff", "rule_version",
+    "duration_s", *scoring.FEATURES, "added_at", "r", "cutoff", "pick", "rule_version",
     "measured_by", "ytdlp_version", "ffmpeg_version", "pipeline_commit", "cache_version",
 )  # fmt: skip
 
@@ -852,6 +872,7 @@ def export(store: Store, directory: Path) -> None:
             "added_at": row["added_at"],
             "r": f"{row['r']:.9f}",
             "cutoff": f"{row['cutoff']:.9f}",
+            "pick": row["pick"],
             "rule_version": sampling.RULE_VERSION,
         }
         out.update({k: "" if features.get(k) is None else features[k] for k in scoring.FEATURES})

@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from hyperstim_api.collector.sampling import rank
+from hyperstim_api.collector.sampling import FLOOR, rank
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -53,7 +53,8 @@ CREATE TABLE IF NOT EXISTS uploads (
     description TEXT NOT NULL DEFAULT '',
     tags TEXT NOT NULL DEFAULT '',
     channel_title TEXT NOT NULL DEFAULT '',
-    duration_s INTEGER
+    duration_s INTEGER,
+    pick TEXT NOT NULL DEFAULT 'sample' -- why it was checked: sample (under t) | floor
 );
 CREATE INDEX IF NOT EXISTS uploads_state_r ON uploads (state, r);
 CREATE INDEX IF NOT EXISTS uploads_channel ON uploads (channel_id);
@@ -91,9 +92,12 @@ ADDED_COLUMNS = {
     "uploads": {
         "unsure": "INTEGER NOT NULL DEFAULT 0",
         "api_failures": "INTEGER NOT NULL DEFAULT 0",
+        "pick": "TEXT NOT NULL DEFAULT 'sample'",  # everything checked before was `sample`
     },
 }
-V2_JOINED = "2026-08-26"  # v2's scan: when v2's channels joined
+V2_JOINED = "2026-08-26"
+# A channel's videos in the dataset or on their way: what the floor counts.
+HAVE_STATES = "('v2', 'measured', 'collected', 'eligible')"  # v2's scan: when v2's channels joined
 
 
 @dataclass(frozen=True)
@@ -110,6 +114,7 @@ class Upload:
     duration_s: int | None
     unsure: int = 0
     api_failures: int = 0
+    pick: str = "sample"
 
     def complete(self) -> bool:
         """Everything the site shows about it is in place (plan 013, decision 12)."""
@@ -256,18 +261,84 @@ class Store:
         ).fetchall()
         return [str(r["id"]) for r in rows]
 
+    def below_floor(self) -> list[sqlite3.Row]:
+        """Channels that are in with fewer than `FLOOR` videos (in the dataset or waiting to be
+        downloaded), the fewest first: `id`, `have`."""
+        return self.db.execute(
+            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
+            f"WHERE state IN {HAVE_STATES} GROUP BY channel_id) "
+            "SELECT c.id, COALESCE(h.n, 0) AS have FROM channels c "
+            "LEFT JOIN have h ON h.channel_id = c.id "
+            "WHERE c.status = 'in' AND COALESCE(h.n, 0) < ? ORDER BY have, c.id",
+            (FLOOR,),
+        ).fetchall()
+
+    def next_floor_unchecked(
+        self, now: float, first_year: int, settled_before: str, per_missing: int, n: int
+    ) -> list[str]:
+        """Unchecked uploads of channels below the floor: each channel's lowest numbers,
+        `per_missing` for each video it lacks, the channels with the fewest videos first."""
+        rows = self.db.execute(
+            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
+            f"WHERE state IN {HAVE_STATES} GROUP BY channel_id), "
+            "floor AS (SELECT c.id, COALESCE(h.n, 0) AS have FROM channels c "
+            "LEFT JOIN have h ON h.channel_id = c.id "
+            "WHERE c.status = 'in' AND COALESCE(h.n, 0) < :floor), "
+            "next AS (SELECT u.id, u.channel_id, u.r, f.have, ROW_NUMBER() OVER "
+            "(PARTITION BY u.channel_id ORDER BY u.r) AS k FROM uploads u "
+            "JOIN floor f ON f.id = u.channel_id WHERE u.state = 'new' AND u.retry_at <= :now "
+            "AND u.published_at >= :first AND u.published_at < :settled) "
+            "SELECT id FROM next WHERE k <= (:floor - have) * :per_missing "
+            "ORDER BY have, channel_id, r LIMIT :n",
+            {
+                "floor": FLOOR,
+                "now": now,
+                "first": f"{first_year}-01-01",
+                "settled": settled_before,
+                "per_missing": per_missing,
+                "n": n,
+            },
+        ).fetchall()
+        return [str(r["id"]) for r in rows]
+
+    def trim_floor(self) -> int:
+        """The floor's eligible picks beyond a channel's `FLOOR` (its other videos counted),
+        highest numbers first, go back to unchecked; returns how many."""
+        before = self.db.total_changes
+        self.db.execute(
+            "WITH other AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
+            "WHERE state IN ('v2', 'measured', 'collected') "
+            "OR (state = 'eligible' AND pick = 'sample') GROUP BY channel_id), "
+            "floor AS (SELECT id, channel_id, ROW_NUMBER() OVER "
+            "(PARTITION BY channel_id ORDER BY r) AS k FROM uploads "
+            "WHERE state = 'eligible' AND pick = 'floor') "
+            "UPDATE uploads SET state = 'new', pick = 'sample', reason = '', checked_at = NULL "
+            "WHERE id IN (SELECT f.id FROM floor f LEFT JOIN other o "
+            "ON o.channel_id = f.channel_id WHERE f.k > ? - COALESCE(o.n, 0))",
+            (FLOOR,),
+        )
+        return self.db.total_changes - before
+
     def next_eligible(self, now: float) -> Upload | None:
-        """The eligible upload with the lowest number, not waiting for a retry."""
+        """The next eligible upload to download, not waiting for a retry: picks under the
+        cut-off first, then the floor's (the channels with the fewest videos first), each by
+        number."""
         row = self.db.execute(
-            "SELECT * FROM uploads WHERE state = 'eligible' AND retry_at <= ? ORDER BY r LIMIT 1",
+            "SELECT * FROM uploads u WHERE state = 'eligible' AND retry_at <= ? "
+            "ORDER BY pick = 'floor', CASE WHEN pick = 'floor' THEN (SELECT COUNT(*) "
+            "FROM uploads d WHERE d.channel_id = u.channel_id "
+            "AND d.state IN ('v2', 'measured', 'collected')) END, r LIMIT 1",
             (now,),
         ).fetchone()
         return _upload(row) if row else None
 
-    def ready(self, now: float) -> int:
-        """Eligible uploads that can be downloaded now (not waiting for a retry)."""
+    def ready(self, now: float, pick: str | None = None) -> int:
+        """Eligible uploads that can be downloaded now (not waiting for a retry); only those
+        picked for `pick` if given."""
         row = self.db.execute(
-            "SELECT COUNT(*) AS n FROM uploads WHERE state = 'eligible' AND retry_at <= ?", (now,)
+            "SELECT COUNT(*) AS n FROM uploads WHERE state = 'eligible' AND retry_at <= ? "
+            "AND pick = COALESCE(?, pick)",
+            (now, pick),
         )
         return int(row.fetchone()["n"])
 
@@ -298,12 +369,12 @@ class Store:
 
     def cutoff(self) -> float:
         """The highest number the sampling has checked: every eligible upload below it is in
-        the dataset or waiting to be downloaded. (v2's picks, also ones taken out later, have
-        numbers that played no part in how they were picked.)"""
+        the dataset or waiting to be downloaded. (v2's picks, also ones taken out later, and the
+        floor's checks have numbers that played no part in how the sampling picked.)"""
         row = self.db.execute(
-            "SELECT MAX(r) AS r FROM uploads "
-            "WHERE state IN ('eligible', 'ineligible', 'measured', 'collected', 'failed') "
-            "OR (state = 'removed' AND id IN (SELECT video_id FROM collected))"
+            "SELECT MAX(r) AS r FROM uploads WHERE pick = 'sample' AND ("
+            "state IN ('eligible', 'ineligible', 'measured', 'collected', 'failed') "
+            "OR (state = 'removed' AND id IN (SELECT video_id FROM collected)))"
         ).fetchone()
         return float(row["r"] or 0.0)
 
@@ -344,7 +415,7 @@ class Store:
     def collected_rows(self) -> list[sqlite3.Row]:
         return self.db.execute(
             "SELECT c.*, u.channel_id, u.channel_title, u.title, u.published_at, u.duration_s, "
-            "u.r FROM collected c JOIN uploads u ON u.id = c.video_id "
+            "u.r, u.pick FROM collected c JOIN uploads u ON u.id = c.video_id "
             "WHERE u.state IN ('collected', 'removed') ORDER BY c.added_at, u.id"
         ).fetchall()
 
@@ -391,4 +462,5 @@ def _upload(row: sqlite3.Row) -> Upload:
         duration_s=row["duration_s"],
         unsure=row["unsure"],
         api_failures=row["api_failures"],
+        pick=row["pick"],
     )
