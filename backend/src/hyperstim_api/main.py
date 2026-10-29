@@ -426,14 +426,15 @@ def create_app(
         q: Search = None,
         offset: Offset = 0,
         limit: Limit = 20,
-        min_videos: Annotated[int, Query(alias="minVideos", ge=1, le=1000)] = 5,
+        min_videos: Annotated[int, Query(alias="minVideos", ge=1, le=1000)] = 1,
         as_of: AsOf = None,
         added_from: AddedFrom = None,
         added_before: AddedBefore = None,
     ) -> ChannelList:
-        """Channels ranked by `sort` (whole-channel scores), listed under a category when at
-        least one of their videos is in it; searched by name. As the dataset was at `asOf` if
-        given. `addedFrom`/`addedBefore` show only channels whose first video was added then."""
+        """Channels ranked by `sort` (whole-channel scores): all of them, unless `minVideos` asks
+        for more videos (plan 013). Listed under a category when at least one of their videos is
+        in it; searched by name. As the dataset was at `asOf` if given. `addedFrom`/`addedBefore`
+        show only channels whose first video was added then."""
         dataset = store.current
         page, total = dataset.ranked_channels(
             sort,

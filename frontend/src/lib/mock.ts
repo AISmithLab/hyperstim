@@ -454,7 +454,7 @@ export async function mockRequest(method: Method, path: string, params: Params):
         (v) => (allVideos().slice(-3).some((added) => added.id === v.id) ? MOCK_VERSION : MOCK_REFERENCE),
       );
     case "/api/channels":
-      return rankList(allChannels(Number(params.minVideos ?? 5), category), params, (c) => [c.name]);
+      return rankList(allChannels(Number(params.minVideos ?? 1), category), params, (c) => [c.name]);
     case "/api/channel-lookup":
       return channelLookup(String(params.url ?? ""));
     default:

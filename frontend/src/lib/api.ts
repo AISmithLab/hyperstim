@@ -129,7 +129,7 @@ export type ChannelLookup = {
   /** Null when we don't have the channel and didn't need to ask YouTube for its name. */
   name: string | null;
   inDataset: boolean;
-  /** Its videos in the dataset; 0 when it isn't in it. The rankings list channels with 5 or more. */
+  /** Its videos in the dataset; 0 when it isn't in it. */
   videoCount: number;
 };
 
@@ -204,7 +204,7 @@ export function getVideos(params: ListParams): Promise<ListResponse<RankedVideo>
   return get("/api/videos", listParams(params));
 }
 
-/** Channels with at least `minVideos` videos (default 5). */
+/** Channels with at least `minVideos` videos (default 1: every channel, plan 013). */
 export function getChannels(params: ListParams & { minVideos?: number }): Promise<ListResponse<RankedChannel>> {
   return get("/api/channels", listParams(params));
 }

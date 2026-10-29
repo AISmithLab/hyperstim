@@ -60,14 +60,14 @@ async function loadVideos(): Promise<Row[]> {
 
 async function loadChannels(): Promise<Row[]> {
   const [top, bottom] = await Promise.all([
-    getChannels({ sort: "score", order: "desc", limit: END, minVideos: 5 }),
-    getChannels({ sort: "score", order: "asc", limit: END, minVideos: 5 }),
+    getChannels({ sort: "score", order: "desc", limit: END }),
+    getChannels({ sort: "score", order: "asc", limit: END }),
   ]);
   return joinEnds(top, bottom, (c, rank) => ({
-    key: c.name,
+    key: c.id,
     rank,
-    name: c.name,
-    detail: `${c.videoCount} videos`,
+    name: <ChannelName name={c.name} id={c.id} />,
+    detail: c.videoCount === 1 ? "1 video" : `${c.videoCount.toLocaleString("en-US")} videos`,
     href: channelHref(c.id),
     score: c.score,
   }));

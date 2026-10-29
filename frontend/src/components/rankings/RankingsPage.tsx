@@ -28,8 +28,6 @@ const OUTLINED_BUTTON =
   "min-h-11 rounded-full border-2 border-navy px-5 font-semibold text-navy hover:bg-white";
 const MESSAGE_BOX = "mt-6 rounded-2xl bg-sky p-6 text-center";
 const FEATURE_KEYS = FEATURE_GROUPS.flatMap((g) => g.keys);
-/** The rankings list channels with at least this many videos (plan 007). */
-const MIN_VIDEOS = 5;
 
 /** What the search field says instead of a search: a message, or that a channel is being looked up. */
 type Notice = { kind: "message"; text: string } | { kind: "busy" } | null;
@@ -94,7 +92,7 @@ async function loadRows(state: RankingState, pin: Pin): Promise<ListResponse<Row
       })),
     };
   }
-  const { items, total, asOf } = await getChannels({ ...params, minVideos: MIN_VIDEOS });
+  const { items, total, asOf } = await getChannels(params);
   pin.asOf ??= asOf;
   return {
     total,
@@ -243,13 +241,10 @@ function resultsLine(state: RankingState, total: number): string {
   const added = addedText ? ` ${addedText}` : "";
   // A pasted link is searched by its ID, which means nothing to read.
   const matching = isLinkId(state) ? " for this link" : words ? ` matching “${words}”` : "";
-  // Channels: the 5-video minimum is said, so the count adds up with the home page's (plan 013).
   const things =
     state.view === "videos"
       ? `${label ? `${label} ` : ""}video${s}${added}${matching}`
-      : label || added
-        ? `channel${s}${label ? ` with ${label} videos` : ""}${added}${matching} (${MIN_VIDEOS}+ videos each)`
-        : `channel${s} with ${MIN_VIDEOS}+ videos${matching}`;
+      : `channel${s}${label ? ` with ${label} videos` : ""}${added}${matching}`;
   return `Showing ${formatCount(from)}–${formatCount(to)} of ${formatCount(total)} ${things}`;
 }
 
@@ -665,22 +660,14 @@ function NoMatch({ state, onClear }: { state: RankingState; onClear: () => void 
   );
 }
 
-/** Why a linked channel isn't ranked: not in the dataset, or too few videos. A channel-ID lookup never asks YouTube. */
+/** Why a linked channel isn't listed: it isn't in the dataset. A channel-ID lookup never asks YouTube. */
 function UnrankedChannel({ id }: { id: string }) {
   const load = useCallback(() => lookupChannel(`https://www.youtube.com/channel/${id}`), [id]);
   const found = useApi(load);
   if (found.status === "loading") return <p>{LOOKING_UP}</p>;
   if (found.status === "error") return <p>No channels match “{id}”.</p>;
-  const { name, inDataset, videoCount } = found.data;
+  const { name, inDataset } = found.data;
   if (!inDataset) return <p>{name ?? "This channel"} isn’t in our dataset yet.</p>;
-  if (videoCount < MIN_VIDEOS) {
-    return (
-      <p>
-        {name} has fewer than {MIN_VIDEOS} videos in our dataset, so it isn’t ranked.{" "}
-        <TextLink href={channelHref(id)}>See its page</TextLink>
-      </p>
-    );
-  }
   return <p>No channels match “{id}”.</p>;
 }
 

@@ -30,7 +30,7 @@ Build `/compare`: two videos, or two channels, side by side, showing **where the
   - **In our dataset:** the channel is offered as the one option, as a search result looks: its name and "{N} videos". Picking it fills the slot.
   - **Not in our dataset:** the field stays, with the message “{Channel name} isn’t in our dataset yet. Checking a whole channel is coming soon. For now, pick a channel from our dataset.” The name is shown when the lookup found it; otherwise it says “This channel”.
   - **Can't be found** (removed, private, not a channel): “We couldn’t find a YouTube channel for that link.”
-- **Searching channels** lists every channel that has a channel page (`minVideos=1`), not only the ≥ 5 shown in the rankings, because a parent may look for a small channel. Its score still averages fewer videos, as on its own page.
+- **Searching channels** lists every channel that has a channel page (`minVideos=1`), as the rankings now do too _(2026-10-28, plan 013)_, because a parent may look for a small channel. Its score still averages fewer videos, as on its own page.
 - **Where people usually start: from a detail page.** The video page gets a "Compare with another video →" text link and the channel page a "Compare with another channel →" link. Each opens `/compare` with A filled, so only B is left to pick. On the video page the link shares the channel name's line (its own line on phones), which keeps it clear of the kid peeking over the score panel. On the channel page it follows "View on YouTube ↗".
 - **A filled slot** shows a compact header:
   - Video: its preview (`YouTubePlayer`), the title (3 lines at most) as a link to the video's page, and the channel.

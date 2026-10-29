@@ -129,9 +129,18 @@ describe("RankingsPage", () => {
     expect(getMeta).not.toHaveBeenCalled();
   });
 
-  it("says the channels' 5-video minimum, so the count adds up with the home page's", async () => {
+  it("lists every channel, however few videos it has, so the count matches the home page's", async () => {
     open("view=channels");
-    expect(await screen.findByText("Showing 1–25 of 30 channels with 5+ videos")).toBeInTheDocument();
+    expect(await screen.findByText("Showing 1–25 of 30 channels")).toBeInTheDocument();
+    expect(getChannels).toHaveBeenCalledWith(expect.not.objectContaining({ minVideos: expect.anything() }));
+  });
+
+  it("shows a channel without a name by its ID, labeled so it doesn't read as a name", async () => {
+    vi.mocked(getChannels).mockImplementation(list((n) => (n === 2 ? { ...channel(n), name: "" } : channel(n)), 3));
+    open("view=channels");
+    const link = await within(await screen.findByRole("table")).findByRole("link", { name: "Channel ID UCchan2" });
+    expect(link).toHaveAttribute("href", "/channel?id=UCchan2");
+    await expectNoAxeViolations();
   });
 
   it("asks for the dataset as it was at the first list, so rows don't shift while browsing", async () => {
@@ -258,12 +267,12 @@ describe("RankingsPage", () => {
     expect(lastCall(url.push)).toBe("/rankings?view=channels&sort=lufs&q=category%3Amusic+zip");
     await screen.findByRole("table", { name: "Channels, ranked by Audio intensity, most intense first" });
     expect(getChannels).toHaveBeenLastCalledWith(
-      expect.objectContaining({ sort: "lufs", category: "music", q: "zip", offset: 0, minVideos: 5 }),
+      expect.objectContaining({ sort: "lufs", category: "music", q: "zip", offset: 0 }),
     );
     expect(within(table()).getByRole("link", { name: "Channel 1" })).toHaveAttribute("href", "/channel?id=UCchan1");
     expect(within(table()).getAllByText("12 videos")).toHaveLength(25);
     expect(
-      screen.getByText("Showing 1–25 of 30 channels with music videos matching “zip” (5+ videos each)"),
+      screen.getByText("Showing 1–25 of 30 channels with music videos matching “zip”"),
     ).toBeInTheDocument();
   });
 
@@ -530,20 +539,12 @@ describe("RankingsPage", () => {
       expect(await screen.findByText(/You’ve looked up or checked several new videos and channels/)).toBeInTheDocument();
     });
 
-    it("says why a linked channel isn't ranked", async () => {
+    it("says when a linked channel isn't in the dataset", async () => {
       vi.mocked(getChannels).mockResolvedValue(nothing);
-      vi.mocked(lookupChannel).mockResolvedValueOnce({ channelId: CHANNEL_ID, name: "Tiny Tales", inDataset: true, videoCount: 3 });
-      const { unmount } = open(`view=channels&q=${CHANNEL_ID}`);
-      expect(
-        await screen.findByText(/Tiny Tales has fewer than 5 videos in our dataset, so it isn’t ranked\./),
-      ).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: /See its page/ })).toHaveAttribute("href", `/channel?id=${CHANNEL_ID}`);
-      expect(lookupChannel).toHaveBeenCalledWith(`https://www.youtube.com/channel/${CHANNEL_ID}`);
-      unmount();
-
       vi.mocked(lookupChannel).mockResolvedValueOnce({ channelId: CHANNEL_ID, name: null, inDataset: false, videoCount: 0 });
       open(`view=channels&q=${CHANNEL_ID}`);
       expect(await screen.findByText("This channel isn’t in our dataset yet.")).toBeInTheDocument();
+      expect(lookupChannel).toHaveBeenCalledWith(`https://www.youtube.com/channel/${CHANNEL_ID}`);
     });
 
     it("says when a link is the wrong kind, and Clear search empties the field", async () => {

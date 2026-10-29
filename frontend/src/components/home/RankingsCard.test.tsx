@@ -100,6 +100,22 @@ describe("RankingsCard", () => {
     expect(screen.getByRole("link", { name: /See full rankings/ })).toHaveAttribute("href", "/rankings?view=channels");
   });
 
+  it("ranks every channel, as the rankings page does, however few videos it has", async () => {
+    vi.mocked(getChannels).mockImplementation(async ({ order }) =>
+      order === "desc"
+        ? { ...channelsDesc, items: [{ ...channel("Tiny", 99), videoCount: 1 }, ...channelsDesc.items.slice(1)] }
+        : channelsAsc,
+    );
+    const user = userEvent.setup();
+    render(<RankingsCard />);
+    await screen.findByRole("table");
+    await user.click(screen.getByRole("button", { name: "Channels" }));
+    const table = screen.getByRole("table", { name: "The 3 most and 3 least stimulating channels" });
+    expect(within(table).getByText("1 video")).toBeInTheDocument();
+    for (const [params] of vi.mocked(getChannels).mock.calls)
+      expect(params).not.toHaveProperty("minVideos");
+  });
+
   it("explains the score in an info popup next to the Score header", async () => {
     const user = userEvent.setup();
     render(<RankingsCard />);

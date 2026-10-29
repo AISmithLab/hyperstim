@@ -28,7 +28,7 @@ VIDEOS = [
     ("vid-b3", "chan-b", 3.0),
     ("vid-b4", "chan-b", 2.0),
     ("vid-b5", "chan-b", 1.0),
-    ("vid-c1", "chan-c", 11.0),  # chan-c has 2 videos: below the default minVideos
+    ("vid-c1", "chan-c", 11.0),  # chan-c has 2 videos
     ("vid-c2", "chan-c", 0.0),
 ]
 

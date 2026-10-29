@@ -107,7 +107,7 @@ def test_scores_are_percentiles_of_the_composite(
 
 
 def test_channels_ranked_by_mean_score(client: TestClient) -> None:
-    body = client.get("/api/channels", params={"sort": "score", "limit": 3}).json()
+    body = client.get("/api/channels", params={"sort": "score", "limit": 3, "minVideos": 5}).json()
     assert body["total"] == 2  # chan-c has only 2 videos
     assert [{k: v for k, v in c.items() if k != "features"} for c in body["items"]] == [
         {"id": "chan-a", "name": "Channel chan-a", "score": pct(8), "videoCount": 5, "rank": 1},
@@ -117,13 +117,13 @@ def test_channels_ranked_by_mean_score(client: TestClient) -> None:
 
 
 def test_channels_least_stimulating_first(client: TestClient) -> None:
-    body = client.get("/api/channels", params={"order": "asc", "limit": 1}).json()
+    body = client.get("/api/channels", params={"order": "asc", "limit": 1, "minVideos": 5}).json()
     assert [(c["name"], c["rank"]) for c in body["items"]] == [("Channel chan-b", 1)]
     assert body["total"] == 2
 
 
-def test_channels_min_videos(client: TestClient) -> None:
-    body = client.get("/api/channels", params={"minVideos": 1}).json()
+def test_channels_ranks_every_channel_by_default(client: TestClient) -> None:
+    body = client.get("/api/channels").json()
     assert body["total"] == 3
     assert [c["name"] for c in body["items"]][1] == "Channel chan-c"  # mean of 100 and 0 = 50
 
