@@ -1,3 +1,4 @@
+import { channelLabel } from "@/components/ChannelName";
 // What a compare slot holds (plan 008): a video or a channel, loaded by its ID.
 import { ApiError, getChannel, getVideo, type ChannelDetail, type Feature, type VideoDetail } from "@/lib/api";
 import { isChannelId, isVideoId } from "@/lib/youtube";
@@ -20,7 +21,7 @@ export async function loadItem(view: View, id: string): Promise<Item | null> {
 }
 
 export function itemName(item: Item): string {
-  return item.kind === "video" ? item.video.title : item.channel.name;
+  return item.kind === "video" ? item.video.title : channelLabel(item.channel.name, item.channel.id);
 }
 
 export function itemScore(item: Item): number {

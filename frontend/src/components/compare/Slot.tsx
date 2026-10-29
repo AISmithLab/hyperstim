@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, type Ref } from "react";
+import ChannelName from "@/components/ChannelName";
 import { metaLine } from "@/components/channel/chart";
 import LiveAnalysis from "@/components/video/LiveAnalysis";
 import { OUTLINED_BUTTON } from "@/components/video/parts";
@@ -131,7 +132,9 @@ function Header({ item, player, onPlay }: { item: Item; player: Ref<PlayerHandle
         >
           {video.title}
         </Link>
-        <p className="mt-1 truncate text-sm text-ink">{video.channel}</p>
+        <p className="mt-1 truncate text-sm text-ink">
+          <ChannelName name={video.channel} id={video.channelId} />
+        </p>
       </div>
     );
   }
@@ -142,7 +145,7 @@ function Header({ item, player, onPlay }: { item: Item; player: Ref<PlayerHandle
         href={channelHref(channel.id)}
         className="line-clamp-2 font-hand text-xl leading-snug font-semibold text-navy hover:underline sm:text-2xl"
       >
-        {channel.name}
+        <ChannelName name={channel.name} id={channel.id} />
       </Link>
       <p className="mt-1 text-sm text-ink">{metaLine(channel.videos)}</p>
     </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
+import ChannelName from "@/components/ChannelName";
 import Chip from "@/components/Chip";
 import MeasurementPicker from "@/components/MeasurementPicker";
 import ScoreCell from "@/components/ScoreCell";
@@ -36,9 +37,9 @@ type Notice = { kind: "message"; text: string } | { kind: "busy" } | null;
 type Row = {
   key: string;
   rank: number | null;
-  name: string;
+  name: ReactNode;
   href: string;
-  detail: string;
+  detail: ReactNode;
   /** Link for the second line (a video's channel). */
   detailHref?: string;
   score: number;
@@ -86,7 +87,7 @@ async function loadRows(state: RankingState, pin: Pin): Promise<ListResponse<Row
         rank: v.rank,
         name: v.title,
         href: videoHref(v.id),
-        detail: v.channel,
+        detail: <ChannelName name={v.channel} id={v.channelId} />,
         detailHref: channelHref(v.channelId),
         score: v.score,
         features: v.features,
@@ -101,7 +102,7 @@ async function loadRows(state: RankingState, pin: Pin): Promise<ListResponse<Row
     items: items.map((c) => ({
       key: c.id,
       rank: c.rank,
-      name: c.name,
+      name: <ChannelName name={c.name} id={c.id} />,
       href: channelHref(c.id),
       detail: c.videoCount === 1 ? "1 video" : `${formatCount(c.videoCount)} videos`,
       score: c.score,

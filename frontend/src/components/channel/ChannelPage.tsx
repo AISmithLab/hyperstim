@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import ChannelName, { channelLabel } from "@/components/ChannelName";
 import { CheckAnother, CONTAINER, KidMessage, Message, OUTLINED_BUTTON, TEXT_LINK } from "@/components/video/parts";
 import ScorePanel, { ScorePanelSkeleton } from "@/components/video/ScorePanel";
 import { ApiError, getChannel, type ChannelDetail } from "@/lib/api";
@@ -38,7 +39,7 @@ function ChannelDetails({ id }: { id: string }) {
   const channel = useApi(load);
 
   useEffect(() => {
-    if (channel.status === "success") document.title = `${channel.data.name} - HyperStim?`;
+    if (channel.status === "success") document.title = `${channelLabel(channel.data.name, channel.data.id)} - HyperStim?`;
   }, [channel]);
 
   if (channel.status === "loading") return <Loading />;
@@ -68,7 +69,7 @@ function Result({ channel }: { channel: ChannelDetail }) {
       <div className={HEADER}>
         <div className="min-w-0">
           <h1 className="line-clamp-2 font-hand text-[1.375rem] leading-tight font-semibold text-navy sm:text-2xl lg:text-[1.75rem]">
-            {channel.name}
+            <ChannelName name={channel.name} id={channel.id} />
           </h1>
           <p className="mt-1 text-ink">{metaLine(channel.videos)}</p>
           <a

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
+import ChannelName from "@/components/ChannelName";
 import InfoTip from "@/components/InfoTip";
 import ScoreMeter from "@/components/ScoreMeter";
 import SegmentedControl from "@/components/SegmentedControl";
@@ -16,8 +17,8 @@ const END = 3;
 type Row = {
   key: string;
   rank: number;
-  name: string;
-  detail: string;
+  name: ReactNode;
+  detail: ReactNode;
   /** Link for the second line (the channel of a video). */
   detailHref?: string;
   score: number;
@@ -50,7 +51,7 @@ async function loadVideos(): Promise<Row[]> {
     key: v.id,
     rank,
     name: v.title,
-    detail: v.channel,
+    detail: <ChannelName name={v.channel} id={v.channelId} />,
     detailHref: channelHref(v.channelId),
     score: v.score,
     href: videoHref(v.id),

@@ -1,6 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, type UIEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+  type UIEvent,
+} from "react";
+import ChannelName from "@/components/ChannelName";
 import { getChannels, getVideos, lookupChannel, thumbnailUrl } from "@/lib/api";
 import { LOOKING_UP, PRESS_ENTER, lookupErrorText } from "@/lib/lookup-text";
 import { useApi } from "@/lib/use-api";
@@ -16,7 +26,7 @@ const MAX_QUERY = 100;
 const LOAD_AHEAD_PX = 120;
 
 /** `thumb`: the video whose thumbnail leads the option. */
-type Option = { id: string; name: string; detail: string; thumb?: string };
+type Option = { id: string; name: ReactNode; detail: ReactNode; thumb?: string };
 type Page = { items: Option[]; total: number };
 
 const TEXT = {
@@ -52,7 +62,12 @@ async function search(view: View, q: string, offset: number, pin: Pin): Promise<
   if (view === "videos") {
     const { items, total, asOf } = await getVideos(params);
     pin.asOf ??= asOf;
-    return { total, items: items.map((v) => ({ id: v.id, name: v.title, detail: v.channel, thumb: v.id })) };
+    return { total, items: items.map((v) => ({
+        id: v.id,
+        name: v.title,
+        detail: <ChannelName name={v.channel} id={v.channelId} />,
+        thumb: v.id,
+      })) };
   }
   const { items, total, asOf } = await getChannels({ ...params, minVideos: 1 });
   pin.asOf ??= asOf;
@@ -60,7 +75,7 @@ async function search(view: View, q: string, offset: number, pin: Pin): Promise<
     total,
     items: items.map((c) => ({
       id: c.id,
-      name: c.name,
+      name: <ChannelName name={c.name} id={c.id} />,
       detail: videoCount(c.videoCount),
     })),
   };
@@ -172,7 +187,11 @@ export default function Picker({
         ? { id: videoId, name: `Use this video: ${videoId}`, detail: "" }
         : null
       : foundChannel?.inDataset && foundChannel.channelId !== otherId
-        ? { id: foundChannel.channelId, name: foundChannel.name ?? foundChannel.channelId, detail: videoCount(foundChannel.videoCount) }
+        ? {
+            id: foundChannel.channelId,
+            name: <ChannelName name={foundChannel.name ?? ""} id={foundChannel.channelId} />,
+            detail: videoCount(foundChannel.videoCount),
+          }
         : null;
   const options = [
     ...(linkOption ? [linkOption] : []),

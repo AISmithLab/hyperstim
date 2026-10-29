@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { channelLabel } from "@/components/ChannelName";
 import type { ChannelDetail } from "@/lib/api";
 import { SM_UP, useMediaQuery } from "@/lib/use-layout";
 import { formatDate, measureName, pointOf, pointText, type Measure } from "./chart";
@@ -47,7 +48,7 @@ export default function OverYears({ channel }: { channel: ChannelDetail }) {
       {/* In a box: a table ignores sr-only's 1 px width and would widen the page. */}
       <div className="sr-only">
         <table>
-          <caption>{channel.name}’s videos over the years</caption>
+          <caption>{channelLabel(channel.name, channel.id)}’s videos over the years</caption>
           <thead>
             <tr>
               <th scope="col">Published</th>

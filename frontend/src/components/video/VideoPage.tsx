@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import ChannelName from "@/components/ChannelName";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { ApiError, getVideo, thumbnailUrl, type VideoDetail } from "@/lib/api";
 import { asset } from "@/lib/asset";
@@ -127,11 +128,13 @@ function Result({ video }: { video: VideoDetail }) {
                     className="group inline-flex min-h-11 max-w-full items-center sm:-my-2.5"
                   >
                     <span className="truncate rounded-full bg-sky px-3 py-0.5 text-sm font-bold text-navy group-hover:bg-mint">
-                      {video.channel}
+                      <ChannelName name={video.channel} id={video.channelId} />
                     </span>
                   </Link>
                 ) : (
-                  <span className="block truncate text-sm text-ink">{video.channel}</span>
+                  <span className="block truncate text-sm text-ink">
+                    <ChannelName name={video.channel} id={video.channelId} />
+                  </span>
                 )}
               </span>
               <Link href={compareHref({ a: video.id })} className={`${TEXT_LINK} text-sm sm:-my-2.5`}>
