@@ -12,6 +12,8 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
     // The end-to-end tests run with Playwright (`npm run test:e2e`).
     include: ["src/**/*.test.{ts,tsx}"],
+    // The axe checks take 2-4 s each, and over Vitest's default 5 s on a busy machine.
+    testTimeout: 15_000,
     // Used by `npm run test:coverage` (CI); lcov is what SonarQube Cloud reads (plan 012).
     coverage: {
       provider: "v8",

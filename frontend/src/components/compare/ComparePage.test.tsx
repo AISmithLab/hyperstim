@@ -353,7 +353,8 @@ describe("ComparePage", () => {
     ]);
     expect(screen.getByText("vs.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Garden Walk" })).toHaveAttribute("href", `/video?id=${VIDEO_B}`);
-    expect(document.title).toBe("Turbo Trucks vs Garden Walk - HyperStim?");
+    // The title is set in an effect, which can run just after the text shows.
+    await waitFor(() => expect(document.title).toBe("Turbo Trucks vs Garden Walk - HyperStim?"));
     expect(screen.queryByRole("link", { name: /Browse the rankings/ })).toBeNull();
   });
 
