@@ -15,7 +15,7 @@ Build `/about`: who makes the site (the AI Smith Lab at UC San Diego) and why, a
   - "HyperStim? is a research-based platform developed by the AI Smith Lab at UC San Diego. By analyzing thousands of children's YouTube videos, we measure their audiovisual stimulation levels and make the results accessible to parents for exploration and comparison." "AI Smith Lab" is an external text link to https://aismithlab.com _(human decision, 2026-10-26)_.
   - "Our mission is to bring greater transparency to children's digital media and empower families to make informed decisions about what their children watch."
 - **Team** _(human decision, 2026-10-26)_: "Contributors: Shao-Yu Chu, Noel Mekogue" (alphabetical by last name) and "Advisor: Haojian Jin". No photos _(human decision, 2026-10-26)_.
-- **Get in touch:** "Questions, corrections or ideas? Please fill out our contact form." The form is plan 009's Google Form (`CONTACT_URL`), as an external text link (new tab, sr-only "(opens in a new tab)") _(human decision, 2026-10-26: use the form)_. Plan 009 now links it from the policy and this page _(human decision, 2026-10-26)_.
+- **Get in touch:** "Questions, corrections or ideas? Please fill out our contact form or open an issue on GitHub." _(human decision, 2026-10-29: GitHub issues added, plan 016)_ "open an issue on GitHub" is an external text link to the repo's New issue page (`/issues/new/choose`), like the form link. The form is plan 009's Google Form (`CONTACT_URL`), as an external text link (new tab, sr-only "(opens in a new tab)") _(human decision, 2026-10-26: use the form)_. Plan 009 now links it from the policy and this page _(human decision, 2026-10-26)_.
 - **"HyperStim?" in bold italic** wherever the page's text mentions it _(human decision, 2026-10-26)_.
 - **American English** _(human decision, 2026-10-26: "colors", not "colours"; a site-wide rule in `CLAUDE.md`)_.
 - **Not on the page** _(human decision, 2026-10-26)_: the paper or any link to the research, the dataset, the GitHub repo (it goes in the footer), acknowledgements (maybe later).
@@ -37,6 +37,7 @@ Build `/about`: who makes the site (the AI Smith Lab at UC San Diego) and why, a
 4. Tests: one H1 and only the contact H2; contributors (by last name) then advisor; the lab and form links (new tab); the name in bold italic; header marks About as current; footer links and order, no FAQ.
 5. `STYLE.md` entry; plan 001's pages, header and footer lines; plans 002 and 006's footer mentions.
 6. Screenshots at 360 and 1280 px (with the header and footer), compared against `STYLE.md`.
+7. ~~(2026-10-29, plan 016)~~ The GitHub issues link in Get in touch; tests: its name, target and new tab; the no-JavaScript E2E check still reads the sentence.
 
 ## Open questions
 

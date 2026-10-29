@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { GITHUB_URL } from "@/components/Footer";
 import { CONTACT_URL } from "@/components/privacy/PrivacyPage";
 import { asset } from "@/lib/asset";
 
@@ -6,6 +7,8 @@ import { asset } from "@/lib/asset";
 // the page itself (no card), then the contact panel.
 
 export const LAB_URL = "https://aismithlab.com";
+/** The repo's New issue page: the issue forms (plan 016). */
+export const ISSUES_URL = `${GITHUB_URL}/issues/new/choose`;
 /** In alphabetical order by last name. */
 export const CONTRIBUTORS = ["Shao-Yu Chu", "Noel Mekogue"];
 export const ADVISORS = ["Haojian Jin"];
@@ -70,7 +73,8 @@ function Contact() {
         Get in touch
       </h2>
       <p className="mt-3">
-        Questions, corrections or ideas? Please fill out our <External href={CONTACT_URL}>contact form</External>.
+        Questions, corrections or ideas? Please fill out our <External href={CONTACT_URL}>contact form</External> or{" "}
+        <External href={ISSUES_URL}>open an issue on GitHub</External>.
       </p>
       <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-3 hidden items-end md:flex">
         {/* eslint-disable-next-line @next/next/no-img-element -- decorative */}

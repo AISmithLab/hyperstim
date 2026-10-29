@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { CONTACT_URL } from "@/components/privacy/PrivacyPage";
 import { expectNoAxeViolations } from "@/test/axe";
-import AboutPage, { ADVISORS, CONTRIBUTORS, LAB_URL } from "./AboutPage";
+import AboutPage, { ADVISORS, CONTRIBUTORS, ISSUES_URL, LAB_URL } from "./AboutPage";
 
 describe("AboutPage", () => {
   it("has one H1 and one H2, for getting in touch", () => {
@@ -25,11 +25,20 @@ describe("AboutPage", () => {
   it.each([
     [/^AI Smith Lab/, LAB_URL],
     [/^contact form/, CONTACT_URL],
+    [/^open an issue on GitHub/, ISSUES_URL],
   ])("opens %s in a new tab", (name, href) => {
     render(<AboutPage />);
     const link = screen.getByRole("link", { name });
     expect(link).toHaveAttribute("href", href);
     expect(link).toHaveAttribute("target", "_blank");
+  });
+
+  it("offers the contact form first, then GitHub issues", () => {
+    render(<AboutPage />);
+    const contact = screen.getByRole("heading", { name: "Get in touch" }).nextElementSibling;
+    expect(contact).toHaveTextContent(
+      "Questions, corrections or ideas? Please fill out our contact form (opens in a new tab) or open an issue on GitHub (opens in a new tab).",
+    );
   });
 
   it("sets the site's name in bold italic in the text", () => {

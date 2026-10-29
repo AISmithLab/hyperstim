@@ -9,6 +9,8 @@ How dev, CI, prod and the outside services fit together, in diagrams: [`ARCHITEC
 - [`deploy/`](deploy/README.md): prod setup on the server and GitHub Pages
 - [`plans/`](plans/): numbered design and implementation plans
 
+Bugs, data that looks wrong, and ideas: open an issue with one of the [issue forms](../../issues/new/choose) ([plan 016](plans/016-community.md)).
+
 ## Run locally
 
 Install the tools once (nvm + Node, uv, and for live analysis ffmpeg and deno, at the versions in `tools.env`; uses `apt` or Homebrew; plus Chromium and WebKit for the end-to-end tests, with the system libraries they need), then start both apps:

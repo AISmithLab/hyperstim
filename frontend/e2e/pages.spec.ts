@@ -41,5 +41,9 @@ test.describe("about", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByRole("term").first()).toBeVisible();
     await expect(page.getByRole("heading", { name: "Get in touch" })).toBeVisible();
+    await expect(page.getByRole("link", { name: /^open an issue on GitHub/ })).toHaveAttribute(
+      "href",
+      "https://github.com/AISmithLab/hyperstim/issues/new/choose",
+    );
   });
 });
