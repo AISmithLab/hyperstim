@@ -184,7 +184,7 @@ Final text for every string on the page goes in a table here, as in plans 002/00
 | Where | Text |
 |---|---|
 | `<title>` | How it works - HyperStim? |
-| Meta description | How HyperStim? measures the production style of kids’ videos and turns 12 measurements into one score. |
+| Meta description | How HyperStim? measures how stimulating kids’ videos are: 12 measurements of scene changes, colors, and sounds, combined into one score. _(human decision, 2026-10-29; plan 011, Page descriptions)_ |
 | H1 | How it works (no `.marker` highlight; only the home page's H1 has one) _(human decision)_ |
 
 **① Paste a link**

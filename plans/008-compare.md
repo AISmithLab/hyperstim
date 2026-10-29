@@ -158,7 +158,7 @@ DOM order: H1 + intro → view control → slot A → “vs.” → slot B → s
 | Where | Text |
 |---|---|
 | `<title>` | Compare - HyperStim? · once both are loaded: {A} vs {B} - HyperStim? |
-| Meta description | Put two kids’ videos or channels side by side and see where their production differs. |
+| Meta description | Is one kids’ video or channel more overstimulating than another? Put two side by side and see how their scene changes, colors, and sounds differ. _(human decision, 2026-10-29; plan 011, Page descriptions)_ |
 | H1 | Compare |
 | Intro | Videos: Put two videos side by side and see where their production differs. · Channels: Put two channels side by side and see where their production differs. |
 | View control `aria-label` | Compare · Videos · Channels |

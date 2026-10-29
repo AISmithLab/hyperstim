@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "About - HyperStim?",
-  description: "Who makes HyperStim?, why we built it, and how to get in touch.",
+  description: "Who built HyperStim? And why we built it.",
   path: "about/",
 });
 

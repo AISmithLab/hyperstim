@@ -31,7 +31,7 @@ Build `/about`: who makes the site (the AI Smith Lab at UC San Diego) and why, a
 
 ## Steps
 
-1. `src/app/about/page.tsx` + `components/about/AboutPage.tsx`; metadata (title, description) and sitemap entry (plan 011).
+1. `src/app/about/page.tsx` + `components/about/AboutPage.tsx`; metadata (title; description "Who built HyperStim? And why we built it." _(human decision, 2026-10-29; plan 011, Page descriptions)_) and sitemap entry (plan 011).
 2. `kid_wave` converted to WebP via `used.json`.
 3. Header: add About. Footer: the three links in the order above.
 4. Tests: one H1 and only the contact H2; contributors (by last name) then advisor; the lab and form links (new tab); the name in bold italic; header marks About as current; footer links and order, no FAQ.
