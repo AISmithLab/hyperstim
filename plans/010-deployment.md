@@ -71,7 +71,7 @@ Everything of the instance sits in one directory `<prod-dir>` on the server, so 
   releases.log               one line per release: time, who, tag, commit, result
 ```
 
-The growing dataset (plan 013, decision 11) adds the collector's service and folders, the data bot's user, clone and daily timer, and the release group's read access (plan 014); `release.sh` restarts the collector after the API.
+The growing dataset (plan 013, decision 11) adds the collector's service and folders, the data bot's user, clone and daily timer, the hourly alert check with its root-only token file (decision 12, 2026-10-29), and the release group's read access (plan 014); `release.sh` restarts the collector after the API.
 
 - Runs as its **own system user** (`<service-user>`), so the public service can't read or write anyone's home folder, the dev checkouts, or GitHub credentials _(human decision, 2026-10-17)_. Pushing the tag uses the releaser's own GitHub login, from their clone.
 - `<prod-dir>` itself, the unit, the nginx files, `env` and `bin/` are owned by root (the service user must not change what runs it or how).

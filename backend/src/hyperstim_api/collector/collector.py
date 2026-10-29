@@ -154,6 +154,7 @@ class Collector:
         """Do what's due; returns the seconds to wait before the next tick. A job that fails
         is logged and waits; the others, and downloads, go on."""
         now = self.clock()
+        self.store.set("tick_at", now)  # the alert check's sign that the collector runs
         self.back_up(now)
         self.prune_logs(now)
         if self.store.get("export_due"):
@@ -766,6 +767,7 @@ class Collector:
         self.s.clips_dir.mkdir(parents=True, exist_ok=True)
         free = shutil.disk_usage(self.s.clips_dir).free
         low = free < FREE_SPACE_MIN
+        self.store.set("low_space", "1" if low else "")
         if low:
             log.warning("Paused: %.0f GB free on the clips volume", free / 1024**3)
         return low
@@ -802,6 +804,7 @@ class Collector:
             return
         self.store.set("backed_up", day)
         self.store.set("backup_failures", 0)
+        self.store.set("ok:back_up", utc(now))
         log.info("Backed up collector.db to %s", folder)
 
     # --- export ----------------------------------------------------------------------
@@ -812,9 +815,14 @@ class Collector:
             export(self.store, self.s.data_dir / "collected")
         except Exception:
             self.store.set("export_due", "1")
+            self.store.set("export_failures", int(self.store.get("export_failures", "0")) + 1)
+            if not self.store.get("export_failed_since"):
+                self.store.set("export_failed_since", self.clock())
             log.exception("Export failed; trying again on the next tick")
             return
         self.store.set("export_due", "")
+        self.store.set("export_failures", 0)
+        self.store.set("export_failed_since", "")
         self.store.set("ok:export", utc(self.clock()))
 
 

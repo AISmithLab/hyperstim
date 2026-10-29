@@ -31,6 +31,11 @@ for name in $VARS; do
   export "${name?}"
 done
 export YTDLP_COOKIES="${YTDLP_COOKIES:-}"
+export ALERT_GITHUB_TOKEN="${ALERT_GITHUB_TOKEN:-}"
+case "$ALERT_GITHUB_TOKEN" in *"<"*) fail "ALERT_GITHUB_TOKEN still has a placeholder in deploy/server.env (leave it empty for none)." ;; esac
+# The repo the alert issues go to: this checkout's origin, as <owner>/<name>.
+ALERT_REPO="$(git -C "$ROOT" remote get-url origin | sed -E 's#^.*github\.com[:/]##; s#\.git$##')"
+export ALERT_REPO
 [ -f "$NGINX_SITE" ] || fail "NGINX_SITE: no such file: $NGINX_SITE"
 case "$COLLECTOR_CLIPS_DIR" in
   /home/* | /root/* | /run/user/*) fail "COLLECTOR_CLIPS_DIR can't be in a home folder: the collector's sandbox hides them." ;;
@@ -48,7 +53,7 @@ as_bot() { sudo -u "$DATA_USER" env HOME="$BOT_HOME" PATH=/usr/bin:/bin "$@"; }
 install_file() {
   local tmp
   tmp="$(mktemp)"
-  envsubst "$(printf '${%s} ' $VARS YTDLP_COOKIES)" <"$HERE/$1" >"$tmp"
+  envsubst "$(printf '${%s} ' $VARS YTDLP_COOKIES ALERT_GITHUB_TOKEN ALERT_REPO)" <"$HERE/$1" >"$tmp"
   if [ -f "$2" ] && cmp -s "$tmp" "$2"; then
     chmod "$3" "$2" && chown "$4" "$2"
     rm "$tmp"
@@ -187,6 +192,19 @@ if [ -e "$DATA_REPO/.git" ] && ! systemctl is-enabled --quiet "$SERVICE-data.tim
   systemctl enable --now --quiet "$SERVICE-data.timer"
   CHANGED+=("daily commit timer on")
 fi
+
+# The hourly alert check (plan 013, decision 12): its token in a root-only file.
+install_file alerts.env.template "$PROD_DIR/alerts.env" 600 root:root || true
+for unit in alerts.service alerts.timer; do
+  install_file "$unit.template" "$PROD_DIR/$SERVICE-$unit" 644 root:root || true
+  [ -L "/etc/systemd/system/$SERVICE-$unit" ] || systemctl link --quiet "$PROD_DIR/$SERVICE-$unit"
+done
+systemctl daemon-reload
+if ! systemctl is-enabled --quiet "$SERVICE-alerts.timer"; then
+  systemctl enable --now --quiet "$SERVICE-alerts.timer"
+  CHANGED+=("alert check timer on")
+fi
+[ -n "$ALERT_GITHUB_TOKEN" ] || say "No ALERT_GITHUB_TOKEN: the alert check only logs what it would post."
 
 # --- Releasing --------------------------------------------------------------------------
 

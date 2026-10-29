@@ -4,6 +4,7 @@ python -m hyperstim_api.collector seed <research-repo>   start from v2's lists, 
 python -m hyperstim_api.collector run                    collect until stopped
 python -m hyperstim_api.collector status                 what it has done, and its health
 python -m hyperstim_api.collector export                 write the TSV files again
+python -m hyperstim_api.collector alerts                 the hourly alert check (GitHub issues)
 """
 
 import argparse
@@ -19,6 +20,7 @@ from pathlib import Path
 
 from hyperstim_api import scoring
 from hyperstim_api.analysis import ResearchPipeline
+from hyperstim_api.collector import alerts
 from hyperstim_api.collector import seed as seeding
 from hyperstim_api.collector.collector import (
     RETRY_AFTER_S,
@@ -248,6 +250,24 @@ def scores_against_reference(store: Store) -> list[str]:
     return lines
 
 
+def check_alerts(s: Settings) -> None:
+    """Plan 013, decision 12. Without ALERT_GITHUB_TOKEN, what would be posted is only logged."""
+    token = os.environ.get("ALERT_GITHUB_TOKEN", "").strip()
+    issues: alerts.Issues = (
+        alerts.GitHubIssues(_required("ALERT_REPO"), token) if token else alerts.LogOnly()
+    )
+    store = open_store(s)
+    posts = alerts.check(
+        store,
+        s.data_dir / "alerts.json",
+        issues,
+        time.time(),
+        os.environ.get("ALERT_DATA_UNIT", "").strip() or None,
+    )
+    store.close()
+    log.info("Alert check: %s", ", ".join(f"{p.action} {p.key}" for p in posts) or "all well")
+
+
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     parser = argparse.ArgumentParser(prog="python -m hyperstim_api.collector")
@@ -257,6 +277,7 @@ def main() -> None:
     commands.add_parser("run", help="collect until stopped")
     commands.add_parser("status", help="what the collector has done")
     commands.add_parser("export", help="write the TSV files again")
+    commands.add_parser("alerts", help="the hourly alert check: open, comment on, close issues")
     args = parser.parse_args()
     s = settings()
     if args.command == "seed":
@@ -268,6 +289,8 @@ def main() -> None:
         run(s)
     elif args.command == "status":
         print(status(s))
+    elif args.command == "alerts":
+        check_alerts(s)
     else:
         store = open_store(s)
         export(store, s.data_dir / "collected")

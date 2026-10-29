@@ -267,6 +267,34 @@ An audit of the collector on 2026-10-29 found that downloads already come back (
 
 Kept as is: quota exhaustion (waits for the next quota day), blocks (decision 7), the export (written whole, so it heals on the next write), the API's reload (keeps the last good dataset), the daily commit (the next day carries everything).
 
+**Alert issues** _(human decision, 2026-10-29: fixed text with typed blanks; only for major problems, something not working for a day, so issues don't bombard us)_. The bot fills a fixed template; nothing else can go out:
+- **Templates in the repo** (`backend/src/hyperstim_api/collector/alerts.py`, next to the code that fills them, so they ship with each release): title and body are fixed text with named slots. Each slot has a type the code checks before posting: a number, a UTC date or time, a duration in whole hours or days, or one word from a fixed list. A value that doesn't fit is replaced by "unknown", never posted. **No free text**: no error messages, log lines, file paths, hostnames, IPs, user names or stream URLs, since any of these can carry server details.
+- **Only after a day**: every alert waits until something has not worked for 24 hours. Shorter trouble (a block, a retry, a restart, a day the quota ran out) shows only in `status` and the log; the collector already rides it out (rules 1–3).
+- **Few and quiet**:
+  - One open issue per kind (and per job for `job-failing`), found by its labels (`alert`, `alert:<kind>`).
+  - **Comments only when something changes** _(human decision, 2026-10-29: the bot comments when the situation changes or gets worse)_, each from a fixed template:
+    - the state changed and has held for two hourly checks (so a flicker isn't reported): "Still no new video. State is now <state>: <meaning>.";
+    - the 3-day and 7-day marks: "Still no new video after <n> days. State: <state>." (the 7-day one adds "This is the last reminder; the next comment will be when it works again."). For `job-failing`, the same with "<job> still not working after <n> days.";
+    - nothing else: no comment while the situation stays the same.
+  - **It resolves them itself**: when the problem clears, the bot closes the issue with the fixed comment "Working again since <time>."
+  - The same kind isn't opened again within 24 hours of closing, so a problem that comes and goes stays one issue a day at most.
+  - At most 3 issues a day across all kinds.
+- **The checker runs on its own**: a systemd timer, every hour, separate from the collector, reading `collector.db` and the timers' last results; so a collector that has stopped altogether is still reported.
+- **The details stay on the server**: each issue ends with the fixed line "Details: the collector's `status` command and its log on the server."
+- **Its own token, Issues only** _(human decision, 2026-10-29: a fine-grained token)_: a fine-grained personal access token with only "Issues: read and write" on this repo, in `server.env` (never in the repo); the data bot's deploy key can't open issues.
+- **Two templates.** The title names when the problem started, not how long it has lasted, so it stays true without edits _(human decision, 2026-10-29: a length like "1 day" would stay "1 day" all week)_.
+
+| Kind | When | Title | Slots |
+|---|---|---|---|
+| `stalled` | no video added for 24 hours | Collector: no video added since <date> | since when; the state (`running`, `blocked`, `paused`, `waiting-for-quota`, `not-running`); videos waiting for a retry |
+| `job-failing` | a job hasn't worked for 24 hours past when it was due | Collector: <job> not working since <date> | the job (`upload-lists`, `details`, `discovery`, `offline-check`, `repair`, `export`, `backup`, `data-commit`); its last success; failures in a row |
+
+Each body is fixed text: the slot values, a fixed one-line meaning for the state or job the slot names (e.g. `blocked`: "YouTube is refusing our downloads. The collector waits and tries again by itself."), "This issue closes by itself when …", and the Details line. Examples of each, in six scenarios: the alert issues artifact (2026-10-29).
+
+A YouTube block, a crashing collector or an empty clips volume all end in no new videos, so `stalled` covers them; `job-failing` catches the jobs that fail quietly while downloads go on (a stale backup, the site's data not updating, new uploads not being listed). The state slot tells which; the details are on the server.
+
+Neither template can show anything that isn't already public: what was added and when is on the site, and "blocked" says only that downloads paused.
+
 ### Privacy policy (plan 009)
 
 No change needed for the collector: it handles no visitor data; it only talks to YouTube from our server, as live checks and thumbnails already do; the clips it keeps are of videos it picked itself, not ones a visitor checked (whose clips are still deleted, as the policy says); new dataset videos' thumbnails go through the existing endpoint. Checked again at build time. (A second instance would also be "us"; still no change.)
@@ -279,7 +307,7 @@ No change needed for the collector: it handles no visitor data; it only talks to
 - 008: the pickers send `asOf` too.
 - 006: score lead copy, two new common questions (scores don't change; how we choose channels and videos), discovery date, dataset box.
 - `STYLE.md`: the growth badge, and the count-up / rolling-digits motion.
-- 010: `release.sh` and `release-notes.sh` treat `data:` commits as above; the tag ruleset for `v*`; `setup.sh` installs the collector unit (1 core, low priority), its clips folder, the data bot's user, clone, deploy key and timer, `server.env` gets `COLLECTOR_CLIPS_DIR` and the pace, `release.sh` restarts both services. The shared API key's note ("a new analysis costs 1, prod caps at 1,000/day") gets the collector's share.
+- 010: `release.sh` and `release-notes.sh` treat `data:` commits as above; the tag ruleset for `v*`; `setup.sh` installs the collector unit (1 core, low priority), its clips folder, the data bot's user, clone, deploy key and timer, `server.env` gets `COLLECTOR_CLIPS_DIR` and the pace, `release.sh` restarts both services. The shared API key's note ("a new analysis costs 1, prod caps at 1,000/day") gets the collector's share. The hourly alert check (decision 12): its service, timer and root-only token file, and the token in `server.env`.
 - `CLAUDE.md`: the `data` commit type; what's cleared to commit (`backend/data/collected/`); the collector next to the pipeline in "Dev environment".
 - CI (plan 012): the `data:` path check.
 - `backend/pipeline/`: add `63_classify_categories.py` unchanged (README table updated).
@@ -308,6 +336,7 @@ Build (Claude; each on the plan's branch with lint, type check, tests and build 
 13. **Channel names** (2026-10-28, decision 9, Channels without a name): _built 2026-10-29._ `backend/data/videos.channel-names.tsv` with the 9 names from the 2026-10-28 lookup; the loader uses it for videos with no channel name; `ChannelName` (I2) and `channelLabel` wherever a channel's name goes; `STYLE.md`; `backend/README.md`. Tests: pytest (a missing name is filled for reference and collected videos; a name a video has is never replaced; without an entry it stays empty), component (`ChannelName`: the name as is; the label and ID, named "Channel ID UC…", axe; the rankings' Channels tab with a nameless channel), E2E: the full suite (the rankings' Channels tab passes axe, compare's two channels). Stop for review.
 14. **When something fails** (2026-10-29, decision 12, rules 1–6): _built 2026-10-29._ the rules in the collector (`collector.py`, `youtube.py`, `store.py` with a migration for the per-item retry counts, listing progress and the `measured` state); the repair pass and `collected/channel-names.tsv` (read by the API like the reference set's names); only complete videos exported, and the API skipping incomplete rows; `status`; `backend/README.md`. Tests with a fake Data API and downloader: a failing channel listing is skipped and retried while downloads go on; a `gone` video and an undecided Shorts probe come back on the schedule; a removal needs two checks and is one transaction; a backup failure doesn't stop the tick; an unexpected error takes a slot; a listing that fails on page 3 resumes at page 3; a measured video with no channel name isn't exported until the repair fills it, then is; the API skips an incomplete row; the committed reference set is complete. Stop for review; deployed with the next release.
 15. **A sensible sentence before the counts arrive** (2026-10-29, On page load (A); plan 011, Readers other than people): _built 2026-10-29._ The hero's skeleton bars (`Room` in `Hero.tsx`) keep their digits in a `data-digits` attribute shown by a CSS `::before`, instead of as text; sr-only "thousands of" and "hundreds of" next to the two totals' bars while loading. `STYLE.md` Growing counts says so. Tests: component (`Hero` while loading: the paragraph's text is "Explore and compare thousands of videos from hundreds of channels…" with no digits, the bars are still there; fails before the change), E2E (plan 011's no-JavaScript check covers the homepage). Screenshots at 360/1280 px before and after, to show the bars are unchanged. Stop for review.
+16. **Alert issues** (2026-10-29, decision 12, Alert issues): _built 2026-10-29._ `collector/alerts.py`: the typed slots and their check, the two templates and their fixed meanings, `decide` (nothing before a day; one issue per kind and job; a state change commented once it held for two checks; the 3- and 7-day comments, none after; closing on recovery; 24 hours before reopening; at most 3 a day; a stopped collector is `stalled`, not one issue per job), GitHub's API with the token (or only the log without one), its memory in `alerts.json`; the command `python -m hyperstim_api.collector alerts`. The collector records what the check reads: a heartbeat each tick (`tick_at`), `low_space`, the backup's time, the export's failures. The daily commit's runs are read from systemd (`systemctl show`). `deploy/`: `alerts.service`/`.timer` (hourly) and the root-only `alerts.env`, `setup.sh` (the repo from the checkout's origin), `server.env.example`, `README.md` (creating the token); `backend/README.md`, `.env.example`. Tests (pytest): every slot type turns free text (a path, an IP, an error line) into "unknown"; the templates; each rule of `decide`; the daily commit from systemd's last run; the check end to end with a fake GitHub; a failed send is tried again; the collector's records. `setup.sh`: `bash -n`, shellcheck (only the existing notes), templates rendered with `envsubst`. Deployed with the next release, then `sudo deploy/setup.sh` with the token. Stop for review.
 
 By hand (the team), in order:
 
@@ -321,6 +350,9 @@ By hand (the team), in order:
 | Then | Claude, then you | Claude stops the local collector; you run the move commands Claude gives (paths from your `server.env`), then `sudo deploy/setup.sh` again. |
 | Then | you | `hyperstim-release` (Claude never releases). |
 | Next day | you | Check the first daily `data:` commit on GitHub and the counts on the live site. |
+| After the release with step 16 | a repo admin | GitHub → your profile → Settings → Developer settings → Fine-grained tokens → Generate: this repo only, "Issues: Read and write" only (`deploy/README.md`, GitHub step 4). |
+| Then | you, on the server | Put the token in `ALERT_GITHUB_TOKEN` in `deploy/server.env`; `sudo deploy/setup.sh`. Without it, the hourly check only logs what it would post. |
+| Then | you | Check the alerts timer is listed (`systemctl list-timers`) and its first run's log; when the first alert issue opens, check it carries its `alert` labels. |
 
 ## Review decisions
 

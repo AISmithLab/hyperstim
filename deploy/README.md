@@ -43,6 +43,8 @@ Then make the first release with `hyperstim-release`.
    - `NEXT_PUBLIC_SITE_ORIGIN` = `https://<domain>` (no path, no trailing slash), for the sitemap and canonical URLs.
    - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` = the token from Google Search Console's HTML tag. Optional: without it the pages have no verification tag. Search Console setup is in plan 011.
 
+4. **The alert issues' token** (plan 013, decision 12): GitHub → your settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token. Resource owner: the repo's owner; Repository access: only this repo; Permissions → Repository permissions → **Issues: Read and write** (nothing else; "Metadata: Read" is added by GitHub). Expiration: up to a year, with a calendar reminder to renew it. Put it in `ALERT_GITHUB_TOKEN` in `server.env` and run `sudo deploy/setup.sh`. Without it the hourly check only logs what it would post. The token can't push, read secrets or change settings; the issues it writes are fixed templates (`backend/src/hyperstim_api/collector/alerts.py`), never log text.
+
 ## Cloud firewall (once)
 
 In the cloud provider's security group for the server, allow only SSH (22) and HTTP/HTTPS (80, 443) from the internet. The service itself listens on `127.0.0.1` only.
@@ -66,6 +68,8 @@ In the cloud provider's security group for the server, allow only SSH (22) and H
   data/usage/                  daily usage counts (plan 014)
   <service>-collector.service  systemd unit of the collector (plan 013)
   <service>-data.service/.timer  the data bot's daily commit of collected/ to GitHub, at 03:00 UTC
+  <service>-alerts.service/.timer  the hourly alert check: GitHub issues when something hasn't worked for a day
+  alerts.env                   the alert issues' token (root only; systemd hands it to the check)
   data-bot/                    the data bot's home: its SSH key (data bot user)
   data-repo/                   the data bot's clone, pushed with the deploy key (data bot user)
 <clips-dir>/                   COLLECTOR_CLIPS_DIR: the collector's clips, feature caches and daily database backups (7 kept)
@@ -90,7 +94,8 @@ The old address then returns 404: GitHub doesn't redirect a renamed repo's Pages
 
 ## Day to day
 
-- **Logs:** `journalctl -u <service>`, `-u <service>-collector`, `-u <service>-data`; releases in `<prod-dir>/releases.log`.
+- **Logs:** `journalctl -u <service>`, `-u <service>-collector`, `-u <service>-data`, `-u <service>-alerts`; releases in `<prod-dir>/releases.log`.
+- **Alert issues:** labeled `alert` on GitHub. The bot opens one when no video was added for a day (`stalled`) or a job hasn't worked for a day past when it was due (`job-failing`), comments when the state changes or at 3 and 7 days, and closes it itself when things work again. Leave them to the bot: it keeps track of its open issues in `data/collector/alerts.json`, so one closed by hand still gets its comments and its closing.
 - **The collector's health:** from `<prod-dir>/releases/current/backend`, as the service user: `sudo -u <service-user> sh -c 'set -a; . <prod-dir>/env; .venv/bin/python -m hyperstim_api.collector status'`.
 - **What's live:** `readlink <prod-dir>/releases/current`.
 - **Rollback:** `hyperstim-release <older tag>` releases that commit under a new tag.

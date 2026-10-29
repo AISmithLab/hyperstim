@@ -38,6 +38,7 @@ See `.env.example`.
 | `COLLECTED_RELOAD_S` | Seconds between looks at `COLLECTED_DIR`. Optional, default 300. |
 | `USAGE_DIR` | Folder for the daily usage counts (see **Usage numbers**). Optional; unset = nothing counted. Outside the repo on the server (locally `usage/`, git-ignored). |
 | `COLLECTOR_DATA_DIR`, `COLLECTOR_CLIPS_DIR`, `COLLECT_PER_DAY`, `COLLECTOR_UNITS_PER_DAY` | The collector's settings (see **Growing dataset**); the API doesn't read them. |
+| `ALERT_GITHUB_TOKEN`, `ALERT_REPO`, `ALERT_DATA_UNIT` | The hourly alert check's (server only, set by `deploy/setup.sh`): a fine-grained token with only "Issues: Read and write", the repo as `<owner>/<name>`, and the daily commit's systemd unit. Without the token the check only logs what it would post. |
 
 Prod (on the server, from a release tag) is set up and updated as described in [`../deploy/README.md`](../deploy/README.md).
 
@@ -78,6 +79,7 @@ It runs as its own process (not inside the API), with its state in `COLLECTOR_DA
 uv run --env-file .env python -m hyperstim_api.collector seed <research-repo>   # once: v2's channels and upload lists
 uv run --env-file .env python -m hyperstim_api.collector run                    # until stopped
 uv run --env-file .env python -m hyperstim_api.collector status                 # counts, pace, quota, blocks, retries, last success per job, score drift
+uv run --env-file .env python -m hyperstim_api.collector alerts                 # the hourly alert check; logs what it would post without ALERT_GITHUB_TOKEN
 ```
 
 - **Pace:** `COLLECT_PER_DAY` (150) downloads a day at random intervals. If YouTube blocks downloads ("not a bot"), it waits 6 hours (doubling up to 2 days if blocked again, at half the pace for a week); a block seen by a live check (`ANALYSIS_DIR/youtube-blocked`) pauses it too.
