@@ -66,7 +66,7 @@ Before committing, check `git diff --staged` for anything above.
   - Find elements by role and accessible name (`getByRole('button', { name: … })`), not by class or test ID.
   - Accessibility is tested too: an axe check in each component test file and on each page in E2E, and each page's keyboard path and 320 px reflow in E2E. A new page or major UI change also gets a manual keyboard and screen reader pass before handoff.
 - Do not commit or push unless asked.
-- When asked for a commit plan, list each commit message in full together with the branch it goes on.
+- When asked for a commit plan, list each commit message in full together with the branch it goes on, and report the test coverage of the changed lines (`npm run test:coverage`, `uv run pytest --cov`), flagging any below Sonar's 80% new-code gate (plan 012).
 - **Commit messages follow Conventional Commits**; `release.sh` takes the next version and the release notes from them (plan 010). Format: `<type>[!]: <subject> (plan NNN)`, then an optional body after a blank line. The `commit-msg` hook in `.githooks/` checks the format.
   - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
   - **Type**, by what the change means for the live site (pick the first that fits; split the commit if it's two things):
