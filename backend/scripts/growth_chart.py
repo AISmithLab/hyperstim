@@ -6,17 +6,17 @@ axis, channels on the right, each axis zoomed to its data. The daily commit
 (scripts/commit-data.sh) runs it before committing, so the chart changes with the counts.
 Standard library only.
 
-    growth_chart.py <collected-dir>
+    cd <collected-dir> && python growth_chart.py
 """
 
 import csv
 import datetime as dt
 import math
-import sys
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
+CHANGELOG = Path("CHANGELOG.tsv")
 WIDTH, HEIGHT = 800, 380
 LEFT, RIGHT = 70, 70  # room for each axis's labels
 TOP, BOTTOM = 96, 330  # the plot's top and bottom edges
@@ -210,19 +210,12 @@ def chart(days: list[Day], theme: dict[str, str]) -> str:
     return "\n".join(out) + "\n"
 
 
-def main(argv: list[str]) -> int:
-    if len(argv) != 2:
-        print(f"usage: {argv[0]} <collected-dir>", file=sys.stderr)
-        return 2
-    folder = Path(argv[1])
-    changelog = folder / "CHANGELOG.tsv"
-    days = read_changelog(changelog) if changelog.exists() else []
-    if not days:
-        return 0
-    for name, theme in THEMES.items():
-        (folder / name).write_text(chart(days, theme), encoding="utf-8")
-    return 0
+def main() -> None:
+    # The folder is the working directory, not an argument, so no path comes from outside.
+    days = read_changelog(CHANGELOG) if CHANGELOG.exists() else []
+    for name, theme in THEMES.items() if days else ():
+        Path(name).write_text(chart(days, theme), encoding="utf-8")
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv))
+    main()

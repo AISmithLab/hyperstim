@@ -29,6 +29,12 @@ def load_script() -> ModuleType:
 gc = load_script()
 
 
+@pytest.fixture(autouse=True)
+def in_tmp_path(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """The script works in the current directory, as the daily commit runs it."""
+    monkeypatch.chdir(tmp_path)
+
+
 def days(n: int, videos: int = 16_375, channels: int = 542) -> list[Any]:
     start = dt.date(2026, 10, 25)
     return [
@@ -51,7 +57,7 @@ def test_oldest_first_from_the_reference_set_the_day_before(tmp_path: Path) -> N
 
 def test_writes_both_themes_with_the_latest_totals(tmp_path: Path) -> None:
     (tmp_path / "CHANGELOG.tsv").write_text(CHANGELOG)
-    assert gc.main(["growth_chart.py", str(tmp_path)]) == 0
+    gc.main()
     light = (tmp_path / "growth.svg").read_text()
     dark = (tmp_path / "growth-dark.svg").read_text()
     for svg in (light, dark):
@@ -69,7 +75,7 @@ def test_writes_both_themes_with_the_latest_totals(tmp_path: Path) -> None:
 
 def test_a_single_day_still_draws(tmp_path: Path) -> None:
     (tmp_path / "CHANGELOG.tsv").write_text(HEADER + line("2026-10-26", 16430, 545, 128, 73, 3))
-    assert gc.main(["growth_chart.py", str(tmp_path)]) == 0
+    gc.main()
     assert "16,430 videos (left axis)" in texts((tmp_path / "growth.svg").read_text())
 
 
@@ -77,12 +83,8 @@ def test_a_single_day_still_draws(tmp_path: Path) -> None:
 def test_nothing_to_draw_writes_nothing(tmp_path: Path, changelog: str | None) -> None:
     if changelog is not None:
         (tmp_path / "CHANGELOG.tsv").write_text(changelog)
-    assert gc.main(["growth_chart.py", str(tmp_path)]) == 0
+    gc.main()
     assert not (tmp_path / "growth.svg").exists()
-
-
-def test_usage() -> None:
-    assert gc.main(["growth_chart.py"]) == 2
 
 
 @pytest.mark.parametrize("n", [2, 5, 40, 125, 400, 730, 1500])
