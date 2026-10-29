@@ -273,7 +273,7 @@ def _channel(members: list[Video]) -> Channel:
         )
     return Channel(
         id=members[0].channel_id,
-        name=members[0].channel,
+        name=next((v.channel for v in members if v.channel.strip()), members[0].channel),
         score=sum(v.score for v in members) / len(members),
         features=tuple(features),
         videos=tuple(sorted(members, key=lambda v: (v.published_at or "", v.id))),
@@ -309,6 +309,25 @@ def meta_path(dataset_path: Path) -> Path:
     return dataset_path.with_suffix(".meta.json")
 
 
+def names_path(dataset_path: Path) -> Path:
+    return dataset_path.with_suffix(".channel-names.tsv")
+
+
+def _channel_name(row: dict[str, str], names: dict[str, str]) -> str:
+    """The row's channel name, or the looked-up one when the row has none."""
+    name = row["channel_title"]
+    return name if name.strip() else names.get(row["channel_id"], "")
+
+
+def _channel_names(path: Path) -> dict[str, str]:
+    """Names looked up on YouTube for channels whose videos carry none (plan 013): ours next
+    to the reference set, or the collector's; optional."""
+    if not path.is_file():
+        return {}
+    with path.open(newline="", encoding="utf-8") as fh:
+        return {r["channel_id"]: r["channel_title"] for r in csv.DictReader(fh, delimiter="\t")}
+
+
 def _float(raw: str | None) -> float | None:
     raw = (raw or "").strip()
     return float(raw) if raw else None
@@ -322,6 +341,9 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
         if missing:
             raise ValueError(f"{path}: missing columns {', '.join(missing)}")
         rows = list(reader)
+    names = _channel_names(names_path(path))
+    if collected_dir is not None:
+        names = _channel_names(collected_dir / NAMES_FILE) | names
 
     kept: list[tuple[dict[str, str], dict[str, float | None]]] = []
     skipped = 0
@@ -345,7 +367,7 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
             row["video_id"].strip(),
             row["title"],
             row["channel_id"],
-            row["channel_title"],
+            _channel_name(row, names),
             _category(path, row["category"]),
             row["published_at"].strip() or None,
             features,
@@ -356,7 +378,7 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
         videos.append(video)
     reference_count = len(videos)
     if collected_dir is not None:
-        videos = _with_collected(videos, collected_dir, pools, composite_pool)
+        videos = _with_collected(videos, collected_dir, pools, composite_pool, names)
     videos.sort(key=lambda v: (-v.score, v.id))
     current = [v for v in videos if v.removed_at is None]
     channels = _channels(current)
@@ -404,20 +426,38 @@ def _added_at(reference_at: str) -> Callable[[Video | Channel], str]:
     return lambda item: item.added_at or reference_at
 
 
+NAMES_FILE = "channel-names.tsv"
+
+
 def collected_files(directory: Path) -> list[Path]:
-    """The collector's files the dataset is built from (plan 013): `<year>.tsv`, `removed.tsv`."""
-    files = [*directory.glob("[0-9][0-9][0-9][0-9].tsv"), directory / "removed.tsv"]
+    """The collector's files the dataset is built from (plan 013): `<year>.tsv`, `removed.tsv`
+    and `channel-names.tsv`."""
+    files = [
+        *directory.glob("[0-9][0-9][0-9][0-9].tsv"),
+        directory / "removed.tsv",
+        directory / NAMES_FILE,
+    ]
     return sorted(p for p in files if p.is_file())
 
 
+# A collected video's fields that must not be empty; the channel's name may come from the names.
+GAPS = ("title", "channel_id", "published_at")
+
+
 def _with_collected(
-    videos: list[Video], directory: Path, pools: scoring.Pools, composite_pool: list[float]
+    videos: list[Video],
+    directory: Path,
+    pools: scoring.Pools,
+    composite_pool: list[float],
+    names: dict[str, str],
 ) -> list[Video]:
     """The reference videos plus the collector's added ones (scored against the reference
     set), with the removed ones marked."""
     by_id = {v.id: v for v in videos}
     removed: dict[str, str] = {}
     for path in collected_files(directory):
+        if path.name == NAMES_FILE:
+            continue  # read with the reference set's names
         with path.open(newline="", encoding="utf-8") as fh:
             rows = list(csv.DictReader(fh, delimiter="\t"))
         if path.name == "removed.tsv":
@@ -427,12 +467,17 @@ def _with_collected(
             video_id = row["video_id"].strip()
             if not video_id or video_id in by_id:
                 continue
+            channel = _channel_name(row, names)
+            gaps = [k for k in GAPS if not row[k].strip()] + ([] if channel.strip() else ["name"])
+            if gaps:  # shown only with everything in place (plan 013, decision 12)
+                log.warning("Left out %s from %s: no %s", video_id, path.name, ", ".join(gaps))
+                continue
             raw = row["category"].strip()
             video = _video(
                 video_id,
                 row["title"],
                 row["channel_id"],
-                row["channel_title"],
+                channel,
                 _category(path, raw) if raw else None,  # none: no keyword placed it
                 row["published_at"].strip() or None,
                 {name: _float(row[name]) for name in scoring.FEATURES},

@@ -140,6 +140,7 @@ def status(s: Settings) -> str:
         + (f" (next {utc(retrying[0])})" if retrying else "")
         + f", {states.get('failed', 0)} given up"
     )
+    lines += health(store, now)
     next_at = float(store.get("next_download_at", "0"))
     lines.append(f"Next download: {utc(max(now, next_at))}")
     if s.clips_dir.exists():
@@ -148,6 +149,63 @@ def status(s: Settings) -> str:
     lines += scores_against_reference(store)
     store.close()
     return "\n".join(lines)
+
+
+def health(store: Store, now: float) -> list[str]:
+    """What's waiting after a failure, what was given up, and when each job last worked
+    (plan 013, decision 12)."""
+    db = store.db
+
+    def count(sql: str, *args: object) -> int:
+        return int(db.execute(sql, args).fetchone()[0])
+
+    month = now - 30 * 86400
+    lines = [
+        "Waiting after a Data API error: "
+        f"{count('SELECT COUNT(*) FROM channels WHERE api_failures > 0')} channels' lists, "
+        f"{count('SELECT COUNT(*) FROM uploads WHERE api_failures > 0 AND retry_at > ?', now)}"
+        " uploads",
+        "Asked again (no clear answer yet): "
+        f"{count("SELECT COUNT(*) FROM uploads WHERE state = 'new' AND unsure > 0")} uploads, "
+        f"{
+            count("SELECT COUNT(*) FROM uploads WHERE state IN ('v2', 'collected') AND unsure > 0")
+        } dataset videos possibly gone",
+        "Given up in 30 days: "
+        f"{
+            count(
+                "SELECT COUNT(*) FROM uploads WHERE state = 'ineligible' AND unsure > 3 "
+                'AND COALESCE(checked_at, 0) >= ?',
+                month,
+            )
+        } unclear uploads, "
+        f"{
+            count(
+                "SELECT COUNT(*) FROM uploads WHERE state = 'failed' AND id IN "
+                '(SELECT video_id FROM attempts WHERE at >= ?)',
+                month,
+            )
+        } downloads",
+        "Waiting for a title, channel name or date: "
+        f"{count("SELECT COUNT(*) FROM uploads WHERE state = 'measured'")} measured videos",
+        "Channels with uploads still to read: "
+        f"{count('SELECT COUNT(*) FROM channels WHERE full_listing IS NOT NULL')}",
+    ]
+    last = db.execute("SELECT MAX(at) FROM attempts WHERE outcome = 'collected'").fetchone()[0]
+    jobs = {
+        "download": utc(last) if last else "",
+        "upload lists": store.get("ok:refresh_uploads"),
+        "offline check": store.get("ok:check_online"),
+        "repair": store.get("ok:repair"),
+        "backup": store.get("backed_up"),
+        "export": store.get("ok:export"),
+    }
+    lines.append("Last worked: " + ", ".join(f"{k} {v or 'not yet'}" for k, v in jobs.items()))
+    if int(store.get("backup_failures", "0")):
+        lines.append(f"Backup: failed {store.get('backup_failures')} times in a row")
+    if float(store.get("blocked_until", "0")) > now:
+        since = float(store.get("blocked_since") or store.get("blocked_at", "0"))
+        lines.append(f"Blocked for {(now - since) / 3600:.0f} h (since {utc(since)})")
+    return lines
 
 
 def scores_against_reference(store: Store) -> list[str]:

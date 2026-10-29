@@ -53,6 +53,7 @@ class Details:
     description: str
     tags: str  # joined with " | ", as v2's snippets
     channel_title: str
+    published_at: str = ""
 
 
 def region_blocked(content_details: dict[str, object], region: str = REGION) -> bool:

@@ -29,17 +29,24 @@ CREATE TABLE IF NOT EXISTS channels (
     queries TEXT NOT NULL DEFAULT '',  -- the discovery queries that found it
     joined_at TEXT,                    -- when it became `in` (v2's: the v2 scan)
     checked_at TEXT,                   -- last time its stats were read
-    listed_at REAL                     -- last time its newest uploads were read
+    listed_at REAL,                    -- last time its newest uploads were read
+    api_failures INTEGER NOT NULL DEFAULT 0,  -- Data API errors in a row reading its uploads
+    retry_at REAL NOT NULL DEFAULT 0,  -- after an error: not read again before this
+    full_listing TEXT                  -- reading all its uploads: '' or the next page; else NULL
 );
 CREATE TABLE IF NOT EXISTS uploads (
     id TEXT PRIMARY KEY,
     channel_id TEXT NOT NULL,
     published_at TEXT NOT NULL,
     r REAL NOT NULL,
-    -- new | v2 | eligible | ineligible | collected | failed | removed
+    -- new | v2 | eligible | ineligible | measured | collected | failed | removed
+    -- (measured: measured, but waiting for a missing title, channel name or date)
     state TEXT NOT NULL DEFAULT 'new',
     reason TEXT NOT NULL DEFAULT '',
-    retry_at REAL NOT NULL DEFAULT 0,  -- `new`: not checked before; `eligible`: not downloaded
+    -- not before: `new`, checked; `eligible`, downloaded; `v2`/`collected`, checked online
+    retry_at REAL NOT NULL DEFAULT 0,
+    unsure INTEGER NOT NULL DEFAULT 0, -- answers that couldn't settle its state, in a row
+    api_failures INTEGER NOT NULL DEFAULT 0,  -- Data API errors in a row checking it
     checked_at REAL,
     online_at REAL,                    -- dataset videos: last seen online (monthly check)
     title TEXT NOT NULL DEFAULT '',
@@ -73,6 +80,20 @@ CREATE TABLE IF NOT EXISTS attempts (
 CREATE INDEX IF NOT EXISTS attempts_at ON attempts (at);
 CREATE TABLE IF NOT EXISTS units (day TEXT PRIMARY KEY, used INTEGER NOT NULL);
 """
+# Columns added since the first release (plan 013, decision 12), added to an older database
+# when it's opened: table -> column -> its definition.
+ADDED_COLUMNS = {
+    "channels": {
+        "api_failures": "INTEGER NOT NULL DEFAULT 0",
+        "retry_at": "REAL NOT NULL DEFAULT 0",
+        "full_listing": "TEXT",
+    },
+    "uploads": {
+        "unsure": "INTEGER NOT NULL DEFAULT 0",
+        "api_failures": "INTEGER NOT NULL DEFAULT 0",
+    },
+}
+V2_JOINED = "2026-08-26"  # v2's scan: when v2's channels joined
 
 
 @dataclass(frozen=True)
@@ -87,6 +108,14 @@ class Upload:
     tags: str
     channel_title: str
     duration_s: int | None
+    unsure: int = 0
+    api_failures: int = 0
+
+    def complete(self) -> bool:
+        """Everything the site shows about it is in place (plan 013, decision 12)."""
+        return all(
+            v.strip() for v in (self.title, self.channel_id, self.channel_title, self.published_at)
+        )
 
 
 class Store:
@@ -98,6 +127,24 @@ class Store:
         # With WAL this can lose the last moments on a power cut, never corrupt the file.
         self.db.execute("PRAGMA synchronous=NORMAL")
         self.db.executescript(SCHEMA)
+        self._migrate()
+
+    def _migrate(self) -> None:
+        """Adds the columns an older database lacks. Channels that joined after v2's scan were
+        read in one go, and a read that failed partway was never finished: they're read again
+        in full (adding only the uploads still missing)."""
+        for table, columns in ADDED_COLUMNS.items():
+            have = {r["name"] for r in self.db.execute(f"PRAGMA table_info({table})")}
+            for name, definition in columns.items():
+                if name in have:
+                    continue
+                self.db.execute(f"ALTER TABLE {table} ADD COLUMN {name} {definition}")
+                if (table, name) == ("channels", "full_listing"):
+                    self.db.execute(
+                        "UPDATE channels SET full_listing = '' "
+                        "WHERE status = 'in' AND joined_at > ?",
+                        (V2_JOINED,),
+                    )
 
     def close(self) -> None:
         self.db.close()
@@ -255,7 +302,7 @@ class Store:
         numbers that played no part in how they were picked.)"""
         row = self.db.execute(
             "SELECT MAX(r) AS r FROM uploads "
-            "WHERE state IN ('eligible', 'ineligible', 'collected', 'failed') "
+            "WHERE state IN ('eligible', 'ineligible', 'measured', 'collected', 'failed') "
             "OR (state = 'removed' AND id IN (SELECT video_id FROM collected))"
         ).fetchone()
         return float(row["r"] or 0.0)
@@ -267,14 +314,16 @@ class Store:
             [state, reason, *fields.values(), video_id],
         )
 
-    def in_dataset(self, checked_before: float, n: int) -> list[str]:
-        """Dataset videos (v2's and added) not seen online since `checked_before`."""
+    def in_dataset(self, checked_before: float, now: float, n: int) -> list[Upload]:
+        """Dataset videos (v2's and added) not seen online since `checked_before`, and not
+        waiting to be checked again."""
         rows = self.db.execute(
-            "SELECT id FROM uploads WHERE state IN ('v2', 'collected') "
-            "AND COALESCE(online_at, 0) < ? ORDER BY COALESCE(online_at, 0), id LIMIT ?",
-            (checked_before, n),
+            "SELECT * FROM uploads WHERE state IN ('v2', 'collected') "
+            "AND COALESCE(online_at, 0) < ? AND retry_at <= ? "
+            "ORDER BY COALESCE(online_at, 0), id LIMIT ?",
+            (checked_before, now, n),
         ).fetchall()
-        return [str(r["id"]) for r in rows]
+        return [_upload(r) for r in rows]
 
     # --- added and removed videos --------------------------------------------------
 
@@ -295,7 +344,8 @@ class Store:
     def collected_rows(self) -> list[sqlite3.Row]:
         return self.db.execute(
             "SELECT c.*, u.channel_id, u.channel_title, u.title, u.published_at, u.duration_s, "
-            "u.r FROM collected c JOIN uploads u ON u.id = c.video_id ORDER BY c.added_at, u.id"
+            "u.r FROM collected c JOIN uploads u ON u.id = c.video_id "
+            "WHERE u.state IN ('collected', 'removed') ORDER BY c.added_at, u.id"
         ).fetchall()
 
     def add_removed(self, video_id: str, removed_at: str, reason: str) -> None:
@@ -339,4 +389,6 @@ def _upload(row: sqlite3.Row) -> Upload:
         tags=row["tags"],
         channel_title=row["channel_title"],
         duration_s=row["duration_s"],
+        unsure=row["unsure"],
+        api_failures=row["api_failures"],
     )

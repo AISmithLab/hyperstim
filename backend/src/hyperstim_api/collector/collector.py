@@ -1,9 +1,14 @@
 """The collector's work, one small job at a time (plan 013, decisions 2-7).
 
 `Collector.tick()` does whatever is due and says how long to wait before the next tick:
-read channels' newest uploads (daily), run a few discovery searches (each query weekly),
-re-check near misses (monthly) and dataset videos (monthly), check the next uploads by
-number, and download and measure the next eligible one when the pace allows.
+read channels' newest uploads (daily) and new channels' full lists, run a few discovery
+searches (each query weekly), re-check near misses (monthly) and dataset videos (monthly),
+fill gaps (daily), check the next uploads by number, and download and measure the next
+eligible one when the pace allows.
+
+When something fails (decision 12), one failure never stops the rest, no decision is final
+on one answer, unfinished work resumes, and a video goes on the site only when everything
+it shows is in place.
 """
 
 import contextlib
@@ -31,7 +36,7 @@ from hyperstim_api.analysis import BLOCK_MARKER, PIPELINE_DIR, AnalysisError, Pi
 from hyperstim_api.collector import sampling
 from hyperstim_api.collector.seed import tier
 from hyperstim_api.collector.store import Store, Upload
-from hyperstim_api.collector.youtube import DataApi, OutOfUnits, quota_day
+from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits, quota_day
 
 log = logging.getLogger(__name__)
 
@@ -56,7 +61,7 @@ QUERIES_PER_DAY = math.ceil(len(QUERIES) / 7)
 MIN_SUBSCRIBERS = 10_000  # v2's channel rules
 MIN_VIDEOS = 100  # more than this many
 CHANNELS_PER_TICK = 25  # newest-uploads reads per tick, so other work isn't held up
-MAX_PAGES = 200  # a channel's uploads read in one go (50 a page)
+MAX_PAGES = 200  # pages of a channel's uploads read in one go (50 a page); more on the next tick
 CANDIDATE_BUFFER = 5  # eligible uploads kept ready for download
 OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
@@ -64,6 +69,11 @@ MAX_BLOCK_WAIT_S = 48 * 3600
 # A failed download (not a block) is tried again after these waits; the next failure gives up.
 RETRY_AFTER_S = (DAY_S, 3 * DAY_S, 7 * DAY_S)
 FAILURES_IN_A_ROW = 3  # then downloads pause, with no change to the pace
+# After a Data API error, an item (a channel's list, a batch of uploads) or a job waits this
+# long, then a day at a time; an error is no answer about the item, so it's never final.
+API_RETRY_AFTER_S = (3600, 6 * 3600, DAY_S)
+BACKUP_RETRY_S = 3600
+REPAIR_BATCHES = 10  # of 50 uploads or channels, per repair pass
 FAILURE_PAUSE_S = 3600
 LOGS_KEPT_S = 30 * DAY_S  # the downloader's output for failed downloads, in download-logs/
 FREE_SPACE_MIN = 50 * 1024**3
@@ -94,6 +104,11 @@ def load_classifier() -> Callable[[dict[str, str]], str | None]:
         return CATEGORY_NAMES[category] if category else None
 
     return classify
+
+
+def api_wait(failures: int) -> float:
+    """How long an item or job waits after its `failures`-th Data API error in a row."""
+    return API_RETRY_AFTER_S[min(failures, len(API_RETRY_AFTER_S)) - 1]
 
 
 def utc(t: float) -> str:
@@ -136,23 +151,49 @@ class Collector:
     # --- the loop --------------------------------------------------------------------
 
     def tick(self) -> float:
-        """Do what's due; returns the seconds to wait before the next tick."""
+        """Do what's due; returns the seconds to wait before the next tick. A job that fails
+        is logged and waits; the others, and downloads, go on."""
         now = self.clock()
         self.back_up(now)
         self.prune_logs(now)
-        out_of_units = self.store.get("out_of_units") == quota_day(now)
-        if not out_of_units:
-            try:
-                self.refresh_uploads(now)
-                self.discover(now)
-                self.check_near_misses(now)
-                self.check_online(now)
-                self.check_candidates(now)
-            except OutOfUnits as exc:
-                log.warning("Data API units used up for today: %s", exc)
-                self.store.set("out_of_units", quota_day(now))
+        if self.store.get("export_due"):
+            self.export()
+        if self.store.get("out_of_units") != quota_day(now):
+            for job in (
+                self.refresh_uploads,
+                self.finish_listings,
+                self.discover,
+                self.check_near_misses,
+                self.check_online,
+                self.repair,
+                self.check_candidates,
+            ):
+                if not self.api_job(job, now):
+                    break
         wait = self.maybe_download(self.clock())
         return max(5.0, min(wait, 60.0))
+
+    def api_job(self, job: Callable[[float], None], now: float) -> bool:
+        """Runs a job that calls the Data API, unless it's waiting after an error; False when
+        the day's units are used up."""
+        name = job.__name__
+        if now < float(self.store.get(f"retry_at:{name}", "0")):
+            return True
+        try:
+            job(now)
+        except OutOfUnits as exc:
+            log.warning("Data API units used up for today: %s", exc)
+            self.store.set("out_of_units", quota_day(now))
+            return False
+        except ApiError as exc:
+            failures = int(self.store.get(f"api_failures:{name}", "0")) + 1
+            self.store.set(f"api_failures:{name}", failures)
+            self.store.set(f"retry_at:{name}", now + api_wait(failures))
+            log.warning("Data API error in %s (%d in a row): %s", name, failures, exc)
+            return True
+        self.store.set(f"api_failures:{name}", 0)
+        self.store.set(f"ok:{name}", utc(now))
+        return True
 
     # --- upload lists ----------------------------------------------------------------
 
@@ -160,26 +201,72 @@ class Collector:
         """Read the newest uploads of channels not read in the last day."""
         due = self.store.db.execute(
             "SELECT id FROM channels WHERE status = 'in' AND COALESCE(listed_at, 0) < ? "
-            "ORDER BY COALESCE(listed_at, 0), id LIMIT ?",
-            (now - DAY_S, CHANNELS_PER_TICK),
+            "AND retry_at <= ? ORDER BY COALESCE(listed_at, 0), id LIMIT ?",
+            (now - DAY_S, now, CHANNELS_PER_TICK),
         ).fetchall()
         for row in due:
-            added = self.list_uploads(row["id"], stop_at_known=True)
-            self.store.update_channel(row["id"], listed_at=now)
+            try:
+                added = self.list_newest(row["id"])
+            except ApiError as exc:
+                self.channel_failed(row["id"], now, exc)
+                continue
+            self.store.update_channel(row["id"], listed_at=now, api_failures=0)
             if added:
                 log.info("Channel %s: %d new uploads", row["id"], added)
 
-    def list_uploads(self, channel_id: str, stop_at_known: bool) -> int:
-        """Pages through the channel's uploads (newest first); with `stop_at_known`, only back
-        to the first one we already have."""
+    def list_newest(self, channel_id: str) -> int:
+        """Pages through the channel's uploads (newest first), back to the first one we
+        already have."""
         added, token = 0, None
         for _ in range(MAX_PAGES):
             uploads, token = self.api.uploads_page(channel_id, token)
-            known = stop_at_known and any(self.store.known(vid) for vid, _ in uploads)
+            known = any(self.store.known(vid) for vid, _ in uploads)
             added += self.store.add_uploads(channel_id, uploads)
             if known or not token:
                 break
         return added
+
+    def finish_listings(self, now: float) -> None:
+        """Go on reading the full upload lists of channels that joined (rule 3)."""
+        due = self.store.db.execute(
+            "SELECT id, full_listing FROM channels WHERE status = 'in' "
+            "AND full_listing IS NOT NULL AND retry_at <= ? ORDER BY id LIMIT ?",
+            (now, CHANNELS_PER_TICK),
+        ).fetchall()
+        for row in due:
+            self.list_all(row["id"], row["full_listing"], now)
+
+    def list_all(self, channel_id: str, token: str, now: float) -> None:
+        """Reads the channel's uploads from page `token` ('' for the first), saving the next
+        page after each, so a read that stops partway goes on from there; done when the last
+        page is in."""
+        added = 0
+        try:
+            for _ in range(MAX_PAGES):
+                uploads, next_token = self.api.uploads_page(channel_id, token or None)
+                with self.store.transaction():
+                    added += self.store.add_uploads(channel_id, uploads)
+                    self.store.update_channel(channel_id, full_listing=next_token, api_failures=0)
+                if not next_token:
+                    log.info("Channel %s: read all its uploads (%d new)", channel_id, added)
+                    return
+                token = next_token
+        except ApiError as exc:
+            self.channel_failed(channel_id, now, exc)
+        if added:
+            log.info("Channel %s: %d uploads so far, more to read", channel_id, added)
+
+    def channel_failed(self, channel_id: str, now: float, exc: ApiError) -> None:
+        """A Data API error reading the channel's uploads: it waits, the others go on."""
+        row = self.store.db.execute(
+            "SELECT api_failures FROM channels WHERE id = ?", (channel_id,)
+        ).fetchone()
+        failures = int(row["api_failures"]) + 1
+        self.store.update_channel(
+            channel_id, api_failures=failures, retry_at=now + api_wait(failures)
+        )
+        log.warning("Data API error reading %s's uploads (%d in a row): %s", channel_id,
+                    failures, exc)  # fmt: skip
 
     # --- channels --------------------------------------------------------------------
 
@@ -233,9 +320,9 @@ class Collector:
         else:  # a near miss read again: it keeps its source and queries
             self.store.update_channel(channel_id, **fields)
         if status == "in":
-            added = self.list_uploads(channel_id, stop_at_known=False)
-            self.store.update_channel(channel_id, listed_at=now)
-            log.info("New channel %s (%s): %d uploads", channel_id, title, added)
+            self.store.update_channel(channel_id, listed_at=now, full_listing="")
+            log.info("New channel %s (%s)", channel_id, title)
+            self.list_all(channel_id, "", now)
 
     def check_near_misses(self, now: float) -> None:
         """Channels found before but under v2's bar, read again monthly."""
@@ -258,23 +345,160 @@ class Collector:
     # --- the dataset's videos still online -------------------------------------------
 
     def check_online(self, now: float) -> None:
-        """Re-check dataset videos not checked in a month; take out the ones gone."""
-        due = self.store.in_dataset(now - OFFLINE_EVERY_S, 50)
+        """Re-check dataset videos not checked in a month; take out the ones still gone a day
+        later (two checks)."""
+        due = self.store.in_dataset(now - OFFLINE_EVERY_S, now, 50)
         if not due:
             return
-        details = self.api.videos(due)
-        for video_id in due:
-            found = details.get(video_id)
-            if found is None or found.region_blocked:
-                reason = "gone" if found is None else "region"
-                self.store.set_state(video_id, "removed", reason)
-                self.store.add_removed(video_id, utc(now), reason)
-                log.info("Took out %s: %s", video_id, reason)
-                self.export()
-            else:
+        try:
+            details = self.api.videos([u.id for u in due])
+        except ApiError:
+            self.uploads_failed(due, now)
+            raise  # and the job waits too
+        removed = False
+        for upload in due:
+            found = details.get(upload.id)
+            if found is not None and not found.region_blocked:
                 self.store.db.execute(
-                    "UPDATE uploads SET online_at = ? WHERE id = ?", (now, video_id)
+                    "UPDATE uploads SET online_at = ?, unsure = 0, api_failures = 0 WHERE id = ?",
+                    (now, upload.id),
                 )
+                continue
+            reason = "gone" if found is None else "region"
+            if upload.unsure == 0:  # the first time: look again in a day
+                self.store.db.execute(
+                    "UPDATE uploads SET unsure = 1, api_failures = 0, retry_at = ? WHERE id = ?",
+                    (now + DAY_S, upload.id),
+                )
+                continue
+            with self.store.transaction():
+                self.store.set_state(upload.id, "removed", reason)
+                self.store.add_removed(upload.id, utc(now), reason)
+            log.info("Took out %s: %s", upload.id, reason)
+            removed = True
+        if removed:
+            self.export()
+
+    def uploads_failed(self, uploads: list[Upload], now: float) -> None:
+        """A Data API error checking a batch of uploads: they wait, so a batch that keeps
+        failing makes way for the others."""
+        for upload in uploads:
+            failures = upload.api_failures + 1
+            self.store.db.execute(
+                "UPDATE uploads SET api_failures = ?, retry_at = ? WHERE id = ?",
+                (failures, now + api_wait(failures), upload.id),
+            )
+
+    # --- filling gaps ----------------------------------------------------------------
+
+    def repair(self, now: float) -> None:
+        """Once a day, fill what's missing (rule 4): channel names, and the title, channel name
+        or date of measured videos and of uploads listed without a date; measured videos that
+        are now complete go on the site. A few units; none when nothing is missing."""
+        day = utc(now)[:10]
+        if self.store.get("repaired_day") == day:
+            return
+        db = self.store.db
+        # Removals half-written before decision 12 (taken out, but never in removed.tsv): they
+        # stay in the dataset and are checked again.
+        db.execute(
+            "UPDATE uploads SET online_at = 0, unsure = 0, retry_at = 0, reason = '', state = "
+            "CASE WHEN id IN (SELECT video_id FROM collected) THEN 'collected' ELSE 'v2' END "
+            "WHERE state = 'removed' AND id NOT IN (SELECT video_id FROM removed)"
+        )
+        named = self.repair_channel_names()
+        filled = self.repair_uploads()
+        added = self.add_completed(now)
+        if named or added:
+            self.export()
+        if named or filled or added:
+            log.info("Repaired: %d channel names, %d uploads; added %d", named, filled, added)
+        self.store.set("repaired_day", day)
+
+    def repair_channel_names(self) -> int:
+        """Dataset channels (v2's or added) with a video that has no channel name, and no name
+        of their own yet: looked up with `channels.list`."""
+        ids = [
+            r["channel_id"]
+            for r in self.store.db.execute(
+                "SELECT DISTINCT u.channel_id FROM uploads u "
+                "JOIN channels c ON c.id = u.channel_id "
+                "WHERE u.state IN ('v2', 'measured', 'collected') AND TRIM(u.channel_title) = '' "
+                "AND TRIM(c.title) = '' ORDER BY u.channel_id LIMIT ?",
+                (50 * REPAIR_BATCHES,),
+            )
+        ]
+        named = 0
+        for i in range(0, len(ids), 50):
+            for channel_id, found in self.api.channels(ids[i : i + 50]).items():
+                if found.title.strip():
+                    self.store.update_channel(channel_id, title=found.title)
+                    named += 1
+        # Measured videos take their channel's name; v2's keep theirs (as in videos.tsv) and
+        # the export carries the names for them.
+        self.store.db.execute(
+            "UPDATE uploads SET channel_title = (SELECT title FROM channels c "
+            "WHERE c.id = uploads.channel_id) "
+            "WHERE state = 'measured' AND TRIM(channel_title) = '' "
+            "AND (SELECT TRIM(title) FROM channels c WHERE c.id = uploads.channel_id) != ''"
+        )
+        return named
+
+    def repair_uploads(self) -> int:
+        """Measured videos missing a title, channel name or date, and uploads listed without a
+        date: looked up with `videos.list`. One missing 4 times running is gone (rule 2)."""
+        rows = self.store.db.execute(
+            "SELECT * FROM uploads WHERE (state = 'measured' AND (TRIM(title) = '' "
+            "OR TRIM(channel_title) = '' OR published_at = '')) "
+            "OR (state = 'new' AND published_at = '') ORDER BY id LIMIT ?",
+            (50 * REPAIR_BATCHES,),
+        ).fetchall()
+        filled = 0
+        for i in range(0, len(rows), 50):
+            batch = rows[i : i + 50]
+            details = self.api.videos([r["id"] for r in batch])
+            for row in batch:
+                found = details.get(row["id"])
+                if found is None:
+                    unsure = row["unsure"] + 1
+                    if unsure > len(RETRY_AFTER_S):
+                        self.store.set_state(row["id"], "ineligible", "gone", unsure=unsure)
+                    else:
+                        self.store.db.execute(
+                            "UPDATE uploads SET unsure = ? WHERE id = ?", (unsure, row["id"])
+                        )
+                    continue
+                self.store.db.execute(
+                    "UPDATE uploads SET unsure = 0, "
+                    "title = CASE WHEN TRIM(title) = '' THEN ? ELSE title END, "
+                    "channel_title = CASE WHEN TRIM(channel_title) = '' THEN ? "
+                    "ELSE channel_title END, "
+                    "published_at = CASE WHEN published_at = '' THEN ? ELSE published_at END "
+                    "WHERE id = ?",
+                    (found.title, found.channel_title, found.published_at, row["id"]),
+                )
+                filled += 1
+        return filled
+
+    def add_completed(self, now: float) -> int:
+        """Measured videos now complete go on the site, added now (so lists read as of an
+        earlier time don't change)."""
+        ids = [
+            r["id"]
+            for r in self.store.db.execute("SELECT id FROM uploads WHERE state = 'measured'")
+        ]
+        added = 0
+        for video_id in ids:
+            upload = self.store.upload(video_id)
+            if upload is None or not upload.complete():
+                continue
+            with self.store.transaction():
+                self.store.db.execute(
+                    "UPDATE collected SET added_at = ? WHERE video_id = ?", (utc(now), video_id)
+                )
+                self.store.set_state(video_id, "collected")
+            added += 1
+        return added
 
     # --- picking ---------------------------------------------------------------------
 
@@ -292,9 +516,17 @@ class Collector:
             self.check(ids, now)
 
     def check(self, ids: list[str], now: float) -> None:
-        """Eligibility of up to 50 uploads, by v2's checks."""
-        details = self.api.videos(ids)
-        for video_id in ids:
+        """Eligibility of up to 50 uploads, by v2's checks. An answer that can't settle it (the
+        upload missing, no made-for-kids answer, the Shorts probe undecided) is asked again
+        after 1, 3 and 7 days; the 4th such answer is final (rule 2)."""
+        uploads = [u for u in map(self.store.upload, ids) if u is not None]
+        try:
+            details = self.api.videos(ids)
+        except ApiError:
+            self.uploads_failed(uploads, now)
+            raise  # and the job waits too
+        for upload in uploads:
+            video_id = upload.id
             found = details.get(video_id)
             short = None
             if found is not None and sampling.needs_shorts_probe(found):
@@ -302,10 +534,27 @@ class Collector:
             verdict = sampling.verdict(found, short)
             if verdict == "wait":  # a premiere or stream not over yet
                 self.store.db.execute(
-                    "UPDATE uploads SET retry_at = ? WHERE id = ?", (now + DAY_S, video_id)
+                    "UPDATE uploads SET retry_at = ?, api_failures = 0 WHERE id = ?",
+                    (now + DAY_S, video_id),
                 )
                 continue
-            fields: dict[str, Any] = {"checked_at": now}
+            unsure = (
+                verdict == "gone"
+                or (verdict == "not_for_kids" and found is not None and found.made_for_kids is None)
+                or (verdict == "short" and short is None)
+            )
+            if unsure and upload.unsure < len(RETRY_AFTER_S):
+                self.store.db.execute(
+                    "UPDATE uploads SET unsure = ?, api_failures = 0, reason = ?, retry_at = ? "
+                    "WHERE id = ?",
+                    (upload.unsure + 1, verdict, now + RETRY_AFTER_S[upload.unsure], video_id),
+                )
+                continue
+            fields: dict[str, Any] = {
+                "checked_at": now,
+                "api_failures": 0,
+                "unsure": upload.unsure + 1 if unsure else 0,
+            }
             if found is not None:
                 fields.update(
                     title=found.title,
@@ -314,6 +563,8 @@ class Collector:
                     channel_title=found.channel_title,
                     duration_s=found.duration_s,
                 )
+                if not upload.published_at and found.published_at:
+                    fields["published_at"] = found.published_at
             state = "eligible" if verdict == "eligible" else "ineligible"
             self.store.set_state(video_id, state, "" if state == "eligible" else verdict,
                                  **fields)  # fmt: skip
@@ -355,6 +606,9 @@ class Collector:
         return gap
 
     def collect(self, upload: Upload, now: float) -> None:
+        """Download, measure and classify the upload, and add it; or, while it lacks a title,
+        channel name or date, keep it measured until the repair pass fills the gap (rule 6).
+        Any failure is a failed try (rule 2)."""
         reused = self.live_result(upload.id)
         work = self.s.clips_dir / "work" / upload.id
         shutil.rmtree(work, ignore_errors=True)
@@ -367,40 +621,54 @@ class Collector:
                 features = self.pipeline.measure(upload.id, work)
                 source = "collector"
                 self.keep_clip(upload.id, work)
+            if all(features.get(k) is None for k in scoring.FEATURES):
+                raise AnalysisError("failed", "measured no feature values")
+            category = self.classify(
+                {"title": upload.title, "tag": upload.tags, "desc": upload.description}
+            )
         except AnalysisError as exc:
             self.failed(upload, now, str(exc), self.keep_logs(upload.id, work, now))
             return
+        except Exception as exc:  # disk, classifier, …: not YouTube, so no block probe
+            log.exception("Unexpected error collecting %s", upload.id)
+            self.failed(upload, now, f"{type(exc).__name__}: {exc}", None, probe=False)
+            return
         finally:
             shutil.rmtree(work, ignore_errors=True)
-        category = self.classify(
-            {"title": upload.title, "tag": upload.tags, "desc": upload.description}
-        )
-        added_at = utc(self.clock())
+        complete = upload.complete()
         with self.store.transaction():
             self.store.add_collected(
                 upload.id,
-                added_at,
+                utc(self.clock()),
                 category,
                 features,
                 self.store.cutoff(),
                 {**self.s.provenance, "measured_by": source},
             )
-            self.store.set_state(upload.id, "collected", online_at=now)
+            self.store.set_state(upload.id, "collected" if complete else "measured",
+                                 online_at=now)  # fmt: skip
             self.store.log_attempt(upload.id, now, "collected")
-        self.export()
         self.store.set("block_wait", 0)
         self.store.set("failures_in_a_row", 0)
+        if not complete:
+            log.info("Measured %s; waiting for its title, channel name or date", upload.id)
+            return
+        self.export()
         log.info("Added %s (%s, %s)", upload.id, category or "no category", upload.title[:60])
 
-    def failed(self, upload: Upload, now: float, message: str, log_file: Path | None) -> None:
+    def failed(
+        self, upload: Upload, now: float, message: str, log_file: Path | None, probe: bool = True
+    ) -> None:
         where = f" (log: {log_file})" if log_file else ""
-        if self.probe_block(upload.id):
+        if probe and self.probe_block(upload.id):
             wait = min(
                 MAX_BLOCK_WAIT_S, max(BLOCK_WAIT_S, 2 * int(self.store.get("block_wait", "0")))
             )
             if int(self.store.get("block_wait", "0")):  # blocked again right after a wait
                 factor = float(self.store.get("pace_factor", "1"))
                 self.store.set("pace_factor", max(0.125, factor / 2))
+            else:
+                self.store.set("blocked_since", now)
             self.store.set("block_wait", wait)
             self.store.set("blocked_until", now + wait)
             self.store.set("blocked_at", now)
@@ -497,17 +765,18 @@ class Collector:
     def low_on_space(self) -> bool:
         self.s.clips_dir.mkdir(parents=True, exist_ok=True)
         free = shutil.disk_usage(self.s.clips_dir).free
-        if free < FREE_SPACE_MIN:
+        low = free < FREE_SPACE_MIN
+        if low:
             log.warning("Paused: %.0f GB free on the clips volume", free / 1024**3)
-            return True
-        return False
+        return low
 
     def prune_logs(self, now: float) -> None:
         """Delete the days of download logs older than LOGS_KEPT_S."""
         oldest = utc(now - LOGS_KEPT_S)[:10]
-        for day in (self.s.data_dir / "download-logs").glob("????-??-??"):
-            if day.name < oldest:
-                shutil.rmtree(day, ignore_errors=True)
+        with contextlib.suppress(OSError):
+            for day in (self.s.data_dir / "download-logs").glob("????-??-??"):
+                if day.name < oldest:
+                    shutil.rmtree(day, ignore_errors=True)
 
     # --- backup ----------------------------------------------------------------------
 
@@ -517,18 +786,36 @@ class Collector:
         day = utc(now)[:10]
         if self.store.get("backed_up") == day:
             return
+        if now < float(self.store.get("retry_at:back_up", "0")):
+            return
         folder = self.s.clips_dir / "backups"
-        folder.mkdir(parents=True, exist_ok=True)
-        self.store.backup(folder / f"collector-{day}.db")
-        for old in sorted(folder.glob("collector-*.db"))[:-BACKUPS_KEPT]:
-            old.unlink()
+        try:
+            folder.mkdir(parents=True, exist_ok=True)
+            self.store.backup(folder / f"collector-{day}.db")
+            for old in sorted(folder.glob("collector-*.db"))[:-BACKUPS_KEPT]:
+                old.unlink()
+        except Exception:  # e.g. the clips volume full or missing: the rest goes on
+            failures = int(self.store.get("backup_failures", "0")) + 1
+            self.store.set("backup_failures", failures)
+            self.store.set("retry_at:back_up", now + BACKUP_RETRY_S)
+            log.exception("Backup failed (%d in a row); trying again in an hour", failures)
+            return
         self.store.set("backed_up", day)
+        self.store.set("backup_failures", 0)
         log.info("Backed up collector.db to %s", folder)
 
     # --- export ----------------------------------------------------------------------
 
     def export(self) -> None:
-        export(self.store, self.s.data_dir / "collected")
+        """Writes the files the API reads; if that fails, tries again on the next tick."""
+        try:
+            export(self.store, self.s.data_dir / "collected")
+        except Exception:
+            self.store.set("export_due", "1")
+            log.exception("Export failed; trying again on the next tick")
+            return
+        self.store.set("export_due", "")
+        self.store.set("ok:export", utc(self.clock()))
 
 
 COLUMNS = (
@@ -566,9 +853,23 @@ def export(store: Store, directory: Path) -> None:
         _write_tsv(directory / f"{year}.tsv", COLUMNS, rows)
     removed = [dict(r) for r in store.removed_rows()]
     _write_tsv(directory / "removed.tsv", ("video_id", "removed_at", "reason"), removed)
+    _write_tsv(
+        directory / "channel-names.tsv", ("channel_id", "channel_title"), channel_names(store)
+    )
     _write_tsv(directory / "CHANGELOG.tsv", CHANGELOG_COLUMNS, changelog(store))
     meta = {"channelsCheckedAt": store.get("channels_checked_at") or None}
     _replace(directory / "meta.json", json.dumps(meta) + "\n")
+
+
+def channel_names(store: Store) -> list[dict[str, object]]:
+    """Names looked up for v2's channels whose videos carry none in `videos.tsv` (the API
+    fills them in, plan 013, decision 9)."""
+    rows = store.db.execute(
+        "SELECT c.id, c.title FROM channels c WHERE TRIM(c.title) != '' AND EXISTS ("
+        "SELECT 1 FROM uploads u WHERE u.channel_id = c.id AND u.state IN ('v2', 'removed') "
+        "AND TRIM(u.channel_title) = '') ORDER BY c.id"
+    )
+    return [{"channel_id": r["id"], "channel_title": r["title"]} for r in rows]
 
 
 CHANGELOG_COLUMNS = ("date", "added", "removed", "channels_added", "videos", "channels")
@@ -583,8 +884,7 @@ def changelog(store: Store) -> list[dict[str, object]]:
             "SELECT id, channel_id FROM uploads WHERE state IN ('v2', 'collected', 'removed')"
         )
     }
-    collected = {r["video_id"]: r["added_at"] for r in store.db.execute(
-        "SELECT video_id, added_at FROM collected")}  # fmt: skip
+    collected = {r["video_id"]: r["added_at"] for r in store.collected_rows()}
     events = [(at, "add", vid) for vid, at in collected.items()]
     events += [(r["removed_at"], "remove", r["video_id"]) for r in store.removed_rows()]
     # The reference set: v2's picks, also the ones removed since.

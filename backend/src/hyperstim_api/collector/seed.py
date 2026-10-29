@@ -10,11 +10,10 @@ import csv
 import time
 from pathlib import Path
 
-from hyperstim_api.collector.store import Store
+from hyperstim_api.collector.store import V2_JOINED, Store
 
 CHANNELS = Path("runs/channel-yield-probe/channels-p1.tsv")
 CATALOGUE = Path("runs/contemporary-v2/catalogue-cache")
-V2_JOINED = "2026-08-26"  # v2's scan
 
 
 def tier(subscribers: int) -> str:

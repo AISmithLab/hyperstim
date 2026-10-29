@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 from hyperstim_api.dataset import load_dataset
 from hyperstim_api.reload import DatasetStore
 from hyperstim_api.scoring import FEATURES
-from tests.conftest import VIDEOS, Row, video_row
+from tests.conftest import VIDEOS, Row, video_row, write_dataset
 
 T1 = "2026-10-20T10:00:00Z"
 T2 = "2026-10-21T10:00:00Z"
@@ -251,3 +251,74 @@ def test_lists_show_only_what_was_added_in_a_window(grown_client: TestClient) ->
 
 def test_added_must_be_a_utc_timestamp(grown_client: TestClient) -> None:
     assert grown_client.get("/api/videos", params={"addedFrom": "2026-10-20"}).status_code == 422
+
+
+def test_channels_without_a_name_take_the_looked_up_one(tmp_path: Path) -> None:
+    """Some reference videos carry no channel name; `videos.channel-names.tsv` fills it in,
+    for reference and added videos, and never replaces a name a video has."""
+    rows = [video_row(*v) for v in VIDEOS]
+    for row in rows:
+        if row["channel_id"] in ("chan-b", "chan-c"):
+            row["channel_title"] = ""
+    path = write_dataset(tmp_path / "videos.tsv", rows)
+    assert load_dataset(path).channels_by_id["chan-b"].name == ""
+    (tmp_path / "videos.channel-names.tsv").write_text(
+        "channel_id\tchannel_title\nchan-a\tNot used\nchan-b\tLooked up B\nchan-d\tLooked up D\n"
+    )
+    added = collected_row("new-d", "chan-d", 5.5, T1)
+    added["channel_title"] = ""
+    grown = load_dataset(path, write_collected(tmp_path / "collected", [added], []))
+    assert grown.channels_by_id["chan-a"].name == "Channel chan-a"
+    assert grown.channels_by_id["chan-b"].name == "Looked up B"
+    assert grown.videos_by_id["vid-b1"].channel == "Looked up B"
+    assert grown.channels_by_id["chan-c"].name == ""  # not looked up yet
+    assert grown.channels_by_id["chan-d"].name == "Looked up D"
+
+
+def test_an_incomplete_collected_video_is_left_out(
+    dataset_path: Path, tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
+    """Nothing incomplete is shown (plan 013, decision 12), even from a hand-edited file."""
+    rows = [collected_row(f"new-{k}", "chan-a", 5.5, T1) for k in ("ok", "title", "date", "name")]
+    rows[1]["title"] = " "
+    rows[2]["published_at"] = ""
+    rows[3]["channel_title"] = ""
+    grown = load_dataset(dataset_path, write_collected(tmp_path / "collected", rows, []))
+    assert [
+        v for v in ("new-ok", "new-title", "new-date", "new-name") if v in grown.videos_by_id
+    ] == ["new-ok"]
+    assert "Left out new-name from 2026.tsv: no name" in caplog.text
+
+
+def test_the_collectors_channel_names_fill_reference_videos_and_reload(
+    dataset_path: Path, collected: Path
+) -> None:
+    rows = [video_row(*v) for v in VIDEOS]
+    for row in rows:
+        if row["channel_id"] == "chan-c":
+            row["channel_title"] = ""
+    write_dataset(dataset_path, rows)
+    store = DatasetStore(dataset_path, collected, 300)
+    assert store.current.channels_by_id["chan-c"].name == ""
+    (collected / "channel-names.tsv").write_text("channel_id\tchannel_title\nchan-c\tLooked up C\n")
+    assert store.reload_if_changed()
+    assert store.current.channels_by_id["chan-c"].name == "Looked up C"
+
+
+def test_the_committed_reference_set_is_complete() -> None:
+    """Every reference video has what the site shows (plan 013, decisions 9 and 12): a title,
+    a channel ID and name (or one in `videos.channel-names.tsv`), a date and a measurement."""
+    data = Path(__file__).parents[1] / "data"
+    with (data / "videos.channel-names.tsv").open(newline="", encoding="utf-8") as fh:
+        names = {r["channel_id"]: r["channel_title"] for r in csv.DictReader(fh, delimiter="\t")}
+    with (data / "videos.tsv").open(newline="", encoding="utf-8") as fh:
+        rows = list(csv.DictReader(fh, delimiter="\t"))
+    gaps = [
+        r["video_id"]
+        for r in rows
+        if not all(r[k].strip() for k in ("video_id", "title", "channel_id", "published_at"))
+        or not (r["channel_title"].strip() or names.get(r["channel_id"], "").strip())
+        or all(not r[f].strip() for f in FEATURES)
+    ]
+    assert gaps == []
+    assert len(rows) == 16_375

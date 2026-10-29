@@ -90,7 +90,8 @@ class DataApi:
     def uploads_page(
         self, channel_id: str, page_token: str | None = None
     ) -> tuple[list[tuple[str, str]], str | None]:
-        """One page (newest first) of the channel's uploads: (video ID, published at)."""
+        """One page (newest first) of the channel's uploads: (video ID, published at). An upload
+        listed without a date has "" (the repair pass looks it up, plan 013, decision 12)."""
         params = {
             "playlistId": "UU" + channel_id[2:],  # the channel's uploads playlist
             "part": "contentDetails",
@@ -107,8 +108,8 @@ class DataApi:
         uploads = []
         for item in body.get("items", []):
             details = item.get("contentDetails", {})
-            if details.get("videoId") and details.get("videoPublishedAt"):
-                uploads.append((details["videoId"], details["videoPublishedAt"]))
+            if details.get("videoId"):
+                uploads.append((details["videoId"], details.get("videoPublishedAt") or ""))
         return uploads, body.get("nextPageToken")
 
     def videos(self, ids: list[str]) -> dict[str, Details]:
@@ -130,6 +131,7 @@ class DataApi:
                 description=snippet.get("description", ""),
                 tags=" | ".join(snippet.get("tags") or []),
                 channel_title=snippet.get("channelTitle", ""),
+                published_at=snippet.get("publishedAt", ""),
             )
         return out
 

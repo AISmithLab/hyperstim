@@ -119,6 +119,8 @@ class FakeYouTube:
         self.channels: dict[str, tuple[str, int, int]] = {}  # ID -> title, subscribers, videos
         self.calls: list[str] = []
         self.quota_exceeded = False
+        # (method, params) -> True: that call fails with HTTP 500
+        self.fails: Callable[[str, dict[str, str]], bool] = lambda method, params: False
 
     def video(self, video_id: str, **changes: Any) -> None:
         item: dict[str, Any] = {
@@ -139,6 +141,8 @@ class FakeYouTube:
         self.calls.append(method)
         if self.quota_exceeded:
             raise ApiError("HTTP 403: quotaExceeded", quota_exceeded=True)
+        if self.fails(method, params):
+            raise ApiError("HTTP 500: backendError")
         if method == "playlistItems":
             channel = "UC" + params["playlistId"][2:]
             if channel not in self.uploads:
@@ -738,12 +742,18 @@ def test_offline_videos_are_taken_out(
     collector.store.set_state("pick0000002", "v2", online_at=0)
     youtube.video("pick0000002", contentDetails__regionRestriction={"blocked": ["US"]})
     collector.check_online(clock.now)
+    assert collector.store.removed_rows() == []  # not on one answer: checked again in a day
+    clock.now += DAY_S - 60
+    collector.check_online(clock.now)
+    assert collector.store.removed_rows() == []
+    clock.now += 60
+    collector.check_online(clock.now)
     removed = {r["video_id"]: r["reason"] for r in collector.store.removed_rows()}
     assert removed == {"pick0000001": "gone", "pick0000002": "region"}
     text = (tmp_path / "data" / "collected" / "removed.tsv").read_text()
     assert "pick0000001" in text
     changelog = (tmp_path / "data" / "collected" / "CHANGELOG.tsv").read_text().splitlines()
-    assert changelog[-1].split("\t") == ["2026-10-26", "0", "2", "0", "0", "0"]
+    assert changelog[-1].split("\t") == ["2026-10-27", "0", "2", "0", "0", "0"]
 
 
 # --- the Data API budget -------------------------------------------------------------------
@@ -814,3 +824,286 @@ def test_seed_from_v2(tmp_path: Path) -> None:
     assert store.upload("more0000001").state == "new"  # type: ignore[union-attr]
     with pytest.raises(RuntimeError, match="already seeded"):
         seed(store, repo, dataset)
+
+
+# --- when something fails (decision 12) ----------------------------------------------------
+
+OTHER = "UC" + "b" * 22
+
+
+def test_a_failing_channel_list_waits_while_the_others_and_downloads_go_on(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.store.upsert_channel(id=OTHER, title="Other", status="in", source="v2", listed_at=0)
+    collector.store.update_channel(CHANNEL, listed_at=0)
+    youtube.uploads[OTHER] = [("othr0000001", "2024-05-01T00:00:00Z")]
+    youtube.fails = lambda method, params: params.get("playlistId") == "UU" + CHANNEL[2:]
+    collector.tick()
+    assert collector.store.known("othr0000001")  # the other channel was read
+    assert len(collected_ids(collector)) == 1  # and a video downloaded
+    calls = youtube.calls.count("playlistItems")
+    clock.now += 1800
+    collector.tick()
+    assert youtube.calls.count("playlistItems") == calls  # it waits an hour, not every tick
+    youtube.fails = lambda method, params: False
+    clock.now += 1800
+    collector.tick()
+    row = collector.store.db.execute("SELECT * FROM channels WHERE id = ?", (CHANNEL,)).fetchone()
+    assert (row["api_failures"], row["listed_at"]) == (0, clock.now)
+
+
+def test_a_failing_batch_of_details_waits_and_downloads_go_on(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()  # checks the uploads, downloads one
+    below = collector.store.cutoff()
+    late = next(f"late{i:07d}" for i in range(100_000) if sampling.rank(f"late{i:07d}") < below)
+    collector.store.add_uploads(CHANNEL, [(late, "2024-05-01T00:00:00Z")])
+    youtube.video(late)
+    youtube.fails = lambda method, params: method == "videos"
+    clock.now += 3600
+    collector.tick()
+    upload = collector.store.upload(late)
+    assert upload is not None and (upload.state, upload.api_failures) == ("new", 1)
+    assert len(collected_ids(collector)) == 2  # downloads went on
+    calls = youtube.calls.count("videos")
+    clock.now += 600
+    collector.tick()
+    assert youtube.calls.count("videos") == calls  # the job waits after the error
+    youtube.fails = lambda method, params: False
+    clock.now += 3600
+    collector.tick()
+    assert collector.store.upload(late).state == "eligible"  # type: ignore[union-attr]
+
+
+def test_a_missing_upload_is_asked_again_after_1_3_and_7_days(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    del youtube.videos[first]  # private for a while
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.check_candidates(clock.now)
+    upload = collector.store.upload(first)
+    assert upload is not None and (upload.state, upload.unsure) == ("new", 1)
+    clock.now += DAY_S
+    collector.check_candidates(clock.now)
+    assert collector.store.upload(first).unsure == 2  # type: ignore[union-attr]
+    youtube.video(first)  # public again
+    clock.now += 3 * DAY_S
+    collector.check_candidates(clock.now)
+    assert collector.store.upload(first).state == "eligible"  # type: ignore[union-attr]
+
+
+def test_an_undecided_shorts_probe_is_final_only_the_4th_time(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    youtube.video(first, contentDetails__duration="PT2M30S")
+    collector = make_collector(tmp_path, youtube, pipeline, clock, shorts={first: None})
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    for wait in (0, DAY_S, 3 * DAY_S, 7 * DAY_S):
+        clock.now += wait
+        assert collector.store.upload(first).state == "new"  # type: ignore[union-attr]
+        collector.check_candidates(clock.now)
+    upload = collector.store.upload(first)
+    assert upload is not None and (upload.state, upload.unsure) == ("ineligible", 4)
+    reason = collector.store.db.execute("SELECT reason FROM uploads WHERE id = ?", (first,))
+    assert reason.fetchone()[0] == "short"
+
+
+def test_a_half_written_removal_is_checked_again(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, [("pick0000001", "2020-01-01")])
+    collector.store.set_state("pick0000001", "removed", "gone")  # no removed.tsv row
+    collector.repair(clock.now)
+    upload = collector.store.upload("pick0000001")
+    assert upload is not None and upload.state == "v2"
+    assert collector.store.in_dataset(clock.now, clock.now, 50)[0].id == "pick0000001"
+
+
+def test_a_failed_backup_doesnt_stop_the_collector(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    (tmp_path / "clips").mkdir()
+    (tmp_path / "clips" / "backups").write_text("not a folder")  # as if the volume broke
+    collector.tick()
+    assert len(collected_ids(collector)) == 1
+    assert collector.store.get("backup_failures") == "1"
+    (tmp_path / "clips" / "backups").unlink()
+    clock.now += 1800
+    collector.tick()
+    assert not (tmp_path / "clips" / "backups").exists()  # waits an hour
+    clock.now += 1800
+    collector.tick()
+    assert (tmp_path / "clips" / "backups" / "collector-2026-10-26.db").exists()
+    assert collector.store.get("backup_failures") == "0"
+
+
+def test_an_unexpected_error_is_a_failed_try_that_takes_a_slot(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    pipeline.fail[first] = ("measure", None)  # crashes, not an AnalysisError
+    probed: list[str] = []
+
+    def blocked(video_id: str) -> bool:
+        probed.append(video_id)
+        return False
+
+    collector = make_collector(tmp_path, youtube, pipeline, clock, blocked=blocked)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    upload = collector.store.upload(first)
+    assert upload is not None and upload.state == "eligible"
+    assert collector.store.failures(first) == 1
+    assert probed == []  # not YouTube: no block probe
+    assert float(collector.store.get("next_download_at")) > clock.now  # the pace holds
+    collector.tick()
+    assert collector.store.attempts_since(0) == 1
+
+
+def test_a_new_channels_list_that_fails_on_page_3_goes_on_from_page_3(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    good = "UC" + "g" * 22
+    youtube.search[QUERIES[0]] = [good]
+    youtube.channels = {good: ("Good Songs", 50_000, 300)}
+    youtube.uploads[good] = [(f"good{i:07d}", "2024-05-01T00:00:00Z") for i in range(200)]
+    pages: list[str] = []
+
+    def fails(method: str, params: dict[str, str]) -> bool:
+        if method != "playlistItems" or params["playlistId"] != "UU" + good[2:]:
+            return False
+        pages.append(params.get("pageToken", "0"))
+        return params.get("pageToken") == "100" and pages.count("100") == 1
+
+    youtube.fails = fails
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.discover(clock.now)
+    store = collector.store
+    row = store.db.execute("SELECT * FROM channels WHERE id = ?", (good,)).fetchone()
+    assert (row["status"], row["full_listing"]) == ("in", "100")
+    assert (
+        store.db.execute("SELECT COUNT(*) FROM uploads WHERE channel_id = ?", (good,)).fetchone()[0]
+        == 100
+    )
+    clock.now += 3600
+    collector.finish_listings(clock.now)
+    assert pages == ["0", "50", "100", "100", "150"]  # pages 1 and 2 not read again
+    assert (
+        store.db.execute("SELECT COUNT(*) FROM uploads WHERE channel_id = ?", (good,)).fetchone()[0]
+        == 200
+    )
+    row = store.db.execute("SELECT * FROM channels WHERE id = ?", (good,)).fetchone()
+    assert row["full_listing"] is None
+
+
+def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
+    tmp_path: Path,
+) -> None:
+    import sqlite3
+
+    path = tmp_path / "collector.db"
+    old = sqlite3.connect(path)
+    old.executescript(
+        "CREATE TABLE channels (id TEXT PRIMARY KEY, title TEXT NOT NULL DEFAULT '', "
+        "subscriber_count INTEGER, video_count INTEGER, tier TEXT NOT NULL DEFAULT '', "
+        "status TEXT NOT NULL, source TEXT NOT NULL, queries TEXT NOT NULL DEFAULT '', "
+        "joined_at TEXT, checked_at TEXT, listed_at REAL);"
+        "CREATE TABLE uploads (id TEXT PRIMARY KEY, channel_id TEXT NOT NULL, "
+        "published_at TEXT NOT NULL, r REAL NOT NULL, state TEXT NOT NULL DEFAULT 'new', "
+        "reason TEXT NOT NULL DEFAULT '', retry_at REAL NOT NULL DEFAULT 0, checked_at REAL, "
+        "online_at REAL, title TEXT NOT NULL DEFAULT '', description TEXT NOT NULL DEFAULT '', "
+        "tags TEXT NOT NULL DEFAULT '', channel_title TEXT NOT NULL DEFAULT '', "
+        "duration_s INTEGER);"
+        "INSERT INTO channels (id, status, source, joined_at) VALUES "
+        "('UCv2', 'in', 'v2', '2026-08-26'), ('UCnew', 'in', 'discovery', "
+        "'2026-10-27T10:00:00Z'), ('UCnear', 'near_miss', 'v2', NULL);"
+        "INSERT INTO uploads (id, channel_id, published_at, r) VALUES ('vid', 'UCv2', '2024', 0.5);"
+    )
+    old.close()
+    store = Store(path)
+    listing = dict(store.db.execute("SELECT id, full_listing FROM channels").fetchall())
+    assert listing == {"UCv2": None, "UCnew": "", "UCnear": None}
+    upload = store.upload("vid")
+    assert upload is not None and (upload.unsure, upload.api_failures) == (0, 0)
+    store.close()
+    assert (
+        dict(Store(path).db.execute("SELECT id, full_listing FROM channels").fetchall()) == listing
+    )
+
+
+def test_a_video_without_a_channel_name_waits_until_the_repair_fills_it(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    youtube.video(first, snippet__channelTitle="")
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.update_channel(CHANNEL, title="")
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.store.set("repaired_day", "2026-10-26")
+    collector.tick()
+    assert collector.store.upload(first).state == "measured"  # type: ignore[union-attr]
+    assert collector.store.attempts_since(0) == 1  # measured: it took its slot
+    assert first not in collected_ids(collector)
+    exported = tmp_path / "data" / "collected" / "2026.tsv"
+    assert not exported.exists() or first not in exported.read_text()
+    youtube.channels[CHANNEL] = ("Found Name", 50_000, 300)
+    clock.now += DAY_S
+    collector.tick()  # the next day's repair
+    upload = collector.store.upload(first)
+    assert upload is not None and (upload.state, upload.channel_title) == (
+        "collected",
+        "Found Name",
+    )
+    row = next(r for r in collector.store.collected_rows() if r["video_id"] == first)
+    assert row["added_at"] == sampling_time(clock.now)  # added when it went on the site
+    assert first in exported.read_text()
+
+
+def test_uploads_listed_without_a_date_are_looked_up(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    youtube.uploads[CHANNEL] = [("nodate00001", "")]
+    youtube.video("nodate00001", snippet__publishedAt="2024-05-01T00:00:00Z")
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.update_channel(CHANNEL, listed_at=0)
+    collector.tick()
+    upload = collector.store.upload("nodate00001")
+    assert upload is not None and upload.published_at == "2024-05-01T00:00:00Z"
+
+
+def test_v2_channels_without_a_name_get_one_in_the_export(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.update_channel(CHANNEL, title="")
+    collector.store.add_uploads(CHANNEL, [("pick0000001", "2020-01-01")])
+    collector.store.set_state("pick0000001", "v2", online_at=clock.now)
+    youtube.channels[CHANNEL] = ("Found Name", 50_000, 300)
+    collector.repair(clock.now)
+    names = (tmp_path / "data" / "collected" / "channel-names.tsv").read_text()
+    assert names == f"channel_id\tchannel_title\n{CHANNEL}\tFound Name\n"
+    assert youtube.calls.count("channels") == 1
+    collector.repair(clock.now + DAY_S)
+    assert youtube.calls.count("channels") == 1  # known now: not asked again
