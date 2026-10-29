@@ -98,6 +98,8 @@ ADDED_COLUMNS = {
 V2_JOINED = "2026-08-26"
 # A channel's videos in the dataset or on their way: what the floor counts.
 HAVE_STATES = "('v2', 'measured', 'collected', 'eligible')"  # v2's scan: when v2's channels joined
+# A channel's videos in the dataset (measured ones too: they wait only for a name).
+IN_STATES = "('v2', 'measured', 'collected')"
 
 
 @dataclass(frozen=True)
@@ -320,15 +322,17 @@ class Store:
         return self.db.total_changes - before
 
     def next_eligible(self, now: float) -> Upload | None:
-        """The next eligible upload to download, not waiting for a retry: picks under the
-        cut-off first, then the floor's (the channels with the fewest videos first), each by
-        number."""
+        """The next eligible upload to download, not waiting for a retry: the channels with
+        the fewest videos in the dataset first, one level at a time up to `FLOOR` (every
+        channel at 1 gets its second before any gets its third), then by number over all
+        (decision 2). Whether it was picked under the cut-off or for the floor doesn't matter."""
         row = self.db.execute(
-            "SELECT * FROM uploads u WHERE state = 'eligible' AND retry_at <= ? "
-            "ORDER BY pick = 'floor', CASE WHEN pick = 'floor' THEN (SELECT COUNT(*) "
-            "FROM uploads d WHERE d.channel_id = u.channel_id "
-            "AND d.state IN ('v2', 'measured', 'collected')) END, r LIMIT 1",
-            (now,),
+            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
+            f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
+            "SELECT u.* FROM uploads u LEFT JOIN have h ON h.channel_id = u.channel_id "
+            "WHERE u.state = 'eligible' AND u.retry_at <= ? "
+            "ORDER BY MIN(COALESCE(h.n, 0), ?), u.r LIMIT 1",
+            (now, FLOOR),
         ).fetchone()
         return _upload(row) if row else None
 
@@ -341,6 +345,19 @@ class Store:
             (now, pick),
         )
         return int(row.fetchone()["n"])
+
+    def levels(self) -> dict[int, int]:
+        """Channels that are in with fewer than `FLOOR` videos in the dataset: how many have 0,
+        1, …"""
+        rows = self.db.execute(
+            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
+            f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
+            "SELECT COALESCE(h.n, 0) AS have, COUNT(*) AS n FROM channels c "
+            "LEFT JOIN have h ON h.channel_id = c.id "
+            "WHERE c.status = 'in' AND COALESCE(h.n, 0) < ? GROUP BY 1",
+            (FLOOR,),
+        )
+        return {int(r["have"]): int(r["n"]) for r in rows}
 
     def retrying(self, now: float) -> list[float]:
         """When the uploads waiting for a retry are due, soonest first."""

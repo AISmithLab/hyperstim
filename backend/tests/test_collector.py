@@ -815,8 +815,65 @@ def test_status_shows_the_channels_below_the_floor(
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     small_channel(collector, youtube, 0)
     assert floor_line(collector.store) == (
-        "Below the floor of 5: 1 channels lacking 4 videos, 1 of them with every upload checked"
+        "Below the floor of 5: 1 channels lacking 4 videos, 1 of them with every upload checked;"
+        " in the dataset: 1 with 1"
     )
+
+
+# --- fewest videos first (plan 013, decision 2) ---------------------------------------------
+
+TINY = "UC" + "c" * 22
+
+
+def waiting(store: Store, channel_id: str, ids: list[str], pick: str = "sample") -> None:
+    """Uploads of the channel checked eligible before, waiting to be downloaded."""
+    store.add_uploads(channel_id, [(v, "2024-05-01T00:00:00Z") for v in ids])
+    for video_id in ids:
+        store.set_state(video_id, "eligible", title="T", channel_title="C")
+        store.db.execute("UPDATE uploads SET pick = ? WHERE id = ?", (pick, video_id))
+
+
+def level_ids(prefix: str, n: int) -> list[str]:
+    return sorted((f"{prefix}{i:07d}" for i in range(n)), key=sampling.rank)
+
+
+def test_downloads_fill_the_fewest_videos_first_one_level_at_a_time(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL has its 5
+    store = collector.store
+    for channel_id, picks in ((SMALL, 1), (TINY, 2)):
+        store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
+        fill_floor(store, channel_id, picks)
+    # All picked under the cut-off before the change, CHANNEL's with the lowest numbers.
+    numbers = level_ids("lvl", 40)
+    waiting(store, CHANNEL, numbers[:10])
+    waiting(store, SMALL, numbers[10:20])
+    waiting(store, TINY, numbers[20:30], pick="floor")
+
+    def have(channel_id: str) -> int:
+        row = store.db.execute(
+            "SELECT COUNT(*) FROM uploads WHERE channel_id = ? AND state IN ('v2', 'collected')",
+            (channel_id,),
+        ).fetchone()
+        return int(row[0])
+
+    levels = [(have(SMALL), have(TINY))]
+    for _ in range(8):
+        run(collector, clock, 1, step=3600)
+        levels.append((have(SMALL), have(TINY)))
+    # Each download goes to a channel on the lowest level: 1 → 2 first, then both at 2 get
+    # their 3rd before either gets a 4th, and so on to 5.
+    assert levels[1] == (2, 2)
+    for (a, b), (c, d) in zip(levels[:7], levels[1:8], strict=True):
+        assert (c, d) in ((a + 1, b), (a, b + 1))
+        assert (c > a and a <= b) or (d > b and b <= a)
+    assert levels[7] == levels[8] == (5, 5)
+    # Only then the lowest number over all channels: CHANNEL's.
+    assert collected_ids(collector)[-1] == numbers[0]
+    within = [v for v in collected_ids(collector) if v in numbers[10:20]]
+    assert within == numbers[10:14]  # each channel's own lowest numbers first
 
 
 # --- the export the API reads --------------------------------------------------------------

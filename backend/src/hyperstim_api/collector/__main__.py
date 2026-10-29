@@ -168,10 +168,14 @@ def floor_line(store: Store) -> str:
         for r in below
     )
     lacking = sum(sampling.FLOOR - r["have"] for r in below)
-    return (
+    line = (
         f"Below the floor of {sampling.FLOOR}: {len(below)} channels lacking {lacking} videos, "
         f"{done} of them with every upload checked"
     )
+    levels = store.levels()  # what the downloads fill first, one level at a time
+    if levels:
+        line += "; in the dataset: " + ", ".join(f"{n} with {k}" for k, n in sorted(levels.items()))
+    return line
 
 
 def health(store: Store, now: float) -> list[str]:
