@@ -31,8 +31,8 @@ cp "${files[@]}" "$CLONE/$DEST/"
 "${git[@]}" diff --cached --quiet && exit 0
 
 # The message counts what's new since the last commit: rows in the year files and in
-# removed.tsv (without their header lines), and the change in channels (the changelog's last
-# column).
+# removed.tsv (without their header lines), and the change in channels (the changelog's
+# latest day, its columns found by name).
 rows() { # <rev, ":0" for the staged files> <path>...
   local rev="$1" n=0 path
   shift
@@ -44,7 +44,11 @@ rows() { # <rev, ":0" for the staged files> <path>...
 mapfile -t years < <("${git[@]}" ls-files -- "$DEST/[0-9][0-9][0-9][0-9].tsv")
 added=$(($(rows :0 "${years[@]}") - $(rows HEAD "${years[@]}")))
 removed=$(($(rows :0 "$DEST/removed.tsv") - $(rows HEAD "$DEST/removed.tsv")))
-channels() { "${git[@]}" show "$1:$DEST/CHANGELOG.tsv" 2>/dev/null | tail -n 1 | cut -f 6; }
+channels() {
+  "${git[@]}" show "$1:$DEST/CHANGELOG.tsv" 2>/dev/null |
+    awk -F'\t' 'NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
+      $1 > day { day = $1; n = $col["channels"] } END { print n }'
+}
 before="$(channels HEAD || true)" after="$(channels :0 || true)"
 new_channels=0
 [[ $before =~ ^[0-9]+$ && $after =~ ^[0-9]+$ ]] && new_channels=$((after - before))

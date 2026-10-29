@@ -10,14 +10,16 @@ from typing import Any
 
 import pytest
 
-from hyperstim_api.collector import sampling
+from hyperstim_api.collector import notes, sampling
 from hyperstim_api.collector.collector import (
     DAY_S,
     QUERIES,
     Collector,
     Settings,
+    changelog,
     load_classifier,
     scorer,
+    utc,
 )
 from hyperstim_api.collector.sampling import Details
 from hyperstim_api.collector.seed import seed
@@ -1038,10 +1040,82 @@ def test_export_is_read_by_the_api(
     with (folder / "CHANGELOG.tsv").open(newline="", encoding="utf-8") as fh:
         log = list(csv.DictReader(fh, delimiter="\t"))
     assert log == [
-        {"date": "2026-10-26", "added": "3", "removed": "0", "channels_added": "1",
-         "videos": "3", "channels": "1"}
+        {"date": "2026-10-26", "videos": "3", "channels": "1", "ch_1": "0", "ch_2": "0",
+         "ch_3": "1", "ch_4": "0", "ch_5plus": "0", "ch_ready": "0", "added_v": "3",
+         "removed_v": "0", "new_ch": "1",
+         "note": "Collecting starts: 150 videos a day, lowest r first"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
+
+
+def added(store: Store, channel_id: str, video_id: str, at: float) -> None:
+    """A video of the channel, checked a day before and added at `at`."""
+    store.add_uploads(channel_id, [(video_id, "2024-05-01T00:00:00Z")])
+    store.set_state(video_id, "collected", checked_at=at - DAY_S)
+    store.log_attempt(video_id, at, "collected")
+    store.add_collected(video_id, utc(at), None, {}, 0.0, {})
+
+
+def changelog_rows(store: Store, now: float) -> list[dict[str, object]]:
+    return [{k: v for k, v in row.items() if k != "note"} for row in changelog(store, now)]
+
+
+def test_the_changelog_counts_the_channels_by_their_videos_newest_day_first(
+    tmp_path: Path,
+) -> None:
+    store = make_store(tmp_path)
+    fill_floor(store, CHANNEL)  # 5 videos
+    for channel_id in (SMALL, TINY):
+        store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
+    fill_floor(store, SMALL, 1)
+    fill_floor(store, TINY, 2)
+    store.db.execute("INSERT INTO left_out VALUES (?, 0, 30)", (TINY,))  # counted nowhere
+    added(store, SMALL, "add00000001", NOW)  # its 2nd video
+    store.set_state("add00000001", "removed")  # taken out the next day
+    store.add_removed("add00000001", utc(NOW + DAY_S), "gone")
+    rows = changelog_rows(store, NOW + DAY_S)
+    assert rows == [
+        {"date": "2026-10-27", "videos": 6, "channels": 2, "ch_1": 1, "ch_2": 0, "ch_3": 0,
+         "ch_4": 0, "ch_5plus": 1, "ch_ready": 0, "added_v": 0, "removed_v": 1, "new_ch": 0},
+        {"date": "2026-10-26", "videos": 7, "channels": 2, "ch_1": 0, "ch_2": 1, "ch_3": 0,
+         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "added_v": 1, "removed_v": 0, "new_ch": 0},
+    ]  # fmt: skip
+    for row in rows:
+        assert sum(int(str(row[f"ch_{k}"])) for k in (1, 2, 3, 4, "5plus")) == row["channels"]
+
+
+def test_the_channels_ready_to_join_are_kept_per_day(tmp_path: Path) -> None:
+    store = make_store(tmp_path)  # CHANNEL has no videos
+    fill_floor(store, SMALL, 1)
+    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
+    added(store, SMALL, "add00000001", NOW)  # the first day with a change
+    waiting(store, CHANNEL, ["wait0000001"])
+    # The changelog's first run, two days later: today's count; the days before stay blank,
+    # since nothing records what was waiting then.
+    ready = {r["date"]: r["ch_ready"] for r in changelog(store, NOW + 2 * DAY_S)}
+    assert ready == {"2026-10-26": "", "2026-10-28": 1}
+    # The next day CHANNEL's video comes in and TINY's waits: the past day keeps its count.
+    store.set_state("wait0000001", "collected")
+    store.add_collected("wait0000001", utc(NOW + 3 * DAY_S), None, {}, 0.0, {})
+    store.upsert_channel(id=TINY, title="C", status="in", source="v2", listed_at=NOW)
+    waiting(store, TINY, ["wait0000002"])
+    ready = {r["date"]: r["ch_ready"] for r in changelog(store, NOW + 3 * DAY_S)}
+    assert ready == {"2026-10-26": "", "2026-10-28": 1, "2026-10-29": 1}
+
+
+def test_a_new_note_lands_on_the_first_day_the_collector_runs_with_it(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW)
+    monkeypatch.setattr(notes, "NOTES", (("Started", "2026-10-26"), ("Rule A", None)))
+    changelog(store, NOW + DAY_S)
+    monkeypatch.setattr(notes, "NOTES", (*notes.NOTES, ("Rule B", None)))
+    changelog(store, NOW + DAY_S + 60)  # a later release the same day
+    by_day = {r["date"]: r["note"] for r in changelog(store, NOW + 3 * DAY_S)}
+    assert by_day == {
+        "2026-10-29": "", "2026-10-27": "Rule A; Rule B", "2026-10-26": "Started",
+    }  # fmt: skip
 
 
 # --- channels ------------------------------------------------------------------------------
@@ -1118,7 +1192,8 @@ def test_offline_videos_are_taken_out(
     text = (tmp_path / "data" / "collected" / "removed.tsv").read_text()
     assert "pick0000001" in text
     changelog = (tmp_path / "data" / "collected" / "CHANGELOG.tsv").read_text().splitlines()
-    assert changelog[-1].split("\t") == ["2026-10-27", "0", "2", "0", "0", "0"]
+    assert changelog[1].split("\t")[:3] == ["2026-10-27", "0", "0"]  # the newest day first
+    assert changelog[1].split("\t")[9:12] == ["0", "2", "0"]
 
 
 # --- the Data API budget -------------------------------------------------------------------

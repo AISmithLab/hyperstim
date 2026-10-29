@@ -47,13 +47,16 @@ else
   echo none
 fi
 
-# The dataset's size at a commit: the last line of the collector's changelog (videos, channels),
-# else the reference set's count (videos only).
+# The dataset's size at a commit: the collector's changelog at its latest day (videos, channels;
+# its columns found by name), else the reference set's count (videos only).
 size() {
   local line
-  line="$(git show "$1:backend/data/collected/CHANGELOG.tsv" 2>/dev/null | tail -n 1)" || true
-  if [[ $line =~ ^[0-9]{4}- ]]; then
-    awk -F'\t' '{ print $5 "\t" $6 }' <<<"$line"
+  line="$(git show "$1:backend/data/collected/CHANGELOG.tsv" 2>/dev/null |
+    awk -F'\t' 'NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
+      $1 > day { day = $1; out = $col["videos"] "\t" $col["channels"] }
+      END { if (day != "") print out }')" || true
+  if [[ $line =~ ^[0-9]+$'\t'[0-9]+$ ]]; then
+    printf '%s\n' "$line"
   else
     git show "$1:backend/data/videos.meta.json" 2>/dev/null |
       sed -n 's/.*"videoCount": *\([0-9]*\).*/\1/p' | head -n 1

@@ -33,7 +33,7 @@ from typing import Any
 
 from hyperstim_api import scoring
 from hyperstim_api.analysis import BLOCK_MARKER, PIPELINE_DIR, AnalysisError, Pipeline
-from hyperstim_api.collector import sampling
+from hyperstim_api.collector import notes, sampling
 from hyperstim_api.collector.seed import tier
 from hyperstim_api.collector.store import KEPT, Store, Upload
 from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits, quota_day
@@ -865,7 +865,7 @@ class Collector:
     def export(self) -> None:
         """Writes the files the API reads; if that fails, tries again on the next tick."""
         try:
-            export(self.store, self.s.data_dir / "collected")
+            export(self.store, self.s.data_dir / "collected", self.clock())
         except Exception:
             self.store.set("export_due", "1")
             self.store.set("export_failures", int(self.store.get("export_failures", "0")) + 1)
@@ -887,7 +887,7 @@ COLUMNS = (
 )  # fmt: skip
 
 
-def export(store: Store, directory: Path) -> None:
+def export(store: Store, directory: Path, now: float | None = None) -> None:
     """The added videos (one file per year of adding, in the order added), the removed ones,
     the channels left out for their kids share (worked out again here) and a little metadata,
     each written whole and renamed into place, for the API to reload."""
@@ -927,7 +927,8 @@ def export(store: Store, directory: Path) -> None:
         [{"channel_id": r["channel_id"], "made_for_kids": r["kids"], "answers": r["answers"]}
          for r in left_out],
     )  # fmt: skip
-    _write_tsv(directory / "CHANGELOG.tsv", CHANGELOG_COLUMNS, changelog(store))
+    changes = changelog(store, time.time() if now is None else now)
+    _write_tsv(directory / "CHANGELOG.tsv", CHANGELOG_COLUMNS, changes)
     meta = {"channelsCheckedAt": store.get("channels_checked_at") or None}
     _replace(directory / "meta.json", json.dumps(meta) + "\n")
 
@@ -943,13 +944,20 @@ def channel_names(store: Store) -> list[dict[str, object]]:
     return [{"channel_id": r["id"], "channel_title": r["title"]} for r in rows]
 
 
-CHANGELOG_COLUMNS = ("date", "added", "removed", "channels_added", "videos", "channels")
+CHANGELOG_COLUMNS = (
+    "date", "videos", "channels", *(f"ch_{n}" for n in range(1, sampling.FLOOR)),
+    f"ch_{sampling.FLOOR}plus", "ch_ready", "added_v", "removed_v", "new_ch", "note",
+)  # fmt: skip
 
 
-def changelog(store: Store) -> list[dict[str, object]]:
-    """One line per UTC day with a change: videos added and removed, channels that got their
-    first video, and the totals at the end of the day (the release notes read the last line).
-    The channels left out now count as never there, as on the site."""
+def changelog(store: Store, now: float) -> list[dict[str, object]]:
+    """One line per UTC day with a change, a recorded count or a note, the newest first: the
+    site at the end of the day (videos, channels, the channels by their number of videos),
+    the channels ready to join, the day's changes and its notes. The channels left out now
+    count as never there, as on the site. Records today's channels ready to join first; the
+    days before the record began have none (blank), since they can't be counted again."""
+    today = time.strftime("%Y-%m-%d", time.gmtime(now))
+    store.date_notes(notes.NOTES, today)
     channel_of = {
         r["id"]: r["channel_id"]
         for r in store.db.execute(
@@ -966,32 +974,41 @@ def changelog(store: Store) -> list[dict[str, object]]:
         for r in store.removed_rows()
         if r["video_id"] in channel_of
     ]
+    events.sort()
+    store.record_daily(today, store.ready_to_join())
+    daily = store.daily()
+    notes_by_day = store.notes()
     # The reference set: v2's picks, also the ones removed since.
     visible = Counter(channel_of[v] for v in channel_of if v not in collected)
-    videos = sum(visible.values())
-    channels = len(visible)
+    days = sorted(d for d in {at[:10] for at, _, _ in events} | set(daily) | set(notes_by_day)
+                  if d <= today)  # fmt: skip
     lines: list[dict[str, object]] = []
-    for at, kind, video_id in sorted(events):
-        day = at[:10]
-        if not lines or lines[-1]["date"] != day:
-            lines.append(dict.fromkeys(CHANGELOG_COLUMNS, 0) | {"date": day})
-        line = lines[-1]
-        channel = channel_of.get(video_id, "")
-        if kind == "add":
-            line["added"] = int(str(line["added"])) + 1
-            if visible[channel] == 0:
-                line["channels_added"] = int(str(line["channels_added"])) + 1
-                channels += 1
-            visible[channel] += 1
-            videos += 1
-        elif visible[channel] > 0:
-            line["removed"] = int(str(line["removed"])) + 1
-            visible[channel] -= 1
-            videos -= 1
-            channels -= visible[channel] == 0
-        line["videos"] = videos
-        line["channels"] = channels
-    return lines
+    i = 0
+    for day in days:
+        line: dict[str, object] = {"added_v": 0, "removed_v": 0, "new_ch": 0}
+        while i < len(events) and events[i][0][:10] == day:
+            _, kind, video_id = events[i]
+            i += 1
+            channel = channel_of[video_id]
+            if kind == "add":
+                line["added_v"] = int(str(line["added_v"])) + 1
+                line["new_ch"] = int(str(line["new_ch"])) + (visible[channel] == 0)
+                visible[channel] += 1
+            elif visible[channel] > 0:
+                line["removed_v"] = int(str(line["removed_v"])) + 1
+                visible[channel] -= 1
+        levels = Counter(min(n, sampling.FLOOR) for n in visible.values() if n > 0)
+        line |= {
+            "date": day,
+            "videos": sum(visible.values()),
+            "channels": sum(levels.values()),
+            **{f"ch_{n}": levels[n] for n in range(1, sampling.FLOOR)},
+            f"ch_{sampling.FLOOR}plus": levels[sampling.FLOOR],
+            "ch_ready": daily.get(day, ""),
+            "note": "; ".join(notes_by_day.get(day, [])),
+        }
+        lines.append(line)
+    return lines[::-1]
 
 
 def _write_tsv(path: Path, columns: tuple[str, ...], rows: list[dict[str, object]]) -> None:

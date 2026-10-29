@@ -87,6 +87,11 @@ CREATE TABLE IF NOT EXISTS left_out (
     kids INTEGER NOT NULL,             -- of its answers, made for kids
     answers INTEGER NOT NULL           -- checked uploads whose made-for-kids answer is known
 );
+-- The changelog's counts that can't be worked out again later (decision 10), one row per UTC
+-- day, the day's last export wins: channels not on the site yet with a video waiting.
+CREATE TABLE IF NOT EXISTS daily (day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL);
+-- The changelog's notes (decision 10): each dated the first day the collector ran with it.
+CREATE TABLE IF NOT EXISTS notes (note TEXT PRIMARY KEY, day TEXT NOT NULL);
 """
 # Columns added since the first release (plan 013, decision 12), added to an older database
 # when it's opened: table -> column -> its definition.
@@ -401,6 +406,38 @@ class Store:
             "SELECT c.video_id, c.features FROM collected c JOIN uploads u ON u.id = c.video_id "
             "WHERE u.score IS NULL"
         ).fetchall()
+
+    # --- the changelog's counts and notes (decision 10) ----------------------------
+
+    def ready_to_join(self) -> int:
+        """Channels with no video in the dataset but an eligible upload waiting to download;
+        left-out channels not counted."""
+        row = self.db.execute(
+            "SELECT COUNT(DISTINCT channel_id) FROM uploads "
+            f"WHERE state = 'eligible' AND channel_id {KEPT} AND channel_id NOT IN "
+            "(SELECT channel_id FROM uploads WHERE state IN ('v2', 'collected'))"
+        ).fetchone()
+        return int(row[0])
+
+    def record_daily(self, day: str, ch_ready: int) -> None:
+        self.db.execute("INSERT OR REPLACE INTO daily VALUES (?, ?)", (day, ch_ready))
+
+    def daily(self) -> dict[str, int]:
+        return {r["day"]: r["ch_ready"] for r in self.db.execute("SELECT * FROM daily")}
+
+    def date_notes(self, notes: Iterable[tuple[str, str | None]], today: str) -> None:
+        """Dates each note not seen before: its own date if it has one, else today."""
+        self.db.executemany(
+            "INSERT OR IGNORE INTO notes VALUES (?, ?)",
+            [(note, day or today) for note, day in notes],
+        )
+
+    def notes(self) -> dict[str, list[str]]:
+        """The notes by day, in the order they were dated."""
+        out: dict[str, list[str]] = {}
+        for r in self.db.execute("SELECT note, day FROM notes ORDER BY rowid"):
+            out.setdefault(r["day"], []).append(r["note"])
+        return out
 
     # --- the kids share (decision 1) -----------------------------------------------
 
