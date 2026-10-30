@@ -145,11 +145,12 @@ function MeasurementTable({
             return (
               <tr
                 key={key}
-                className={`relative border-b border-navy/10 last:border-0 ${marked ? "bg-butter" : ""}`}
+                className={`border-b border-navy/10 last:border-0 ${marked ? "bg-butter" : ""}`}
                 data-row={key}
                 data-highlight={marked ? "" : undefined}
               >
-                <th scope="row" className={`h-12 py-1 pl-3 font-normal ${marked ? "rounded-l-xl" : ""}`}>
+                {/* The cell, not the row, anchors the info popover: Safari ignores `relative` on a row. */}
+                <th scope="row" className={`relative h-12 py-1 pl-3 font-normal ${marked ? "rounded-l-xl" : ""}`}>
                   <span className="flex min-w-0 items-center">
                     <span className="leading-tight font-semibold text-navy">{FEATURE_INFO[key].name}</span>
                     {marked && <span className="sr-only"> (a headline difference)</span>}

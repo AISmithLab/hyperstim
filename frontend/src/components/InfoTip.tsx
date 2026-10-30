@@ -7,7 +7,8 @@ import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "re
  * Enter/Space. The popover opens below the trigger (above if there is no room below) and is
  * right-aligned with it, so place it at the right end of a row with no controls under it.
  * With `align="row"` it starts at the left edge of the nearest positioned ancestor instead
- * (e.g. a `relative` row), for a trigger that sits after a label at the row's start.
+ * (e.g. a `relative` row; in a table its first cell, as Safari ignores `relative` on a `tr`),
+ * for a trigger that sits after a label at the row's start.
  */
 export default function InfoTip({
   id,

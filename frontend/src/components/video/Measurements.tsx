@@ -85,7 +85,7 @@ function Row({ feature, subject }: { feature: Feature; subject: Subject }) {
 /**
  * A measurement's info button: its description, then `children` (e.g. this video's raw value),
  * then a link to where How it works explains it. Opens from the row's left edge, so the row
- * must be `relative`.
+ * must be `relative` (in a table, its first cell: Safari ignores `relative` on a `tr`).
  */
 export function FeatureTip({
   featureKey,

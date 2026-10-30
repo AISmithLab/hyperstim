@@ -358,6 +358,15 @@ describe("ComparePage", () => {
     expect(screen.queryByRole("link", { name: /Browse the rankings/ })).toBeNull();
   });
 
+  it("opens a measurement's info popup from its row header, not the row (Safari ignores `relative` on a row)", async () => {
+    open(`a=${VIDEO_A}&b=${VIDEO_B}`);
+    const cuts = (await screen.findAllByRole("button", { name: /^About / })).find((b) =>
+      b.closest('[data-row="cuts_per_min"]'),
+    )!;
+    expect(cuts.closest("th")).toHaveClass("relative");
+    expect(document.querySelector("tr.relative")).toBeNull();
+  });
+
   it("empties a slot with × and puts focus in its picker", async () => {
     const user = userEvent.setup();
     open(`a=${VIDEO_A}&b=${VIDEO_B}`);

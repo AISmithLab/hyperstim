@@ -257,6 +257,7 @@ The frontend is built against mock data, then reviewed. There is no backend step
    - The link helpers move into `lib/youtube.ts` as one `readSearchInput` (a name, a video ID, a channel ID, a channel page link, or a link we can't use), shared with the rankings search (plan 007). The lookup's messages move to `lib/lookup-text.ts`, shared too.
    - Backend: the lookup returns `videoCount`.
    - Screenshots of both fields at 360 and 1280 px. Stop for review.
+7. **Safari and touch fixes** (2026-10-30, plan 017). The compare table's info popovers opened about a screen away from their button in Safari: the `th`, not the row, is `relative` now. A chart dot's popover goes when a finger leaves it too, so a scroll that starts on a dot leaves none behind. The picker's list is at most `40svh` tall, so the iPhone keyboard doesn't hide its lower options. `STYLE.md` (Compare table, Two-channel chart, Compare picker); tests.
 
 ## Review decisions
 
