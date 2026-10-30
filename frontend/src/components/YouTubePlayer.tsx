@@ -99,7 +99,7 @@ export default function YouTubePlayer({
         <>
           <iframe
             ref={frame}
-            src={`${PLAYER_ORIGIN}/embed/${videoId}?autoplay=1${api}`}
+            src={`${PLAYER_ORIGIN}/embed/${videoId}?autoplay=1&playsinline=1${api}`}
             title={title}
             allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
             allowFullScreen

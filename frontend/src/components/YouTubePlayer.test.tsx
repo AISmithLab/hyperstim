@@ -17,7 +17,7 @@ describe("YouTubePlayer", () => {
     await user.click(screen.getByRole("button", { name: "Play video: Snail time" }));
 
     const frame = screen.getByTitle("Snail time");
-    expect(frame).toHaveAttribute("src", "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1");
+    expect(frame).toHaveAttribute("src", "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&playsinline=1");
     expect(frame).toHaveFocus();
     expect(container.querySelector("img")).toBeNull();
   });
