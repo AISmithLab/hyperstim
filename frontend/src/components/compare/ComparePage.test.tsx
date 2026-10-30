@@ -443,6 +443,34 @@ describe("ComparePage", () => {
     expect(screen.queryByRole("region", { name: "Picked video" })).toBeNull();
   });
 
+  it("fits the suggestions above the on-screen keyboard, moving a low field up first and keeping it in view", async () => {
+    // A phone with the keyboard up: 373 px of a 664 px screen stay visible.
+    const view = Object.assign(new EventTarget(), { offsetTop: 0, height: 373 });
+    vi.stubGlobal("visualViewport", view);
+    const scrollBy = vi.fn();
+    vi.stubGlobal("scrollBy", scrollBy);
+    let fieldTop = 400; // low on the screen, behind the keyboard
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+      if (this.getAttribute("role") === "combobox") return { top: fieldTop, bottom: fieldTop + 48 } as DOMRect;
+      if (this.getAttribute("role") === "listbox") return { top: fieldTop + 60 } as DOMRect;
+      return { top: 0, bottom: 0 } as DOMRect;
+    });
+    const user = userEvent.setup();
+    open();
+    await user.type(screen.getAllByRole("combobox")[0], "r");
+    const list = await screen.findByRole("listbox");
+    await waitFor(() => expect(within(list).getAllByRole("option")).toHaveLength(2));
+    // The page moves the field to 16 px below the top of what's visible…
+    expect(scrollBy).toHaveBeenCalledWith({ top: 400 - 16 });
+    fieldTop = 16;
+    fireEvent.scroll(window);
+    // …and the list ends 20 px above the keyboard: 373 − (16 + 60) − 20.
+    expect(list.style.maxHeight).toBe("min(21rem, 277px)");
+    expect(scrollBy).toHaveBeenCalledTimes(1);
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
   it("has no accessibility violations with empty pickers and with suggestions open", async () => {
     const user = userEvent.setup();
     open();

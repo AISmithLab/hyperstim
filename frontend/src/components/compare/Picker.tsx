@@ -4,6 +4,7 @@ import {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
   type KeyboardEvent,
@@ -104,6 +105,7 @@ export default function Picker({
 }) {
   const id = useId();
   const input = useRef<HTMLInputElement>(null);
+  const list = useRef<HTMLUListElement>(null);
   const text = TEXT[view];
   const [value, setValue] = useState("");
   const [query, setQuery] = useState("");
@@ -210,6 +212,7 @@ export default function Picker({
   }
   const expanded = open && options.length > 0;
   const showPopup = open && (options.length > 0 || message !== null);
+  const room = useRoomBelow(list, input, expanded);
 
   const choose = (option: Option) => {
     setOpen(false);
@@ -311,11 +314,13 @@ export default function Picker({
           className="absolute inset-x-0 top-full z-20 mt-2 rounded-2xl border border-navy/15 bg-white p-2 shadow-[0_4px_16px_rgb(15_46_138/0.08)]"
         >
           <ul
+            ref={list}
             id={`${id}-list`}
             role="listbox"
             aria-label={view === "videos" ? "Suggested videos" : "Suggested channels"}
             onScroll={onScroll}
             // About six options in view; the rest scroll, and more load near the end.
+            style={room === null ? undefined : { maxHeight: `min(21rem, ${room}px)` }}
             className={`max-h-[21rem] overflow-y-auto overscroll-contain ${current ? "" : "opacity-60"}`}
           >
             {expanded &&
@@ -369,4 +374,60 @@ export default function Picker({
       </p>
     </div>
   );
+}
+
+/** Room the list keeps above the screen's bottom edge, or the keyboard's top: its popup's padding and a gap. */
+const BELOW = 20;
+/** A list never gets shorter than two options. */
+const MIN_ROOM = 104;
+/** With less room than three options when it opens, the page moves the field up first. */
+const FEW = 156;
+/** Where the field lands when the page moves it: this far below the top of what's visible. */
+const FIELD_TOP = 16;
+
+/**
+ * The list's height that fits on screen, above the on-screen keyboard when there is one: the
+ * visual viewport shrinks for the keyboard, while `svh` and the layout don't (plan 008). When the
+ * list opens with little room under the field (the field low on the screen, or under the
+ * keyboard), the page first scrolls the field near the top of what's visible, once, so the field
+ * stays in view with the list under it. Null while closed.
+ */
+function useRoomBelow(
+  list: React.RefObject<HTMLUListElement | null>,
+  field: React.RefObject<HTMLInputElement | null>,
+  open: boolean,
+): number | null {
+  const [room, setRoom] = useState<number | null>(null);
+  useLayoutEffect(() => {
+    if (!open) return;
+    const view = window.visualViewport;
+    let moved = false;
+    const fit = () => {
+      const top = list.current?.getBoundingClientRect().top;
+      const box = field.current?.getBoundingClientRect();
+      if (top === undefined || !box) return;
+      // What's visible, in the page's coordinates: the keyboard covers the bottom.
+      const visibleTop = view ? view.offsetTop : 0;
+      const visibleBottom = view ? view.offsetTop + view.height : window.innerHeight;
+      const space = Math.floor(visibleBottom - top - BELOW);
+      const fieldHidden = box.top < visibleTop || box.bottom > visibleBottom;
+      if (!moved && (space < FEW || fieldHidden)) {
+        moved = true;
+        window.scrollBy({ top: box.top - visibleTop - FIELD_TOP });
+        // The scroll event fits the list again.
+        return;
+      }
+      setRoom(Math.max(MIN_ROOM, space));
+    };
+    fit();
+    view?.addEventListener("resize", fit);
+    view?.addEventListener("scroll", fit);
+    window.addEventListener("scroll", fit, { passive: true });
+    return () => {
+      view?.removeEventListener("resize", fit);
+      view?.removeEventListener("scroll", fit);
+      window.removeEventListener("scroll", fit);
+    };
+  }, [open, list, field]);
+  return open ? room : null;
 }

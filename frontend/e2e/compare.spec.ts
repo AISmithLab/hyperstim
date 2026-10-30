@@ -105,4 +105,24 @@ test.describe("compare", () => {
     await expect(page).toHaveURL(/\/compare\//);
   });
 
+  test("the suggestions fit above an on-screen keyboard, with the field in view", async ({ page }) => {
+    test.skip(!isPhone(), "phones have the on-screen keyboard");
+    // The keyboard takes the bottom 291 px, as on an iPhone: the visual viewport shrinks.
+    await page.addInitScript(() => {
+      const view = Object.assign(new EventTarget(), { offsetTop: 0, offsetLeft: 0, scale: 1 });
+      Object.defineProperties(view, { height: { get: () => innerHeight - 291 }, width: { get: () => innerWidth } });
+      Object.defineProperty(window, "visualViewport", { value: view });
+    });
+    await page.goto("/compare/");
+    const field = page.getByRole("region", { name: "Video A" }).getByRole("combobox");
+    await field.tap();
+    await page.keyboard.type("a");
+    const list = page.getByRole("listbox").first();
+    await expect(list.getByRole("option").first()).toBeVisible();
+    const visible = page.viewportSize()!.height - 291;
+    await expect.poll(async () => (await list.boundingBox())!.y + (await list.boundingBox())!.height).toBeLessThanOrEqual(visible);
+    const box = (await field.boundingBox())!;
+    expect(box.y).toBeGreaterThanOrEqual(0);
+    expect(box.y + box.height).toBeLessThanOrEqual(visible);
+  });
 });
