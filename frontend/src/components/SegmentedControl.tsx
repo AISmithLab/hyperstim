@@ -30,7 +30,8 @@ export default function SegmentedControl<T extends string>({
           onClick={() => onChange(option.value)}
           className="group flex min-h-11 rounded-full p-1 text-sm font-semibold text-navy"
         >
-          <span className="flex items-center rounded-full px-3 group-hover:bg-sky group-aria-pressed:bg-sunny">
+          {/* Its own height: Safari doesn't stretch a button's content to the button (STYLE.md, Browser pitfalls). */}
+          <span className="flex min-h-9 items-center rounded-full px-3 group-hover:bg-sky group-aria-pressed:bg-sunny">
             {option.label}
           </span>
         </button>

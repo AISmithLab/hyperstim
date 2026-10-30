@@ -192,6 +192,7 @@ The list endpoints' full contract (sorting by measurement, `order`, category, se
 7. **Backend scaffold.** FastAPI app, env config (`DATASET_PATH`, `CORS_ORIGIN`), `.env.example`, ruff + mypy + pytest, CI job. Dataset loaded into memory at startup.
 8. **Backend endpoints.** `/api/health`, `/api/meta`, `/api/videos` (sort + limit), `/api/channels` (sort, limit, minVideos). Pytest against a small synthetic fixture dataset (ranking order, channel threshold, limits, bad params → 422).
 9. **Connect.** Frontend uses the real backend when `NEXT_PUBLIC_API_BASE` is set; run both locally and check the page end to end. `frontend/.env.example` now defaults to the local backend (`http://localhost:8000`, mock off); CI builds keep using the mock.
+10. **Safari fixes** (2026-10-30, plan 017). In Safari, a tap anywhere in the rankings card opened the least stimulating video, as Safari ignores `relative` on a table row. The name's link now covers its cell, and a click elsewhere in the row opens it (`LinkedRow`). The Videos/Channels pill gets its own height (`min-h-9`). `STYLE.md` (Tables, Segmented control, Browser pitfalls); tests.
 
 ## Review decisions
 

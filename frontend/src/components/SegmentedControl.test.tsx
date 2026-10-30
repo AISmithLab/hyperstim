@@ -37,6 +37,14 @@ describe("SegmentedControl", () => {
     expect(group.getAllByRole("button", { pressed: true })).toHaveLength(1);
   });
 
+  it("gives each pill its own height, as Safari doesn't stretch it to the button", () => {
+    render(<Controlled />);
+    for (const button of screen.getAllByRole("button")) {
+      expect(button).toHaveClass("min-h-11", "p-1");
+      expect(button.firstElementChild).toHaveClass("min-h-9");
+    }
+  });
+
   it("switches the pressed option on click", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
