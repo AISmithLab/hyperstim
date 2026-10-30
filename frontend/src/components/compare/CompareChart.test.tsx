@@ -1,8 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelDetail, ChannelVideo, Feature } from "@/lib/api";
 import { expectNoAxeViolations } from "@/test/axe";
 import CompareChart from "./CompareChart";
+import { HOLD_MS } from "./hold-spread";
 
 const CUTS = "inter_cut_dssim_mean"; // no value: "No cuts", drawn as a ×
 const LOUD = "lufs"; // no value: "No sound", left out
@@ -121,6 +122,61 @@ describe("CompareChart", () => {
     expect(screen.getByRole("button", { name: /Title a2/ })).toHaveAttribute("aria-current", "true");
     fireEvent.click(b1);
     expect(onOpen).toHaveBeenCalledWith("b-b1");
+  });
+
+  describe("hold to spread (touch)", () => {
+    // jsdom has no layout: the chart's box is at 0, 0, so touch positions are chart positions.
+    const touch = (x: number, y: number) => ({ touches: [{ clientX: x, clientY: y }], changedTouches: [{ clientX: x, clientY: y }] });
+    const dotAt = (container: HTMLElement, k: string) => {
+      const hit = q(container, `[data-hit="${k}"]`)!;
+      return [Number(hit.getAttribute("cx")), Number(hit.getAttribute("cy"))];
+    };
+    const svgOf = (container: HTMLElement) => container.querySelector("svg")!;
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
+
+    it("spreads the dots around a finger held still, fades the rest, and opens the one it lifts on", () => {
+      const { container } = renderChart();
+      const [x, y] = dotAt(container, "a-a1");
+      const svg = svgOf(container);
+      const before = Array.from(container.querySelectorAll("[data-dot]"), (d) => d.outerHTML);
+      fireEvent.touchStart(svg, touch(x + 3, y));
+      act(() => vi.advanceTimersByTime(HOLD_MS));
+      // The finger's dot is picked: larger, in the popover; the dots away from it fade.
+      expect(q(container, "[data-popover]")).toHaveTextContent("Title a1");
+      expect(Array.from(container.querySelectorAll("[data-dot]"), (d) => d.outerHTML)).not.toEqual(before);
+      expect(container.querySelectorAll("[data-dot].opacity-30").length).toBeGreaterThan(0);
+      expect(q(container, '[data-trend="a"]')).toHaveClass("opacity-30");
+      const move = fireEvent.touchMove(svg, touch(x + 4, y + 1));
+      expect(move).toBe(false); // the page doesn't scroll while the chart has the finger
+      fireEvent.touchEnd(svg, touch(x + 4, y + 1));
+      expect(onOpen).toHaveBeenCalledWith("a-a1");
+      expect(q(container, "[data-popover]")).toBeNull();
+      expect(container.querySelectorAll("[data-dot].opacity-30")).toHaveLength(0);
+    });
+
+    it("leaves a finger that moves before the hold to the page's scrolling", () => {
+      const { container } = renderChart();
+      const [x, y] = dotAt(container, "a-a1");
+      const svg = svgOf(container);
+      fireEvent.touchStart(svg, touch(x, y));
+      const move = fireEvent.touchMove(svg, touch(x, y + 20));
+      act(() => vi.advanceTimersByTime(HOLD_MS));
+      expect(move).toBe(true);
+      expect(q(container, "[data-popover]")).toBeNull();
+      fireEvent.touchEnd(svg, touch(x, y + 20));
+      expect(onOpen).not.toHaveBeenCalled();
+    });
+
+    it("opens nothing when lifted away from every dot", () => {
+      const { container } = renderChart();
+      const svg = svgOf(container);
+      fireEvent.touchStart(svg, touch(5, 5));
+      act(() => vi.advanceTimersByTime(HOLD_MS));
+      expect(q(container, "[data-popover]")).toBeNull();
+      fireEvent.touchEnd(svg, touch(5, 5));
+      expect(onOpen).not.toHaveBeenCalled();
+    });
   });
 
   it("has no thumbnails on phones", () => {

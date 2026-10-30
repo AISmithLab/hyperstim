@@ -81,4 +81,28 @@ test.describe("compare", () => {
     await expect(page).toHaveURL(/\/compare\//);
   });
 
+  test("a finger held on the chart spreads the dots, and lifting opens the one under it", async ({ page, request }) => {
+    // A held, sliding touch needs Chromium's DevTools input; Playwright's touchscreen only taps.
+    test.skip(test.info().project.name !== "chromium-phone", "held touches are sent through Chromium's DevTools");
+    const [c1, c2] = await topChannels(request, 2);
+    await page.goto(`/compare/?view=channels&a=${c1.id}&b=${c2.id}`);
+    const hit = page.locator("[data-hit]").first();
+    await hit.scrollIntoViewIfNeeded();
+    const box = (await hit.boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    const cdp = await page.context().newCDPSession(page);
+    const send = (type: "touchStart" | "touchMove" | "touchEnd", px: number, py: number) =>
+      cdp.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x: px, y: py }] });
+    await send("touchStart", x, y);
+    await page.waitForTimeout(500);
+    await send("touchMove", x + 1, y);
+    await expect(page.locator("[data-popover]")).toBeVisible();
+    await expect(page.locator("[data-dot].opacity-30").first()).toBeAttached();
+    await send("touchEnd", x + 1, y);
+    await expect(page.getByRole("region", { name: "Picked video" })).toBeVisible();
+    await expect(page.locator("[data-popover]")).toHaveCount(0);
+    await expect(page).toHaveURL(/\/compare\//);
+  });
+
 });
