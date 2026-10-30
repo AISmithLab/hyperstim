@@ -17,6 +17,7 @@ from hyperstim_api.collector.collector import (
     Collector,
     Settings,
     changelog,
+    left_out_rows,
     load_classifier,
     scorer,
     utc,
@@ -984,7 +985,9 @@ def test_a_left_out_channel_gets_no_downloads_or_floor_and_comes_back(
     assert [r["channel_id"] for r in store.db.execute("SELECT * FROM left_out")] == [SMALL]
     rows = list(csv.DictReader((tmp_path / "data" / "collected" / "excluded-channels.tsv").open(),
                                delimiter="\t"))  # fmt: skip
-    assert rows == [{"channel_id": SMALL, "made_for_kids": "2", "answers": "22"}]
+    # The numbers behind it, and its 3 v2 picks the site doesn't show.
+    assert rows == [{"channel_id": SMALL, "channel_title": "Small", "checked": "22",
+                     "for_kids": "2", "kids_pct": "9.1", "videos": "3"}]  # fmt: skip
     run(collector, clock, 5, step=3600)
     assert collected_ids(collector) == []  # nothing downloaded
     # Its uploads are still checked as the cut-off rises (their answers decide whether it comes
@@ -1041,7 +1044,7 @@ def test_export_is_read_by_the_api(
         log = list(csv.DictReader(fh, delimiter="\t"))
     assert log == [
         {"date": "2026-10-26", "videos": "3", "channels": "1", "ch_1": "0", "ch_2": "0",
-         "ch_3": "1", "ch_4": "0", "ch_5plus": "0", "ch_ready": "0", "added_v": "3",
+         "ch_3": "1", "ch_4": "0", "ch_5plus": "0", "ch_ready": "0", "ch_out": "0", "added_v": "3",
          "removed_v": "0", "new_ch": "1",
          "note": "Collecting starts: 150 videos a day, lowest r first"}
     ]  # fmt: skip
@@ -1076,9 +1079,11 @@ def test_the_changelog_counts_the_channels_by_their_videos_newest_day_first(
     rows = changelog_rows(store, NOW + DAY_S)
     assert rows == [
         {"date": "2026-10-27", "videos": 6, "channels": 2, "ch_1": 1, "ch_2": 0, "ch_3": 0,
-         "ch_4": 0, "ch_5plus": 1, "ch_ready": 0, "added_v": 0, "removed_v": 1, "new_ch": 0},
+         "ch_4": 0, "ch_5plus": 1, "ch_ready": 0, "ch_out": 1, "added_v": 0, "removed_v": 1,
+         "new_ch": 0},
         {"date": "2026-10-26", "videos": 7, "channels": 2, "ch_1": 0, "ch_2": 1, "ch_3": 0,
-         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "added_v": 1, "removed_v": 0, "new_ch": 0},
+         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "", "added_v": 1, "removed_v": 0,
+         "new_ch": 0},
     ]  # fmt: skip
     for row in rows:
         assert sum(int(str(row[f"ch_{k}"])) for k in (1, 2, 3, 4, "5plus")) == row["channels"]
@@ -1101,6 +1106,41 @@ def test_the_channels_ready_to_join_are_kept_per_day(tmp_path: Path) -> None:
     waiting(store, TINY, ["wait0000002"])
     ready = {r["date"]: r["ch_ready"] for r in changelog(store, NOW + 3 * DAY_S)}
     assert ready == {"2026-10-26": "", "2026-10-28": 1, "2026-10-29": 1}
+
+
+def test_the_channels_left_out_are_kept_per_day(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    fill_floor(store, CHANNEL, 1)
+    added(store, CHANNEL, "add00000001", NOW)  # the first day with a change
+    # A day recorded before `ch_out` was: its `ch_ready` stays, its `ch_out` is blank.
+    store.db.execute("INSERT INTO daily (day, ch_ready) VALUES ('2026-10-27', 4)")
+    for channel_id in (SMALL, TINY):  # left out, one with a video and one without
+        store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
+        answered(store, channel_id, 0, 20, channel_id[-3:])
+    fill_floor(store, SMALL, 1)
+    store.update_left_out()
+    rows = {r["date"]: (r["ch_ready"], r["ch_out"]) for r in changelog(store, NOW + 2 * DAY_S)}
+    assert rows == {"2026-10-26": ("", ""), "2026-10-27": (4, ""), "2026-10-28": (0, 2)}
+    # The next day TINY's answers bring it back: the past day keeps its count.
+    answered(store, TINY, 20, 0, "kid")
+    store.update_left_out()
+    out = {r["date"]: r["ch_out"] for r in changelog(store, NOW + 3 * DAY_S)}
+    assert out == {"2026-10-26": "", "2026-10-27": "", "2026-10-28": 2, "2026-10-29": 1}
+
+
+def test_the_left_out_list_counts_only_the_videos_the_site_would_show(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    picks = fill_floor(store, SMALL, 2)
+    store.set_state(picks[0], "removed")  # gone offline: not counted
+    added(store, SMALL, "add00000001", NOW)
+    waiting(store, SMALL, ["wait0000001"])  # not downloaded: not counted
+    answered(store, SMALL, 1, 32, "nfk")  # 1 of 33, with the added and waiting ones: 3 of 35
+    store.update_left_out()
+    assert left_out_rows(store) == [
+        {"channel_id": SMALL, "channel_title": "Small", "checked": 35, "for_kids": 3,
+         "kids_pct": "8.6", "videos": 2}
+    ]  # fmt: skip
 
 
 def test_a_new_note_lands_on_the_first_day_the_collector_runs_with_it(
@@ -1193,7 +1233,7 @@ def test_offline_videos_are_taken_out(
     assert "pick0000001" in text
     changelog = (tmp_path / "data" / "collected" / "CHANGELOG.tsv").read_text().splitlines()
     assert changelog[1].split("\t")[:3] == ["2026-10-27", "0", "0"]  # the newest day first
-    assert changelog[1].split("\t")[9:12] == ["0", "2", "0"]
+    assert changelog[1].split("\t")[10:13] == ["0", "2", "0"]  # added_v, removed_v, new_ch
 
 
 # --- the Data API budget -------------------------------------------------------------------
@@ -1477,6 +1517,8 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
         "('UCv2', 'in', 'v2', '2026-08-26'), ('UCnew', 'in', 'discovery', "
         "'2026-10-27T10:00:00Z'), ('UCnear', 'near_miss', 'v2', NULL);"
         "INSERT INTO uploads (id, channel_id, published_at, r) VALUES ('vid', 'UCv2', '2024', 0.5);"
+        "CREATE TABLE daily (day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL);"
+        "INSERT INTO daily VALUES ('2026-10-29', 17);"
     )
     old.close()
     store = Store(path)
@@ -1485,6 +1527,8 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
     upload = store.upload("vid")
     assert upload is not None and (upload.unsure, upload.api_failures) == (0, 0)
     assert upload.pick == "sample"  # everything picked before the floor
+    day = store.daily()["2026-10-29"]
+    assert (day["ch_ready"], day["ch_out"]) == (17, None)  # recorded before `ch_out` was
     store.close()
     assert (
         dict(Store(path).db.execute("SELECT id, full_listing FROM channels").fetchall()) == listing

@@ -332,7 +332,8 @@ def test_a_left_out_channel_is_never_there_and_no_score_moves(
     them, so every other video's score is unchanged."""
     before = load_dataset(dataset_path, collected)
     (collected / "excluded-channels.tsv").write_text(
-        "channel_id\tmade_for_kids\tanswers\nchan-a\t1\t40\n"
+        "channel_id\tchannel_title\tchecked\tfor_kids\tkids_pct\tvideos\n"
+        "chan-a\tChannel A\t40\t1\t2.5\t6\n"
     )
     grown = load_dataset(dataset_path, collected)
     gone = {"vid-a1", "vid-a2", "vid-a3", "vid-a4", "vid-a5", "new-high"}
@@ -356,6 +357,7 @@ def test_a_channel_comes_back_when_its_left_out_file_changes(
     dataset_path: Path, collected: Path
 ) -> None:
     left_out = collected / "excluded-channels.tsv"
+    # The file's first layout (before plan 013's step 22), still read until the next export.
     left_out.write_text("channel_id\tmade_for_kids\tanswers\nchan-c\t0\t25\n")
     store = DatasetStore(dataset_path, collected, 300)
     assert "chan-c" not in store.current.channels_by_id

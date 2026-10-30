@@ -88,8 +88,9 @@ CREATE TABLE IF NOT EXISTS left_out (
     answers INTEGER NOT NULL           -- checked uploads whose made-for-kids answer is known
 );
 -- The changelog's counts that can't be worked out again later (decision 10), one row per UTC
--- day, the day's last export wins: channels not on the site yet with a video waiting.
-CREATE TABLE IF NOT EXISTS daily (day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL);
+-- day, the day's last export wins: channels not on the site yet with a video waiting, and
+-- channels left out (NULL on the days before it was recorded).
+CREATE TABLE IF NOT EXISTS daily (day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL, ch_out INTEGER);
 -- The changelog's notes (decision 10): each dated the first day the collector ran with it.
 CREATE TABLE IF NOT EXISTS notes (note TEXT PRIMARY KEY, day TEXT NOT NULL);
 """
@@ -107,6 +108,7 @@ ADDED_COLUMNS = {
         "pick": "TEXT NOT NULL DEFAULT 'sample'",  # everything checked before was `sample`
         "score": "REAL",  # filled in when the collector starts
     },
+    "daily": {"ch_out": "INTEGER"},
 }
 V2_JOINED = "2026-08-26"
 # A channel's videos in the dataset or on their way: what the floor counts.
@@ -419,11 +421,15 @@ class Store:
         ).fetchone()
         return int(row[0])
 
-    def record_daily(self, day: str, ch_ready: int) -> None:
-        self.db.execute("INSERT OR REPLACE INTO daily VALUES (?, ?)", (day, ch_ready))
+    def record_daily(self, day: str, ch_ready: int, ch_out: int) -> None:
+        self.db.execute(
+            "INSERT OR REPLACE INTO daily (day, ch_ready, ch_out) VALUES (?, ?, ?)",
+            (day, ch_ready, ch_out),
+        )
 
-    def daily(self) -> dict[str, int]:
-        return {r["day"]: r["ch_ready"] for r in self.db.execute("SELECT * FROM daily")}
+    def daily(self) -> dict[str, sqlite3.Row]:
+        """The recorded counts by day: `ch_ready`, `ch_out` (None before it was recorded)."""
+        return {r["day"]: r for r in self.db.execute("SELECT * FROM daily")}
 
     def date_notes(self, notes: Iterable[tuple[str, str | None]], today: str) -> None:
         """Dates each note not seen before: its own date if it has one, else today."""
@@ -456,6 +462,17 @@ class Store:
                 [(r["channel_id"], r["kids"], r["answers"]) for r in out],
             )
         return out
+
+    def left_out_list(self) -> list[sqlite3.Row]:
+        """The channels left out at the last `update_left_out`, by ID: `channel_id`, `title`,
+        `kids`, `answers`, and `videos` (its videos in the dataset, as the site would count
+        them)."""
+        return self.db.execute(
+            "SELECT l.channel_id, COALESCE(c.title, '') AS title, l.kids, l.answers, "
+            "(SELECT COUNT(*) FROM uploads u WHERE u.channel_id = l.channel_id "
+            "AND u.state IN ('v2', 'collected')) AS videos "
+            "FROM left_out l LEFT JOIN channels c ON c.id = l.channel_id ORDER BY l.channel_id"
+        ).fetchall()
 
     def levels(self) -> dict[int, int]:
         """Channels that are in and not left out, with fewer than `FLOOR` videos in the

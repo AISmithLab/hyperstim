@@ -13,14 +13,14 @@ COMMIT_DATA = ROOT / "scripts" / "commit-data.sh"
 RELEASE_NOTES = ROOT / "scripts" / "release-notes.sh"
 
 COLUMNS = ["date", "videos", "channels", "ch_1", "ch_2", "ch_3", "ch_4", "ch_5plus", "ch_ready",
-           "added_v", "removed_v", "new_ch", "note"]  # fmt: skip
+           "ch_out", "added_v", "removed_v", "new_ch", "note"]  # fmt: skip
 HEADER = "\t".join(COLUMNS) + "\n"
 
 
 def line(day: str, videos: int, channels: int, added: int, removed: int, new: int) -> str:
     """A changelog row; the per-level counts are made up (nothing here reads them)."""
     return "\t".join(
-        [day, str(videos), str(channels), "40", "20", "10", "5", "500", "", str(added),
+        [day, str(videos), str(channels), "40", "20", "10", "5", "500", "", "", str(added),
          str(removed), str(new), ""]
     ) + "\n"  # fmt: skip
 

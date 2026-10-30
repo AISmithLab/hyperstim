@@ -892,7 +892,7 @@ def export(store: Store, directory: Path, now: float | None = None) -> None:
     the channels left out for their kids share (worked out again here) and a little metadata,
     each written whole and renamed into place, for the API to reload."""
     directory.mkdir(parents=True, exist_ok=True)
-    left_out = [dict(r) for r in store.update_left_out()]
+    store.update_left_out()
     by_year: dict[str, list[dict[str, object]]] = {}
     for row in store.collected_rows():
         features = json.loads(row["features"])
@@ -921,12 +921,7 @@ def export(store: Store, directory: Path, now: float | None = None) -> None:
     _write_tsv(
         directory / "channel-names.tsv", ("channel_id", "channel_title"), channel_names(store)
     )
-    _write_tsv(
-        directory / LEFT_OUT_FILE,
-        ("channel_id", "made_for_kids", "answers"),
-        [{"channel_id": r["channel_id"], "made_for_kids": r["kids"], "answers": r["answers"]}
-         for r in left_out],
-    )  # fmt: skip
+    _write_tsv(directory / LEFT_OUT_FILE, LEFT_OUT_COLUMNS, left_out_rows(store))
     changes = changelog(store, time.time() if now is None else now)
     _write_tsv(directory / "CHANGELOG.tsv", CHANGELOG_COLUMNS, changes)
     meta = {"channelsCheckedAt": store.get("channels_checked_at") or None}
@@ -944,18 +939,41 @@ def channel_names(store: Store) -> list[dict[str, object]]:
     return [{"channel_id": r["id"], "channel_title": r["title"]} for r in rows]
 
 
+LEFT_OUT_COLUMNS = (
+    "channel_id", "channel_title", "checked", "for_kids", "kids_pct", "videos",
+)  # fmt: skip
+
+
+def left_out_rows(store: Store) -> list[dict[str, object]]:
+    """The channels left out for their kids share, with the numbers behind it (plan 013,
+    decision 10): the checked uploads, how many of them are made for kids, their share, and
+    the channel's videos in the dataset that the site doesn't show."""
+    return [
+        {
+            "channel_id": r["channel_id"],
+            "channel_title": r["title"],
+            "checked": r["answers"],
+            "for_kids": r["kids"],
+            "kids_pct": f"{100 * r['kids'] / r['answers']:.1f}",
+            "videos": r["videos"],
+        }
+        for r in store.left_out_list()
+    ]
+
+
 CHANGELOG_COLUMNS = (
     "date", "videos", "channels", *(f"ch_{n}" for n in range(1, sampling.FLOOR)),
-    f"ch_{sampling.FLOOR}plus", "ch_ready", "added_v", "removed_v", "new_ch", "note",
+    f"ch_{sampling.FLOOR}plus", "ch_ready", "ch_out", "added_v", "removed_v", "new_ch", "note",
 )  # fmt: skip
 
 
 def changelog(store: Store, now: float) -> list[dict[str, object]]:
     """One line per UTC day with a change, a recorded count or a note, the newest first: the
     site at the end of the day (videos, channels, the channels by their number of videos),
-    the channels ready to join, the day's changes and its notes. The channels left out now
-    count as never there, as on the site. Records today's channels ready to join first; the
-    days before the record began have none (blank), since they can't be counted again."""
+    the channels ready to join and left out, the day's changes and its notes. The channels left
+    out now count as never there, as on the site. Records today's channels ready to join and
+    left out first; the days before each record began have none (blank), since they can't be
+    counted again."""
     today = time.strftime("%Y-%m-%d", time.gmtime(now))
     store.date_notes(notes.NOTES, today)
     channel_of = {
@@ -975,7 +993,7 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
         if r["video_id"] in channel_of
     ]
     events.sort()
-    store.record_daily(today, store.ready_to_join())
+    store.record_daily(today, store.ready_to_join(), len(store.left_out_list()))
     daily = store.daily()
     notes_by_day = store.notes()
     # The reference set: v2's picks, also the ones removed since.
@@ -998,13 +1016,15 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
                 line["removed_v"] = int(str(line["removed_v"])) + 1
                 visible[channel] -= 1
         levels = Counter(min(n, sampling.FLOOR) for n in visible.values() if n > 0)
+        recorded = daily.get(day)
         line |= {
             "date": day,
             "videos": sum(visible.values()),
             "channels": sum(levels.values()),
             **{f"ch_{n}": levels[n] for n in range(1, sampling.FLOOR)},
             f"ch_{sampling.FLOOR}plus": levels[sampling.FLOOR],
-            "ch_ready": daily.get(day, ""),
+            "ch_ready": recorded["ch_ready"] if recorded else "",
+            "ch_out": "" if recorded is None or recorded["ch_out"] is None else recorded["ch_out"],
             "note": "; ".join(notes_by_day.get(day, [])),
         }
         lines.append(line)
