@@ -29,6 +29,15 @@ The single, current source for how the site looks. Values (colours, fonts) live 
 
 - **Site icon:** the logo's "H", cut out of `art/Logo.png` (the letter only, without the crayon specks around it) and centred on a square with a 3 % margin: `src/app/icon.png` (256 px, transparent) and `src/app/apple-icon.png` (180 px, on `butter`, since home screens don't show transparency). Legible down to 16 px on light and dark tabs. Cut it again if the logo changes.
 
+## Browser pitfalls
+
+Safari's engine (WebKit) ships later than Playwright's, so some of its bugs pass the main E2E suite (plan 017). The Safari check (`frontend/e2e/safari`) catches the first kind below; the others rely on these rules and their component tests. Avoid these:
+
+- **No table row as an anchor.** Safari ignores `position: relative` on `tr`, `thead` and `tbody` (WebKit bug 240961), so anything `absolute` inside (a stretched link, a popover) attaches to the next positioned ancestor instead: one row's link covers the whole card. Anchor to a cell (`td`/`th`) or outside the table.
+- **No stretching inside a button.** Safari 18 doesn't stretch a `<button>`'s content to its height, so a pill inside sticks to the top at its text's height. Give the content its own height (`min-h-9` in a `min-h-11 p-1` button) or center it.
+- **No built-in clear button on `type="search"`** where text lines up with a layer behind the input (search filters): it narrows the text area in Safari and Chrome. Hide it (`[&::-webkit-search-cancel-button]:hidden`).
+- **`svh`, not `dvh`,** for sizes: `dvh` follows the mobile toolbar, so the layout jumps while scrolling.
+
 ## Surfaces
 
 | Surface | Classes |
