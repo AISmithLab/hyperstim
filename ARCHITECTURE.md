@@ -198,7 +198,7 @@ flowchart TB
         clips[("clips volume<br>clips, caches, db backups")]
 
         subgraph botuser["data bot user · SSH deploy key"]
-            timer["Timer, 03:00 UTC"] --> commit["commit-data.sh<br>+ growth chart"] --> datarepo[("data-repo/")]
+            timer["Timer, 23:59:59 UTC"] --> commit["commit-data.sh<br>+ growth chart"] --> datarepo[("data-repo/")]
         end
     end
 

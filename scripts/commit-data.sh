@@ -7,7 +7,8 @@
 #   scripts/commit-data.sh <clone> <collected-dir>
 #
 # <clone> is the bot's own clone (never a dev checkout); its origin must accept the bot's
-# deploy key. Does nothing when nothing changed.
+# deploy key. Does nothing when nothing changed. The timer runs it at 23:59:59 UTC, so it
+# takes the day and the files first, before the fetch can run past midnight.
 set -euo pipefail
 
 [ $# = 2 ] || {
@@ -18,15 +19,20 @@ CLONE="$1" SOURCE="$2"
 DEST="backend/data/collected"
 git=(git -C "$CLONE" -c user.name="HyperStim data bot" -c user.email="hyperstim-data-bot@users.noreply.github.com")
 
-"${git[@]}" fetch --quiet origin main
-"${git[@]}" checkout --quiet -B main origin/main
-mkdir -p "$CLONE/$DEST"
+day="$(date -u +%F)"
 files=()
 for f in "$SOURCE"/[0-9][0-9][0-9][0-9].tsv "$SOURCE"/{removed.tsv,excluded-channels.tsv,CHANGELOG.tsv,meta.json}; do
   [ -f "$f" ] && files+=("$f")
 done
 [ ${#files[@]} -gt 0 ] || exit 0
-cp "${files[@]}" "$CLONE/$DEST/"
+snapshot="$(mktemp -d)"
+trap 'rm -rf "$snapshot"' EXIT
+cp "${files[@]}" "$snapshot/"
+
+"${git[@]}" fetch --quiet origin main
+"${git[@]}" checkout --quiet -B main origin/main
+mkdir -p "$CLONE/$DEST"
+cp "$snapshot"/* "$CLONE/$DEST/"
 # The README's growth chart (plan 013), drawn from the changelog just copied, with the release's
 # own Python. If it fails, the data still goes in, with yesterday's chart.
 here="$(cd "$(dirname "$0")/.." && pwd)"
@@ -61,7 +67,7 @@ plural() { [ "$1" = 1 ] && echo "$1 $2" || echo "$1 ${2}s"; }
 subject="data: Add $(plural "$added" video)"
 [ "$new_channels" -gt 0 ] && subject+=" and $(plural "$new_channels" channel)"
 [ "$removed" -gt 0 ] && subject+=", remove $removed"
-subject+=" ($(date -u +%F))"
+subject+=" ($day)"
 "${git[@]}" commit --quiet -m "$subject"
 
 for attempt in 1 2 3; do

@@ -67,7 +67,7 @@ In the cloud provider's security group for the server, allow only SSH (22) and H
   data/collector/              the collector's database and exported files (collected/, which the API reads)
   data/usage/                  daily usage counts (plan 014)
   <service>-collector.service  systemd unit of the collector (plan 013)
-  <service>-data.service/.timer  the data bot's daily commit of collected/ to GitHub, at 03:00 UTC
+  <service>-data.service/.timer  the data bot's daily commit of collected/ to GitHub, at 23:59:59 UTC
   <service>-alerts.service/.timer  the hourly alert check: GitHub issues when something hasn't worked for a day
   alerts.env                   the alert issues' token (root only; systemd hands it to the check)
   data-bot/                    the data bot's home: its SSH key (data bot user)

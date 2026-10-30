@@ -2,6 +2,7 @@
 draws the README's growth chart, and the dataset's size in the release notes
 (scripts/release-notes.sh), both read from the collector's CHANGELOG.tsv."""
 
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -109,3 +110,32 @@ def test_the_release_notes_read_the_dataset_size_from_the_latest_day(tmp_path: P
         [str(RELEASE_NOTES), "HEAD~1..HEAD"], cwd=repo, check=True, capture_output=True, text=True
     ).stdout
     assert "Dataset: 16,725 → 16,989 videos, 588 → 594 channels." in notes
+
+
+def test_the_daily_commit_takes_the_day_and_files_before_the_fetch(
+    tmp_path: Path, clone: Path
+) -> None:
+    # The timer runs it at 23:59:59 UTC: midnight passes during the fetch. Stand-ins for git
+    # and date make it pass: once the fetch starts, the day is the next one and the collector
+    # has written the next day's row.
+    source = collected(tmp_path)
+    midnight = tmp_path / "midnight"
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    real_git = shutil.which("git")
+    (bin_dir / "git").write_text(
+        "#!/usr/bin/env bash\n"
+        f'if [[ " $* " == *" fetch "* ]]; then touch "{midnight}"; '
+        f"sed -i '1a 2026-10-30\\t16726\\t588' \"{source}/CHANGELOG.tsv\"; fi\n"
+        f'exec "{real_git}" "$@"\n'
+    )
+    (bin_dir / "date").write_text(
+        f'#!/usr/bin/env bash\n[ -e "{midnight}" ] && echo 2026-10-30 || echo 2026-10-29\n'
+    )
+    for stub in ("git", "date"):
+        (bin_dir / stub).chmod(0o755)
+    env = {**os.environ, "PATH": f"{bin_dir}:{os.environ['PATH']}"}
+    subprocess.run([str(COMMIT_DATA), str(clone), str(source)], check=True, env=env)
+    assert git(clone, "log", "-1", "--format=%s").strip().endswith("(2026-10-29)")
+    committed = git(clone, "show", "HEAD:backend/data/collected/CHANGELOG.tsv")
+    assert committed == CHANGELOG
