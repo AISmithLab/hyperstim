@@ -73,4 +73,28 @@ test.describe("rankings", () => {
     await page.getByRole("columnheader", { name: "Rapid cutting" }).getByRole("button").click();
     await expect(page.getByRole("table", { name: /ranked by Rapid cutting/ })).toBeVisible();
   });
+
+  test("the column names stay in view while scrolling the table", async ({ page }) => {
+    test.skip(isPhone(), "phones get a list of cards");
+    await page.goto("/rankings/");
+    const table = results(page);
+    const rows = table.getByRole("row").filter({ has: page.getByRole("link") });
+    await rows.last().scrollIntoViewIfNeeded();
+    await expect(page.getByRole("columnheader", { name: "Overall" })).toBeInViewport();
+
+    // Each link focused on the way back up shows below the stuck names, not under them.
+    const names = page.getByRole("columnheader", { name: "Rapid cutting" });
+    await rows.last().getByRole("link").first().focus();
+    for (let i = 0; i < 16; i++) {
+      await page.keyboard.press("Shift+Tab");
+      const [focusTop, namesBottom] = await Promise.all([
+        page.evaluate(() => document.activeElement!.getBoundingClientRect().top),
+        names.evaluate((th) => th.getBoundingClientRect().bottom),
+      ]);
+      expect(focusTop, `focused link ${i + 1} below the column names`).toBeGreaterThanOrEqual(namesBottom - 1);
+    }
+
+    await names.getByRole("button").click();
+    await expect(page.getByRole("table", { name: /ranked by Rapid cutting/ })).toBeVisible();
+  });
 });

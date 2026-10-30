@@ -736,6 +736,9 @@ const SKELETON_ROWS = 8;
 const BAR = "block animate-pulse rounded bg-gray-200";
 // First column of each group: a line on its left, so the groups read as blocks.
 const GROUP_START = new Set(["score", ...FEATURE_GROUPS.map((g) => g.keys[0])]);
+// The column names stay at the top of the screen as the rows scroll. Their line is a shadow, as
+// collapsed borders stay with the table; links get a scroll margin so focus never hides under it.
+const STICKY = "sticky top-0 z-20 bg-white shadow-[inset_0_-1px_0] shadow-navy/15";
 
 function RankTable({
   state,
@@ -754,7 +757,7 @@ function RankTable({
         key={key}
         scope="col"
         aria-sort={selected ? (state.order === "desc" ? "descending" : "ascending") : undefined}
-        className={`px-0.5 pt-1 pb-2 align-bottom ${groupLine(key)}`}
+        className={`px-0.5 pt-1 pb-2 align-bottom ${STICKY} ${groupLine(key)}`}
       >
         <button
           type="button"
@@ -772,7 +775,7 @@ function RankTable({
   };
 
   return (
-    <table className="mt-2 w-full table-fixed border-collapse">
+    <table className="mt-2 w-full table-fixed border-collapse [&_tbody_a]:scroll-mt-44">
       <caption className="sr-only">
         {VIEWS[state.view].label}, ranked by {sortName(state.sort)}, {orderName(state.order)}
       </caption>
@@ -798,12 +801,12 @@ function RankTable({
             </th>
           ))}
         </tr>
-        <tr className="border-b border-navy/15 text-sm text-ink">
-          <th scope="col" className="pr-4 pb-2 text-right align-bottom font-semibold">
+        <tr className="text-sm text-ink">
+          <th scope="col" className={`pr-4 pb-2 text-right align-bottom font-semibold ${STICKY}`}>
             <span aria-hidden="true">#</span>
             <span className="sr-only">Rank</span>
           </th>
-          <th scope="col" className="pr-4 pb-2 text-left align-bottom font-semibold">
+          <th scope="col" className={`pr-4 pb-2 text-left align-bottom font-semibold ${STICKY}`}>
             {state.view === "videos" ? "Video" : "Channel"}
           </th>
           {header("score")}
