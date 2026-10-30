@@ -74,6 +74,25 @@ describe("InfoTip", () => {
     expect(popover).toHaveClass("bottom-full");
   });
 
+  it("shifts sideways to stay 16 px inside the screen", async () => {
+    const user = userEvent.setup();
+    vi.spyOn(Element.prototype, "clientWidth", "get").mockReturnValue(320);
+    const rect = vi.spyOn(HTMLElement.prototype, "getBoundingClientRect");
+    const { button } = renderTip();
+    const popover = document.getElementById(button.getAttribute("aria-controls")!)!;
+    const open = async (left: number) => {
+      rect.mockReturnValue({ bottom: 100, left, right: left + 256 } as DOMRect);
+      await user.click(button);
+      const translate = popover.style.translate;
+      await user.keyboard("{Escape}");
+      return translate;
+    };
+
+    expect(await open(-8)).toBe("24px 0");
+    expect(await open(100)).toBe("-52px 0");
+    expect(await open(30)).toBe("");
+  });
+
   it("has no accessibility violations, closed or open", async () => {
     const user = userEvent.setup();
     const { button } = renderTip();

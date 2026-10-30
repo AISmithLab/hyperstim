@@ -22,6 +22,25 @@ test.describe("video", () => {
     await expect(info).toHaveAttribute("aria-expanded", "false");
   });
 
+  test("the score's ⓘ opens on top of the measurements and inside a 320 px screen", async ({ page, request }) => {
+    const [video] = await topVideos(request);
+    await page.setViewportSize({ width: 320, height: 740 });
+    await page.goto(`/video/?id=${video.id}`);
+    const info = page.getByRole("button", { name: "About the stimulation score" });
+    await info.click();
+    const popover = page.locator("#score-info");
+    await expect(popover).toBeVisible();
+    const box = (await popover.boundingBox())!;
+    expect(box.x).toBeGreaterThanOrEqual(16);
+    expect(box.x + box.width).toBeLessThanOrEqual(320 - 16);
+    // Nothing later in the page (the measurement rows below it) draws over it.
+    const onTop = await popover.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return el.contains(document.elementFromPoint(r.left + r.width / 2, r.bottom - 12));
+    });
+    expect(onTop).toBe(true);
+  });
+
   test("Play shows the video large; Shrink video puts the preview back and focus on it", async ({ page, request }) => {
     const [video] = await topVideos(request);
     await page.goto(`/video/?id=${video.id}`);

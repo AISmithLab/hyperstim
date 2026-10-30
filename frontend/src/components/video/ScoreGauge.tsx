@@ -76,7 +76,7 @@ export default function ScoreGauge({ score, children }: { score: number; childre
           </span>
           <span className="sr-only">Stimulation score {rounded} out of 100</span>
         </p>
-        {children && <div className="absolute top-1/2 left-full ml-1 -translate-y-1/2">{children}</div>}
+        {children && <div className="absolute top-1/2 left-full z-10 ml-1 -translate-y-1/2">{children}</div>}
       </div>
     </div>
   );

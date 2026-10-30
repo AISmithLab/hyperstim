@@ -28,6 +28,8 @@ export default function InfoTip({
   const [hovered, setHovered] = useState(false);
   const [pinned, setPinned] = useState(false);
   const [above, setAbove] = useState(false);
+  // Sideways shift that keeps the popover on screen, e.g. one right-aligned to a centred button.
+  const [shift, setShift] = useState(0);
   const open = hovered || pinned;
   const ref = useRef<HTMLDivElement>(null);
   const popover = useRef<HTMLDivElement>(null);
@@ -50,11 +52,17 @@ export default function InfoTip({
     };
   }, [open]);
 
-  // Measured before paint, so a flip never flashes.
+  // Measured before paint, so a flip or shift never flashes.
   useLayoutEffect(() => {
     if (!open || !ref.current || !popover.current) return;
     const spaceBelow = window.innerHeight - ref.current.getBoundingClientRect().bottom;
     setAbove(spaceBelow < popover.current.offsetHeight);
+    // 16 px from the screen's edges, like the page gutter. Measured unshifted: closing resets it.
+    const { left, right } = popover.current.getBoundingClientRect();
+    const edge = 16;
+    const width = document.documentElement.clientWidth;
+    setShift(left < edge ? edge - left : right > width - edge ? width - edge - right : 0);
+    return () => setShift(0);
   }, [open]);
 
   return (
@@ -87,6 +95,7 @@ export default function InfoTip({
         id={id}
         hidden={!open}
         className={`absolute z-10 w-64 ${align === "end" ? "right-0" : "left-0"} max-w-[calc(100vw-2rem)] ${above ? "bottom-full pb-1" : "top-full pt-1"}`}
+        style={shift ? { translate: `${shift}px 0` } : undefined}
       >
         <div className="rounded-2xl border border-navy/15 bg-white px-4 py-3 text-left text-sm font-normal text-ink shadow-[0_4px_16px_rgb(15_46_138/0.08)]">
           {children}
