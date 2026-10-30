@@ -1,5 +1,6 @@
-date	added	removed	channels_added	videos	channels
-2026-10-26	128	73	3	16430	545
-2026-10-27	137	0	18	16567	563
-2026-10-28	143	0	18	16710	581
-2026-10-29	15	0	7	16725	588
+date	videos	channels	ch_1	ch_2	ch_3	ch_4	ch_5plus	ch_ready	added_v	removed_v	new_ch	note
+2026-10-30	16558	591	55	21	9	3	503	39	15	0	0	
+2026-10-29	16543	591	59	22	8	1	501	17	128	0	55	Each channel gets 5 videos first; failed downloads retried; Fewest-video channels first; channels with under 10% kids' videos left out; Channels with 1–4 videos by score first; at most 3 new channels a day
+2026-10-28	16415	536	28	7	7	2	492		142	0	18	
+2026-10-27	16273	518	17	2	6	2	491		137	0	18	
+2026-10-26	16136	500	4	1	3	1	491		125	73	3	Collecting starts: 150 videos a day, lowest r first
