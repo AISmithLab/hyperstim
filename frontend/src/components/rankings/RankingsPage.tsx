@@ -542,7 +542,8 @@ function SearchBox({
         <label htmlFor="rankings-search" className="sr-only">
           {label}
         </label>
-        {/* Behind the input: its text, transparent, with the filters marked; clipped and scrolled as the input's text is. */}
+        {/* Behind the input: its text, transparent, with the filters marked; clipped and scrolled as the input's text is.
+            The input has no built-in clear button, which would narrow its text and put the marks out of line. */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-full border-2 border-transparent bg-white">
           <div
             ref={backdropRef}
@@ -581,7 +582,7 @@ function SearchBox({
           onSelect={syncScroll}
           placeholder={view === "videos" ? "Title, channel, or video link…" : "Channel name or link…"}
           autoComplete="off"
-          className="relative h-12 w-full rounded-full border-2 border-navy bg-transparent pr-5 pl-12 text-navy placeholder:text-ink/70 focus:shadow-[0_0_0_5px_var(--color-sunny)] focus:outline-none"
+          className="relative h-12 w-full rounded-full border-2 border-navy bg-transparent pr-5 pl-12 text-navy placeholder:text-ink/70 [&::-webkit-search-cancel-button]:hidden focus:shadow-[0_0_0_5px_var(--color-sunny)] focus:outline-none"
         />
       </div>
       <InfoTip id="search-info" label="How to search">

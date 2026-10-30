@@ -64,6 +64,23 @@ test.describe("rankings", () => {
     await expect(page.getByRole("heading", { level: 1, name: video.title })).toBeVisible();
   });
 
+  test("the filter highlights stay under their words in a long search", async ({ page }) => {
+    await page.goto("/rankings/");
+    const search = page.getByRole("searchbox", { name: "Search videos" });
+    await search.click();
+    await page.keyboard.type("a long search for trucks and diggers in the garden after:2024-01-01");
+    // The highlights sit in a layer behind the field that scrolls with its text.
+    await expect
+      .poll(() =>
+        search.evaluate((input: HTMLInputElement) => {
+          const layer = input.parentElement!.querySelector<HTMLElement>("[aria-hidden] > div")!;
+          // Within a pixel: WebKit rounds the two scroll positions differently.
+          return [input.scrollLeft > 0, Math.abs(input.scrollLeft - layer.scrollLeft) <= 1];
+        }),
+      )
+      .toEqual([true, true]);
+  });
+
   test("the channels view lists channels and opens one", async ({ page, request }) => {
     const [channel] = await topChannels(request);
     await page.goto("/rankings/");

@@ -208,6 +208,7 @@ Order: the frontend first (steps 2–5, on mock data) and a review of it; then t
    - Screenshots at 360 and 1280 px against the real backend. Stop for review.
 8. **Speed** (2026-10-27, with plan 013's garbage collection change): the ready-made default view, the add-time count, and the leaner filtering path (Backend). Tests as there. Measure before and after: the home page's six requests alone and together, and a rankings search. Stop for review.
 9. **Sticky column names** (2026-10-30). The header's column-name row sticks (see Table header). `STYLE.md` (Rankings table). Tests: E2E at 1280 × 800 that, after scrolling to the last row, the column names are still in view and a sort button still works; Shift+Tab up the rows leaves each focused link below the names; the axe and keyboard checks pass. Screenshots at 1280 px at the top and part-way down, and at 360 px (unchanged). Stop for review.
+10. **Safari fixes** (2026-10-30, plan 017). In Safari, every table row opened the last row on the page, as Safari ignores `relative` on a table row. The name's link now covers its cell, and a click elsewhere in the row opens it (`LinkedRow`). The search has no built-in clear button, which narrowed the text and put the filter marks out of line. `STYLE.md` (Tables, Search filters, Browser pitfalls); tests.
 
 ## Review decisions
 
