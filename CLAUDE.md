@@ -65,6 +65,7 @@ Before committing, check `git diff --staged` for anything above.
 - **Tests** (plan 012 has the setup and details):
   - Every new feature and bug fix comes with tests. A fix includes a test that fails without it.
   - Test at the level that catches the problem, often more than one: **unit** (logic: Vitest, pytest), **component** (one component or page section with `api.ts` mocked: Vitest + Testing Library), **end-to-end** (visitor flows on the built site against the real backend: Playwright, in `frontend/e2e/`). A new page or visitor flow gets an E2E spec.
+  - The **Safari check** (`frontend/e2e/safari`, plan 017) runs a few E2E checks in the newest shipping Safari's WebKit, which the main suite's newer WebKit doesn't match. Run it for UI changes; extend it when a Safari-only bug turns up.
   - Find elements by role and accessible name (`getByRole('button', { name: … })`), not by class or test ID.
   - Accessibility is tested too: an axe check in each component test file and on each page in E2E, and each page's keyboard path and 320 px reflow in E2E. A new page or major UI change also gets a manual keyboard and screen reader pass before handoff, and a check on a real iPhone (Safari's bugs pass Playwright's newer WebKit, plan 017).
 - Do not commit or push unless asked.

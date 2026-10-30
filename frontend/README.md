@@ -51,6 +51,14 @@ What to test and at which level: CLAUDE.md (**Tests**) and [plan 012](../plans/0
   npx playwright install --with-deps chromium webkit
   ```
   It builds the site, starts the backend (port 8100, the reference set in `../backend/data/`) and serves `out/` (port 3100), then runs every test in Chromium and WebKit, each at 1280 px and 360 px (projects `chromium-desktop`, `webkit-desktop`, `chromium-phone`, `webkit-phone`). Requests to other hosts fail the test; YouTube embeds and Google's tag get empty answers. `--project=webkit-phone` runs one of them; `--ui` opens Playwright's test runner. A failed run leaves a trace in `test-results/` (`npx playwright show-trace <file>`).
+- **Safari check** (`npm test` in `e2e/safari/`, [plan 017](../plans/017-browser-support.md)): a few end-to-end checks in WebKit 26, the engine of the newest shipping Safari. The main suite's WebKit is newer than any Safari, so it misses Safari bugs such as overlays a table row can't hold. Every button, link and field on each page must get the tap aimed at it, and the compare page's info popups must open next to their buttons. It has its own Playwright version (pinned in `e2e/safari/package.json`) and keeps its WebKit in `~/.cache/ms-playwright-safari`; it starts the same servers as the main suite. `./dev.sh --install-tools` sets it up; by hand:
+  ```sh
+  cd e2e/safari
+  npm ci
+  npm run install-browser            # add `-- --with-deps` for the system libraries
+  npm test
+  ```
+  CI runs it after the main suite. When a new Safari version ships, move the pin up to a Playwright whose WebKit matches a Safari still in wide use.
 
 ## Images
 

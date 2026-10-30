@@ -16,6 +16,10 @@
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+# The Safari check's own install and results (plan 017).
+/e2e/safari/node_modules/
+/e2e/safari/test-results/
+/e2e/safari/playwright-report/
 
 # next.js
 /.next/
