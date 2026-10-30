@@ -52,7 +52,7 @@ Two small changes on the video and channel pages come with it: their measurement
 - **New styles go into `STYLE.md` in the same change:** the page pattern (including the numbered step H2s), the diagram style (including the timeline and its numbered markers), the measurement list, and the accordion.
 - **The header nav is unchanged.** "How it works" is marked as the current page.
 - **No mention of the research paper** _(human decision: not public yet)_.
-- **Measurement popovers link here** _(human decision)_. On the video and channel pages, each measurement's "(i)" popover ends with a "More about this →" text link to its anchor (`/how-it-works#rapid-cutting`, …). This is the only link in a popover. It's still supplementary (the popover's text stands on its own), so it fits `STYLE.md`'s popover rule. `STYLE.md` gains a line saying a popover may end with one "more" link.
+- **Measurement popovers link here** _(human decision)_. On the video and channel pages, each measurement's "(i)" popover ends with a "More about this →" text link to its anchor (`/how-it-works#rapid-cutting`, …). Following it lands with the **"We measure 12 things" title at the top of the screen**, so the visitor sees the section from its start, with the linked measurement highlighted in the list _(human decision, 2026-10-30: it stopped somewhere awkward)_. Also where the item doesn't fit on the screen below the title (a later item on a phone, any item on a phone in landscape): the title stays at the top and the highlighted item is further down _(human decision, 2026-10-30)_. This is the only link in a popover. It's still supplementary (the popover's text stands on its own), so it fits `STYLE.md`'s popover rule. `STYLE.md` gains a line saying a popover may end with one "more" link.
 - **Score popovers say "production style only"** _(human decision)_. The score popovers on the video page (plan 004) and the channel page (plan 005) drop "…not whether it is good or bad" (see **Copy**). This overrides those plans' InfoTip copy.
 
 ## Design
@@ -168,7 +168,7 @@ In the second box, one channel's uploads are small rectangles stacked by year, u
 
 - **Check field** (shared): the home page's form (label, input, "Check video →", hint, error) moves into `CheckVideoForm`, used by the home card and step ①. Same validation, errors and navigation to the video page.
 - **Step headings** (**new**): steps ①–④ are section cards whose H2 starts with a `sunny` number circle (`size-9`, `font-hand`, `aria-hidden`), with sr-only "Step 1: " in the H2 text. The questions panel has a plain H2.
-- **Timeline and measurement list** (**new**): diagram F and the list under it (see **Diagrams**). Each measurement has an anchor (`#rapid-cutting`, …) with `scroll-mt` for the header, so other pages can link to it later. The marker number appears in both the diagram and the list, `aria-hidden` in the list (screen readers get the list alone).
+- **Timeline and measurement list** (**new**): diagram F and the list under it (see **Diagrams**). Each measurement has an anchor (`#rapid-cutting`, …), so other pages can link to it; where it lands is under **Decisions** (Measurement popovers link here). The marker number appears in both the diagram and the list, `aria-hidden` in the list (screen readers get the list alone).
 - **Accordion** (**new**): native `<details>`/`<summary>`, so there's no JavaScript.
   - Each item is a `summary` row (`min-h-11`, semibold navy, with a chevron that rotates when open) followed by body text. Row lines are `navy/10` on the mint panel.
   - All items start closed.
@@ -282,6 +282,14 @@ The list shows the existing one-line descriptions (plan 004).
    - Keyboard-only pass through the accordion.
    - Anchors land below the header.
    - Stop for review.
+8. **Where a measurement link lands** (2026-10-30, plans 017 and this one). Measured in Chromium, WebKit 18.2 and Firefox at 320 × 568 to 1920 × 1080: all three land within a few pixels of each other, so it's not a browser bug. The landing spot was a fixed distance above the item (`scroll-mt-[32rem]`), so where the title ended up depended on the item's place in the list and on the screen. On desktop the title was 67 px down for the first item, but scrolled past for a later one. On phones it was about 200 px down, with the item often below the screen. Plan 017's first fix (`min(32rem,40svh)`) put the title above the screen almost everywhere, so this step replaces it.
+   - **How** (`LandAtTitle`): each item's `scroll-margin-top` is set in the browser to its distance below the title plus 16 px, so every way of reaching the anchor lands with the title 16 px from the top: the link from another page, a shared link, a reload, Back. It's measured again when the page's size changes (`ResizeObserver`: a new width, fonts loading) and right before each landing. On first load the browser scrolls to the anchor before the page's script runs, so the script scrolls there once more. It also lands again when only the address's `#` part changes (`hashchange`, `popstate`).
+   - **Kept in place while the page settles:** after landing, a later change of the page's size (late layout, a resize) puts the item back at its place, until the visitor scrolls, taps or types. Safari doesn't keep the scroll position when content above changes; without this the title ended up 6–134 px off in WebKit's phone tests.
+   - **Highlight after a link inside the site** (found while testing, also on the live site): `:target` only follows real page loads, and the "More about this" link changes the address without one, so the item wasn't highlighted. `LandAtTitle` marks it (`data-linked`, `data-linked:bg-butter`) as well.
+   - **Without JavaScript:** `scroll-mt-4`, so the item lands at the top of the screen, in view.
+   - **Tests:** E2E in all four projects, from a video page's popover and opened directly (first and last measurement), at 1280 × 800, 360 × 740, 375 × 548 and 740 × 340: the title is 16 px from the top (±3, WebKit rounds on phones) and the item is highlighted. Component: the margins follow the distance to the title; the first load and a `#` change land and mark the item; a size change lands again until the visitor scrolls.
+   - **Checked** in Chromium, WebKit 18.2 and Firefox at 10 sizes from 320 × 568 to 1920 × 1080, by link and opened directly: the title lands 13–19 px from the top in all 90 cases.
+   - **Docs:** `STYLE.md` (Measurement list); plan 017's fix 8 row.
 
 ## Review decisions
 

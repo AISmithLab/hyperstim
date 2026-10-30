@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { FEATURE_INFO, featureSlug } from "@/lib/features";
+import LandAtTitle from "./LandAtTitle";
 import { Marker, Section } from "./parts";
 
 // Step 2, "We measure 12 things": one diagram, the annotated timeline of a made-up 5-minute clip, with the
@@ -30,6 +31,7 @@ export default function WhatWeMeasure() {
         <Timeline />
       </div>
       <MeasurementList />
+      <LandAtTitle titleId="measure-heading" listId="measure-list" />
     </Section>
   );
 }
@@ -264,16 +266,16 @@ function BrightIcon() {
 
 /**
  * The 12 by marker number, each with its one-line description. Each item has the anchor other
- * pages link to, and lands low enough to keep the timeline in view.
+ * pages link to; `LandAtTitle` makes it land with the section's title at the top.
  */
 function MeasurementList() {
   return (
-    <ul className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <ul id="measure-list" className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {BY_MARKER.map((key) => (
         <li
           key={key}
           id={featureSlug(key)}
-          className="-mx-2 flex scroll-mt-[32rem] gap-2 rounded-xl px-2 py-1 target:bg-butter"
+          className="-mx-2 flex scroll-mt-4 gap-2 rounded-xl px-2 py-1 target:bg-butter data-linked:bg-butter"
         >
           <Marker n={MARKERS[key]} />
           <div>

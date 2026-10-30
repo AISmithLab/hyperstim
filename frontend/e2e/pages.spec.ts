@@ -13,6 +13,36 @@ test.describe("how it works", () => {
     await expect(page.getByRole("heading", { level: 1, name: video.title })).toBeVisible();
   });
 
+  test("a link to a measurement lands with “We measure 12 things” at the top, at any size", async ({ page, request }) => {
+    test.slow(); // 12 page loads
+    const [video] = await topVideos(request);
+    const title = page.getByRole("heading", { name: "We measure 12 things" });
+    /** Checks the title is 16 px from the top (±3: WebKit rounds scroll positions on phones). */
+    const expectTitleAtTop = async (what: string) => {
+      // The linked measurement is highlighted, also after a link followed inside the site.
+      const slug = new URL(page.url()).hash;
+      await expect(page.locator(slug)).toHaveCSS("background-color", "rgb(254, 248, 212)");
+      // Polled: the page sets where each item lands once its script runs.
+      const top = () => title.boundingBox().then((box) => Math.round(box!.y));
+      await expect.poll(top, { message: what }).toBeGreaterThanOrEqual(13);
+      expect(await top(), what).toBeLessThanOrEqual(19);
+    };
+    for (const size of [{ width: 1280, height: 800 }, { width: 360, height: 740 }, { width: 375, height: 548 }, { width: 740, height: 340 }]) {
+      await page.setViewportSize(size);
+      // Opened directly: the first and the last measurement.
+      for (const slug of ["rapid-cutting", "surprise-reveals"]) {
+        await page.goto(`/how-it-works/#${slug}`);
+        await expectTitleAtTop(`${slug} at ${size.width}×${size.height}`);
+      }
+      // From a video page's info popup.
+      await page.goto(`/video/?id=${video.id}`);
+      await page.getByRole("button", { name: "About Surprise reveals" }).click();
+      await page.getByRole("link", { name: /^More about this.*Surprise reveals/ }).click();
+      await expect(page).toHaveURL(/#surprise-reveals$/);
+      await expectTitleAtTop(`link at ${size.width}×${size.height}`);
+    }
+  });
+
   test("a question opens and closes by keyboard", async ({ page }) => {
     await page.goto("/how-it-works/");
     // A <summary> has no role to find it by.
