@@ -191,6 +191,20 @@ describe("RankingsPage", () => {
     expect(screen.getByRole("columnheader", { name: "Pacing intensification" })).toBeInTheDocument();
   });
 
+  it("opens a row's page from a click anywhere in it; the name's link covers its cell, not the row", async () => {
+    const user = userEvent.setup();
+    open();
+    const table = await screen.findByRole("table", { name: "Videos, ranked by Overall, most intense first" });
+    const name = within(table).getByRole("link", { name: "Tiny Trucks 2" });
+    // Safari ignores `relative` on a row, so the link would cover the whole page's rows instead.
+    expect(name.closest("td")).toHaveClass("relative");
+    expect(table.querySelector("tr.relative")).toBeNull();
+
+    url.push.mockClear();
+    await user.click(within(name.closest("tr")!).getAllByRole("cell")[2]);
+    expect(url.push).toHaveBeenCalledWith("/video?id=video000002");
+  });
+
   it("ranks by a clicked column, and flips the order on a second click", async () => {
     const user = userEvent.setup();
     open();

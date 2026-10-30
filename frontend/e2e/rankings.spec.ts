@@ -55,6 +55,15 @@ test.describe("rankings", () => {
     await expect(results(page).getByRole("link", { name: video.title, exact: true })).toBeVisible();
   });
 
+  test("a click anywhere in a table row opens its video", async ({ page, request }) => {
+    test.skip(isPhone(), "phones get a list of cards");
+    const [video] = await topVideos(request);
+    await page.goto("/rankings/");
+    const row = results(page).getByRole("row").filter({ has: page.getByRole("link", { name: video.title, exact: true }) });
+    await row.getByRole("cell").nth(2).click();
+    await expect(page.getByRole("heading", { level: 1, name: video.title })).toBeVisible();
+  });
+
   test("the channels view lists channels and opens one", async ({ page, request }) => {
     const [channel] = await topChannels(request);
     await page.goto("/rankings/");

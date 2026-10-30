@@ -20,6 +20,7 @@ import { isChannelId, isVideoId, readSearchInput } from "@/lib/youtube";
 import Pagination from "./Pagination";
 import { filterTokens, parseSearch, type TokenSpan } from "@/lib/search-filters";
 import InfoTip from "@/components/InfoTip";
+import LinkedRow from "@/components/LinkedRow";
 import { MAX_QUERY, MAX_TEXT, PAGE_SIZE, parseState, serializeState, type RankingState, type View } from "./state";
 
 // The rankings page (plan 007): every video or channel, ranked by Overall or one measurement.
@@ -712,7 +713,7 @@ function Rank({ rank, order }: { rank: number | null; order: Order }) {
   );
 }
 
-/** The name's link covers the whole row or card; the second line's link sits above it. */
+/** The name's link covers its cell or the whole card; the second line's link sits above it. */
 function NameLines({ row }: { row: Row }) {
   return (
     <>
@@ -816,11 +817,15 @@ function RankTable({
       <tbody>
         {rows
           ? rows.map((row) => (
-              <tr key={row.key} className="relative h-16 border-b border-navy/10 last:border-0 hover:bg-sky/60">
+              <LinkedRow
+                key={row.key}
+                href={row.href}
+                className="h-16 border-b border-navy/10 last:border-0 hover:bg-sky/60"
+              >
                 <td className="pr-4 text-right text-sm font-bold text-navy tabular-nums">
                   <Rank rank={row.rank} order={state.order} />
                 </td>
-                <td className="pr-4">
+                <td className="relative pr-4">
                   <NameLines row={row} />
                 </td>
                 <td className={`text-center ${groupLine("score")}`}>
@@ -831,7 +836,7 @@ function RankTable({
                     <FeatureCell feature={row.features.find((f) => f.key === key)} />
                   </td>
                 ))}
-              </tr>
+              </LinkedRow>
             ))
           : Array.from({ length: SKELETON_ROWS }, (_, i) => (
               <tr key={i} className="h-16 border-b border-navy/10 last:border-0">

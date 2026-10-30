@@ -5,6 +5,9 @@ import { getChannels, getVideos, type RankedChannel, type RankedVideo } from "@/
 import { expectNoAxeViolations } from "@/test/axe";
 import RankingsCard, { joinEnds } from "./RankingsCard";
 
+const push = vi.fn();
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
+
 vi.mock("@/lib/api", () => ({
   getVideos: vi.fn(),
   getChannels: vi.fn(),
@@ -79,6 +82,20 @@ describe("RankingsCard", () => {
     const meters = table.querySelectorAll("[data-filled]");
     expect(Array.from(meters, (m) => m.getAttribute("data-filled"))).toEqual(["5", "5", "5", "1", "1", "1"]);
     expect(within(table).getByRole("link", { name: "Video 120" })).toBeInTheDocument();
+  });
+
+  it("opens a row's page from a click anywhere in it; the name's link covers its cell, not the row", async () => {
+    const user = userEvent.setup();
+    render(<RankingsCard />);
+    const table = await loadedTable(/videos/);
+    const name = within(table).getByRole("link", { name: "Video 120" });
+    // Safari ignores `relative` on a row, so the link would cover the whole card instead.
+    expect(name.closest("td")).toHaveClass("relative");
+    expect(table.querySelector("tr.relative")).toBeNull();
+
+    const row = name.closest("tr")!;
+    await user.click(within(row).getAllByRole("cell")[0]);
+    expect(push).toHaveBeenCalledWith("/video?id=video000120");
   });
 
   it("switches to channels", async () => {

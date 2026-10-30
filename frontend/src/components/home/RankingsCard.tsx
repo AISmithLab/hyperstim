@@ -4,6 +4,7 @@ import Link from "next/link";
 import { type ReactNode, useState } from "react";
 import ChannelName from "@/components/ChannelName";
 import InfoTip from "@/components/InfoTip";
+import LinkedRow from "@/components/LinkedRow";
 import ScoreMeter from "@/components/ScoreMeter";
 import SegmentedControl from "@/components/SegmentedControl";
 import { getChannels, getVideos, type ListResponse } from "@/lib/api";
@@ -254,7 +255,7 @@ function SkeletonRows() {
 function RankRow({ row, fromEnd }: { row: Row; fromEnd?: number }) {
   const warn = row.rank <= END;
   return (
-    <tr className={`relative ${ROW}`}>
+    <LinkedRow href={row.href} className={ROW}>
       {/* Ranks 1–3 may get warning-triangle art behind the number later (plan 002). */}
       <td
         className={`pr-4 text-right align-middle text-sm font-bold tabular-nums sm:pr-5 sm:text-base ${warn ? "text-navy" : "text-ink"}`}
@@ -268,8 +269,8 @@ function RankRow({ row, fromEnd }: { row: Row; fromEnd?: number }) {
           row.rank.toLocaleString("en-US")
         )}
       </td>
-      <td className="pr-4 align-middle sm:pr-6">
-        {/* The name's link covers the whole row; the second line's link sits above it. */}
+      <td className="relative pr-4 align-middle sm:pr-6">
+        {/* The name's link covers its cell; the second line's link sits above it. */}
         <Link
           href={row.href}
           className="line-clamp-2 font-semibold text-navy after:absolute after:inset-0 hover:underline"
@@ -289,6 +290,6 @@ function RankRow({ row, fromEnd }: { row: Row; fromEnd?: number }) {
       <td className="align-middle">
         <ScoreMeter score={row.score} />
       </td>
-    </tr>
+    </LinkedRow>
   );
 }
