@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import ScoreMeter from "@/components/ScoreMeter";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { canAnimate, grow } from "@/components/video/grow";
@@ -31,10 +31,13 @@ const pageParts = () =>
 export default function VideoPanel({
   video,
   measure,
+  label,
   onClose,
 }: {
   video: ChannelVideo;
   measure: Measure;
+  /** Above the title, e.g. the compare page's channel badge and name. */
+  label?: ReactNode;
   onClose: () => void;
 }) {
   const panel = useRef<HTMLDivElement>(null);
@@ -115,6 +118,7 @@ export default function VideoPanel({
     >
       {/* Right of the preview; above the player while playing. Clear of the × on the right. */}
       <div ref={text} className={`min-w-0 pr-10 ${playing ? "" : "sm:col-start-2 sm:row-start-1"}`}>
+        {label}
         <h3 ref={heading} id="video-panel-title" className="font-hand text-lg leading-snug font-semibold text-navy">
           <Link
             href={videoHref(video.id)}

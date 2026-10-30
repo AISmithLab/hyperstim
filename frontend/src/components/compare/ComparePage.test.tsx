@@ -411,6 +411,38 @@ describe("ComparePage", () => {
     expect(document.querySelector('[data-trend="b"]')).toBeNull();
   });
 
+  it("opens a clicked dot's video in the panel under the chart, from sm", async () => {
+    const user = userEvent.setup();
+    open(`view=channels&a=${CHANNEL_A}&b=${CHANNEL_B}`);
+    await screen.findByRole("heading", { name: "Over the years" });
+    await user.click(document.querySelector('[data-hit="b-qa"]')!);
+    const panel = screen.getByRole("region", { name: "Video qa" });
+    expect(within(panel).getByText("Quiet Lane")).toBeInTheDocument();
+    expect(url.push).not.toHaveBeenCalled();
+    // Its thumbnail under the chart is marked as the open one.
+    expect(screen.getByRole("button", { name: /^B: Video qa/ })).toHaveAttribute("aria-current", "true");
+    await user.click(within(panel).getByRole("button", { name: "Close video panel" }));
+    expect(screen.queryByRole("region", { name: "Video qa" })).toBeNull();
+  });
+
+  it("shows a tapped dot's video in a card under the chart on phones, and stays on the page", async () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({ matches: false, media: query }));
+    const user = userEvent.setup();
+    open(`view=channels&a=${CHANNEL_A}&b=${CHANNEL_B}`);
+    await screen.findByRole("heading", { name: "Over the years" });
+    // A tap: a touch pointer, then the click.
+    const hit = document.querySelector('[data-hit="a-zb"]')!;
+    fireEvent.pointerOver(hit, { pointerType: "touch" });
+    fireEvent.click(hit);
+    const card = screen.getByRole("region", { name: "Picked video" });
+    expect(within(card).getByText("Zoom Kids")).toBeInTheDocument();
+    expect(within(card).getByRole("link")).toHaveAttribute("href", expect.stringMatching(/^\/video\?id=/));
+    expect(document.querySelector("[data-popover]")).toBeNull();
+    expect(url.push).not.toHaveBeenCalled();
+    await user.click(within(card).getByRole("button", { name: "Close" }));
+    expect(screen.queryByRole("region", { name: "Picked video" })).toBeNull();
+  });
+
   it("has no accessibility violations with empty pickers and with suggestions open", async () => {
     const user = userEvent.setup();
     open();

@@ -1,5 +1,5 @@
 import { topChannels, topVideos } from "./api";
-import { expect, test } from "./fixtures";
+import { expect, isPhone, test } from "./fixtures";
 
 test.describe("compare", () => {
   test("two videos picked by search, by keyboard, give a shareable comparison", async ({ page, request }) => {
@@ -57,4 +57,28 @@ test.describe("compare", () => {
     }
     await expect(page.getByRole("heading", { level: 2, name: "How they compare" })).toBeVisible();
   });
+
+  test("a video on the two-channel chart opens under the chart, without leaving the page", async ({ page, request }) => {
+    const [c1, c2] = await topChannels(request, 2);
+    await page.goto(`/compare/?view=channels&a=${c1.id}&b=${c2.id}`);
+    await expect(page.getByRole("heading", { level: 2, name: "Over the years" })).toBeVisible();
+    if (isPhone()) {
+      // A tap shows the card under the chart, and no popup under the finger.
+      const hit = page.locator("[data-hit]").first();
+      await hit.scrollIntoViewIfNeeded();
+      const box = (await hit.boundingBox())!;
+      await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+      await expect(page.getByRole("region", { name: "Picked video" })).toBeVisible();
+      await expect(page.locator("[data-popover]")).toHaveCount(0);
+    } else {
+      // The thumbnails under the chart open the video panel, also by keyboard.
+      const thumb = page.getByRole("button", { name: /^B: / }).first();
+      await thumb.focus();
+      await page.keyboard.press("Enter");
+      await expect(page.getByRole("button", { name: "Close video panel" })).toBeVisible();
+      await expect(thumb).toHaveAttribute("aria-current", "true");
+    }
+    await expect(page).toHaveURL(/\/compare\//);
+  });
+
 });

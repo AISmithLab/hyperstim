@@ -1,11 +1,8 @@
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import type { ChannelDetail, ChannelVideo, Feature } from "@/lib/api";
 import { expectNoAxeViolations } from "@/test/axe";
 import CompareChart from "./CompareChart";
-
-const push = vi.hoisted(() => vi.fn());
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
 
 const CUTS = "inter_cut_dssim_mean"; // no value: "No cuts", drawn as a ×
 const LOUD = "lufs"; // no value: "No sound", left out
@@ -29,8 +26,11 @@ const B = channel("Beta", [
   video("b2", "2024-05-01", 20, [{ key: CUTS, value: null, percentile: null }]),
 ]);
 
-function renderChart(measure = "overall", channels = { a: A, b: B }) {
-  return render(<CompareChart channels={channels} measure={measure} wide={false} />);
+const onOpen = vi.fn();
+
+function renderChart(measure = "overall", channels = { a: A, b: B }, { wide = false, marked = null as string | null } = {}) {
+  onOpen.mockClear();
+  return render(<CompareChart channels={channels} measure={measure} wide={wide} marked={marked} onOpen={onOpen} />);
 }
 
 const q = (c: HTMLElement, selector: string) => c.querySelector(selector);
@@ -90,25 +90,46 @@ describe("CompareChart", () => {
     expect(q(container, 'path[data-dot="a"]')!.getAttribute("stroke-width")).not.toBe(before);
   });
 
-  it("hides the popover when the mouse leaves, but keeps it after a tap", () => {
+  it("shows the popover to a mouse only, and hides it when the mouse leaves", () => {
     const { container } = renderChart();
     const hit = q(container, '[data-hit="a-a3"]')!;
+    // A finger gets none: it would sit under the finger, which would have to stay on the dot.
     fireEvent.pointerEnter(hit, { pointerType: "touch" });
-    fireEvent.pointerLeave(hit, { pointerType: "touch" });
-    expect(q(container, "[data-popover]")).toBeInTheDocument();
+    expect(q(container, "[data-popover]")).toBeNull();
     fireEvent.pointerEnter(hit, { pointerType: "mouse" });
+    expect(q(container, "[data-popover]")).toBeInTheDocument();
     fireEvent.pointerLeave(hit, { pointerType: "mouse" });
     expect(q(container, "[data-popover]")).toBeNull();
   });
 
-  it("opens the video's page on click", () => {
-    const { container } = renderChart();
+  it("opens a dot's video on a click or tap, and keeps the opened video's dot marked", () => {
+    const { container, rerender } = renderChart();
     fireEvent.click(q(container, '[data-hit="b-b1"]')!);
-    expect(push).toHaveBeenCalledWith(expect.stringContaining("b1"));
+    expect(onOpen).toHaveBeenCalledWith("b-b1");
+    rerender(<CompareChart channels={{ a: A, b: B }} measure="overall" wide={false} marked="b-b1" onOpen={onOpen} />);
+    expect(q(container, 'rect[data-dot="b"][width="14"]')).toBeInTheDocument();
+    expect(q(container, "line[stroke-dasharray]")).toBeInTheDocument();
+    expect(q(container, "[data-popover]")).toBeNull();
+  });
+
+  it("hangs A's thumbnails above B's from sm, each a button that opens its video", () => {
+    renderChart("overall", { a: A, b: B }, { wide: true, marked: "a-a2" });
+    const a1 = screen.getByRole("button", { name: "A: Title a1, Jan 1, 2020" });
+    const b1 = screen.getByRole("button", { name: "B: Title b1, May 1, 2019" });
+    expect(screen.getAllByRole("button")).toHaveLength(6);
+    expect(parseFloat(a1.style.top)).toBeLessThan(parseFloat(b1.style.top));
+    expect(screen.getByRole("button", { name: /Title a2/ })).toHaveAttribute("aria-current", "true");
+    fireEvent.click(b1);
+    expect(onOpen).toHaveBeenCalledWith("b-b1");
+  });
+
+  it("has no thumbnails on phones", () => {
+    renderChart();
+    expect(screen.queryAllByRole("button")).toHaveLength(0);
   });
 
   it("has no accessibility violations, with and without a popover", async () => {
-    const { container } = renderChart();
+    const { container } = renderChart("overall", { a: A, b: B }, { wide: true });
     await expectNoAxeViolations();
     fireEvent.pointerEnter(q(container, '[data-hit="a-a1"]')!, { pointerType: "mouse" });
     await expectNoAxeViolations();
