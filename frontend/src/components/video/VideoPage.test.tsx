@@ -93,8 +93,8 @@ describe("VideoPage", () => {
     expect(heading.compareDocumentPosition(frame) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(container.querySelector(header)).toBeNull();
     // The title stays at the left; only the player is centred, at the screen-fitting width.
-    expect(heading.closest(".mx-auto")).not.toHaveClass("max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]");
-    expect(frame.closest(".mx-auto")).toHaveClass("max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]");
+    expect(heading.closest(".mx-auto")).not.toHaveClass("max-w-[min(100%,max(24rem,calc((100svh_-_22rem)*16/9)))]");
+    expect(frame.closest(".mx-auto")).toHaveClass("max-w-[min(100%,max(24rem,calc((100svh_-_22rem)*16/9)))]");
 
     await user.click(screen.getByRole("button", { name: "Shrink video" }));
     expect(container.querySelector("iframe")).toBeNull();

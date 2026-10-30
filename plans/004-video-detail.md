@@ -363,6 +363,7 @@ Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, t
 14. **Review.** Recordings at 360, 768 and 1280 px, screenshots at 1280 × 800, 1366 × 768 and 1920 × 1080 while playing; reduced motion; keyboard-only. Stop for review.
 15. **Title stays left while playing** (2026-10-28). The header keeps the full content width while playing: title and channel line left-aligned, the shrink button (replacing ×) at the line's right end, the player centred under them at the screen-fitting width; the grow and the score panel's slide unchanged; `STYLE.md` (Video header); tests (while playing the title's left edge stays where it was, the player is centred, "Shrink video" closes it).
 16. **Review.** Recordings at 360, 768 and 1280 px, screenshots at 1280 × 800 and 1920 × 1080 while playing. Stop for review.
+17. **Safari and phone fixes** (2026-10-30, plan 017). The player plays inline on iPhone (`playsinline=1`). `PLAYER_WIDTH` uses `svh`, so a playing video doesn't resize as the mobile toolbar hides. The score's info popover draws over the measurement rows below `lg` (`z-10` on its wrapper), and every info popover shifts to stay 16 px inside the screen (it stuck out at 320 px). `STYLE.md` (Video header, Score gauge, Popover); tests.
 
 ## Review decisions
 

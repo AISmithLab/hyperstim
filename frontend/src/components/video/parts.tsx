@@ -11,7 +11,7 @@ const MESSAGE_BOX = "mx-auto max-w-2xl rounded-2xl bg-sky p-6 text-center";
 // A playing video, centred: never wider than its box, and narrow enough that its height leaves room
 // for the site header, a title and the top of what's below (22rem) on short, wide screens. The video
 // page's header and the channel's video panel.
-export const PLAYER_WIDTH = "mx-auto w-full max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]";
+export const PLAYER_WIDTH = "mx-auto w-full max-w-[min(100%,max(24rem,calc((100svh_-_22rem)*16/9)))]";
 export const TEXT_LINK =
   "inline-flex min-h-11 items-center font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny";
 

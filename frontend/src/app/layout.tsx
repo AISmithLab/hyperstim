@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${nunito.variable} ${shantellSans.variable} antialiased`}>
-      <body className="flex min-h-dvh flex-col bg-white font-sans text-ink">
+      <body className="flex min-h-svh flex-col bg-white font-sans text-ink">
         <ConsentBanner />
         <a
           href="#main"

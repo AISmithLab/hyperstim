@@ -234,7 +234,7 @@ describe("ChannelPage", () => {
     // Under the title, at the screen-fitting width, with the shrink button.
     const title = within(panel).getByRole("heading", { level: 3 });
     expect(title.compareDocumentPosition(frame) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(frame.closest(".mx-auto")).toHaveClass("max-w-[min(100%,max(24rem,calc((100dvh_-_22rem)*16/9)))]");
+    expect(frame.closest(".mx-auto")).toHaveClass("max-w-[min(100%,max(24rem,calc((100svh_-_22rem)*16/9)))]");
 
     // A tall panel: never scrolled past its title.
     rects.mockRestore();
