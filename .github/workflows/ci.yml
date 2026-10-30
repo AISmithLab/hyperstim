@@ -65,7 +65,8 @@ jobs:
           name: coverage-backend
           path: backend/coverage.xml
 
-  # End-to-end tests: the built site against the real backend, in Chromium and WebKit (plan 012).
+  # End-to-end tests: the built site against the real backend, in Chromium and WebKit (plan 012),
+  # then the Safari check (plan 017).
   e2e:
     needs: [frontend, backend]
     runs-on: ubuntu-latest
@@ -78,7 +79,9 @@ jobs:
         with:
           node-version-file: frontend/.nvmrc
           cache: npm
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: |
+            frontend/package-lock.json
+            frontend/e2e/safari/package-lock.json
       - id: tools
         run: grep '^UV_VERSION=' ../tools.env | sed 's/^UV_VERSION=/uv=/' >> "$GITHUB_OUTPUT"
       - uses: astral-sh/setup-uv@v6
@@ -91,6 +94,13 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium webkit
       - run: npm run test:e2e
+      # The Safari check: its own Playwright, in the newest shipping Safari's WebKit (plan 017).
+      - run: npm ci
+        working-directory: frontend/e2e/safari
+      - run: npm run install-browser -- --with-deps
+        working-directory: frontend/e2e/safari
+      - run: npm test
+        working-directory: frontend/e2e/safari
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
@@ -98,6 +108,8 @@ jobs:
           path: |
             frontend/playwright-report/
             frontend/test-results/
+            frontend/e2e/safari/playwright-report/
+            frontend/e2e/safari/test-results/
           retention-days: 14
 
   # SonarQube Cloud analysis with both coverage reports (plan 012). Skipped for PRs

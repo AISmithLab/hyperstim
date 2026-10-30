@@ -13,7 +13,7 @@ Bugs, data that looks wrong, and ideas: open an issue with one of the [issue for
 
 ## Run locally
 
-Install the tools once (nvm + Node, uv, and for live analysis ffmpeg and deno, at the versions in `tools.env`; uses `apt` or Homebrew; plus Chromium and WebKit for the end-to-end tests, with the system libraries they need), then start both apps:
+Install the tools once (nvm + Node, uv, and for live analysis ffmpeg and deno, at the versions in `tools.env`; uses `apt` or Homebrew; plus Chromium and WebKit for the end-to-end tests, with the system libraries they need, and the Safari check's own WebKit), then start both apps:
 
 ```sh
 ./dev.sh --install-tools   # once, and after tools.env changes

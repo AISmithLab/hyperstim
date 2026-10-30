@@ -103,12 +103,16 @@ if [ "$MODE" = dev ]; then
 
   # The browsers the end-to-end tests run in (plan 012), at the version Playwright's
   # package-lock.json entry expects, with their OS libraries (apt; none needed on macOS).
-  say "Installing the end-to-end test browsers (Chromium, WebKit)"
+  say "Installing the end-to-end test browsers (Chromium, WebKit, and the Safari check's WebKit)"
   (
     cd "$ROOT/frontend"
     nvm use --silent
     [ -d node_modules ] || npm ci
     npx playwright install --with-deps chromium webkit
+    # The Safari check's own Playwright and WebKit (plan 017), in a browser folder of its own.
+    cd e2e/safari
+    [ -d node_modules ] || npm ci
+    npm run install-browser -- --with-deps
   )
   case ":$PATH:" in
     *":$BIN:"*) ;;
