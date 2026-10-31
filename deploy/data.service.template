@@ -10,8 +10,9 @@ Type=oneshot
 User=${DATA_USER}
 Group=${DATA_USER}
 Environment=HOME=${PROD_DIR}/data-bot
-# The released script, never unreleased main.
-ExecStart=${PROD_DIR}/releases/current/scripts/commit-data.sh ${PROD_DIR}/data-repo ${PROD_DIR}/data/collector/collected
+# The released script, never unreleased main. It commits the files as they stood at the end of
+# the last day, which the collector copies to day-end/ when it closes the day (plan 013).
+ExecStart=${PROD_DIR}/releases/current/scripts/commit-data.sh ${PROD_DIR}/data-repo ${PROD_DIR}/data/collector/collected/day-end
 
 NoNewPrivileges=yes
 ProtectSystem=strict

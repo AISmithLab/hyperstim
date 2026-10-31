@@ -3,11 +3,9 @@
 Description=HyperStim website: commit the collected dataset daily (prod)
 
 [Timer]
-# The day's last second, so the commit wraps up the UTC day, as the changelog counts them
-# (commit-data.sh takes the files and the date first, before midnight).
-OnCalendar=*-*-* 23:59:59 UTC
-# On time: systemd's default lets a timer start up to a minute late, past midnight.
-AccuracySec=1ms
+# Just after midnight UTC, once the collector has closed the day before (its counts and the
+# day-end copy of the files, all at 23:59:59).
+OnCalendar=*-*-* 00:05:00 UTC
 # A run missed while the server was off happens at the next boot.
 Persistent=true
 
