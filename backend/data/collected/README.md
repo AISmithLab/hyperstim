@@ -33,6 +33,7 @@ Until the day the changelog's note says "Counts end at 23:59:59 UTC" (plan 013),
 - Each commit's newest changelog row was the day still running, so it was partial; the next commit replaced it with the whole day.
 - Each commit's message counted the videos added since the commit before, so it covered parts of two days and didn't match a changelog row. The release notes' "Dataset" line read those partial newest rows.
 - `ch_ready` and `ch_out` were recorded at each export, the day's last one standing (time not kept), until days were recounted from backups (above).
+- `ch_ready` and `ch_out` for 2026-10-26 to 2026-10-28 were recounted from backups with the kids-share rule, which went live on 2026-10-29; on those days no channel was left out on the site.
 
 The commits and release notes stay as they were; the changelog's rows in the latest commit are what counts.
 
