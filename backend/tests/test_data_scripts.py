@@ -2,7 +2,6 @@
 draws the README's growth chart, and the dataset's size in the release notes
 (scripts/release-notes.sh), both read from the collector's CHANGELOG.tsv."""
 
-import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -85,15 +84,32 @@ def test_the_data_goes_in_when_the_chart_fails(tmp_path: Path, clone: Path) -> N
     assert "backend/data/collected/growth.svg" not in files
 
 
-def test_the_commit_message_counts_new_channels(tmp_path: Path, clone: Path) -> None:
-    subprocess.run([str(COMMIT_DATA), str(clone), str(collected(tmp_path))], check=True)
-    source = tmp_path / "collected"
-    (source / "CHANGELOG.tsv").write_text(
-        CHANGELOG.replace("2026-10-29\t16725\t588", "2026-10-30\t16727\t591", 1)
-    )
-    (source / "2026.tsv").write_text("video_id\nabc\ndef\nghi\n")
+def commit(clone: Path, source: Path) -> str:
+    """Runs the daily commit; returns the newest commit's subject."""
     subprocess.run([str(COMMIT_DATA), str(clone), str(source)], check=True)
-    assert git(clone, "log", "-1", "--format=%s").startswith("data: Add 2 videos and 3 channels")
+    return git(clone, "log", "-1", "--format=%s").strip()
+
+
+def test_the_commit_message_is_the_new_days_rows(tmp_path: Path, clone: Path) -> None:
+    source = collected(tmp_path)
+    assert commit(clone, source) == (
+        "data: Add 423 videos and 46 channels, remove 73 (2026-10-26 to 2026-10-29)"
+    )
+    (source / "CHANGELOG.tsv").write_text(
+        HEADER + line("2026-10-30", 16727, 591, 2, 0, 3) + CHANGELOG.removeprefix(HEADER)
+    )
+    (source / "2026.tsv").write_text("video_id\nabc\ndef\nghi\nnext-day\n")
+    assert commit(clone, source) == "data: Add 2 videos and 3 channels (2026-10-30)"
+
+
+def test_nothing_is_committed_without_a_new_day(tmp_path: Path, clone: Path) -> None:
+    source = collected(tmp_path)
+    commit(clone, source)
+    head = git(clone, "rev-parse", "HEAD")
+    # The same days, with the files changed (videos added after midnight): no commit.
+    (source / "2026.tsv").write_text("video_id\nabc\ndef\n")
+    commit(clone, source)
+    assert git(clone, "rev-parse", "HEAD") == head
 
 
 def test_the_release_notes_read_the_dataset_size_from_the_latest_day(tmp_path: Path) -> None:
@@ -110,32 +126,3 @@ def test_the_release_notes_read_the_dataset_size_from_the_latest_day(tmp_path: P
         [str(RELEASE_NOTES), "HEAD~1..HEAD"], cwd=repo, check=True, capture_output=True, text=True
     ).stdout
     assert "Dataset: 16,725 → 16,989 videos, 588 → 594 channels." in notes
-
-
-def test_the_daily_commit_takes_the_day_and_files_before_the_fetch(
-    tmp_path: Path, clone: Path
-) -> None:
-    # The timer runs it at 23:59:59 UTC: midnight passes during the fetch. Stand-ins for git
-    # and date make it pass: once the fetch starts, the day is the next one and the collector
-    # has written the next day's row.
-    source = collected(tmp_path)
-    midnight = tmp_path / "midnight"
-    bin_dir = tmp_path / "bin"
-    bin_dir.mkdir()
-    real_git = shutil.which("git")
-    (bin_dir / "git").write_text(
-        "#!/usr/bin/env bash\n"
-        f'if [[ " $* " == *" fetch "* ]]; then touch "{midnight}"; '
-        f"sed -i '1a 2026-10-30\\t16726\\t588' \"{source}/CHANGELOG.tsv\"; fi\n"
-        f'exec "{real_git}" "$@"\n'
-    )
-    (bin_dir / "date").write_text(
-        f'#!/usr/bin/env bash\n[ -e "{midnight}" ] && echo 2026-10-30 || echo 2026-10-29\n'
-    )
-    for stub in ("git", "date"):
-        (bin_dir / stub).chmod(0o755)
-    env = {**os.environ, "PATH": f"{bin_dir}:{os.environ['PATH']}"}
-    subprocess.run([str(COMMIT_DATA), str(clone), str(source)], check=True, env=env)
-    assert git(clone, "log", "-1", "--format=%s").strip().endswith("(2026-10-29)")
-    committed = git(clone, "show", "HEAD:backend/data/collected/CHANGELOG.tsv")
-    assert committed == CHANGELOG

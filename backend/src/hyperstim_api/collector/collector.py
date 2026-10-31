@@ -11,6 +11,7 @@ on one answer, unfinished work resumes, and a video goes on the site only when e
 it shows is in place.
 """
 
+import calendar
 import contextlib
 import csv
 import functools
@@ -81,6 +82,10 @@ FAILURE_PAUSE_S = 3600
 LOGS_KEPT_S = 30 * DAY_S  # the downloader's output for failed downloads, in download-logs/
 FREE_SPACE_MIN = 50 * 1024**3
 BACKUPS_KEPT = 7  # daily copies of collector.db, in clips_dir/backups
+# The collector rests in each UTC day's last minutes, so no work runs over midnight and the day
+# closes with its counts at 23:59:59 (decision 10).
+REST_S = 600
+DAY_END_DIR = "day-end"  # in collected/: the files as they stood at the last day's end
 # The classifier's names → the dataset's category keys (dataset.CATEGORIES).
 CATEGORY_NAMES = {
     "music": "music",
@@ -168,9 +173,21 @@ class Collector:
 
     def tick(self) -> float:
         """Do what's due; returns the seconds to wait before the next tick. A job that fails
-        is logged and waits; the others, and downloads, go on."""
+        is logged and waits; the others, and downloads, go on. Nothing in the day's last
+        minutes; the first tick of a day closes the day before."""
         now = self.clock()
-        self.store.set("tick_at", now)  # the alert check's sign that the collector runs
+        to_midnight = DAY_S - now % DAY_S
+        if to_midnight <= REST_S:
+            self.store.set("tick_at", now)  # the alert check's sign that the collector runs
+            self.store.set("tick_end", self.clock())
+            return to_midnight + 1
+        self.close_day(now)
+        self.store.set("tick_at", now)
+        wait = self.work(now)
+        self.store.set("tick_end", self.clock())
+        return wait
+
+    def work(self, now: float) -> float:
         self.back_up(now)
         self.prune_logs(now)
         # Also at least daily, so the channels left out for their kids share are judged again
@@ -860,6 +877,43 @@ class Collector:
         self.store.set("ok:back_up", utc(now))
         log.info("Backed up collector.db to %s", folder)
 
+    # --- closing the day (decision 10) -------------------------------------------------
+
+    def close_day(self, now: float) -> None:
+        """On the first tick of a UTC day: records the day before's counts that can't be worked
+        out again (`ch_ready`, `ch_out`), then writes the files and their day-end copy. When the
+        last tick finished before midnight, nothing has changed since, so the counts are the
+        day's end (also for days the collector was down); otherwise they're as of now, and
+        only the day before gets them."""
+        midnight = now - now % DAY_S
+        yesterday = utc(midnight - DAY_S)[:10]
+        closed = self.store.get("closed_day")
+        if not closed:  # the first run with this: the day before was recorded the old way
+            self.store.set("closed_day", yesterday)
+            return
+        if closed >= yesterday:
+            return
+        started = float(self.store.get("tick_at", "0") or 0)
+        ended = float(self.store.get("tick_end", "0") or 0)
+        exact = started <= ended < midnight
+        self.store.update_left_out()
+        ready, out = self.store.ready_to_join(), len(self.store.left_out_list())
+        day = midnight - DAY_S
+        with self.store.transaction():
+            while utc(day)[:10] > closed:
+                if exact or utc(day)[:10] == yesterday:
+                    at = day + DAY_S if exact else now
+                    self.store.record_daily(utc(day)[:10], ready, out, at)
+                day -= DAY_S
+            self.store.set("closed_day", yesterday)
+        if not exact:
+            log.warning("Closed %s late: its counts are as of %s", yesterday, utc(now))
+        self.export()
+        try:
+            export(self.store, self.s.data_dir / "collected" / DAY_END_DIR, now, until=midnight)
+        except Exception:  # the daily commit then waits for the next day's copy
+            log.exception("Couldn't write the day-end copy of %s", yesterday)
+
     # --- export ----------------------------------------------------------------------
 
     def export(self) -> None:
@@ -887,14 +941,20 @@ COLUMNS = (
 )  # fmt: skip
 
 
-def export(store: Store, directory: Path, now: float | None = None) -> None:
+def export(
+    store: Store, directory: Path, now: float | None = None, until: float | None = None
+) -> None:
     """The added videos (one file per year of adding, in the order added), the removed ones,
     the channels left out for their kids share (worked out again here) and a little metadata,
-    each written whole and renamed into place, for the API to reload."""
+    each written whole and renamed into place, for the API to reload. With `until` (a
+    midnight), only the videos added and taken out before it: the day-end copy."""
     directory.mkdir(parents=True, exist_ok=True)
     store.update_left_out()
+    before = "9999" if until is None else utc(until)
     by_year: dict[str, list[dict[str, object]]] = {}
     for row in store.collected_rows():
+        if row["added_at"] >= before:
+            continue
         features = json.loads(row["features"])
         provenance = json.loads(row["provenance"])
         out: dict[str, object] = {
@@ -916,7 +976,7 @@ def export(store: Store, directory: Path, now: float | None = None) -> None:
         by_year.setdefault(row["added_at"][:4], []).append(out)
     for year, rows in by_year.items():
         _write_tsv(directory / f"{year}.tsv", COLUMNS, rows)
-    removed = [dict(r) for r in store.removed_rows()]
+    removed = [dict(r) for r in store.removed_rows() if r["removed_at"] < before]
     _write_tsv(directory / "removed.tsv", ("video_id", "removed_at", "reason"), removed)
     _write_tsv(
         directory / "channel-names.tsv", ("channel_id", "channel_title"), channel_names(store)
@@ -926,6 +986,35 @@ def export(store: Store, directory: Path, now: float | None = None) -> None:
     _write_tsv(directory / "CHANGELOG.tsv", CHANGELOG_COLUMNS, changes)
     meta = {"channelsCheckedAt": store.get("channels_checked_at") or None}
     _replace(directory / "meta.json", json.dumps(meta) + "\n")
+
+
+def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
+    """Works out `ch_ready` and `ch_out` again from daily backups of collector.db (decision
+    10): each was taken on a day's first tick, so it holds the end of the day before. Records
+    them for that day with the backup's time (its `tick_at`, else the file's), unless the day
+    has a count from 23:59:59 or from closer to it, or is before the collector's first day.
+    Returns a line per backup saying what it did."""
+    first = store.db.execute("SELECT MIN(added_at) FROM collected").fetchone()[0]
+    daily = store.daily()
+    done: list[str] = []
+    for path in sorted(backups):
+        copy = scratch / path.name  # judged again in a copy, so the backup stays as it was
+        shutil.copyfile(path, copy)
+        backup = Store(copy)
+        at = float(backup.get("tick_at") or path.stat().st_mtime)
+        day = utc(at - at % DAY_S - DAY_S)[:10]
+        recorded = daily.get(day)
+        if first is None or day < first[:10]:
+            done.append(f"{path.name}: {day} is before the first day, skipped")
+        elif recorded is not None and recorded["at"] is not None and recorded["at"] <= at:
+            done.append(f"{path.name}: {day} already has a closer count, skipped")
+        else:
+            backup.update_left_out()
+            ready, out = backup.ready_to_join(), len(backup.left_out_list())
+            store.record_daily(day, ready, out, at)
+            done.append(f"{path.name}: {day} ch_ready {ready}, ch_out {out}, as of {utc(at)}")
+        backup.close()
+    return done
 
 
 def channel_names(store: Store) -> list[dict[str, object]]:
@@ -968,12 +1057,12 @@ CHANGELOG_COLUMNS = (
 
 
 def changelog(store: Store, now: float) -> list[dict[str, object]]:
-    """One line per UTC day with a change, a recorded count or a note, the newest first: the
-    site at the end of the day (videos, channels, the channels by their number of videos),
-    the channels ready to join and left out, the day's changes and its notes. The channels left
-    out now count as never there, as on the site. Records today's channels ready to join and
-    left out first; the days before each record began have none (blank), since they can't be
-    counted again."""
+    """One line per finished UTC day with a change, a recorded count or a note, the newest
+    first: the site at 23:59:59 (videos, channels, the channels by their number of videos),
+    the channels ready to join and left out as recorded when the day was closed, the day's
+    changes and its notes. The channels left out now count as never there, as on the site. The
+    days before each record began have none (blank), since they can't be counted again; a
+    recorded count not from 23:59:59 gets a note saying when it's from."""
     today = time.strftime("%Y-%m-%d", time.gmtime(now))
     store.date_notes(notes.NOTES, today)
     channel_of = {
@@ -993,13 +1082,12 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
         if r["video_id"] in channel_of
     ]
     events.sort()
-    store.record_daily(today, store.ready_to_join(), len(store.left_out_list()))
     daily = store.daily()
     notes_by_day = store.notes()
     # The reference set: v2's picks, also the ones removed since.
     visible = Counter(channel_of[v] for v in channel_of if v not in collected)
     days = sorted(d for d in {at[:10] for at, _, _ in events} | set(daily) | set(notes_by_day)
-                  if d <= today)  # fmt: skip
+                  if d < today)  # fmt: skip
     lines: list[dict[str, object]] = []
     i = 0
     for day in days:
@@ -1025,10 +1113,23 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
             f"ch_{sampling.FLOOR}plus": levels[sampling.FLOOR],
             "ch_ready": recorded["ch_ready"] if recorded else "",
             "ch_out": "" if recorded is None or recorded["ch_out"] is None else recorded["ch_out"],
-            "note": "; ".join(notes_by_day.get(day, [])),
+            "note": "; ".join(notes_by_day.get(day, []) + recorded_when(day, recorded)),
         }
         lines.append(line)
     return lines[::-1]
+
+
+def recorded_when(day: str, recorded: Any) -> list[str]:
+    """The note for a day whose `ch_ready` and `ch_out` aren't from 23:59:59."""
+    if recorded is None:
+        return []
+    if recorded["at"] is None:
+        return ["ch_ready and ch_out at the day's last export (time not kept)"]
+    end = calendar.timegm(time.strptime(day, "%Y-%m-%d")) + DAY_S
+    if recorded["at"] == end:
+        return []
+    at = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(recorded["at"]))
+    return [f"ch_ready and ch_out as of {at} UTC"]
 
 
 def _write_tsv(path: Path, columns: tuple[str, ...], rows: list[dict[str, object]]) -> None:

@@ -88,9 +88,12 @@ CREATE TABLE IF NOT EXISTS left_out (
     answers INTEGER NOT NULL           -- checked uploads whose made-for-kids answer is known
 );
 -- The changelog's counts that can't be worked out again later (decision 10), one row per UTC
--- day, the day's last export wins: channels not on the site yet with a video waiting, and
--- channels left out (NULL on the days before it was recorded).
-CREATE TABLE IF NOT EXISTS daily (day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL, ch_out INTEGER);
+-- day, recorded when the day is closed: channels not on the site yet with a video waiting, and
+-- channels left out (NULL on the days before it was recorded); `at`, the time they stand for
+-- (the next midnight when they're the day's end; NULL when recorded before it was kept).
+CREATE TABLE IF NOT EXISTS daily (
+    day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL, ch_out INTEGER, at REAL
+);
 -- The changelog's notes (decision 10): each dated the first day the collector ran with it.
 CREATE TABLE IF NOT EXISTS notes (note TEXT PRIMARY KEY, day TEXT NOT NULL);
 """
@@ -108,7 +111,7 @@ ADDED_COLUMNS = {
         "pick": "TEXT NOT NULL DEFAULT 'sample'",  # everything checked before was `sample`
         "score": "REAL",  # filled in when the collector starts
     },
-    "daily": {"ch_out": "INTEGER"},
+    "daily": {"ch_out": "INTEGER", "at": "REAL"},
 }
 V2_JOINED = "2026-08-26"
 # A channel's videos in the dataset or on their way: what the floor counts.
@@ -421,14 +424,15 @@ class Store:
         ).fetchone()
         return int(row[0])
 
-    def record_daily(self, day: str, ch_ready: int, ch_out: int) -> None:
+    def record_daily(self, day: str, ch_ready: int, ch_out: int, at: float) -> None:
         self.db.execute(
-            "INSERT OR REPLACE INTO daily (day, ch_ready, ch_out) VALUES (?, ?, ?)",
-            (day, ch_ready, ch_out),
+            "INSERT OR REPLACE INTO daily (day, ch_ready, ch_out, at) VALUES (?, ?, ?, ?)",
+            (day, ch_ready, ch_out, at),
         )
 
     def daily(self) -> dict[str, sqlite3.Row]:
-        """The recorded counts by day: `ch_ready`, `ch_out` (None before it was recorded)."""
+        """The recorded counts by day: `ch_ready`, `ch_out` (None before it was recorded) and
+        `at`, the time they stand for (None before it was kept)."""
         return {r["day"]: r for r in self.db.execute("SELECT * FROM daily")}
 
     def date_notes(self, notes: Iterable[tuple[str, str | None]], today: str) -> None:

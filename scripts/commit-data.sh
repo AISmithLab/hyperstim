@@ -7,8 +7,9 @@
 #   scripts/commit-data.sh <clone> <collected-dir>
 #
 # <clone> is the bot's own clone (never a dev checkout); its origin must accept the bot's
-# deploy key. Does nothing when nothing changed. The timer runs it at 23:59:59 UTC, so it
-# takes the day and the files first, before the fetch can run past midnight.
+# deploy key. <collected-dir> is the collector's day-end copy: the files as they stood at the
+# end of the last day it closed. The message counts the changelog's days new since the last
+# commit, so it equals their rows; with no new day, nothing is committed.
 set -euo pipefail
 
 [ $# = 2 ] || {
@@ -19,7 +20,6 @@ CLONE="$1" SOURCE="$2"
 DEST="backend/data/collected"
 git=(git -C "$CLONE" -c user.name="HyperStim data bot" -c user.email="hyperstim-data-bot@users.noreply.github.com")
 
-day="$(date -u +%F)"
 files=()
 for f in "$SOURCE"/[0-9][0-9][0-9][0-9].tsv "$SOURCE"/{removed.tsv,excluded-channels.tsv,CHANGELOG.tsv,meta.json}; do
   [ -f "$f" ] && files+=("$f")
@@ -31,6 +31,24 @@ cp "${files[@]}" "$snapshot/"
 
 "${git[@]}" fetch --quiet origin main
 "${git[@]}" checkout --quiet -B main origin/main
+
+# The changelog's days after the newest one committed: their added and removed videos and new
+# channels, and the first and last of them (columns found by name).
+newest="$("${git[@]}" show "HEAD:$DEST/CHANGELOG.tsv" 2>/dev/null |
+  awk -F'\t' 'NR > 1 && $1 > day { day = $1 } END { print day }')" || true
+read -r days added removed new_channels first last < <(
+  awk -F'\t' -v after="$newest" '
+    NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
+    $1 > after {
+      n++; a += $col["added_v"]; r += $col["removed_v"]; c += $col["new_ch"]
+      if (first == "" || $1 < first) first = $1
+      if ($1 > last) last = $1
+    }
+    END { print n + 0, a + 0, r + 0, c + 0, first, last }' "$snapshot/CHANGELOG.tsv" 2>/dev/null ||
+    echo 0
+)
+[ "${days:-0}" -gt 0 ] || exit 0
+
 mkdir -p "$CLONE/$DEST"
 cp "$snapshot"/* "$CLONE/$DEST/"
 # The README's growth chart (plan 013), drawn from the changelog just copied, with the release's
@@ -41,33 +59,11 @@ here="$(cd "$(dirname "$0")/.." && pwd)"
 "${git[@]}" add -- "$DEST"
 "${git[@]}" diff --cached --quiet && exit 0
 
-# The message counts what's new since the last commit: rows in the year files and in
-# removed.tsv (without their header lines), and the change in channels (the changelog's
-# latest day, its columns found by name).
-rows() { # <rev, ":0" for the staged files> <path>...
-  local rev="$1" n=0 path
-  shift
-  for path in "$@"; do
-    n=$((n + $("${git[@]}" show "$rev:$path" 2>/dev/null | tail -n +2 | wc -l)))
-  done
-  echo "$n"
-}
-mapfile -t years < <("${git[@]}" ls-files -- "$DEST/[0-9][0-9][0-9][0-9].tsv")
-added=$(($(rows :0 "${years[@]}") - $(rows HEAD "${years[@]}")))
-removed=$(($(rows :0 "$DEST/removed.tsv") - $(rows HEAD "$DEST/removed.tsv")))
-channels() {
-  "${git[@]}" show "$1:$DEST/CHANGELOG.tsv" 2>/dev/null |
-    awk -F'\t' 'NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
-      $1 > day { day = $1; n = $col["channels"] } END { print n }'
-}
-before="$(channels HEAD || true)" after="$(channels :0 || true)"
-new_channels=0
-[[ $before =~ ^[0-9]+$ && $after =~ ^[0-9]+$ ]] && new_channels=$((after - before))
 plural() { [ "$1" = 1 ] && echo "$1 $2" || echo "$1 ${2}s"; }
 subject="data: Add $(plural "$added" video)"
 [ "$new_channels" -gt 0 ] && subject+=" and $(plural "$new_channels" channel)"
 [ "$removed" -gt 0 ] && subject+=", remove $removed"
-subject+=" ($day)"
+if [ "$first" = "$last" ]; then subject+=" ($last)"; else subject+=" ($first to $last)"; fi
 "${git[@]}" commit --quiet -m "$subject"
 
 for attempt in 1 2 3; do

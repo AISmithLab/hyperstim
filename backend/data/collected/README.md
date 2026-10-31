@@ -1,16 +1,16 @@
 # The collected dataset
 
-The videos added to the HyperStim dataset since the reference set (16,375 videos, 2015 to August 2026), committed every day by the data bot. How they're picked: [plan 013](../../../plans/013-growing-dataset.md).
+The videos added to the HyperStim dataset since the reference set (16,375 videos, 2015 to August 2026), committed every day by the data bot, as they stood at 23:59:59 UTC the day before. How they're picked: [plan 013](../../../plans/013-growing-dataset.md).
 
 - `<year>.tsv`: the videos added that year, in the order they were added.
 - `removed.tsv`: videos taken out because they went offline.
 - `excluded-channels.tsv`: channels left out because few of their uploads are made for kids (below).
-- `CHANGELOG.tsv`: one row a day, the newest first (below).
+- `CHANGELOG.tsv`: one row a finished day, the newest first (below).
 - `growth.svg`, `growth-dark.svg`: the chart in the repo's README.
 
 ## CHANGELOG.tsv
 
-The site at the end of each day (UTC). Channels left out for their kids share are counted nowhere, as on the site.
+The site at the end of each finished day: every count is at 23:59:59 UTC, and the day still running has no row yet. Channels left out for their kids share are counted nowhere, as on the site, using today's list for every row, so a channel that comes or goes changes the past rows too.
 
 | Column | What it counts |
 |---|---|
@@ -21,9 +21,20 @@ The site at the end of each day (UTC). Channels left out for their kids share ar
 | `ch_out` | channels left out for their kids share (the list below), with or without videos |
 | `added_v`, `removed_v` | videos added that day, and taken out as offline |
 | `new_ch` | channels that got their first video that day |
-| `note` | a change to what the collector picks, or in what order, that went live that day |
+| `note` | a change to what the collector picks, or in what order, or to how this file counts, that went live that day; and when `ch_ready` and `ch_out` aren't from 23:59:59, when they are from |
 
-`ch_ready` and `ch_out` are blank for the days before the collector started recording them: those days can't be counted again.
+`ch_ready` and `ch_out` can't be worked out again later, so the collector records them when it closes a day, just after midnight. They're blank for the days before it started recording them. When they aren't from 23:59:59 (the collector was down at midnight, or the day was recounted from a backup taken just after it), the note says when they're from, e.g. "ch_ready and ch_out as of 2026-10-27 00:00:41 UTC"; "at the day's last export (time not kept)" marks a day recorded before the time was kept.
+
+## History
+
+Until the day the changelog's note says "Counts end at 23:59:59 UTC" (plan 013), the files were committed as they stood at the commit's time, not at the end of a day:
+
+- 2026-10-28 to 2026-10-30: at 03:00 UTC; 2026-10-31: at 00:49 UTC; then at 23:59:59 UTC until the change was deployed.
+- Each commit's newest changelog row was the day still running, so it was partial; the next commit replaced it with the whole day.
+- Each commit's message counted the videos added since the commit before, so it covered parts of two days and didn't match a changelog row. The release notes' "Dataset" line read those partial newest rows.
+- `ch_ready` and `ch_out` were recorded at each export, the day's last one standing (time not kept), until days were recounted from backups (above).
+
+The commits and release notes stay as they were; the changelog's rows in the latest commit are what counts.
 
 ## excluded-channels.tsv
 

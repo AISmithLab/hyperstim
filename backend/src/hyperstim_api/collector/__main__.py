@@ -4,6 +4,8 @@ python -m hyperstim_api.collector seed <research-repo>   start from v2's lists, 
 python -m hyperstim_api.collector run                    collect until stopped
 python -m hyperstim_api.collector status                 what it has done, and its health
 python -m hyperstim_api.collector export                 write the TSV files again
+python -m hyperstim_api.collector recount <backup>...    the changelog's ch_ready and ch_out
+                                                         from daily backups, once
 python -m hyperstim_api.collector alerts                 the hourly alert check (GitHub issues)
 """
 
@@ -13,6 +15,7 @@ import os
 import shutil
 import signal
 import sys
+import tempfile
 import threading
 import time
 from collections import Counter
@@ -30,6 +33,7 @@ from hyperstim_api.collector.collector import (
     load_classifier,
     probe_block,
     provenance,
+    recount,
     scorer,
     utc,
 )
@@ -61,10 +65,6 @@ def run(s: Settings) -> None:
     if not store.get("seeded"):
         sys.exit("Seed the collector first: python -m hyperstim_api.collector seed <research-repo>")
     s.provenance = provenance()
-    # Downloads that failed before they were retried (plan 013, decision 7) get their retries.
-    requeued = store.requeue_failed(len(RETRY_AFTER_S) + 1)
-    if requeued:
-        log.info("Trying %d failed downloads again", requeued)
 
     def spend(units: int) -> None:
         day = quota_day(time.time())
@@ -84,6 +84,12 @@ def run(s: Settings) -> None:
         probe_block,
         score=scorer(reference),
     )
+    # Before anything changes, so a day that ended while it was stopped is closed as it ended.
+    collector.close_day(time.time())
+    # Downloads that failed before they were retried (plan 013, decision 7) get their retries.
+    requeued = store.requeue_failed(len(RETRY_AFTER_S) + 1)
+    if requeued:
+        log.info("Trying %d failed downloads again", requeued)
     collector.fill_scores({v.id: v.score for v in reference.videos})
     stop = threading.Event()
 
@@ -322,6 +328,10 @@ def main() -> None:
     commands.add_parser("status", help="what the collector has done")
     commands.add_parser("export", help="write the TSV files again")
     commands.add_parser("alerts", help="the hourly alert check: open, comment on, close issues")
+    recount_cmd = commands.add_parser(
+        "recount", help="the changelog's ch_ready and ch_out from daily backups (once)"
+    )
+    recount_cmd.add_argument("backups", type=Path, nargs="+")
     args = parser.parse_args()
     s = settings()
     if args.command == "seed":
@@ -335,6 +345,12 @@ def main() -> None:
         print(status(s))
     elif args.command == "alerts":
         check_alerts(s)
+    elif args.command == "recount":
+        store = open_store(s)
+        with tempfile.TemporaryDirectory() as scratch:
+            print("\n".join(recount(store, args.backups, Path(scratch))))
+        export(store, s.data_dir / "collected")
+        store.close()
     else:
         store = open_store(s)
         export(store, s.data_dir / "collected")

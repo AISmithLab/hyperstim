@@ -2,6 +2,7 @@
 
 import csv
 import json
+import os
 import random
 import urllib.parse
 from collections.abc import Callable
@@ -19,6 +20,7 @@ from hyperstim_api.collector.collector import (
     changelog,
     left_out_rows,
     load_classifier,
+    recount,
     scorer,
     utc,
 )
@@ -1039,14 +1041,19 @@ def test_export_is_read_by_the_api(
     dataset = load_dataset(reference, folder)
     assert len(dataset.videos) == 4
     assert all(dataset.videos_by_id[r["video_id"]].added_at == r["added_at"] for r in rows)
-    # The changelog the release notes read: one line a day, with the totals.
+    # The changelog the release notes read: one line a finished day, with the totals. The day
+    # still running has none; the next day's first tick closes it.
+    assert (folder / "CHANGELOG.tsv").read_text().count("\n") == 1
+    clock.now = NOW - NOW % DAY_S + DAY_S + 1
+    collector.tick()
     with (folder / "CHANGELOG.tsv").open(newline="", encoding="utf-8") as fh:
         log = list(csv.DictReader(fh, delimiter="\t"))
-    assert log == [
+    assert log[-1:] == [
         {"date": "2026-10-26", "videos": "3", "channels": "1", "ch_1": "0", "ch_2": "0",
          "ch_3": "1", "ch_4": "0", "ch_5plus": "0", "ch_ready": "0", "ch_out": "0", "added_v": "3",
          "removed_v": "0", "new_ch": "1",
-         "note": "Collecting starts: 150 videos a day, lowest r first"}
+         "note": "Collecting starts: 150 videos a day, lowest r first; "
+                 "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -1076,10 +1083,10 @@ def test_the_changelog_counts_the_channels_by_their_videos_newest_day_first(
     added(store, SMALL, "add00000001", NOW)  # its 2nd video
     store.set_state("add00000001", "removed")  # taken out the next day
     store.add_removed("add00000001", utc(NOW + DAY_S), "gone")
-    rows = changelog_rows(store, NOW + DAY_S)
+    rows = changelog_rows(store, NOW + 2 * DAY_S)
     assert rows == [
         {"date": "2026-10-27", "videos": 6, "channels": 2, "ch_1": 1, "ch_2": 0, "ch_3": 0,
-         "ch_4": 0, "ch_5plus": 1, "ch_ready": 0, "ch_out": 1, "added_v": 0, "removed_v": 1,
+         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "", "added_v": 0, "removed_v": 1,
          "new_ch": 0},
         {"date": "2026-10-26", "videos": 7, "channels": 2, "ch_1": 0, "ch_2": 1, "ch_3": 0,
          "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "", "added_v": 1, "removed_v": 0,
@@ -1089,43 +1096,193 @@ def test_the_changelog_counts_the_channels_by_their_videos_newest_day_first(
         assert sum(int(str(row[f"ch_{k}"])) for k in (1, 2, 3, 4, "5plus")) == row["channels"]
 
 
-def test_the_channels_ready_to_join_are_kept_per_day(tmp_path: Path) -> None:
-    store = make_store(tmp_path)  # CHANNEL has no videos
-    fill_floor(store, SMALL, 1)
-    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
-    added(store, SMALL, "add00000001", NOW)  # the first day with a change
-    waiting(store, CHANNEL, ["wait0000001"])
-    # The changelog's first run, two days later: today's count; the days before stay blank,
-    # since nothing records what was waiting then.
-    ready = {r["date"]: r["ch_ready"] for r in changelog(store, NOW + 2 * DAY_S)}
-    assert ready == {"2026-10-26": "", "2026-10-28": 1}
-    # The next day CHANNEL's video comes in and TINY's waits: the past day keeps its count.
-    store.set_state("wait0000001", "collected")
-    store.add_collected("wait0000001", utc(NOW + 3 * DAY_S), None, {}, 0.0, {})
-    store.upsert_channel(id=TINY, title="C", status="in", source="v2", listed_at=NOW)
-    waiting(store, TINY, ["wait0000002"])
-    ready = {r["date"]: r["ch_ready"] for r in changelog(store, NOW + 3 * DAY_S)}
-    assert ready == {"2026-10-26": "", "2026-10-28": 1, "2026-10-29": 1}
+MIDNIGHT = NOW - NOW % DAY_S + DAY_S  # 2026-10-27 00:00:00 UTC, the end of 2026-10-26
 
 
-def test_the_channels_left_out_are_kept_per_day(tmp_path: Path) -> None:
+def test_only_finished_days_are_listed_each_to_23_59_59(tmp_path: Path) -> None:
     store = make_store(tmp_path)
-    fill_floor(store, CHANNEL, 1)
-    added(store, CHANNEL, "add00000001", NOW)  # the first day with a change
-    # A day recorded before `ch_out` was: its `ch_ready` stays, its `ch_out` is blank.
-    store.db.execute("INSERT INTO daily (day, ch_ready) VALUES ('2026-10-27', 4)")
-    for channel_id in (SMALL, TINY):  # left out, one with a video and one without
-        store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
-        answered(store, channel_id, 0, 20, channel_id[-3:])
-    fill_floor(store, SMALL, 1)
-    store.update_left_out()
-    rows = {r["date"]: (r["ch_ready"], r["ch_out"]) for r in changelog(store, NOW + 2 * DAY_S)}
-    assert rows == {"2026-10-26": ("", ""), "2026-10-27": (4, ""), "2026-10-28": (0, 2)}
-    # The next day TINY's answers bring it back: the past day keeps its count.
+    added(store, CHANNEL, "add00000001", MIDNIGHT - 1)  # 23:59:59
+    added(store, CHANNEL, "add00000002", MIDNIGHT)  # 00:00:00, the next day
+    assert [r["date"] for r in changelog(store, MIDNIGHT + 3600)] == ["2026-10-26"]
+    rows = {r["date"]: r["added_v"] for r in changelog(store, MIDNIGHT + DAY_S)}
+    assert rows == {"2026-10-27": 1, "2026-10-26": 1}
+
+
+def closing(tmp_path: Path, ended: float, closed: str = "2026-10-25") -> Collector:
+    """A collector whose last tick started 100 s before midnight and ended at `ended`."""
+    clock = Clock()
+    clock.now = MIDNIGHT + 1
+    collector = make_collector(tmp_path, FakeYouTube(), FakePipeline(), clock)
+    collector.store.set("closed_day", closed)
+    collector.store.set("tick_at", MIDNIGHT - 100)
+    collector.store.set("tick_end", ended)
+    return collector
+
+
+def recorded(store: Store) -> dict[str, tuple[int, int | None, float | None]]:
+    return {d: (r["ch_ready"], r["ch_out"], r["at"]) for d, r in store.daily().items()}
+
+
+def notes_by_day(store: Store, now: float) -> dict[str, str]:
+    return {str(r["date"]): str(r["note"]) for r in changelog(store, now)}
+
+
+def test_the_first_tick_of_a_day_closes_the_day_before_at_23_59_59(tmp_path: Path) -> None:
+    collector = closing(tmp_path, ended=MIDNIGHT - 90)
+    store = collector.store
+    waiting(store, SMALL, ["wait0000001"])
+    store.upsert_channel(id=TINY, title="C", status="in", source="v2", listed_at=NOW)
+    answered(store, TINY, 0, 20, "nfk")  # left out
+    collector.close_day(MIDNIGHT + 1)
+    assert recorded(store) == {"2026-10-26": (1, 1, MIDNIGHT)}
+    # Later the same day: another channel waits and TINY comes back; the closed day keeps its
+    # counts, with no note, since they're from 23:59:59.
+    waiting(store, CHANNEL, ["wait0000002"])
     answered(store, TINY, 20, 0, "kid")
-    store.update_left_out()
-    out = {r["date"]: r["ch_out"] for r in changelog(store, NOW + 3 * DAY_S)}
-    assert out == {"2026-10-26": "", "2026-10-27": "", "2026-10-28": 2, "2026-10-29": 1}
+    collector.close_day(MIDNIGHT + 3600)
+    collector.export()
+    assert recorded(store) == {"2026-10-26": (1, 1, MIDNIGHT)}
+    assert "as of" not in notes_by_day(store, MIDNIGHT + DAY_S)["2026-10-26"]
+
+
+def test_a_tick_that_ran_past_midnight_closes_the_day_as_of_then(tmp_path: Path) -> None:
+    collector = closing(tmp_path, ended=MIDNIGHT + 30)  # a download finished after midnight
+    collector.close_day(MIDNIGHT + 31)
+    assert recorded(collector.store) == {"2026-10-26": (0, 0, MIDNIGHT + 31)}
+    note = notes_by_day(collector.store, MIDNIGHT + DAY_S)["2026-10-26"]
+    assert note.endswith("ch_ready and ch_out as of 2026-10-27 00:00:31 UTC")
+
+
+def test_days_the_collector_was_down_are_closed_as_they_ended(tmp_path: Path) -> None:
+    # Stopped after a finished tick on 2026-10-25: nothing changed until it started again.
+    collector = closing(tmp_path, ended=MIDNIGHT - DAY_S - 3600, closed="2026-10-24")
+    collector.store.set("tick_at", MIDNIGHT - DAY_S - 3610)
+    collector.close_day(MIDNIGHT + 5 * 3600)
+    assert recorded(collector.store) == {
+        "2026-10-25": (0, 0, MIDNIGHT - DAY_S), "2026-10-26": (0, 0, MIDNIGHT)
+    }  # fmt: skip
+
+
+def test_after_a_crash_only_the_day_before_is_closed_as_of_then(tmp_path: Path) -> None:
+    # Its last tick never finished, so what changed then and when is unknown.
+    collector = closing(tmp_path, ended=MIDNIGHT - DAY_S - 3600, closed="2026-10-24")
+    collector.store.set("tick_at", MIDNIGHT - DAY_S - 60)
+    collector.close_day(MIDNIGHT + 5 * 3600)
+    assert recorded(collector.store) == {"2026-10-26": (0, 0, MIDNIGHT + 5 * 3600)}
+
+
+def test_the_first_run_with_closing_leaves_the_day_before_as_recorded(tmp_path: Path) -> None:
+    collector = closing(tmp_path, ended=MIDNIGHT - 90, closed="")
+    collector.store.db.execute(
+        "INSERT INTO daily (day, ch_ready, ch_out) VALUES ('2026-10-26', 4, 2)"
+    )
+    collector.close_day(MIDNIGHT + 1)
+    assert recorded(collector.store) == {"2026-10-26": (4, 2, None)}
+    assert collector.store.get("closed_day") == "2026-10-26"
+    note = notes_by_day(collector.store, MIDNIGHT + DAY_S)["2026-10-26"]
+    assert note.endswith("ch_ready and ch_out at the day's last export (time not kept)")
+
+
+def test_a_day_recorded_before_ch_out_was_keeps_its_ch_ready(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW)
+    store.db.execute("INSERT INTO daily (day, ch_ready) VALUES ('2026-10-27', 4)")
+    rows = {r["date"]: (r["ch_ready"], r["ch_out"]) for r in changelog(store, NOW + 2 * DAY_S)}
+    assert rows == {"2026-10-26": ("", ""), "2026-10-27": (4, "")}
+
+
+def test_the_collector_rests_in_the_days_last_10_minutes(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    clock.now = MIDNIGHT - 600
+    assert collector.tick() == 601  # until just after midnight
+    assert collected_ids(collector) == [] and youtube.calls == []
+    assert float(collector.store.get("tick_at")) == MIDNIGHT - 600
+    clock.now = MIDNIGHT - 601
+    collector.tick()
+    assert collected_ids(collector) != []
+
+
+def test_the_day_end_copy_leaves_out_what_came_after_midnight(tmp_path: Path) -> None:
+    collector = closing(tmp_path, ended=MIDNIGHT + 30)
+    added(collector.store, CHANNEL, "add00000001", MIDNIGHT - 5)
+    added(collector.store, CHANNEL, "add00000002", MIDNIGHT + 10)
+    collector.close_day(MIDNIGHT + 31)
+    folder = tmp_path / "data" / "collected"
+    assert "add00000002" in (folder / "2026.tsv").read_text()
+    day_end = (folder / "day-end" / "2026.tsv").read_text()
+    assert "add00000001" in day_end and "add00000002" not in day_end
+    changelog_end = (folder / "day-end" / "CHANGELOG.tsv").read_text().splitlines()
+    assert [line.split("\t")[0] for line in changelog_end[1:]] == ["2026-10-26"]
+    assert (folder / "day-end" / "excluded-channels.tsv").exists()
+
+
+def test_a_failed_day_end_copy_still_closes_the_day(tmp_path: Path) -> None:
+    collector = closing(tmp_path, ended=MIDNIGHT - 90)
+    folder = tmp_path / "data" / "collected"
+    folder.mkdir(parents=True)
+    (folder / "day-end").write_text("in the way")  # the copy can't be written
+    collector.close_day(MIDNIGHT + 1)
+    assert recorded(collector.store) == {"2026-10-26": (0, 0, MIDNIGHT)}
+    assert (folder / "CHANGELOG.tsv").read_text().count("\n") == 2  # the live files: written
+
+
+def backup_at(store: Store, path: Path, tick_at: float | None) -> Path:
+    if tick_at is not None:
+        store.set("tick_at", tick_at)
+    store.backup(path)
+    return path
+
+
+def test_recount_takes_the_counts_from_each_backup_with_its_time(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW)  # the first day: 2026-10-26
+    waiting(store, SMALL, ["wait0000001"])
+    store.upsert_channel(id=TINY, title="C", status="in", source="v2", listed_at=NOW)
+    answered(store, TINY, 0, 20, "nfk")  # left out, but not judged yet in the backup
+    first = backup_at(store, tmp_path / "collector-2026-10-27.db", MIDNIGHT + 41)
+    before = backup_at(store, tmp_path / "collector-2026-10-26.db", MIDNIGHT - DAY_S + 30)
+    # Since then: the video came in, and the day was recorded the old way, with no time.
+    store.set_state("wait0000001", "collected")
+    store.db.execute("INSERT INTO daily (day, ch_ready, ch_out) VALUES ('2026-10-26', 0, 0)")
+    scratch = tmp_path / "scratch"
+    scratch.mkdir()
+    done = recount(store, [first, before], scratch)
+    assert recorded(store) == {"2026-10-26": (1, 1, MIDNIGHT + 41)}
+    assert store.left_out_list() == []  # judged in the copy only
+    assert done == [
+        "collector-2026-10-26.db: 2026-10-25 is before the first day, skipped",
+        "collector-2026-10-27.db: 2026-10-26 ch_ready 1, ch_out 1, as of 2026-10-27T00:00:41Z",
+    ]
+    note = notes_by_day(store, MIDNIGHT + DAY_S)["2026-10-26"]
+    assert note.endswith("ch_ready and ch_out as of 2026-10-27 00:00:41 UTC")
+
+
+def test_recount_never_replaces_a_count_from_closer_to_the_days_end(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW)
+    store.record_daily("2026-10-26", 3, 2, MIDNIGHT)
+    backup = backup_at(store, tmp_path / "collector-2026-10-27.db", MIDNIGHT + 41)
+    scratch = tmp_path / "scratch"
+    scratch.mkdir()
+    assert recount(store, [backup], scratch) == [
+        "collector-2026-10-27.db: 2026-10-26 already has a closer count, skipped"
+    ]
+    assert recorded(store) == {"2026-10-26": (3, 2, MIDNIGHT)}
+
+
+def test_recount_uses_the_files_time_for_a_backup_without_tick_at(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW)
+    backup = backup_at(store, tmp_path / "collector-2026-10-27.db", None)
+    os.utime(backup, (MIDNIGHT + 75, MIDNIGHT + 75))
+    scratch = tmp_path / "scratch"
+    scratch.mkdir()
+    recount(store, [backup], scratch)
+    assert recorded(store) == {"2026-10-26": (0, 0, MIDNIGHT + 75)}
 
 
 def test_the_left_out_list_counts_only_the_videos_the_site_would_show(tmp_path: Path) -> None:
@@ -1153,9 +1310,7 @@ def test_a_new_note_lands_on_the_first_day_the_collector_runs_with_it(
     monkeypatch.setattr(notes, "NOTES", (*notes.NOTES, ("Rule B", None)))
     changelog(store, NOW + DAY_S + 60)  # a later release the same day
     by_day = {r["date"]: r["note"] for r in changelog(store, NOW + 3 * DAY_S)}
-    assert by_day == {
-        "2026-10-29": "", "2026-10-27": "Rule A; Rule B", "2026-10-26": "Started",
-    }  # fmt: skip
+    assert by_day == {"2026-10-27": "Rule A; Rule B", "2026-10-26": "Started"}
 
 
 # --- channels ------------------------------------------------------------------------------
@@ -1231,9 +1386,9 @@ def test_offline_videos_are_taken_out(
     assert removed == {"pick0000001": "gone", "pick0000002": "region"}
     text = (tmp_path / "data" / "collected" / "removed.tsv").read_text()
     assert "pick0000001" in text
-    changelog = (tmp_path / "data" / "collected" / "CHANGELOG.tsv").read_text().splitlines()
-    assert changelog[1].split("\t")[:3] == ["2026-10-27", "0", "0"]  # the newest day first
-    assert changelog[1].split("\t")[10:13] == ["0", "2", "0"]  # added_v, removed_v, new_ch
+    row = changelog(collector.store, clock.now + DAY_S)[0]  # once the day is over
+    assert (row["date"], row["videos"], row["channels"]) == ("2026-10-27", 0, 0)
+    assert (row["added_v"], row["removed_v"], row["new_ch"]) == (0, 2, 0)
 
 
 # --- the Data API budget -------------------------------------------------------------------
@@ -1528,7 +1683,7 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
     assert upload is not None and (upload.unsure, upload.api_failures) == (0, 0)
     assert upload.pick == "sample"  # everything picked before the floor
     day = store.daily()["2026-10-29"]
-    assert (day["ch_ready"], day["ch_out"]) == (17, None)  # recorded before `ch_out` was
+    assert (day["ch_ready"], day["ch_out"], day["at"]) == (17, None, None)  # before those were
     store.close()
     assert (
         dict(Store(path).db.execute("SELECT id, full_listing FROM channels").fetchall()) == listing
@@ -1592,3 +1747,21 @@ def test_v2_channels_without_a_name_get_one_in_the_export(
     assert youtube.calls.count("channels") == 1
     collector.repair(clock.now + DAY_S)
     assert youtube.calls.count("channels") == 1  # known now: not asked again
+
+
+def test_the_recount_command_records_and_writes_the_files(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from hyperstim_api.collector.__main__ import main
+
+    data = tmp_path / "data"
+    store = make_store(data)
+    added(store, CHANNEL, "add00000001", NOW)
+    backup = backup_at(store, tmp_path / "collector-2026-10-27.db", MIDNIGHT + 41)
+    store.close()
+    monkeypatch.setenv("COLLECTOR_DATA_DIR", str(data))
+    monkeypatch.setenv("COLLECTOR_CLIPS_DIR", str(tmp_path / "clips"))
+    monkeypatch.setattr("sys.argv", ["collector", "recount", str(backup)])
+    main()
+    assert "2026-10-26 ch_ready 0, ch_out 0" in capsys.readouterr().out
+    assert "00:00:41 UTC" in (data / "collected" / "CHANGELOG.tsv").read_text()

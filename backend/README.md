@@ -82,7 +82,10 @@ uv run --env-file .env python -m hyperstim_api.collector seed <research-repo>   
 uv run --env-file .env python -m hyperstim_api.collector run                    # until stopped
 uv run --env-file .env python -m hyperstim_api.collector status                 # counts, pace, quota, channels below 5, first videos today and left out, blocks, retries, last success per job, score drift
 uv run --env-file .env python -m hyperstim_api.collector alerts                 # the hourly alert check; logs what it would post without ALERT_GITHUB_TOKEN
+uv run --env-file .env python -m hyperstim_api.collector recount <backup>...    # once: the changelog's ch_ready and ch_out from daily backups of collector.db
 ```
+
+- **Days end at 23:59:59 UTC** (plan 013, decision 10): the collector does nothing in each UTC day's last 10 minutes, and its first tick of a day closes the day before: it records the changelog's `ch_ready` and `ch_out` (at 23:59:59 when the tick before finished before midnight, else with the time they're from) and writes the files again, plus a copy as they stood at midnight in `collected/day-end/` (videos added or taken out after midnight left out), which the daily commit takes. `CHANGELOG.tsv` lists finished days only. `recount` takes `ch_ready` and `ch_out` for the day before each backup (its first tick's time, or the file's) unless the day has a count from closer to its end; run it as the service user with the copies of `<clips-dir>/backups/collector-*.db`.
 
 - **Pace:** `COLLECT_PER_DAY` (150) downloads a day at random intervals. If YouTube blocks downloads ("not a bot"), it waits 6 hours (doubling up to 2 days if blocked again, at half the pace for a week); a block seen by a live check (`ANALYSIS_DIR/youtube-blocked`) pauses it too.
 - **Failed downloads** (not blocks) are tried again 1, 3 and 7 days later, within the daily pace; the 4th failure gives up. Three failures in a row pause downloads for an hour. yt-dlp's full output for each failed download is kept in `COLLECTOR_DATA_DIR/download-logs/<date>/<id>.log` for 30 days; the warning in the log names the file.
