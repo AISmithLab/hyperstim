@@ -314,8 +314,8 @@ class Store:
         (`eligible`), those waiting to be downloaded (`waiting`) and ready now (`ready`), the
         unchecked ones (`unchecked`; `fresh` without the floor's put back) and those due for a
         check (`due`; a day old), whether one of those is asked again after an answer that
-        couldn't settle it (`unsure`), and its first and last upload (`first`, `last`). One
-        pass over the uploads."""
+        couldn't settle it (`unsure`), the lowest number of the eligible ones ready now
+        (`low_r`), and its first and last upload (`first`, `last`). One pass over the uploads."""
         return self.db.execute(
             "SELECT channel_id, CAST(SUBSTR(published_at, 1, 4) AS INTEGER) AS y, "
             f"SUM(state IN {IN_STATES}) AS videos, SUM(state IN ('v2', 'collected')) AS site, "
@@ -327,7 +327,9 @@ class Store:
             "SUM(state = 'new') AS unchecked, SUM(state = 'new' AND reason != 'trimmed') AS fresh, "
             "SUM(state = 'new' AND retry_at <= :now AND published_at < :settled) AS due, "
             "MAX(state = 'new' AND retry_at <= :now AND published_at < :settled AND unsure > 0) "
-            "AS unsure, MIN(published_at) AS first, MAX(published_at) AS last FROM uploads "
+            "AS unsure, "
+            "MIN(CASE WHEN state = 'eligible' AND retry_at <= :now THEN r END) AS low_r, "
+            "MIN(published_at) AS first, MAX(published_at) AS last FROM uploads "
             "WHERE channel_id IN (SELECT id FROM channels WHERE status = 'in') "
             "AND published_at != '' AND SUBSTR(published_at, 1, 10) <= :until "
             "GROUP BY channel_id, y",

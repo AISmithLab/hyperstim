@@ -2,8 +2,9 @@
 
 Every upload has a fixed random number `rank(video_id)` in [0, 1). The dataset is v2's picks
 plus, one at a time, an eligible upload of the channel with the fewest videos per year, from
-its year with the fewest videos per active year below the channel's threshold, the one with the
-lowest number, so a random one (`pick_order`). Eligibility is v2's: made for kids, 2-60
+its year with the fewest videos per active year below the channel's threshold (on a tie, the
+year farthest from its years with videos, then a random one), the one with the lowest number, so
+a random one (`pick_order`). Eligibility is v2's: made for kids, 2-60
 minutes, not a Short, online and not blocked in the US. A channel that marks only a few of its
 uploads as made for kids, or makes fewer than 5 eligible videos a year, is left out with all
 its videos (`left_out`).
@@ -60,6 +61,7 @@ class Year:
     ready: int  # of those, not waiting for a retry
     unchecked: int  # not checked yet
     part: float  # the part of the year the channel was active, in (0, 1]
+    low_r: float | None = None  # the lowest number of its eligible uploads ready now
 
     @property
     def counted(self) -> bool:
@@ -100,6 +102,24 @@ def average(years: Iterable[Year], site: bool = False) -> float | None:
     return sum(y.site if site else y.videos for y in counted) / part if part else None
 
 
+def _lines(
+    years: Iterable[Year],
+) -> tuple[dict[str, list[Year]], dict[str, float], dict[str, list[Year]], dict[str, list[Year]]]:
+    """The channels' years (`by`), and of the channels on the site: their averages, their
+    open years, and their open years below their threshold (`pick_order`)."""
+    by: dict[str, list[Year]] = {}
+    for y in years:
+        by.setdefault(y.channel_id, []).append(y)
+    avgs = {c: average(ys) or 0.0 for c, ys in by.items() if any(y.videos > 0 for y in ys)}
+    can = {c: [y for y in by[c] if y.counted and y.open] for c in avgs}
+    lows = sorted((a, c) for c, a in avgs.items() if can[c])[:2]
+    below = {}
+    for c in avgs:
+        threshold = max(avgs[c], next((a for a, o in lows if o != c), math.inf))
+        below[c] = [y for y in can[c] if y.rate < threshold]
+    return by, avgs, can, below
+
+
 def pick_order(
     years: Iterable[Year], scores: Mapping[str, float | None]
 ) -> list[tuple[str, list[Year]]]:
@@ -109,27 +129,29 @@ def pick_order(
     the other channels that can still take a video, whichever is higher: a channel whose years
     below its average have nothing left is skipped until the others have all passed it, and
     then fills its years below their level. When no channel has a year below its threshold,
-    every open year in turn, fewest videos per active year first, so no year runs ahead."""
-    by: dict[str, list[Year]] = {}
-    for y in years:
-        by.setdefault(y.channel_id, []).append(y)
-    avgs = {c: average(ys) or 0.0 for c, ys in by.items() if any(y.videos > 0 for y in ys)}
-    can = {c: [y for y in by[c] if y.counted and y.open] for c in avgs}
-    lows = sorted((a, c) for c, a in avgs.items() if can[c])[:2]
+    every open year in turn, fewest videos per active year first, so no year runs ahead. On a
+    tie between a channel's years, the one farthest from its years with videos first, so its
+    videos spread evenly over time; still tied, the one with the lowest number (`low_r`), so a
+    random one."""
+    by, avgs, can, below = _lines(years)
 
     def key(c: str) -> tuple[float, float, str]:
         return (avgs[c], -(scores.get(c) or -1), c)
 
+    filled = {c: [y.year for y in ys if y.videos > 0] for c, ys in by.items()}
+
+    def spread(y: Year) -> tuple[float, float, int]:
+        gap = min((abs(y.year - f) for f in filled[y.channel_id]), default=math.inf)
+        return (-gap, 1.0 if y.low_r is None else y.low_r, y.year)
+
     order = []
     for c in sorted(avgs, key=key):
-        others = next((a for a, o in lows if o != c), math.inf)
-        threshold = max(avgs[c], others)
-        below = [y for y in can[c] if y.rate < threshold]
-        if below:
-            order.append((c, sorted(below, key=lambda y: (y.rate, y.year))))
+        if below[c]:
+            order.append((c, sorted(below[c], key=lambda y: (y.rate, *spread(y)))))
     if not order:
         every = sorted(
-            ((y, c) for c in avgs for y in can[c]), key=lambda t: (t[0].rate, *key(t[1]))
+            ((y, c) for c in avgs for y in can[c]),
+            key=lambda t: (t[0].rate, *key(t[1]), *spread(t[0])),
         )
         order = [(c, [y]) for y, c in every]
     return order
@@ -166,6 +188,7 @@ def years_from(rows: Iterable[Any], today: str) -> list[Year]:
             ready=int(r["ready"]),
             unchecked=int(r["unchecked"]),
             part=active_part(int(r["y"]), *dates[str(r["channel_id"])], day),
+            low_r=r["low_r"],
         )
         for r in rows
         if int(r["y"]) >= FIRST_YEAR

@@ -716,11 +716,11 @@ def judged(store: Store, channel_id: str, n: int = 20, year: int = 2023) -> None
 
 
 def a_year(channel_id: str, year: int, videos: int, open_: bool = True, part: float = 1.0,
-           eligible: int | None = None) -> sampling.Year:  # fmt: skip
+           eligible: int | None = None, low_r: float | None = None) -> sampling.Year:  # fmt: skip
     return sampling.Year(
         channel_id=channel_id, year=year, videos=videos, site=videos,
         eligible=videos + open_ if eligible is None else eligible, waiting=int(open_),
-        ready=int(open_), unchecked=0, part=part,
+        ready=int(open_), unchecked=0, part=part, low_r=low_r,
     )  # fmt: skip
 
 
@@ -770,6 +770,37 @@ def test_a_channel_with_nothing_left_below_its_average_waits_until_the_others_pa
     channel = [a_year(CHANNEL, 2023, 8), a_year(CHANNEL, 2024, 7)]
     order = sampling.pick_order(small + channel, {})
     assert [c for c, _ in order][0] == SMALL and [y.year for y in order[0][1]] == [2024]
+
+
+def test_on_a_tie_a_channels_year_farthest_from_its_videos_goes_first() -> None:
+    # Videos in 2015-2020 only; 2021-2026 tie at 0. Before, the earliest tied year went first.
+    years = [a_year(CHANNEL, y, 1, open_=False) for y in range(2015, 2021)]
+    years += [a_year(CHANNEL, y, 0, low_r=0.5) for y in range(2021, 2027)]
+    years += [a_year(SMALL, 2024, 9)]  # a higher channel, so CHANNEL's 0s are below threshold
+    order = sampling.pick_order(years, {})
+    assert [y.year for y in order[0][1]][:2] == [2026, 2025]  # 6 years from 2020, then 5
+    # With 2026 filled, 2023 is farthest from both 2020 and 2026.
+    years = [y for y in years if y.year != 2026 or y.channel_id != CHANNEL]
+    years.append(a_year(CHANNEL, 2026, 1, open_=False))
+    assert sampling.pick_order(years, {})[0][1][0].year == 2023
+
+
+def test_on_a_tie_at_the_same_distance_the_year_with_the_lowest_number_goes_first() -> None:
+    years = [a_year(CHANNEL, 2020, 1, open_=False), a_year(CHANNEL, 2023, 1, open_=False),
+             a_year(CHANNEL, 2021, 0, low_r=0.31), a_year(CHANNEL, 2022, 0, low_r=0.07),
+             a_year(CHANNEL, 2024, 0, low_r=0.52), a_year(SMALL, 2024, 9)]  # fmt: skip
+    assert [y.year for y in sampling.pick_order(years, {})[0][1]] == [2022, 2021, 2024]
+
+
+def test_a_years_lowest_number_counts_only_eligible_uploads_ready_now(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    ids = [f"low{i:04d}" for i in range(4)]
+    store.add_uploads(CHANNEL, [(v, "2024-05-01T00:00:00Z") for v in ids])
+    ready, later, _, _ = sorted(ids, key=sampling.rank)[::-1]  # the two highest numbers
+    store.set_state(ready, "eligible")
+    store.set_state(later, "eligible", retry_at=NOW + 3600)  # waiting for a retry
+    (row,) = [r for r in store.year_rows(NOW, "", "2026-10-26") if r["y"] == 2024]
+    assert row["low_r"] == sampling.rank(ready)  # not the unchecked ones' lower numbers
 
 
 def test_on_a_tie_the_higher_scored_channel_goes_first() -> None:
