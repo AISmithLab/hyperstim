@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiError, getChannel, type ChannelDetail, type ChannelVideo } from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
 import { expectNoAxeViolations } from "@/test/axe";
+import { VIDEO_GONE } from "@/components/VideoGoneNote";
 import ChannelPage from "./ChannelPage";
 
 let search = new URLSearchParams();
@@ -265,6 +266,21 @@ describe("ChannelPage", () => {
     expect(container.querySelector("[data-popover]")).toBeNull();
     fireEvent.pointerEnter(screen.getByRole("button", { name: "Tiny Trucks 2, May 1, 2020" }), { pointerType: "mouse" });
     expect(container.querySelector("[data-popover]")).toHaveTextContent("“Tiny Trucks 2”May 1, 2020Overall:20");
+  });
+
+  it("adds a line about the video to the popover when YouTube has no thumbnail for it", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => ({ status: 404 })));
+    const { container } = open(ID);
+    await loaded();
+    const thumb = screen.getByRole("button", { name: "Tiny Trucks 4, Jan 10, 2026" });
+    fireEvent.error(thumb.querySelector("img")!);
+    fireEvent.pointerEnter(thumb, { pointerType: "mouse" });
+    await waitFor(() => expect(container.querySelector("[data-popover]")).toHaveTextContent(VIDEO_GONE));
+    // Another video's popover doesn't have it.
+    fireEvent.pointerLeave(thumb, { pointerType: "mouse" });
+    fireEvent.pointerEnter(screen.getByRole("button", { name: "Tiny Trucks 1, Feb 3, 2018" }), { pointerType: "mouse" });
+    expect(container.querySelector("[data-popover]")).not.toHaveTextContent(VIDEO_GONE);
+    vi.unstubAllGlobals();
   });
 
   it("says 1 video and one year for a single video", async () => {

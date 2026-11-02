@@ -10,13 +10,16 @@ function escape(text: string) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
 }
 
-/** Our backend answers 404 for this video's thumbnails, as when YouTube no longer has them. */
-async function gone(page: Page, id: string) {
+const VIDEO_GONE = "This video may have been removed or made private on YouTube.";
+
+/** Our backend answers this for the video's thumbnails: 404 when YouTube no longer has them, 502 when YouTube is down. */
+async function answer(page: Page, id: string, status: 404 | 502 = 404) {
   await page.route(
     (url) => url.href.startsWith(`${API}/api/thumbnails/${id}?`),
-    (route) => route.fulfill({ status: 404, body: "" }),
+    (route) => route.fulfill({ status, body: "", headers: { "Access-Control-Allow-Origin": "*" } }),
   );
 }
+const gone = (page: Page, id: string) => answer(page, id);
 
 async function oldestVideo(request: Parameters<typeof channelVideos>[0]) {
   const [channel] = await topChannels(request);
@@ -57,6 +60,64 @@ test.describe("a thumbnail that can't load", () => {
     await expect.poll(() => youtubeRequests.length).toBeGreaterThan(0);
   });
 
+  test("says on the video page that the video may be gone", async ({ page, request }) => {
+    const { video } = await oldestVideo(request);
+    await gone(page, video.id);
+    await page.goto(`/video/?id=${video.id}`);
+    const note = page.getByText(VIDEO_GONE).filter({ visible: true });
+    await expect(note).toHaveCount(1);
+    // Under the preview from `sm`; on phones the preview is narrow, so under the title, full width.
+    const [noteBox, previewBox, titleBox] = await Promise.all([
+      note.boundingBox(),
+      page.getByRole("button", { name: /^Play video/ }).locator("..").boundingBox(),
+      page.getByRole("heading", { level: 1 }).boundingBox(),
+    ]);
+    if (isPhone()) {
+      expect(noteBox!.x).toBeCloseTo(titleBox!.x, 0);
+      expect(noteBox!.y).toBeGreaterThan(previewBox!.y + previewBox!.height);
+    } else {
+      expect(noteBox!.x).toBeCloseTo(previewBox!.x, 0);
+      expect(noteBox!.y).toBeGreaterThan(previewBox!.y + previewBox!.height);
+    }
+    await expectNoAxeViolations(page);
+  });
+
+  test("says nothing about the video while YouTube is down", async ({ page, request }) => {
+    const { video } = await oldestVideo(request);
+    await answer(page, video.id, 502);
+    const asked = page.waitForRequest((r) => r.url().includes(`/api/thumbnails/${video.id}?size=mq`));
+    await page.goto(`/video/?id=${video.id}`);
+    await expect(page.locator("[data-thumbnail-missing]")).toBeVisible();
+    await asked; // the status check
+    await page.waitForLoadState("networkidle");
+    await expect(page.getByText(VIDEO_GONE)).toHaveCount(0);
+  });
+
+  test("says in the chart's popover and the video panel that the video may be gone", async ({ page, request }) => {
+    const { channel, video, title } = await oldestVideo(request);
+    await gone(page, video.id);
+    await page.goto(`/channel/?id=${channel.id}`);
+    const popover = page.locator("[data-popover]");
+    if (isPhone()) {
+      // The strip's card shows the placeholder; its dot, tapped, shows the popover. (Clicked
+      // directly: neighbouring dots overlap, so a tap at its spot may hit another video.)
+      const card = page.getByRole("link", { name: title }).first();
+      await card.scrollIntoViewIfNeeded();
+      await expect(card.locator("[data-thumbnail-missing]")).toBeVisible();
+      await page.locator(`[data-hit="${video.id}"]`).dispatchEvent("click");
+      await expect(popover).toContainText(VIDEO_GONE);
+    } else {
+      // Focus shows the same popover as hover; the thumbnail may sit under another in its stack.
+      const thumb = page.getByRole("button", { name: title }).first();
+      await thumb.scrollIntoViewIfNeeded();
+      await expect(thumb.locator("[data-thumbnail-missing]")).toBeVisible();
+      await thumb.focus();
+      await expect(popover).toContainText(VIDEO_GONE);
+      await page.keyboard.press("Enter");
+      await expect(page.getByRole("region", { name: title }).getByText(VIDEO_GONE)).toBeVisible();
+    }
+  });
+
   test("is a placeholder in the compare picker's suggestions", async ({ page, request }) => {
     const { video } = await oldestVideo(request);
     await gone(page, video.id);
@@ -68,5 +129,8 @@ test.describe("a thumbnail that can't load", () => {
     await expect(list.getByRole("option").first()).toBeVisible();
     await expect(list.locator("[data-thumbnail-missing] svg")).toHaveCount(1);
     await expect(list.locator("[data-thumbnail-missing] svg")).toBeVisible();
+    // Picked, its slot says the video may be gone.
+    await list.getByRole("option").filter({ has: page.locator("[data-thumbnail-missing]") }).click();
+    await expect(page.getByRole("region", { name: "Video A" }).getByText(VIDEO_GONE)).toBeVisible();
   });
 });

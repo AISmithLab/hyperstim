@@ -18,7 +18,7 @@ from hyperstim_api.thumbnails import (
     Unavailable,
     fetch_from_youtube,
 )
-from tests.conftest import video_row, write_dataset
+from tests.conftest import ORIGIN, video_row, write_dataset
 
 KNOWN = "data0000000"
 LIVE = "live0000000"
@@ -94,6 +94,21 @@ def test_rejects_bad_sizes_and_ids(client: TestClient, path: str) -> None:
 def test_a_missing_thumbnail_is_a_404(client: TestClient, youtube: FakeYouTube) -> None:
     del youtube.images[(KNOWN, "hq")]
     assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 404
+
+
+def test_the_site_can_read_a_missing_or_failed_thumbnails_status(
+    client: TestClient, youtube: FakeYouTube
+) -> None:
+    # The frontend asks again after an image fails, to tell a gone video (404) from an outage
+    # (502), so both answers carry the CORS header (plan 009, Thumbnails).
+    del youtube.images[(KNOWN, "mq")]
+    gone = client.get(f"/api/thumbnails/{KNOWN}?size=mq", headers={"Origin": ORIGIN})
+    assert gone.status_code == 404
+    assert gone.headers["access-control-allow-origin"] == ORIGIN
+    youtube.down = True
+    down = client.get(f"/api/thumbnails/{KNOWN}", headers={"Origin": ORIGIN})
+    assert down.status_code == 502
+    assert down.headers["access-control-allow-origin"] == ORIGIN
 
 
 def test_youtube_down_is_a_502_the_browser_doesnt_keep(

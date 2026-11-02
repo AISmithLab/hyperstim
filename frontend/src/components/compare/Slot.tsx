@@ -6,6 +6,7 @@ import ChannelName from "@/components/ChannelName";
 import { metaLine } from "@/components/channel/chart";
 import LiveAnalysis from "@/components/video/LiveAnalysis";
 import { OUTLINED_BUTTON } from "@/components/video/parts";
+import { VideoGoneNote } from "@/components/VideoGoneNote";
 import YouTubePlayer, { type PlayerHandle } from "@/components/YouTubePlayer";
 import { ApiError } from "@/lib/api";
 import { channelHref, videoHref } from "@/lib/routes";
@@ -126,6 +127,7 @@ function Header({ item, player, onPlay }: { item: Item; player: Ref<PlayerHandle
     return (
       <div>
         <YouTubePlayer id={video.id} title={video.title} ref={player} onPlay={onPlay} />
+        <VideoGoneNote id={video.id} />
         <Link
           href={videoHref(video.id)}
           className="mt-3 line-clamp-3 font-hand text-lg leading-snug font-semibold text-navy hover:underline"

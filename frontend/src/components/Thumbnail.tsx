@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { thumbnailUrl } from "@/lib/api";
+import { checkThumbnail } from "@/lib/thumbnails";
 
 type Props = {
   id: string;
@@ -20,18 +21,27 @@ type Props = {
 /**
  * A video's thumbnail from our backend. One that can't load (gone from YouTube, YouTube down, no
  * network) is a placeholder in its place: the same box with a picture icon (plan 009, Thumbnails).
- * Decorative either way, as the thumbnail's text is always next to it.
+ * Decorative either way, as the thumbnail's text is always next to it. A failure is reported to
+ * `lib/thumbnails`, which finds out whether YouTube has none (for `VideoGoneNote` and the popovers).
  */
 export function Thumbnail({ id, size = "hq", width, height, className, loading, icon = true, ...data }: Props) {
   const src = thumbnailUrl(id, size);
   const [failed, setFailed] = useState<string | null>(null);
   const img = useRef<HTMLImageElement>(null);
 
+  const fail = () => {
+    setFailed(src);
+    checkThumbnail(id);
+  };
+
   // An image that failed before React listened for it (e.g. from the browser's cache).
   useEffect(() => {
     const el = img.current;
-    if (el?.complete && el.naturalWidth === 0) setFailed(src);
-  }, [src]);
+    if (el?.complete && el.naturalWidth === 0) {
+      setFailed(src);
+      checkThumbnail(id);
+    }
+  }, [src, id]);
 
   if (failed === src) {
     return (
@@ -50,7 +60,7 @@ export function Thumbnail({ id, size = "hq", width, height, className, loading, 
       loading={loading}
       width={width}
       height={height}
-      onError={() => setFailed(src)}
+      onError={fail}
       className={className}
     />
   );

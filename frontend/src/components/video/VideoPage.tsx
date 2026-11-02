@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ChannelName from "@/components/ChannelName";
+import { VideoGoneNote } from "@/components/VideoGoneNote";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { ApiError, getVideo, thumbnailUrl, type VideoDetail } from "@/lib/api";
 import { asset } from "@/lib/asset";
@@ -153,13 +154,17 @@ function Result({ video }: { video: VideoDetail }) {
         {playing ? (
           <div ref={player} className={`mt-4 ${PLAYER_WIDTH}`}>
             <YouTubePlayer id={video.id} title={video.title} playing cover />
+            <VideoGoneNote id={video.id} />
           </div>
         ) : (
           <div ref={preview}>
             <YouTubePlayer id={video.id} title={video.title} onStart={() => toggle(true)} />
+            <VideoGoneNote id={video.id} className="hidden sm:block" />
           </div>
         )}
       </div>
+      {/* On phones the preview is a third of the width, too narrow for it: under the title instead. */}
+      {!playing && <VideoGoneNote id={video.id} className="sm:hidden" />}
 
       <ScorePanel
         score={video.score}

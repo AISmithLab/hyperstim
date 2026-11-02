@@ -5,6 +5,8 @@ import ScoreMeter from "@/components/ScoreMeter";
 import type { ChannelVideo } from "@/lib/api";
 import { useWidth } from "@/lib/use-layout";
 import { Thumbnail } from "@/components/Thumbnail";
+import { VIDEO_GONE } from "@/components/VideoGoneNote";
+import { useThumbnailGone } from "@/lib/thumbnails";
 import { ChartGrid, TimeAxis } from "./ChartAxes";
 import {
   formatDate,
@@ -242,6 +244,7 @@ function Popover({
   width: number;
 }) {
   const point = pointOf(video, measure);
+  const gone = useThumbnailGone(video.id);
   const left = Math.min(Math.max(x - POPOVER_W / 2, 0), Math.max(0, width - POPOVER_W));
   const below = y < 110;
   return (
@@ -261,6 +264,7 @@ function Popover({
       ) : (
         <p className="mt-1">{point.text}</p>
       )}
+      {gone && <p className="mt-2 text-ink/80">{VIDEO_GONE}</p>}
     </div>
   );
 }

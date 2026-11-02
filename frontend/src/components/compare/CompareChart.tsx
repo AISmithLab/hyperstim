@@ -19,6 +19,8 @@ import {
 } from "@/components/channel/chart";
 import ScoreMeter from "@/components/ScoreMeter";
 import { Thumbnail } from "@/components/Thumbnail";
+import { VIDEO_GONE } from "@/components/VideoGoneNote";
+import { useThumbnailGone } from "@/lib/thumbnails";
 import { type ChannelDetail, type ChannelVideo } from "@/lib/api";
 import { useWidth } from "@/lib/use-layout";
 import { spreadOut, useHoldToSpread, type Finger } from "./hold-spread";
@@ -332,6 +334,7 @@ function Popover({
   const y = at?.y ?? dot.cy;
   const left = Math.min(Math.max(x - POPOVER_W / 2, 0), Math.max(0, width - POPOVER_W));
   const below = !at && y < 130;
+  const gone = useThumbnailGone(dot.video.id);
   return (
     <div
       aria-hidden="true"
@@ -353,6 +356,7 @@ function Popover({
       ) : (
         <p className="mt-1">{pointText(pointOf(dot.video, measure))}</p>
       )}
+      {gone && <p className="mt-2 text-ink/80">{VIDEO_GONE}</p>}
     </div>
   );
 }

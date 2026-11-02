@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import ScoreMeter from "@/components/ScoreMeter";
+import { VideoGoneNote } from "@/components/VideoGoneNote";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { canAnimate, grow } from "@/components/video/grow";
 import { PLAYER_WIDTH, ShrinkButton } from "@/components/video/parts";
@@ -142,6 +143,7 @@ export default function VideoPanel({
         <div ref={box}>
           <YouTubePlayer id={video.id} title={video.title} playing={playing} onStart={() => toggle(true)} cover />
         </div>
+        <VideoGoneNote id={video.id} />
         {/* Above the player's top right corner, clear of YouTube's own controls. */}
         {playing && <ShrinkButton onClick={() => toggle(false)} className="absolute right-0 bottom-full -mr-2.5 hover:bg-white" />}
       </div>

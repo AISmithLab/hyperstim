@@ -2,6 +2,8 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelDetail, ChannelVideo, Feature } from "@/lib/api";
 import { expectNoAxeViolations } from "@/test/axe";
+import { VIDEO_GONE } from "@/components/VideoGoneNote";
+import { checkThumbnail } from "@/lib/thumbnails";
 import CompareChart from "./CompareChart";
 import { HOLD_MS } from "./hold-spread";
 
@@ -72,6 +74,18 @@ describe("CompareChart", () => {
     expect(popover.style.top).not.toBe("");
     expect(q(container, 'circle[data-dot="a"][r="7"]')).toBeInTheDocument();
     expect(q(container, "line")).toBeInTheDocument();
+  });
+
+  it("adds a line about the video to the popover when YouTube has no thumbnail for it", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => ({ status: 404 })));
+    act(() => checkThumbnail("b1"));
+    const { container } = renderChart();
+    fireEvent.pointerEnter(q(container, '[data-hit="b-b1"]')!, { pointerType: "mouse" });
+    await vi.waitFor(() => expect(q(container, "[data-popover]")).toHaveTextContent(VIDEO_GONE));
+    fireEvent.pointerLeave(q(container, '[data-hit="b-b1"]')!, { pointerType: "mouse" });
+    fireEvent.pointerEnter(q(container, '[data-hit="a-a1"]')!, { pointerType: "mouse" });
+    expect(q(container, "[data-popover]")).not.toHaveTextContent(VIDEO_GONE);
+    vi.unstubAllGlobals();
   });
 
   it("shows a popover above a low dot, for B's squares too", () => {
