@@ -34,6 +34,7 @@ from hyperstim_api.collector.store import Store
 from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits
 from hyperstim_api.dataset import collected_files, load_dataset
 from hyperstim_api.scoring import FEATURES
+from hyperstim_api.thumbnails import OFFLINE_HINTS
 from tests.conftest import FakePipeline, video_row, write_dataset
 
 NOW = 1_793_000_000.0  # 2026-10-26
@@ -1591,6 +1592,34 @@ def test_offline_videos_are_taken_out(
     row = changelog(collector.store, clock.now + DAY_S)[0]  # once the day is over
     assert (row["date"], row["videos"], row["channels"]) == ("2026-10-27", 0, 0)
     assert (row["added_v"], row["removed_v"], row["new_ch"]) == (0, 2, 0)
+
+
+def test_a_missing_thumbnail_brings_the_offline_check_forward(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
+    gone, online, waiting = "pick0000001", "pick0000002", "pick0000003"
+    collector.store.add_uploads(CHANNEL, [(v, "2020-01-01") for v in (gone, online, waiting)])
+    for video_id in (gone, online, waiting):
+        collector.store.set_state(video_id, "v2", online_at=clock.now)  # checked today
+    youtube.video(online)
+    collector.store.db.execute(  # missed once yesterday: its second check is due today
+        "UPDATE uploads SET online_at = 0, unsure = 1, retry_at = ? WHERE id = ?",
+        (clock.now + DAY_S, waiting),
+    )
+    hints = tmp_path / "analyses" / OFFLINE_HINTS
+    hints.mkdir(parents=True)
+    for video_id in (gone, online, waiting, "vid00000000", "unknown0000"):
+        (hints / video_id).touch()
+    collector.tick()
+    assert list(hints.iterdir()) == []
+    online_at = dict(collector.store.db.execute("SELECT id, online_at FROM uploads").fetchall())
+    assert online_at[online] == clock.now  # checked at once, still online
+    assert collector.store.removed_rows() == []  # not on one answer, nor `waiting` early
+    clock.now += DAY_S
+    collector.tick()
+    assert [r["video_id"] for r in collector.store.removed_rows()] == [gone, waiting]
 
 
 # --- the Data API budget -------------------------------------------------------------------

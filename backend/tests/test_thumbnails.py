@@ -11,6 +11,7 @@ from fastapi.testclient import TestClient
 from hyperstim_api.thumbnails import (
     KEEP_S,
     MISSING_S,
+    OFFLINE_HINTS,
     UNREACHABLE_S,
     Size,
     ThumbnailCache,
@@ -54,7 +55,12 @@ def client(
     tmp_path: Path, make_client: Callable[..., TestClient], youtube: FakeYouTube
 ) -> TestClient:
     dataset = write_dataset(tmp_path / "videos.tsv", [video_row(KNOWN, "UC-data", 1.0)])
-    return make_client(dataset, fetch_thumbnail=youtube)
+    return make_client(dataset, analysis_dir=tmp_path / "analyses", fetch_thumbnail=youtube)
+
+
+def hints(tmp_path: Path) -> list[str]:
+    folder = tmp_path / "analyses" / OFFLINE_HINTS
+    return sorted(p.name for p in folder.iterdir()) if folder.exists() else []
 
 
 def test_serves_a_dataset_videos_thumbnail_fetched_once(
@@ -102,6 +108,28 @@ def test_youtube_down_is_a_502_the_browser_doesnt_keep(
     assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 502
     assert client.get(f"/api/thumbnails/{KNOWN}?size=mq").status_code == 200
     assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "mq")]
+
+
+def test_a_dataset_videos_missing_thumbnail_tells_the_collector(
+    tmp_path: Path, client: TestClient, youtube: FakeYouTube
+) -> None:
+    del youtube.images[(KNOWN, "hq")]
+    assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 404
+    assert hints(tmp_path) == [KNOWN]
+    (tmp_path / "analyses" / OFFLINE_HINTS / KNOWN).unlink()  # the collector took it
+    assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 404  # remembered: no new hint
+    assert hints(tmp_path) == []
+
+
+def test_no_hint_for_a_live_check_or_while_youtube_is_down(
+    tmp_path: Path, client: TestClient, youtube: FakeYouTube
+) -> None:
+    del youtube.images[(LIVE, "hq")]
+    client.post(f"/api/analyses/{LIVE}")
+    assert client.get(f"/api/thumbnails/{LIVE}").status_code == 404
+    youtube.down = True
+    assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 502
+    assert hints(tmp_path) == []
 
 
 DAY = 24 * 3600
@@ -181,6 +209,17 @@ def test_cache_serves_a_stale_image_while_waiting(
     cache.clock = lambda: start + KEEP_S + 60
     assert cache.get(KNOWN, "hq") == b"hq-image"  # waiting: the stale copy, YouTube not asked
     assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "hq")]
+
+
+def test_cache_tells_only_youtubes_answer_that_its_missing(
+    tmp_path: Path, youtube: FakeYouTube
+) -> None:
+    told: list[str] = []
+    cache = ThumbnailCache(tmp_path, youtube, on_missing=told.append)
+    cache.get(UNKNOWN, "hq")
+    cache.get(UNKNOWN, "hq")  # remembered, not asked
+    cache.get(KNOWN, "hq")
+    assert told == [UNKNOWN]
 
 
 def test_cache_holds_only_finished_images(tmp_path: Path, youtube: FakeYouTube) -> None:

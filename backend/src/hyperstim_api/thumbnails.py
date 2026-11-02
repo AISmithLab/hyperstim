@@ -17,11 +17,16 @@ from typing import Literal
 
 Size = Literal["hq", "mq"]  # hq 480×360 (4:3, letterboxed), mq 320×180 (16:9)
 Fetch = Callable[[str, Size], bytes | None]
+OnMissing = Callable[[str], None]
 
 TIMEOUT_S = 10
 KEEP_S = 30 * 24 * 3600  # a cached image is fetched again after this
 MISSING_S = 24 * 3600  # "YouTube has none" is remembered this long
 UNREACHABLE_S = 10 * 60  # "YouTube couldn't be reached" is remembered this long
+
+# In ANALYSIS_DIR: one empty file per dataset video whose thumbnail YouTube no longer has, named
+# by its ID; the collector checks those videos first (plan 013, decision 5).
+OFFLINE_HINTS = "offline-hints"
 
 
 class Unavailable(Exception):
@@ -47,11 +52,19 @@ def fetch_from_youtube(video_id: str, size: Size) -> bytes | None:
 
 class ThumbnailCache:
     """Thumbnails on disk, one file per video and size; fetched from YouTube when missing or
-    older than KEEP_S. Holds only public images, nothing about visitors."""
+    older than KEEP_S. Holds only public images, nothing about visitors. `on_missing` is told
+    each time YouTube answers that it has none."""
 
-    def __init__(self, directory: Path, fetch: Fetch, clock: Callable[[], float] = time.time):
+    def __init__(
+        self,
+        directory: Path,
+        fetch: Fetch,
+        clock: Callable[[], float] = time.time,
+        on_missing: OnMissing = lambda video_id: None,
+    ):
         self._dir = directory
         self._fetch = fetch
+        self._on_missing = on_missing
         self.clock = clock
         directory.mkdir(parents=True, exist_ok=True)
 
@@ -86,6 +99,7 @@ class ThumbnailCache:
         if data is None:
             _write(missing, b"", now)
             image.unlink(missing_ok=True)
+            self._on_missing(video_id)
             return None
         _write(image, data, now)  # whole or not at all: written aside, then renamed
         missing.unlink(missing_ok=True)

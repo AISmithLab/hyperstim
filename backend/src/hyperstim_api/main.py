@@ -27,7 +27,14 @@ from hyperstim_api.config import Settings, load_settings
 from hyperstim_api.dataset import CATEGORIES, Channel, Feature, Video
 from hyperstim_api.ranking import CRITERIA, Order, Ranked
 from hyperstim_api.reload import DatasetStore
-from hyperstim_api.thumbnails import Fetch, Size, ThumbnailCache, Unavailable, fetch_from_youtube
+from hyperstim_api.thumbnails import (
+    OFFLINE_HINTS,
+    Fetch,
+    Size,
+    ThumbnailCache,
+    Unavailable,
+    fetch_from_youtube,
+)
 from hyperstim_api.usage import UsageLog
 
 VIDEO_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"  # a YouTube video ID
@@ -291,7 +298,21 @@ def create_app(
             usage.search(request.client.host if request.client else "", kind, q, total > 0)
 
     lookup = ChannelLookup(lambda: store.current, analyzer, pipeline)
-    thumbnails = ThumbnailCache(settings.thumbnail_dir, fetch_thumbnail)
+
+    def hint_offline(video_id: str) -> None:
+        """YouTube no longer has a dataset video's thumbnail: the collector checks whether the
+        video is still online on its next tick (plan 013, decision 5)."""
+        video = store.current.videos_by_id.get(video_id)
+        if video is None or video.removed_at is not None:
+            return  # a live check's, or already taken out
+        hints = settings.analysis_dir / OFFLINE_HINTS
+        try:
+            hints.mkdir(parents=True, exist_ok=True)
+            (hints / video_id).touch()
+        except OSError as exc:
+            logging.getLogger(__name__).warning("Couldn't leave an offline hint: %s", exc)
+
+    thumbnails = ThumbnailCache(settings.thumbnail_dir, fetch_thumbnail, on_missing=hint_offline)
 
     docs = settings.api_docs  # off in prod: no need to hand out a map of the API
     app = FastAPI(

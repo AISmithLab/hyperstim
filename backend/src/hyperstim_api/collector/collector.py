@@ -40,6 +40,7 @@ from hyperstim_api.collector.seed import tier
 from hyperstim_api.collector.store import KEPT, Store, Upload
 from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits, quota_day
 from hyperstim_api.dataset import LEFT_OUT_FILE, Dataset
+from hyperstim_api.thumbnails import OFFLINE_HINTS
 
 log = logging.getLogger(__name__)
 
@@ -139,7 +140,7 @@ def utc(t: float) -> str:
 class Settings:
     data_dir: Path  # collector.db and the exported files (collected/)
     clips_dir: Path  # clips/, cache/ and a work/ folder, on the clips volume
-    analysis_dir: Path | None  # the live analysis's results and block marker
+    analysis_dir: Path | None  # the live analysis's results, block marker and offline hints
     per_day: int = 150
     units_per_day: int = 7000
     provenance: dict[str, str] = field(default_factory=dict)
@@ -195,6 +196,7 @@ class Collector:
         # (and at the first start, before any download).
         if self.store.get("export_due") or now - float(self.store.get("left_out_at", "0")) >= DAY_S:
             self.export()
+        self.take_offline_hints()
         if self.store.get("out_of_units") != quota_day(now):
             for job in (
                 self.refresh_uploads,
@@ -415,6 +417,20 @@ class Collector:
             removed = True
         if removed:
             self.export()
+
+    def take_offline_hints(self) -> None:
+        """Dataset videos whose thumbnail YouTube no longer has (the API's hints): due for the
+        offline check now, so a gone video leaves in about a day, not a month."""
+        if self.s.analysis_dir is None:
+            return
+        for hint in sorted((self.s.analysis_dir / OFFLINE_HINTS).glob("*")):
+            # Not one already waiting for its second check: that would only delay it.
+            self.store.db.execute(
+                "UPDATE uploads SET online_at = 0 WHERE id = ? "
+                "AND state IN ('v2', 'collected') AND unsure = 0",
+                (hint.name,),
+            )
+            hint.unlink(missing_ok=True)
 
     def uploads_failed(self, uploads: list[Upload], now: float) -> None:
         """A Data API error checking a batch of uploads: they wait, so a batch that keeps
