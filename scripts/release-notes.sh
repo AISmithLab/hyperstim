@@ -6,7 +6,7 @@
 # Run in the repo. Prints the bump (major, minor or patch; none when there are only `data:`
 # commits) on the first line, then the notes in Markdown: the commit subjects grouped by their
 # Conventional Commits type (CLAUDE.md). The daily `data:` commits (plan 013) aren't listed:
-# one line says how the dataset grew instead.
+# the last bullet under Other says how the dataset grew instead.
 set -euo pipefail
 
 [ $# = 1 ] || {
@@ -63,13 +63,14 @@ size() {
   fi
 }
 grouped() { LC_ALL=en_US.UTF-8 printf "%'d" "$1" 2>/dev/null || printf '%d' "$1"; }
+# After the bump, so it stays none with only `data:` commits.
 if [ "$data" -gt 0 ]; then
   IFS=$'\t' read -r v0 c0 <<<"$(size "${1%%..*}")" || true
   IFS=$'\t' read -r v1 c1 <<<"$(size "${1#*..}")" || true
   if [ -n "${v0:-}" ] && [ -n "${v1:-}" ]; then
     line="$(grouped "$v0") → $(grouped "$v1") videos"
     [ -n "${c0:-}" ] && [ -n "${c1:-}" ] && line+=", $(grouped "$c0") → $(grouped "$c1") channels"
-    printf '\nDataset: %s.\n' "$line"
+    other+=("Dataset: $line")
   fi
 fi
 

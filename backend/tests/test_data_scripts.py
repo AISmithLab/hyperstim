@@ -140,17 +140,38 @@ def test_nothing_is_committed_without_a_new_day(tmp_path: Path, clone: Path) -> 
     assert git(clone, "rev-parse", "HEAD") == head
 
 
-def test_the_release_notes_read_the_dataset_size_from_the_latest_day(tmp_path: Path) -> None:
+def release_notes(tmp_path: Path, *subjects: str) -> str:
+    """The notes for a repo's commits after its first: a `data:` subject commits the changelog
+    with its newest day moved on (16,725 → 16,989 videos), any other an empty commit."""
     repo = tmp_path / "repo"
     path = repo / "backend" / "data" / "collected" / "CHANGELOG.tsv"
     path.parent.mkdir(parents=True)
     subprocess.run(["git", "init", "--quiet", "-b", "main", str(repo)], check=True)
-    for changelog, subject in ((CHANGELOG, "data: Before"), (CHANGELOG.replace(
-        "2026-10-29\t16725\t588", "2026-10-30\t16989\t594"), "data: After")):  # fmt: skip
-        path.write_text(changelog)
-        git(repo, "add", "-A")
-        git(repo, "-c", "user.name=t", "-c", "user.email=t@example.com", "commit", "-qm", subject)
-    notes = subprocess.run(
-        [str(RELEASE_NOTES), "HEAD~1..HEAD"], cwd=repo, check=True, capture_output=True, text=True
-    ).stdout
-    assert "Dataset: 16,725 → 16,989 videos, 588 → 594 channels." in notes
+    for subject in ("data: Before", *subjects):
+        if subject.startswith("data:"):
+            changelog = CHANGELOG if subject == "data: Before" else CHANGELOG.replace(
+                "2026-10-29\t16725\t588", "2026-10-30\t16989\t594")  # fmt: skip
+            path.write_text(changelog)
+            git(repo, "add", "-A")
+        git(repo, "-c", "user.name=t", "-c", "user.email=t@example.com", "commit", "-qm",
+            subject, "--allow-empty")  # fmt: skip
+    return subprocess.run(
+        [str(RELEASE_NOTES), f"HEAD~{len(subjects)}..HEAD"], cwd=repo, check=True,
+        capture_output=True, text=True,
+    ).stdout  # fmt: skip
+
+
+def test_the_release_notes_read_the_dataset_size_from_the_latest_day(tmp_path: Path) -> None:
+    assert release_notes(tmp_path, "data: After") == (
+        "none\n\n## Other\n\n- Dataset: 16,725 → 16,989 videos, 588 → 594 channels\n"
+    )
+
+
+def test_the_dataset_is_the_last_bullet_under_other(tmp_path: Path) -> None:
+    notes = release_notes(
+        tmp_path, "fix: Mend a page (plan 004)", "data: After", "docs: Note a rule (plan 001)"
+    )
+    assert notes == (
+        "patch\n\n## Fixes\n\n- Mend a page (plan 004)\n\n## Other\n\n"
+        "- Note a rule (plan 001)\n- Dataset: 16,725 → 16,989 videos, 588 → 594 channels\n"
+    )

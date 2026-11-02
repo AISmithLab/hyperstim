@@ -291,7 +291,7 @@ Two separate limits: the **Data API quota** (listing uploads, video details, cha
 **Release notes and versions** (plan 010's `release.sh` and `scripts/release-notes.sh`):
 
 - **A new commit type `data`**: added to `CLAUDE.md`'s commit rules (what it's for: the bot's daily dataset commits only) and to the `commit-msg` hook.
-- `data:` commits **don't bump the version and aren't listed** in the notes. Instead the notes get one line, from the files: "Dataset: 16,375 → 21,402 videos, 542 → 560 channels since v1.3.0." So releases stay about the code, and the growth shows up once per release. Each number is the changelog's newest row at the tag: the last finished day committed before it (23:59:59 UTC) _(human decision, 2026-10-31)_.
+- `data:` commits **don't bump the version and aren't listed** in the notes. Instead the notes get one line, from the files, as the last bullet under Other (plan 010) _(human decision, 2026-11-02)_: "Dataset: 16,375 → 21,402 videos, 542 → 560 channels". So releases stay about the code, and the growth shows up once per release. Each number is the changelog's newest row at the tag: the last finished day committed before it (23:59:59 UTC) _(human decision, 2026-10-31)_.
 - With only `data:` commits since the last release, `release.sh` says there's nothing to release and stops (nothing would change on the site anyway).
 
 ### 11. On the prod server (step 5)
