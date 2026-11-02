@@ -4,8 +4,8 @@ python -m hyperstim_api.collector seed <research-repo>   start from v2's lists, 
 python -m hyperstim_api.collector run                    collect until stopped
 python -m hyperstim_api.collector status                 what it has done, and its health
 python -m hyperstim_api.collector export                 write the TSV files again
-python -m hyperstim_api.collector recount <backup>...    the changelog's ch_ready and ch_out
-                                                         from daily backups, once
+python -m hyperstim_api.collector recount <backup>...    the changelog's day-end counts from
+                                                         daily backups, once
 python -m hyperstim_api.collector alerts                 the hourly alert check (GitHub issues)
 """
 
@@ -29,11 +29,13 @@ from hyperstim_api.collector.collector import (
     RETRY_AFTER_S,
     Collector,
     Settings,
+    channel_averages,
     export,
     load_classifier,
     probe_block,
     provenance,
     recount,
+    rule,
     scorer,
     utc,
 )
@@ -136,8 +138,7 @@ def status(s: Settings) -> str:
         f"{sum(a >= utc(now - 86400) for a in added)} in 24 h, "
         f"{sum(a >= utc(now - 7 * 86400) for a in added)} in 7 days",
         "Last 24 h: " + (", ".join(f"{k} {v}" for k, v in attempts.items()) or "nothing"),
-        f"Cut-off: {store.cutoff():.6f}",
-        floor_line(store),
+        level_line(store, now),
         f"First videos today: {store.first_videos_today(now)} of "
         f"{sampling.FIRST_VIDEOS_PER_DAY} channels",
         left_out_line(store),
@@ -167,39 +168,33 @@ def status(s: Settings) -> str:
     return "\n".join(lines)
 
 
-def floor_line(store: Store) -> str:
-    """Channels below the floor, the videos they lack, and how many have no upload left to
-    check (fewer than `FLOOR` eligible in all, until new ones come out)."""
-    below = store.below_floor()
-    done = sum(
-        store.db.execute(
-            "SELECT 1 FROM uploads WHERE channel_id = ? AND state = 'new' "
-            "AND published_at >= ? LIMIT 1",
-            (r["id"], f"{sampling.FIRST_YEAR}-01-01"),
-        ).fetchone()
-        is None
-        for r in below
+def level_line(store: Store, now: float) -> str:
+    """How far the channels are filled (plan 013, decision 1): their videos per year (the
+    median, and the second smallest of those with an upload left), how many the channel-first
+    rule can fill now and how many it skips for now (nothing left below their threshold)."""
+    second, median = channel_averages(store, utc(now)[:10])
+    rows, order = rule(store, now)
+    on_site = {r["channel_id"] for r in rows if int(r["videos"])} - store.left_out_ids()
+    return (
+        f"Channels' videos per year: median {median}, second smallest {second}; "
+        f"the rule can fill {len(order)} channels now, skips {len(on_site) - len(order)}"
     )
-    lacking = sum(sampling.FLOOR - r["have"] for r in below)
-    line = (
-        f"Below the floor of {sampling.FLOOR}: {len(below)} channels lacking {lacking} videos, "
-        f"{done} of them with every upload checked"
-    )
-    levels = store.levels()  # the downloads fill those with 1 to 4 first, by score
-    if levels:
-        line += "; in the dataset: " + ", ".join(f"{n} with {k}" for k, n in sorted(levels.items()))
-    return line
 
 
 def left_out_line(store: Store) -> str:
-    """The channels left out for their kids share at the last export, and their videos."""
-    channels, videos = store.db.execute(
-        "SELECT (SELECT COUNT(*) FROM left_out), (SELECT COUNT(*) FROM uploads "
-        "WHERE state IN ('v2', 'collected') AND channel_id IN (SELECT channel_id FROM left_out))"
-    ).fetchone()
+    """The channels left out at the last export, by why, and their videos."""
+    reasons = dict(
+        store.db.execute("SELECT reason, COUNT(*) FROM left_out GROUP BY reason").fetchall()
+    )
+    videos = store.db.execute(
+        "SELECT COUNT(*) FROM uploads WHERE state IN ('v2', 'collected') "
+        "AND channel_id IN (SELECT channel_id FROM left_out)"
+    ).fetchone()[0]
     return (
-        f"Left out (under {sampling.KIDS_PERCENT_MIN} % made for kids, of "
-        f"{sampling.KIDS_ANSWERS_MIN}+ answers): {channels} channels, {videos} of their videos"
+        f"Left out ({sampling.KIDS_ANSWERS_MIN}+ answers): {sum(reasons.values())} channels, "
+        f"{videos} of their videos; under {sampling.KIDS_PERCENT_MIN} % made for kids "
+        f"{reasons.get('kids_share', 0)}, under {sampling.PER_YEAR_MIN} eligible a year "
+        f"{reasons.get('per_year', 0)}, both {reasons.get('both', 0)}"
     )
 
 
@@ -329,7 +324,7 @@ def main() -> None:
     commands.add_parser("export", help="write the TSV files again")
     commands.add_parser("alerts", help="the hourly alert check: open, comment on, close issues")
     recount_cmd = commands.add_parser(
-        "recount", help="the changelog's ch_ready and ch_out from daily backups (once)"
+        "recount", help="the changelog's day-end counts from daily backups (once)"
     )
     recount_cmd.add_argument("backups", type=Path, nargs="+")
     args = parser.parse_args()

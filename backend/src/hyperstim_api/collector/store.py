@@ -14,7 +14,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from hyperstim_api.collector.sampling import FIRST_VIDEOS_PER_DAY, FLOOR, left_out, rank
+from hyperstim_api.collector import sampling
+from hyperstim_api.collector.sampling import (
+    FIRST_VIDEOS_PER_DAY,
+    KIDS_ANSWERS_MIN,
+    PER_YEAR_MIN,
+    left_out,
+    rank,
+)
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -54,7 +61,8 @@ CREATE TABLE IF NOT EXISTS uploads (
     tags TEXT NOT NULL DEFAULT '',
     channel_title TEXT NOT NULL DEFAULT '',
     duration_s INTEGER,
-    pick TEXT NOT NULL DEFAULT 'sample', -- why it was checked: sample (under t) | floor
+    -- why it was checked: level (rule v2); before 2026-11-02, sample (under t) | floor
+    pick TEXT NOT NULL DEFAULT 'sample',
     score REAL                         -- dataset videos: their score, for the download order
 );
 CREATE INDEX IF NOT EXISTS uploads_state_r ON uploads (state, r);
@@ -64,7 +72,7 @@ CREATE TABLE IF NOT EXISTS collected (
     added_at TEXT NOT NULL,            -- UTC, ISO 8601
     category TEXT,                     -- None: no keyword placed it
     features TEXT NOT NULL,            -- JSON: the 12 raw values
-    cutoff REAL NOT NULL,              -- the cut-off when it was picked
+    cutoff REAL NOT NULL,              -- the cut-off when it was picked (rule v1; 0 under v2)
     provenance TEXT NOT NULL           -- JSON
 );
 CREATE TABLE IF NOT EXISTS removed (
@@ -85,14 +93,17 @@ CREATE TABLE IF NOT EXISTS units (day TEXT PRIMARY KEY, used INTEGER NOT NULL);
 CREATE TABLE IF NOT EXISTS left_out (
     channel_id TEXT PRIMARY KEY,
     kids INTEGER NOT NULL,             -- of its answers, made for kids
-    answers INTEGER NOT NULL           -- checked uploads whose made-for-kids answer is known
+    answers INTEGER NOT NULL,          -- checked uploads whose made-for-kids answer is known
+    per_year REAL,                     -- estimated eligible uploads per active year
+    reason TEXT NOT NULL DEFAULT 'kids_share'  -- kids_share | per_year | both
 );
 -- The changelog's counts that can't be worked out again later (decision 10), one row per UTC
 -- day, recorded when the day is closed: channels not on the site yet with a video waiting, and
 -- channels left out (NULL on the days before it was recorded); `at`, the time they stand for
 -- (the next midnight when they're the day's end; NULL when recorded before it was kept).
 CREATE TABLE IF NOT EXISTS daily (
-    day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL, ch_out INTEGER, at REAL
+    day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL, ch_out INTEGER, at REAL, ch_yr_2nd REAL,
+    ch_yr_med REAL
 );
 -- The changelog's notes (decision 10): each dated the first day the collector ran with it.
 CREATE TABLE IF NOT EXISTS notes (note TEXT PRIMARY KEY, day TEXT NOT NULL);
@@ -111,11 +122,11 @@ ADDED_COLUMNS = {
         "pick": "TEXT NOT NULL DEFAULT 'sample'",  # everything checked before was `sample`
         "score": "REAL",  # filled in when the collector starts
     },
-    "daily": {"ch_out": "INTEGER", "at": "REAL"},
+    "daily": {"ch_out": "INTEGER", "at": "REAL", "ch_yr_2nd": "REAL", "ch_yr_med": "REAL"},
+    "left_out": {"per_year": "REAL", "reason": "TEXT NOT NULL DEFAULT 'kids_share'"},
 }
 V2_JOINED = "2026-08-26"
 # A channel's videos in the dataset or on their way: what the floor counts.
-HAVE_STATES = "('v2', 'measured', 'collected', 'eligible')"  # v2's scan: when v2's channels joined
 # A channel's videos in the dataset (measured ones too: they wait only for a name).
 IN_STATES = "('v2', 'measured', 'collected')"
 KEPT = "NOT IN (SELECT channel_id FROM left_out)"  # a channel not left out: `<id column> {KEPT}`
@@ -124,6 +135,11 @@ KEPT = "NOT IN (SELECT channel_id FROM left_out)"  # a channel not left out: `<i
 HAVE = (
     "WITH have AS (SELECT channel_id, COUNT(*) AS n, AVG(score) AS score FROM uploads "
     f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
+)
+# Each channel-year with videos in the dataset (to append to `HAVE`): how many.
+YEARS = (
+    ", cy AS (SELECT channel_id, SUBSTR(published_at, 1, 4) AS y, COUNT(*) AS n FROM uploads "
+    f"WHERE state IN {IN_STATES} GROUP BY channel_id, y) "
 )
 # Uploads whose made-for-kids answer is known: those that passed that check (the later checks
 # need it), those that failed it, and the floor's eligible ones put back unchecked (`trimmed`).
@@ -282,104 +298,89 @@ class Store:
         row = self.db.execute("SELECT * FROM uploads WHERE id = ?", (video_id,)).fetchone()
         return _upload(row) if row else None
 
-    def next_unchecked(
-        self, now: float, first_year: int, settled_before: str, n: int, below: float = 1.0
-    ) -> list[str]:
-        """The unchecked uploads with the lowest numbers (under `below`), from channels that
-        are in."""
-        rows = self.db.execute(
-            "SELECT u.id FROM uploads u JOIN channels c ON c.id = u.channel_id "
-            "WHERE u.state = 'new' AND c.status = 'in' AND u.retry_at <= ? AND u.r < ? "
-            "AND u.published_at >= ? AND u.published_at < ? ORDER BY u.r LIMIT ?",
-            (now, below, f"{first_year}-01-01", settled_before, n),
-        ).fetchall()
-        return [str(r["id"]) for r in rows]
-
-    def below_floor(self) -> list[sqlite3.Row]:
-        """Channels that are in with fewer than `FLOOR` videos (in the dataset or waiting to be
-        downloaded), the fewest first: `id`, `have`."""
+    def year_rows(self, now: float, settled_before: str, until: str) -> list[sqlite3.Row]:
+        """Each year of the channels that are in, as the channel-first rule and the filters see
+        it (decisions 1 and 2), with uploads up to the day `until`: `channel_id`, `y`, its
+        videos in the dataset (`videos`) and on the site (`site`), v2's picks (`v2`), the
+        eligible uploads the collector found (`found`; also the floor's put back unchecked),
+        the uploads whose made-for-kids answer is known (`answers`), all eligible ones
+        (`eligible`), those waiting to be downloaded (`waiting`) and ready now (`ready`), the
+        unchecked ones (`unchecked`; `fresh` without the floor's put back) and those due for a
+        check (`due`; a day old), whether one of those is asked again after an answer that
+        couldn't settle it (`unsure`), and its first and last upload (`first`, `last`). One
+        pass over the uploads."""
         return self.db.execute(
-            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
-            f"WHERE state IN {HAVE_STATES} GROUP BY channel_id) "
-            "SELECT c.id, COALESCE(h.n, 0) AS have FROM channels c "
-            "LEFT JOIN have h ON h.channel_id = c.id "
-            f"WHERE c.status = 'in' AND c.id {KEPT} AND COALESCE(h.n, 0) < ? ORDER BY have, c.id",
-            (FLOOR,),
+            "SELECT channel_id, CAST(SUBSTR(published_at, 1, 4) AS INTEGER) AS y, "
+            f"SUM(state IN {IN_STATES}) AS videos, SUM(state IN ('v2', 'collected')) AS site, "
+            "SUM(state = 'v2') AS v2, SUM(state IN ('eligible', 'measured', 'collected', "
+            "'failed') OR (state = 'new' AND reason = 'trimmed')) AS found, "
+            f"SUM({ANSWERED}) AS answers, SUM(state IN ('eligible', 'v2', 'measured', "
+            "'collected', 'failed')) AS eligible, SUM(state = 'eligible') AS waiting, "
+            "SUM(state = 'eligible' AND retry_at <= :now) AS ready, "
+            "SUM(state = 'new') AS unchecked, SUM(state = 'new' AND reason != 'trimmed') AS fresh, "
+            "SUM(state = 'new' AND retry_at <= :now AND published_at < :settled) AS due, "
+            "MAX(state = 'new' AND retry_at <= :now AND published_at < :settled AND unsure > 0) "
+            "AS unsure, MIN(published_at) AS first, MAX(published_at) AS last FROM uploads "
+            "WHERE channel_id IN (SELECT id FROM channels WHERE status = 'in') "
+            "AND published_at != '' AND SUBSTR(published_at, 1, 10) <= :until "
+            "GROUP BY channel_id, y",
+            {"now": now, "settled": settled_before, "until": until},
         ).fetchall()
 
-    def next_floor_unchecked(
-        self, now: float, first_year: int, settled_before: str, per_missing: int, n: int
+    def channel_scores(self) -> dict[str, float | None]:
+        """Each channel with videos in the dataset: its score as the site ranks it."""
+        return {r["channel_id"]: r["score"] for r in self.db.execute(HAVE + "SELECT * FROM have")}
+
+    def left_out_ids(self) -> frozenset[str]:
+        return frozenset(r[0] for r in self.db.execute("SELECT channel_id FROM left_out"))
+
+    def lowest_unchecked(
+        self, channel_id: str, year: str | None, now: float, settled_before: str, n: int
     ) -> list[str]:
-        """Unchecked uploads of channels below the floor: each channel's lowest numbers,
-        `per_missing` for each video it lacks, the channels with the fewest videos first."""
+        """The channel's `n` due uploads not checked yet, from `year` (all years from 2015 if
+        None): those asked again after an answer that couldn't settle it first, then the
+        lowest numbers."""
+        first, end = (year, str(int(year) + 1)) if year else ("2015", "9999")
         rows = self.db.execute(
-            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
-            f"WHERE state IN {HAVE_STATES} GROUP BY channel_id), "
-            "floor AS (SELECT c.id, COALESCE(h.n, 0) AS have FROM channels c "
-            "LEFT JOIN have h ON h.channel_id = c.id "
-            f"WHERE c.status = 'in' AND c.id {KEPT} AND COALESCE(h.n, 0) < :floor), "
-            "next AS (SELECT u.id, u.channel_id, u.r, f.have, ROW_NUMBER() OVER "
-            "(PARTITION BY u.channel_id ORDER BY u.r) AS k FROM uploads u "
-            "JOIN floor f ON f.id = u.channel_id WHERE u.state = 'new' AND u.retry_at <= :now "
-            "AND u.published_at >= :first AND u.published_at < :settled) "
-            "SELECT id FROM next WHERE k <= (:floor - have) * :per_missing "
-            "ORDER BY have, channel_id, r LIMIT :n",
-            {
-                "floor": FLOOR,
-                "now": now,
-                "first": f"{first_year}-01-01",
-                "settled": settled_before,
-                "per_missing": per_missing,
-                "n": n,
-            },
+            "SELECT id FROM uploads WHERE channel_id = ? AND state = 'new' AND retry_at <= ? "
+            "AND published_at >= ? AND published_at < ? AND published_at < ? "
+            "ORDER BY unsure = 0, r LIMIT ?",
+            (channel_id, now, first, end, settled_before, n),
         ).fetchall()
         return [str(r["id"]) for r in rows]
 
-    def trim_floor(self) -> int:
-        """The floor's eligible picks beyond a channel's `FLOOR` (its other videos counted),
-        highest numbers first, go back to unchecked; returns how many. They keep `trimmed` as
-        their reason, so their made-for-kids answer still counts."""
-        before = self.db.total_changes
-        self.db.execute(
-            "WITH other AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
-            "WHERE state IN ('v2', 'measured', 'collected') "
-            "OR (state = 'eligible' AND pick = 'sample') GROUP BY channel_id), "
-            "floor AS (SELECT id, channel_id, ROW_NUMBER() OVER "
-            "(PARTITION BY channel_id ORDER BY r) AS k FROM uploads "
-            "WHERE state = 'eligible' AND pick = 'floor') "
-            "UPDATE uploads SET state = 'new', pick = 'sample', reason = 'trimmed', "
-            "checked_at = NULL "
-            "WHERE id IN (SELECT f.id FROM floor f LEFT JOIN other o "
-            "ON o.channel_id = f.channel_id WHERE f.k > ? - COALESCE(o.n, 0))",
-            (FLOOR,),
-        )
-        return self.db.total_changes - before
-
-    def next_eligible(self, now: float) -> Upload | None:
-        """The next eligible upload to download, not waiting for a retry (decision 2): first
-        the channels with 1 to `FLOOR` - 1 videos in the dataset, highest channel score first;
-        then a channel's first video, while fewer than `FIRST_VIDEOS_PER_DAY` channels got
-        theirs today; then by number over all. Within a channel, its lowest number, whether
-        picked under the cut-off or for the floor; left-out channels get none."""
+    def ready_upload(self, channel_id: str, year: int, now: float) -> Upload | None:
+        """The channel's eligible upload from `year` with the lowest number, not waiting for a
+        retry."""
         row = self.db.execute(
-            HAVE + "SELECT u.* FROM uploads u LEFT JOIN have h ON h.channel_id = u.channel_id "
-            f"WHERE u.state = 'eligible' AND u.retry_at <= :now AND u.channel_id {KEPT} "
-            "AND (h.n > 0 OR :first) "
-            "ORDER BY CASE WHEN h.n < :floor THEN 0 WHEN h.n IS NULL THEN 1 ELSE 2 END, "
-            "CASE WHEN h.n < :floor THEN -COALESCE(h.score, -1) END, u.r LIMIT 1",
-            {"now": now, "first": self.first_video_left(now), "floor": FLOOR},
+            "SELECT * FROM uploads WHERE channel_id = ? AND state = 'eligible' AND retry_at <= ? "
+            "AND published_at >= ? AND published_at < ? ORDER BY r LIMIT 1",
+            (channel_id, now, str(year), str(year + 1)),
         ).fetchone()
         return _upload(row) if row else None
 
-    def ready(self, now: float, pick: str | None = None) -> int:
+    def first_video(self, now: float) -> Upload | None:
+        """A channel's first video (decision 2): the eligible upload with the lowest number, not
+        waiting for a retry, of a channel that is in, has no video in the dataset, has been
+        judged by the filters (`KIDS_ANSWERS_MIN` answers) and isn't left out."""
+        row = self.db.execute(
+            "SELECT u.* FROM uploads u JOIN channels c ON c.id = u.channel_id "
+            "WHERE u.state = 'eligible' AND u.retry_at <= ? AND c.status = 'in' "
+            f"AND u.channel_id {KEPT} AND u.channel_id NOT IN (SELECT channel_id FROM uploads "
+            f"WHERE state IN {IN_STATES}) AND u.channel_id IN (SELECT channel_id FROM uploads "
+            f"WHERE {ANSWERED} GROUP BY channel_id HAVING COUNT(*) >= ?) ORDER BY u.r LIMIT 1",
+            (now, KIDS_ANSWERS_MIN),
+        ).fetchone()
+        return _upload(row) if row else None
+
+    def ready(self, now: float) -> int:
         """Eligible uploads that can be downloaded now (not waiting for a retry, not of a
-        left-out channel, not a first video once today's are taken); only those picked for
-        `pick` if given."""
+        left-out channel, not a first video once today's are taken)."""
         row = self.db.execute(
             "SELECT COUNT(*) AS n FROM uploads WHERE state = 'eligible' AND retry_at <= ? "
-            f"AND pick = COALESCE(?, pick) AND channel_id {KEPT} AND (? OR channel_id IN "
+            f"AND channel_id {KEPT} AND (? OR channel_id IN "
             f"(SELECT channel_id FROM uploads WHERE state IN {IN_STATES}))",
-            (now, pick, self.first_video_left(now)),
+            (now, self.first_video_left(now)),
         )
         return int(row.fetchone()["n"])
 
@@ -424,15 +425,24 @@ class Store:
         ).fetchone()
         return int(row[0])
 
-    def record_daily(self, day: str, ch_ready: int, ch_out: int, at: float) -> None:
+    def record_daily(
+        self,
+        day: str,
+        ch_ready: int,
+        ch_out: int,
+        at: float,
+        years: tuple[float | None, float | None] = (None, None),
+    ) -> None:
+        """The day's counts that can't be worked out again; `years`: `ch_yr_2nd`, `ch_yr_med`."""
         self.db.execute(
-            "INSERT OR REPLACE INTO daily (day, ch_ready, ch_out, at) VALUES (?, ?, ?, ?)",
-            (day, ch_ready, ch_out, at),
+            "INSERT OR REPLACE INTO daily (day, ch_ready, ch_out, at, ch_yr_2nd, ch_yr_med) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (day, ch_ready, ch_out, at, *years),
         )
 
     def daily(self) -> dict[str, sqlite3.Row]:
-        """The recorded counts by day: `ch_ready`, `ch_out` (None before it was recorded) and
-        `at`, the time they stand for (None before it was kept)."""
+        """The recorded counts by day: `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` (None
+        before each was recorded) and `at`, the time they stand for (None before it was kept)."""
         return {r["day"]: r for r in self.db.execute("SELECT * FROM daily")}
 
     def date_notes(self, notes: Iterable[tuple[str, str | None]], today: str) -> None:
@@ -451,45 +461,54 @@ class Store:
 
     # --- the kids share (decision 1) -----------------------------------------------
 
-    def update_left_out(self) -> list[sqlite3.Row]:
-        """Works out each channel's kids share from its answers and keeps the channels left
-        out; returns them (`channel_id`, `kids`, `answers`), by ID."""
-        rows = self.db.execute(
-            "SELECT channel_id, SUM(reason != 'not_for_kids') AS kids, COUNT(*) AS answers "
-            f"FROM uploads WHERE {ANSWERED} GROUP BY channel_id ORDER BY channel_id"
-        ).fetchall()
-        out = [r for r in rows if left_out(int(r["kids"]), int(r["answers"]))]
+    def update_left_out(self, today: str) -> list[sqlite3.Row]:
+        """Works out each channel's kids share and eligible uploads per active year (on `today`)
+        from its answers, and keeps the channels left out by either (decision 1); returns them
+        (`channel_id`, `kids`, `answers`, `per_year`, `reason`), by ID."""
+        kids = {
+            r["channel_id"]: (int(r["kids"]), int(r["answers"]))
+            for r in self.db.execute(
+                "SELECT channel_id, SUM(reason != 'not_for_kids') AS kids, COUNT(*) AS answers "
+                f"FROM uploads WHERE {ANSWERED} GROUP BY channel_id"
+            )
+        }
+        per_year = sampling.channel_estimates(self.year_rows(0, "", today), today)
+        out = []
+        for channel_id in sorted(set(kids) | set(per_year)):
+            k, answers = kids.get(channel_id, (0, 0))
+            estimate = per_year.get(channel_id)
+            reasons = [
+                name
+                for name, hit in (
+                    ("kids_share", left_out(k, answers)),
+                    ("per_year", estimate is not None and estimate < PER_YEAR_MIN),
+                )
+                if hit
+            ]
+            if reasons:
+                out.append(
+                    (channel_id, k, answers, estimate, "both" if len(reasons) == 2 else reasons[0])
+                )
         with self.transaction():
             self.db.execute("DELETE FROM left_out")
             self.db.executemany(
-                "INSERT INTO left_out (channel_id, kids, answers) VALUES (?, ?, ?)",
-                [(r["channel_id"], r["kids"], r["answers"]) for r in out],
+                "INSERT INTO left_out (channel_id, kids, answers, per_year, reason) "
+                "VALUES (?, ?, ?, ?, ?)",
+                out,
             )
-        return out
+        return self.db.execute("SELECT * FROM left_out ORDER BY channel_id").fetchall()
 
     def left_out_list(self) -> list[sqlite3.Row]:
         """The channels left out at the last `update_left_out`, by ID: `channel_id`, `title`,
-        `kids`, `answers`, and `videos` (its videos in the dataset, as the site would count
-        them)."""
+        `kids`, `answers`, `per_year`, `reason`, and `videos` (its videos in the dataset, as
+        the site would count them)."""
         return self.db.execute(
-            "SELECT l.channel_id, COALESCE(c.title, '') AS title, l.kids, l.answers, "
+            "SELECT l.channel_id, COALESCE(c.title, '') AS title, l.kids, l.answers, l.per_year, "
+            "l.reason, "
             "(SELECT COUNT(*) FROM uploads u WHERE u.channel_id = l.channel_id "
             "AND u.state IN ('v2', 'collected')) AS videos "
             "FROM left_out l LEFT JOIN channels c ON c.id = l.channel_id ORDER BY l.channel_id"
         ).fetchall()
-
-    def levels(self) -> dict[int, int]:
-        """Channels that are in and not left out, with fewer than `FLOOR` videos in the
-        dataset: how many have 0, 1, …"""
-        rows = self.db.execute(
-            "WITH have AS (SELECT channel_id, COUNT(*) AS n FROM uploads "
-            f"WHERE state IN {IN_STATES} GROUP BY channel_id) "
-            "SELECT COALESCE(h.n, 0) AS have, COUNT(*) AS n FROM channels c "
-            "LEFT JOIN have h ON h.channel_id = c.id "
-            f"WHERE c.status = 'in' AND c.id {KEPT} AND COALESCE(h.n, 0) < ? GROUP BY 1",
-            (FLOOR,),
-        )
-        return {int(r["have"]): int(r["n"]) for r in rows}
 
     def retrying(self, now: float) -> list[float]:
         """When the uploads waiting for a retry are due, soonest first."""
@@ -515,17 +534,6 @@ class Store:
     def count(self, state: str) -> int:
         row = self.db.execute("SELECT COUNT(*) AS n FROM uploads WHERE state = ?", (state,))
         return int(row.fetchone()["n"])
-
-    def cutoff(self) -> float:
-        """The highest number the sampling has checked: every eligible upload below it is in
-        the dataset or waiting to be downloaded. (v2's picks, also ones taken out later, and the
-        floor's checks have numbers that played no part in how the sampling picked.)"""
-        row = self.db.execute(
-            "SELECT MAX(r) AS r FROM uploads WHERE pick = 'sample' AND ("
-            "state IN ('eligible', 'ineligible', 'measured', 'collected', 'failed') "
-            "OR (state = 'removed' AND id IN (SELECT video_id FROM collected)))"
-        ).fetchone()
-        return float(row["r"] or 0.0)
 
     def set_state(self, video_id: str, state: str, reason: str = "", **fields: Any) -> None:
         sets = ", ".join(["state = ?", "reason = ?", *(f"{k} = ?" for k in fields)])

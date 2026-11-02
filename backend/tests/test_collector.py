@@ -5,7 +5,9 @@ import json
 import os
 import random
 import urllib.parse
+from collections import Counter
 from collections.abc import Callable
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +20,8 @@ from hyperstim_api.collector.collector import (
     Collector,
     Settings,
     changelog,
+    channel_averages,
+    export,
     left_out_rows,
     load_classifier,
     recount,
@@ -57,8 +61,13 @@ def test_a_transaction_commits_only_a_finished_block(tmp_path: Path) -> None:
 # --- the sampling rule ---------------------------------------------------------------------
 
 
+RANK_DQW = 0.7570944611853032  # rank("dQw4w9WgXcQ") under rule v1
+
+
 def test_rank_is_fixed_and_in_range() -> None:
     assert sampling.rank("dQw4w9WgXcQ") == sampling.rank("dQw4w9WgXcQ")
+    # The same numbers under rule v2 as under v1: the rule's version isn't part of them.
+    assert sampling.rank("dQw4w9WgXcQ") == RANK_DQW
     ranks = [sampling.rank(f"video{i:06d}") for i in range(2000)]
     assert all(0 <= r < 1 for r in ranks)
     assert 0.45 < sum(ranks) / len(ranks) < 0.55  # spread evenly
@@ -220,7 +229,7 @@ def make_collector(
     at_floor: bool = True,
 ) -> Collector:
     store = make_store(tmp_path)
-    if at_floor:  # tests of the cut-off: the channel already has its 5, so only `t` picks
+    if at_floor:  # the channel has 5 v2 picks, from 2016: its uploads are from other years
         fill_floor(store, CHANNEL)
 
     def spend(units: int) -> None:
@@ -250,10 +259,10 @@ def make_collector(
     return collector
 
 
-def fill_floor(store: Store, channel_id: str, n: int = sampling.FLOOR) -> list[str]:
-    """Gives the channel `n` v2 picks (not due for the offline check)."""
-    picks = [f"v2{channel_id[-6:]}{i:03d}" for i in range(n)]
-    store.add_uploads(channel_id, [(v, "2016-01-01T00:00:00Z") for v in picks])
+def fill_floor(store: Store, channel_id: str, n: int = 5, year: int = 2016) -> list[str]:
+    """Gives the channel `n` v2 picks from `year` (not due for the offline check)."""
+    picks = [f"v2{channel_id[-6:]}{year % 100:02d}{i:03d}" for i in range(n)]
+    store.add_uploads(channel_id, [(v, f"{year}-01-01T00:00:00Z") for v in picks])
     for video_id in picks:
         store.set_state(video_id, "v2", title="Old", channel_title="Channel", online_at=1e12)
     return picks
@@ -300,27 +309,9 @@ def test_takes_eligible_uploads_lowest_number_first(
     run(collector, clock, 3, step=3600)
     assert collected_ids(collector) == [order[0], order[2], order[3]]
     assert collector.store.upload(order[1]).state == "ineligible"  # type: ignore[union-attr]
-    # The cut-off is the highest number checked: everything eligible below it is taken.
-    assert collector.store.cutoff() >= sampling.rank(order[3])
 
 
-def test_v2_picks_taken_out_dont_move_the_cutoff(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
-) -> None:
-    clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
-    high = next(f"pick{i:07d}" for i in range(1000) if sampling.rank(f"pick{i:07d}") > 0.9)
-    collector.store.add_uploads(CHANNEL, [(high, "2020-01-01")])
-    collector.store.set_state(high, "removed", "gone")
-    assert collector.store.cutoff() == 0.0
-    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
-    collector.tick()
-    assert youtube.calls.count("videos") == 1  # one batch, not everything below 0.9
-
-
-def test_raising_the_cutoff_only_adds(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
-) -> None:
+def test_picking_only_adds(tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline) -> None:
     clock = Clock()
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
@@ -332,20 +323,17 @@ def test_raising_the_cutoff_only_adds(
         assert after[: len(before)] == before
 
 
-def test_new_uploads_below_the_cutoff_come_first_after_a_day(
+def test_a_new_upload_comes_in_a_day_after_it_goes_up(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
     run(collector, clock, 10, step=3600)
-    # A new upload with a lower number than any waiting one: listed by the daily check, then
-    # checked and taken first once it's a day old.
-    waiting = collector.store.db.execute("SELECT MIN(r) FROM uploads WHERE state = 'eligible'")
-    lowest = waiting.fetchone()[0]
-    fresh = next(f"new{i:08d}" for i in range(100_000) if sampling.rank(f"new{i:08d}") < lowest)
-    published = sampling_time(clock.now - 3600)
-    youtube.uploads[CHANNEL].insert(0, (fresh, published))
+    # Listed by the daily check, then checked and taken first once it's a day old: its year,
+    # the running one, has no video yet, so it's the thinnest.
+    fresh = "new00000001"
+    youtube.uploads[CHANNEL].insert(0, (fresh, sampling_time(clock.now - 3600)))
     youtube.video(fresh)
     collector.store.update_channel(CHANNEL, listed_at=0)
     run(collector, clock, 1, step=3600)
@@ -477,7 +465,7 @@ def test_retries_come_one_per_slot_and_count_towards_the_pace(
     waiting = by_rank(youtube.uploads[CHANNEL])[1:6]
     for video_id in waiting:  # five failed a day ago, all due now
         collector.store.log_attempt(video_id, NOW - DAY_S, "failed")
-        collector.store.set_state(video_id, "eligible", retry_at=NOW)
+        collector.store.set_state(video_id, "eligible", retry_at=NOW, title="T", channel_title="C")
     gap = DAY_S / 150
     for i in range(5):
         clock.now += gap
@@ -674,7 +662,7 @@ def test_categories_come_from_v2s_keywords(
     assert rows == {first: "gaming", second: None}
 
 
-# --- the floor: at least 5 videos per channel -----------------------------------------------
+# --- channel first, and the per-year filter (plan 013, decisions 1 and 2) -----------------
 
 SMALL = "UC" + "b" * 22
 
@@ -694,105 +682,151 @@ def small_channel(
     return by_rank(rows)
 
 
-def picks_of(collector: Collector, channel_id: str) -> dict[str, str]:
-    rows = collector.store.db.execute(
-        "SELECT id, pick FROM uploads WHERE channel_id = ? AND state = 'collected'", (channel_id,)
-    )
-    return {r["id"]: r["pick"] for r in rows}
+def eligible_in(youtube: FakeYouTube, channel_id: str, year: int, n: int) -> list[str]:
+    """`n` eligible uploads of the channel from `year`, listed on YouTube; returns their IDs."""
+    rows = [(f"y{year}{channel_id[-3:]}{i:04d}", f"{year}-05-01T00:00:00Z") for i in range(n)]
+    youtube.uploads.setdefault(channel_id, []).extend(rows)
+    for video_id, _ in rows:
+        youtube.video(video_id)
+    return [v for v, _ in rows]
 
 
-def test_a_channel_below_the_floor_is_topped_up_by_its_lowest_numbers_first(
+def year_of(store: Store, video_id: str) -> str:
+    return store.upload(video_id).published_at[:4]  # type: ignore[union-attr]
+
+
+def span(
+    store: Store, channel_id: str, first: str = "2023-01-01", last: str = "2026-10-25"
+) -> None:
+    """The channel's first and last uploads (gone, so they count for nothing else): its years
+    from `first` to `last` are active in full, the running year up to today."""
+    for video_id, published in ((f"fst{channel_id[-6:]}", first), (f"lst{channel_id[-6:]}", last)):
+        store.add_uploads(channel_id, [(video_id, f"{published}T00:00:00Z")])
+        store.set_state(video_id, "ineligible", "gone")
+
+
+def judged(store: Store, channel_id: str, n: int = 20, year: int = 2023) -> None:
+    """`n` uploads of the channel found eligible but given up: answers enough for the filters
+    to judge it (and in again, at `n` a year), none of them to download."""
+    ids = [f"jdg{channel_id[-4:]}{i:04d}" for i in range(n)]
+    store.add_uploads(channel_id, [(v, f"{year}-05-01T00:00:00Z") for v in ids])
+    for video_id in ids:
+        store.set_state(video_id, "failed")
+
+
+def a_year(channel_id: str, year: int, videos: int, open_: bool = True, part: float = 1.0,
+           eligible: int | None = None) -> sampling.Year:  # fmt: skip
+    return sampling.Year(
+        channel_id=channel_id, year=year, videos=videos, site=videos,
+        eligible=videos + open_ if eligible is None else eligible, waiting=int(open_),
+        ready=int(open_), unchecked=0, part=part,
+    )  # fmt: skip
+
+
+def test_the_part_of_a_year_a_channel_was_active() -> None:
+    today = date(2026, 10, 26)
+    full = sampling.active_part(2023, date(2020, 1, 1), date(2026, 10, 20), today)
+    started = sampling.active_part(2024, date(2024, 7, 1), date(2026, 10, 20), today)
+    running = sampling.active_part(2026, date(2020, 1, 1), date(2026, 10, 20), today)
+    stopped = sampling.active_part(2022, date(2020, 1, 1), date(2022, 3, 31), today)
+    assert full == 1.0
+    assert started == 184 / 366  # from its first upload
+    assert running == 299 / 365  # to today
+    assert stopped == 90 / 365  # to its last upload
+
+
+def test_a_channels_average_counts_only_years_with_an_eligible_upload() -> None:
+    years = [
+        a_year(CHANNEL, 2022, 4, open_=False),
+        a_year(CHANNEL, 2023, 0, open_=False, eligible=0),  # every upload checked ineligible
+        a_year(CHANNEL, 2024, 2, part=0.5),
+    ]
+    assert sampling.average(years) == 6 / 1.5
+
+
+def test_the_channel_with_the_fewest_videos_a_year_goes_first_in_its_thinnest_year() -> None:
+    order = sampling.pick_order(
+        [a_year(CHANNEL, 2023, 6), a_year(CHANNEL, 2024, 2),
+         a_year(SMALL, 2023, 3), a_year(SMALL, 2024, 1), a_year(SMALL, 2025, 2, part=0.25)],
+        {},
+    )  # fmt: skip
+    assert [c for c, _ in order] == [SMALL, CHANNEL]  # 6 / 2.25 a year, then 8 / 2
+    # SMALL's years below its threshold, CHANNEL's 4 a year: 2024 (1), then 2023 (3); 2025 is
+    # 8 a year.
+    assert [(y.year, y.rate) for y in order[0][1]] == [(2024, 1.0), (2023, 3.0)]
+    assert [y.year for y in order[1][1]] == [2024]
+
+
+def test_a_channel_with_nothing_left_below_its_average_waits_until_the_others_pass_it() -> None:
+    small = [a_year(SMALL, 2022, 9, open_=False), a_year(SMALL, 2023, 1, open_=False),
+             a_year(SMALL, 2024, 6)]  # fmt: skip
+    # SMALL averages 5.3: its years under it have nothing left, so it's skipped while
+    # CHANNEL, at 5.5, still has a thin year to fill.
+    channel = [a_year(CHANNEL, 2023, 8), a_year(CHANNEL, 2024, 3)]
+    assert [c for c, _ in sampling.pick_order(small + channel, {})] == [CHANNEL]
+    # Once CHANNEL is past 6 a year (no year under its average left), SMALL comes back for its
+    # 2024, under the new threshold.
+    channel = [a_year(CHANNEL, 2023, 8), a_year(CHANNEL, 2024, 7)]
+    order = sampling.pick_order(small + channel, {})
+    assert [c for c, _ in order][0] == SMALL and [y.year for y in order[0][1]] == [2024]
+
+
+def test_on_a_tie_the_higher_scored_channel_goes_first() -> None:
+    years = [a_year(CHANNEL, 2024, 1), a_year(SMALL, 2024, 1),
+             a_year(CHANNEL, 2023, 3), a_year(SMALL, 2023, 3)]  # fmt: skip
+    assert [c for c, _ in sampling.pick_order(years, {CHANNEL: 10.0, SMALL: 50.0})] == [
+        SMALL, CHANNEL,
+    ]  # fmt: skip
+
+
+def test_eligible_uploads_per_year_are_estimated_from_the_checked_ones() -> None:
+    assert sampling.eligible_per_year(v2=5, found=6, answers=19, unchecked=100, part=2) is None
+    # 5 of v2's, 6 found of 20 answers (30 %), and 30 % of the 100 not checked, over 2 years.
+    assert sampling.eligible_per_year(v2=5, found=6, answers=20, unchecked=100, part=2) == 20.5
+
+
+def test_downloads_follow_the_channel_first_rule(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
-    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
-    small = small_channel(collector, youtube, 30)
-    collector.tick()
-    # Only the floor's checks so far: they don't raise the cut-off, and only the 4 it lacks
-    # are kept; the others it checked go back to unchecked.
-    assert collector.store.cutoff() == 0.0
-    waiting = collector.store.db.execute(
-        "SELECT id FROM uploads WHERE state = 'eligible' ORDER BY r"
-    ).fetchall()
-    assert [r["id"] for r in waiting] == small[1:4]
-    run(collector, clock, 4, step=3600)
-    assert collected_ids(collector) == small[:4]  # before any upload of the other channel
-    assert set(picks_of(collector, SMALL).values()) == {"floor"}
-    # Then the cut-off rises over both channels; once it passes the floor's picks nothing
-    # changes: in the end every eligible upload is in, each once.
-    run(collector, clock, 70, step=3600)
-    taken = collected_ids(collector)
-    assert taken[:4] == small[:4]
-    assert sorted(taken) == sorted(small + [v for v, _ in youtube.uploads[CHANNEL]])
-    assert collector.store.cutoff() > max(sampling.rank(v) for v in small[:4])
-    assert {v for v, p in picks_of(collector, SMALL).items() if p == "floor"} == set(small[:4])
-    rows = list(csv.DictReader((tmp_path / "data" / "collected" / "2026.tsv").open(),
-                               delimiter="\t"))  # fmt: skip
-    assert {r["video_id"]: r["pick"] for r in rows}[small[0]] == "floor"
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
+    store = collector.store
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    for channel_id, picks in ((CHANNEL, 5), (SMALL, 1)):
+        span(store, channel_id)
+        fill_floor(store, channel_id, picks, year=2023)
+        fresh = eligible_in(youtube, channel_id, 2024, 8)
+        store.add_uploads(channel_id, [(v, "2024-05-01T00:00:00Z") for v in fresh])
+        judged(store, channel_id, year=2025)
+    run(collector, clock, 8, step=3600)
+    # Over 2023-2025, SMALL has 1/3 a year on average and CHANNEL 5/3. Each takes its 2024
+    # while it's under its threshold (its own average or the other's, whichever is higher),
+    # the lower average first; once neither is under its threshold (both at 3), the open years
+    # take turns, the fewest videos first, SMALL on the tie.
+    channels = [channel_of(store, v) for v in collected_ids(collector)]
+    assert channels == [SMALL, SMALL, CHANNEL, CHANNEL, SMALL, CHANNEL, SMALL, CHANNEL]
+    assert {year_of(store, v) for v in collected_ids(collector)} == {"2024"}
 
 
-def test_a_channel_with_too_few_eligible_uploads_takes_its_next_new_one(
+def test_a_download_doesnt_wait_for_a_retry(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
-    youtube.uploads[CHANNEL] = []  # nothing for the cut-off to take
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
-    small = small_channel(collector, youtube, 3, picks=0)
-    run(collector, clock, 5, step=3600)
-    assert collected_ids(collector) == small
-    # A new upload with a number far above the cut-off: taken, as the channel lacks 2.
-    fresh = next(f"new{i:08d}" for i in range(100_000) if sampling.rank(f"new{i:08d}") > 0.9)
-    youtube.uploads[SMALL].insert(0, (fresh, sampling_time(clock.now - 3600)))
-    youtube.video(fresh)
-    collector.store.update_channel(SMALL, listed_at=0)
-    clock.now += DAY_S
-    run(collector, clock, 3, step=3600)
-    assert collected_ids(collector)[-1] == fresh
-    assert collector.store.cutoff() == 0.0
-
-
-def test_a_channel_that_loses_a_video_is_topped_up_again(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
-) -> None:
-    clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
-    small = small_channel(collector, youtube, 10, picks=sampling.FLOOR)
-    assert collector.store.below_floor() == []
-    gone = f"v2{SMALL[-6:]}000"
-    collector.store.set_state(gone, "removed", "gone")
-    collector.store.add_removed(gone, "2026-10-26T00:00:00Z", "gone")
-    collector.check_candidates(clock.now)
-    collector.tick()
-    assert picks_of(collector, SMALL) == {small[0]: "floor"}
-
-
-def test_with_no_floor_video_ready_the_slot_goes_to_raising_the_cutoff(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
-) -> None:
-    clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
-    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
-    (only,) = small_channel(collector, youtube, 1)
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
+    store = collector.store
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    for channel_id, picks in ((CHANNEL, 3), (SMALL, 4)):
+        span(store, channel_id)
+        fill_floor(store, channel_id, picks, year=2024 if channel_id == CHANNEL else 2023)
+    (only,) = eligible_in(youtube, CHANNEL, 2023, 1)  # CHANNEL's 2023: next in line
+    store.add_uploads(CHANNEL, [(only, "2023-05-01T00:00:00Z")])
     failing(pipeline, only)
-    collector.tick()  # the floor's only video: its download fails, it waits a day
-    assert collector.store.failures(only) == 1
-    run(collector, clock, 1, step=3600)
-    clock.now += 3600
-    collector.tick()
-    assert collected_ids(collector) == by_rank(youtube.uploads[CHANNEL])[:1]
-    assert collector.store.cutoff() > 0
-
-
-def test_floor_downloads_count_towards_the_pace(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
-) -> None:
-    clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
-    collector.s.per_day = 2
-    small = small_channel(collector, youtube, 30)
-    run(collector, clock, 23, step=3600)
-    assert collected_ids(collector) == small[:2]
+    waiting(store, SMALL, level_ids("rdy", 3))  # SMALL's 2024
+    run(collector, clock, 3, step=3600)
+    assert store.failures(only) == 1  # its only video waits a day for its retry,
+    assert [channel_of(store, v) for v in collected_ids(collector)] == [SMALL, SMALL]  # SMALL goes
 
 
 def test_the_shorts_probe_is_asked_only_when_its_all_thats_left(
@@ -818,17 +852,21 @@ def test_the_shorts_probe_is_asked_only_when_its_all_thats_left(
     assert asked.asked == [second]
 
 
-def test_status_shows_the_channels_below_the_floor(
+def test_status_shows_how_far_the_channels_are_filled(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
-    from hyperstim_api.collector.__main__ import floor_line
+    from hyperstim_api.collector.__main__ import level_line
 
     clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)
-    small_channel(collector, youtube, 0)
-    assert floor_line(collector.store) == (
-        "Below the floor of 5: 1 channels lacking 4 videos, 1 of them with every upload checked;"
-        " in the dataset: 1 with 1"
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # 2016: 5 videos
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])  # 2024: none yet
+    small_channel(collector, youtube, 0)  # 2016: 1 video, nothing left
+    for channel_id in (CHANNEL, SMALL):
+        span(collector.store, channel_id)
+    # CHANNEL: 5 over 2016 and 2024, 2.5 a year; SMALL: 1 a year, with nothing left to take.
+    assert level_line(collector.store, clock.now) == (
+        "Channels' videos per year: median 1.75, second smallest None; the rule can fill 1 "
+        "channels now, skips 1"
     )
 
 
@@ -873,59 +911,32 @@ def channel_of(store: Store, video_id: str) -> str:
     return store.upload(video_id).channel_id  # type: ignore[union-attr]
 
 
-def test_downloads_fill_the_channels_on_the_site_highest_score_first(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
-) -> None:
-    clock = Clock()
-    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL has its 5
-    collector.score = lambda features: 5.0  # every added video scores 5
-    store = collector.store
-    for channel_id in (SMALL, TINY):
-        store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
-    scored(store, SMALL, [30.0])  # 1 video, score 30
-    scored(store, TINY, [50.0, 50.0])  # 2 videos, score 50
-    # All picked under the cut-off before the change, CHANNEL's with the lowest numbers.
-    numbers = level_ids("lvl", 40)
-    waiting(store, CHANNEL, numbers[:10])
-    waiting(store, SMALL, numbers[10:20])
-    waiting(store, TINY, numbers[20:30], pick="floor")
-    run(collector, clock, 8, step=3600)
-    # The 2-video channel goes before the 1-video one, as its score is higher, until its own
-    # added videos bring it under 30 (35, then 27.5); then the turn passes, back and forth.
-    assert [channel_of(store, v) for v in collected_ids(collector)] == [
-        TINY, TINY, SMALL, TINY, SMALL, SMALL, SMALL, CHANNEL,
-    ]  # fmt: skip
-    # Only then the lowest number over all channels: CHANNEL's.
-    assert collected_ids(collector)[-1] == numbers[0]
-    within = [v for v in collected_ids(collector) if v in numbers[10:20]]
-    assert within == numbers[10:14]  # each channel's own lowest numbers first
-    assert score_of(store, numbers[10]) == 5.0
-
-
 def test_at_most_3_channels_get_their_first_video_a_day(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
     clock.now = NOW - NOW % DAY_S + 3600  # 01:00 UTC
-    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL has its 5
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: 2016's 5
     store = collector.store
     store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
     fill_floor(store, SMALL, 1)
     numbers = level_ids("fst", 20)
-    waiting(store, CHANNEL, numbers[:5])  # the lowest numbers
+    waiting(store, CHANNEL, numbers[:5])  # 2024, the lowest numbers
     new = [f"UC{i:022d}" for i in range(5)]
     for channel_id, video_id in zip(new, numbers[5:10], strict=True):
         store.upsert_channel(id=channel_id, title="C", status="in", source="discovery",
                              listed_at=NOW)  # fmt: skip
-        waiting(store, channel_id, [video_id], pick="floor")
-    waiting(store, SMALL, numbers[19:])  # a channel on the site: before any first video
+        waiting(store, channel_id, [video_id])
+        judged(store, channel_id)  # the filters judged it in
+    waiting(store, SMALL, numbers[19:])  # 2024 too
     failing(pipeline, numbers[5])  # a failed first download doesn't use up a slot
     run(collector, clock, 6, step=3600)
-    taken = collected_ids(collector)
-    assert taken == [numbers[19], *numbers[6:9], numbers[0]]
+    # First videos first; then by the channel-first rule: SMALL, with fewer videos a year than
+    # CHANNEL, then CHANNEL.
+    assert collected_ids(collector) == [*numbers[6:9], numbers[19], numbers[0]]
     assert store.first_videos_today(clock.now) == 3
-    assert store.ready(clock.now, "floor") == 0  # the 5th waits: no reason to hold up `t`
-    # The next day: the 5th first, and the failed one is tried again once it's due.
+    assert store.ready(clock.now) == 4  # the 5th new channel's video waits for tomorrow
+    # The next day: the failed one is tried again once it's due, then the 5th.
     clock.now += DAY_S - 6 * 3600
     run(collector, clock, 6, step=3600)
     assert collected_ids(collector)[5] == numbers[9]
@@ -972,31 +983,33 @@ def test_a_channel_under_10_percent_made_for_kids_is_left_out(
     assert sampling.left_out(kids, answers) is out
 
 
-def test_a_left_out_channel_gets_no_downloads_or_floor_and_comes_back(
+def test_a_left_out_channel_gets_no_downloads_and_comes_back(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
     youtube.uploads[CHANNEL] = []
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     store = collector.store
-    small = small_channel(collector, youtube, 10, picks=3)  # unchecked: for the floor
-    # 2 of 22 answers made for kids (9 %); v2's 3 picks don't count, or it'd be 5 of 25.
+    small = small_channel(collector, youtube, 10, picks=15)  # unchecked
+    # 2 of 22 answers made for kids (9 %); v2's 15 picks don't count, or it'd be 17 of 37.
     answered(store, SMALL, 1, 20, "nfk")
     waiting(store, SMALL, ["wait0000001"])
     collector.tick()
     assert [r["channel_id"] for r in store.db.execute("SELECT * FROM left_out")] == [SMALL]
     rows = list(csv.DictReader((tmp_path / "data" / "collected" / "excluded-channels.tsv").open(),
                                delimiter="\t"))  # fmt: skip
-    # The numbers behind it, and its 3 v2 picks the site doesn't show.
+    # The numbers behind it, and its 15 v2 picks the site doesn't show. Its eligible uploads per
+    # year are enough: only its kids share leaves it out.
     assert rows == [{"channel_id": SMALL, "channel_title": "Small", "checked": "22",
-                     "for_kids": "2", "kids_pct": "9.1", "videos": "3"}]  # fmt: skip
+                     "for_kids": "2", "kids_pct": "9.1", "per_year": "12.3",
+                     "reason": "kids_share", "videos": "15"}]  # fmt: skip
     run(collector, clock, 5, step=3600)
     assert collected_ids(collector) == []  # nothing downloaded
-    # Its uploads are still checked as the cut-off rises (their answers decide whether it comes
-    # back), but none for the floor.
-    assert {store.upload(v).pick for v in small} == {"sample"}  # type: ignore[union-attr]
-    assert store.below_floor() == []
-    # Those checks found its 10 made for kids: 12 of 32 (37 %). Judged again within a day, it's
+    # Its uploads are still checked, also with one waiting, as their answers decide whether it
+    # comes back: a few a day, 3 from this year today.
+    picks = Counter(store.upload(v).pick for v in small)  # type: ignore[union-attr]
+    assert picks == {"level": 3, "sample": 7}
+    # Those checks found 3 more made for kids: 5 of 25 (20 %). Judged again within a day, it's
     # back, and its waiting uploads are downloaded.
     assert store.db.execute("SELECT COUNT(*) FROM left_out").fetchone()[0] == 1
     clock.now += DAY_S
@@ -1004,6 +1017,46 @@ def test_a_left_out_channel_gets_no_downloads_or_floor_and_comes_back(
     assert store.db.execute("SELECT COUNT(*) FROM left_out").fetchone()[0] == 0
     assert collected_ids(collector)
     assert {store.upload(v).channel_id for v in collected_ids(collector)} == {SMALL}  # type: ignore[union-attr]
+
+
+def test_a_channel_under_5_eligible_a_year_is_left_out_and_comes_back(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    span(store, SMALL)  # 2023, 2024 and 2026 so far: 2.82 active years
+    fill_floor(store, SMALL, 2, year=2023)
+    answered(store, SMALL, 19, 0, "kid")  # made for kids, but none eligible (too long)
+    assert store.update_left_out("2026-10-26") == []  # 19 answers: not judged yet
+    answered(store, SMALL, 20, 0, "kid")
+    (row,) = store.update_left_out("2026-10-26")
+    assert (row["channel_id"], row["reason"], round(row["per_year"], 2)) == (
+        SMALL,
+        "per_year",
+        0.71,
+    )
+    judged(store, SMALL, 20)  # 20 more found eligible: (2 + 20) / 2.82 years
+    assert store.update_left_out("2026-10-26") == []
+
+
+def test_a_new_channel_is_judged_before_its_first_video(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    store = collector.store
+    new = "UC" + "n" * 22
+    store.upsert_channel(id=new, title="New", status="in", source="discovery", listed_at=NOW)
+    rows = [(f"new{i:08d}", "2024-05-01T00:00:00Z") for i in range(40)]
+    for video_id, _ in rows:
+        youtube.video(video_id)
+    store.add_uploads(new, rows)
+    store.add_uploads(new, [("few00000001", "2023-05-01T00:00:00Z")])
+    collector.check_candidates(clock.now)
+    # Its 20 lowest numbers over all its years, so the filters can judge it.
+    checked = [v for v, _ in rows if store.upload(v).state != "new"]  # type: ignore[union-attr]
+    assert sorted(checked, key=sampling.rank) == by_rank(rows)[:20]
+    collector.tick()
+    assert collected_ids(collector) == by_rank(rows)[:1]  # judged in: its first video
 
 
 def test_status_shows_the_channels_left_out(
@@ -1015,9 +1068,10 @@ def test_status_shows_the_channels_left_out(
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     small_channel(collector, youtube, 0, picks=2)
     answered(collector.store, SMALL, 0, 25, "nfk")
-    collector.store.update_left_out()
+    collector.store.update_left_out("2026-10-26")
     assert left_out_line(collector.store) == (
-        "Left out (under 10 % made for kids, of 20+ answers): 1 channels, 2 of their videos"
+        "Left out (20+ answers): 1 channels, 2 of their videos; under 10 % made for kids 0, "
+        "under 5 eligible a year 0, both 1"
     )
 
 
@@ -1030,13 +1084,14 @@ def test_export_is_read_by_the_api(
     clock = Clock()
     collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    span(collector.store, CHANNEL)
     run(collector, clock, 3, step=3600)
     folder = tmp_path / "data" / "collected"
     with (folder / "2026.tsv").open(newline="", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh, delimiter="\t"))
     assert [r["video_id"] for r in rows] == collected_ids(collector)
-    assert rows[0]["ytdlp_version"] == "test" and rows[0]["rule_version"] == "v1"
-    assert {r["pick"] for r in rows} == {"floor"}  # the channel had no videos
+    assert rows[0]["ytdlp_version"] == "test"
+    assert {(r["pick"], r["rule_version"], r["cutoff"]) for r in rows} == {("level", "v2", "")}
     reference = write_dataset(tmp_path / "videos.tsv", [video_row("ref00000001", CHANNEL, 5.0)])
     dataset = load_dataset(reference, folder)
     assert len(dataset.videos) == 4
@@ -1050,12 +1105,28 @@ def test_export_is_read_by_the_api(
         log = list(csv.DictReader(fh, delimiter="\t"))
     assert log[-1:] == [
         {"date": "2026-10-26", "videos": "3", "channels": "1", "ch_1": "0", "ch_2": "0",
-         "ch_3": "1", "ch_4": "0", "ch_5plus": "0", "ch_ready": "0", "ch_out": "0", "added_v": "3",
-         "removed_v": "0", "new_ch": "1",
+         "ch_3": "1", "ch_4": "0", "ch_5plus": "0", "ch_ready": "0", "ch_out": "0",
+         "ch_yr_2nd": "", "ch_yr_med": "3.00", "added_v": "3", "removed_v": "0", "new_ch": "1",
          "note": "Collecting starts: 150 videos a day, lowest r first; "
-                 "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups"}
+                 "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups; "
+                 "Thinnest channels first; under 5 eligible a year left out; 3 new a day"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
+
+
+def test_videos_picked_under_rule_v1_keep_their_provenance(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    for video_id, pick in (("old00000001", "floor"), ("old00000002", "sample")):
+        added(store, CHANNEL, video_id, NOW)
+        store.db.execute("UPDATE uploads SET pick = ? WHERE id = ?", (pick, video_id))
+        store.db.execute("UPDATE collected SET cutoff = 0.25 WHERE video_id = ?", (video_id,))
+    folder = tmp_path / "collected"
+    export(store, folder, NOW + 60)
+    with (folder / "2026.tsv").open(newline="", encoding="utf-8") as fh:
+        rows = {r["video_id"]: r for r in csv.DictReader(fh, delimiter="\t")}
+    assert {(r["pick"], r["rule_version"], r["cutoff"]) for r in rows.values()} == {
+        ("floor", "v1", "0.250000000"), ("sample", "v1", "0.250000000")
+    }  # fmt: skip
 
 
 def added(store: Store, channel_id: str, video_id: str, at: float) -> None:
@@ -1079,18 +1150,22 @@ def test_the_changelog_counts_the_channels_by_their_videos_newest_day_first(
         store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
     fill_floor(store, SMALL, 1)
     fill_floor(store, TINY, 2)
-    store.db.execute("INSERT INTO left_out VALUES (?, 0, 30)", (TINY,))  # counted nowhere
+    store.db.execute(
+        "INSERT INTO left_out (channel_id, kids, answers) VALUES (?, 0, 30)", (TINY,)
+    )  # counted nowhere
     added(store, SMALL, "add00000001", NOW)  # its 2nd video
     store.set_state("add00000001", "removed")  # taken out the next day
     store.add_removed("add00000001", utc(NOW + DAY_S), "gone")
     rows = changelog_rows(store, NOW + 2 * DAY_S)
     assert rows == [
         {"date": "2026-10-27", "videos": 6, "channels": 2, "ch_1": 1, "ch_2": 0, "ch_3": 0,
-         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "", "added_v": 0, "removed_v": 1,
-         "new_ch": 0},
+         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "",
+         "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 0,
+         "removed_v": 1, "new_ch": 0},
         {"date": "2026-10-26", "videos": 7, "channels": 2, "ch_1": 0, "ch_2": 1, "ch_3": 0,
-         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "", "added_v": 1, "removed_v": 0,
-         "new_ch": 0},
+         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "",
+         "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 1,
+         "removed_v": 0, "new_ch": 0},
     ]  # fmt: skip
     for row in rows:
         assert sum(int(str(row[f"ch_{k}"])) for k in (1, 2, 3, 4, "5plus")) == row["channels"]
@@ -1150,7 +1225,7 @@ def test_a_tick_that_ran_past_midnight_closes_the_day_as_of_then(tmp_path: Path)
     collector.close_day(MIDNIGHT + 31)
     assert recorded(collector.store) == {"2026-10-26": (0, 0, MIDNIGHT + 31)}
     note = notes_by_day(collector.store, MIDNIGHT + DAY_S)["2026-10-26"]
-    assert note.endswith("ch_ready and ch_out as of 2026-10-27 00:00:31 UTC")
+    assert note.endswith("ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:31 UTC")
 
 
 def test_days_the_collector_was_down_are_closed_as_they_ended(tmp_path: Path) -> None:
@@ -1189,6 +1264,58 @@ def test_a_day_recorded_before_ch_out_was_keeps_its_ch_ready(tmp_path: Path) -> 
     store.db.execute("INSERT INTO daily (day, ch_ready) VALUES ('2026-10-27', 4)")
     rows = {r["date"]: (r["ch_ready"], r["ch_out"]) for r in changelog(store, NOW + 2 * DAY_S)}
     assert rows == {"2026-10-26": ("", ""), "2026-10-27": (4, "")}
+
+
+def test_the_channels_videos_per_year_count_the_channels_on_the_site(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    for channel_id in (SMALL, TINY, "UC" + "w" * 22, "UC" + "o" * 22):
+        store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
+    for channel_id in (CHANNEL, SMALL, TINY):
+        span(store, channel_id)  # 2023 to 2026: whole years
+    fill_floor(store, CHANNEL, 4, year=2023)
+    added(store, CHANNEL, "add00000001", NOW)  # 2024
+    store.add_uploads(CHANNEL, [("chk00000001", "2024-03-01T00:00:00Z")])  # one left to check
+    fill_floor(store, SMALL, 2, year=2023)
+    answered(store, SMALL, 0, 3, "nfk")  # 2024: none eligible, so it doesn't count
+    fill_floor(store, TINY, 6, year=2023)
+    store.add_uploads(TINY, [("chk00000002", "2024-03-01T00:00:00Z")])
+    waiting(store, "UC" + "w" * 22, ["wait0000001"])  # not on the site: not counted
+    fill_floor(store, "UC" + "o" * 22, 1)
+    store.db.execute("INSERT INTO left_out (channel_id, kids, answers) VALUES (?, 0, 30)",
+                     ("UC" + "o" * 22,))  # fmt: skip  # nor a left-out one
+    # CHANNEL 2.5 a year (5 over 2023-2024), SMALL 2 (only 2023 counts), TINY 3 (6 over two):
+    # the median 2.5; the second smallest of those with an upload left (CHANNEL, TINY) 3.
+    assert channel_averages(store, "2026-10-26") == (3.0, 2.5)
+    # An upload the next day makes 2026 one of SMALL's years, still open: 2 over 1.82 years.
+    store.add_uploads(SMALL, [("new00000001", "2026-10-27T00:00:00Z")])
+    assert channel_averages(store, "2026-10-26") == (3.0, 2.5)
+    assert channel_averages(store, "2026-10-27") == (2.5, 2.5)
+
+
+def test_the_channels_videos_per_year_are_recorded_at_the_close_and_kept(tmp_path: Path) -> None:
+    collector = closing(tmp_path, ended=MIDNIGHT - 90)  # CHANNEL: 2016's 5
+    store = collector.store
+    span(store, CHANNEL, first="2016-01-01")
+    store.add_uploads(CHANNEL, [("vid00000008", "2019-01-01T00:00:00Z")])  # 2019: 0, open
+    collector.close_day(MIDNIGHT + 1)
+    day = store.daily()["2026-10-26"]
+    assert (day["ch_yr_2nd"], day["ch_yr_med"]) == (None, 2.5)  # one channel: no second
+    # Uploads listed later add years, but the closed day keeps its values.
+    store.add_uploads(CHANNEL, [("vid00000009", "2020-01-01T00:00:00Z")])
+    collector.close_day(MIDNIGHT + 3600)
+    rows = {r["date"]: (r["ch_yr_2nd"], r["ch_yr_med"]) for r in changelog(store, MIDNIGHT + DAY_S)}
+    assert rows["2026-10-26"] == ("", "2.50")
+    assert "as of" not in notes_by_day(store, MIDNIGHT + DAY_S)["2026-10-26"]
+
+
+def test_the_channels_videos_per_year_are_blank_for_a_day_recorded_before_them(
+    tmp_path: Path,
+) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW)
+    store.record_daily("2026-10-26", 0, 0, MIDNIGHT)
+    rows = {r["date"]: (r["ch_yr_2nd"], r["ch_yr_med"]) for r in changelog(store, NOW + 2 * DAY_S)}
+    assert rows == {"2026-10-26": ("", "")}
 
 
 def test_the_collector_rests_in_the_days_last_10_minutes(
@@ -1239,6 +1366,7 @@ def backup_at(store: Store, path: Path, tick_at: float | None) -> Path:
 
 def test_recount_takes_the_counts_from_each_backup_with_its_time(tmp_path: Path) -> None:
     store = make_store(tmp_path)
+    span(store, CHANNEL)
     added(store, CHANNEL, "add00000001", NOW)  # the first day: 2026-10-26
     waiting(store, SMALL, ["wait0000001"])
     store.upsert_channel(id=TINY, title="C", status="in", source="v2", listed_at=NOW)
@@ -1255,10 +1383,11 @@ def test_recount_takes_the_counts_from_each_backup_with_its_time(tmp_path: Path)
     assert store.left_out_list() == []  # judged in the copy only
     assert done == [
         "collector-2026-10-26.db: 2026-10-25 is before the first day, skipped",
-        "collector-2026-10-27.db: 2026-10-26 ch_ready 1, ch_out 1, as of 2026-10-27T00:00:41Z",
+        "collector-2026-10-27.db: 2026-10-26 ch_ready 1, ch_out 1, ch_yr_2nd -, ch_yr_med 1.00, "
+        "as of 2026-10-27T00:00:41Z",
     ]
     note = notes_by_day(store, MIDNIGHT + DAY_S)["2026-10-26"]
-    assert note.endswith("ch_ready and ch_out as of 2026-10-27 00:00:41 UTC")
+    assert note.endswith("ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC")
 
 
 def test_recount_never_replaces_a_count_from_closer_to_the_days_end(tmp_path: Path) -> None:
@@ -1293,10 +1422,10 @@ def test_the_left_out_list_counts_only_the_videos_the_site_would_show(tmp_path: 
     added(store, SMALL, "add00000001", NOW)
     waiting(store, SMALL, ["wait0000001"])  # not downloaded: not counted
     answered(store, SMALL, 1, 32, "nfk")  # 1 of 33, with the added and waiting ones: 3 of 35
-    store.update_left_out()
+    store.update_left_out("2026-10-26")
     assert left_out_rows(store) == [
         {"channel_id": SMALL, "channel_title": "Small", "checked": 35, "for_kids": 3,
-         "kids_pct": "8.6", "videos": 2}
+         "kids_pct": "8.6", "per_year": "2.2", "reason": "both", "videos": 2}
     ]  # fmt: skip
 
 
@@ -1497,9 +1626,8 @@ def test_a_failing_batch_of_details_waits_and_downloads_go_on(
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
     collector.tick()  # checks the uploads, downloads one
-    below = collector.store.cutoff()
-    late = next(f"late{i:07d}" for i in range(100_000) if sampling.rank(f"late{i:07d}") < below)
-    collector.store.add_uploads(CHANNEL, [(late, "2024-05-01T00:00:00Z")])
+    late = "late0000001"  # from 2023, which has no video yet: the thinnest year
+    collector.store.add_uploads(CHANNEL, [(late, "2023-05-01T00:00:00Z")])
     youtube.video(late)
     youtube.fails = lambda method, params: method == "videos"
     clock.now += 3600
@@ -1514,7 +1642,7 @@ def test_a_failing_batch_of_details_waits_and_downloads_go_on(
     youtube.fails = lambda method, params: False
     clock.now += 3600
     collector.tick()
-    assert collector.store.upload(late).state == "eligible"  # type: ignore[union-attr]
+    assert collected_ids(collector)[-1] == late  # checked, and downloaded first
 
 
 def test_a_missing_upload_is_asked_again_after_1_3_and_7_days(
@@ -1683,7 +1811,7 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
     assert upload is not None and (upload.unsure, upload.api_failures) == (0, 0)
     assert upload.pick == "sample"  # everything picked before the floor
     day = store.daily()["2026-10-29"]
-    assert (day["ch_ready"], day["ch_out"], day["at"]) == (17, None, None)  # before those were
+    assert (day["ch_ready"], day["ch_out"], day["at"], day["ch_yr_med"]) == (17, None, None, None)
     store.close()
     assert (
         dict(Store(path).db.execute("SELECT id, full_listing FROM channels").fetchall()) == listing

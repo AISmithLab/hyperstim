@@ -3,8 +3,8 @@
 `Collector.tick()` does whatever is due and says how long to wait before the next tick:
 read channels' newest uploads (daily) and new channels' full lists, run a few discovery
 searches (each query weekly), re-check near misses (monthly) and dataset videos (monthly),
-fill gaps (daily), check the next uploads by number, and download and measure the next
-eligible one when the pace allows.
+fill gaps (daily), check the uploads the channel-first rule needs next, and download
+and measure the next eligible one when the pace allows.
 
 When something fails (decision 12), one failure never stops the rest, no decision is final
 on one answer, unfinished work resumes, and a video goes on the site only when everything
@@ -23,6 +23,7 @@ import os
 import random
 import re
 import shutil
+import statistics
 import subprocess
 import sys
 import time
@@ -64,9 +65,9 @@ MIN_SUBSCRIBERS = 10_000  # v2's channel rules
 MIN_VIDEOS = 100  # more than this many
 CHANNELS_PER_TICK = 25  # newest-uploads reads per tick, so other work isn't held up
 MAX_PAGES = 200  # pages of a channel's uploads read in one go (50 a page); more on the next tick
-CANDIDATE_BUFFER = 5  # eligible uploads kept ready for download
-FLOOR_CHECKS_PER_MISSING = 3  # a channel below the floor: uploads checked per video it lacks
-FLOOR_BATCHES_PER_TICK = 10  # of 50 uploads, so a channel with few eligible ones can't hold a tick
+CHECK_BATCHES_PER_TICK = 10  # of 50 uploads, so years with few eligible ones can't hold a tick
+CH_LEVELS = 5  # the changelog counts the channels with 1 to 4 videos, and with 5 or more
+LEFT_OUT_CHECKS_PER_DAY = 50  # uploads of left-out channels checked beyond the others
 OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
 MAX_BLOCK_WAIT_S = 48 * 3600
@@ -538,40 +539,89 @@ class Collector:
 
     # --- picking ---------------------------------------------------------------------
 
-    def check_candidates(self, now: float) -> None:
-        """Check uploads below the cut-off that are new to us (new uploads, new channels) at
-        once, then those of channels below the floor by number, and when no floor video is
-        ready, the next ones by number until a few eligible ones are ready (plan 013, 2)."""
-        settled = utc(now - sampling.SETTLE_S)
-        floor_batches = 0
-        while True:
-            below = self.store.cutoff()
-            ids = self.store.next_unchecked(now, sampling.FIRST_YEAR, settled, 50, below)
-            pick = "sample"
-            if not ids and floor_batches < FLOOR_BATCHES_PER_TICK:
-                floor_batches += 1
-                ids = self.store.next_floor_unchecked(
-                    now, sampling.FIRST_YEAR, settled, FLOOR_CHECKS_PER_MISSING, 50
-                )
-                pick = "floor"
-            if (
-                not ids
-                and not self.store.ready(now, "floor")
-                and self.store.ready(now) < CANDIDATE_BUFFER
-            ):
-                ids = self.store.next_unchecked(now, sampling.FIRST_YEAR, settled, 50)
-                pick = "sample"
-            if not ids:
-                return
-            self.check(ids, now, pick)
-            if pick == "floor":  # more found than lacking: only the lowest numbers are taken
-                self.store.trim_floor()
+    def rule(self, now: float) -> tuple[list[Any], list[tuple[str, list[sampling.Year]]]]:
+        return rule(self.store, now)
 
-    def check(self, ids: list[str], now: float, pick: str = "sample") -> None:
-        """Eligibility of up to 50 uploads, by v2's checks, recording why they were checked
-        (`pick`: the floor's checks don't move the cut-off). An answer that can't settle it (the
-        upload missing, no made-for-kids answer, the Shorts probe undecided) is asked again
-        after 1, 3 and 7 days; the 4th such answer is final (rule 2)."""
+    def check_candidates(self, now: float) -> None:
+        """Check uploads in the order they'll be needed (plan 013, decision 2), a few at a
+        time by number, so a download never waits for one: an upload asked again after an
+        answer that couldn't settle it, when it's due (rule 2); a channel's lowest numbers
+        until the filters can judge it (`KIDS_ANSWERS_MIN` answers) and, for one judged in
+        but not on the site yet, until it has an upload ready for its first video; then the
+        years the channel-first rule fills next that have none ready. Left-out channels'
+        years get `LEFT_OUT_CHECKS_PER_DAY` more a day, as their answers decide whether they
+        come back (decision 1)."""
+        settled = utc(now - sampling.SETTLE_S)
+        rows, order = self.rule(now)
+        out = self.store.left_out_ids()
+        due = {
+            (r["channel_id"], int(r["y"])): r
+            for r in rows
+            if r["due"] and int(r["y"]) >= sampling.FIRST_YEAR
+        }
+        per_channel: dict[str, list[Any]] = {}
+        for r in rows:
+            per_channel.setdefault(r["channel_id"], []).append(r)
+        limit = 50 * CHECK_BATCHES_PER_TICK
+        ids: list[str] = []
+
+        def take(channel_id: str, year: int | None, n: int) -> None:
+            if len(ids) < limit and n > 0:
+                ids.extend(v for v in self.store.lowest_unchecked(
+                    channel_id, None if year is None else str(year), now, settled, n
+                ) if v not in ids)  # fmt: skip
+
+        for (channel_id, year), r in sorted(due.items()):
+            if r["unsure"]:
+                take(channel_id, year, 1)
+        for channel_id, rs in sorted(per_channel.items()):
+            answers = sum(int(r["answers"]) for r in rs)
+            on_site = any(int(r["videos"]) for r in rs)
+            if answers < sampling.KIDS_ANSWERS_MIN:
+                take(channel_id, None, sampling.KIDS_ANSWERS_MIN - answers)
+            elif not on_site and channel_id not in out and not any(int(r["ready"]) for r in rs):
+                take(channel_id, None, sampling.CHECKS_PER_YEAR)
+        for channel_id, years in order:
+            for y in years:
+                if not y.ready and (channel_id, y.year) in due:
+                    take(channel_id, y.year, sampling.CHECKS_PER_YEAR)
+        today = utc(now)[:10]
+        if self.store.get("left_out_checked") != today:
+            budget = len(ids) + LEFT_OUT_CHECKS_PER_DAY
+            years = sorted(
+                (y for y in sampling.years_from(rows, today) if y.channel_id in out
+                 and (y.channel_id, y.year) in due),
+                key=lambda y: (y.rate, y.channel_id, y.year),
+            )  # fmt: skip
+            for y in years:
+                if len(ids) >= budget:
+                    break
+                take(y.channel_id, y.year, sampling.CHECKS_PER_YEAR)
+            del ids[budget:]
+            self.store.set("left_out_checked", today)
+        for start in range(0, len(ids), 50):
+            self.check(ids[start : start + 50], now)
+
+    def next_upload(self, now: float) -> Upload | None:
+        """The next upload to download (plan 013, decision 2): a channel's first video while
+        fewer than `FIRST_VIDEOS_PER_DAY` channels got theirs today; then, by the
+        channel-first rule, the first channel in line with an upload ready in one of its years
+        below its threshold, the thinnest such year, its lowest number."""
+        if self.store.first_video_left(now):
+            first = self.store.first_video(now)
+            if first is not None:
+                return first
+        for channel_id, years in self.rule(now)[1]:
+            for y in years:
+                if y.ready:
+                    return self.store.ready_upload(channel_id, y.year, now)
+        return None
+
+    def check(self, ids: list[str], now: float) -> None:
+        """Eligibility of up to 50 uploads, by v2's checks, recording the rule they were
+        checked for (`pick`). An answer that can't settle it (the upload missing, no
+        made-for-kids answer, the Shorts probe undecided) is asked again after 1, 3 and 7 days;
+        the 4th such answer is final (rule 2)."""
         uploads = [u for u in map(self.store.upload, ids) if u is not None]
         try:
             details = self.api.videos(ids)
@@ -613,7 +663,7 @@ class Collector:
                 "checked_at": now,
                 "api_failures": 0,
                 "unsure": upload.unsure + 1 if unsure else 0,
-                "pick": pick,
+                "pick": "level",
             }
             if found is not None:
                 fields.update(
@@ -657,7 +707,7 @@ class Collector:
             return 600
         if self.live_running() or self.low_on_space():
             return 60
-        upload = self.store.next_eligible(now)
+        upload = self.next_upload(now)
         if upload is None:
             return 60
         self.collect(upload, now)
@@ -713,7 +763,7 @@ class Collector:
                 utc(self.clock()),
                 category,
                 features,
-                self.store.cutoff(),
+                0.0,  # no cut-off under rule v2: the year files leave it blank
                 {**self.s.provenance, "measured_by": source},
             )
             self.store.set_state(upload.id, "collected" if complete else "measured",
@@ -881,10 +931,10 @@ class Collector:
 
     def close_day(self, now: float) -> None:
         """On the first tick of a UTC day: records the day before's counts that can't be worked
-        out again (`ch_ready`, `ch_out`), then writes the files and their day-end copy. When the
-        last tick finished before midnight, nothing has changed since, so the counts are the
-        day's end (also for days the collector was down); otherwise they're as of now, and
-        only the day before gets them."""
+        out again (`ch_ready`, `ch_out`, `ch_yr_2nd`, `ch_yr_med`), then writes the files and their
+        day-end copy. When the last tick finished before midnight, nothing has changed since,
+        so the counts are the day's end (also for days the collector was down); otherwise
+        they're as of now, and only the day before gets them."""
         midnight = now - now % DAY_S
         yesterday = utc(midnight - DAY_S)[:10]
         closed = self.store.get("closed_day")
@@ -896,14 +946,15 @@ class Collector:
         started = float(self.store.get("tick_at", "0") or 0)
         ended = float(self.store.get("tick_end", "0") or 0)
         exact = started <= ended < midnight
-        self.store.update_left_out()
+        self.store.update_left_out(utc(now)[:10])
         ready, out = self.store.ready_to_join(), len(self.store.left_out_list())
+        years = channel_averages(self.store, yesterday)
         day = midnight - DAY_S
         with self.store.transaction():
             while utc(day)[:10] > closed:
                 if exact or utc(day)[:10] == yesterday:
                     at = day + DAY_S if exact else now
-                    self.store.record_daily(utc(day)[:10], ready, out, at)
+                    self.store.record_daily(utc(day)[:10], ready, out, at, years)
                 day -= DAY_S
             self.store.set("closed_day", yesterday)
         if not exact:
@@ -949,7 +1000,7 @@ def export(
     each written whole and renamed into place, for the API to reload. With `until` (a
     midnight), only the videos added and taken out before it: the day-end copy."""
     directory.mkdir(parents=True, exist_ok=True)
-    store.update_left_out()
+    store.update_left_out(utc(time.time() if now is None else now)[:10])
     before = "9999" if until is None else utc(until)
     by_year: dict[str, list[dict[str, object]]] = {}
     for row in store.collected_rows():
@@ -967,9 +1018,9 @@ def export(
             "duration_s": row["duration_s"] if row["duration_s"] is not None else "",
             "added_at": row["added_at"],
             "r": f"{row['r']:.9f}",
-            "cutoff": f"{row['cutoff']:.9f}",
+            "cutoff": "" if row["pick"] == "level" else f"{row['cutoff']:.9f}",
             "pick": row["pick"],
-            "rule_version": sampling.RULE_VERSION,
+            "rule_version": sampling.rule_version(row["pick"]),
         }
         out.update({k: "" if features.get(k) is None else features[k] for k in scoring.FEATURES})
         out.update({k: provenance.get(k, "") for k in COLUMNS if k not in out})
@@ -989,8 +1040,9 @@ def export(
 
 
 def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
-    """Works out `ch_ready` and `ch_out` again from daily backups of collector.db (decision
-    10): each was taken on a day's first tick, so it holds the end of the day before. Records
+    """Works out `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` again from daily backups of
+    collector.db (decision 10): each was taken on a day's first tick, so it holds the end of
+    the day before. Records
     them for that day with the backup's time (its `tick_at`, else the file's), unless the day
     has a count from 23:59:59 or from closer to it, or is before the collector's first day.
     Returns a line per backup saying what it did."""
@@ -1009,10 +1061,15 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
         elif recorded is not None and recorded["at"] is not None and recorded["at"] <= at:
             done.append(f"{path.name}: {day} already has a closer count, skipped")
         else:
-            backup.update_left_out()
+            backup.update_left_out(day)
             ready, out = backup.ready_to_join(), len(backup.left_out_list())
-            store.record_daily(day, ready, out, at)
-            done.append(f"{path.name}: {day} ch_ready {ready}, ch_out {out}, as of {utc(at)}")
+            years = channel_averages(backup, day)
+            store.record_daily(day, ready, out, at, years)
+            done.append(
+                f"{path.name}: {day} ch_ready {ready}, ch_out {out}, "
+                f"ch_yr_2nd {_avg(years[0]) or '-'}, ch_yr_med {_avg(years[1]) or '-'}, "
+                f"as of {utc(at)}"
+            )
         backup.close()
     return done
 
@@ -1029,14 +1086,16 @@ def channel_names(store: Store) -> list[dict[str, object]]:
 
 
 LEFT_OUT_COLUMNS = (
-    "channel_id", "channel_title", "checked", "for_kids", "kids_pct", "videos",
+    "channel_id", "channel_title", "checked", "for_kids", "kids_pct", "per_year", "reason",
+    "videos",
 )  # fmt: skip
 
 
 def left_out_rows(store: Store) -> list[dict[str, object]]:
-    """The channels left out for their kids share, with the numbers behind it (plan 013,
-    decision 10): the checked uploads, how many of them are made for kids, their share, and
-    the channel's videos in the dataset that the site doesn't show."""
+    """The channels left out for their kids share or their eligible uploads per year, with the
+    numbers behind it (plan 013, decisions 1 and 10): the checked uploads, how many of them are
+    made for kids, their share, the estimated eligible uploads per active year, why it's left
+    out, and the channel's videos in the dataset that the site doesn't show."""
     return [
         {
             "channel_id": r["channel_id"],
@@ -1044,6 +1103,8 @@ def left_out_rows(store: Store) -> list[dict[str, object]]:
             "checked": r["answers"],
             "for_kids": r["kids"],
             "kids_pct": f"{100 * r['kids'] / r['answers']:.1f}",
+            "per_year": "" if r["per_year"] is None else f"{r['per_year']:.1f}",
+            "reason": r["reason"],
             "videos": r["videos"],
         }
         for r in store.left_out_list()
@@ -1051,15 +1112,17 @@ def left_out_rows(store: Store) -> list[dict[str, object]]:
 
 
 CHANGELOG_COLUMNS = (
-    "date", "videos", "channels", *(f"ch_{n}" for n in range(1, sampling.FLOOR)),
-    f"ch_{sampling.FLOOR}plus", "ch_ready", "ch_out", "added_v", "removed_v", "new_ch", "note",
+    "date", "videos", "channels", *(f"ch_{n}" for n in range(1, CH_LEVELS)),
+    f"ch_{CH_LEVELS}plus", "ch_ready", "ch_out", "ch_yr_2nd", "ch_yr_med", "added_v", "removed_v",
+    "new_ch", "note",
 )  # fmt: skip
 
 
 def changelog(store: Store, now: float) -> list[dict[str, object]]:
     """One line per finished UTC day with a change, a recorded count or a note, the newest
     first: the site at 23:59:59 (videos, channels, the channels by their number of videos),
-    the channels ready to join and left out as recorded when the day was closed, the day's
+    the channels ready to join and left out and the thinnest and typical channel-year as
+    recorded when the day was closed, the day's
     changes and its notes. The channels left out now count as never there, as on the site. The
     days before each record began have none (blank), since they can't be counted again; a
     recorded count not from 23:59:59 gets a note saying when it's from."""
@@ -1103,33 +1166,75 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
             elif visible[channel] > 0:
                 line["removed_v"] = int(str(line["removed_v"])) + 1
                 visible[channel] -= 1
-        levels = Counter(min(n, sampling.FLOOR) for n in visible.values() if n > 0)
+        levels = Counter(min(n, CH_LEVELS) for n in visible.values() if n > 0)
         recorded = daily.get(day)
         line |= {
             "date": day,
             "videos": sum(visible.values()),
             "channels": sum(levels.values()),
-            **{f"ch_{n}": levels[n] for n in range(1, sampling.FLOOR)},
-            f"ch_{sampling.FLOOR}plus": levels[sampling.FLOOR],
+            **{f"ch_{n}": levels[n] for n in range(1, CH_LEVELS)},
+            f"ch_{CH_LEVELS}plus": levels[CH_LEVELS],
             "ch_ready": recorded["ch_ready"] if recorded else "",
             "ch_out": "" if recorded is None or recorded["ch_out"] is None else recorded["ch_out"],
+            "ch_yr_2nd": _avg(recorded["ch_yr_2nd"]) if recorded else "",
+            "ch_yr_med": _avg(recorded["ch_yr_med"]) if recorded else "",
             "note": "; ".join(notes_by_day.get(day, []) + recorded_when(day, recorded)),
         }
         lines.append(line)
     return lines[::-1]
 
 
+def rule(store: Store, now: float) -> tuple[list[Any], list[tuple[str, list[sampling.Year]]]]:
+    """The store's rows of the channel-years (`year_rows`) and the channel-first order of the
+    channels on the site that aren't left out (decisions 1 and 2)."""
+    rows = store.year_rows(now, utc(now - sampling.SETTLE_S), utc(now)[:10])
+    out = store.left_out_ids()
+    years = [y for y in sampling.years_from(rows, utc(now)[:10]) if y.channel_id not in out]
+    return rows, sampling.pick_order(years, store.channel_scores())
+
+
+def channel_averages(store: Store, day: str) -> tuple[float | None, float | None]:
+    """The channels' videos per year on the site on `day` (decision 10): the second smallest
+    among the channels with an upload left to take (`ch_yr_2nd`), and the median over all
+    (`ch_yr_med`); None without channels."""
+    out = store.left_out_ids()
+    by: dict[str, list[sampling.Year]] = {}
+    for y in sampling.years_from(store.year_rows(0, "", day), day):
+        if y.channel_id not in out:
+            by.setdefault(y.channel_id, []).append(y)
+    avgs = {c: sampling.average(ys, site=True) for c, ys in by.items() if any(y.site for y in ys)}
+    values = [a for a in avgs.values() if a is not None]
+    left = sorted(
+        a for c, a in avgs.items() if a is not None and any(y.counted and y.open for y in by[c])
+    )
+    return (
+        round(left[1], 2) if len(left) > 1 else None,
+        round(statistics.median(values), 2) if values else None,
+    )
+
+
+def _avg(value: float | None) -> str:
+    """Videos per year as the changelog shows it: two decimals, blank if not recorded."""
+    return "" if value is None else f"{value:.2f}"
+
+
 def recorded_when(day: str, recorded: Any) -> list[str]:
-    """The note for a day whose `ch_ready` and `ch_out` aren't from 23:59:59."""
+    """The note for a day whose `ch_ready` and `ch_out` (and `ch_yr_2nd`, `ch_yr_med`) aren't
+    from 23:59:59."""
     if recorded is None:
         return []
+    counts = (
+        "ch_ready, ch_out, ch_yr_2nd and ch_yr_med"
+        if recorded["ch_yr_med"] is not None
+        else "ch_ready and ch_out"
+    )
     if recorded["at"] is None:
         return ["ch_ready and ch_out at the day's last export (time not kept)"]
     end = calendar.timegm(time.strptime(day, "%Y-%m-%d")) + DAY_S
     if recorded["at"] == end:
         return []
     at = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(recorded["at"]))
-    return [f"ch_ready and ch_out as of {at} UTC"]
+    return [f"{counts} as of {at} UTC"]
 
 
 def _write_tsv(path: Path, columns: tuple[str, ...], rows: list[dict[str, object]]) -> None:

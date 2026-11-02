@@ -69,6 +69,34 @@ def test_the_daily_commit_carries_the_chart(tmp_path: Path, clone: Path) -> None
     assert "16,725 videos" in git(clone, "show", "HEAD:backend/data/collected/growth.svg")
 
 
+def test_the_next_daily_commit_brings_a_new_layout_and_redraws_the_chart(
+    tmp_path: Path, clone: Path
+) -> None:
+    # Committed in the old layout; then a release adds columns (plan 013, step 25) and the
+    # left-out list's reasons, and the collector rewrites its files: the next new day brings
+    # them all in, with the chart redrawn.
+    subprocess.run([str(COMMIT_DATA), str(clone), str(collected(tmp_path))], check=True)
+    source = tmp_path / "collected"
+    new_columns = COLUMNS[:10] + ["ch_yr_2nd", "ch_yr_med"] + COLUMNS[10:]
+    rows = [r.split("\t") for r in CHANGELOG.splitlines()[1:]]
+    newest = line("2026-10-30", 16860, 591, 135, 0, 3).rstrip("\n").split("\t")
+    (source / "CHANGELOG.tsv").write_text("\t".join(new_columns) + "\n" + "".join(
+        "\t".join(r[:10] + extra + r[10:]) + "\n"
+        for r, extra in [(newest, ["4.25", "6.00"])] + [(r, ["", ""]) for r in rows]
+    ))  # fmt: skip
+    (source / "excluded-channels.tsv").write_text(
+        "channel_id\tchannel_title\tchecked\tfor_kids\tkids_pct\tper_year\treason\tvideos\n"
+        "UCx\tX\t40\t40\t100.0\t2.2\tper_year\t3\n"
+    )
+    out = subprocess.run([str(COMMIT_DATA), str(clone), str(source)], check=True,
+                         capture_output=True, text=True).stdout  # fmt: skip
+    assert out.strip() == "data: Add 135 videos and 3 channels (2026-10-30)"
+    dest = "HEAD:backend/data/collected/"
+    assert "ch_yr_med" in git(clone, "show", dest + "CHANGELOG.tsv").splitlines()[0]
+    assert "per_year" in git(clone, "show", dest + "excluded-channels.tsv")
+    assert "16,860 videos" in git(clone, "show", dest + "growth.svg")
+
+
 def test_the_data_goes_in_when_the_chart_fails(tmp_path: Path, clone: Path) -> None:
     # A release without the chart's Python: the script copied alone.
     lone = tmp_path / "release" / "scripts" / "commit-data.sh"
