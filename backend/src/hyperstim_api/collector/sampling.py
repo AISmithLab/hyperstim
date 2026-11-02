@@ -26,6 +26,8 @@ FIRST_YEAR = 2015  # v2's first year (YouTube Kids' launch)
 SETTLE_S = 24 * 3600  # an upload is checked once it's a day old
 REGION = "US"
 FIRST_VIDEOS_PER_DAY = 3  # channels that get their first video in a day (UTC), at most
+# ... and only while no channel the rule can fill now averages under this many a year (`behind`)
+FIRST_VIDEO_FLOOR = 3.0
 CHECKS_PER_YEAR = 3  # unchecked uploads of a channel-year checked at a time, lowest numbers first
 # A channel whose checked uploads are under 10 % made for kids is left out (decision 1),
 # judged once it has 20 answers; so is one with fewer than 5 eligible uploads per active year.
@@ -118,6 +120,16 @@ def _lines(
         threshold = max(avgs[c], next((a for a, o in lows if o != c), math.inf))
         below[c] = [y for y in can[c] if y.rate < threshold]
     return by, avgs, can, below
+
+
+def behind(years: Iterable[Year]) -> list[str]:
+    """The channels the rule can fill now (a year below their threshold with an eligible upload
+    left) that average under `FIRST_VIDEO_FLOOR`: while there is one, no channel gets its first
+    video (decision 2), so new channels don't pile up below the ones still catching up."""
+    _, avgs, _, below = _lines(years)
+    return sorted(
+        c for c, ys in below.items() if avgs[c] < FIRST_VIDEO_FLOOR and any(y.waiting for y in ys)
+    )
 
 
 def pick_order(

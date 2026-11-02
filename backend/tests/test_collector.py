@@ -944,8 +944,9 @@ def channel_of(store: Store, video_id: str) -> str:
 
 
 def test_at_most_3_channels_get_their_first_video_a_day(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    monkeypatch.setattr(sampling, "FIRST_VIDEO_FLOOR", 0.0)  # the cap alone: SMALL isn't behind
     clock = Clock()
     clock.now = NOW - NOW % DAY_S + 3600  # 01:00 UTC
     collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: 2016's 5
@@ -974,6 +975,52 @@ def test_at_most_3_channels_get_their_first_video_a_day(
     assert collected_ids(collector)[5] == numbers[9]
     assert store.failures(numbers[5]) == 2
     assert store.first_videos_today(clock.now) == 1
+
+
+def test_no_first_video_while_a_channel_on_the_site_is_behind(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: 2016's 5
+    store = collector.store
+    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
+    fill_floor(store, SMALL, 1)  # under 3 a year, with an upload waiting in 2024
+    new = "UC" + "9" * 22
+    store.upsert_channel(id=new, title="C", status="in", source="discovery", listed_at=NOW)
+    judged(store, new)
+    first, behind = level_ids("bhd", 2)
+    waiting(store, new, [first])  # the lower number, but SMALL is behind
+    waiting(store, SMALL, [behind])
+    run(collector, clock, 3, step=3600)
+    # SMALL first; then, with nothing left it can take, it no longer holds the new channel back.
+    assert collected_ids(collector) == [behind, first]
+
+
+def test_status_shows_when_first_videos_are_held(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    from hyperstim_api.collector.__main__ import first_videos_line
+
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: 2016's 5
+    store = collector.store
+    assert first_videos_line(store, clock.now) == "First videos today: 0 of 3 channels"
+    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
+    fill_floor(store, SMALL, 1)
+    waiting(store, SMALL, ["held0000001"])  # under 3 a year, with an upload it can take
+    assert first_videos_line(store, clock.now) == (
+        "First videos today: 0 of 3 channels; held while 1 channels are under 3 a year"
+    )
+
+
+def test_a_channel_is_behind_under_3_a_year_with_an_upload_it_can_take() -> None:
+    def channel(videos: int, open_: bool = True) -> list[sampling.Year]:
+        return [a_year(SMALL, 2023, videos, open_=False), a_year(SMALL, 2024, 0, open_=open_)]
+
+    others = [a_year(CHANNEL, 2023, 6), a_year(CHANNEL, 2024, 6)]
+    assert sampling.behind(channel(5) + others) == [SMALL]  # 2.5 a year
+    assert sampling.behind(channel(6) + others) == []  # 3 a year
+    assert sampling.behind(channel(5, open_=False) + others) == []  # nothing it can take
 
 
 def test_the_dataset_videos_scores_are_filled_in_once(

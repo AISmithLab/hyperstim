@@ -36,6 +36,7 @@ from hyperstim_api.collector.collector import (
     provenance,
     recount,
     rule,
+    rule_years,
     scorer,
     utc,
 )
@@ -139,8 +140,7 @@ def status(s: Settings) -> str:
         f"{sum(a >= utc(now - 7 * 86400) for a in added)} in 7 days",
         "Last 24 h: " + (", ".join(f"{k} {v}" for k, v in attempts.items()) or "nothing"),
         level_line(store, now),
-        f"First videos today: {store.first_videos_today(now)} of "
-        f"{sampling.FIRST_VIDEOS_PER_DAY} channels",
+        first_videos_line(store, now),
         left_out_line(store),
         f"Data API units today: {store.units_used(quota_day(now))} of {s.units_per_day}",
         f"Pace: {s.per_day}/day x {store.get('pace_factor', '1')}",
@@ -179,6 +179,18 @@ def level_line(store: Store, now: float) -> str:
         f"Channels' videos per year: median {median}, second smallest {second}; "
         f"the rule can fill {len(order)} channels now, skips {len(on_site) - len(order)}"
     )
+
+
+def first_videos_line(store: Store, now: float) -> str:
+    """Channels that got their first video today, and the channels holding new ones back
+    (plan 013, decision 2)."""
+    held = sampling.behind(rule_years(store, now)[1])
+    return (
+        f"First videos today: {store.first_videos_today(now)} of "
+        f"{sampling.FIRST_VIDEOS_PER_DAY} channels"
+        + (f"; held while {len(held)} channels are under "
+           f"{sampling.FIRST_VIDEO_FLOOR:g} a year" if held else "")
+    )  # fmt: skip
 
 
 def left_out_line(store: Store) -> str:

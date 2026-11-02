@@ -620,14 +620,16 @@ class Collector:
 
     def next_upload(self, now: float) -> Upload | None:
         """The next upload to download (plan 013, decision 2): a channel's first video while
-        fewer than `FIRST_VIDEOS_PER_DAY` channels got theirs today; then, by the
-        channel-first rule, the first channel in line with an upload ready in one of its years
-        below its threshold, the thinnest such year, its lowest number."""
-        if self.store.first_video_left(now):
+        fewer than `FIRST_VIDEOS_PER_DAY` channels got theirs today and none is behind
+        (`sampling.behind`); then, by the channel-first rule, the first channel in line with an
+        upload ready in one of its years below its threshold, the thinnest such year, its
+        lowest number."""
+        every = rule_years(self.store, now)[1]
+        if self.store.first_video_left(now) and not sampling.behind(every):
             first = self.store.first_video(now)
             if first is not None:
                 return first
-        for channel_id, years in self.rule(now)[1]:
+        for channel_id, years in sampling.pick_order(every, self.store.channel_scores()):
             for y in years:
                 if y.ready:
                     return self.store.ready_upload(channel_id, y.year, now)
@@ -1219,12 +1221,18 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
     return lines[::-1]
 
 
+def rule_years(store: Store, now: float) -> tuple[list[Any], list[sampling.Year]]:
+    """The store's rows of the channel-years (`year_rows`) and the years of the channels that
+    aren't left out, as the channel-first rule sees them (decisions 1 and 2)."""
+    rows = store.year_rows(now, utc(now - sampling.SETTLE_S), utc(now)[:10])
+    out = store.left_out_ids()
+    return rows, [y for y in sampling.years_from(rows, utc(now)[:10]) if y.channel_id not in out]
+
+
 def rule(store: Store, now: float) -> tuple[list[Any], list[tuple[str, list[sampling.Year]]]]:
     """The store's rows of the channel-years (`year_rows`) and the channel-first order of the
     channels on the site that aren't left out (decisions 1 and 2)."""
-    rows = store.year_rows(now, utc(now - sampling.SETTLE_S), utc(now)[:10])
-    out = store.left_out_ids()
-    years = [y for y in sampling.years_from(rows, utc(now)[:10]) if y.channel_id not in out]
+    rows, years = rule_years(store, now)
     return rows, sampling.pick_order(years, store.channel_scores())
 
 
