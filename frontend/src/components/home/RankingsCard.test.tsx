@@ -40,6 +40,7 @@ const channelsDesc = { items: [channel("Loud", 88), channel("Busy", 80), channel
 const channelsAsc = { items: [channel("Calm", 9), channel("Slow", 12), channel("Soft", 15)], total: 40, asOf: "2026-10-26T00:00:00Z" };
 
 beforeEach(() => {
+  push.mockReset();
   vi.mocked(getVideos)
     .mockReset()
     .mockImplementation(async ({ order }) => (order === "desc" ? videosDesc : videosAsc));
@@ -68,7 +69,7 @@ describe("RankingsCard", () => {
       "1",
       "2",
       "3",
-      "↓ Least stimulating",
+      "Least stimulating",
       "−33rd least stimulating",
       "−22nd least stimulating",
       "−1least stimulating",
@@ -82,6 +83,20 @@ describe("RankingsCard", () => {
     const meters = table.querySelectorAll("[data-filled]");
     expect(Array.from(meters, (m) => m.getAttribute("data-filled"))).toEqual(["5", "5", "5", "1", "1", "1"]);
     expect(within(table).getByRole("link", { name: "Video 120" })).toBeInTheDocument();
+  });
+
+  it("shows the gap as a quiet divider that isn't a row to click", async () => {
+    const user = userEvent.setup();
+    render(<RankingsCard />);
+    const table = await loadedTable(/videos/);
+    const gap = within(table).getByText("Least stimulating").closest("tr")!;
+    expect(within(gap).queryByRole("link")).toBeNull();
+    // No row lines around it: neither its own nor the one of the row above.
+    expect(gap).not.toHaveClass("border-b");
+    expect(gap.previousElementSibling).not.toHaveClass("border-b");
+
+    await user.click(within(gap).getByRole("cell"));
+    expect(push).not.toHaveBeenCalled();
   });
 
   it("opens a row's page from a click anywhere in it; the name's link covers its cell, not the row", async () => {
@@ -108,7 +123,7 @@ describe("RankingsCard", () => {
 
     const table = await loadedTable("The 3 most and 3 least stimulating channels");
     expect(rankCells(table).slice(3)).toEqual([
-      "↓ Least stimulating",
+      "Least stimulating",
       "−33rd least stimulating",
       "−22nd least stimulating",
       "−1least stimulating",

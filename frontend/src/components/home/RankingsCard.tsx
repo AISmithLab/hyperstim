@@ -90,8 +90,10 @@ const VIEWS: Record<View, { chip: string; column: string; caption: string }> = {
 };
 
 // Every row has room for a two-line name plus the small second line, so switching
-// between videos and channels never changes the card's height.
-const ROW = "h-20 border-b border-navy/10 last:border-0";
+// between videos and channels never changes the card's height. The row just above the gap
+// has no line, so the gap reads as a divider rather than a row.
+const ROW = "h-20";
+const ROW_LINE = "border-b border-navy/10 last:border-0";
 
 export default function RankingsCard() {
   const [view, setView] = useState<View>("videos");
@@ -195,12 +197,17 @@ export default function RankingsCard() {
   );
 }
 
-/** Marks where the least stimulating end of the ranking starts. */
+/**
+ * Marks where the least stimulating end of the ranking starts: a quiet divider between dotted
+ * rules, without row lines, so it doesn't look like a row to click (plan 002).
+ */
 function GapRow() {
   return (
-    <tr className="h-9 border-b border-navy/10">
-      <td colSpan={3} className="text-center text-sm text-ink/80">
-        <span aria-hidden="true">↓</span> Least stimulating
+    <tr className="h-9">
+      <td colSpan={3} className="text-sm text-ink/80">
+        <span className="flex items-center gap-2.5 before:flex-1 before:border-t-2 before:border-dotted before:border-navy/20 after:flex-1 after:border-t-2 after:border-dotted after:border-navy/20">
+          Least stimulating
+        </span>
       </td>
     </tr>
   );
@@ -217,7 +224,7 @@ function RankRows({ rows }: { rows: Row[] }) {
     const fromEnd = gapAt > 0 && i >= gapAt ? last - row.rank + 1 : undefined;
     return [
       i === gapAt && <GapRow key="gap" />,
-      <RankRow key={row.key} row={row} fromEnd={fromEnd} />,
+      <RankRow key={row.key} row={row} fromEnd={fromEnd} line={i !== gapAt - 1} />,
     ];
   });
 }
@@ -230,7 +237,7 @@ function ordinal(n: number): string {
 function SkeletonRows() {
   const bar = "block animate-pulse rounded bg-gray-200";
   const row = (i: number) => (
-    <tr key={i} className={ROW}>
+    <tr key={i} className={i === 2 ? ROW : `${ROW} ${ROW_LINE}`}>
       <td className="pr-4 sm:pr-5">
         <span className={`${bar} ml-auto h-4 w-4`} />
       </td>
@@ -252,10 +259,10 @@ function SkeletonRows() {
   );
 }
 
-function RankRow({ row, fromEnd }: { row: Row; fromEnd?: number }) {
+function RankRow({ row, fromEnd, line }: { row: Row; fromEnd?: number; line: boolean }) {
   const warn = row.rank <= END;
   return (
-    <LinkedRow href={row.href} className={ROW}>
+    <LinkedRow href={row.href} className={line ? `${ROW} ${ROW_LINE}` : ROW}>
       {/* Ranks 1–3 may get warning-triangle art behind the number later (plan 002). */}
       <td
         className={`pr-4 text-right align-middle text-sm font-bold tabular-nums sm:pr-5 sm:text-base ${warn ? "text-navy" : "text-ink"}`}
