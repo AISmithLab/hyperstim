@@ -18,7 +18,8 @@ import {
   type Measure,
 } from "@/components/channel/chart";
 import ScoreMeter from "@/components/ScoreMeter";
-import { thumbnailUrl, type ChannelDetail, type ChannelVideo } from "@/lib/api";
+import { Thumbnail } from "@/components/Thumbnail";
+import { type ChannelDetail, type ChannelVideo } from "@/lib/api";
 import { useWidth } from "@/lib/use-layout";
 import { spreadOut, useHoldToSpread, type Finger } from "./hold-spread";
 import { Badge } from "./parts";
@@ -252,8 +253,7 @@ export default function CompareChart({
             style={{ left: t.left, top: t.top, width: THUMB_W, height: THUMB_H, zIndex: t.front ? 2 * rows + 1 : t.row }}
             className={`absolute overflow-hidden rounded bg-navy/10 ring-2 transition-[top,scale] duration-200 ease-out motion-reduce:transition-none ${t.front ? "scale-108" : ""} ${on ? "ring-navy" : "ring-white"}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization */}
-            <img src={thumbnailUrl(t.video.id, "mq")} alt="" loading="lazy" width={THUMB_W} height={THUMB_H} className="size-full object-cover" />
+            <Thumbnail id={t.video.id} size="mq" loading="lazy" width={THUMB_W} height={THUMB_H} className="size-full object-cover" />
           </button>
         );
       })}

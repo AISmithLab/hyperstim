@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
-import { thumbnailUrl } from "@/lib/api";
+import { Thumbnail } from "@/components/Thumbnail";
 
 const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
 /** The player's "playing" state in the embed's message API. */
@@ -110,12 +110,11 @@ export default function YouTubePlayer({
             className="absolute inset-0 size-full"
           />
           {cover && (
-            // eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization
-            <img
-              src={thumbnailUrl(id)}
-              alt=""
+            <Thumbnail
+              id={id}
               width={480}
               height={360}
+              icon={false}
               data-cover=""
               className={`pointer-events-none absolute inset-0 size-full object-cover motion-safe:transition-opacity motion-safe:duration-300 ${loaded ? "opacity-0" : ""}`}
             />
@@ -123,14 +122,8 @@ export default function YouTubePlayer({
         </>
       ) : (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization */}
-          <img
-            src={thumbnailUrl(id)}
-            alt=""
-            width={480}
-            height={360}
-            className="absolute inset-0 size-full object-cover"
-          />
+          {/* No icon if it can't load: the Play button sits in the middle. */}
+          <Thumbnail id={id} width={480} height={360} icon={false} className="absolute inset-0 size-full object-cover" />
           <div className="absolute inset-0 flex items-center justify-center bg-navy/20">
             <button
               type="button"

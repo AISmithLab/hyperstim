@@ -27,6 +27,7 @@ export function grow(from: DOMRect, to: HTMLElement, thumbnail: string, slides: 
   img.src = thumbnail;
   img.alt = "";
   img.className = "size-full object-cover";
+  img.onerror = () => img.remove(); // a thumbnail that can't load: the plain tile (plan 009)
   ghost.append(img);
   document.body.append(ghost);
   to.style.visibility = "hidden";

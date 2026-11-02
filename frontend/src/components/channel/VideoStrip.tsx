@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import ScoreMeter from "@/components/ScoreMeter";
 import type { ChannelVideo } from "@/lib/api";
 import { videoHref } from "@/lib/routes";
-import { thumbnailUrl } from "@/lib/api";
+import { Thumbnail } from "@/components/Thumbnail";
 import { formatDate, pointOf, type Measure } from "./chart";
 
 /** Share of the strip's width the ‹ › buttons scroll by. */
@@ -105,10 +105,9 @@ export default function VideoStrip({
                 href={videoHref(video.id)}
                 className={`-mx-1.5 mt-1 block rounded-2xl p-1.5 ${video.id === marked ? "bg-sky" : ""}`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization */}
-                <img
-                  src={thumbnailUrl(video.id, "mq")}
-                  alt=""
+                <Thumbnail
+                  id={video.id}
+                  size="mq"
                   loading="lazy"
                   width={320}
                   height={180}

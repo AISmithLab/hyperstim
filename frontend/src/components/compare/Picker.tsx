@@ -12,7 +12,8 @@ import {
   type UIEvent,
 } from "react";
 import ChannelName from "@/components/ChannelName";
-import { getChannels, getVideos, lookupChannel, thumbnailUrl } from "@/lib/api";
+import { Thumbnail } from "@/components/Thumbnail";
+import { getChannels, getVideos, lookupChannel } from "@/lib/api";
 import { LOOKING_UP, PRESS_ENTER, lookupErrorText } from "@/lib/lookup-text";
 import { useApi } from "@/lib/use-api";
 import { readSearchInput } from "@/lib/youtube";
@@ -336,10 +337,9 @@ export default function Picker({
                   className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl px-3 py-1.5 hover:bg-sky aria-selected:bg-sky"
                 >
                   {option.thumb && (
-                    // eslint-disable-next-line @next/next/no-img-element -- static export, no image optimization
-                    <img
-                      src={thumbnailUrl(option.thumb, "mq")}
-                      alt=""
+                    <Thumbnail
+                      id={option.thumb}
+                      size="mq"
                       loading="lazy"
                       width={64}
                       height={36}
