@@ -25,7 +25,7 @@ const QUESTIONS: [string, ReactNode][] = [
   ],
   [
     "How do you choose the channels and videos?",
-    "We look for kids’ channels on YouTube that have at least 10,000 subscribers and more than 100 videos, leaving out channels YouTube makes automatically. From each channel, we pick videos at random from everything it has uploaded since 2015, so every video has the same chance, popular or not. Every video we pick must be made for kids, 2 to 60 minutes long, not a Short, and still online. We keep adding new channels and videos.",
+    "We look for kids’ channels on YouTube that have at least 10,000 subscribers and more than 100 videos, leaving out channels YouTube makes automatically (e.g., “Topic” channels). From each channel, we randomly pick about the same number of videos from every year since 2015. Every video we pick must be made for kids, 2 to 60 minutes long, not a Short, and still online. We keep adding new channels and videos.",
   ],
   [
     "Do scores change as the dataset grows?",

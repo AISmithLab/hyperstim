@@ -82,6 +82,7 @@ describe("HowItWorks", () => {
       screen.getByText("A score of 74 means a video is more intense than 74 of every 100 videos we compare with."),
     ).toBeInTheDocument();
     expect(screen.getByText("How do you choose the channels and videos?")).toBeInTheDocument();
+    expect(screen.getByText(/we randomly pick about the same number of videos from every year since 2015/)).toBeInTheDocument();
     expect(screen.getByText(/compared with the same set of 16,375 videos from 2015 to August 2026/)).toBeInTheDocument();
   });
 
