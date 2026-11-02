@@ -72,6 +72,7 @@ LEFT_OUT_CHECKS_PER_DAY = 50  # uploads of left-out channels checked beyond the 
 OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
 MAX_BLOCK_WAIT_S = 48 * 3600
+PACE_BACK_S = 3 * DAY_S  # a halved pace doubles after this long without a block, up to full
 # A failed download (not a block) is tried again after these waits; the next failure gives up.
 RETRY_AFTER_S = (DAY_S, 3 * DAY_S, 7 * DAY_S)
 FAILURES_IN_A_ROW = 3  # then downloads pause, with no change to the pace
@@ -700,12 +701,13 @@ class Collector:
     # --- downloading and measuring ---------------------------------------------------
 
     def per_day(self, now: float) -> float:
-        """The pace, halved after repeated blocks and doubled back after a week without one."""
+        """The pace, halved after repeated blocks and doubled back every `PACE_BACK_S` without
+        one."""
         factor = float(self.store.get("pace_factor", "1"))
-        if factor < 1 and now - float(self.store.get("blocked_at", "0")) > 7 * DAY_S:
+        if factor < 1 and now - float(self.store.get("blocked_at", "0")) > PACE_BACK_S:
             factor = min(1.0, factor * 2)
             self.store.set("pace_factor", factor)
-            self.store.set("blocked_at", now)  # the next doubling a week later
+            self.store.set("blocked_at", now)  # the next doubling `PACE_BACK_S` later
         return self.s.per_day * factor
 
     def maybe_download(self, now: float) -> float:

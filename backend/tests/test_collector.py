@@ -563,7 +563,8 @@ def test_a_block_pauses_downloads_and_backs_off(
     collector.tick()
     assert collected_ids(collector) == [first]
     assert collector.store.get("block_wait") == "0"
-    assert collector.per_day(clock.now + 8 * DAY_S) == 150  # the pace comes back after a week
+    assert collector.per_day(clock.now + 2 * DAY_S) == 75
+    assert collector.per_day(clock.now + 3 * DAY_S) == 150  # back after 3 days without a block
 
 
 def test_a_live_check_goes_first_and_its_result_is_reused(
