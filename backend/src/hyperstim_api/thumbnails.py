@@ -3,7 +3,8 @@
 The site shows thumbnails from here instead of YouTube's image server, so a visitor's browser
 contacts YouTube only once they press play. Each image is kept for 30 days, so YouTube sees at
 most one request per video and size in that time, however often it's shown; the visitor's
-browser also keeps it for a day (the response's cache header).
+browser also keeps it for a day (the response's cache header). When YouTube can't be reached, it
+isn't asked again for that image for 10 minutes, so an outage doesn't slow every page.
 """
 
 import os
@@ -20,6 +21,7 @@ Fetch = Callable[[str, Size], bytes | None]
 TIMEOUT_S = 10
 KEEP_S = 30 * 24 * 3600  # a cached image is fetched again after this
 MISSING_S = 24 * 3600  # "YouTube has none" is remembered this long
+UNREACHABLE_S = 10 * 60  # "YouTube couldn't be reached" is remembered this long
 
 
 class Unavailable(Exception):
@@ -55,23 +57,32 @@ class ThumbnailCache:
 
     def get(self, video_id: str, size: Size) -> bytes | None:
         """The JPEG bytes, or None if YouTube has none. Raises Unavailable only when YouTube
-        can't be reached and nothing is cached; a stale image beats none.
+        can't be reached (now, or in the last UNREACHABLE_S) and nothing is cached; a stale
+        image beats none.
 
         `video_id` must already be checked: it becomes part of the file name.
         """
         image = self._dir / f"{video_id}_{size}.jpg"
         missing = self._dir / f"{video_id}_{size}.missing"
+        unreachable = self._dir / f"{video_id}_{size}.unreachable"
         now = self.clock()
         if _age(image, now) < KEEP_S:
             return image.read_bytes()
         if _age(missing, now) < MISSING_S:
             return None
         try:
-            data = self._fetch(video_id, size)
+            if _age(unreachable, now) < UNREACHABLE_S:
+                raise Unavailable
+            try:
+                data = self._fetch(video_id, size)
+            except Unavailable:
+                _write(unreachable, b"", now)
+                raise
         except Unavailable:
             if image.exists():
                 return image.read_bytes()
             raise
+        unreachable.unlink(missing_ok=True)
         if data is None:
             _write(missing, b"", now)
             image.unlink(missing_ok=True)

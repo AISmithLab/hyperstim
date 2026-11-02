@@ -124,7 +124,7 @@ A video that isn't in the dataset is analyzed on request (`POST /api/analyses/{i
 
 ## Thumbnails
 
-`GET /api/thumbnails/{id}?size=hq|mq` (`src/hyperstim_api/thumbnails.py`) serves a video's YouTube thumbnail (`hq` 480×360, `mq` 320×180), so visitors' browsers don't contact YouTube before they press play (the privacy policy says so; plan 009). Only for videos in the dataset or requested for live analysis; anything else is 404. The server fetches each image from YouTube once and keeps it in `THUMBNAIL_DIR` for 30 days (then fetches it again), so YouTube sees at most one request per video and size in that time however often it's shown; the response tells the visitor's browser to keep it for a day. A thumbnail YouTube doesn't have is 404, remembered for a day. YouTube unreachable is 502, unless an older copy is cached, which is served instead.
+`GET /api/thumbnails/{id}?size=hq|mq` (`src/hyperstim_api/thumbnails.py`) serves a video's YouTube thumbnail (`hq` 480×360, `mq` 320×180), so visitors' browsers don't contact YouTube before they press play (the privacy policy says so; plan 009). Only for videos in the dataset or requested for live analysis; anything else is 404. The server fetches each image from YouTube once and keeps it in `THUMBNAIL_DIR` for 30 days (then fetches it again), so YouTube sees at most one request per video and size in that time however often it's shown; the response tells the visitor's browser to keep it for a day. A thumbnail YouTube doesn't have is 404, remembered for a day. YouTube unreachable is 502 (not kept by the browser), unless an older copy is cached, which is served instead; YouTube isn't asked again for that image for 10 minutes.
 
 ## Privacy
 

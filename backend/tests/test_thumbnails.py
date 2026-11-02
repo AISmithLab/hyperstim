@@ -11,6 +11,7 @@ from fastapi.testclient import TestClient
 from hyperstim_api.thumbnails import (
     KEEP_S,
     MISSING_S,
+    UNREACHABLE_S,
     Size,
     ThumbnailCache,
     Unavailable,
@@ -89,11 +90,18 @@ def test_a_missing_thumbnail_is_a_404(client: TestClient, youtube: FakeYouTube) 
     assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 404
 
 
-def test_youtube_down_is_a_502(client: TestClient, youtube: FakeYouTube) -> None:
+def test_youtube_down_is_a_502_the_browser_doesnt_keep(
+    client: TestClient, youtube: FakeYouTube
+) -> None:
     youtube.down = True
-    assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 502
+    response = client.get(f"/api/thumbnails/{KNOWN}")
+    assert response.status_code == 502
+    assert response.headers["cache-control"] == "no-store"
     youtube.down = False
-    assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 200
+    # Within 10 minutes YouTube isn't asked again, but the size not tried yet is.
+    assert client.get(f"/api/thumbnails/{KNOWN}").status_code == 502
+    assert client.get(f"/api/thumbnails/{KNOWN}?size=mq").status_code == 200
+    assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "mq")]
 
 
 DAY = 24 * 3600
@@ -143,6 +151,36 @@ def test_cache_serves_a_stale_image_while_youtube_is_down(
     assert cache.get(KNOWN, "hq") == b"hq-image"
     with pytest.raises(Unavailable):
         cache.get(KNOWN, "mq")  # nothing cached to fall back on
+
+
+def test_cache_waits_10_minutes_after_youtube_cant_be_reached(
+    cache: ThumbnailCache, youtube: FakeYouTube
+) -> None:
+    start = cache.clock()
+    youtube.down = True
+    with pytest.raises(Unavailable):
+        cache.get(KNOWN, "hq")
+    youtube.down = False
+    cache.clock = lambda: start + UNREACHABLE_S - 1
+    with pytest.raises(Unavailable):
+        cache.get(KNOWN, "hq")
+    assert youtube.calls == [(KNOWN, "hq")]
+    cache.clock = lambda: start + UNREACHABLE_S
+    assert cache.get(KNOWN, "hq") == b"hq-image"
+    assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "hq")]
+
+
+def test_cache_serves_a_stale_image_while_waiting(
+    cache: ThumbnailCache, youtube: FakeYouTube
+) -> None:
+    start = cache.clock()
+    cache.get(KNOWN, "hq")
+    youtube.down = True
+    cache.clock = lambda: start + KEEP_S
+    assert cache.get(KNOWN, "hq") == b"hq-image"  # YouTube down: the stale copy
+    cache.clock = lambda: start + KEEP_S + 60
+    assert cache.get(KNOWN, "hq") == b"hq-image"  # waiting: the stale copy, YouTube not asked
+    assert youtube.calls == [(KNOWN, "hq"), (KNOWN, "hq")]
 
 
 def test_cache_holds_only_finished_images(tmp_path: Path, youtube: FakeYouTube) -> None:

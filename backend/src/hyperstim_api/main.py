@@ -494,13 +494,17 @@ def create_app(
     def thumbnail(video_id: VideoId, size: Size = "hq") -> Response:
         """A video's YouTube thumbnail, served by us so visitors' browsers don't contact YouTube.
         Only for videos in the dataset or requested for live analysis. Cached on the server for
-        30 days; the visitor's browser keeps it for a day."""
+        30 days; the visitor's browser keeps it for a day. While YouTube can't be reached, 502
+        without asking it again for 10 minutes."""
         if video_id not in store.current.videos_by_id and analyzer.snapshot(video_id) is None:
             raise HTTPException(status_code=404, detail="Video not found")
         try:
             image = thumbnails.get(video_id, size)
         except Unavailable:
-            raise HTTPException(status_code=502, detail="YouTube unavailable") from None
+            # Not kept by the browser: the next page load asks again.
+            raise HTTPException(
+                status_code=502, detail="YouTube unavailable", headers={"Cache-Control": "no-store"}
+            ) from None
         if image is None:
             raise HTTPException(status_code=404, detail="No thumbnail")
         return Response(
