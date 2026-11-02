@@ -25,7 +25,7 @@ The site at the end of each finished day: every count is at 23:59:59 UTC, and th
 | `new_ch` | channels that got their first video that day |
 | `note` | a change to what the collector picks, or in what order, or to how this file counts, that went live that day; and when `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` aren't from 23:59:59, when they are from |
 
-`ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` can't be worked out again later (for the last two, the channels' upload lists keep growing), so the collector records them when it closes a day, just after midnight. They're blank for the days before it started recording them: `ch_yr_2nd` and `ch_yr_med` start on 2026-11-01, worked out from the backup taken at that day's end. When they aren't from 23:59:59 (the collector was down at midnight, or the day was recounted from a backup taken just after it), the note says when they're from, e.g. "ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC"; "at the day's last export (time not kept)" marks a day recorded before the time was kept.
+`ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` can't be worked out again later (for the last two, the channels' upload lists keep growing), so the collector records them when it closes a day, just after midnight. They're blank for the days before it started recording them: `ch_yr_2nd` and `ch_yr_med` start on 2026-11-01, worked out from the backup taken at that day's end. Since the collector began keeping a log of who is left out and when, `ch_out` is counted from that log at 23:59:59 instead. When they aren't from 23:59:59 (the collector was down at midnight, or the day was recounted from a backup taken just after it), the note says when they're from, e.g. "ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC"; "at the day's last export (time not kept)" marks a day recorded before the time was kept.
 
 ## History
 
@@ -52,4 +52,5 @@ The channels left out of the site now, by channel ID, for either of two reasons,
 | `kids_pct` | `for_kids` as a percentage of `checked` |
 | `per_year` | its estimated eligible uploads per active year |
 | `reason` | `kids_share`, `per_year`, or `both` |
+| `since` | the day (UTC) it was last left out; for the channels already left out when the collector began logging this, that day: they were left out on or before it |
 | `videos` | its videos in the dataset, not shown on the site while it's left out |

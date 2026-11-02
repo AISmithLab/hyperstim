@@ -97,6 +97,13 @@ CREATE TABLE IF NOT EXISTS left_out (
     per_year REAL,                     -- estimated eligible uploads per active year
     reason TEXT NOT NULL DEFAULT 'kids_share'  -- kids_share | per_year | both
 );
+-- Who was left out and when (decision 10): a row each time a judging leaves a channel out
+-- (`out`, with its reason), lets it back in (`in`), or changes its reason (`out` again). It
+-- starts with the channels left out at its first judging (kv `left_out_log_from`).
+CREATE TABLE IF NOT EXISTS left_out_log (
+    channel_id TEXT NOT NULL, at REAL NOT NULL, change TEXT NOT NULL, reason TEXT
+);
+CREATE INDEX IF NOT EXISTS left_out_log_channel ON left_out_log (channel_id, at);
 -- The changelog's counts that can't be worked out again later (decision 10), one row per UTC
 -- day, recorded when the day is closed: channels not on the site yet with a video waiting, and
 -- channels left out (NULL on the days before it was recorded); `at`, the time they stand for
@@ -448,6 +455,19 @@ class Store:
             (*years, day),
         )
 
+    def left_out_at(self, at: float) -> int | None:
+        """The channels left out just before `at`, from the log; None if the log began later."""
+        start = self.get("left_out_log_from")
+        if not start or float(start) >= at:
+            return None
+        return int(
+            self.db.execute(
+                "SELECT COUNT(*) FROM left_out_log WHERE change = 'out' AND rowid IN ("
+                "SELECT MAX(rowid) FROM left_out_log WHERE at < ? GROUP BY channel_id)",
+                (at,),
+            ).fetchone()[0]
+        )
+
     def daily(self) -> dict[str, sqlite3.Row]:
         """The recorded counts by day: `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` (None
         before each was recorded) and `at`, the time they stand for (None before it was kept)."""
@@ -469,10 +489,11 @@ class Store:
 
     # --- the kids share (decision 1) -----------------------------------------------
 
-    def update_left_out(self, today: str) -> list[sqlite3.Row]:
+    def update_left_out(self, today: str, at: float) -> list[sqlite3.Row]:
         """Works out each channel's kids share and eligible uploads per active year (on `today`)
-        from its answers, and keeps the channels left out by either (decision 1); returns them
-        (`channel_id`, `kids`, `answers`, `per_year`, `reason`), by ID."""
+        from its answers, and keeps the channels left out by either (decision 1), logging at `at`
+        who left, came back or changed reason (decision 10); returns them (`channel_id`, `kids`,
+        `answers`, `per_year`, `reason`), by ID."""
         kids = {
             r["channel_id"]: (int(r["kids"]), int(r["answers"]))
             for r in self.db.execute(
@@ -497,6 +518,13 @@ class Store:
                 out.append(
                     (channel_id, k, answers, estimate, "both" if len(reasons) == 2 else reasons[0])
                 )
+        logged = bool(self.get("left_out_log_from"))  # before its first judging: all are new
+        before = dict(self.db.execute("SELECT channel_id, reason FROM left_out")) if logged else {}
+        after = {r[0]: r[4] for r in out}
+        changes: list[tuple[str, float, str, str | None]] = [
+            (c, at, "out", r) for c, r in after.items() if before.get(c) != r
+        ]
+        changes += [(c, at, "in", None) for c in before if c not in after]
         with self.transaction():
             self.db.execute("DELETE FROM left_out")
             self.db.executemany(
@@ -504,15 +532,22 @@ class Store:
                 "VALUES (?, ?, ?, ?, ?)",
                 out,
             )
+            self.db.executemany("INSERT INTO left_out_log VALUES (?, ?, ?, ?)", changes)
+            if not logged:
+                self.set("left_out_log_from", at)
         return self.db.execute("SELECT * FROM left_out ORDER BY channel_id").fetchall()
 
     def left_out_list(self) -> list[sqlite3.Row]:
         """The channels left out at the last `update_left_out`, by ID: `channel_id`, `title`,
-        `kids`, `answers`, `per_year`, `reason`, and `videos` (its videos in the dataset, as
-        the site would count them)."""
+        `kids`, `answers`, `per_year`, `reason`, `since` (when it was last left out, from the
+        log; None before it) and `videos` (its videos in the dataset, as the site would count
+        them)."""
         return self.db.execute(
             "SELECT l.channel_id, COALESCE(c.title, '') AS title, l.kids, l.answers, l.per_year, "
             "l.reason, "
+            "(SELECT MIN(g.at) FROM left_out_log g WHERE g.channel_id = l.channel_id "
+            "AND g.at > COALESCE((SELECT MAX(i.at) FROM left_out_log i "
+            "WHERE i.channel_id = l.channel_id AND i.change = 'in'), 0)) AS since, "
             "(SELECT COUNT(*) FROM uploads u WHERE u.channel_id = l.channel_id "
             "AND u.state IN ('v2', 'collected')) AS videos "
             "FROM left_out l LEFT JOIN channels c ON c.id = l.channel_id ORDER BY l.channel_id"

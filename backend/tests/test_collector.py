@@ -1002,7 +1002,7 @@ def test_a_left_out_channel_gets_no_downloads_and_comes_back(
     # year are enough: only its kids share leaves it out.
     assert rows == [{"channel_id": SMALL, "channel_title": "Small", "checked": "22",
                      "for_kids": "2", "kids_pct": "9.1", "per_year": "12.3",
-                     "reason": "kids_share", "videos": "15"}]  # fmt: skip
+                     "reason": "kids_share", "since": "2026-10-26", "videos": "15"}]  # fmt: skip
     run(collector, clock, 5, step=3600)
     assert collected_ids(collector) == []  # nothing downloaded
     # Its uploads are still checked, also with one waiting, as their answers decide whether it
@@ -1025,16 +1025,74 @@ def test_a_channel_under_5_eligible_a_year_is_left_out_and_comes_back(tmp_path: 
     span(store, SMALL)  # 2023, 2024 and 2026 so far: 2.82 active years
     fill_floor(store, SMALL, 2, year=2023)
     answered(store, SMALL, 19, 0, "kid")  # made for kids, but none eligible (too long)
-    assert store.update_left_out("2026-10-26") == []  # 19 answers: not judged yet
+    assert store.update_left_out("2026-10-26", NOW) == []  # 19 answers: not judged yet
     answered(store, SMALL, 20, 0, "kid")
-    (row,) = store.update_left_out("2026-10-26")
+    (row,) = store.update_left_out("2026-10-26", NOW)
     assert (row["channel_id"], row["reason"], round(row["per_year"], 2)) == (
         SMALL,
         "per_year",
         0.71,
     )
     judged(store, SMALL, 20)  # 20 more found eligible: (2 + 20) / 2.82 years
-    assert store.update_left_out("2026-10-26") == []
+    assert store.update_left_out("2026-10-26", NOW) == []
+
+
+def log_of(store: Store) -> list[tuple[str, float, str, str | None]]:
+    return [tuple(r) for r in store.db.execute("SELECT * FROM left_out_log ORDER BY rowid")]
+
+
+def test_the_log_keeps_who_left_came_back_or_changed_reason_and_since_when(
+    tmp_path: Path,
+) -> None:
+    store = make_store(tmp_path)
+    store.upsert_channel(id=TINY, title="C", status="in", source="v2", listed_at=NOW)
+    answered(store, TINY, 0, 20, "nfa")  # none made for kids, none eligible: both
+    # Left out before the log began: its first judging logs it as of then.
+    store.db.execute("INSERT INTO left_out (channel_id, kids, answers) VALUES (?, 0, 20)", (TINY,))
+    store.update_left_out("2026-10-26", NOW)
+    assert log_of(store) == [(TINY, NOW, "out", "both")]
+    store.update_left_out("2026-10-26", NOW + 60)  # nothing changed: nothing logged
+    assert len(log_of(store)) == 1
+    # SMALL leaves (under 5 eligible a year) ...
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    span(store, SMALL)
+    fill_floor(store, SMALL, 2, year=2023)
+    answered(store, SMALL, 20, 0, "kid")
+    store.update_left_out("2026-10-26", NOW + 120)
+    assert log_of(store)[1:] == [(SMALL, NOW + 120, "out", "per_year")]
+    # ... and comes back the next day; TINY's kids share passes 10 %, so only its reason changes.
+    judged(store, SMALL, 20)
+    answered(store, TINY, 5, 0, "kdb")
+    store.update_left_out("2026-10-27", NOW + DAY_S)
+    assert log_of(store)[2:] == [
+        (TINY, NOW + DAY_S, "out", "per_year"),
+        (SMALL, NOW + DAY_S, "in", None),
+    ]
+    # Left out since its first `out`, not since its reason changed.
+    assert [(r["channel_id"], r["reason"], r["since"]) for r in store.left_out_list()] == [
+        (TINY, "per_year", NOW)
+    ]
+    assert [r["since"] for r in left_out_rows(store)] == ["2026-10-26"]
+
+
+def test_ch_out_is_counted_from_the_log_from_its_first_day(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW - DAY_S)
+    store.record_daily("2026-10-25", 0, 7, MIDNIGHT - DAY_S)  # before the log: as recorded
+    store.record_daily("2026-10-26", 0, 99, MIDNIGHT)
+    store.record_daily("2026-10-27", 0, 99, MIDNIGHT + DAY_S)
+    store.upsert_channel(id=TINY, title="C", status="in", source="v2", listed_at=NOW)
+    answered(store, TINY, 0, 20, "nfa")
+    store.update_left_out("2026-10-26", NOW)  # the log begins: TINY out
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    answered(store, SMALL, 0, 20, "nfb")
+    store.update_left_out("2026-10-27", MIDNIGHT + 60)  # SMALL out the next day
+    judged(store, SMALL, 20)  # back in, judged just after the next day's end
+    store.update_left_out("2026-10-28", MIDNIGHT + DAY_S + 60)
+    assert [r["channel_id"] for r in store.left_out_list()] == [TINY]
+    store.record_daily("2026-10-28", 0, 99, MIDNIGHT + 2 * DAY_S)
+    rows = {r["date"]: r["ch_out"] for r in changelog(store, MIDNIGHT + 2 * DAY_S + 60)}
+    assert rows == {"2026-10-25": 7, "2026-10-26": 1, "2026-10-27": 2, "2026-10-28": 1}
 
 
 def test_a_new_channel_is_judged_before_its_first_video(
@@ -1068,7 +1126,7 @@ def test_status_shows_the_channels_left_out(
     collector = make_collector(tmp_path, youtube, pipeline, clock)
     small_channel(collector, youtube, 0, picks=2)
     answered(collector.store, SMALL, 0, 25, "nfk")
-    collector.store.update_left_out("2026-10-26")
+    collector.store.update_left_out("2026-10-26", NOW)
     assert left_out_line(collector.store) == (
         "Left out (20+ answers): 1 channels, 2 of their videos; under 10 % made for kids 0, "
         "under 5 eligible a year 0, both 1"
@@ -1436,10 +1494,11 @@ def test_the_left_out_list_counts_only_the_videos_the_site_would_show(tmp_path: 
     added(store, SMALL, "add00000001", NOW)
     waiting(store, SMALL, ["wait0000001"])  # not downloaded: not counted
     answered(store, SMALL, 1, 32, "nfk")  # 1 of 33, with the added and waiting ones: 3 of 35
-    store.update_left_out("2026-10-26")
+    store.update_left_out("2026-10-26", NOW)
     assert left_out_rows(store) == [
         {"channel_id": SMALL, "channel_title": "Small", "checked": 35, "for_kids": 3,
-         "kids_pct": "8.6", "per_year": "2.2", "reason": "both", "videos": 2}
+         "kids_pct": "8.6", "per_year": "2.2", "reason": "both", "since": "2026-10-26",
+         "videos": 2}
     ]  # fmt: skip
 
 

@@ -946,7 +946,7 @@ class Collector:
         started = float(self.store.get("tick_at", "0") or 0)
         ended = float(self.store.get("tick_end", "0") or 0)
         exact = started <= ended < midnight
-        self.store.update_left_out(utc(now)[:10])
+        self.store.update_left_out(utc(now)[:10], now)
         ready, out = self.store.ready_to_join(), len(self.store.left_out_list())
         years = channel_averages(self.store, yesterday)
         day = midnight - DAY_S
@@ -996,11 +996,13 @@ def export(
     store: Store, directory: Path, now: float | None = None, until: float | None = None
 ) -> None:
     """The added videos (one file per year of adding, in the order added), the removed ones,
-    the channels left out for their kids share (worked out again here) and a little metadata,
+    the channels left out for their kids share or eligible uploads per year (worked out again
+    here) and a little metadata,
     each written whole and renamed into place, for the API to reload. With `until` (a
     midnight), only the videos added and taken out before it: the day-end copy."""
     directory.mkdir(parents=True, exist_ok=True)
-    store.update_left_out(utc(time.time() if now is None else now)[:10])
+    now = time.time() if now is None else now
+    store.update_left_out(utc(now)[:10], now)
     before = "9999" if until is None else utc(until)
     by_year: dict[str, list[dict[str, object]]] = {}
     for row in store.collected_rows():
@@ -1063,7 +1065,7 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
             if recorded["ch_yr_2nd"] is not None and recorded["ch_yr_med"] is not None:
                 done.append(f"{path.name}: {day} already has a closer count, skipped")
             else:  # its closer counts stay; only the videos per year it lacks are filled in
-                backup.update_left_out(day)
+                backup.update_left_out(day, at)
                 years = channel_averages(backup, day)
                 store.fill_years(day, years)
                 done.append(
@@ -1071,7 +1073,7 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
                     f"ch_yr_2nd {_avg(years[0]) or '-'}, ch_yr_med {_avg(years[1]) or '-'}"
                 )
         else:
-            backup.update_left_out(day)
+            backup.update_left_out(day, at)
             ready, out = backup.ready_to_join(), len(backup.left_out_list())
             years = channel_averages(backup, day)
             store.record_daily(day, ready, out, at, years)
@@ -1097,7 +1099,7 @@ def channel_names(store: Store) -> list[dict[str, object]]:
 
 LEFT_OUT_COLUMNS = (
     "channel_id", "channel_title", "checked", "for_kids", "kids_pct", "per_year", "reason",
-    "videos",
+    "since", "videos",
 )  # fmt: skip
 
 
@@ -1105,7 +1107,8 @@ def left_out_rows(store: Store) -> list[dict[str, object]]:
     """The channels left out for their kids share or their eligible uploads per year, with the
     numbers behind it (plan 013, decisions 1 and 10): the checked uploads, how many of them are
     made for kids, their share, the estimated eligible uploads per active year, why it's left
-    out, and the channel's videos in the dataset that the site doesn't show."""
+    out, the day it was last left out (UTC), and the channel's videos in the dataset that the
+    site doesn't show."""
     return [
         {
             "channel_id": r["channel_id"],
@@ -1115,6 +1118,7 @@ def left_out_rows(store: Store) -> list[dict[str, object]]:
             "kids_pct": f"{100 * r['kids'] / r['answers']:.1f}",
             "per_year": "" if r["per_year"] is None else f"{r['per_year']:.1f}",
             "reason": r["reason"],
+            "since": "" if r["since"] is None else utc(r["since"])[:10],
             "videos": r["videos"],
         }
         for r in store.left_out_list()
@@ -1178,6 +1182,9 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
                 visible[channel] -= 1
         levels = Counter(min(n, CH_LEVELS) for n in visible.values() if n > 0)
         recorded = daily.get(day)
+        end = calendar.timegm(time.strptime(day, "%Y-%m-%d")) + DAY_S
+        logged = store.left_out_at(end)  # from the log, from its first day on
+        out = recorded["ch_out"] if logged is None and recorded is not None else logged
         line |= {
             "date": day,
             "videos": sum(visible.values()),
@@ -1185,10 +1192,12 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
             **{f"ch_{n}": levels[n] for n in range(1, CH_LEVELS)},
             f"ch_{CH_LEVELS}plus": levels[CH_LEVELS],
             "ch_ready": recorded["ch_ready"] if recorded else "",
-            "ch_out": "" if recorded is None or recorded["ch_out"] is None else recorded["ch_out"],
+            "ch_out": "" if out is None else out,
             "ch_yr_2nd": _avg(recorded["ch_yr_2nd"]) if recorded else "",
             "ch_yr_med": _avg(recorded["ch_yr_med"]) if recorded else "",
-            "note": "; ".join(notes_by_day.get(day, []) + recorded_when(day, recorded)),
+            "note": "; ".join(
+                notes_by_day.get(day, []) + recorded_when(day, recorded, logged is not None)
+            ),
         }
         lines.append(line)
     return lines[::-1]
@@ -1228,16 +1237,14 @@ def _avg(value: float | None) -> str:
     return "" if value is None else f"{value:.2f}"
 
 
-def recorded_when(day: str, recorded: Any) -> list[str]:
+def recorded_when(day: str, recorded: Any, logged: bool = False) -> list[str]:
     """The note for a day whose `ch_ready` and `ch_out` (and `ch_yr_2nd`, `ch_yr_med`) aren't
-    from 23:59:59."""
+    from 23:59:59; `ch_out` isn't named when it's from the log (`logged`), which has it there."""
     if recorded is None:
         return []
-    counts = (
-        "ch_ready, ch_out, ch_yr_2nd and ch_yr_med"
-        if recorded["ch_yr_med"] is not None
-        else "ch_ready and ch_out"
-    )
+    names = ["ch_ready", *([] if logged else ["ch_out"])]
+    names += ["ch_yr_2nd", "ch_yr_med"] if recorded["ch_yr_med"] is not None else []
+    counts = " and ".join(names) if len(names) < 3 else ", ".join(names[:-1]) + " and " + names[-1]
     if recorded["at"] is None:
         return ["ch_ready and ch_out at the day's last export (time not kept)"]
     end = calendar.timegm(time.strptime(day, "%Y-%m-%d")) + DAY_S
