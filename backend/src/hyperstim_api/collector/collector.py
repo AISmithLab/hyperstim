@@ -1044,7 +1044,8 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
     collector.db (decision 10): each was taken on a day's first tick, so it holds the end of
     the day before. Records
     them for that day with the backup's time (its `tick_at`, else the file's), unless the day
-    has a count from 23:59:59 or from closer to it, or is before the collector's first day.
+    has a count from 23:59:59 or from closer to it (then only its blank `ch_yr_2nd` and
+    `ch_yr_med` are filled in), or is before the collector's first day.
     Returns a line per backup saying what it did."""
     first = store.db.execute("SELECT MIN(added_at) FROM collected").fetchone()[0]
     daily = store.daily()
@@ -1059,7 +1060,16 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
         if first is None or day < first[:10]:
             done.append(f"{path.name}: {day} is before the first day, skipped")
         elif recorded is not None and recorded["at"] is not None and recorded["at"] <= at:
-            done.append(f"{path.name}: {day} already has a closer count, skipped")
+            if recorded["ch_yr_2nd"] is not None and recorded["ch_yr_med"] is not None:
+                done.append(f"{path.name}: {day} already has a closer count, skipped")
+            else:  # its closer counts stay; only the videos per year it lacks are filled in
+                backup.update_left_out(day)
+                years = channel_averages(backup, day)
+                store.fill_years(day, years)
+                done.append(
+                    f"{path.name}: {day} already has a closer count, kept; filled in "
+                    f"ch_yr_2nd {_avg(years[0]) or '-'}, ch_yr_med {_avg(years[1]) or '-'}"
+                )
         else:
             backup.update_left_out(day)
             ready, out = backup.ready_to_join(), len(backup.left_out_list())

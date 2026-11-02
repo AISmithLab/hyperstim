@@ -1390,17 +1390,31 @@ def test_recount_takes_the_counts_from_each_backup_with_its_time(tmp_path: Path)
     assert note.endswith("ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC")
 
 
-def test_recount_never_replaces_a_count_from_closer_to_the_days_end(tmp_path: Path) -> None:
+def test_recount_keeps_a_closer_count_and_fills_in_only_its_blank_videos_per_year(
+    tmp_path: Path,
+) -> None:
     store = make_store(tmp_path)
+    span(store, CHANNEL)
     added(store, CHANNEL, "add00000001", NOW)
-    store.record_daily("2026-10-26", 3, 2, MIDNIGHT)
+    store.record_daily("2026-10-26", 3, 2, MIDNIGHT)  # at 23:59:59, before ch_yr_* were kept
     backup = backup_at(store, tmp_path / "collector-2026-10-27.db", MIDNIGHT + 41)
     scratch = tmp_path / "scratch"
     scratch.mkdir()
     assert recount(store, [backup], scratch) == [
-        "collector-2026-10-27.db: 2026-10-26 already has a closer count, skipped"
+        "collector-2026-10-27.db: 2026-10-26 already has a closer count, kept; filled in "
+        "ch_yr_2nd -, ch_yr_med 1.00"
     ]
     assert recorded(store) == {"2026-10-26": (3, 2, MIDNIGHT)}
+    day = store.daily()["2026-10-26"]
+    assert (day["ch_yr_2nd"], round(day["ch_yr_med"], 2)) == (None, 1.0)
+    assert "as of" not in notes_by_day(store, MIDNIGHT + DAY_S)["2026-10-26"]  # still 23:59:59
+    # Only blanks are filled: the median stays; once both are there, a run skips the day.
+    store.fill_years("2026-10-26", (0.5, 9.0))
+    assert recount(store, [backup], scratch) == [
+        "collector-2026-10-27.db: 2026-10-26 already has a closer count, skipped"
+    ]
+    day = store.daily()["2026-10-26"]
+    assert (day["ch_yr_2nd"], day["ch_yr_med"]) == (0.5, 1.0)
 
 
 def test_recount_uses_the_files_time_for_a_backup_without_tick_at(tmp_path: Path) -> None:

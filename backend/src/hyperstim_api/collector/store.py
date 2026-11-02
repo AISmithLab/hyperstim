@@ -440,6 +440,14 @@ class Store:
             (day, ch_ready, ch_out, at, *years),
         )
 
+    def fill_years(self, day: str, years: tuple[float | None, float | None]) -> None:
+        """Fills in a recorded day's `ch_yr_2nd` and `ch_yr_med` where they're blank."""
+        self.db.execute(
+            "UPDATE daily SET ch_yr_2nd = COALESCE(ch_yr_2nd, ?), "
+            "ch_yr_med = COALESCE(ch_yr_med, ?) WHERE day = ?",
+            (*years, day),
+        )
+
     def daily(self) -> dict[str, sqlite3.Row]:
         """The recorded counts by day: `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` (None
         before each was recorded) and `at`, the time they stand for (None before it was kept)."""
