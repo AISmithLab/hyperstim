@@ -565,7 +565,8 @@ class Collector:
         answer that couldn't settle it, when it's due (rule 2); a channel's lowest numbers
         until the filters can judge it (`KIDS_ANSWERS_MIN` answers) and, for one judged in
         but not on the site yet, until it has an upload ready for its first video; then the
-        years the channel-first rule fills next that have none ready. Left-out channels'
+        years the channels catching up need and the years the channel-first rule fills next
+        (`rule`) that have none ready. Left-out channels'
         years get `LEFT_OUT_CHECKS_PER_DAY` more a day, as their answers decide whether they
         come back (decision 1)."""
         settled = utc(now - sampling.SETTLE_S)
@@ -620,20 +621,42 @@ class Collector:
             self.check(ids[start : start + 50], now)
 
     def next_upload(self, now: float) -> Upload | None:
-        """The next upload to download (plan 013, decision 2): a channel's first video while
-        fewer than `FIRST_VIDEOS_PER_DAY` channels got theirs today and none is behind
-        (`sampling.behind`); then, by the channel-first rule, the first channel in line with an
-        upload ready in one of its years below its threshold, the thinnest such year, its
-        lowest number."""
-        every = rule_years(self.store, now)[1]
-        if self.store.first_video_left(now) and not sampling.behind(every):
-            first = self.store.first_video(now)
-            if first is not None:
-                return first
-        for channel_id, years in sampling.pick_order(every, self.store.channel_scores()):
-            for y in years:
-                if y.ready:
-                    return self.store.ready_upload(channel_id, y.year, now)
+        """The next upload to download (plan 013, decision 2). An exploring one while exploring
+        has had under a third of today's downloads (`sampling.explore_turn`): the channels
+        catching up first, in their order (`sampling.catch_up_order`), the first with an upload
+        ready in a year it needs; with none catching up, a channel's first video while fewer
+        than `FIRST_VIDEOS_PER_DAY` channels got theirs today. Otherwise an expanding one: by
+        the channel-first rule over the channels in, the first channel in line with an upload
+        ready in one of its years below its threshold, the thinnest such year, its lowest
+        number. Either goes to the other when it has nothing ready. A channel that caught up
+        is marked so here."""
+        _, ahead, done, expand = plan(self.store, now)
+        for channel_id in done:
+            self.store.set_catching_up(channel_id, False)
+
+        def explore() -> Upload | None:
+            for channel_id, years in ahead:
+                for y in years:
+                    if y.ready:
+                        return self.store.ready_upload(channel_id, y.year, now)
+            if not ahead and self.store.first_video_left(now):
+                return self.store.first_video(now)
+            return None
+
+        def expanding() -> Upload | None:
+            for channel_id, years in expand:
+                for y in years:
+                    if y.ready:
+                        return self.store.ready_upload(channel_id, y.year, now)
+            return None
+
+        turns = (explore, expanding)
+        if not sampling.explore_turn(*self.store.downloads_today(now)):
+            turns = (expanding, explore)
+        for turn in turns:
+            upload = turn()
+            if upload is not None:
+                return upload
         return None
 
     def check(self, ids: list[str], now: float) -> None:
@@ -777,6 +800,7 @@ class Collector:
         finally:
             shutil.rmtree(work, ignore_errors=True)
         complete = upload.complete()
+        first = not self.store.has_videos(upload.channel_id)
         with self.store.transaction():
             self.store.add_collected(
                 upload.id,
@@ -788,6 +812,8 @@ class Collector:
             )
             self.store.set_state(upload.id, "collected" if complete else "measured",
                                  online_at=now, score=self.score(features))  # fmt: skip
+            if first:  # it catches up from exploring's share (decision 2)
+                self.store.set_catching_up(upload.channel_id, True)
             self.store.log_attempt(upload.id, now, "collected")
         self.store.set("block_wait", 0)
         self.store.set("failures_in_a_row", 0)
@@ -1231,11 +1257,28 @@ def rule_years(store: Store, now: float) -> tuple[list[Any], list[sampling.Year]
     return rows, [y for y in sampling.years_from(rows, utc(now)[:10]) if y.channel_id not in out]
 
 
-def rule(store: Store, now: float) -> tuple[list[Any], list[tuple[str, list[sampling.Year]]]]:
-    """The store's rows of the channel-years (`year_rows`) and the channel-first order of the
-    channels on the site that aren't left out (decisions 1 and 2)."""
+Order = list[tuple[str, list[sampling.Year]]]
+
+
+def plan(store: Store, now: float) -> tuple[list[Any], Order, list[str], Order]:
+    """The store's rows of the channel-years (`year_rows`), and of the channels on the site
+    that aren't left out (decision 2): exploring's order of the channels catching up
+    (`sampling.catch_up_order`), the ones of them that caught up, and the channel-first order
+    of the others (`sampling.pick_order`)."""
     rows, years = rule_years(store, now)
-    return rows, sampling.pick_order(years, store.channel_scores())
+    scores = store.channel_scores()
+    ahead, done = sampling.catch_up_order(years, store.catching_up(), scores)
+    catching = {c for c, _ in ahead}
+    expand = sampling.pick_order([y for y in years if y.channel_id not in catching], scores)
+    return rows, ahead, done, expand
+
+
+def rule(store: Store, now: float) -> tuple[list[Any], Order]:
+    """The store's rows of the channel-years (`year_rows`) and the order the channels on the
+    site that aren't left out are filled in: the channels catching up, then channel first
+    (decisions 1 and 2)."""
+    rows, ahead, _, expand = plan(store, now)
+    return rows, ahead + expand
 
 
 def channel_averages(store: Store, day: str) -> tuple[float | None, float | None]:

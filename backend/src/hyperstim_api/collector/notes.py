@@ -13,4 +13,5 @@ NOTES: tuple[tuple[str, str | None], ...] = (
     ("Channels with 1–4 videos by score first; at most 3 new channels a day", "2026-10-29"),
     ("Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups", None),
     ("Thinnest channels first; under 5 eligible a year left out; 3 new a day", None),
+    ("A third of downloads for new channels to catch up; at most 3 new a day", None),
 )

@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS channels (
     listed_at REAL,                    -- last time its newest uploads were read
     api_failures INTEGER NOT NULL DEFAULT 0,  -- Data API errors in a row reading its uploads
     retry_at REAL NOT NULL DEFAULT 0,  -- after an error: not read again before this
-    full_listing TEXT                  -- reading all its uploads: '' or the next page; else NULL
+    full_listing TEXT,                 -- reading all its uploads: '' or the next page; else NULL
+    catching_up INTEGER NOT NULL DEFAULT 0  -- 1 from its first video until it caught up
 );
 CREATE TABLE IF NOT EXISTS uploads (
     id TEXT PRIMARY KEY,
@@ -85,7 +86,8 @@ CREATE TABLE IF NOT EXISTS attempts (
     video_id TEXT NOT NULL,
     at REAL NOT NULL,
     outcome TEXT NOT NULL,             -- collected | unavailable | blocked | failed
-    message TEXT NOT NULL DEFAULT ''
+    message TEXT NOT NULL DEFAULT '',
+    explore INTEGER NOT NULL DEFAULT 0 -- 1: an exploring download (a first video or a catch-up)
 );
 CREATE INDEX IF NOT EXISTS attempts_at ON attempts (at);
 CREATE TABLE IF NOT EXISTS units (day TEXT PRIMARY KEY, used INTEGER NOT NULL);
@@ -122,7 +124,9 @@ ADDED_COLUMNS = {
         "api_failures": "INTEGER NOT NULL DEFAULT 0",
         "retry_at": "REAL NOT NULL DEFAULT 0",
         "full_listing": "TEXT",
+        "catching_up": "INTEGER NOT NULL DEFAULT 0",  # the channels in before count as caught up
     },
+    "attempts": {"explore": "INTEGER NOT NULL DEFAULT 0"},
     "uploads": {
         "unsure": "INTEGER NOT NULL DEFAULT 0",
         "api_failures": "INTEGER NOT NULL DEFAULT 0",
@@ -405,6 +409,23 @@ class Store:
         ).fetchone()
         return int(row[0])
 
+    def has_videos(self, channel_id: str) -> bool:
+        """Whether the channel has a video in the dataset."""
+        row = self.db.execute(
+            f"SELECT 1 FROM uploads WHERE channel_id = ? AND state IN {IN_STATES} LIMIT 1",
+            (channel_id,),
+        ).fetchone()
+        return row is not None
+
+    def catching_up(self) -> frozenset[str]:
+        """The channels catching up (decision 2): from their first video until they caught up
+        with the channels in."""
+        rows = self.db.execute("SELECT id FROM channels WHERE catching_up = 1")
+        return frozenset(r[0] for r in rows)
+
+    def set_catching_up(self, channel_id: str, on: bool) -> None:
+        self.db.execute("UPDATE channels SET catching_up = ? WHERE id = ?", (int(on), channel_id))
+
     def first_video_left(self, now: float) -> bool:
         return self.first_videos_today(now) < FIRST_VIDEOS_PER_DAY
 
@@ -632,10 +653,23 @@ class Store:
     # --- download attempts ---------------------------------------------------------
 
     def log_attempt(self, video_id: str, at: float, outcome: str, message: str = "") -> None:
+        """A download attempt; an exploring one (decision 2) if its channel is catching up or
+        has no video in the dataset (a first video)."""
         self.db.execute(
-            "INSERT INTO attempts (video_id, at, outcome, message) VALUES (?, ?, ?, ?)",
-            (video_id, at, outcome, message[-500:]),
+            "INSERT INTO attempts (video_id, at, outcome, message, explore) VALUES (?, ?, ?, ?, "
+            "COALESCE((SELECT c.catching_up = 1 OR NOT EXISTS (SELECT 1 FROM uploads v "
+            f"WHERE v.channel_id = c.id AND v.state IN {IN_STATES}) FROM uploads u "
+            "JOIN channels c ON c.id = u.channel_id WHERE u.id = ?), 0))",
+            (video_id, at, outcome, message[-500:], video_id),
         )
+
+    def downloads_today(self, now: float) -> tuple[int, int]:
+        """Today's (UTC) exploring download attempts and all of them (decision 2)."""
+        row = self.db.execute(
+            "SELECT COALESCE(SUM(explore), 0), COUNT(*) FROM attempts WHERE at >= ?",
+            (now - now % 86400,),
+        ).fetchone()
+        return int(row[0]), int(row[1])
 
     def failures(self, video_id: str) -> int:
         """Failed downloads of the video (blocks not counted)."""

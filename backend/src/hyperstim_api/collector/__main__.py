@@ -32,11 +32,11 @@ from hyperstim_api.collector.collector import (
     channel_averages,
     export,
     load_classifier,
+    plan,
     probe_block,
     provenance,
     recount,
     rule,
-    rule_years,
     scorer,
     utc,
 )
@@ -182,15 +182,15 @@ def level_line(store: Store, now: float) -> str:
 
 
 def first_videos_line(store: Store, now: float) -> str:
-    """Channels that got their first video today, and the channels holding new ones back
-    (plan 013, decision 2)."""
-    held = sampling.behind(rule_years(store, now)[1])
+    """Today's exploring downloads, the channels catching up and the channels that got their
+    first video today (plan 013, decision 2)."""
+    explored, downloads = store.downloads_today(now)
     return (
-        f"First videos today: {store.first_videos_today(now)} of "
+        f"Exploring today: {explored} of {downloads} downloads "
+        f"(share {sampling.EXPLORE_SHARE}); {len(plan(store, now)[1])} channels catching up; "
+        f"first videos today: {store.first_videos_today(now)} of "
         f"{sampling.FIRST_VIDEOS_PER_DAY} channels"
-        + (f"; held while {len(held)} channels are under "
-           f"{sampling.FIRST_VIDEO_FLOOR:g} a year" if held else "")
-    )  # fmt: skip
+    )
 
 
 def left_out_line(store: Store) -> str:

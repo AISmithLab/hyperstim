@@ -7,15 +7,17 @@ year farthest from its years with videos, then a random one), the one with the l
 a random one (`pick_order`). Eligibility is v2's: made for kids, 2-60
 minutes, not a Short, online and not blocked in the US. A channel that marks only a few of its
 uploads as made for kids, or makes fewer than 5 eligible videos a year, is left out with all
-its videos (`left_out`).
+its videos (`left_out`). A third of the downloads goes to new channels until they catch up with
+the others (`explore_turn`, `catch_up_order`).
 """
 
 import hashlib
 import math
 import re
-from collections.abc import Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass
 from datetime import date, timedelta
+from fractions import Fraction
 from typing import Any, Literal
 
 # The picking rule: v1, a rising cut-off on the numbers and a floor of 5 per channel (until
@@ -25,9 +27,14 @@ RANK_SALT = "hyperstim-sample-v1"
 FIRST_YEAR = 2015  # v2's first year (YouTube Kids' launch)
 SETTLE_S = 24 * 3600  # an upload is checked once it's a day old
 REGION = "US"
+# A third of each day's downloads (UTC) goes to exploring: new channels' first videos and their
+# catch-up (`catch_up_order`); the rest to expanding the channels in (`pick_order`).
+EXPLORE_SHARE = Fraction(1, 3)
 FIRST_VIDEOS_PER_DAY = 3  # channels that get their first video in a day (UTC), at most
-# ... and only while no channel the rule can fill now averages under this many a year (`behind`)
-FIRST_VIDEO_FLOOR = 3.0
+# A new channel catches up to at least this many videos, and this many a year, so it isn't
+# scored from one or two (fewer only when it has nothing more to take).
+CATCH_UP_MIN_VIDEOS = 5
+CATCH_UP_MIN_PER_YEAR = 0.5
 CHECKS_PER_YEAR = 3  # unchecked uploads of a channel-year checked at a time, lowest numbers first
 # A channel whose checked uploads are under 10 % made for kids is left out (decision 1),
 # judged once it has 20 answers; so is one with fewer than 5 eligible uploads per active year.
@@ -122,14 +129,59 @@ def _lines(
     return by, avgs, can, below
 
 
-def behind(years: Iterable[Year]) -> list[str]:
-    """The channels the rule can fill now (a year below their threshold with an eligible upload
-    left) that average under `FIRST_VIDEO_FLOOR`: while there is one, no channel gets its first
-    video (decision 2), so new channels don't pile up below the ones still catching up."""
-    _, avgs, _, below = _lines(years)
-    return sorted(
-        c for c, ys in below.items() if avgs[c] < FIRST_VIDEO_FLOOR and any(y.waiting for y in ys)
-    )
+def explore_turn(explored: int, downloads: int) -> bool:
+    """Whether the next download is an exploring one: while exploring has had under
+    `EXPLORE_SHARE` of the day's downloads so far, counting the next one (decision 2)."""
+    return explored < (downloads + 1) * EXPLORE_SHARE
+
+
+def _spread(by: Mapping[str, list[Year]]) -> Callable[[Year], tuple[float, float, int]]:
+    """The tie-break between a channel's years: the one farthest from its years with videos
+    first, so its videos spread evenly over time; still tied, the one with the lowest number
+    (`low_r`), so a random one."""
+    filled = {c: [y.year for y in ys if y.videos > 0] for c, ys in by.items()}
+
+    def key(y: Year) -> tuple[float, float, int]:
+        gap = min((abs(y.year - f) for f in filled[y.channel_id]), default=math.inf)
+        return (-gap, 1.0 if y.low_r is None else y.low_r, y.year)
+
+    return key
+
+
+def catch_up_order(
+    years: Iterable[Year], catching: Iterable[str], scores: Mapping[str, float | None]
+) -> tuple[list[tuple[str, list[Year]]], list[str]]:
+    """Exploring's order (decision 2): the channels catching up (`catching`, from their first
+    video), fewest videos per year first (the higher score on a tie), each with the years it
+    still needs, fewest videos per active year first: while it has fewer than
+    `CATCH_UP_MIN_VIDEOS` videos or averages under `CATCH_UP_MIN_PER_YEAR`, its open years; then,
+    while its average is under the level of the channels in (the lowest average of those that
+    can still take a video), its open years under that level. Also the channels that need nothing
+    more: they're caught up, and channel first (`pick_order`) takes them from there. `years`
+    are every channel's on the site."""
+    catching = set(catching)
+    by: dict[str, list[Year]] = {}
+    for y in years:
+        by.setdefault(y.channel_id, []).append(y)
+    ahead = {c: ys for c, ys in by.items() if c in catching and any(y.videos for y in ys)}
+    _, avgs, _, _ = _lines(y for c, ys in by.items() if c not in ahead for y in ys)
+    level = min((a for c, a in avgs.items() if any(y.counted and y.open for y in by[c])),
+                default=0.0)  # fmt: skip
+    spread = _spread(by)
+    order, done = [], []
+    for c, ys in ahead.items():
+        can = [y for y in ys if y.counted and y.open]
+        avg = average(ys) or 0.0
+        if sum(y.videos for y in ys) < CATCH_UP_MIN_VIDEOS or avg < CATCH_UP_MIN_PER_YEAR:
+            need = can
+        else:
+            need = [y for y in can if avg < level and y.rate < level]
+        if need:
+            order.append((c, sorted(need, key=lambda y: (y.rate, *spread(y)))))
+        else:
+            done.append(c)
+    order.sort(key=lambda t: (average(by[t[0]]) or 0.0, -(scores.get(t[0]) or -1), t[0]))
+    return order, sorted(done)
 
 
 def pick_order(
@@ -150,12 +202,7 @@ def pick_order(
     def key(c: str) -> tuple[float, float, str]:
         return (avgs[c], -(scores.get(c) or -1), c)
 
-    filled = {c: [y.year for y in ys if y.videos > 0] for c, ys in by.items()}
-
-    def spread(y: Year) -> tuple[float, float, int]:
-        gap = min((abs(y.year - f) for f in filled[y.channel_id]), default=math.inf)
-        return (-gap, 1.0 if y.low_r is None else y.low_r, y.year)
-
+    spread = _spread(by)
     order = []
     for c in sorted(avgs, key=key):
         if below[c]:

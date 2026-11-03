@@ -944,60 +944,149 @@ def channel_of(store: Store, video_id: str) -> str:
     return store.upload(video_id).channel_id  # type: ignore[union-attr]
 
 
-def test_at_most_3_channels_get_their_first_video_a_day(
-    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    monkeypatch.setattr(sampling, "FIRST_VIDEO_FLOOR", 0.0)  # the cap alone: SMALL isn't behind
-    clock = Clock()
-    clock.now = NOW - NOW % DAY_S + 3600  # 01:00 UTC
-    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: 2016's 5
-    store = collector.store
-    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
-    fill_floor(store, SMALL, 1)
-    numbers = level_ids("fst", 20)
-    waiting(store, CHANNEL, numbers[:5])  # 2024, the lowest numbers
-    new = [f"UC{i:022d}" for i in range(5)]
-    for channel_id, video_id in zip(new, numbers[5:10], strict=True):
-        store.upsert_channel(id=channel_id, title="C", status="in", source="discovery",
-                             listed_at=NOW)  # fmt: skip
-        waiting(store, channel_id, [video_id])
-        judged(store, channel_id)  # the filters judged it in
-    waiting(store, SMALL, numbers[19:])  # 2024 too
-    failing(pipeline, numbers[5])  # a failed first download doesn't use up a slot
-    run(collector, clock, 6, step=3600)
-    # First videos first; then by the channel-first rule: SMALL, with fewer videos a year than
-    # CHANNEL, then CHANNEL.
-    assert collected_ids(collector) == [*numbers[6:9], numbers[19], numbers[0]]
-    assert store.first_videos_today(clock.now) == 3
-    assert store.ready(clock.now) == 4  # the 5th new channel's video waits for tomorrow
-    # The next day: the failed one is tried again once it's due, then the 5th.
-    clock.now += DAY_S - 6 * 3600
-    run(collector, clock, 6, step=3600)
-    assert collected_ids(collector)[5] == numbers[9]
-    assert store.failures(numbers[5]) == 2
-    assert store.first_videos_today(clock.now) == 1
+def eligible_waiting(store: Store, channel_id: str, ids: list[str], year: int) -> None:
+    """Uploads of the channel from `year`, checked eligible, waiting to be downloaded."""
+    store.add_uploads(channel_id, [(v, f"{year}-05-01T00:00:00Z") for v in ids])
+    for video_id in ids:
+        store.set_state(video_id, "eligible", title="T", channel_title="C")
 
 
-def test_no_first_video_while_a_channel_on_the_site_is_behind(
+def new_channel(store: Store, channel_id: str) -> None:
+    """A channel discovery added, judged in by the filters (its 2023 counted, nothing left)."""
+    store.upsert_channel(id=channel_id, title="C", status="in", source="discovery",
+                         listed_at=NOW)  # fmt: skip
+    judged(store, channel_id)
+
+
+def explore_flags(store: Store) -> list[int]:
+    return [r[0] for r in store.db.execute("SELECT explore FROM attempts ORDER BY id")]
+
+
+def test_a_third_of_the_days_downloads_go_to_exploring() -> None:
+    def explored(downloads: int) -> int:
+        n = 0
+        for i in range(downloads):
+            n += sampling.explore_turn(n, i)
+        return n
+
+    assert [sampling.explore_turn(n, i) for i, n in enumerate([0, 1, 1, 1, 2, 2])] == [
+        True, False, False, True, False, False,
+    ]  # fmt: skip
+    assert explored(150) == 50
+    assert explored(75) == 25  # at half pace after a block too
+
+
+def test_a_new_channel_catches_up_its_empty_years_first_then_to_the_lowest_channel_in() -> None:
+    others = [a_year(CHANNEL, 2023, 2), a_year(CHANNEL, 2024, 2)]  # 2 a year, can take more
+    full = [a_year(SMALL, 2023, 9, open_=False)]  # nothing left: doesn't set the level
+    new = [a_year(TINY, 2023, 1), a_year(TINY, 2024, 0), a_year(TINY, 2025, 0)]
+    order, done = sampling.catch_up_order(others + full + new, {TINY}, {})
+    assert done == []
+    ((channel_id, years),) = order
+    assert channel_id == TINY
+    assert [y.year for y in years][2:] == [2023]  # its years with no video first
+    assert {y.year for y in years[:2]} == {2024, 2025}
+    caught = [a_year(TINY, 2023, 2), a_year(TINY, 2024, 2), a_year(TINY, 2025, 2)]
+    assert sampling.catch_up_order(others + caught, {TINY}, {}) == ([], [TINY])
+
+
+def test_a_new_channel_gets_at_least_5_videos_and_one_every_other_year() -> None:
+    others = [a_year(CHANNEL, 2023, 1), a_year(CHANNEL, 2024, 0)]  # 0.5 a year: a low level
+
+    def needs(new: list[sampling.Year]) -> list[int]:
+        order, _ = sampling.catch_up_order(others + new, {TINY}, {})
+        return [y.year for _, ys in order for y in ys]
+
+    # A short history: 3 videos over 2 years is above the level, but under 5 in all.
+    assert needs([a_year(TINY, 2025, 1), a_year(TINY, 2026, 2)]) == [2025, 2026]
+    # 5 over 12 years is under one every other year: its open years, empty ones first.
+    long = [a_year(TINY, y, int(y < 2020)) for y in range(2015, 2027)]
+    assert needs(long)[:7] == [2026, 2025, 2024, 2023, 2022, 2021, 2020]  # spread: the farthest
+    assert needs(long)[7:] == [2015, 2016, 2017, 2018, 2019]
+    long[-1] = a_year(TINY, 2026, 1)  # 6 over 12: caught up, empty years and all
+    assert sampling.catch_up_order(others + long, {TINY}, {}) == ([], [TINY])
+    # Nothing left to take: caught up with what it has.
+    closed = [a_year(TINY, 2023, 1, open_=False), a_year(TINY, 2024, 0, open_=False)]
+    assert sampling.catch_up_order(others + closed, {TINY}, {}) == ([], [TINY])
+
+
+def test_exploring_downloads_take_a_third_and_the_new_channel_catches_up_from_them(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
+    clock.now = NOW - NOW % DAY_S + 3600  # 01:00 UTC
+    youtube.uploads[CHANNEL] = []
     collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: 2016's 5
     store = collector.store
-    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
-    fill_floor(store, SMALL, 1)  # under 3 a year, with an upload waiting in 2024
-    new = "UC" + "9" * 22
-    store.upsert_channel(id=new, title="C", status="in", source="discovery", listed_at=NOW)
-    judged(store, new)
-    first, behind = level_ids("bhd", 2)
-    waiting(store, new, [first])  # the lower number, but SMALL is behind
-    waiting(store, SMALL, [behind])
+    eligible_waiting(store, CHANNEL, level_ids("exp", 6), 2024)
+    new_channel(store, TINY)
+    eligible_waiting(store, TINY, level_ids("tny", 2), 2024)
+    eligible_waiting(store, TINY, level_ids("tnz", 2), 2025)
+    run(collector, clock, 6, step=3600)
+    channels = [channel_of(store, v) for v in collected_ids(collector)]
+    assert channels == [TINY, CHANNEL, CHANNEL, TINY, CHANNEL, CHANNEL]
+    assert explore_flags(store) == [1, 0, 0, 1, 0, 0]
+    assert store.downloads_today(clock.now) == (2, 6)
+    assert {year_of(store, v) for v in collected_ids(collector) if channel_of(store, v) == TINY} \
+        == {"2024", "2025"}  # its empty year first  # fmt: skip
+    assert store.catching_up() == {TINY}  # still under CHANNEL's 2.5 a year
+
+
+def test_no_first_video_while_a_channel_is_catching_up_and_exploring_left_goes_to_expanding(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    clock.now = NOW - NOW % DAY_S + 3600
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: nothing to take
+    store = collector.store
+    second = "UC" + "9" * 22
+    for channel_id in (TINY, second):
+        new_channel(store, channel_id)
+    numbers = level_ids("cat", 4)
+    eligible_waiting(store, TINY, numbers[:1], 2024)  # the lowest number: TINY first
+    eligible_waiting(store, TINY, numbers[2:3], 2025)
+    eligible_waiting(store, second, numbers[1:2], 2024)  # lower than TINY's 2025
     run(collector, clock, 3, step=3600)
-    # SMALL first; then, with nothing left it can take, it no longer holds the new channel back.
-    assert collected_ids(collector) == [behind, first]
+    # With no channel in that can take a video, every download explores: TINY's first video,
+    # its empty 2025 before the second channel's first, then it's caught up.
+    assert [channel_of(store, v) for v in collected_ids(collector)] == [TINY, TINY, second]
+    assert TINY not in store.catching_up()
+    # Once exploring has nothing ready, the download goes to expanding.
+    eligible_waiting(store, CHANNEL, numbers[3:], 2024)
+    run(collector, clock, 1, step=3600)
+    assert channel_of(store, collected_ids(collector)[-1]) == CHANNEL
+    assert explore_flags(store) == [1, 1, 1, 0]
 
 
-def test_status_shows_when_first_videos_are_held(
+def test_at_most_3_channels_get_their_first_video_a_day(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    clock.now = NOW - NOW % DAY_S + 3600  # 01:00 UTC
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: nothing to take
+    store = collector.store
+    numbers = level_ids("fst", 5)
+    new = [f"UC{i:022d}" for i in range(5)]
+    for channel_id, video_id in zip(new, numbers, strict=True):
+        new_channel(store, channel_id)
+        eligible_waiting(store, channel_id, [video_id], 2024)  # caught up with it
+    failing(pipeline, numbers[0])  # a failed first download doesn't use up a slot
+    run(collector, clock, 6, step=3600)
+    assert collected_ids(collector) == numbers[1:4]
+    assert store.first_videos_today(clock.now) == 3
+    assert store.ready(clock.now) == 0  # the 5th new channel's video waits for tomorrow
+    assert explore_flags(store) == [1, 1, 1, 1]  # the failed one was exploring too
+    # The next day: the failed one is tried again once it's due, then the 5th.
+    clock.now += DAY_S - 6 * 3600
+    run(collector, clock, 6, step=3600)
+    assert collected_ids(collector)[3] == numbers[4]
+    assert store.failures(numbers[0]) == 2
+    assert store.first_videos_today(clock.now) == 1
+
+
+def test_status_shows_the_days_exploring_and_the_channels_catching_up(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     from hyperstim_api.collector.__main__ import first_videos_line
@@ -1005,23 +1094,19 @@ def test_status_shows_when_first_videos_are_held(
     clock = Clock()
     collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: 2016's 5
     store = collector.store
-    assert first_videos_line(store, clock.now) == "First videos today: 0 of 3 channels"
-    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
-    fill_floor(store, SMALL, 1)
-    waiting(store, SMALL, ["held0000001"])  # under 3 a year, with an upload it can take
     assert first_videos_line(store, clock.now) == (
-        "First videos today: 0 of 3 channels; held while 1 channels are under 3 a year"
+        "Exploring today: 0 of 0 downloads (share 1/3); 0 channels catching up; "
+        "first videos today: 0 of 3 channels"
     )
-
-
-def test_a_channel_is_behind_under_3_a_year_with_an_upload_it_can_take() -> None:
-    def channel(videos: int, open_: bool = True) -> list[sampling.Year]:
-        return [a_year(SMALL, 2023, videos, open_=False), a_year(SMALL, 2024, 0, open_=open_)]
-
-    others = [a_year(CHANNEL, 2023, 6), a_year(CHANNEL, 2024, 6)]
-    assert sampling.behind(channel(5) + others) == [SMALL]  # 2.5 a year
-    assert sampling.behind(channel(6) + others) == []  # 3 a year
-    assert sampling.behind(channel(5, open_=False) + others) == []  # nothing it can take
+    new_channel(store, TINY)
+    fill_floor(store, TINY, 1, year=2024)
+    eligible_waiting(store, TINY, ["tny0000001"], 2025)  # an empty year with a video waiting
+    store.set_catching_up(TINY, True)
+    store.log_attempt("tny0000001", clock.now, "failed")
+    assert first_videos_line(store, clock.now) == (
+        "Exploring today: 1 of 1 downloads (share 1/3); 1 channels catching up; "
+        "first videos today: 0 of 3 channels"
+    )
 
 
 def test_the_dataset_videos_scores_are_filled_in_once(
@@ -1247,7 +1332,8 @@ def test_export_is_read_by_the_api(
          "ch_yr_2nd": "", "ch_yr_med": "3.00", "added_v": "3", "removed_v": "0", "new_ch": "1",
          "note": "Collecting starts: 150 videos a day, lowest r first; "
                  "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups; "
-                 "Thinnest channels first; under 5 eligible a year left out; 3 new a day"}
+                 "Thinnest channels first; under 5 eligible a year left out; 3 new a day; "
+                 "A third of downloads for new channels to catch up; at most 3 new a day"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -1983,6 +2069,9 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
         "INSERT INTO uploads (id, channel_id, published_at, r) VALUES ('vid', 'UCv2', '2024', 0.5);"
         "CREATE TABLE daily (day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL);"
         "INSERT INTO daily VALUES ('2026-10-29', 17);"
+        "CREATE TABLE attempts (id INTEGER PRIMARY KEY, video_id TEXT NOT NULL, at REAL NOT NULL, "
+        "outcome TEXT NOT NULL, message TEXT NOT NULL DEFAULT '');"
+        "INSERT INTO attempts (video_id, at, outcome) VALUES ('vid', 1, 'collected');"
     )
     old.close()
     store = Store(path)
@@ -1993,6 +2082,8 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
     assert upload.pick == "sample"  # everything picked before the floor
     day = store.daily()["2026-10-29"]
     assert (day["ch_ready"], day["ch_out"], day["at"], day["ch_yr_med"]) == (17, None, None, None)
+    assert store.catching_up() == frozenset()  # the channels in before count as caught up
+    assert store.downloads_today(1) == (0, 1)  # the downloads before weren't exploring
     store.close()
     assert (
         dict(Store(path).db.execute("SELECT id, full_listing FROM channels").fetchall()) == listing
