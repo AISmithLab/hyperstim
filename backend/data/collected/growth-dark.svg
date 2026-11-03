@@ -1,48 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" role="img">
-<title>HyperStim dataset: 16,867 videos and 593 channels on November 1, 2026</title>
+<title>HyperStim dataset: 16,502 videos and 568 channels on November 2, 2026</title>
 <rect width="800" height="380" rx="12" fill="#0d1117"/>
 <text x="24.0" y="36.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#e6edf3" text-anchor="start" font-weight="700">HyperStim dataset</text>
-<text x="776.0" y="36.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#9198a1" text-anchor="end">updated Nov 1, 2026</text>
+<text x="776.0" y="36.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#9198a1" text-anchor="end">updated Nov 2, 2026</text>
 <line x1="24" x2="48" y1="62" y2="62" stroke="#5b88ee" stroke-width="3" stroke-linecap="round"/>
-<text x="56.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1" text-anchor="start"><tspan font-weight="700" fill="#e6edf3">16,867</tspan> videos (left axis)</text>
+<text x="56.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1" text-anchor="start"><tspan font-weight="700" fill="#e6edf3">16,502</tspan> videos (left axis)</text>
 <line x1="300" x2="324" y1="62" y2="62" stroke="#e06a4c" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 5"/>
-<text x="332.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1" text-anchor="start"><tspan font-weight="700" fill="#e6edf3">593</tspan> channels (right axis)</text>
-<text x="62.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,000</text>
-<text x="738.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">475</text>
+<text x="332.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1" text-anchor="start"><tspan font-weight="700" fill="#e6edf3">568</tspan> channels (right axis)</text>
+<text x="62.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">15,600</text>
+<text x="738.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">450</text>
 <line x1="70" x2="730" y1="283.2" y2="283.2" stroke="#c9d1d9" stroke-opacity="0.12"/>
-<text x="62.0" y="287.2" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,200</text>
-<text x="738.0" y="287.2" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">500</text>
+<text x="62.0" y="287.2" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">15,800</text>
+<text x="738.0" y="287.2" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">475</text>
 <line x1="70" x2="730" y1="236.4" y2="236.4" stroke="#c9d1d9" stroke-opacity="0.12"/>
-<text x="62.0" y="240.4" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,400</text>
-<text x="738.0" y="240.4" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">525</text>
+<text x="62.0" y="240.4" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,000</text>
+<text x="738.0" y="240.4" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">500</text>
 <line x1="70" x2="730" y1="189.6" y2="189.6" stroke="#c9d1d9" stroke-opacity="0.12"/>
-<text x="62.0" y="193.6" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,600</text>
-<text x="738.0" y="193.6" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">550</text>
+<text x="62.0" y="193.6" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,200</text>
+<text x="738.0" y="193.6" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">525</text>
 <line x1="70" x2="730" y1="142.8" y2="142.8" stroke="#c9d1d9" stroke-opacity="0.12"/>
-<text x="62.0" y="146.8" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,800</text>
-<text x="738.0" y="146.8" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">575</text>
+<text x="62.0" y="146.8" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,400</text>
+<text x="738.0" y="146.8" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">550</text>
 <line x1="70" x2="730" y1="96.0" y2="96.0" stroke="#c9d1d9" stroke-opacity="0.12"/>
-<text x="62.0" y="100.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">17,000</text>
-<text x="738.0" y="100.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">600</text>
+<text x="62.0" y="100.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="end">16,600</text>
+<text x="738.0" y="100.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="start">575</text>
 <line x1="70" x2="730" y1="330" y2="330" stroke="#c9d1d9" stroke-opacity="0.35"/>
 <line x1="70.0" x2="70.0" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
 <text x="70.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 25</text>
-<line x1="164.3" x2="164.3" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
-<text x="164.3" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 26</text>
-<line x1="258.6" x2="258.6" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
-<text x="258.6" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 27</text>
-<line x1="352.9" x2="352.9" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
-<text x="352.9" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 28</text>
-<line x1="447.1" x2="447.1" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
-<text x="447.1" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 29</text>
-<line x1="541.4" x2="541.4" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
-<text x="541.4" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 30</text>
-<line x1="635.7" x2="635.7" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
-<text x="635.7" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 31</text>
+<line x1="235.0" x2="235.0" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
+<text x="235.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 27</text>
+<line x1="400.0" x2="400.0" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
+<text x="400.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 29</text>
+<line x1="565.0" x2="565.0" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
+<text x="565.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Oct 31</text>
 <line x1="730.0" x2="730.0" y1="330" y2="335" stroke="#c9d1d9" stroke-opacity="0.35"/>
-<text x="730.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Nov 1</text>
-<path d="M70.0,288.8 L164.3,283.2 L258.6,249.5 L352.9,215.8 L447.1,112.8 L541.4,112.8 L635.7,112.8 L730.0,109.1" fill="none" stroke="#e06a4c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 5"/>
+<text x="730.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1" text-anchor="middle">Nov 2</text>
+<path d="M70.0,288.8 L152.5,283.2 L235.0,249.5 L317.5,215.8 L400.0,116.6 L482.5,116.6 L565.0,116.6 L647.5,112.8 L730.0,109.1" fill="none" stroke="#e06a4c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 5"/>
 <circle cx="730.0" cy="109.1" r="4.5" fill="#e06a4c" stroke="#0d1117" stroke-width="2"/>
-<path d="M70.0,310.3 L164.3,298.2 L258.6,266.1 L352.9,232.9 L447.1,202.9 L541.4,171.1 L635.7,143.3 L730.0,127.1" fill="none" stroke="#5b88ee" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="730.0" cy="127.1" r="4.5" fill="#5b88ee" stroke="#0d1117" stroke-width="2"/>
+<path d="M70.0,309.6 L152.5,297.0 L235.0,264.9 L317.5,231.7 L400.0,202.2 L482.5,171.8 L565.0,144.9 L647.5,129.2 L730.0,118.9" fill="none" stroke="#5b88ee" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="730.0" cy="118.9" r="4.5" fill="#5b88ee" stroke="#0d1117" stroke-width="2"/>
 </svg>
