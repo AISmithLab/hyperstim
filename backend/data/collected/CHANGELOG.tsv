@@ -1,4 +1,5 @@
 date	videos	channels	ch_1	ch_2	ch_3	ch_4	ch_5plus	ch_ready	ch_out	ch_yr_2nd	ch_yr_med	added_v	removed_v	new_ch	note
+2026-11-03	16573	571	0	1	0	1	569	74	279	0.64	5.11	71	0	3	A third of downloads for new channels to catch up; at most 3 new a day
 2026-11-02	16502	568	0	1	1	0	566	70	277	0.51	5.12	44	0	2	Thinnest channels first; under 5 eligible a year left out; 3 new a day
 2026-11-01	16458	566	1	0	0	0	565	65	240	0.42	5.06	67	0	2	
 2026-10-31	16391	564	12	4	0	1	547	55	240			115	0	0	Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups
