@@ -1,0 +1,115 @@
+# Writing a blog post
+
+How to write, preview and publish a post on the site's blog ([plan 018](../../../plans/018-blog.md)). This guide stays in the repo; it is not a post and never appears on the site.
+
+The example post, [`src/lib/blog/fixtures/every-element.md`](../../src/lib/blog/fixtures/every-element.md), uses every element below. It is also the blog's test post, so everything it shows is known to work. Copy from it.
+
+## Files
+
+- **The post:** one markdown file, `frontend/content/blog/<slug>.md`. The slug is the file's name and becomes the post's URL, `/blog/<slug>/`. Use lowercase words joined by hyphens: `why-cuts-are-not-everything.md`.
+- **Its media** (images, videos, posters): `frontend/public/blog-media/<slug>/`, a folder named like the post. In the post, refer to them by file name only.
+
+## Front matter
+
+Every post starts with this block:
+
+```markdown
+---
+title: Why scene cuts are only part of the story
+date: 2026-11-09
+tldr: Fast editing is the measure most people think of, but a video can feel intense with few cuts. This post shows three videos where cuts alone would get it wrong.
+description: Why scene cuts alone don't tell you how stimulating a kids' video is, with three examples.
+---
+```
+
+| Field | | |
+|---|---|---|
+| `title` | required | The post's heading, and its name in search results ("<title> - HyperStim?"). |
+| `date` | required | `YYYY-MM-DD`. Posts are listed newest first. |
+| `tldr` | required | Two or three sentences in the yellow box at the top, and under the title in the list. |
+| `description` | optional | What search results and link previews show. Without it they show the TL;DR. **At most 155 characters**: if the TL;DR is longer, add a description (a test checks this). |
+
+There is no author, reading time or draft field. A post that isn't ready stays on its branch (see **Publishing**).
+
+## Text
+
+Write in American English (color, center, gray), in short paragraphs. Standard markdown works: `**bold**`, `*italic*`, lists, `> quotes`, links and tables.
+
+- **Headings:** `##` for sections and `###` inside them. The title is the page's only top heading, so `#` isn't allowed.
+- **Links to the site's own pages** start with `/`: `[the rankings](/rankings/)`. Links to other sites open in a new tab.
+- **Tables:** a header row, then `|---|---|`. Wide tables scroll sideways on phones.
+
+## Figures
+
+```markdown
+::figure[The caption, shown under the image.]{src="cuts-chart.webp" alt="What the image shows, for someone who can't see it."}
+```
+
+- `alt` is required: describe what the image shows. The caption can add what it means.
+- Figures are numbered for you ("Figure 1.", "Figure 2."). Write only the caption's text.
+
+## Videos
+
+Our own recording, played from the site:
+
+```markdown
+::video[The caption.]{src="compare-page.mp4" poster="compare-page.webp"}
+```
+
+A YouTube video, embedded:
+
+```markdown
+::youtube[The caption, also the video's name for screen readers.]{id="dQw4w9WgXcQ"}
+```
+
+- The `id` is the 11 characters after `watch?v=` in the video's link.
+- Nothing loads from YouTube until the reader presses Play.
+- Videos and YouTube embeds share one count ("Video 1.", "Video 2."), apart from figures.
+
+## References
+
+Cite with a footnote: `[^key]` right after the words it supports, and the source anywhere in the file (the end is easiest):
+
+```markdown
+Studies of children's TV have looked at pacing this way for decades.[^pacing]
+
+[^pacing]: Author, A., & Author, B. (2011). Title of the paper. *Journal Name*, 128(4), 644–649.
+```
+
+- Keys are any word you like; readers see numbers, `[1]`, `[2]`, in the order sources are first cited. Adding a citation never means renumbering.
+- Each source is listed under **References** at the end, with a ↩ link back to the text.
+- Cite the same source again with the same key.
+
+## Media rules
+
+- **Only our own material.** Images and figures come from the team. Videos are our own screen recordings, animations or talks. Never a clip downloaded from YouTube (the repo is public, `CLAUDE.md`): embed the YouTube video instead.
+- **Images:** WebP or PNG, at most twice as wide as they show (the text column is at most about 1,100 px wide, so at most 2,200 px).
+- **Videos:** MP4 (H.264), at most 10 MB each, always with a poster image (WebP or PNG, the video's first frame or a good still).
+- **Alt text** on every figure, saying what it shows.
+
+## Checks
+
+The build fails, naming the post's file and the problem, when:
+
+- `title`, `date` or `tldr` is missing, or the date isn't a real `YYYY-MM-DD` date;
+- a media file the post refers to isn't in its folder;
+- a figure has no `alt`, a video no `poster`, or a YouTube embed no valid `id`;
+- two posts have the same file name (also differing only in upper and lower case);
+- a citation `[^key]` has no source, or a source is never cited;
+- a heading is `#` or deeper than `###`, or an image is written with `![…](…)` instead of `::figure`.
+
+## Preview
+
+```sh
+cd frontend
+npm run dev
+```
+
+Open http://localhost:3000/blog/. The page updates as you save. A broken post shows the build's error in the browser.
+
+## Publishing
+
+1. Write the post on the blog's branch, `018-blog`, rebased onto `main` first (`DEVELOPMENT.md`). It stays there, unpublished, until it's merged.
+2. Commit the post and its media together, as `feat: Add the blog post "<title>" (plan 018)`. It's new text visitors can read, so it gets a release note.
+3. Merge it into `main` as for any change (lint, type check, tests and build pass first).
+4. It goes live with the next release (`hyperstim-release`, run by the team).

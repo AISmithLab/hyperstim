@@ -42,7 +42,10 @@ export const test = base.extend<Options & Fixtures>({
       if (url.startsWith(`${API}/api/thumbnails/`)) {
         return route.fulfill({ contentType: "image/png", body: PIXEL });
       }
-      if (url.startsWith(SITE) || url.startsWith(API) || url.startsWith("data:")) return route.continue();
+      // blob: is the page's own (WebKit plays a <video> through one).
+      if (url.startsWith(SITE) || url.startsWith(API) || url.startsWith("data:") || url.startsWith("blob:")) {
+        return route.continue();
+      }
       if (YOUTUBE.test(url)) {
         youtubeRequests.push(url);
         return route.fulfill({ contentType: "text/html", body: "<!doctype html><title>Player</title>" });

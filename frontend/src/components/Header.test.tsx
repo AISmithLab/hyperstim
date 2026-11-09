@@ -28,6 +28,7 @@ describe("Header", () => {
       ["Rankings", "/rankings"],
       ["Compare", "/compare"],
       ["How it works", "/how-it-works"],
+      ["Blog", "/blog"],
       ["About", "/about"],
     ]);
   });
@@ -38,6 +39,9 @@ describe("Header", () => {
     ["/rankings/", "Rankings"],
     ["/compare/x", "Compare"],
     ["/how-it-works", "How it works"],
+    ["/blog/", "Blog"],
+    ["/blog/page/2/", "Blog"],
+    ["/blog/my-first-post/", "Blog"],
     ["/about/", "About"],
   ])("marks %s as the current page under %s", (pathname, label) => {
     nav.pathname = pathname;
@@ -101,7 +105,7 @@ describe("Header", () => {
     render(<Header />);
     await user.tab(); // the logo
     await user.tab(); // the desktop links are in the DOM too
-    for (let i = 0; i < 5; i++) await user.tab();
+    for (let i = 0; i < 6; i++) await user.tab();
     expect(screen.getByRole("button", { name: "Menu" })).toHaveFocus();
     await user.keyboard("{Enter}");
     expect(phoneMenu()).toBeVisible();

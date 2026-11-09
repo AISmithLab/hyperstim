@@ -2,6 +2,9 @@ import path from "node:path";
 import type { PlaywrightTestConfig } from "@playwright/test";
 import { API_PORT, GA_ID, prepareBackendDirs, SITE_PORT } from "./backend";
 
+/** The blog's test posts, which the E2E build shows instead of content/blog/ (plan 018). */
+const BLOG_FIXTURES = "src/lib/blog/fixtures";
+
 /**
  * The two servers the end-to-end tests run against (plan 012): the real backend with the
  * committed reference set, and the built static site. Shared by the main suite's config and the
@@ -32,9 +35,11 @@ export function servers(frontend: string, ci: boolean): PlaywrightTestConfig["we
       },
     },
     {
-      // Builds the static export for this backend, then serves it like GitHub Pages
-      // (`trailingSlash` gives each page an index.html).
-      command: `npm run build && uv run --project ../backend python -m http.server ${SITE_PORT} --directory out`,
+      // Builds the static export for this backend, with the blog's test posts and their media
+      // (plan 018), then serves it like GitHub Pages (`trailingSlash` gives each page an index.html).
+      command:
+        `npm run build && node -e "require('fs').cpSync('${BLOG_FIXTURES}/media', 'out/blog-media', { recursive: true })"` +
+        ` && uv run --project ../backend python -m http.server ${SITE_PORT} --directory out`,
       cwd: frontend,
       url: `http://localhost:${SITE_PORT}/`,
       reuseExistingServer: !ci,
@@ -48,6 +53,8 @@ export function servers(frontend: string, ci: boolean): PlaywrightTestConfig["we
         NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: "",
         // A made-up ID, so the consent banner works as in prod; Google's tag itself never loads.
         NEXT_PUBLIC_GA_ID: GA_ID,
+        BLOG_CONTENT_DIR: BLOG_FIXTURES,
+        BLOG_MEDIA_DIR: `${BLOG_FIXTURES}/media`,
       },
     },
   ];

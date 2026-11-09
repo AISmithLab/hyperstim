@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_STATE, pageWindow, parseState, serializeState } from "./state";
+import { DEFAULT_STATE, parseState, serializeState } from "./state";
 
 describe("parseState", () => {
   it("reads every field", () => {
@@ -57,20 +57,5 @@ describe("serializeState", () => {
       "added:>2026-10-19 category:music",
     );
     expect(new URLSearchParams(serializeState(state, "")).get("q")).toBe("added:>2026-10-19 peppa");
-  });
-});
-
-describe("pageWindow", () => {
-  it("shows every page up to 9", () => {
-    expect(pageWindow(1, 1)).toEqual([1]);
-    expect(pageWindow(4, 9)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  });
-
-  it("keeps 9 slots with gaps", () => {
-    expect(pageWindow(1, 655)).toEqual([1, 2, 3, 4, 5, 6, 7, "gap", 655]);
-    expect(pageWindow(5, 655)).toEqual([1, 2, 3, 4, 5, 6, 7, "gap", 655]);
-    expect(pageWindow(6, 655)).toEqual([1, "gap", 4, 5, 6, 7, 8, "gap", 655]);
-    expect(pageWindow(651, 655)).toEqual([1, "gap", 649, 650, 651, 652, 653, 654, 655]);
-    expect(pageWindow(650, 655)).toEqual([1, "gap", 648, 649, 650, 651, 652, "gap", 655]);
   });
 });

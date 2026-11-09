@@ -27,6 +27,7 @@ See `.env.example`. All are read at build time.
 | `NEXT_PUBLIC_SITE_ORIGIN` | The site's origin (`https://<domain>`), no path or trailing slash. Used for the sitemap and canonical URLs. Empty: `http://localhost:3000`. |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console verification token (plan 011). Empty: no verification tag. Set only for production. |
 | `NEXT_PUBLIC_API_MOCK` | `1` = use the mock data in `src/lib/mock.ts` instead of the backend. |
+| `BLOG_CONTENT_DIR`, `BLOG_MEDIA_DIR` | Where the blog's posts and their media are read from (default `content/blog` and `public/blog-media`). Only the E2E build sets them, to the test posts in `src/lib/blog/fixtures/`. |
 
 ## Commands
 
@@ -62,9 +63,13 @@ What to test and at which level: CLAUDE.md (**Tests**) and [plan 012](../plans/0
 
 ## Images
 
-Originals from the team live in `art/` (including unused ones). Only images listed in `art/used.json` are converted to WebP into `public/images/` (git-ignored), at 2× the given display width. To use a new image, add a line to `used.json` and reference it as `asset("/images/<name>.webp")`.
+Originals from the team live in `art/` (including unused ones). Only images listed in `art/used.json` are converted to WebP into `public/images/` (git-ignored), at 2× the given display width (`{ "width": …, "trim": true }` cuts off transparent margins first). To use a new image, add a line to `used.json` and reference it as `asset("/images/<name>.webp")`.
 
 The link-preview image, `public/og-image.png` (1200 × 630, opaque PNG), is committed: `art/Logo.png` centred above `art/kid_1.png` on white, both scaled to fit with margins so a square crop still shows the kid. Recompose it if either changes; its size and alt text are in `src/lib/site.ts` (plan 011).
+
+## Blog
+
+Posts are markdown files in `content/blog/`, rendered at build time with `react-markdown`, `remark-gfm`, `remark-directive` and `gray-matter` (plan 018). How to write and publish one: [`content/blog/README.md`](content/blog/README.md).
 
 ## Styles
 

@@ -19,15 +19,19 @@ async function mtime(file) {
   }
 }
 
-for (const [name, displayWidth] of Object.entries(used)) {
+for (const [name, entry] of Object.entries(used)) {
   if (name.startsWith("_")) continue;
+  // A number, or { width, trim } for art whose transparent margins are cut off first.
+  const { width: displayWidth, trim = false } = typeof entry === "number" ? { width: entry } : entry;
   const src = path.join(artDir, `${name}.png`);
   const out = path.join(outDir, `${name}.webp`);
   // Skip up-to-date outputs so `npm run dev` starts fast.
   if ((await mtime(out)) > Math.max(await mtime(src), await mtime(path.join(artDir, "used.json")))) {
     continue;
   }
-  const info = await sharp(src)
+  let image = sharp(src);
+  if (trim) image = sharp(await image.trim().toBuffer());
+  const info = await image
     .resize({ width: displayWidth * 2, withoutEnlargement: true })
     .webp({ quality: 82, alphaQuality: 90 })
     .toFile(out);

@@ -17,7 +17,7 @@ import { LOOKING_UP, PRESS_ENTER, lookupErrorText } from "@/lib/lookup-text";
 import { channelHref, videoHref } from "@/lib/routes";
 import { useApi } from "@/lib/use-api";
 import { isChannelId, isVideoId, readSearchInput } from "@/lib/youtube";
-import Pagination from "./Pagination";
+import Pagination from "@/components/Pagination";
 import { filterTokens, parseSearch, type TokenSpan } from "@/lib/search-filters";
 import InfoTip from "@/components/InfoTip";
 import LinkedRow from "@/components/LinkedRow";

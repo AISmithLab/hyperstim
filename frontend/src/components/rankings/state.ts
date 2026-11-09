@@ -65,15 +65,3 @@ export function serializeState(state: RankingState, changedCategory?: string): s
   }
   return params.toString();
 }
-
-/**
- * The page buttons to show: all of them up to 9 pages, else the first, the last and the current
- * one with two either side, with gaps; always 9 slots, so the control keeps its width.
- */
-export function pageWindow(page: number, count: number): (number | "gap")[] {
-  const range = (from: number, to: number) => Array.from({ length: to - from + 1 }, (_, i) => from + i);
-  if (count <= 9) return range(1, count);
-  if (page <= 5) return [...range(1, 7), "gap", count];
-  if (page >= count - 4) return [1, "gap", ...range(count - 6, count)];
-  return [1, "gap", ...range(page - 2, page + 2), "gap", count];
-}

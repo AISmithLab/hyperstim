@@ -120,3 +120,24 @@ test("compare: each measurement's info popup opens next to its button", async ({
     await page.keyboard.press("Escape");
   }
 });
+
+test("blog: the post's video keeps its 16:9 box, and newer / older sit side by side from sm", async ({ page }) => {
+  for (const path of ["/blog/", "/blog/every-element/", "/blog/test-post-05/"]) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(await coveredControls(page), path).toEqual([]);
+  }
+  await page.goto("/blog/every-element/");
+  const video = (await page.locator("video").boundingBox())!;
+  expect(Math.abs(video.width / video.height - 16 / 9)).toBeLessThan(0.05);
+  await page.goto("/blog/test-post-05/");
+  const more = page.getByRole("navigation", { name: "More posts" });
+  const newer = (await more.getByRole("link", { name: /Newer post/ }).boundingBox())!;
+  const older = (await more.getByRole("link", { name: /Older post/ }).boundingBox())!;
+  if ((page.viewportSize()?.width ?? 0) >= 640) {
+    expect(Math.abs(older.y - newer.y), "side by side").toBeLessThan(2);
+    expect(older.x + older.width).toBeGreaterThan(newer.x + newer.width);
+  } else {
+    expect(older.y, "stacked").toBeGreaterThan(newer.y);
+  }
+});

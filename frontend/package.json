@@ -15,9 +15,13 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "next": "16.4.2",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "react-markdown": "^10.1.0",
+    "remark-directive": "^4.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",

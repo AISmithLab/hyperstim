@@ -41,3 +41,19 @@ test("video and channel pages have a title and heading without JavaScript", asyn
     expect(await mainText(page)).not.toMatch(PLACEHOLDER);
   }
 });
+
+// A blog post is all in the built page: the text, its figures and references (plan 018).
+test("a blog post reads in full without JavaScript", async ({ page }) => {
+  await page.goto("/blog/every-element/");
+  await expect(page).toHaveTitle("An example post with every element - HyperStim?");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /\S/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("An example post with every element");
+  await expect(page.getByRole("region", { name: "TL;DR" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "References" })).toBeVisible();
+  await expect(page.getByText("Figure 1.")).toBeVisible();
+  const jsonLd = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent())!);
+  expect(jsonLd).toMatchObject({ "@type": "BlogPosting", datePublished: "2026-11-09" });
+  const text = await mainText(page);
+  expect(text).not.toMatch(PLACEHOLDER);
+  expect(text).toContain("That's everything.");
+});
