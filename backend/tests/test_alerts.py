@@ -156,6 +156,43 @@ def test_a_failing_job_is_named_by_when_it_last_worked() -> None:
     assert mark.body == "`backup` still not working after 3 days."
 
 
+def test_a_failing_waiting_channels_refresh_is_retried_daily_and_reported_after_a_week(
+    tmp_path: Path, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    youtube = FakeYouTube()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    store = collector.store
+    waiting = "UC" + "w" * 22
+    store.upsert_channel(id=waiting, title="W", status="in", source="discovery")
+    youtube.channels[waiting] = ("W", 50_000, 200)
+    start = clock()
+    collector.api_job(collector.refresh_waiting, start)  # a good run
+    store.update_channel(waiting, checked_at=utc(start - 8 * DAY_S))  # due again
+    youtube.fails = lambda method, params: method == "channels"
+    youtube.calls.clear()
+    memory: dict[str, Any] = {}
+    reported: list[float] = []
+    for h in range(1, 8 * 24 + 1):
+        now = start + h * HOUR_S
+        collector.api_job(collector.refresh_waiting, now)
+        store.set("tick_at", now)
+        for post in alerts.decide(alerts.observe(store, now, None), memory, now):
+            if post.key == "job:waiting-channels" and post.action == "open":
+                reported.append(h)
+                assert post.title == "Collector: waiting-channels not working since 26 Oct 2026"
+                assert post.labels == ("alert", "alert:job-failing", "job:waiting-channels")
+    # Tried at hour 1, again 1 hour and then 6 hours later, then once a day: 1, 2, 8, 32, …
+    assert len(youtube.calls) == len([1, 2, *range(8, 8 * 24 + 1, 24)])
+    assert reported == [7 * 24]  # not before a whole week without a good run
+    youtube.fails = lambda method, params: False
+    later = start + 8 * DAY_S + DAY_S
+    collector.api_job(collector.refresh_waiting, later)
+    assert "waiting-channels" in alerts.observe(store, later, None).jobs
+    closes = alerts.decide(alerts.observe(store, later, None), memory, later)
+    assert [p.action for p in closes if p.key == "job:waiting-channels"] == ["close"]
+
+
 def test_a_stopped_collector_is_one_issue_not_one_per_job() -> None:
     memory: dict[str, Any] = {}
     jobs = {"repair": Job(T0, T0), "data-commit": Job(T0, T0 + DAY_S)}

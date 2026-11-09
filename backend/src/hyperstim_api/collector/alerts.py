@@ -33,6 +33,7 @@ REOPEN_AFTER_S = DAY_S  # the same kind waits this long after its issue closed
 OPENED_PER_DAY = 3  # new issues a day, across all kinds
 MARK_DAYS = (3, 7)  # "still not working after n days" comments; none after the last
 STATE_CHECKS = 2  # a new state is reported once it has held for this many checks
+WAITING_GRACE_S = 6 * DAY_S  # with OPEN_AFTER_S: `waiting-channels` after 7 days without a success
 HEARTBEAT_S = HOUR_S  # the collector ticks every minute or so; an hour without one: not running
 
 # --- Typed slots ------------------------------------------------------------------------
@@ -42,6 +43,7 @@ JOBS = (
     "upload-lists",
     "details",
     "discovery",
+    "waiting-channels",
     "offline-check",
     "repair",
     "export",
@@ -93,6 +95,8 @@ JOB_MEANING = {
     "details": "Checks picked uploads (made for kids, length, not a Short) before they're "
     "downloaded.",
     "discovery": "Searches for new channels, weekly.",
+    "waiting-channels": "Reads the subscribers of the channels waiting to join, weekly; they set "
+    "the order the channels join in. Reported after a week without a good run.",
     "offline-check": "Checks monthly that the dataset's videos are still online.",
     "repair": "Fills in missing titles, channel names and dates, so waiting videos can go on "
     "the site.",
@@ -197,6 +201,13 @@ def observe(store: Store, now: float, data_commit: Job | None) -> Seen:
             last = min(ok for ok in oks if ok is not None)
             failures = max(int(store.get(f"api_failures:{name}", "0") or 0) for name in names)
             jobs[word] = Job(last, last, failures)  # due on every tick
+    # Weekly, retried daily after a failure: reported only after a week without a success.
+    if (waiting_ok := parse_utc(store.get("ok:refresh_waiting"))) is not None:
+        jobs["waiting-channels"] = Job(
+            waiting_ok,
+            waiting_ok + WAITING_GRACE_S,
+            int(store.get("api_failures:refresh_waiting", "0") or 0),
+        )
     if failed_since := store.get("export_failed_since"):
         jobs["export"] = Job(
             parse_utc(store.get("ok:export")),
