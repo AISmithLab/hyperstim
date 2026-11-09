@@ -332,9 +332,9 @@ describe("ComparePage", () => {
 
   it("compares two videos: summary, the biggest difference in words, and every measurement", async () => {
     open(`a=${VIDEO_A}&b=${VIDEO_B}`);
-    const summary = await screen.findByText(/is more intense overall/);
+    const summary = await screen.findByText(/is more stimulating overall/);
     // The badge's letter is hidden from screen readers, which hear the title instead.
-    expect(summary).toHaveTextContent("ATurbo Trucks is more intense overall: 82 vs 41.");
+    expect(summary).toHaveTextContent("ATurbo Trucks is more stimulating overall: 82 vs 41.");
 
     // Only differences of 20+ points make a headline: here just one.
     const headlines = within(document.querySelector("[data-headlines]") as HTMLElement).getAllByRole("listitem");
@@ -382,7 +382,7 @@ describe("ComparePage", () => {
     const slot = screen.getByRole("region", { name: "Video B" });
     await waitFor(() => expect(within(slot).getByRole("progressbar")).toHaveAttribute("aria-valuenow", "30"));
     // No comparison until both are scored; A stays usable.
-    expect(screen.queryByText(/more intense/)).toBeNull();
+    expect(screen.queryByText(/more stimulating/)).toBeNull();
     expect(screen.getByText("Turbo Trucks")).toBeInTheDocument();
   });
 
@@ -397,8 +397,8 @@ describe("ComparePage", () => {
 
   it("compares two channels, with both over the years on one chart", async () => {
     open(`view=channels&a=${CHANNEL_A}&b=${CHANNEL_B}`);
-    const summary = await screen.findByText(/as intense as each other/);
-    expect(summary).toHaveTextContent("AZoom Kids and BQuiet Lane’s videos are about as intense as each other: 80 vs 78.");
+    const summary = await screen.findByText(/as stimulating as each other/);
+    expect(summary).toHaveTextContent("AZoom Kids and BQuiet Lane’s videos are about as stimulating as each other: 80 vs 78.");
     expect(screen.getByText("Their 12 measurements are all within 20 points of each other.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Quiet Lane" })).toHaveAttribute("href", `/channel?id=${CHANNEL_B}`);
     expect(screen.getByRole("heading", { name: "Over the years" })).toBeInTheDocument();
@@ -483,13 +483,13 @@ describe("ComparePage", () => {
 
   it("has no accessibility violations comparing two videos", async () => {
     open(`a=${VIDEO_A}&b=${VIDEO_B}`);
-    await screen.findByText(/is more intense overall/);
+    await screen.findByText(/is more stimulating overall/);
     await expectNoAxeViolations();
   });
 
   it("has no accessibility violations comparing two channels", async () => {
     open(`view=channels&a=${CHANNEL_A}&b=${CHANNEL_B}`);
-    await screen.findByText(/as intense as each other/);
+    await screen.findByText(/as stimulating as each other/);
     await expectNoAxeViolations();
   });
 

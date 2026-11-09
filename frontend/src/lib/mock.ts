@@ -356,9 +356,9 @@ function withRanks<T>(items: { item: T; value: number }[]): (T & { rank: number 
 const fold = (text: string) => text.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase();
 
 /**
- * Ranks like the backend: by `sort` within the category, most intense first, ties by ID (equal
+ * Ranks like the backend: by `sort` within the category, most stimulating first, ties by ID (equal
  * values share a rank), items without a value last and unranked. Search keeps ranks; `asc` reverses the ranked items and
- * counts their ranks from the calm end.
+ * counts their ranks from the least stimulating end.
  */
 function rankList<T extends Ranked>(
   items: T[],
@@ -382,7 +382,7 @@ function rankList<T extends Ranked>(
   const withValue = valued.filter((v): v is { item: T; value: number } => v.value !== null);
   const ranked = withRanks(withValue);
   const unranked = valued.filter((v) => v.value === null).map(({ item }) => ({ ...item, rank: null }));
-  // Calmest first: reversed, ranks counted from the calm end (1 = the calmest).
+  // Least stimulating first: reversed, ranks counted from that end (1 = the least stimulating).
   const calmFirst = withRanks([...withValue].reverse());
   const ordered = [...(order === "asc" ? calmFirst : ranked), ...unranked];
   // A name matches in part; an ID (from a pasted link) exactly, as in the backend.

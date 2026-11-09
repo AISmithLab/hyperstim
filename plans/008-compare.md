@@ -39,8 +39,8 @@ Build `/compare`: two videos, or two channels, side by side, showing **where the
 - **One sound at a time.** Both previews can be played, but when one starts, the other pauses. This uses the YouTube embed's message API (`enablejsapi=1`): the player reports its state, and the page sends `pauseVideo` to the other one. No script is loaded from YouTube. `YouTubePlayer` gains an optional `onPlay` callback and a `pause()` handle. The video and channel pages don't use them.
 - **What a comparison shows,** in this order, once both slots are filled:
   1. **Summary:** one sentence.
-     - Videos: “[B] is more intense overall: 41 vs 82.” A's score always comes first, like the table's columns _(human decision)_. Within 5 points _(human decision)_: “[A] and [B] are about as intense as each other: 52 vs 49.”
-     - Channels: “[B]’s videos are more intense on average: …”
+     - Videos: “[B] is more stimulating overall: 41 vs 82.” A's score always comes first, like the table's columns _(human decision)_. Within 5 points _(human decision)_: “[A] and [B] are about as stimulating as each other: 52 vs 49.” _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_
+     - Channels: “[B]’s videos are more stimulating on average: …”
      - [A]/[B] are the badges, followed by the name in sr-only text. No good/bad wording (plan 006).
   2. **The biggest differences, in words** _(human decision)_ (instead of a long list of bars, _human decision: too long to read_): under the summary, at most **two** lines, for the measurements whose values differ most, and only by **20 points or more**. Each says what the higher side does more, in plain words, with the two values: “[A] cuts to a new shot more often: 99 vs 0.” Values are always the 0–100 values the table shows _(human decision)_: mixing units and 0–100 values was hard to read. **A's value always comes first** (“[B] is louder: 21 vs 77”), not the higher one _(human decision)_: swapping the order made the numbers hard to read. With no difference of 20+: “Their 12 measurements are all within 20 points of each other.”
      - A count of 0 is a 0 like any other value (plan 004) _(human decision, 2026-10-16)_: “99 vs 0” is a big difference. A side without a value ("No cuts", "No sound", "Not measured") has no difference to compare.
@@ -85,7 +85,7 @@ DOM order: H1 + intro → view control → slot A → “vs.” → slot B → s
 │  │  Super Fast Toy Party (link)                Quiet Garden Walk (link)                 │  │
 │  │  Wheelie Friends TV                         Little Leaf                              │  │
 │  │ ──────────────────────────────────────────────────────────────────────────────────── │  │
-│  │            (A) is more intense overall: 82 vs 41.                                    │  │
+│  │            (A) is more stimulating overall: 82 vs 41.                               │  │
 │  │            (A) cuts to a new shot more often: 88 vs 35.                              │  │
 │  │            (A) has more sudden loud moments: 80 vs 0.                                │  │
 │  │                                                                                      │  │
@@ -129,7 +129,7 @@ DOM order: H1 + intro → view control → slot A → “vs.” → slot B → s
 │ │ Super Fast   Quiet       │ │
 │ │ Toy Party    Garden Walk │ │
 │ │ ──────────────────────── │ │
-│ │ (A) is more intense      │ │
+│ │ (A) is more stimulating  │ │
 │ │ overall: 82 vs 41.       │ │
 │ │ (A) cuts to a new shot   │ │
 │ │ more often: 88 vs 35.    │ │
@@ -180,8 +180,8 @@ DOM order: H1 + intro → view control → slot A → “vs.” → slot B → s
 | Already picked | That video is already in the other slot. |
 | Search error | We couldn’t search right now. Please try again in a moment. |
 | Slot errors | We couldn’t find this video. · We couldn’t find this channel. · We couldn’t load this video. Try again |
-| Summary, videos | [A] is more intense overall: {82} vs {41}. ([B] …: {A’s} vs {B’s}.) · [A] and [B] are about as intense as each other: {52} vs {49}. |
-| Summary, channels | [A]’s videos are more intense on average: {82} vs {41}. · [A] and [B]’s videos are about as intense as each other: {52} vs {49}. |
+| Summary, videos | [A] is more stimulating overall: {82} vs {41}. ([B] …: {A’s} vs {B’s}.) · [A] and [B] are about as stimulating as each other: {52} vs {49}. _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ |
+| Summary, channels | [A]’s videos are more stimulating on average: {82} vs {41}. · [A] and [B]’s videos are about as stimulating as each other: {52} vs {49}. _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ |
 | Headline | [A] cuts to a new shot more often: {99} vs {0}. (channels: [A]’s videos cut …) · none: Their 12 measurements are all within 20 points of each other. |
 | Table caption (sr-only) | Every measurement: {A} (A) and {B} (B), 0–100 |
 | Info popover extra | A: {30.3 cuts per minute} · B: {0 cuts per minute} |
@@ -238,7 +238,7 @@ The frontend is built against mock data, then reviewed. There is no backend step
    - URL state and history.
    - View switch clears the slots.
    - Picker: debounce, keyboard, link option, live check start, other item excluded.
-   - Summary wording, including the 5-point "about as intense" rule.
+   - Summary wording, including the 5-point "about as stimulating" rule.
    - Headlines: at most two, 20+ points, the higher side, 0–100 values; their rows highlighted.
    - Only one player plays (message API mocked).
    - Chart: two series, sr-only table.
@@ -274,6 +274,7 @@ The frontend is built against mock data, then reviewed. There is no backend step
 
 - Desktop sketch: the Videos/Channels control moved under the intro, and the kid sits on the card's top edge at the right (see **Decisions**, the kid).
 - Desktop, picking and phone sketches: × at each slot's top right, “vs.” between the slots, linked titles, no scores in the suggestions, and the headlines and table in place of the bars (see **Decisions**: "vs.", the picker, a filled slot, what a comparison shows).
+- Desktop and phone sketches (2026-11-09): the summary reads “more stimulating” (see **Copy**).
 - Desktop and phone sketches: headlines in 0–100 values, the table in two columns from `lg`, the headline rows highlighted (see **Decisions**, what a comparison shows).
 
 ## Open questions

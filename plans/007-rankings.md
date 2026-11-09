@@ -11,14 +11,14 @@ Build `/rankings`: every video or channel in the dataset, ranked by the overall 
 - **Scope.** The page, the extended list endpoints, and the page's states. Not in scope: comparing, rows for live-analyzed videos (these never join the dataset, plan 004), and downloads or exports.
 - **Videos or channels**, switched with the segmented control (as on the home card). Videos are the default. Switching keeps the search, category, and ranking criterion, and goes back to page 1.
 - **Columns:** rank, name, Overall, then the 12 measurements in the research taxonomy's three groups (the order of the measurement table, plan 004). Video rows: title, with the channel (linked) on a second line. Channel rows: name, with "{N} videos" on a second line. A row links to its video or channel page.
-- **Ranking criterion:** Overall by default. Clicking a column header (Overall or any measurement) ranks by that column, keeping the current order _(human decision: switching columns used to jump back to most intense first)_. Clicking the selected header again flips the order. One criterion at a time.
-- **Order button** _(human decision: an order switch on wide screens too, on the category row; quiet, so it doesn't race the view control for attention)_: a text button with a ⇅ icon that shows the current order ("Most intense first" / "Calmest first") and flips it on click. No border or fill (`STYLE.md`, Order button). From `lg` at the right end of the category row; below `lg` next to the "Rank by" select (under it below `sm`) _(human decision: the same button on narrow screens, in place of a segmented control)_.
+- **Ranking criterion:** Overall by default. Clicking a column header (Overall or any measurement) ranks by that column, keeping the current order _(human decision: switching columns used to jump back to most stimulating first)_. Clicking the selected header again flips the order. One criterion at a time.
+- **Order button** _(human decision: an order switch on wide screens too, on the category row; quiet, so it doesn't race the view control for attention)_: a text button with a ⇅ icon that shows the current order ("Most stimulating first" / "Least stimulating first") _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ and flips it on click. No border or fill (`STYLE.md`, Order button). From `lg` at the right end of the category row; below `lg` next to the "Rank by" select (under it below `sm`) _(human decision: the same button on narrow screens, in place of a segmented control)_.
 - **Ranks:**
-  - A rank is the position, most intense first, by the selected criterion among the rows in the selected category. **Search does not change ranks**: it only hides rows, so a search result still shows a video's real place.
-  - When the order is flipped to calmest first, the list is reversed and the ranks count back from the calm end: −1 is the calmest, then −2, −3, as on the home card (screen readers: “1st calmest”) _(human decision: not the huge numbers)_. The API returns them as 1, 2, 3 in that order; the page adds the minus sign.
+  - A rank is the position, most stimulating first, by the selected criterion among the rows in the selected category. **Search does not change ranks**: it only hides rows, so a search result still shows a video's real place.
+  - When the order is flipped to least stimulating first, the list is reversed and the ranks count back from that end: −1 is the least stimulating, then −2, −3, as on the home card (screen readers: “1st least stimulating”) _(human decision: not the huge numbers)_. The API returns them as 1, 2, 3 in that order; the page adds the minus sign.
   - Rows with no value for the criterion ("No cuts", "No sound", "Not measured", see plan 004) get no rank ("–"). They come last in both orders.
-  - A count of 0 is a value (0, plan 004) _(human decision, 2026-10-16)_, so those rows are ranked, at the calm end. **Equal values share a rank** (the first one's: 1, 2, 2, 4), so the thousands of videos tied at 0 don't get arbitrary ranks; calmest first, they are all −1 _(human decision, 2026-10-16)_.
-  - Ties are listed by ID, so the order is stable (same rule as plan 002). With Overall, all categories, most intense first, the top 3 match the home card.
+  - A count of 0 is a value (0, plan 004) _(human decision, 2026-10-16)_, so those rows are ranked, at the least stimulating end. **Equal values share a rank** (the first one's: 1, 2, 2, 4), so the thousands of videos tied at 0 don't get arbitrary ranks; least stimulating first, they are all −1 _(human decision, 2026-10-16)_.
+  - Ties are listed by ID, so the order is stable (same rule as plan 002). With Overall, all categories, most stimulating first, the top 3 match the home card.
 - **Colour-coded numbers** (**new**, the *score cell*). Each score is a navy bold number on a rounded tile. The tile's background is the score scale colour the score meter uses for that score (`filledSegments`: `sky-blue`, `leaf`, `scale-low`, `scale-mid`, `scale-high`) at 50 %. At 50 %, navy text has a contrast of at least 6.3 : 1 on every colour (checked). Full-strength colours fail on `leaf` and `scale-high`. The number carries the value, so colour is never the only cue. Empty values show a muted "–" on no tile, with the reason for screen readers.
 - **Search:** one search input at the top of the card. It matches any part of the name, ignoring case, accents and repeated spaces _(2026-10-27: pages show a title's double spaces as one, so a copied title didn't match)_. For videos it searches the title and the channel name (typing a channel's name lists its videos). For channels it searches the name. Results update as the user types (300 ms debounce) and the list goes back to page 1. 1–100 characters; the field is trimmed. The field itself takes up to 500, so long links fit.
 - **Links in the search, as in the compare picker** _(human decision, 2026-10-17)_. The same input rules as plan 008, read by the same helper (`readSearchInput`):
@@ -70,7 +70,7 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 │ HyperStim?                                      Home  Rankings  Compare  How it works  About │
 ├────────────────────────────────────────────────────────────────────────────────────────────┤
 │  Stimulation rankings                                                                      │
-│  16,375 videos and 512 channels, ranked by how intense their production is.                │
+│  16,375 videos and 512 channels, ranked by how stimulating they are.                      │
 │                                                                           {kid with lens}  │
 │  ╭─ rankings card ──────────────────────────────────────────────────────────────────────╮  │
 │  │  ( 🔍 Search videos or channels…           )                 ( Videos | Channels )   │  │
@@ -109,7 +109,7 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 │ │ ( 🔍 Search videos…     )│ │
 │ │ Category     Rank by     │ │
 │ │ [ All     ▾] [ Rapid c ▾]│ │
-│ │ ⇅ Most intense first     │ │
+│ │ ⇅ Most stimulating first │ │
 │ │                          │ │
 │ │ 1–25 of 16,375 videos    │ │
 │ │ ──────────────────────── │ │
@@ -142,19 +142,19 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 | `<title>` | Stimulation rankings - HyperStim? |
 | Meta description | Which kids’ videos and channels are the most stimulating, or overstimulating? Every one in our dataset, ranked by overall score or any of 12 measurements. _(human decision, 2026-10-29; plan 011, Page descriptions)_ |
 | H1 | Stimulation rankings |
-| Intro | Videos and channels in our dataset, ranked by how intense their production is. Then, on its own line _(human decision)_: [What the measurements mean →](/how-it-works) (no counts: the results line has them, and needs no extra request; no sentence on the 5-video minimum _(human decision)_) |
+| Intro | Videos and channels in our dataset, ranked by how stimulating they are. _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ Then, on its own line _(human decision)_: [What the measurements mean →](/how-it-works) (no counts: the results line has them, and needs no extra request; no sentence on the 5-video minimum _(human decision)_) |
 | Search label (sr-only) / placeholder | Search videos / Title, channel, or video link… · Search channels / Channel name or link… (short enough for 320 px) |
 | Link messages | This video isn’t in our dataset. Check it → · {Name} isn’t in our dataset yet. · That’s a channel link. Switch to Channels to find a channel. · That’s a video link. To find a channel, paste a channel’s link or type its name. · That doesn’t look like a YouTube link or video ID. · the lookup's errors as in plan 008 |
 | View control `aria-label` | Show ranking of · Videos · Channels |
 | Category label | Category · All · Music · Narrative · Play & activity · Educational · Gaming |
 | Rank by (below `lg`) | Rank by · Overall · {12 names} |
-| Order button | ⇅ Most intense first / ⇅ Calmest first (`aria-label` “Order: …”) |
+| Order button | ⇅ Most stimulating first / ⇅ Least stimulating first (`aria-label` “Order: …”) _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ |
 | Results line (`aria-live="polite"`) | Showing {26}–{50} of {5,699} {music} videos (the criterion is left out: the selected header shows it _(human decision)_); channels: “… of {544} channels …”, with a category “… of {120} channels with {music} videos …”, every channel, so the count matches the home page's _(human decision, 2026-10-28, plan 013: no 5-video minimum)_; with search: “… matching “{q}” …”; a link (its ID): “… for this link”; one row: “1 video” / “1 channel” |
 | Search info (`InfoTip`) | Search by title or channel, or paste a YouTube link. Filters: **category:music** (music, narrative, play, educational, gaming) · **added:2026-10-20** added that day · **added:>2026-10-20** added after it (also <, >=, <=) |
-| Table caption (sr-only) | {Videos}, ranked by {Overall}, {most intense first} |
+| Table caption (sr-only) | {Videos}, ranked by {Overall}, {most stimulating first} |
 | Sort button | the column's name; the header's `aria-sort` tells the current order |
 | Rank “–” (sr-only) | Not ranked |
-| Rank “−{12}” (sr-only), calmest first | {12th} calmest |
+| Rank “−{12}” (sr-only), least stimulating first | {12th} least stimulating |
 | Empty cell (sr-only) | No cuts / No sound / Not measured |
 | Page control (`nav` “Pages”) | ‹ Previous · Next › (`aria-label` “Previous page” / “Next page”) · page buttons (`aria-label` “Page {3}”), current `aria-current="page"` · phones: Page {3} of {655} |
 | No match | No {videos} match “{q}”. · Clear search |
@@ -183,7 +183,7 @@ GET /api/channels?sort=…&order=…&category=…&q=…&offset=0&limit=25
 
 - `Video` gains `category` (the API key: the dataset's “play & activity” is `play`; an unknown category stops the load); `Channel` gains `categories` (the set of its videos' categories).
 - A count of 0 on a per-minute feature ranks as percentile 0, as the API sends it (plan 004, `dataset.py`) _(human decision, 2026-10-16)_. The six keys match the frontend's `perMin`/`cutsPerMin` units, and a test checks this.
-- At startup (and at each dataset reload, plan 013), for each of the 13 criteria (score + 12), the videos and the channels are pre-sorted once: most intense first, ties by ID, no-value rows last. One helper (`ranking.py`) serves both videos and channels. A feature ranks by its percentile (for a channel, the mean percentile shown in its tile).
+- At startup (and at each dataset reload, plan 013), for each of the 13 criteria (score + 12), the videos and the channels are pre-sorted once: most stimulating first, ties by ID, no-value rows last. One helper (`ranking.py`) serves both videos and channels. A feature ranks by its percentile (for a channel, the mean percentile shown in its tile).
 - **Requests cost the same however large the dataset grows** _(human decision, 2026-10-27: the home page's numbers waited on requests that built a row for each of the 16k videos to return 3, and the dataset keeps growing)_:
   - **The default view is ready-made:** with the load, each criterion's order is also kept for the unfiltered view (every video now, no category, no search, no `asOf`), with its values. A request for it (the home card, the rankings page as it opens) just slices, read backwards for `asc`, and builds only the rows it returns; each row's rank is a binary search on the values (equal values share the first one's rank, in either order).
   - **The pill's count is looked up, not scanned:** an `addedFrom`/`addedBefore` filter on that view counts its rows from a list of the videos' add times sorted with the load (binary search), and finds its page by walking the ready-made order until it has enough rows.
@@ -216,7 +216,8 @@ Order: the frontend first (steps 2–5, on mock data) and a review of it; then t
 - Layout sketch (`lg`+): the category row ends with the order button, right-aligned (see Decisions, Order button).
 - Layout sketch (phone): the view control moved above the search (see Layout, `sm`–`md`).
 - Layout sketch (phone): the category and "Rank by" selects side by side (see Layout, < `sm`).
-- Layout sketch (phone): the order button replaces the “( Most intense | Calmest )” control under “Rank by” (see Decisions, Order button).
+- Layout sketches (2026-11-09): the intro and order button read “stimulating” (see Copy).
+- Layout sketch (phone): the order button replaces the segmented order control that was planned under “Rank by” (see Decisions, Order button).
 
 ## Open questions
 

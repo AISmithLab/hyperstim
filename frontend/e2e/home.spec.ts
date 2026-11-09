@@ -35,7 +35,7 @@ test.describe("home", () => {
     await expect(page).toHaveURL("/");
   });
 
-  test("the rankings card shows the most intense videos and channels", async ({ page, request }) => {
+  test("the rankings card shows the most stimulating videos and channels", async ({ page, request }) => {
     const [video] = await topVideos(request);
     const [channel] = await topChannels(request);
     await page.goto("/");

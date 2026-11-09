@@ -1,10 +1,10 @@
 """Rankings of videos or channels by the score or one feature (plan 007).
 
-Each criterion's order is computed once: most intense first, ties by ID, rows with no
+Each criterion's order is computed once: most stimulating first, ties by ID, rows with no
 value last, also for the default view's rows alone. A request keeps the rows in its
 category (or takes the default view's), applies the search, reads them in reverse for
 `asc`, and slices a page; only the page's rows get their rank (equal values share one,
-counted from the calm end for `asc`), by binary search on the values. A search matches
+counted from the least stimulating end for `asc`), by binary search on the values. A search matches
 names, or a row's exact ID (a pasted link, plan 007).
 """
 
@@ -147,7 +147,7 @@ def _count_between(times: list[str], added: Added) -> int:
 
 @dataclass(frozen=True)
 class _Rows[T]:
-    """Rows in one criterion's order: those with a value, most intense first (ties by ID),
+    """Rows in one criterion's order: those with a value, most stimulating first (ties by ID),
     then those without. The rows are shared, not copied, so a request that filters them makes
     no row objects of its own; ranks are worked out only for the rows a page returns."""
 
@@ -176,7 +176,7 @@ class _Rows[T]:
         return len(self.valued) + len(self.unranked)
 
     def at(self, i: int, order: Order) -> T:
-        """The `i`th row in `order`: calmest first, rows with no value still come last."""
+        """The `i`th row in `order`: least stimulating first, rows with no value still come last."""
         n = len(self.valued)
         if i >= n:
             return self.unranked[i - n]

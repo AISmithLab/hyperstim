@@ -170,8 +170,7 @@ export default function RankingsCard() {
                 <span className="flex items-center gap-1">
                   Score
                   <InfoTip id="score-info" label="About the score" className="-my-3">
-                    <p>Score 0–100: how intense the production is compared with the rest of our dataset.</p>
-                    <p className="mt-2">A channel’s score is the average of its videos.</p>
+                    <p>Scores range from 0 to 100. Videos with higher scores are more stimulating.</p>
                   </InfoTip>
                 </span>
               </th>

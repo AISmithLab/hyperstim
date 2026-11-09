@@ -10,7 +10,7 @@ const R = 96;
 const STROKE = 26;
 const BANDS = ["stroke-sky-blue", "stroke-leaf", "stroke-scale-low", "stroke-scale-mid", "stroke-scale-high"];
 
-/** Clockwise rotation of the needle from the "calm" end, in degrees: 0 → 0°, 50 → 90°, 100 → 180°. */
+/** Clockwise rotation of the needle from the low end, in degrees: 0 → 0°, 50 → 90°, 100 → 180°. */
 export function needleAngle(score: number): number {
   return (Math.min(100, Math.max(0, score)) / 100) * 180;
 }
@@ -60,9 +60,18 @@ export default function ScoreGauge({ score, children }: { score: number; childre
         <circle cx={CX} cy={CY} r={10} className="fill-navy" />
         <circle cx={CX} cy={CY} r={3.5} className="fill-white" />
       </svg>
-      <div aria-hidden="true" className="flex w-full justify-between text-sm text-ink">
-        <span>calm</span>
-        <span>intense</span>
+      {/* Each label is centred under its end of the dial (10 % and 90 % of the drawing's width). */}
+      <div aria-hidden="true" className="relative h-[2.5rem] w-full text-sm/5 text-ink">
+        <span className="absolute left-[10%] -translate-x-1/2 text-center whitespace-nowrap">
+          less
+          <br />
+          stimulating
+        </span>
+        <span className="absolute left-[90%] -translate-x-1/2 text-center whitespace-nowrap">
+          more
+          <br />
+          stimulating
+        </span>
       </div>
       {/* The number is centred under the dial; the info button hangs to its right. */}
       <div className="relative mt-1">

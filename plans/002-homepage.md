@@ -9,7 +9,7 @@ Build the home page (`/`) following the look of the mockup's home panel: hero wi
 ## Decisions
 
 - **Scope.** This plan also covers what the home page needs to exist at all: frontend scaffold, root layout (header + footer), the typed API client, and the backend scaffold with the endpoints below. Cookie banner, other pages, live analysis, and the Pages deploy workflow are later plans.
-- **Score shown.** "Stimulation score", 0–100 = the dataset's composite percentile (higher = more intense production than other videos in the dataset). Shown as an integer plus a small bar.
+- **Score shown.** "Stimulation score", 0–100 = the dataset's composite percentile (higher = more stimulating than other videos in the dataset). Shown as an integer plus a small bar.
 - **"Top" means highest score.** The table is titled "Stimulation rankings", never "top-rated" or "best". _(was: “Most stimulating”, kept even though it also shows the least stimulating; briefly “Most and least stimulating”)_
 - **High ranks are a warning, not a prize.** The table highlights the most stimulating videos/channels as the ones to watch out for. Nothing in it looks like an award: no gold/silver/bronze, trophies, stars, or crowns. Ranks 1–3 may later get a warning style (see table card below); this is shown by design only, with no extra text. The score meter's warmest colour (coral) is at the high end.
 - **Both ends in one table.** The table shows the 3 most and the 3 least stimulating, separated by a quiet “Least stimulating” divider, so parents see the range. _(was: no calm view; only the most stimulating, calmer videos on `/rankings`)_
@@ -107,7 +107,7 @@ Final text for every string on the page. `{…}` = filled in at runtime. Arrows 
 | Score info button label (sr) | About the score |
 | Video row, second line | {channel name} |
 | Channel row, second line | {n} videos |
-| Score info popup | Score 0–100: how intense the production is compared with the rest of our dataset. / A channel’s score is the average of its videos. (two lines) _(was: footnote under the table)_ |
+| Score info popup | Scores range from 0 to 100. Videos with higher scores are more stimulating. _(human decision, 2026-11-09: keep it simple, “stimulating” not “intense”, no word on how channel scores are worked out)_ _(was: footnote under the table)_ |
 | Link | See full rankings → |
 | Loading (sr-only) | Loading rankings… |
 | Error | We couldn’t load the rankings. |

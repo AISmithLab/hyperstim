@@ -1,4 +1,4 @@
-import { calmestVideo, topChannels, topVideos } from "./api";
+import { leastStimulatingVideo, topChannels, topVideos } from "./api";
 import type { Page } from "@playwright/test";
 import { expect, isPhone, tabTo, test } from "./fixtures";
 
@@ -9,7 +9,7 @@ function results(page: Page, kind: "Videos" | "Channels" = "Videos") {
 }
 
 test.describe("rankings", () => {
-  test("lists the most intense video first and opens it", async ({ page, request }) => {
+  test("lists the most stimulating video first and opens it", async ({ page, request }) => {
     const [video] = await topVideos(request);
     await page.goto("/rankings/");
     const first = results(page).getByRole("link").first();
@@ -18,8 +18,8 @@ test.describe("rankings", () => {
     await expect(page.getByRole("heading", { level: 1, name: video.title })).toBeVisible();
   });
 
-  test("calmest first puts the calmest video at the top", async ({ page, request }) => {
-    const video = await calmestVideo(request);
+  test("least stimulating first puts the least stimulating video at the top", async ({ page, request }) => {
+    const video = await leastStimulatingVideo(request);
     await page.goto("/rankings/");
     await page.getByRole("button", { name: /^Order:/ }).click();
     await expect(page).toHaveURL(/order=asc/);
@@ -86,7 +86,7 @@ test.describe("rankings", () => {
     await page.goto("/rankings/");
     await page.getByRole("group", { name: "Show ranking of" }).getByRole("button", { name: "Channels" }).click();
     await expect(page).toHaveURL(/view=channels/);
-    // The most intense channel first (the videos stay in view until the channels load).
+    // The most stimulating channel first (the videos stay in view until the channels load).
     const first = results(page, "Channels").getByRole("link").first();
     await expect(first).toHaveAccessibleName(channel.name);
     await first.click();

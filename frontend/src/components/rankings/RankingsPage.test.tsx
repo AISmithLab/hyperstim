@@ -165,7 +165,7 @@ describe("RankingsPage", () => {
   it("shows the first page of videos ranked by Overall", async () => {
     open();
 
-    const table = await screen.findByRole("table", { name: "Videos, ranked by Overall, most intense first" });
+    const table = await screen.findByRole("table", { name: "Videos, ranked by Overall, most stimulating first" });
     expect(getVideos).toHaveBeenLastCalledWith({
       sort: "score",
       order: "desc",
@@ -185,7 +185,7 @@ describe("RankingsPage", () => {
     expect(first.querySelectorAll("[data-filled]")[0]).toHaveTextContent("99");
     expect(first.querySelectorAll("[data-filled]")[0]).toHaveAttribute("data-filled", "5");
     expect(first.querySelectorAll("[data-filled]")[1]).toHaveAttribute("data-filled", "3");
-    // A count of 0 is a 0 on the calmest tile.
+    // A count of 0 is a 0 on the least stimulating tile.
     expect(rows[3].querySelectorAll("[data-filled]")[4]).toHaveTextContent("0");
     expect(screen.getByRole("columnheader", { name: "Overall" })).toHaveAttribute("aria-sort", "descending");
     expect(screen.getByRole("columnheader", { name: "Pacing intensification" })).toBeInTheDocument();
@@ -194,7 +194,7 @@ describe("RankingsPage", () => {
   it("opens a row's page from a click anywhere in it; the name's link covers its cell, not the row", async () => {
     const user = userEvent.setup();
     open();
-    const table = await screen.findByRole("table", { name: "Videos, ranked by Overall, most intense first" });
+    const table = await screen.findByRole("table", { name: "Videos, ranked by Overall, most stimulating first" });
     const name = within(table).getByRole("link", { name: "Tiny Trucks 2" });
     // Safari ignores `relative` on a row, so the link would cover the whole page's rows instead.
     expect(name.closest("td")).toHaveClass("relative");
@@ -220,17 +220,17 @@ describe("RankingsPage", () => {
     expect(lastCall(url.push)).toBe("/rankings?sort=cuts_per_min&order=asc");
     expect(screen.getByRole("columnheader", { name: "Rapid cutting" })).toHaveAttribute("aria-sort", "ascending");
     await waitFor(() => expect(lastCall(vi.mocked(getVideos))).toMatchObject({ sort: "cuts_per_min", order: "asc" }));
-    expect(await screen.findByRole("table", { name: "Videos, ranked by Rapid cutting, calmest first" })).toBeInTheDocument();
+    expect(await screen.findByRole("table", { name: "Videos, ranked by Rapid cutting, least stimulating first" })).toBeInTheDocument();
   });
 
-  it("counts back from the calm end when calmest first: −1, −2, …", async () => {
+  it("counts back from the least stimulating end when least stimulating first: −1, −2, …", async () => {
     open("order=asc");
     await screen.findByRole("table");
     const rows = within(table()).getAllByRole("row");
     expect(within(rows[2]).getByText("−1")).toBeInTheDocument();
-    expect(within(rows[2]).getByText("1st calmest")).toBeInTheDocument();
-    expect(within(rows[12]).getByText("11th calmest")).toBeInTheDocument();
-    expect(within(rows[23]).getByText("22nd calmest")).toBeInTheDocument();
+    expect(within(rows[2]).getByText("1st least stimulating")).toBeInTheDocument();
+    expect(within(rows[12]).getByText("11th least stimulating")).toBeInTheDocument();
+    expect(within(rows[23]).getByText("22nd least stimulating")).toBeInTheDocument();
     expect(within(cards()).getByText("−3")).toBeInTheDocument();
   });
 
@@ -239,17 +239,17 @@ describe("RankingsPage", () => {
     open("sort=lufs");
     await screen.findByRole("table");
 
-    expect(orderButton("wide")).toHaveAccessibleName("Order: Most intense first");
+    expect(orderButton("wide")).toHaveAccessibleName("Order: Most stimulating first");
     await user.click(orderButton("wide"));
     expect(lastCall(url.push)).toBe("/rankings?sort=lufs&order=asc");
     expect(screen.getByRole("columnheader", { name: "Audio intensity" })).toHaveAttribute("aria-sort", "ascending");
 
-    expect(orderButton("wide")).toHaveAccessibleName("Order: Calmest first");
+    expect(orderButton("wide")).toHaveAccessibleName("Order: Least stimulating first");
     await user.click(orderButton("wide"));
     expect(lastCall(url.push)).toBe("/rankings?sort=lufs");
   });
 
-  it("keeps calmest first when ranking by another column", async () => {
+  it("keeps least stimulating first when ranking by another column", async () => {
     const user = userEvent.setup();
     open("order=asc");
     await screen.findByRole("table");
@@ -279,7 +279,7 @@ describe("RankingsPage", () => {
     await user.click(screen.getByRole("button", { name: "Channels" }));
 
     expect(lastCall(url.push)).toBe("/rankings?view=channels&sort=lufs&q=category%3Amusic+zip");
-    await screen.findByRole("table", { name: "Channels, ranked by Audio intensity, most intense first" });
+    await screen.findByRole("table", { name: "Channels, ranked by Audio intensity, most stimulating first" });
     expect(getChannels).toHaveBeenLastCalledWith(
       expect.objectContaining({ sort: "lufs", category: "music", q: "zip", offset: 0 }),
     );
@@ -465,7 +465,7 @@ describe("RankingsPage", () => {
     const user = userEvent.setup();
     open("sort=cuts_per_min");
 
-    const list = await screen.findByRole("list", { name: "Videos, ranked by Rapid cutting, most intense first" });
+    const list = await screen.findByRole("list", { name: "Videos, ranked by Rapid cutting, most stimulating first" });
     const first = within(list).getAllByRole("listitem")[0];
     expect(within(first).getByText("Overall")).toBeInTheDocument();
     expect(within(first).getByText("Rapid cutting")).toBeInTheDocument();
@@ -476,7 +476,7 @@ describe("RankingsPage", () => {
 
     await user.click(orderButton("narrow"));
     expect(lastCall(url.push)).toBe("/rankings?order=asc");
-    expect(orderButton("narrow")).toHaveTextContent("Calmest first");
+    expect(orderButton("narrow")).toHaveTextContent("Least stimulating first");
   });
 
   it("shows a message with a clear button when nothing matches", async () => {

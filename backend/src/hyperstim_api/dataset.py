@@ -30,7 +30,7 @@ CATEGORIES: dict[str, str] = {
     "gaming": "gaming",
 }
 
-# Per-minute counts (plan 004). A count of 0 is the calmest value there is, so it shows as
+# Per-minute counts (plan 004). A count of 0 is the least stimulating value there is, so it shows as
 # percentile 0: in the pool thousands of videos tie at 0, and "at or below" puts them in the
 # middle (e.g. 60). Shown values only; the score uses the pool percentiles (scoring.py).
 EVENT_FEATURES = frozenset(

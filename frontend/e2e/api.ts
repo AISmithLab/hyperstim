@@ -11,18 +11,18 @@ async function list<T>(request: APIRequestContext, path: string): Promise<T[]> {
   return ((await res.json()) as { items: T[] }).items;
 }
 
-/** The `n` most intense videos (most intense first). */
+/** The `n` most stimulating videos (most stimulating first). */
 export function topVideos(request: APIRequestContext, n = 1) {
   return list<RankedVideo>(request, `/videos?limit=${n}`);
 }
 
-/** The `n` most intense channels. */
+/** The `n` most stimulating channels. */
 export function topChannels(request: APIRequestContext, n = 1) {
   return list<RankedChannel>(request, `/channels?limit=${n}`);
 }
 
-/** The calmest video. */
-export async function calmestVideo(request: APIRequestContext) {
+/** The least stimulating video. */
+export async function leastStimulatingVideo(request: APIRequestContext) {
   return (await list<RankedVideo>(request, "/videos?order=asc&limit=1"))[0];
 }
 

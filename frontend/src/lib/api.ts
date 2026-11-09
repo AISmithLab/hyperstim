@@ -80,7 +80,7 @@ export type RankedVideo = VideoSummary & {
   /** Category key (see `CATEGORIES`). */
   category: string;
   /** Place by the ranking's criterion within its category, 1 = first in the order asked for (the
-   * most intense, or with `asc` the calmest); null = no value. */
+   * most stimulating, or with `asc` the least stimulating); null = no value. */
   rank: number | null;
   features: Feature[];
 };

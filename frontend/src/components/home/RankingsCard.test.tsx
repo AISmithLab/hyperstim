@@ -156,7 +156,7 @@ describe("RankingsCard", () => {
   it("explains the score in an info popup next to the Score header", async () => {
     const user = userEvent.setup();
     render(<RankingsCard />);
-    const text = await screen.findByText(/how intense the production is/);
+    const text = await screen.findByText(/Videos with higher scores are more stimulating/);
 
     expect(text).not.toBeVisible();
     await user.hover(screen.getByRole("button", { name: "About the score" }));

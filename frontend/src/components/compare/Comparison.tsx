@@ -26,12 +26,12 @@ export default function Comparison({ a, b }: { a: Item; b: Item }) {
         {summary.kind === "more" ? (
           <>
             {badge(summary.side)}
-            {whose} {channels ? "are" : "is"} more intense {channels ? "on average" : "overall"}: {summary.a} vs {summary.b}.
+            {whose} {channels ? "are" : "is"} more stimulating {channels ? "on average" : "overall"}: {summary.a} vs {summary.b}.
           </>
         ) : (
           <>
             {badge("a")} and {badge("b")}
-            {whose} are about as intense as each other: {summary.a} vs {summary.b}.
+            {whose} are about as stimulating as each other: {summary.a} vs {summary.b}.
           </>
         )}
       </p>

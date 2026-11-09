@@ -9,11 +9,11 @@ import { H2, TEXT_LINK } from "./parts";
 const QUESTIONS: [string, ReactNode][] = [
   [
     "What does a high score mean?",
-    "A high score means a video is more intensely produced than most videos we compare with. We measure production style only. We don’t judge a video’s content, educational value, or age appropriateness.",
+    "A high score means a video is more stimulating than most videos we compare with. We measure production style only. We don’t judge a video’s content, educational value, or age appropriateness.",
   ],
   [
-    "This video looks really intense. Why is its score low?",
-    "We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are intense too, so a video can feel busy and still sit in the middle.",
+    "This video looks really stimulating. Why is its score low?",
+    "We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are stimulating too, so a video can feel busy and still sit in the middle.",
   ],
   [
     "What do “No cuts” and “No sound” mean?",

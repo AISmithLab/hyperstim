@@ -3,14 +3,14 @@ import type { Feature } from "@/lib/api";
 import { FEATURE_GROUPS, featureDisplay } from "@/lib/features";
 import type { Side } from "./state";
 
-/** Scores at most this many points apart read as "about as intense as each other". */
+/** Scores at most this many points apart read as "about as stimulating as each other". */
 export const SAME_WITHIN = 5;
 
 export type Summary =
   | { kind: "more"; side: Side; a: number; b: number }
   | { kind: "same"; a: number; b: number };
 
-/** Which side is more intense overall, by the scores as shown (rounded); A's score always first. */
+/** Which side is more stimulating overall, by the scores as shown (rounded); A's score always first. */
 export function summarize(scoreA: number, scoreB: number): Summary {
   const a = Math.round(scoreA);
   const b = Math.round(scoreB);
@@ -55,7 +55,7 @@ export const HEADLINE_GAP = 20;
 
 /**
  * What the side with the higher value does more, for headlines: said of one video, and of a
- * channel's videos. Every measurement is more intense the higher it is.
+ * channel's videos. Every measurement is more stimulating the higher it is.
  */
 export const MORE: Record<string, { one: string; many: string }> = {
   cuts_per_min: { one: "cuts to a new shot more often", many: "cut to a new shot more often" },

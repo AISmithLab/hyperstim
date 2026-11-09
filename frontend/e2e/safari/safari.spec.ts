@@ -5,7 +5,7 @@ import { API } from "../backend";
 // Safari-only bugs (plan 017). Each check would have caught a bug that reached visitors.
 
 /**
- * The `n` most intense videos or channels, from the real API. With plain `fetch`: this folder's
+ * The `n` most stimulating videos or channels, from the real API. With plain `fetch`: this folder's
  * Playwright is another version than the main suite's, whose helpers (`../api`) take its types.
  */
 async function top<T>(kind: "videos" | "channels", n: number): Promise<T[]> {

@@ -52,7 +52,7 @@ const VIEWS: Record<View, { label: string; noun: string }> = {
 
 /** What `sort` is called in text: "Overall" or the measurement's name. */
 const sortName = (sort: string) => (sort === "score" ? "Overall" : FEATURE_INFO[sort].name);
-const orderName = (order: Order) => (order === "desc" ? "most intense first" : "calmest first");
+const orderName = (order: Order) => (order === "desc" ? "most stimulating first" : "least stimulating first");
 const formatCount = (n: number) => n.toLocaleString("en-US");
 
 /**
@@ -274,7 +274,7 @@ function Hero() {
           Stimulation rankings
         </h1>
         <p className="mt-3 max-w-prose text-lg">
-          Videos and channels in our dataset, ranked by how intense their production is.
+          Videos and channels in our dataset, ranked by how stimulating they are.
         </p>
         <p className="mt-1 text-lg">
           <Link
@@ -392,7 +392,7 @@ function OrderButton({
   onChange: (order: Order) => void;
   className: string;
 }) {
-  const text = order === "desc" ? "Most intense first" : "Calmest first";
+  const text = order === "desc" ? "Most stimulating first" : "Least stimulating first";
   return (
     <button
       type="button"
@@ -695,7 +695,7 @@ function FeatureCell({ feature }: { feature: Feature | undefined }) {
 const ORDINAL = new Intl.PluralRules("en", { type: "ordinal" });
 const SUFFIX: Partial<Record<Intl.LDMLPluralRule, string>> = { one: "st", two: "nd", few: "rd" };
 
-/** Most intense first: 1, 2, 3…; calmest first: −1, −2, −3… (as on the home card). */
+/** Most stimulating first: 1, 2, 3…; least stimulating first: −1, −2, −3… (as on the home card). */
 function Rank({ rank, order }: { rank: number | null; order: Order }) {
   if (rank === null) {
     return (
@@ -709,7 +709,7 @@ function Rank({ rank, order }: { rank: number | null; order: Order }) {
   return (
     <>
       <span aria-hidden="true">−{formatCount(rank)}</span>
-      <span className="sr-only">{`${formatCount(rank)}${SUFFIX[ORDINAL.select(rank)] ?? "th"} calmest`}</span>
+      <span className="sr-only">{`${formatCount(rank)}${SUFFIX[ORDINAL.select(rank)] ?? "th"} least stimulating`}</span>
     </>
   );
 }

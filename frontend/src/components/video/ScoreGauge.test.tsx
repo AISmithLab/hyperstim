@@ -32,6 +32,17 @@ describe("ScoreGauge", () => {
     expect(screen.getByText("87")).toHaveAttribute("aria-hidden", "true");
   });
 
+  it("labels the dial's ends less and more stimulating, centred under each end", () => {
+    mockReducedMotion(true);
+    const { container } = render(<ScoreGauge score={50} />);
+    const labels = [...container.querySelectorAll("[aria-hidden='true'] > span")].filter((s) =>
+      s.textContent?.endsWith("stimulating"),
+    );
+    expect(labels.map((s) => s.textContent)).toEqual(["lessstimulating", "morestimulating"]);
+    expect(labels[0]).toHaveClass("left-[10%]", "-translate-x-1/2", "text-center");
+    expect(labels[1]).toHaveClass("left-[90%]", "-translate-x-1/2", "text-center");
+  });
+
   it("puts its children after the number, outside the number's centring", () => {
     mockReducedMotion(true);
     render(

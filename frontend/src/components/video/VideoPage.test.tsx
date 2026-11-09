@@ -65,7 +65,7 @@ describe("VideoPage", () => {
     expect(screen.getByRole("heading", { level: 2, name: "Stimulation score" })).toHaveClass("sr-only");
     expect(screen.getByRole("button", { name: "About the stimulation score" })).toBeInTheDocument();
     expect(screen.getByText("Stimulation score 87 out of 100")).toBeInTheDocument();
-    expect(screen.queryByText(/More intense than/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/More stimulating than/)).not.toBeInTheDocument();
     expect(screen.getAllByText("Higher than 40% of videos in our dataset")).toHaveLength(12);
     expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual([
       "Pacing intensification",

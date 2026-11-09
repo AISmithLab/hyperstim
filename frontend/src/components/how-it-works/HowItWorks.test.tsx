@@ -79,7 +79,7 @@ describe("HowItWorks", () => {
   it("says scores compare with a fixed set, and how videos are picked", () => {
     render(<HowItWorks />);
     expect(
-      screen.getByText("A score of 74 means a video is more intense than 74 of every 100 videos we compare with."),
+      screen.getByText("A score of 74 means a video is more stimulating than 74 of every 100 videos we compare with."),
     ).toBeInTheDocument();
     expect(screen.getByText("How do you choose the channels and videos?")).toBeInTheDocument();
     expect(screen.getByText(/we randomly pick about the same number of videos from every year since 2015/)).toBeInTheDocument();

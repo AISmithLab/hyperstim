@@ -71,7 +71,7 @@ DOM order: header → score panel → over-years section → footer.
 │  ╭─ score panel ───────────────────────────────────────────────────────────────────────╮   │
 │  │   ,-'''''-.        Pacing intensification          Sustained sensory intensity      │   │
 │  │  /    \    \       Rapid cutting (i)    78 ▮▮▮▮▯   Visual intensity (i)   61 ▮▮▮▮▯  │   │
-│  │ calm   ●  intense  …                               …                                │   │
+│  │ less   ●     more  …                               …                                │   │
 │  │    74 / 100 (i)                                    Reward patterning …              │   │
 │  ╰─────────────────────────────────────────────────────────────────────────────────────╯   │
 │                                                                                            │

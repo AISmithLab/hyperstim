@@ -23,7 +23,7 @@ describe("parseState", () => {
 });
 
 describe("summarize", () => {
-  it("names the more intense side, A's score first", () => {
+  it("names the more stimulating side, A's score first", () => {
     expect(summarize(41.2, 82.4)).toEqual({ kind: "more", side: "b", a: 41, b: 82 });
     expect(summarize(90, 10)).toEqual({ kind: "more", side: "a", a: 90, b: 10 });
   });

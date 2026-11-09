@@ -28,7 +28,7 @@ Two small changes on the video and channel pages come with it: their measurement
   2. **① Paste a link:** a slim card _(human decision: options 1 + 2 of the step 1 mocks; the card looked empty)_: the title and one sentence **at the top left, like the other step titles** _(human decision: it sat mid-height)_, and on the right **the real check field, the same as the home page's, on its butter background and as long as its field there** _(human decision: so people see it's the same thing)_, with the same space above and below it in its box _(human decision, 2026-10-26: without the length hint, the empty error line made the bottom look heavier)_. Stacked below `lg`. **No fork into "already in our dataset" / "not yet", and no pointer to steps ②–④** _(human decision: the cards' top-to-bottom order already tells it)_.
   3. **② We measure 12 things:** no lead _(human decision)_; **one annotated timeline (diagram F) and a compact list of the 12** _(human decision: option a of the brainstormed displays; avoids a wall of text)_. The 5-minute clip is the timeline's time axis, not a diagram of its own _(human decision: one diagram per section)_.
   4. **③ We compare it with our dataset:** the sampling process (diagram E), **no lead** _(human decision)_, **with no captions** _(human decision)_; the scan date sits in the first box. No "Why it matters" _(human decision)_.
-  5. **④ You get a score:** one sentence ("more intense than 74 of every 100") and diagram C, a calm → intense row of dots **in the score's 5 colors** _(human decision)_. No "lining up" scenario and no "12 → one score" subsection or diagram _(human decision)_.
+  5. **④ You get a score:** one sentence ("more stimulating than 74 of every 100") _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ and diagram C, a less → more stimulating row of dots **in the score's 5 colors** _(human decision)_. No "lining up" scenario and no "12 → one score" subsection or diagram _(human decision)_.
   6. **Common questions:** an accordion (`id="questions"`) on a mint section panel with plants peeking from its bottom edge. This takes over the look of the mockup's green note _(human decision: instead of a separate "production style" panel)_.
 
   No closing "Check a video" link _(human decision)_.
@@ -90,12 +90,12 @@ From `lg`, the short label sits next to each marker as well. Below `lg`, only th
 
 In the second box, one channel's uploads are small rectangles stacked by year, uneven: few early, many recent. In the third, the picked ones are filled navy. One pick per row is crossed out (failed a check) and the next one is picked instead; the checks are a ✓ list in its box (read out by screen readers, like the first box's).
 
-**C. Where it sits** (step ④): one row of ~40 small dots sorted from calm to intense, standing for all the videos in our dataset, in the score's 5 colors. Dots left of "your video" are filled, and the ones right of it are rings. Below `md` there are ~19 dots.
+**C. Where it sits** (step ④): one row of ~40 small dots sorted from less to more stimulating, standing for all the videos in our dataset, in the score's 5 colors. Dots left of "your video" are filled, and the ones right of it are rings. Below `md` there are ~19 dots.
 
 ```
-  calm ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●◆○○○○○○○○○○ intense
+  less stimulating ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●◆○○○○○○○○○○ more stimulating
                                     ▲ your video
-        ← 74 of every 100 videos are calmer →
+        ← 74 of every 100 videos are less stimulating →
 ```
 
 ### Layout
@@ -236,14 +236,14 @@ The list shows the existing one-line descriptions (plan 004).
 | Where | Text |
 |---|---|
 | H2 | ④ You get a score |
-| Lead | A score of 74 means a video is more intense than 74 of every 100 videos in our dataset. _(human decision: short, no scenario, no count)_ |
+| Lead | A score of 74 means a video is more stimulating than 74 of every 100 videos we compare with. _(human decision: short, no scenario, no count)_ _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ |
 
 **Common questions** (H2 "Common questions", `id="questions"`)
 
 | Question | Answer |
 |---|---|
-| What does a high score mean? _(human decision)_ | A high score means a video is more intensely produced than most videos in our dataset. We measure production style only. We don’t judge a video’s content, educational value, or age appropriateness. |
-| This video looks really intense. Why is its score low? | We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are intense too, so a video can feel busy and still sit in the middle. _(human decision)_ |
+| What does a high score mean? _(human decision)_ | A high score means a video is more stimulating than most videos we compare with. We measure production style only. We don’t judge a video’s content, educational value, or age appropriateness. |
+| This video looks really stimulating. Why is its score low? _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ | We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are stimulating too, so a video can feel busy and still sit in the middle. _(human decision)_ |
 | What do “No cuts” and “No sound” mean? | Scene discontinuity measures how different each new shot looks from the one before. If a video stays on one shot for the whole 5 minutes we measure, there’s nothing to compare, so we show “No cuts” instead of a score. Likewise, a video without sound has no loudness to measure, so Audio intensity shows “No sound”. _(human decision, 2026-10-16: replaces “What does ‘None detected’ mean?”, since a count of 0 now shows as 0)_ |
 | How is a channel’s score worked out? _(human decision: a question, not a section)_ | It’s the average of its videos’ scores in our dataset. _(human decision: no mention of rankings)_ |
 | How do you choose the channels and videos? _(plan 013, 2026-10-25)_ | We look for kids’ channels on YouTube that have at least 10,000 subscribers and more than 100 videos, leaving out channels YouTube makes automatically (e.g., “Topic” channels). From each channel, we randomly pick about the same number of videos from every year since 2015. Every video we pick must be made for kids, 2 to 60 minutes long, not a Short, and still online. We keep adding new channels and videos. _(human decision, 2026-11-02: plan 013's channel-first rule, worded for a general audience; it said every video has the same chance)_ |
@@ -298,6 +298,7 @@ The list shows the existing one-line descriptions (plan 004).
 - The ASCII sketches of the desktop and phone layouts below **Layout** are redrawn for the page that follows one video: steps ①–④ as section titles, one diagram per card, descriptions under the list's names, no closing link (see **Sections**).
 - The ASCII sketch of diagram E drops its step numbers (see **Diagrams**, E).
 - The phone sketch below **Layout** has no kid under the H1 (2026-10-16; see **Decisions**, Art).
+- Diagram C's sketch reads “less stimulating” / “more stimulating” and “74 of every 100 videos are less stimulating” (2026-11-09; see **Diagrams**, C).
 
 ## Open questions
 
