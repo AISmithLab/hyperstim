@@ -373,18 +373,34 @@ class Store:
         return _upload(row) if row else None
 
     def first_video(self, now: float) -> Upload | None:
-        """A channel's first video (decision 2): the eligible upload with the lowest number, not
-        waiting for a retry, of a channel that is in, has no video in the dataset, has been
-        judged by the filters (`KIDS_ANSWERS_MIN` answers) and isn't left out."""
+        """A channel's first video (decision 2): of the channels that are in, have no video in
+        the dataset, have been judged by the filters (`KIDS_ANSWERS_MIN` answers) and aren't
+        left out, the one with the most subscribers (on a tie, the lowest number) that has an
+        eligible upload not waiting for a retry; its eligible upload with the lowest number."""
         row = self.db.execute(
             "SELECT u.* FROM uploads u JOIN channels c ON c.id = u.channel_id "
             "WHERE u.state = 'eligible' AND u.retry_at <= ? AND c.status = 'in' "
             f"AND u.channel_id {KEPT} AND u.channel_id NOT IN (SELECT channel_id FROM uploads "
             f"WHERE state IN {IN_STATES}) AND u.channel_id IN (SELECT channel_id FROM uploads "
-            f"WHERE {ANSWERED} GROUP BY channel_id HAVING COUNT(*) >= ?) ORDER BY u.r LIMIT 1",
+            f"WHERE {ANSWERED} GROUP BY channel_id HAVING COUNT(*) >= ?) "
+            "ORDER BY COALESCE(c.subscriber_count, 0) DESC, u.r LIMIT 1",
             (now, KIDS_ANSWERS_MIN),
         ).fetchone()
         return _upload(row) if row else None
+
+    def subscribers(self) -> dict[str, int]:
+        """Each channel's subscribers, as last read (0 when never read)."""
+        rows = self.db.execute("SELECT id, COALESCE(subscriber_count, 0) FROM channels")
+        return {r[0]: int(r[1]) for r in rows}
+
+    def waiting_channels(self) -> list[sqlite3.Row]:
+        """The channels waiting for their first video (in, none in the dataset, not left out),
+        in the order they get it: the most subscribers first (decision 2)."""
+        return self.db.execute(
+            "SELECT id, title, COALESCE(subscriber_count, 0) AS subscribers FROM channels "
+            f"WHERE status = 'in' AND id {KEPT} AND id NOT IN (SELECT channel_id FROM uploads "
+            f"WHERE state IN {IN_STATES}) ORDER BY subscribers DESC, id"
+        ).fetchall()
 
     def ready(self, now: float) -> int:
         """Eligible uploads that can be downloaded now (not waiting for a retry, not of a

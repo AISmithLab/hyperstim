@@ -37,7 +37,7 @@ from hyperstim_api import scoring
 from hyperstim_api.analysis import BLOCK_MARKER, PIPELINE_DIR, AnalysisError, Pipeline
 from hyperstim_api.collector import notes, sampling
 from hyperstim_api.collector.seed import tier
-from hyperstim_api.collector.store import KEPT, Store, Upload
+from hyperstim_api.collector.store import IN_STATES, KEPT, Store, Upload
 from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits, quota_day
 from hyperstim_api.dataset import LEFT_OUT_FILE, Dataset
 from hyperstim_api.thumbnails import OFFLINE_HINTS
@@ -64,6 +64,7 @@ QUERIES: tuple[str, ...] = (
 QUERIES_PER_DAY = math.ceil(len(QUERIES) / 7)
 MIN_SUBSCRIBERS = 10_000  # v2's channel rules
 MIN_VIDEOS = 100  # more than this many
+WAITING_EVERY_S = 7 * DAY_S  # the waiting channels' subscribers are read again this often
 CHANNELS_PER_TICK = 25  # newest-uploads reads per tick, so other work isn't held up
 MAX_PAGES = 200  # pages of a channel's uploads read in one go (50 a page); more on the next tick
 CHECK_BATCHES_PER_TICK = 10  # of 50 uploads, so years with few eligible ones can't hold a tick
@@ -204,6 +205,7 @@ class Collector:
                 self.finish_listings,
                 self.discover,
                 self.check_near_misses,
+                self.refresh_waiting,
                 self.check_online,
                 self.repair,
                 self.check_candidates,
@@ -381,6 +383,26 @@ class Collector:
                 continue
             self.judge(row["id"], found.title, found.subscriber_count, found.video_count, now,
                        row["queries"])  # fmt: skip
+
+    def refresh_waiting(self, now: float) -> None:
+        """The subscribers of the channels waiting for their first video, read again weekly, as
+        they set the order the channels join in (decision 2). Left-out ones too, as they may
+        come back. A channel no longer found keeps its counts."""
+        due = self.store.db.execute(
+            "SELECT id FROM channels WHERE status = 'in' AND id NOT IN (SELECT channel_id "
+            f"FROM uploads WHERE state IN {IN_STATES}) AND COALESCE(checked_at, '') < ? "
+            "ORDER BY checked_at, id LIMIT 50",
+            (utc(now - WAITING_EVERY_S),),
+        ).fetchall()
+        if not due:
+            return
+        stats = self.api.channels([r["id"] for r in due])
+        for row in due:
+            found = stats.get(row["id"])
+            counts = {} if found is None else {
+                "subscriber_count": found.subscriber_count, "video_count": found.video_count,
+            }  # fmt: skip
+            self.store.update_channel(row["id"], checked_at=utc(now), **counts)
 
     # --- the dataset's videos still online -------------------------------------------
 
@@ -564,7 +586,8 @@ class Collector:
         time by number, so a download never waits for one: an upload asked again after an
         answer that couldn't settle it, when it's due (rule 2); a channel's lowest numbers
         until the filters can judge it (`KIDS_ANSWERS_MIN` answers) and, for one judged in
-        but not on the site yet, until it has an upload ready for its first video; then the
+        but not on the site yet, until it has an upload ready for its first video, the
+        channels with the most subscribers first, as they get theirs first; then the
         years the channels catching up need and the years the channel-first rule fills next
         (`rule`) that have none ready. Left-out channels'
         years get `LEFT_OUT_CHECKS_PER_DAY` more a day, as their answers decide whether they
@@ -592,7 +615,10 @@ class Collector:
         for (channel_id, year), r in sorted(due.items()):
             if r["unsure"]:
                 take(channel_id, year, 1)
-        for channel_id, rs in sorted(per_channel.items()):
+        subscribers = self.store.subscribers()
+        for channel_id, rs in sorted(
+            per_channel.items(), key=lambda item: (-subscribers.get(item[0], 0), item[0])
+        ):
             answers = sum(int(r["answers"]) for r in rs)
             on_site = any(int(r["videos"]) for r in rs)
             if answers < sampling.KIDS_ANSWERS_MIN:

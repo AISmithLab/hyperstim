@@ -141,6 +141,7 @@ def status(s: Settings) -> str:
         "Last 24 h: " + (", ".join(f"{k} {v}" for k, v in attempts.items()) or "nothing"),
         level_line(store, now),
         first_videos_line(store, now),
+        waiting_line(store),
         left_out_line(store),
         f"Data API units today: {store.units_used(quota_day(now))} of {s.units_per_day}",
         f"Pace: {s.per_day}/day x {store.get('pace_factor', '1')}",
@@ -168,6 +169,9 @@ def status(s: Settings) -> str:
     return "\n".join(lines)
 
 
+WAITING_SHOWN = 5  # the channels next in line that `status` names
+
+
 def level_line(store: Store, now: float) -> str:
     """How far the channels are filled (plan 013, decision 1): their videos per year (the
     median, and the second smallest of those with an upload left), how many the channel-first
@@ -190,6 +194,16 @@ def first_videos_line(store: Store, now: float) -> str:
         f"(share {sampling.EXPLORE_SHARE}); {len(plan(store, now)[1])} channels catching up; "
         f"first videos today: {store.first_videos_today(now)} of "
         f"{sampling.FIRST_VIDEOS_PER_DAY} channels"
+    )
+
+
+def waiting_line(store: Store) -> str:
+    """The channels waiting for their first video and the next few in line, by subscribers
+    (plan 013, decision 2)."""
+    waiting = store.waiting_channels()
+    following = ", ".join(f"{r['title']} ({r['subscribers']:,})" for r in waiting[:WAITING_SHOWN])
+    return f"Waiting for a first video: {len(waiting)} channels" + (
+        f"; next: {following}" if waiting else ""
     )
 
 

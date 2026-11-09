@@ -1086,6 +1086,125 @@ def test_at_most_3_channels_get_their_first_video_a_day(
     assert store.first_videos_today(clock.now) == 1
 
 
+def subscribed(store: Store, channel_id: str, subscribers: int, title: str = "C") -> None:
+    store.update_channel(channel_id, subscriber_count=subscribers, title=title)
+
+
+def test_the_waiting_channel_with_the_most_subscribers_gets_the_first_video(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    clock.now = NOW - NOW % DAY_S + 3600  # 01:00 UTC
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: nothing to take
+    store = collector.store
+    small, big, tied, unjudged, out = (f"UC{i:018d}{i}abc" for i in range(1, 6))
+    numbers = level_ids("sub", 6)
+    for channel_id, video_id, subscribers in (
+        (small, numbers[0], 20_000),  # the lowest number, but the fewest subscribers
+        (big, numbers[2], 5_000_000),
+        (tied, numbers[1], 5_000_000),  # as many as `big`, with a lower number
+    ):
+        new_channel(store, channel_id)
+        subscribed(store, channel_id, subscribers)
+        eligible_waiting(store, channel_id, [video_id], 2024)
+    # Not judged by the filters yet (no answers), or left out (1 of 21 made for kids): passed
+    # over however big.
+    for channel_id, video_id, subscribers in ((unjudged, numbers[4], 80_000_000),
+                                              (out, numbers[3], 90_000_000)):  # fmt: skip
+        store.upsert_channel(id=channel_id, title="C", status="in", source="discovery",
+                             listed_at=NOW, subscriber_count=subscribers)  # fmt: skip
+        eligible_waiting(store, channel_id, [video_id], 2024)
+    answered(store, out, 0, 20, "out")
+    collector.export()  # judges the channels: `out` is left out
+    assert store.left_out_ids() == {out}
+    assert store.first_video(clock.now).id == numbers[1]  # type: ignore[union-attr]
+    assert [r["id"] for r in store.waiting_channels()] == [unjudged, big, tied, small]
+    run(collector, clock, 4, step=3600)
+    assert [channel_of(store, v) for v in collected_ids(collector)] == [tied, big, small]
+    assert store.first_videos_today(clock.now) == 3  # still at most 3 a day
+
+
+def test_checks_reach_the_new_channel_with_the_most_subscribers_first(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    store = collector.store
+    small, big = "UC" + "1" * 22, "UC" + "z" * 22  # `small` first by ID
+    for channel_id, subscribers in ((small, 20_000), (big, 3_000_000)):
+        store.upsert_channel(id=channel_id, title="C", status="in", source="discovery",
+                             listed_at=NOW, subscriber_count=subscribers)  # fmt: skip
+        store.add_uploads(channel_id, [(f"{channel_id[-1]}chk{i:06d}", "2024-05-01T00:00:00Z")
+                                       for i in range(25)])  # fmt: skip
+    seen: list[str] = []
+    collector.check = lambda ids, now: seen.extend(ids)  # type: ignore[method-assign]
+    collector.check_candidates(clock.now)
+    assert len(seen) == 40
+    assert {channel_of(store, v) for v in seen[:20]} == {big}
+    assert {channel_of(store, v) for v in seen[20:]} == {small}
+
+
+def test_the_waiting_channels_subscribers_are_read_again_weekly(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: on the site
+    store = collector.store
+    week_ago, yesterday = utc(clock.now - 8 * DAY_S), utc(clock.now - DAY_S)
+    due, fresh, out, gone = (f"UC{i:018d}{i}xyz" for i in range(1, 5))
+    for channel_id, checked in ((due, week_ago), (fresh, yesterday), (out, week_ago),
+                                (gone, week_ago)):  # fmt: skip
+        store.upsert_channel(id=channel_id, title="C", status="in", source="discovery",
+                             subscriber_count=50_000, video_count=200,
+                             checked_at=checked)  # fmt: skip
+        youtube.channels[channel_id] = ("C", 9_000_000, 300)
+    del youtube.channels[gone]
+    store.update_channel(CHANNEL, subscriber_count=1_000, checked_at=week_ago)
+    youtube.channels[CHANNEL] = ("Channel", 7_000_000, 300)
+    store.db.execute("INSERT INTO left_out (channel_id, kids, answers) VALUES (?, 0, 20)", (out,))
+    youtube.calls.clear()
+    collector.refresh_waiting(clock.now)
+    assert youtube.calls == ["channels"]  # one unit for up to 50 channels
+
+    def counts(channel_id: str) -> tuple[int | None, int | None, str]:
+        row = store.db.execute(
+            "SELECT subscriber_count, video_count, checked_at FROM channels WHERE id = ?",
+            (channel_id,),
+        ).fetchone()
+        return row[0], row[1], row[2]
+
+    assert counts(due) == (9_000_000, 300, utc(clock.now))
+    assert counts(out) == (9_000_000, 300, utc(clock.now))  # left out, but may come back
+    assert counts(fresh) == (50_000, 200, yesterday)  # read in the past week
+    assert counts(gone) == (50_000, 200, utc(clock.now))  # not found: keeps its counts
+    assert counts(CHANNEL)[:2] == (1_000, None)  # has a video: not waiting
+    assert [r["id"] for r in store.waiting_channels()] == [due, fresh, gone]  # reordered
+    youtube.calls.clear()
+    collector.refresh_waiting(clock.now + DAY_S)
+    assert youtube.calls == []  # nothing due again for a week
+
+
+def test_status_names_the_channels_next_in_line_for_a_first_video(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    from hyperstim_api.collector.__main__ import waiting_line
+
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: on the site
+    store = collector.store
+    assert waiting_line(store) == "Waiting for a first video: 0 channels"
+    for i, subscribers in enumerate((20_000, 45_000_000, 300_000, 1_000, 2_000, 3_000)):
+        channel_id = f"UC{i:020d}w"
+        store.upsert_channel(id=channel_id, title=f"Ch{i}", status="in", source="discovery",
+                             subscriber_count=subscribers)  # fmt: skip
+    assert waiting_line(store) == (
+        "Waiting for a first video: 6 channels; next: Ch1 (45,000,000), Ch2 (300,000), "
+        "Ch0 (20,000), Ch5 (3,000), Ch4 (2,000)"
+    )
+
+
 def test_status_shows_the_days_exploring_and_the_channels_catching_up(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
@@ -1333,7 +1452,8 @@ def test_export_is_read_by_the_api(
          "note": "Collecting starts: 150 videos a day, lowest r first; "
                  "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups; "
                  "Thinnest channels first; under 5 eligible a year left out; 3 new a day; "
-                 "A third of downloads for new channels to catch up; at most 3 new a day"}
+                 "A third of downloads for new channels to catch up; at most 3 new a day; "
+                 "New channels join by subscribers, most first; their counts read weekly"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
