@@ -153,7 +153,7 @@ Watch it, then render it:
 ```sh
 cd frontend
 node scripts/social-video.mjs content/blog/<date>-<slug> --serve   # prints an address to open
-node scripts/social-video.mjs content/blog/<date>-<slug>           # writes social-video.mp4 there
+node scripts/social-video.mjs content/blog/<date>-<slug>           # writes <date>-<slug>.mp4 there
 ```
 
 Both download the verses' stretches into a temporary folder first and delete them afterwards (they need the network, `uv` and ffmpeg). Rendering records every frame and takes about six minutes for a one-minute film. `--clips DIR` reuses clips downloaded before (see the script's header). The MP4 holds the channels' footage, so it's never committed (`.gitignore`); post it by hand.

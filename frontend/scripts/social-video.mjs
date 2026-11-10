@@ -6,7 +6,7 @@
 // social-video.json (backend/scripts/social_video_data.py). The script downloads each video's
 // verses to a temporary folder with the backend's yt-dlp, serves the folder and the clips on
 // localhost, records the film frame by frame in Playwright's Chromium and has ffmpeg join the
-// frames and each turn's sound into <folder>/social-video.mp4. The clips are deleted afterwards.
+// frames and each turn's sound into <folder>/<folder's name>.mp4. The clips are deleted afterwards.
 // Neither the clips nor the MP4 are ever committed (CLAUDE.md, Public repository).
 //
 //   --serve      open the film for review instead (prints its address; Ctrl-C stops it)
@@ -38,7 +38,7 @@ if (positionals.length !== 1) {
   process.exit(2);
 }
 const folder = path.resolve(positionals[0]);
-const out = path.resolve(opts.out ?? path.join(folder, "social-video.mp4"));
+const out = path.resolve(opts.out ?? path.join(folder, `${path.basename(folder)}.mp4`));
 const data = JSON.parse(await readFile(path.join(folder, "social-video.json"), "utf8"));
 
 function run(command, args, options = {}) {
