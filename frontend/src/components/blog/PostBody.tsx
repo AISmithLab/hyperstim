@@ -52,8 +52,7 @@ function Block({ slug, props }: { slug: string; props: BlockProps }) {
     content = <YouTubePlayer id={props["data-id"]!} title={captionText(children) || label} />;
   }
   return (
-    // A clip comparison is capped and centered, with its videos still large enough to watch.
-    <figure className={block === "clips" ? "mx-auto my-8 max-w-[56rem]" : "my-8"}>
+    <figure className="my-8">
       {content}
       {caption}
     </figure>

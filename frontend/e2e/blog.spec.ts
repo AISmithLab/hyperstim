@@ -205,6 +205,11 @@ test("a clip comparison puts each video's lane under it on phones, and both lane
     expect(Math.abs(a.y - b.y)).toBeLessThan(2);
     expect(laneA.y).toBeGreaterThan(b.y + b.height);
   }
+  // As wide as the text around it.
+  const figure = (await block.boundingBox())!;
+  const text = (await page.getByText(/^A clip comparison plays two YouTube videos/).boundingBox())!;
+  expect(Math.abs(figure.x - text.x)).toBeLessThan(2);
+  expect(Math.abs(figure.width - text.width)).toBeLessThan(2);
 });
 
 test("a clip comparison's video title leads to that video's page", async ({ page }) => {
