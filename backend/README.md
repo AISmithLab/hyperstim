@@ -151,6 +151,16 @@ uv run python scripts/clip_data.py <slug>
 
 It downloads only the stretches the tabs play into a temporary folder, measures them with the pipeline at the dataset's settings, and deletes them; only titles, times and numbers are written. It also adds the post's videos to `data/blog-videos.txt`, the list of videos the blog embeds, whose thumbnails the API serves like a dataset video's (plan 009, Thumbnails); a test fails if a post embeds a video the list lacks. Needs the network, ffmpeg/ffprobe and deno. `--content-dir` and `--media-dir` point it at other folders.
 
+## Social video data
+
+A post's social video (plan 018, Social video) plays the verses in `frontend/content/blog/<date>-<slug>/social-video.md`. After changing them, re-measure and commit the JSON next to them:
+
+```sh
+uv run python scripts/social_video_data.py ../frontend/content/blog/<date>-<slug>
+```
+
+It measures the verses exactly as `clip_data.py` measures a post's clips (same download and pipeline settings) and writes `social-video.json`. The video itself is rendered in `frontend/` (see `frontend/content/blog/README.md`, Social video).
+
 ## Pipeline
 
 See [`pipeline/README.md`](pipeline/README.md).

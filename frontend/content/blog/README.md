@@ -134,6 +134,24 @@ npm run dev
 
 Open http://localhost:3000/blog/. The page updates as you save. A broken post shows the build's error in the browser.
 
+## Social video
+
+A post can have a short film for X and LinkedIn: its clip comparison played as a 1920 × 1080 video (plan 018, Social video). It isn't shown on the site. Its files live in a folder named like the post, next to it, which the blog never reads as a post: `content/blog/<date>-<slug>/`.
+
+- `social-video.md`: the verses each video plays, as a `::::clips` block (a `cuts` tab, then a `motion` tab).
+- `social-video.json`: the measured verses. After changing a verse, run `uv run python scripts/social_video_data.py ../frontend/content/blog/<date>-<slug>` in `backend/`.
+- `social-video.html`: the film, drawn like the post's widget.
+
+Watch it, then render it:
+
+```sh
+cd frontend
+node scripts/social-video.mjs content/blog/<date>-<slug> --serve   # prints an address to open
+node scripts/social-video.mjs content/blog/<date>-<slug>           # writes social-video.mp4 there
+```
+
+Both download the verses' stretches into a temporary folder first and delete them afterwards (they need the network, `uv` and ffmpeg). Rendering records every frame and takes about six minutes for a one-minute film. `--clips DIR` reuses clips downloaded before (see the script's header). The MP4 holds the channels' footage, so it's never committed (`.gitignore`); post it by hand.
+
 ## Publishing
 
 1. Write the post on the blog's branch, `018-blog`, rebased onto `main` first (`DEVELOPMENT.md`). It stays there, unpublished, until it's merged.

@@ -51,3 +51,6 @@ next-env.d.ts
 
 # generated from art/ by `npm run images`
 /public/images/
+
+# a post's rendered social video (plan 018): third-party footage, never committed
+/content/blog/*/social-video.mp4
