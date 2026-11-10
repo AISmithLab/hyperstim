@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { blogPageHref, formatDate, loadPosts, pageCount, postsOnPage, POSTS_PER_PAGE } from "./posts";
+import { blogPageHref, formatDate, loadPosts, pageCount, plainText, postsOnPage, POSTS_PER_PAGE } from "./posts";
 
 const dirs: string[] = [];
 
@@ -31,8 +31,8 @@ afterEach(() => {
 describe("loadPosts", () => {
   it("reads each post's front matter and text, using the TL;DR as description unless one is set", () => {
     const dir = postsDir({
-      "first-post.md": { title: "First post", date: "2026-11-01", tldr: "It begins." },
-      "second-post.md": { title: '"Second: the sequel"', date: "2026-11-08", tldr: "More.", description: "Searchable." },
+      "2026-11-01-first-post.md": { title: "First post", date: "2026-11-01", tldr: "It begins." },
+      "2026-11-08-second-post.md": { title: '"Second: the sequel"', date: "2026-11-08", tldr: "More.", description: "Searchable." },
     });
     const [second, first] = loadPosts(dir);
     expect(first).toMatchObject({
@@ -48,10 +48,10 @@ describe("loadPosts", () => {
 
   it("sorts newest first, by title within a day, and links each post to its neighbors", () => {
     const dir = postsDir({
-      "a.md": post("2026-10-01"),
-      "b.md": post("2026-11-01", "Banana"),
-      "c.md": post("2026-11-01", "Apple"),
-      "d.md": post("2026-09-15"),
+      "2026-10-01-a.md": post("2026-10-01"),
+      "2026-11-01-b.md": post("2026-11-01", "Banana"),
+      "2026-11-01-c.md": post("2026-11-01", "Apple"),
+      "2026-09-15-d.md": post("2026-09-15"),
     });
     const posts = loadPosts(dir);
     expect(posts.map((p) => p.slug)).toEqual(["c", "b", "a", "d"]);
@@ -63,13 +63,13 @@ describe("loadPosts", () => {
   });
 
   it("has no neighbors for a single post", () => {
-    const [only] = loadPosts(postsDir({ "only.md": post("2026-11-01") }));
+    const [only] = loadPosts(postsDir({ "2026-11-01-only.md": post("2026-11-01") }));
     expect(only.newer).toBeUndefined();
     expect(only.older).toBeUndefined();
   });
 
   it("skips the writing guide and other files", () => {
-    const dir = postsDir({ "README.md": "# Writing guide\n", "notes.txt": "x", "real.md": post("2026-11-01") });
+    const dir = postsDir({ "README.md": "# Writing guide\n", "notes.txt": "x", "2026-11-01-real.md": post("2026-11-01") });
     expect(loadPosts(dir).map((p) => p.slug)).toEqual(["real"]);
   });
 
@@ -85,7 +85,7 @@ describe("loadPosts", () => {
 
   describe("fails on a broken post", () => {
     it.each([
-      ["a missing title", { date: "2026-11-01", tldr: "x" }, /my-post\.md: "title" is missing/],
+      ["a missing title", { date: "2026-11-01", tldr: "x" }, /2026-11-01-my-post\.md: "title" is missing/],
       ["an empty title", { title: '""', date: "2026-11-01", tldr: "x" }, /"title" is missing/],
       ["a missing date", { title: "T", tldr: "x" }, /"date" is missing/],
       ["a missing TL;DR", { title: "T", date: "2026-11-01" }, /"tldr" is missing/],
@@ -94,20 +94,25 @@ describe("loadPosts", () => {
       ["a date in another format", { title: "T", date: "11/01/2026", tldr: "x" }, /"date" must be a real date/],
       ["a date with a time", { title: "T", date: '"2026-11-01 10:00"', tldr: "x" }, /"date" must be a real date/],
     ])("%s", (_, frontMatter, message) => {
-      expect(() => loadPosts(postsDir({ "my-post.md": frontMatter }))).toThrow(message);
+      expect(() => loadPosts(postsDir({ "2026-11-01-my-post.md": frontMatter }))).toThrow(message);
     });
 
-    it("two posts with the same slug", () => {
-      // One URL on a case-insensitive disk (macOS), where the second file replaces the first.
-      const dir = postsDir({ "my-post.md": post("2026-11-01"), "My-Post.md": post("2026-11-02") });
-      if (fs.readdirSync(dir).length < 2) return;
-      expect(() => loadPosts(dir)).toThrow(/same name as/);
+    it("a file whose date isn't the post's", () => {
+      expect(() => loadPosts(postsDir({ "2026-11-02-my-post.md": post("2026-11-01") }))).toThrow(
+        /2026-11-02-my-post\.md: the file name starts with 2026-11-02, but "date" is 2026-11-01/,
+      );
+    });
+
+    it("two posts with the same slug on different dates", () => {
+      const dir = postsDir({ "2026-11-01-my-post.md": post("2026-11-01"), "2026-11-02-my-post.md": post("2026-11-02") });
+      expect(() => loadPosts(dir)).toThrow(/same name as 2026-11-01-my-post\.md, apart from the date; both would be \/blog\/my-post\//);
     });
 
     it.each([
-      ["My-Post.md", /lowercase words joined by hyphens/],
-      ["my post.md", /lowercase words joined by hyphens/],
-      ["page.md", /"page" can't be a post's name/],
+      ["my-post.md", /the post's date, then lowercase words joined by hyphens/],
+      ["2026-11-01-My-Post.md", /the post's date, then lowercase words joined by hyphens/],
+      ["2026-11-01-my post.md", /the post's date, then lowercase words joined by hyphens/],
+      ["2026-11-01-page.md", /"page" can't be a post's name/],
     ])("a file named %s", (name, message) => {
       expect(() => loadPosts(postsDir({ [name]: post("2026-11-01") }))).toThrow(message);
     });
@@ -135,5 +140,13 @@ describe("formatDate", () => {
   it("writes the date out in American English, whatever the time zone", () => {
     expect(formatDate("2026-11-09")).toBe("November 9, 2026");
     expect(formatDate("2026-01-01")).toBe("January 1, 2026");
+  });
+});
+
+describe("plainText", () => {
+  it("drops markdown's emphasis markers, for descriptions taken from the TL;DR", () => {
+    expect(plainText("Meet **HyperStim?**, a *new* way_to_see it.")).toBe("Meet HyperStim?, a new way_to_see it.");
+    expect(plainText("2 * 3 * 4")).toBe("2 * 3 * 4");
+    expect(plainText("Meet ***HyperStim?***.")).toBe("Meet HyperStim?.");
   });
 });

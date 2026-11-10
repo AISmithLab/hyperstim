@@ -4,12 +4,13 @@ import Markdown, { type Components } from "react-markdown";
 import remarkDirective from "remark-directive";
 import remarkGfm from "remark-gfm";
 import YouTubePlayer from "@/components/YouTubePlayer";
+import ClipCompare from "@/components/blog/ClipCompare";
 import { asset } from "@/lib/asset";
 import { rehypeReferences, remarkPost, remarkRehypeOptions } from "@/lib/blog/markdown";
 import { blogDirs } from "@/lib/blog/posts";
 
 // A post's text, rendered at build time (plan 018; STYLE.md, Blog post). No JavaScript is
-// needed to read it; only the YouTube embed's Play button runs any.
+// needed to read it; only the YouTube embeds and the clip comparison run any.
 
 const TEXT_LINK = "font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny";
 const H2 = "mt-[1.8em] mb-[0.5em] font-hand text-2xl leading-snug font-semibold text-navy sm:text-3xl";
@@ -22,9 +23,10 @@ type BlockProps = ComponentProps<"figure"> & {
   "data-alt"?: string;
   "data-poster"?: string;
   "data-id"?: string;
+  "data-clips"?: string;
 };
 
-/** A figure, video or YouTube embed with its numbered caption ("Figure 1.", "Video 1."). */
+/** A figure, video, YouTube embed or clip comparison with its numbered caption ("Figure 1.", "Video 1."). */
 function Block({ slug, props }: { slug: string; props: BlockProps }) {
   const { children, "data-block": block, "data-number": number } = props;
   const media = (file?: string) => asset(`/blog-media/${slug}/${file}`);
@@ -44,11 +46,14 @@ function Block({ slug, props }: { slug: string; props: BlockProps }) {
         <source src={media(props["data-src"])} type="video/mp4" />
       </video>
     );
+  } else if (block === "clips") {
+    content = <ClipCompare clips={JSON.parse(props["data-clips"]!)} />;
   } else {
     content = <YouTubePlayer id={props["data-id"]!} title={captionText(children) || label} />;
   }
   return (
-    <figure className="my-8">
+    // A clip comparison is capped and centered, with its videos still large enough to watch.
+    <figure className={block === "clips" ? "mx-auto my-8 max-w-[56rem]" : "my-8"}>
       {content}
       {caption}
     </figure>
@@ -88,7 +93,8 @@ function components(slug: string): Components {
     blockquote: (props) => (
       <blockquote {...dom(props)} className="mb-[1.1em] border-l-4 border-navy/15 pl-4 italic [&>p:last-child]:mb-0" />
     ),
-    strong: (props) => <strong {...dom(props)} className="font-bold text-navy" />,
+    // Bold is navy; bold italic (the site's name, ***HyperStim?***) keeps the text's color.
+    strong: (props) => <strong {...dom(props)} className="font-bold text-navy in-[em]:text-current" />,
     hr: () => <hr className="my-8 border-navy/10" />,
     code: (props) => <code {...dom(props)} className="rounded bg-navy/5 px-1 font-mono text-[0.9em]" />,
     pre: (props) => (

@@ -2,12 +2,12 @@
 
 How to write, preview and publish a post on the site's blog ([plan 018](../../../plans/018-blog.md)). This guide stays in the repo; it is not a post and never appears on the site.
 
-The example post, [`src/lib/blog/fixtures/every-element.md`](../../src/lib/blog/fixtures/every-element.md), uses every element below. It is also the blog's test post, so everything it shows is known to work. Copy from it.
+The example post, [`src/lib/blog/fixtures/2026-11-09-every-element.md`](../../src/lib/blog/fixtures/2026-11-09-every-element.md), uses every element below. It is also the blog's test post, so everything it shows is known to work. Copy from it.
 
 ## Files
 
-- **The post:** one markdown file, `frontend/content/blog/<slug>.md`. The slug is the file's name and becomes the post's URL, `/blog/<slug>/`. Use lowercase words joined by hyphens: `why-cuts-are-not-everything.md`.
-- **Its media** (images, videos, posters): `frontend/public/blog-media/<slug>/`, a folder named like the post. In the post, refer to them by file name only.
+- **The post:** one markdown file, `frontend/content/blog/<date>-<slug>.md`, starting with the post's `date` so the folder lists posts in order: `2026-11-09-why-cuts-are-not-everything.md`. The slug, the rest of the name, becomes the post's URL, `/blog/why-cuts-are-not-everything/`. Use lowercase words joined by hyphens. If the publishing day changes, rename the file along with `date`.
+- **Its media** (images, videos, posters): `frontend/public/blog-media/<slug>/`, a folder named after the slug (no date). In the post, refer to them by file name only.
 
 ## Front matter
 
@@ -26,7 +26,7 @@ description: Why scene cuts alone don't tell you how stimulating a kids' video i
 |---|---|---|
 | `title` | required | The post's heading, and its name in search results ("<title> - HyperStim?"). |
 | `date` | required | `YYYY-MM-DD`. Posts are listed newest first. |
-| `tldr` | required | Two or three sentences in the yellow box at the top, and under the title in the list. |
+| `tldr` | required | Two or three sentences in the TL;DR box at the top, and under the title in the list. `**bold**` and `*italic*` work here; put the text in quotes if it starts with `*` or holds a `:` followed by a space. |
 | `description` | optional | What search results and link previews show. Without it they show the TL;DR. **At most 155 characters**: if the TL;DR is longer, add a description (a test checks this). |
 
 There is no author, reading time or draft field. A post that isn't ready stays on its branch (see **Publishing**).
@@ -64,7 +64,32 @@ A YouTube video, embedded:
 
 - The `id` is the 11 characters after `watch?v=` in the video's link.
 - Nothing loads from YouTube until the reader presses Play.
+- Add the video's ID to `backend/data/blog-videos.txt`, so its thumbnail shows (the API serves thumbnails only for videos it knows; a test reminds you). Videos in a comparison below are added for you.
 - Videos and YouTube embeds share one count ("Video 1.", "Video 2."), apart from figures.
+
+### Comparing two videos
+
+A clip comparison plays two YouTube videos side by side, with a tab per stretch (a verse, say). As a video plays, a chart under it fills in: a tick for each cut to a new shot, or a line for how much the picture moves. One video plays at a time.
+
+```markdown
+::::clips[The caption.]{a=enq9Ge90o1w b=jyaUWUFH3BA}
+::cuts[Scene changes]{a=0:14.5-0:30.5 b=0:03-0:21.6}
+::motion[Motion]{a=0:36-0:51.5 b=0:21.6-0:39.6}
+::::
+```
+
+- `a` and `b` are the two videos' IDs. Each tab is `::cuts` or `::motion`, with its label and the stretch of each video as `minutes:seconds-minutes:seconds` (tenths allowed).
+- One tab is fine; with two or more, readers switch between them.
+- The numbers come from `public/blog-media/<slug>/clips.json`. Make it (and remake it after changing a block) with:
+
+  ```sh
+  cd backend
+  uv run python scripts/clip_data.py <slug>
+  ```
+
+  It downloads only the stretches, to a temporary folder it deletes, and measures them as the dataset does. The build fails while a block and `clips.json` don't match. It also lists both videos in `backend/data/blog-videos.txt`, for their thumbnails.
+- Check that both videos play when embedded: preview at `localhost` (not `127.0.0.1` or a server's IP address, where YouTube refuses some videos), and from another computer through an SSH tunnel (`ssh -L 3000:localhost:3000 <server>`).
+- It counts as a video ("Video 1.").
 
 ## References
 
@@ -94,7 +119,9 @@ The build fails, naming the post's file and the problem, when:
 - `title`, `date` or `tldr` is missing, or the date isn't a real `YYYY-MM-DD` date;
 - a media file the post refers to isn't in its folder;
 - a figure has no `alt`, a video no `poster`, or a YouTube embed no valid `id`;
-- two posts have the same file name (also differing only in upper and lower case);
+- a clip comparison lacks a caption, a tab or valid times, or doesn't match its `clips.json`;
+- a file name doesn't start with the post's `date`;
+- two posts have the same slug (also on different dates);
 - a citation `[^key]` has no source, or a source is never cited;
 - a heading is `#` or deeper than `###`, or an image is written with `![…](…)` instead of `::figure`.
 

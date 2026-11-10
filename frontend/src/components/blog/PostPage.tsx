@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { formatDate, postHref, type Post, type PostLink } from "@/lib/blog/posts";
+import InlineText from "./InlineText";
 import PostBody from "./PostBody";
 
 // One blog post (plan 018; STYLE.md, Blog post): back link, title, date, the TL;DR box, the text
@@ -21,11 +22,13 @@ export default function PostPage({ post, mediaDir }: { post: Post; mediaDir?: st
         <p className="mt-2.5 text-ink">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
         </p>
-        <section aria-labelledby="tldr" className="mt-6 rounded-2xl bg-butter px-5 py-4.5">
+        <section aria-labelledby="tldr" className="mt-6 rounded-2xl border border-navy/15 px-5 py-4.5">
           <h2 id="tldr" className="font-hand text-lg font-semibold text-navy">
             TL;DR
           </h2>
-          <p className="mt-1 text-[1.0625rem] leading-relaxed">{post.tldr}</p>
+          <p className="mt-1 text-[1.0625rem] leading-relaxed">
+            <InlineText>{post.tldr}</InlineText>
+          </p>
         </section>
         <PostBody slug={post.slug} body={post.body} mediaDir={mediaDir} />
         <Neighbors newer={post.newer} older={post.older} />

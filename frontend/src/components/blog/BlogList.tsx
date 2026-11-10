@@ -2,6 +2,7 @@ import Link from "next/link";
 import Pagination from "@/components/Pagination";
 import { asset } from "@/lib/asset";
 import { blogPageHref, formatDate, postHref, type Post } from "@/lib/blog/posts";
+import InlineText from "./InlineText";
 
 // The blog's post list (plan 018; STYLE.md, Blog list page): page 1 at /blog/, later pages at
 // /blog/page/2/ and on, each built as its own static page.
@@ -32,7 +33,9 @@ export default function BlogList({ posts, page, pageCount }: { posts: Post[]; pa
                     {post.title}
                   </Link>
                 </h2>
-                <p className="mt-2">{post.tldr}</p>
+                <p className="mt-2">
+                  <InlineText>{post.tldr}</InlineText>
+                </p>
               </li>
             ))}
           </ol>

@@ -141,6 +141,16 @@ The privacy policy (`/privacy`, plan 009) promises what the server keeps; keep t
 - Needs ffmpeg/ffprobe and deno (see Prerequisites); `deno` must be on the API's `PATH`. On the server, `deploy/setup.sh` takes care of both.
 - The progress estimate uses typical step durations (`TYPICAL_S` in `analysis.py`); each finished analysis logs its step times, so re-time them if the server changes.
 
+## Blog clip data
+
+A blog post's clip comparisons (`::::clips` blocks, plan 018) chart cuts and motion from `frontend/public/blog-media/<slug>/clips.json`. After adding or changing a block, re-measure and commit the JSON:
+
+```sh
+uv run python scripts/clip_data.py <slug>
+```
+
+It downloads only the stretches the tabs play into a temporary folder, measures them with the pipeline at the dataset's settings, and deletes them; only titles, times and numbers are written. It also adds the post's videos to `data/blog-videos.txt`, the list of videos the blog embeds, whose thumbnails the API serves like a dataset video's (plan 009, Thumbnails); a test fails if a post embeds a video the list lacks. Needs the network, ffmpeg/ffprobe and deno. `--content-dir` and `--media-dir` point it at other folders.
+
 ## Pipeline
 
 See [`pipeline/README.md`](pipeline/README.md).

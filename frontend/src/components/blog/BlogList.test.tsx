@@ -1,7 +1,7 @@
 import path from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { loadPosts, pageCount, postsOnPage } from "@/lib/blog/posts";
+import { loadPosts, pageCount, plainText, postsOnPage } from "@/lib/blog/posts";
 import { expectNoAxeViolations } from "@/test/axe";
 import BlogList from "./BlogList";
 
@@ -28,7 +28,7 @@ describe("BlogList", () => {
     );
     expect(first.querySelector("time")).toHaveAttribute("datetime", "2026-11-09");
     expect(first).toHaveTextContent("November 9, 2026");
-    expect(first).toHaveTextContent(posts[0].tldr);
+    expect(first).toHaveTextContent(plainText(posts[0].tldr));
     expect(rows()[1]).toHaveTextContent("Test post 01");
   });
 

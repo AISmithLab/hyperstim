@@ -141,3 +141,22 @@ test("blog: the post's video keeps its 16:9 box, and newer / older sit side by s
     expect(older.y, "stacked").toBeGreaterThan(newer.y);
   }
 });
+
+test("blog: a clip comparison's videos keep 16:9, each lane under its video on phones, both under the videos from 30rem", async ({ page }) => {
+  await page.goto("/blog/every-element/");
+  const block = page.getByRole("figure").filter({ hasText: "Two videos of the same nursery rhyme." });
+  await block.scrollIntoViewIfNeeded();
+  const play = (side: string) => block.getByRole("button", { name: new RegExp(`^Play video\\W+${side}: `) });
+  const box = async (side: string) => (await play(side).locator("xpath=../..").boundingBox())!;
+  const [a, b] = [await box("A"), await box("B")];
+  expect(Math.abs(a.width / a.height - 16 / 9)).toBeLessThan(0.05);
+  const laneA = (await block.getByRole("slider", { name: /^Video A: / }).boundingBox())!;
+  if ((page.viewportSize()?.width ?? 0) >= 640) {
+    expect(Math.abs(a.y - b.y), "videos side by side").toBeLessThan(2);
+    expect(laneA.y, "lanes under both videos").toBeGreaterThan(b.y + b.height);
+  } else {
+    expect(laneA.y, "lane A under video A").toBeGreaterThan(a.y + a.height);
+    expect(b.y, "video B under lane A").toBeGreaterThan(laneA.y + laneA.height);
+  }
+  expect(await coveredControls(page)).toEqual([]);
+});

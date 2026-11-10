@@ -1,7 +1,7 @@
 import path from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { loadPosts } from "@/lib/blog/posts";
+import { loadPosts, plainText } from "@/lib/blog/posts";
 import { expectNoAxeViolations } from "@/test/axe";
 import PostPage from "./PostPage";
 
@@ -22,7 +22,8 @@ describe("PostPage", () => {
     expect(screen.getByRole("heading", { level: 1, name: "An example post with every element" })).toBeInTheDocument();
     expect(screen.getByText("November 9, 2026")).toHaveAttribute("datetime", "2026-11-09");
     const tldr = screen.getByRole("region", { name: "TL;DR" });
-    expect(tldr).toHaveTextContent(bySlug("every-element").tldr);
+    expect(tldr).toHaveTextContent(plainText(bySlug("every-element").tldr));
+    expect(within(tldr).getByText("each thing").tagName).toBe("STRONG"); // **bold** in the front matter
     expect(screen.getByRole("heading", { level: 2, name: "Headings" })).toBeInTheDocument();
   });
 

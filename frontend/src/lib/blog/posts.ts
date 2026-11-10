@@ -22,8 +22,9 @@ export type Post = {
   title: string;
   /** YYYY-MM-DD */
   date: string;
+  /** May hold **bold** and *italic*. */
   tldr: string;
-  /** For search results and link previews; the TL;DR when not set. */
+  /** For search results and link previews; the TL;DR (as plain text) when not set. */
   description: string;
   /** The markdown after the front matter. */
   body: string;
@@ -31,7 +32,9 @@ export type Post = {
   older?: PostLink;
 };
 
-/** A slug is the file's name and the post's URL: lowercase words joined by hyphens. */
+/** A post's file name: its date, then its slug (the URL), so the folder lists posts in date order. */
+const FILE_NAME = /^(\d{4}-\d{2}-\d{2})-(.+)\.md$/;
+/** A slug is lowercase words joined by hyphens. */
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /** Slugs that are taken by the blog's own pages (`/blog/page/2/`). */
 const RESERVED = new Set(["page"]);
@@ -60,10 +63,16 @@ function requiredText(data: Record<string, unknown>, field: string, file: string
   return value.trim();
 }
 
+/** Text without markdown's emphasis markers: "***HyperStim?***" becomes "HyperStim?". */
+export function plainText(text: string): string {
+  return text.replace(/(\*\*\*|\*\*|\*)(\S(?:.*?\S)?)\1/g, "$2");
+}
+
 function readPost(dir: string, file: string): Omit<Post, "newer" | "older"> {
-  const slug = file.slice(0, -".md".length);
-  if (!SLUG.test(slug)) {
-    throw new PostError(file, "the file name must be lowercase words joined by hyphens, like my-first-post.md.");
+  const name = FILE_NAME.exec(file);
+  const slug = name?.[2] ?? "";
+  if (!name || !SLUG.test(slug)) {
+    throw new PostError(file, "the file name must be the post's date, then lowercase words joined by hyphens, like 2026-11-09-my-first-post.md.");
   }
   if (RESERVED.has(slug)) throw new PostError(file, `"${slug}" can't be a post's name: the blog uses it for its own pages.`);
   // Options (even none) turn off gray-matter's cache, whose copies lose the raw front matter.
@@ -73,7 +82,8 @@ function readPost(dir: string, file: string): Omit<Post, "newer" | "older"> {
   if (data.date === undefined) throw new PostError(file, `"date" is missing in the front matter.`);
   const date = readDate(data.date, frontMatter);
   if (!date) throw new PostError(file, `"date" must be a real date written as YYYY-MM-DD.`);
-  const description = data.description === undefined ? tldr : requiredText(data, "description", file);
+  if (date !== name[1]) throw new PostError(file, `the file name starts with ${name[1]}, but "date" is ${date}; they must match.`);
+  const description = data.description === undefined ? plainText(tldr) : requiredText(data, "description", file);
   return { slug, title, date, tldr, description, body: content };
 }
 
@@ -88,15 +98,15 @@ export function loadPosts(dir = blogDirs().content): Post[] {
     .filter((file) => file.endsWith(".md") && file.toLowerCase() !== "readme.md")
     .sort();
   const seen = new Map<string, string>();
-  for (const file of files) {
-    // Two files that differ only in case would be one URL on a case-insensitive disk.
-    const key = file.toLowerCase();
-    const other = seen.get(key);
-    if (other) throw new PostError(file, `it has the same name as ${other}.`);
-    seen.set(key, file);
-  }
   const posts: Post[] = files
-    .map((file) => readPost(dir, file))
+    .map((file) => {
+      const post = readPost(dir, file);
+      // The URL is the slug alone, so two dates can't share one.
+      const other = seen.get(post.slug);
+      if (other) throw new PostError(file, `it has the same name as ${other}, apart from the date; both would be /blog/${post.slug}/.`);
+      seen.set(post.slug, file);
+      return post;
+    })
     .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
   return posts.map((post, i) => ({
     ...post,
