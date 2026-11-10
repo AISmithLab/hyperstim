@@ -38,36 +38,40 @@
 // Scene changes: A's verse, then B's; the switch to Motion and a swipe; Motion: A's, then B's.
 const LEAD = 0.6; // before A's first verse
 const GAP = 0.6; // between A's verse and B's
-const SWIPE = 0.7; // the swipe to Motion, starting as B's first verse ends
+const SWIPE = 0.7; // the swipe to Motion, after the rest that follows B's first verse
 const AFTER_SWIPE = 0.2;
-const REVEAL = 0.3; // a lane fades in over this, ending as its video starts
-const BUTTON_FADE = 0.35; // the Play button fades over this once its video starts
+const REVEAL = 0.3; // a side comes back from faded over this, ending as its video starts
+const DIM = 0.8; // how far the side that isn't playing fades
+const HOLD = REVEAL + 0.5; // after B's verse: A comes back, then both rest
 
 // ---- Look: the post's widget (ClipCompare; STYLE.md, Clip comparison) ----
 // Shapes at Z times the widget's CSS pixels, text and letters at F times so they read in a feed.
-const W = 1920, H = 1080, Z = 1.6, F = 2.3;
-const C = { primary: "#0f4a9c", navy: "#0f2e8a", ink: "#4a5262", sunny: "#f8d040", white: "#ffffff", mid: "#f8a048" };
+// Laid out in two columns: each side's chart sits under its own video.
+const W = 1920, H = 1080, Z = 1.6, F = 3.2;
+const C = { navy: "#0f2e8a", ink: "#4a5262", sunny: "#f8d040", white: "#ffffff", mid: "#f8a048" };
 const SANS = "Nunito, system-ui, sans-serif";
 const TABS = ["Scene changes", "Motion"];
 const MOTION_TOP = 30; // the gridlines run 0 to 30; a higher value rises above the top line
-const NUM_W = 72 * F; // the number column on the right of each lane
 
 const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
 const ease = (p) => ((p = clamp(p)), p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2);
 const pop = (p) => ((p = clamp(p)), 1 + 2.9 * (p - 1) ** 3 + 1.9 * (p - 1) ** 2); // a slight overshoot
 
-// The layout, top to bottom, centered in the frame.
-const PLOT_TOP = 6 * Z, PLOT_H = 64 * Z, PLOT_BASE = PLOT_TOP + PLOT_H;
-const LANE_A = PLOT_BASE + 6 * Z; // lane A: the plot only
-const LANE_B = LANE_A + 12 * F * 1.15; // lane B: the plot and the time labels, shared by both lanes
-const LANE_GAP = 10 * Z + 16, PANEL_PAD = 12 * Z + 12; // room for gridline labels and peaks over 30
+// The layout, top to bottom, centered in the frame. Gaps next to text grow with the text (F);
+// gaps between shapes stay at the shapes' scale (Z). The charts take the height that's left.
+const TOP = 36, VIDEO_H = 470;
+const SWITCH_H = 36 * F; // a little lower than the widget's 44 px
+const SWITCH_GAP = 18 * F, HEAD_H = 34 * F, HEAD_GAP = 6 * F, VIDEO_GAP = 20 * Z;
+const PANEL_PAD = 4 * F, PANEL_BOTTOM = 8 * Z + 2; // room for peaks over 30
+const LABELS_H = 12 * F * 1.15; // the time labels under each chart
+const PLOT_TOP = 6 * Z;
+const PLOT_H = H - 2 * TOP - SWITCH_H - SWITCH_GAP - HEAD_H - HEAD_GAP - VIDEO_H - VIDEO_GAP - PANEL_PAD - PLOT_TOP - 6 * Z - LABELS_H - PANEL_BOTTOM;
+const PLOT_BASE = PLOT_TOP + PLOT_H;
 const L = (() => {
-  const top = 36, pillH = 44 * F, gap = 14 * Z + 24, headH = 34 * F;
-  const panelH = PANEL_PAD + LANE_A + LANE_GAP + LANE_B + 8 * Z + 2;
-  const vh = Math.floor(H - 2 * top - (pillH + gap + headH + 6 * Z + 20 * Z + panelH)), vw = (vh * 16) / 9;
-  const width = 2 * vw + 20 * Z, x0 = (W - width) / 2;
-  const head = top + pillH + gap, video = head + headH + 6 * Z, panel = video + vh + 20 * Z;
-  return { top, vw, vh, width, x0, head, video, panel, panelH, xs: [x0, x0 + vw + 20 * Z] };
+  const top = TOP, vh = VIDEO_H, vw = (vh * 16) / 9;
+  const width = 2 * vw + VIDEO_GAP, x0 = (W - width) / 2;
+  const head = top + SWITCH_H + SWITCH_GAP, video = head + HEAD_H + HEAD_GAP, panel = video + vh + VIDEO_GAP;
+  return { top, vw, vh, width, x0, head, video, panel, xs: [x0, x0 + vw + VIDEO_GAP] };
 })();
 
 let DATA, TURNS, SWITCH, DURATION;
@@ -79,9 +83,9 @@ function timeline(data) {
   const turns = [];
   let t = LEAD;
   const add = (tab, side) => { turns.push({ kind: tab.kind, side, t0: t, len: len(tab[side]), start: tab[side].start }); t += len(tab[side]); };
-  add(cuts, "a"); t += GAP; add(cuts, "b");
+  add(cuts, "a"); t += GAP; add(cuts, "b"); t += HOLD;
   const at = t; t += SWIPE + AFTER_SWIPE;
-  add(motion, "a"); t += GAP; add(motion, "b");
+  add(motion, "a"); t += GAP; add(motion, "b"); t += HOLD;
   return { turns, switchAt: at, duration: Math.round(t * 100) / 100 };
 }
 
@@ -108,40 +112,30 @@ function headLine(ctx, side, x, y, w) { // the letter, centered on the title; th
   text(ctx, fit(ctx, video.title, `600 ${14 * F}px ${SANS}`, room), tx, y + 14 * F, { size: 14 * F, weight: 600 });
   text(ctx, fit(ctx, video.channel, `400 ${12 * F}px ${SANS}`, room), tx, y + 31 * F, { size: 12 * F, color: C.ink });
 }
-function switchControl(ctx, active, slide, cx, y) { // SegmentedControl; `slide` 0 → 1 moves the pill to `active`
-  const size = 14 * F, h = 44 * F, pad = 4 * F;
+// The widget's SegmentedControl, showing only the current measure: one pill in its border. `slide` 0 → 1
+// changes it to `active`: the label fades out, the pill takes the new label's width and the new label fades in.
+function switchControl(ctx, active, slide, cx, y) {
+  const size = 14 * F, h = SWITCH_H, pad = 4 * F;
   ctx.save(); ctx.font = `600 ${size}px ${SANS}`;
-  const pw = TABS.map((l) => ctx.measureText(l).width + 24 * F), total = pw[0] + pw[1] + 4 * pad, x0 = cx - total / 2;
-  rr(ctx, x0, y, total, h, h / 2); ctx.fillStyle = C.white; ctx.fill();
+  const pw = TABS.map((l) => ctx.measureText(l).width + 24 * F);
+  const from = 1 - active, p = ease(slide), w = pw[from] + (pw[active] - pw[from]) * p;
+  rr(ctx, cx - w / 2 - pad, y, w + 2 * pad, h, h / 2); ctx.fillStyle = C.white; ctx.fill();
   ctx.strokeStyle = "rgba(15,46,138,.15)"; ctx.lineWidth = Z; ctx.stroke();
-  const xs = [x0 + pad, x0 + pw[0] + 3 * pad], from = 1 - active, p = ease(slide); // the same gap to the border on every side
-  rr(ctx, xs[from] + (xs[active] - xs[from]) * p, y + pad, pw[from] + (pw[active] - pw[from]) * p, h - 2 * pad, (h - 2 * pad) / 2);
-  ctx.fillStyle = C.sunny; ctx.fill();
+  rr(ctx, cx - w / 2, y + pad, w, h - 2 * pad, (h - 2 * pad) / 2); ctx.fillStyle = C.sunny; ctx.fill();
   // Centered on the capitals, not the font's line box, which sits the text a little high.
   const cap = ctx.measureText("M").actualBoundingBoxAscent;
+  for (const [i, alpha] of [[from, 1 - clamp(2 * p)], [active, clamp(2 * p - 1)]]) { // out, then in
+    if (alpha <= 0) continue;
+    ctx.globalAlpha = alpha; text(ctx, TABS[i], cx, y + h / 2 + cap / 2, { size, weight: 600, align: "center" });
+  }
   ctx.restore();
-  TABS.forEach((l, i) => text(ctx, l, xs[i] + pw[i] / 2, y + h / 2 + cap / 2, { size, weight: 600, align: "center" }));
 }
-// A video, rounded as the widget's preview. Before its turn it looks as on the site before Play:
-// a navy/20 tint and the "Play video" button, which presses and fades as its turn starts.
-function drawVideo(ctx, video, x, y, w, h, untilStart) {
+// A video, rounded as the widget's preview; `dim` 0 → 1 fades it toward white while the other side plays.
+function drawVideo(ctx, video, x, y, w, h, dim) {
   ctx.save(); rr(ctx, x, y, w, h, 16 * Z); ctx.clip();
   ctx.fillStyle = "#e7eaf3"; ctx.fillRect(x, y, w, h);
   if (video.readyState >= 2) ctx.drawImage(video, x, y, w, h);
-  if (untilStart > -BUTTON_FADE) {
-    const press = untilStart >= 0 && untilStart < 0.15 ? 1 - 0.06 * Math.sin((1 - untilStart / 0.15) * Math.PI) : untilStart < 0 ? 0.94 : 1;
-    ctx.globalAlpha = untilStart >= 0 ? 1 : 1 + untilStart / BUTTON_FADE;
-    ctx.fillStyle = "rgba(15,46,138,.20)"; ctx.fillRect(x, y, w, h);
-    const k = F * 0.85, label = "Play video", size = 16 * k;
-    ctx.font = `700 ${size}px ${SANS}`;
-    const bh = 48 * k, bw = ctx.measureText(label).width + 76 * k;
-    ctx.translate(x + w / 2, y + h / 2); ctx.scale(press, press);
-    rr(ctx, -bw / 2, -bh / 2, bw, bh, bh / 2); ctx.fillStyle = C.primary; ctx.fill();
-    const ix = -bw / 2 + 24 * k, is = 20 * k; // the play triangle (size-5), then the label
-    ctx.beginPath(); ctx.moveTo(ix + is * 0.33, -is * 0.38); ctx.lineTo(ix + is * 0.33, is * 0.38); ctx.lineTo(ix + is * 0.82, 0); ctx.closePath();
-    ctx.lineJoin = "round"; ctx.lineWidth = 2 * k; ctx.fillStyle = ctx.strokeStyle = C.white; ctx.fill(); ctx.stroke();
-    ctx.textBaseline = "middle"; ctx.fillText(label, ix + is + 8 * k, 1); // white, bold (font and color set above)
-  }
+  if (dim > 0) { ctx.fillStyle = `rgba(255,255,255,${DIM * dim})`; ctx.fillRect(x, y, w, h); }
   ctx.restore();
 }
 function playhead(ctx, x) {
@@ -191,58 +185,93 @@ function motionChart(ctx, part, ct, w, end, live) {
   if (live && ct < len - 0.05) playhead(ctx, X(ct));
   ctx.restore();
 }
-function laneNumber(ctx, kind, part, ct, x, y) { // the figure over its line, centered on the plot
+/** A chart's number at ct: the figure, its unit after it, and the rest of the line under them. */
+function numberText(kind, part, ct) {
   const len = part.end - part.start;
-  let figure, line;
   if (kind === "cuts") {
     const n = part.cuts.filter((c) => c <= ct).length;
-    figure = String(n); line = `${n === 1 ? "cut" : "cuts"} in ${ct >= len - 0.05 ? Math.round(len) : Math.floor(ct)} s`;
-  } else {
-    const v = part.motion.slice(0, Math.floor(ct / part.step) + 1).filter((x) => x !== null);
-    figure = (v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0).toFixed(1); line = "% of width/s";
+    return { figure: String(n), unit: n === 1 ? "cut" : "cuts", line: `in ${ct >= len - 0.05 ? Math.round(len) : Math.floor(ct)} s` };
   }
+  const v = part.motion.slice(0, Math.floor(ct / part.step) + 1).filter((x) => x !== null);
+  return { figure: (v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0).toFixed(1), unit: "%", line: "of width/s" };
+}
+function numberWidths(ctx, n) { // the figure's width and the whole block's
+  ctx.save();
+  ctx.font = `700 ${22 * F}px ${SANS}`; const fw = ctx.measureText(n.figure).width;
+  ctx.font = `400 ${12 * F}px ${SANS}`; const space = ctx.measureText(" ").width;
+  const block = Math.max(fw + space + ctx.measureText(n.unit).width, ctx.measureText(n.line).width);
+  ctx.restore();
+  return { fw, space, block };
+}
+/** The widest a measure's number gets on either side: the room the charts leave for it. */
+const NUMBER_W = {};
+function numberWidth(ctx, kind) {
+  if (!(kind in NUMBER_W)) {
+    const tab = DATA.tabs[kind === "cuts" ? 0 : 1];
+    let w = 0;
+    for (const s of ["a", "b"]) for (let ct = 0; ct <= tab[s].end - tab[s].start + 0.05; ct += 0.05) w = Math.max(w, numberWidths(ctx, numberText(kind, tab[s], ct)).block);
+    NUMBER_W[kind] = Math.ceil(w);
+  }
+  return NUMBER_W[kind];
+}
+function chartNumber(ctx, kind, part, ct, right, y) { // the figure and its unit over the rest of the line, ending at `right`
+  const n = numberText(kind, part, ct), { fw, space, block } = numberWidths(ctx, n), x = right - block;
   const lh = 12 * F * 1.25, top = y + PLOT_TOP + (PLOT_H - (22 * F * 1.25 + lh)) / 2;
-  text(ctx, figure, x, top + 22 * F, { size: 22 * F, weight: 700 });
-  text(ctx, line, x, top + 22 * F * 1.25 + lh - 3 * F, { size: 12 * F, color: C.ink });
+  text(ctx, n.figure, x, top + 22 * F, { size: 22 * F, weight: 700 });
+  text(ctx, n.unit, x + fw + space, top + 22 * F, { size: 12 * F, color: C.ink });
+  text(ctx, n.line, x, top + 22 * F * 1.25 + lh - 3 * F, { size: 12 * F, color: C.ink });
 }
 
 function draw(ctx, t, V) {
   const swipe = clamp((t - SWITCH) / SWIPE), p = ease(swipe);
   ctx.fillStyle = C.white; ctx.fillRect(0, 0, W, H);
   switchControl(ctx, t >= SWITCH ? 1 : 0, t >= SWITCH ? swipe : 1, W / 2, L.top);
-  ["a", "b"].forEach((s, i) => headLine(ctx, s, L.xs[i], L.head, L.vw));
-  // The videos and the panel swipe as one: Scene changes out to the left, Motion in from the right.
+  // The titles stay put through the swipe, fading with their videos (blending the two measures' fades).
+  const from = sideDims(t, "cuts"), to = sideDims(t, "motion");
+  ["a", "b"].forEach((s, i) => {
+    ctx.save(); ctx.globalAlpha = 1 - DIM * (from[s] + (to[s] - from[s]) * p);
+    headLine(ctx, s, L.xs[i], L.head, L.vw); ctx.restore();
+  });
+  // The videos and charts swipe as one: Scene changes out to the left, Motion in from the right.
   if (swipe < 1) scene(ctx, t, V, "cuts", -p * W);
   if (swipe > 0) scene(ctx, t, V, "motion", (1 - p) * W);
 }
-function scene(ctx, t, V, kind, dx) {
-  const tab = DATA.tabs[kind === "cuts" ? 0 : 1];
-  const turns = Object.fromEntries(TURNS.filter((u) => u.kind === kind).map((u) => [u.side, u]));
-  const end = Math.max(turns.a.len, turns.b.len); // the axis ends with the longer verse
-  const cx = L.x0 + 16 * Z + 24 * F + 8 * Z, cw = L.width - 32 * Z - 24 * F - NUM_W - 16 * Z;
-  ctx.save(); ctx.translate(dx, 0);
-  ["a", "b"].forEach((s, i) => drawVideo(ctx, V[`${s}-${kind}`], L.xs[i], L.video, L.vw, L.vh, turns[s].t0 - t));
-  rr(ctx, L.x0 + 0.5, L.panel + 0.5, L.width - 1, L.panelH - 1, 16 * Z);
-  ctx.strokeStyle = "rgba(15,46,138,.15)"; ctx.lineWidth = Z; ctx.stroke();
-  ["a", "b"].forEach((s, i) => {
-    const u = turns[s], shown = ease((t - u.t0 + REVEAL) / REVEAL);
-    if (shown <= 0) return; // a lane starts blank and fades in just before its video starts
-    const ct = clamp(t - u.t0, 0, u.len), live = t >= u.t0 && t < u.t0 + u.len, y = L.panel + PANEL_PAD + i * (LANE_A + LANE_GAP);
-    const part = tab[s];
-    ctx.save(); ctx.globalAlpha = shown;
-    letter(ctx, s, L.x0 + 16 * Z, y + PLOT_TOP + PLOT_H / 2 - 12 * F);
-    ctx.save(); ctx.translate(cx, y);
+/** One side: its video, and under it its chart with time labels and number. */
+function column(ctx, t, V, kind, u, s, x, end, dim) {
+  drawVideo(ctx, V[`${s}-${kind}`], x, L.video, L.vw, L.vh, dim);
+  const part = DATA.tabs[kind === "cuts" ? 0 : 1][s], live = t >= u.t0 && t < u.t0 + u.len;
+  const nw = numberWidth(ctx, kind), cw = L.vw - nw - 8 * Z, y = L.panel + PANEL_PAD, X = (kind === "cuts" ? cutsX : motionX)(cw, end);
+  // Before its turn the chart is whole; it gives way to the drawing from 0 as the turn comes.
+  const fresh = ease((t - u.t0 + REVEAL) / REVEAL);
+  const states = [[u.len, 1 - clamp(2 * fresh)], [clamp(t - u.t0, 0, u.len), clamp(2 * fresh - 1)]]; // out, then in
+  ctx.save(); ctx.globalAlpha *= 1 - DIM * dim;
+  ctx.save(); ctx.translate(x, y); timeLabels(ctx, X, end); ctx.restore();
+  for (const [ct, alpha] of states) {
+    if (alpha <= 0) continue;
+    ctx.save(); ctx.globalAlpha *= alpha;
+    ctx.save(); ctx.translate(x, y);
     if (kind === "cuts") cutsChart(ctx, part, ct, cw, end, live); else motionChart(ctx, part, ct, cw, end, live);
     ctx.restore();
-    laneNumber(ctx, kind, part, ct, cx + cw + 8 * Z, y);
+    chartNumber(ctx, kind, part, ct, x + L.vw, y); // the block ends at the video's right edge
     ctx.restore();
-  });
-  // One set of time labels: in with lane A, then dropping under B while B's lane fades in.
-  if (t >= turns.a.t0 - REVEAL) {
-    const X = (kind === "cuts" ? cutsX : motionX)(cw, end), yA = L.panel + PANEL_PAD, yB = yA + LANE_A + LANE_GAP;
-    ctx.save(); ctx.globalAlpha = ease((t - turns.a.t0 + REVEAL) / REVEAL);
-    ctx.translate(cx, yA + (yB - yA) * ease((t - turns.b.t0 + REVEAL) / REVEAL)); timeLabels(ctx, X, end); ctx.restore();
   }
+  ctx.restore();
+}
+/** How faded each side is (0 → 1): the side that isn't playing fades, and both come back once B ends. */
+function sideDims(t, kind) {
+  const turns = Object.fromEntries(TURNS.filter((u) => u.kind === kind).map((u) => [u.side, u]));
+  const duringB = ease((t - turns.b.t0 + REVEAL) / REVEAL) * (1 - ease((t - turns.b.t0 - turns.b.len) / REVEAL));
+  const startA = ease((t - turns.a.t0 + REVEAL) / REVEAL), untilB = 1 - ease((t - turns.b.t0 + REVEAL) / REVEAL);
+  // The film opens on both sides whole, a preview of the results; B fades as A starts. Motion opens with both faded.
+  if (kind === "cuts") return { a: duringB, b: Math.min(startA, untilB) };
+  return { a: Math.max(1 - startA, duringB), b: untilB };
+}
+function scene(ctx, t, V, kind, dx) {
+  const turns = Object.fromEntries(TURNS.filter((u) => u.kind === kind).map((u) => [u.side, u]));
+  const end = Math.max(turns.a.len, turns.b.len); // the axis ends with the longer verse
+  const dims = sideDims(t, kind);
+  ctx.save(); ctx.translate(dx, 0);
+  ["a", "b"].forEach((s, i) => column(ctx, t, V, kind, turns[s], s, L.xs[i], end, dims[s]));
   ctx.restore();
 }
 
