@@ -144,6 +144,8 @@ Open http://localhost:3000/blog/. The page updates as you save. A broken post sh
 
 A post can have a short film for X and LinkedIn: its clip comparison played as a 1920 × 1080 video (plan 018, Social video). It isn't shown on the site. Its files live in a folder named like the post, next to it, which the blog never reads as a post: `content/blog/<date>-<slug>/`.
 
+**Design the first frame as the thumbnail.** X and LinkedIn show a video's opening frame before anyone presses play, so make it say what the post is about on its own: the film opens on both videos with their results already showing, not on a blank or half-drawn screen. Check it before rendering: open the film with `--serve` and look at it before it starts.
+
 - `social-video.md`: the verses each video plays, as a `::::clips` block (a `cuts` tab, then a `motion` tab).
 - `social-video.json`: the measured verses. After changing a verse, run `uv run python scripts/social_video_data.py ../frontend/content/blog/<date>-<slug>` in `backend/`.
 - `social-video.html`: the film, drawn like the post's widget.
@@ -156,7 +158,13 @@ node scripts/social-video.mjs content/blog/<date>-<slug> --serve   # prints an a
 node scripts/social-video.mjs content/blog/<date>-<slug>           # writes <date>-<slug>.mp4 there
 ```
 
-Both download the verses' stretches into a temporary folder first and delete them afterwards (they need the network, `uv` and ffmpeg). Rendering records every frame and takes about six minutes for a one-minute film. `--clips DIR` reuses clips downloaded before (see the script's header). The MP4 holds the channels' footage, so it's never committed (`.gitignore`); post it by hand.
+Both download the verses' stretches into a temporary folder first and delete them afterwards (they need the network, `uv` and ffmpeg). Rendering records every frame and takes about six minutes for a one-minute film. `--clips DIR` reuses clips downloaded before (see the script's header). The MP4 holds the channels' footage, so it's never committed (`.gitignore`); post it by hand. Then make the thumbnail: LinkedIn asks for an image when you post a video, so save the MP4's first frame next to it as `<date>-<slug>.png` (also ignored), in the post's folder:
+
+```sh
+ffmpeg -i <date>-<slug>.mp4 -frames:v 1 <date>-<slug>.png
+```
+
+Post both: the MP4, and on LinkedIn the PNG as its thumbnail.
 
 ## Publishing
 
