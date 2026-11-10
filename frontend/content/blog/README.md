@@ -125,6 +125,12 @@ The build fails, naming the post's file and the problem, when:
 - a citation `[^key]` has no source, or a source is never cited;
 - a heading is `#` or deeper than `###`, or an image is written with `![…](…)` instead of `::figure`.
 
+Before publishing a post with YouTube videos, check that they play when embedded (an uploader can turn embedding off). CI can't, as YouTube asks its servers to sign in. From `frontend/`, after `npx playwright install chromium` once:
+
+```sh
+npx playwright test youtube-embeds
+```
+
 ## Preview
 
 ```sh

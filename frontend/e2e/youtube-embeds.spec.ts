@@ -6,6 +6,8 @@ import { expect, test } from "@playwright/test";
 // (plan 018): an uploader can turn embedding off at any time. Unlike the rest of E2E, this
 // loads the real player from YouTube. The page's origin is a stand-in host, as YouTube refuses
 // some videos in pages whose address is a bare IP but plays them under any host name.
+// Skipped in CI: YouTube asks GitHub's runners to sign in to prove they aren't bots. Run it
+// before publishing a post: `npx playwright test youtube-embeds`.
 
 const POSTS = path.resolve(__dirname, "../content/blog");
 const ORIGIN = "https://hyperstim.example";
@@ -23,6 +25,7 @@ function embeddedVideos(): string[] {
   return [...ids];
 }
 
+test.skip(!!process.env.CI, "YouTube asks CI runners to sign in");
 test.skip(({ browserName, isMobile }) => browserName !== "chromium" || isMobile, "once is enough: it loads from YouTube");
 
 for (const id of embeddedVideos()) {

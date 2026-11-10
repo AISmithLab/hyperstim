@@ -13,7 +13,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: CI,
   retries: CI ? 1 : 0,
-  reporter: CI ? [["list"], ["html", { open: "never" }]] : "list",
+  // In CI, also each failure as an annotation on the commit, readable without the job's log.
+  reporter: CI ? [["list"], ["github"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL: `http://localhost:${SITE_PORT}`,
     trace: "retain-on-failure",
