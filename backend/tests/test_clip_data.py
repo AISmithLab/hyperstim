@@ -140,15 +140,8 @@ def test_measures_a_generated_clip(
     monkeypatch.setattr(cd, "download", fake_download)
     listed = tmp_path / "blog-videos.txt"
     listed.write_text("# Listed\nzzzzzzzzzzz\naaaaaaaaaaa\n")
-    args = [
-        "post",
-        "--content-dir",
-        str(content),
-        "--media-dir",
-        str(media),
-        "--blog-videos",
-        str(listed),
-    ]
+    monkeypatch.setattr(cd, "BLOG_VIDEOS", listed)
+    args = ["post", "--content-dir", str(content), "--media-dir", str(media)]
     monkeypatch.setattr(sys, "argv", ["clip_data.py", *args])
     cd.main()
 

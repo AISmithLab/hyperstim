@@ -1,7 +1,6 @@
 """Measures the stretches a blog post's clip comparisons play (plan 018, Clip comparison).
 
-Usage: uv run python scripts/clip_data.py <slug>
-       [--content-dir DIR] [--media-dir DIR] [--blog-videos FILE]
+Usage: uv run python scripts/clip_data.py <slug> [--content-dir DIR] [--media-dir DIR]
 
 Reads every `::::clips` block of the post <content-dir>/<date>-<slug>.md, in order:
 
@@ -44,6 +43,7 @@ import numpy as np
 import numpy.typing as npt
 
 BACKEND = Path(__file__).resolve().parents[1]
+BLOG_VIDEOS = BACKEND / "data/blog-videos.txt"
 BLOG_VIDEOS_HEADER = (
     "# The YouTube videos the blog's posts embed (plan 018); "
     "the API serves their thumbnails (plan 009)."
@@ -257,7 +257,6 @@ def main() -> None:
     ap.add_argument("slug")
     ap.add_argument("--content-dir", type=Path, default=BACKEND / "../frontend/content/blog")
     ap.add_argument("--media-dir", type=Path, default=BACKEND / "../frontend/public/blog-media")
-    ap.add_argument("--blog-videos", type=Path, default=BACKEND / "data/blog-videos.txt")
     args = ap.parse_args()
     try:
         blocks = parse_blocks(find_post(args.content_dir, args.slug).read_text(encoding="utf-8"))
@@ -270,8 +269,8 @@ def main() -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"wrote {out.resolve()}")
-    add_blog_videos(args.blog_videos, [v for block in blocks for v in (block.a, block.b)])
-    print(f"listed the videos in {args.blog_videos.resolve()}")
+    add_blog_videos(BLOG_VIDEOS, [v for block in blocks for v in (block.a, block.b)])
+    print(f"listed the videos in {BLOG_VIDEOS}")
 
 
 if __name__ == "__main__":
