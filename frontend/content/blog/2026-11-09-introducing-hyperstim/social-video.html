@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social video: Five Little Ducks</title>
+<!-- The post's social video (plan 018, Social video): the post's clip comparison as a 1920 × 1080
+     film. scripts/social-video.mjs serves this folder with the clips and either opens it for
+     review or records it frame by frame (?render). Not part of the site. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+<style>
+  body { margin: 0; background: #eef6fa; font: 16px/1.5 Nunito, system-ui, sans-serif; color: #4a5262; }
+  main { max-width: 1280px; margin: 0 auto; padding: 24px 16px; }
+  canvas { display: block; width: 100%; height: auto; background: #fff; border-radius: 12px; }
+  .controls { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+  .controls button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(15, 46, 138, .15); background: #fff; color: #0f2e8a; font: 600 15px Nunito, sans-serif; }
+  .controls button[aria-pressed="true"] { background: #f8d040; border-color: #f8d040; }
+  .controls input { flex: 1; }
+  .render main { padding: 0; max-width: none; }
+  .render canvas { width: 1920px; height: 1080px; border-radius: 0; }
+  .render .controls { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <canvas width="1920" height="1080" aria-label="The two videos side by side, played one at a time, with their scene changes and then their motion charted under them."></canvas>
+  <div class="controls">
+    <button type="button" id="play">Play</button>
+    <input type="range" id="scrub" min="0" step="0.05" value="0" aria-label="Position in the film">
+    <span id="time">0:00</span>
+    <button type="button" id="sound" aria-pressed="false">Sound</button>
+  </div>
+</main>
+<script>
+"use strict";
+
+// ---- Timing (seconds) ----
+// Scene changes: A's verse, then B's; the switch to Motion and a swipe; Motion: A's, then B's.
+const LEAD = 0.6; // before A's first verse
+const GAP = 0.6; // between A's verse and B's
+const SWIPE = 0.7; // the swipe to Motion, starting as B's first verse ends
+const AFTER_SWIPE = 0.2;
+const REVEAL = 0.3; // a lane fades in over this, ending as its video starts
+const BUTTON_FADE = 0.35; // the Play button fades over this once its video starts
+
+// ---- Look: the post's widget (ClipCompare; STYLE.md, Clip comparison) ----
+// Shapes at Z times the widget's CSS pixels, text and letters at F times so they read in a feed.
+const W = 1920, H = 1080, Z = 1.6, F = 2.3;
+const C = { primary: "#0f4a9c", navy: "#0f2e8a", ink: "#4a5262", sunny: "#f8d040", white: "#ffffff", mid: "#f8a048" };
+const SANS = "Nunito, system-ui, sans-serif";
+const TABS = ["Scene changes", "Motion"];
+const MOTION_TOP = 30; // the gridlines run 0 to 30; a higher value rises above the top line
+const NUM_W = 72 * F; // the number column on the right of each lane
+
+const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
+const ease = (p) => ((p = clamp(p)), p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2);
+const pop = (p) => ((p = clamp(p)), 1 + 2.9 * (p - 1) ** 3 + 1.9 * (p - 1) ** 2); // a slight overshoot
+
+// The layout, top to bottom, centered in the frame.
+const PLOT_TOP = 6 * Z, PLOT_H = 64 * Z, PLOT_BASE = PLOT_TOP + PLOT_H;
+const LANE_A = PLOT_BASE + 6 * Z; // lane A: the plot only
+const LANE_B = LANE_A + 12 * F * 1.15; // lane B: the plot and the time labels, shared by both lanes
+const LANE_GAP = 10 * Z + 16, PANEL_PAD = 12 * Z + 12; // room for gridline labels and peaks over 30
+const L = (() => {
+  const top = 36, pillH = 44 * F, gap = 14 * Z + 24, headH = 34 * F;
+  const panelH = PANEL_PAD + LANE_A + LANE_GAP + LANE_B + 8 * Z + 2;
+  const vh = Math.floor(H - 2 * top - (pillH + gap + headH + 6 * Z + 20 * Z + panelH)), vw = (vh * 16) / 9;
+  const width = 2 * vw + 20 * Z, x0 = (W - width) / 2;
+  const head = top + pillH + gap, video = head + headH + 6 * Z, panel = video + vh + 20 * Z;
+  return { top, vw, vh, width, x0, head, video, panel, panelH, xs: [x0, x0 + vw + 20 * Z] };
+})();
+
+let DATA, TURNS, SWITCH, DURATION;
+
+/** The film's turns, from the measured verses: when each starts and how long it plays. */
+function timeline(data) {
+  const len = (part) => Math.round((part.end - part.start) * 100) / 100;
+  const [cuts, motion] = data.tabs;
+  const turns = [];
+  let t = LEAD;
+  const add = (tab, side) => { turns.push({ kind: tab.kind, side, t0: t, len: len(tab[side]), start: tab[side].start }); t += len(tab[side]); };
+  add(cuts, "a"); t += GAP; add(cuts, "b");
+  const at = t; t += SWIPE + AFTER_SWIPE;
+  add(motion, "a"); t += GAP; add(motion, "b");
+  return { turns, switchAt: at, duration: Math.round(t * 100) / 100 };
+}
+
+// ---- Drawing ----
+function rr(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+function text(ctx, s, x, y, { size, weight = 400, color = C.navy, align = "left", base = "alphabetic" }) {
+  ctx.save(); ctx.font = `${weight} ${size}px ${SANS}`; ctx.fillStyle = color;
+  ctx.textAlign = align; ctx.textBaseline = base; ctx.fillText(s, x, y); ctx.restore();
+}
+function fit(ctx, s, font, room) { // cut with "…" to fit, as the widget's truncate
+  ctx.save(); ctx.font = font; let t = s;
+  if (ctx.measureText(t).width > room) { while (t && ctx.measureText(t + "…").width > room) t = t.slice(0, -1); t += "…"; }
+  ctx.restore(); return t;
+}
+function letter(ctx, side, x, y) { // a white circle with a thin navy/35 ring, the bold navy letter
+  const d = 24 * F;
+  ctx.save(); ctx.beginPath(); ctx.arc(x + d / 2, y + d / 2, d / 2 - 0.75 * F, 0, Math.PI * 2);
+  ctx.fillStyle = C.white; ctx.fill(); ctx.lineWidth = 1.5 * F; ctx.strokeStyle = "rgba(15,46,138,.35)"; ctx.stroke(); ctx.restore();
+  text(ctx, side.toUpperCase(), x + d / 2, y + d / 2 + 1, { size: 14 * F, weight: 700, align: "center", base: "middle" });
+}
+function headLine(ctx, side, x, y, w) { // the letter, centered on the title; the title over the channel
+  letter(ctx, side, x, y + 14 * F - 0.36 * 14 * F - 12 * F);
+  const tx = x + 32 * F, room = w - 32 * F, video = DATA.videos[side];
+  text(ctx, fit(ctx, video.title, `600 ${14 * F}px ${SANS}`, room), tx, y + 14 * F, { size: 14 * F, weight: 600 });
+  text(ctx, fit(ctx, video.channel, `400 ${12 * F}px ${SANS}`, room), tx, y + 31 * F, { size: 12 * F, color: C.ink });
+}
+function switchControl(ctx, active, slide, cx, y) { // SegmentedControl; `slide` 0 → 1 moves the pill to `active`
+  const size = 14 * F, h = 44 * F, pad = 4 * F;
+  ctx.save(); ctx.font = `600 ${size}px ${SANS}`;
+  const pw = TABS.map((l) => ctx.measureText(l).width + 24 * F), total = pw[0] + pw[1] + 4 * pad, x0 = cx - total / 2;
+  rr(ctx, x0, y, total, h, h / 2); ctx.fillStyle = C.white; ctx.fill();
+  ctx.strokeStyle = "rgba(15,46,138,.15)"; ctx.lineWidth = Z; ctx.stroke();
+  const xs = [x0 + pad, x0 + pw[0] + 3 * pad], from = 1 - active, p = ease(slide); // the same gap to the border on every side
+  rr(ctx, xs[from] + (xs[active] - xs[from]) * p, y + pad, pw[from] + (pw[active] - pw[from]) * p, h - 2 * pad, (h - 2 * pad) / 2);
+  ctx.fillStyle = C.sunny; ctx.fill();
+  // Centered on the capitals, not the font's line box, which sits the text a little high.
+  const cap = ctx.measureText("M").actualBoundingBoxAscent;
+  ctx.restore();
+  TABS.forEach((l, i) => text(ctx, l, xs[i] + pw[i] / 2, y + h / 2 + cap / 2, { size, weight: 600, align: "center" }));
+}
+// A video, rounded as the widget's preview. Before its turn it looks as on the site before Play:
+// a navy/20 tint and the "Play video" button, which presses and fades as its turn starts.
+function drawVideo(ctx, video, x, y, w, h, untilStart) {
+  ctx.save(); rr(ctx, x, y, w, h, 16 * Z); ctx.clip();
+  ctx.fillStyle = "#e7eaf3"; ctx.fillRect(x, y, w, h);
+  if (video.readyState >= 2) ctx.drawImage(video, x, y, w, h);
+  if (untilStart > -BUTTON_FADE) {
+    const press = untilStart >= 0 && untilStart < 0.15 ? 1 - 0.06 * Math.sin((1 - untilStart / 0.15) * Math.PI) : untilStart < 0 ? 0.94 : 1;
+    ctx.globalAlpha = untilStart >= 0 ? 1 : 1 + untilStart / BUTTON_FADE;
+    ctx.fillStyle = "rgba(15,46,138,.20)"; ctx.fillRect(x, y, w, h);
+    const k = F * 0.85, label = "Play video", size = 16 * k;
+    ctx.font = `700 ${size}px ${SANS}`;
+    const bh = 48 * k, bw = ctx.measureText(label).width + 76 * k;
+    ctx.translate(x + w / 2, y + h / 2); ctx.scale(press, press);
+    rr(ctx, -bw / 2, -bh / 2, bw, bh, bh / 2); ctx.fillStyle = C.primary; ctx.fill();
+    const ix = -bw / 2 + 24 * k, is = 20 * k; // the play triangle (size-5), then the label
+    ctx.beginPath(); ctx.moveTo(ix + is * 0.33, -is * 0.38); ctx.lineTo(ix + is * 0.33, is * 0.38); ctx.lineTo(ix + is * 0.82, 0); ctx.closePath();
+    ctx.lineJoin = "round"; ctx.lineWidth = 2 * k; ctx.fillStyle = ctx.strokeStyle = C.white; ctx.fill(); ctx.stroke();
+    ctx.textBaseline = "middle"; ctx.fillText(label, ix + is + 8 * k, 1); // white, bold (font and color set above)
+  }
+  ctx.restore();
+}
+function playhead(ctx, x) {
+  ctx.save(); ctx.strokeStyle = C.mid; ctx.lineWidth = 3 * Z; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(x, PLOT_TOP - 2 * Z); ctx.lineTo(x, PLOT_BASE); ctx.stroke(); ctx.restore();
+}
+function timeLabels(ctx, X, end) { // every 5 s, the last with " s"
+  const ks = []; for (let k = 0; k <= end; k += 5) ks.push(k);
+  ks.forEach((k, i) => text(ctx, i === ks.length - 1 ? `${k} s` : String(k), X(k), PLOT_BASE + 6 * Z + 12 * F, { size: 12 * F, color: C.ink, align: k === 0 ? "left" : "center" }));
+}
+const cutsX = (w, end) => (s) => 4 * Z + (s / end) * (w - 16 * Z);
+const motionX = (w, end) => (s) => 24 * F + (s / end) * (w - 24 * F - 12 * Z);
+function cutsChart(ctx, part, ct, w, end, live) {
+  const X = cutsX(w, end), my = PLOT_TOP + PLOT_H / 2, len = part.end - part.start;
+  ctx.save(); ctx.lineCap = "round"; ctx.lineWidth = 2 * Z;
+  ctx.strokeStyle = "rgba(15,46,138,.15)"; ctx.beginPath(); ctx.moveTo(X(0), my); ctx.lineTo(X(len), my); ctx.stroke();
+  ctx.strokeStyle = C.navy; ctx.beginPath(); ctx.moveTo(X(0), my); ctx.lineTo(X(ct), my); ctx.stroke();
+  ctx.fillStyle = C.navy;
+  for (const cut of part.cuts) {
+    if (cut > ct) break;
+    const th = 36 * Z * pop((ct - cut) / 0.3); // each tick pops in
+    rr(ctx, X(cut) - 1.75 * Z, my - th / 2, 3.5 * Z, th, 1.75 * Z); ctx.fill();
+  }
+  if (live && ct < len - 0.05) playhead(ctx, X(ct));
+  ctx.restore();
+}
+function motionChart(ctx, part, ct, w, end, live) {
+  const X = motionX(w, end), Y = (v) => PLOT_BASE - (v / MOTION_TOP) * PLOT_H, len = part.end - part.start;
+  ctx.save(); ctx.lineWidth = Z;
+  for (const g of [0, MOTION_TOP / 2, MOTION_TOP]) {
+    ctx.strokeStyle = g ? "rgba(15,46,138,.08)" : "rgba(15,46,138,.25)";
+    ctx.beginPath(); ctx.moveTo(24 * F, Y(g)); ctx.lineTo(w - 12 * Z, Y(g)); ctx.stroke();
+    text(ctx, String(g), 19 * F, Y(g) + 4 * F, { size: 12 * F, color: C.ink, align: "right" });
+  }
+  // The line so far, broken where a step is null (across a cut), over a light fill.
+  const runs = []; let run = [];
+  for (let i = 0; i < Math.min(part.motion.length, Math.floor(ct / part.step) + 1); i++) {
+    const v = part.motion[i];
+    if (v === null) { if (run.length) runs.push(run); run = []; } else run.push([(i + 0.5) * part.step, v]);
+  }
+  if (run.length) runs.push(run);
+  for (const r of runs) {
+    const path = () => { ctx.beginPath(); r.forEach(([s, v], i) => (i ? ctx.lineTo(X(s), Y(v)) : ctx.moveTo(X(s), Y(v)))); };
+    if (r.length > 1) { path(); ctx.lineTo(X(r.at(-1)[0]), PLOT_BASE); ctx.lineTo(X(r[0][0]), PLOT_BASE); ctx.closePath(); ctx.fillStyle = "rgba(15,46,138,.12)"; ctx.fill(); }
+    path(); ctx.strokeStyle = C.navy; ctx.lineWidth = 2.25 * Z; ctx.lineJoin = ctx.lineCap = "round"; ctx.stroke();
+  }
+  if (live && ct < len - 0.05) playhead(ctx, X(ct));
+  ctx.restore();
+}
+function laneNumber(ctx, kind, part, ct, x, y) { // the figure over its line, centered on the plot
+  const len = part.end - part.start;
+  let figure, line;
+  if (kind === "cuts") {
+    const n = part.cuts.filter((c) => c <= ct).length;
+    figure = String(n); line = `${n === 1 ? "cut" : "cuts"} in ${ct >= len - 0.05 ? Math.round(len) : Math.floor(ct)} s`;
+  } else {
+    const v = part.motion.slice(0, Math.floor(ct / part.step) + 1).filter((x) => x !== null);
+    figure = (v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0).toFixed(1); line = "% of width/s";
+  }
+  const lh = 12 * F * 1.25, top = y + PLOT_TOP + (PLOT_H - (22 * F * 1.25 + lh)) / 2;
+  text(ctx, figure, x, top + 22 * F, { size: 22 * F, weight: 700 });
+  text(ctx, line, x, top + 22 * F * 1.25 + lh - 3 * F, { size: 12 * F, color: C.ink });
+}
+
+function draw(ctx, t, V) {
+  const swipe = clamp((t - SWITCH) / SWIPE), p = ease(swipe);
+  ctx.fillStyle = C.white; ctx.fillRect(0, 0, W, H);
+  switchControl(ctx, t >= SWITCH ? 1 : 0, t >= SWITCH ? swipe : 1, W / 2, L.top);
+  ["a", "b"].forEach((s, i) => headLine(ctx, s, L.xs[i], L.head, L.vw));
+  // The videos and the panel swipe as one: Scene changes out to the left, Motion in from the right.
+  if (swipe < 1) scene(ctx, t, V, "cuts", -p * W);
+  if (swipe > 0) scene(ctx, t, V, "motion", (1 - p) * W);
+}
+function scene(ctx, t, V, kind, dx) {
+  const tab = DATA.tabs[kind === "cuts" ? 0 : 1];
+  const turns = Object.fromEntries(TURNS.filter((u) => u.kind === kind).map((u) => [u.side, u]));
+  const end = Math.max(turns.a.len, turns.b.len); // the axis ends with the longer verse
+  const cx = L.x0 + 16 * Z + 24 * F + 8 * Z, cw = L.width - 32 * Z - 24 * F - NUM_W - 16 * Z;
+  ctx.save(); ctx.translate(dx, 0);
+  ["a", "b"].forEach((s, i) => drawVideo(ctx, V[`${s}-${kind}`], L.xs[i], L.video, L.vw, L.vh, turns[s].t0 - t));
+  rr(ctx, L.x0 + 0.5, L.panel + 0.5, L.width - 1, L.panelH - 1, 16 * Z);
+  ctx.strokeStyle = "rgba(15,46,138,.15)"; ctx.lineWidth = Z; ctx.stroke();
+  ["a", "b"].forEach((s, i) => {
+    const u = turns[s], shown = ease((t - u.t0 + REVEAL) / REVEAL);
+    if (shown <= 0) return; // a lane starts blank and fades in just before its video starts
+    const ct = clamp(t - u.t0, 0, u.len), live = t >= u.t0 && t < u.t0 + u.len, y = L.panel + PANEL_PAD + i * (LANE_A + LANE_GAP);
+    const part = tab[s];
+    ctx.save(); ctx.globalAlpha = shown;
+    letter(ctx, s, L.x0 + 16 * Z, y + PLOT_TOP + PLOT_H / 2 - 12 * F);
+    ctx.save(); ctx.translate(cx, y);
+    if (kind === "cuts") cutsChart(ctx, part, ct, cw, end, live); else motionChart(ctx, part, ct, cw, end, live);
+    ctx.restore();
+    laneNumber(ctx, kind, part, ct, cx + cw + 8 * Z, y);
+    ctx.restore();
+  });
+  // One set of time labels: in with lane A, then dropping under B while B's lane fades in.
+  if (t >= turns.a.t0 - REVEAL) {
+    const X = (kind === "cuts" ? cutsX : motionX)(cw, end), yA = L.panel + PANEL_PAD, yB = yA + LANE_A + LANE_GAP;
+    ctx.save(); ctx.globalAlpha = ease((t - turns.a.t0 + REVEAL) / REVEAL);
+    ctx.translate(cx, yA + (yB - yA) * ease((t - turns.b.t0 + REVEAL) / REVEAL)); timeLabels(ctx, X, end); ctx.restore();
+  }
+  ctx.restore();
+}
+
+// ---- Playing ----
+// One video element per side and measure, so both scenes have their own frame during the swipe.
+// `CLIPS` says where each downloaded clip starts in its video (clips/clips.json, from the script).
+function cues(clips) {
+  return TURNS.map((u) => ({ key: `${u.side}-${u.kind}`, side: u.side, t0: u.t0, len: u.len, from: u.start - clips[u.side].start }));
+}
+/** Where a cue's video is at t: its verse's start before its turn, then playing, then its last frame. */
+const target = (c, t) => c.from + clamp(t - c.t0, 0, c.len - 0.05);
+
+async function start() {
+  const render = new URLSearchParams(location.search).has("render");
+  if (render) document.body.classList.add("render");
+  const [data, clips] = await Promise.all(["social-video.json", "clips/clips.json"].map((f) => fetch(f).then((r) => r.json())));
+  DATA = data;
+  ({ turns: TURNS, switchAt: SWITCH, duration: DURATION } = timeline(data));
+  await document.fonts.load(`600 ${14 * F}px Nunito`); await document.fonts.load(`700 ${14 * F}px Nunito`); await document.fonts.load(`400 ${14 * F}px Nunito`);
+  const CUES = cues(clips);
+  const V = {};
+  await Promise.all(CUES.map((c) => new Promise((resolve, reject) => {
+    const v = document.createElement("video");
+    v.muted = true; v.preload = "auto"; v.playsInline = true; v.src = `clips/${clips[c.side].file}`;
+    v.addEventListener("loadeddata", resolve, { once: true }); v.addEventListener("error", () => reject(new Error(v.src)), { once: true });
+    V[c.key] = v;
+  })));
+  const canvas = document.querySelector("canvas"), ctx = canvas.getContext("2d");
+  const seekTo = (v, s) => new Promise((resolve) => {
+    if (Math.abs(v.currentTime - s) < 0.001) return resolve();
+    v.addEventListener("seeked", () => resolve(), { once: true }); v.currentTime = s;
+  });
+
+  // For the render script: draw the frame at t, once every video shows its frame.
+  window.film = {
+    duration: DURATION,
+    turns: TURNS.map((u) => ({ ...u, from: CUES.find((c) => c.key === `${u.side}-${u.kind}`).from })),
+    async frame(t) { await Promise.all(CUES.map((c) => seekTo(V[c.key], target(c, t)))); draw(ctx, t, V); },
+  };
+  await window.film.frame(0);
+  if (render) return;
+
+  // Review: play in real time, one video at a time, with each turn's sound.
+  const play = document.getElementById("play"), scrub = document.getElementById("scrub"), time = document.getElementById("time"), sound = document.getElementById("sound");
+  scrub.max = DURATION;
+  let t = 0, playing = false, wall = 0, base = 0, withSound = false;
+  const sync = (hard) => {
+    for (const c of CUES) {
+      const v = V[c.key], on = playing && t >= c.t0 && t < c.t0 + c.len, tg = target(c, t);
+      v.muted = !(withSound && on);
+      if (on) { if (hard || Math.abs(v.currentTime - tg) > 0.25) v.currentTime = tg; if (v.paused) v.play().catch(() => {}); }
+      else { if (!v.paused) v.pause(); if (Math.abs(v.currentTime - tg) > 0.04) v.currentTime = tg; }
+    }
+  };
+  const show = () => { draw(ctx, t, V); scrub.value = t; time.textContent = `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`; };
+  const loop = () => {
+    if (!playing) return;
+    t = base + (performance.now() - wall) / 1000;
+    if (t >= DURATION) { t = DURATION; playing = false; play.textContent = "Play"; }
+    sync(); show(); requestAnimationFrame(loop);
+  };
+  play.onclick = () => {
+    playing = !playing; play.textContent = playing ? "Pause" : "Play";
+    if (playing) { if (t >= DURATION) t = 0; base = t; wall = performance.now(); sync(true); loop(); } else { sync(); show(); }
+  };
+  scrub.oninput = () => { t = Number(scrub.value); base = t; wall = performance.now(); sync(true); show(); };
+  sound.onclick = () => { withSound = !withSound; sound.setAttribute("aria-pressed", String(withSound)); sync(); };
+  for (const v of Object.values(V)) v.addEventListener("seeked", () => { if (!playing) show(); });
+}
+start().catch((e) => { document.body.dataset.error = String(e); throw e; });
+</script>
+</body>
+</html>
