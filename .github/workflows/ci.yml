@@ -55,6 +55,8 @@ jobs:
           version: ${{ steps.tools.outputs.uv }}
           enable-cache: true
           cache-dependency-glob: backend/uv.lock
+      # The clip data test makes a short clip with ffmpeg (plan 018).
+      - run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends ffmpeg
       - run: uv sync --locked
       - run: uv run ruff check
       - run: uv run ruff format --check
