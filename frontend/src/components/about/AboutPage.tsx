@@ -56,7 +56,7 @@ function Contact() {
   return (
     <section
       aria-labelledby="contact"
-      className="relative mt-10 rounded-[2rem] bg-mint px-5 py-8 sm:px-8 md:mt-24 md:pb-28 lg:mt-32 xl:mt-40"
+      className="relative mt-10 rounded-[2rem] bg-mint px-5 py-8 sm:px-8 md:mt-18 md:pb-28 lg:mt-24 xl:mt-32"
     >
       {/* Sitting on the panel's edge: the art's bottom 1 % is empty. */}
       {/* eslint-disable-next-line @next/next/no-img-element -- static export, images pre-converted */}
@@ -64,10 +64,10 @@ function Contact() {
         src={asset("/images/kid_wave.webp")}
         alt=""
         aria-hidden="true"
-        width={576}
-        height={480}
+        width={488}
+        height={407}
         data-kid=""
-        className="pointer-events-none absolute right-6 bottom-full hidden h-auto w-54 translate-y-[1%] md:block lg:w-61 xl:w-72"
+        className="pointer-events-none absolute right-6 bottom-full hidden h-auto w-46 translate-y-[1%] md:block lg:w-52 xl:w-61"
       />
       <h2 id="contact" className="font-hand text-2xl font-semibold text-navy sm:text-3xl">
         Get in touch

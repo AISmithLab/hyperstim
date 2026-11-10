@@ -160,7 +160,7 @@ export default function ComparePage() {
  */
 function Hero({ view, children }: { view: View; children?: ReactNode }) {
   return (
-    <div className="relative md:pr-[20rem] lg:pr-[24rem] xl:pr-[27.5rem]">
+    <div className="relative md:pr-[16.5rem] lg:pr-[20rem] xl:pr-[23rem]">
       <div className="md:pb-6">
         <h1 className="font-hand text-[2rem] leading-tight font-semibold text-navy sm:text-[2.75rem] lg:text-[3.25rem]">
           Compare
@@ -174,10 +174,10 @@ function Hero({ view, children }: { view: View; children?: ReactNode }) {
         src={asset("/images/kid_compare.webp")}
         alt=""
         aria-hidden="true"
-        width={768}
-        height={512}
+        width={624}
+        height={416}
         data-kid=""
-        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-72 translate-y-[7%] md:mr-4 md:block lg:mr-8 lg:w-[20.5rem] xl:w-96"
+        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-58 translate-y-[7%] md:mr-4 md:block lg:mr-8 lg:w-66 xl:w-78"
       />
     </div>
   );

@@ -88,17 +88,19 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
 - Illustrations live in `frontend/public/images/`. Claude Code asks for each one (object, pose, colours, size, background) and the team supplies it; no placeholder art is committed.
 - **The kid** _(human decision, 2026-10-16)_:
   - **Hidden below `md` (768 px) on every page**: the hero kids, the kid on the score panel, and `kid_2` above the message box. Layouts drop the room they kept for it there.
-  - **The hero kids (home, rankings, compare, how it works, privacy) have the same head size** at every width they show at. The measure is the distance between the eyes (centre to centre): **30 px at `md`, 34 px at `lg`, 40 px from `xl`**, the home kid's size on desktop. Each artwork draws the kid at its own scale, so each page's width = target ÷ the art's eye distance per image width: `kid_1` 0.087, `kid_blocks_2` 0.119, `kid_compare` 0.104, `kid_wonder` 0.110, `kid_quiet` 0.139 (privacy, plan 009; its head is turned, so the ratio comes from its head height against `kid_compare`'s).
+  - **The hero kids (home, rankings, compare, how it works, blog, privacy, about) have the same head size** at every width they show at: each kid's face is as wide as the home kid's (`kid_1`), compared side by side at the same breakpoint _(human decision, 2026-11-10: sized by eye distance (`kid_1`'s turned face puts its eyes close together), their heads were 10–20 % larger than the home kid's; then fine-tuned by eye against it)_.
 
     | Art (page) | `md` | `lg` | `xl`+ |
     |---|---|---|---|
     | `kid_1` (home) | 344 px | 392 px | 464 px |
-    | `kid_blocks_2` (rankings) | 252 px | 288 px | 336 px |
-    | `kid_compare` (compare) | 288 px | 328 px | 384 px |
-    | `kid_wonder` (how it works) | 272 px | 308 px | 364 px |
-    | `kid_quiet` (privacy) | 216 px | 244 px | 288 px |
+    | `kid_blocks_2` (rankings) | 216 px | 248 px | 288 px |
+    | `kid_compare` (compare) | 232 px | 264 px | 312 px |
+    | `kid_wonder` (how it works) | 244 px | 276 px | 324 px |
+    | `kid_quiet` (privacy) | 208 px | 232 px | 272 px |
+    | `kid_wave` (about) | 184 px | 208 px | 244 px |
+    | `kid_notebook` (blog) | 202 px | 230 px | 272 px |
 
-  - The score-panel kids (video, channel) keep their own size (about 75 % of the home kid's head, plan 004). New art gets its eye ratio measured and its widths from this table.
+  - The score-panel kids (video, channel) keep their own size (about 75 % of the home kid's head, plan 004). New art gets its widths by comparing its face with `kid_1`'s.
   - `STYLE.md` gets this in the same change (the **Hand-drawn art** rule, the recurring-character line, and each page's entry); the pages' plans (002, 004–008) say what it means for each.
 
 ## Backend

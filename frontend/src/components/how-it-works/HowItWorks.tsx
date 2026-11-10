@@ -37,9 +37,9 @@ function Hero() {
         aria-hidden="true"
         src={asset("/images/kid_wonder.webp")}
         alt=""
-        width={728}
-        height={485}
-        className="relative z-10 -mt-4 mr-8 -mb-10 hidden h-auto w-68 md:block lg:-mb-11 lg:w-[19.25rem] xl:-mt-5 xl:-mb-[3.125rem] xl:w-[22.75rem]"
+        width={648}
+        height={432}
+        className="relative z-10 -mt-3.5 mr-8 -mb-[2.25rem] hidden h-auto w-61 md:block lg:-mb-[2.4375rem] lg:w-69 xl:-mt-[1.125rem] xl:-mb-[2.75rem] xl:w-81"
       />
     </div>
   );

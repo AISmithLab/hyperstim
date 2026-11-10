@@ -91,7 +91,7 @@ export default function PrivacyPage() {
  */
 function Hero() {
   return (
-    <div className="relative md:min-h-36 md:pr-64 lg:min-h-40 lg:pr-76 xl:min-h-48 xl:pr-88">
+    <div className="relative md:min-h-36 md:pr-62 lg:min-h-40 lg:pr-73 xl:min-h-48 xl:pr-84">
       <div className="pb-6">
         <h1 className="font-hand text-[2rem] leading-tight font-semibold text-navy sm:text-[2.75rem] lg:text-[3.25rem]">
           Privacy policy
@@ -104,10 +104,10 @@ function Hero() {
         src={asset("/images/kid_quiet.webp")}
         alt=""
         aria-hidden="true"
-        width={448}
-        height={373}
+        width={544}
+        height={453}
         data-kid=""
-        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-54 translate-y-[1%] md:mr-8 md:block lg:mr-12 lg:w-61 xl:w-72"
+        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto w-52 translate-y-[1%] md:mr-8 md:block lg:mr-12 lg:w-58 xl:w-68"
       />
     </div>
   );

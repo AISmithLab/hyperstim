@@ -68,10 +68,10 @@ function Hero() {
         src={asset("/images/kid_notebook.webp")}
         alt=""
         aria-hidden="true"
-        width={656}
-        height={506}
+        width={544}
+        height={419}
         data-kid=""
-        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto translate-y-[4%] md:mr-4 md:block md:w-[15.375rem] lg:w-[17.5rem] xl:w-[20.5rem]"
+        className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-auto translate-y-[4%] md:mr-4 md:block md:w-[12.625rem] lg:w-[14.375rem] xl:w-[17rem]"
       />
     </div>
   );
