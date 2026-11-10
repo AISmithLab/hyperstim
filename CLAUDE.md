@@ -59,6 +59,7 @@ Before committing, check `git diff --staged` for anything above.
   - A new or changed style goes into `STYLE.md` in the same change, and the plan says so.
   - If a requested style change conflicts with `STYLE.md`, point out the conflict before applying it.
   - Before handing back UI work, screenshot the changed parts next to their neighbours at phone (360 px) and desktop (1280 px) widths and compare them against `STYLE.md`.
+  - Screenshots for the user to review go in an artifact page (labelled by screen size and state), not in local files. Within a session, reuse one artifact page: republish it with each round's screenshots instead of starting a new page.
   - An artifact page built to review a layout shows it at three screen sizes: phone (360 × 740), tablet (768 × 1024) and desktop (1280 × 800).
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests (including end-to-end) before commit.
@@ -74,7 +75,7 @@ Before committing, check `git diff --staged` for anything above.
   - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
   - **Type**, by what the change means for the live site (pick the first that fits; split the commit if it's two things):
     - `feat`: something new visitors can see or use: pages, features, text, API endpoints. → minor version.
-    - `fix`: the site or API didn't work as intended, or an existing feature is adjusted to work better (how it behaves, looks or is laid out), including security fixes (also a dependency upgrade done for one). → patch.
+    - `fix`: the site or API didn't work as intended, or an existing feature is adjusted to work better (how it behaves, looks or is laid out), including security fixes (also a dependency upgrade done for one). A new blog post is `fix` too: content on an existing page, not a new feature (plan 018). → patch.
     - `perf`: faster or lighter, same behaviour. `refactor`: code change with no visible change. `style`: formatting only.
     - `test`: tests only. `docs`: plans, READMEs, `STYLE.md`, `CLAUDE.md`, code comments. `build`: dependencies, build config, dev scripts. `ci`: CI, release and server setup (`.github/`, `release.sh`, `deploy/`). `chore`: anything else.
     - `data`: only the server's daily commit of the collected dataset (`backend/data/collected/`, plan 013); never used by hand. Not listed in the release notes and no version bump; CI and `release.sh` reject a `data:` commit that changes any other file.
