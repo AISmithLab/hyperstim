@@ -1525,7 +1525,8 @@ def test_export_is_read_by_the_api(
                  "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups; "
                  "Thinnest channels first; under 5 eligible a year left out; 3 new a day; "
                  "A third of downloads for new channels to catch up; at most 3 new a day; "
-                 "New channels join by subscribers, most first; their counts read weekly"}
+                 "New channels join by subscribers, most first; their counts read weekly; "
+                 "Pace lowered from 150 to 120 videos a day after three blocks"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -2359,3 +2360,17 @@ def test_the_recount_command_records_and_writes_the_files(
     main()
     assert "2026-10-26 ch_ready 0, ch_out 0" in capsys.readouterr().out
     assert "00:00:41 UTC" in (data / "collected" / "CHANGELOG.tsv").read_text()
+
+
+def test_the_collector_adds_120_videos_a_day_unless_set(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from hyperstim_api.collector.__main__ import settings as collector_settings
+
+    monkeypatch.setenv("COLLECTOR_DATA_DIR", str(tmp_path / "data"))
+    monkeypatch.setenv("COLLECTOR_CLIPS_DIR", str(tmp_path / "clips"))
+    monkeypatch.delenv("COLLECT_PER_DAY", raising=False)
+    assert collector_settings().per_day == 120
+    assert Settings(data_dir=tmp_path, clips_dir=tmp_path, analysis_dir=None).per_day == 120
+    monkeypatch.setenv("COLLECT_PER_DAY", "150")
+    assert collector_settings().per_day == 150

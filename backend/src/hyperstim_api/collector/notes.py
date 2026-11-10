@@ -15,4 +15,5 @@ NOTES: tuple[tuple[str, str | None], ...] = (
     ("Thinnest channels first; under 5 eligible a year left out; 3 new a day", None),
     ("A third of downloads for new channels to catch up; at most 3 new a day", None),
     ("New channels join by subscribers, most first; their counts read weekly", None),
+    ("Pace lowered from 150 to 120 videos a day after three blocks", None),
 )

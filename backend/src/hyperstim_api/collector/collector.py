@@ -144,7 +144,7 @@ class Settings:
     data_dir: Path  # collector.db and the exported files (collected/)
     clips_dir: Path  # clips/, cache/ and a work/ folder, on the clips volume
     analysis_dir: Path | None  # the live analysis's results, block marker and offline hints
-    per_day: int = 150
+    per_day: int = 120
     units_per_day: int = 7000
     provenance: dict[str, str] = field(default_factory=dict)
 

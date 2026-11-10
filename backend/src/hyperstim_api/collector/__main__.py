@@ -54,7 +54,7 @@ def settings() -> Settings:
         data_dir=Path(_required("COLLECTOR_DATA_DIR")),
         clips_dir=Path(_required("COLLECTOR_CLIPS_DIR")),
         analysis_dir=Path(analysis) if analysis else None,
-        per_day=_limit("COLLECT_PER_DAY", 150),
+        per_day=_limit("COLLECT_PER_DAY", 120),
         units_per_day=_limit("COLLECTOR_UNITS_PER_DAY", 7000),
     )
 
