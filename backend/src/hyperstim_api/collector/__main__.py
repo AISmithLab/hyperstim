@@ -269,6 +269,7 @@ def health(store: Store, now: float) -> list[str]:
         "upload lists": store.get("ok:refresh_uploads"),
         "offline check": store.get("ok:check_online"),
         "repair": store.get("ok:repair"),
+        "names": store.get("ok:refresh_names"),
         "backup": store.get("backed_up"),
         "export": store.get("ok:export"),
     }

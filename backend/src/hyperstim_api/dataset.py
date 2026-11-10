@@ -314,14 +314,16 @@ def names_path(dataset_path: Path) -> Path:
 
 
 def _channel_name(row: dict[str, str], names: dict[str, str]) -> str:
-    """The row's channel name, or the looked-up one when the row has none."""
-    name = row["channel_title"]
-    return name if name.strip() else names.get(row["channel_id"], "")
+    """The channel's current name, looked up on YouTube, or the row's own when none is known
+    (a row keeps the name its channel had when the video was collected)."""
+    name = names.get(row["channel_id"], "")
+    return name if name.strip() else row["channel_title"]
 
 
 def _channel_names(path: Path) -> dict[str, str]:
-    """Names looked up on YouTube for channels whose videos carry none (plan 013): ours next
-    to the reference set, or the collector's; optional."""
+    """Channel names looked up on YouTube (plan 013, decision 9): ours next to the reference
+    set (channels whose videos carry none, and renamed ones), or the collector's (every
+    dataset channel, read weekly); optional."""
     if not path.is_file():
         return {}
     with path.open(newline="", encoding="utf-8") as fh:
@@ -351,7 +353,7 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
         rows = list(reader)
     names = _channel_names(names_path(path))
     if collected_dir is not None:
-        names = _channel_names(collected_dir / NAMES_FILE) | names
+        names |= _channel_names(collected_dir / NAMES_FILE)  # the collector's are newer
 
     kept: list[tuple[dict[str, str], dict[str, float | None]]] = []
     skipped = 0

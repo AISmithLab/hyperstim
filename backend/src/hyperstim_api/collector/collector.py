@@ -2,9 +2,9 @@
 
 `Collector.tick()` does whatever is due and says how long to wait before the next tick:
 read channels' newest uploads (daily) and new channels' full lists, run a few discovery
-searches (each query weekly), re-check near misses (monthly) and dataset videos (monthly),
-fill gaps (daily), check the uploads the channel-first rule needs next, and download
-and measure the next eligible one when the pace allows.
+searches (each query weekly), re-check near misses (monthly), dataset videos (monthly) and
+the dataset channels' names (weekly), fill gaps (daily), check the uploads the channel-first
+rule needs next, and download and measure the next eligible one when the pace allows.
 
 When something fails (decision 12), one failure never stops the rest, no decision is final
 on one answer, unfinished work resumes, and a video goes on the site only when everything
@@ -65,6 +65,7 @@ QUERIES_PER_DAY = math.ceil(len(QUERIES) / 7)
 MIN_SUBSCRIBERS = 10_000  # v2's channel rules
 MIN_VIDEOS = 100  # more than this many
 WAITING_EVERY_S = 7 * DAY_S  # the waiting channels' subscribers are read again this often
+NAMES_EVERY_S = 7 * DAY_S  # the dataset channels' names are read again this often
 CHANNELS_PER_TICK = 25  # newest-uploads reads per tick, so other work isn't held up
 MAX_PAGES = 200  # pages of a channel's uploads read in one go (50 a page); more on the next tick
 CHECK_BATCHES_PER_TICK = 10  # of 50 uploads, so years with few eligible ones can't hold a tick
@@ -206,6 +207,7 @@ class Collector:
                 self.discover,
                 self.check_near_misses,
                 self.refresh_waiting,
+                self.refresh_names,
                 self.check_online,
                 self.repair,
                 self.check_candidates,
@@ -403,6 +405,30 @@ class Collector:
                 "subscriber_count": found.subscriber_count, "video_count": found.video_count,
             }  # fmt: skip
             self.store.update_channel(row["id"], checked_at=utc(now), **counts)
+
+    def refresh_names(self, now: float) -> None:
+        """The names of the channels with a video in the dataset (on the site, measured, or
+        left out), read again weekly, so a channel renamed on YouTube shows its new name
+        (plan 013, decision 9). A channel no longer found, or with no title, keeps its name."""
+        due = self.store.db.execute(
+            "SELECT id, title FROM channels WHERE id IN (SELECT channel_id FROM uploads "
+            f"WHERE state IN {IN_STATES}) AND COALESCE(named_at, '') < ? "
+            "ORDER BY named_at, id LIMIT 50",
+            (utc(now - NAMES_EVERY_S),),
+        ).fetchall()
+        if not due:
+            return
+        stats = self.api.channels([r["id"] for r in due])
+        for row in due:
+            found = stats.get(row["id"])
+            title = "" if found is None else found.title.strip()
+            if title and title != row["title"]:
+                if row["title"].strip():
+                    log.info("Renamed %s: %s -> %s", row["id"], row["title"], title)
+                self.store.update_channel(row["id"], title=title, named_at=utc(now))
+                self.store.set("export_due", "1")
+            else:
+                self.store.update_channel(row["id"], named_at=utc(now))
 
     # --- the dataset's videos still online -------------------------------------------
 
@@ -1159,12 +1185,13 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
 
 
 def channel_names(store: Store) -> list[dict[str, object]]:
-    """Names looked up for v2's channels whose videos carry none in `videos.tsv` (the API
-    fills them in, plan 013, decision 9)."""
+    """The current names of the channels with videos in the dataset (or taken out of it): the
+    API shows them instead of the name a video carries, which is its channel's name when it
+    was collected (plan 013, decision 9)."""
     rows = store.db.execute(
         "SELECT c.id, c.title FROM channels c WHERE TRIM(c.title) != '' AND EXISTS ("
-        "SELECT 1 FROM uploads u WHERE u.channel_id = c.id AND u.state IN ('v2', 'removed') "
-        "AND TRIM(u.channel_title) = '') ORDER BY c.id"
+        "SELECT 1 FROM uploads u WHERE u.channel_id = c.id "
+        f"AND (u.state IN {IN_STATES} OR u.state = 'removed')) ORDER BY c.id"
     )
     return [{"channel_id": r["id"], "channel_title": r["title"]} for r in rows]
 

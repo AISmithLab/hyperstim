@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS channels (
     api_failures INTEGER NOT NULL DEFAULT 0,  -- Data API errors in a row reading its uploads
     retry_at REAL NOT NULL DEFAULT 0,  -- after an error: not read again before this
     full_listing TEXT,                 -- reading all its uploads: '' or the next page; else NULL
-    catching_up INTEGER NOT NULL DEFAULT 0  -- 1 from its first video until it caught up
+    catching_up INTEGER NOT NULL DEFAULT 0,  -- 1 from its first video until it caught up
+    named_at TEXT                      -- last time its name was read (dataset channels, weekly)
 );
 CREATE TABLE IF NOT EXISTS uploads (
     id TEXT PRIMARY KEY,
@@ -125,6 +126,7 @@ ADDED_COLUMNS = {
         "retry_at": "REAL NOT NULL DEFAULT 0",
         "full_listing": "TEXT",
         "catching_up": "INTEGER NOT NULL DEFAULT 0",  # the channels in before count as caught up
+        "named_at": "TEXT",
     },
     "attempts": {"explore": "INTEGER NOT NULL DEFAULT 0"},
     "uploads": {

@@ -1186,6 +1186,78 @@ def test_the_waiting_channels_subscribers_are_read_again_weekly(
     assert youtube.calls == []  # nothing due again for a week
 
 
+def test_the_dataset_channels_names_are_read_again_weekly(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline, caplog: pytest.LogCaptureFixture
+) -> None:
+    """A channel renamed on YouTube gets its new name in the export (plan 013, decision 9)."""
+    caplog.set_level("INFO")
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: on the site
+    store = collector.store
+    week_ago, yesterday = utc(clock.now - 8 * DAY_S), utc(clock.now - DAY_S)
+    renamed, fresh, gone, blank, out, waiting = (f"UC{i:018d}{i}nam" for i in range(1, 7))
+    for i, channel_id in enumerate((renamed, fresh, gone, blank, out, waiting)):
+        store.upsert_channel(id=channel_id, title=f"Old {i}", status="in", source="discovery",
+                             named_at=yesterday if channel_id == fresh else week_ago)  # fmt: skip
+        youtube.channels[channel_id] = (f"New {i}", 50_000, 300)
+        if channel_id != waiting:
+            store.add_uploads(channel_id, [(f"vid{i:08d}", "2020-01-01")])
+            store.set_state(f"vid{i:08d}", "v2", online_at=clock.now)
+    del youtube.channels[gone]
+    youtube.channels[blank] = ("  ", 50_000, 300)
+    youtube.channels[CHANNEL] = ("Channel", 50_000, 300)  # unchanged
+    store.db.execute("INSERT INTO left_out (channel_id, kids, answers) VALUES (?, 0, 20)", (out,))
+    youtube.calls.clear()
+    collector.refresh_names(clock.now)
+    assert youtube.calls == ["channels"]  # one unit for up to 50 channels
+
+    def name(channel_id: str) -> tuple[str, str]:
+        row = store.db.execute(
+            "SELECT title, named_at FROM channels WHERE id = ?", (channel_id,)
+        ).fetchone()
+        return row[0], row[1]
+
+    now = utc(clock.now)
+    assert name(renamed) == ("New 0", now)
+    assert name(out) == ("New 4", now)  # left out: its page may come back
+    assert name(fresh) == ("Old 1", yesterday)  # read in the past week
+    assert name(gone) == ("Old 2", now)  # not found: keeps its name
+    assert name(blank) == ("Old 3", now)  # no title: keeps its name
+    assert name(waiting) == ("Old 5", week_ago)  # no video in the dataset
+    assert name(CHANNEL)[1] == now
+    assert f"Renamed {renamed}: Old 0 -> New 0" in caplog.text
+    assert "Renamed " + CHANNEL not in caplog.text
+    assert store.get("export_due") == "1"
+    collector.tick()  # the export it asked for
+    names = (tmp_path / "data" / "collected" / "channel-names.tsv").read_text()
+    assert f"{renamed}\tNew 0\n" in names and f"{fresh}\tOld 1\n" in names
+    assert f"{CHANNEL}\tChannel\n" in names  # every dataset channel with a name
+    assert waiting not in names
+    youtube.calls.clear()
+    collector.refresh_names(clock.now + DAY_S)
+    assert youtube.calls == []  # nothing due again for a week
+    collector.refresh_names(clock.now + 7 * DAY_S)
+    assert youtube.calls == ["channels"]  # the week after
+
+
+def test_the_names_are_read_50_channels_a_call(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    store = collector.store
+    for i in range(60):
+        channel_id = f"UC{i:020d}n"
+        store.upsert_channel(id=channel_id, title="C", status="in", source="discovery")
+        store.add_uploads(channel_id, [(f"many{i:07d}", "2020-01-01")])
+        store.set_state(f"many{i:07d}", "v2", online_at=clock.now)
+    youtube.calls.clear()
+    collector.refresh_names(clock.now)
+    collector.refresh_names(clock.now)
+    collector.refresh_names(clock.now)
+    assert youtube.calls == ["channels", "channels"]  # 61 channels: two units, then none due
+
+
 def test_status_names_the_channels_next_in_line_for_a_first_video(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
@@ -2197,6 +2269,8 @@ def test_an_older_database_gets_the_new_columns_and_reads_new_channels_again(
     store = Store(path)
     listing = dict(store.db.execute("SELECT id, full_listing FROM channels").fetchall())
     assert listing == {"UCv2": None, "UCnew": "", "UCnear": None}
+    named = dict(store.db.execute("SELECT id, named_at FROM channels").fetchall())
+    assert named == {"UCv2": None, "UCnew": None, "UCnear": None}  # names read on the next tick
     upload = store.upload("vid")
     assert upload is not None and (upload.unsure, upload.api_failures) == (0, 0)
     assert upload.pick == "sample"  # everything picked before the floor

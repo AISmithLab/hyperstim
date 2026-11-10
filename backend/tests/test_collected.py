@@ -253,9 +253,9 @@ def test_added_must_be_a_utc_timestamp(grown_client: TestClient) -> None:
     assert grown_client.get("/api/videos", params={"addedFrom": "2026-10-20"}).status_code == 422
 
 
-def test_channels_without_a_name_take_the_looked_up_one(tmp_path: Path) -> None:
-    """Some reference videos carry no channel name; `videos.channel-names.tsv` fills it in,
-    for reference and added videos, and never replaces a name a video has."""
+def test_channels_take_the_looked_up_name(tmp_path: Path) -> None:
+    """Some reference videos carry no channel name, and some channels were renamed;
+    `videos.channel-names.tsv` gives their current name, for reference and added videos."""
     rows = [video_row(*v) for v in VIDEOS]
     for row in rows:
         if row["channel_id"] in ("chan-b", "chan-c"):
@@ -268,7 +268,8 @@ def test_channels_without_a_name_take_the_looked_up_one(tmp_path: Path) -> None:
     added = collected_row("new-d", "chan-d", 5.5, T1)
     added["channel_title"] = ""
     grown = load_dataset(path, write_collected(tmp_path / "collected", [added], []))
-    assert grown.channels_by_id["chan-a"].name == "Channel chan-a"
+    assert grown.channels_by_id["chan-a"].name == "Not used"  # renamed: the current name
+    assert grown.videos_by_id["vid-a1"].channel == "Not used"
     assert grown.channels_by_id["chan-b"].name == "Looked up B"
     assert grown.videos_by_id["vid-b1"].channel == "Looked up B"
     assert grown.channels_by_id["chan-c"].name == ""  # not looked up yet
@@ -305,6 +306,34 @@ def test_the_collectors_channel_names_fill_reference_videos_and_reload(
     assert store.current.channels_by_id["chan-c"].name == "Looked up C"
 
 
+def test_a_renamed_channel_shows_its_current_name(tmp_path: Path) -> None:
+    """A video row keeps the name its channel had when collected; the collector's names win
+    over ours, ours over the row's, and a channel in neither keeps the row's (plan 013,
+    decision 9)."""
+    path = write_dataset(tmp_path / "videos.tsv", [video_row(*v) for v in VIDEOS])
+    (tmp_path / "videos.channel-names.tsv").write_text(
+        "channel_id\tchannel_title\nchan-a\tOurs A\nchan-b\tOurs B\n"
+    )
+    collected = write_collected(
+        tmp_path / "collected",
+        [
+            collected_row(v, c, 5.5, T1)
+            for v, c in (("new-a", "chan-a"), ("new-c", "chan-c"), ("new-d", "chan-d"))
+        ],
+        [],
+    )
+    (collected / "channel-names.tsv").write_text(
+        "channel_id\tchannel_title\nchan-a\tCollector A\nchan-c\tCollector C\n"
+    )
+    grown = load_dataset(path, collected)
+    assert grown.channels_by_id["chan-a"].name == "Collector A"
+    assert {grown.videos_by_id[v].channel for v in ("vid-a1", "new-a")} == {"Collector A"}
+    assert grown.channels_by_id["chan-b"].name == "Ours B"
+    assert grown.channels_by_id["chan-c"].name == "Collector C"
+    assert grown.videos_by_id["new-c"].channel == "Collector C"
+    assert grown.channels_by_id["chan-d"].name == "Channel chan-d"  # in neither: the row's
+
+
 def test_the_committed_reference_set_is_complete() -> None:
     """Every reference video has what the site shows (plan 013, decisions 9 and 12): a title,
     a channel ID and name (or one in `videos.channel-names.tsv`), a date and a measurement."""
@@ -322,6 +351,9 @@ def test_the_committed_reference_set_is_complete() -> None:
     ]
     assert gaps == []
     assert len(rows) == 16_375
+    assert names["UC3GWY1x08hTsS0fDG8mEYaA"] == "Mary's World"  # renamed from Mary Nursery Rhymes
+    grown = load_dataset(data / "videos.tsv")
+    assert grown.channels_by_id["UC3GWY1x08hTsS0fDG8mEYaA"].name == "Mary's World"
 
 
 def test_a_left_out_channel_is_never_there_and_no_score_moves(

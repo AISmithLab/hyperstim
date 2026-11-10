@@ -4,6 +4,7 @@ The videos added to the HyperStim dataset since the reference set (16,375 videos
 
 - `<year>.tsv`: the videos added that year, in the order they were added.
 - `removed.tsv`: videos taken out because they went offline.
+- `channel-names.tsv`: the current name of each channel with videos in the dataset, read from YouTube weekly. The site shows it instead of the channel name in a video's row, which is the name the channel had when the video was collected.
 - `excluded-channels.tsv`: channels left out because few of their uploads are made for kids, or they make too few videos we can use (below).
 - `CHANGELOG.tsv`: one row a finished day, the newest first (below).
 - `growth.svg`, `growth-dark.svg`: the chart in the repo's README.
