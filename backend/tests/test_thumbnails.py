@@ -9,6 +9,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from hyperstim_api.thumbnails import (
+    BLOG_VIDEOS,
     KEEP_S,
     MISSING_S,
     OFFLINE_HINTS,
@@ -22,6 +23,7 @@ from tests.conftest import ORIGIN, video_row, write_dataset
 
 KNOWN = "data0000000"
 LIVE = "live0000000"
+BLOG = "blog0000000"
 UNKNOWN = "else0000000"
 
 
@@ -47,6 +49,7 @@ def youtube() -> FakeYouTube:
     fake.images[(KNOWN, "hq")] = b"hq-image"
     fake.images[(KNOWN, "mq")] = b"mq-image"
     fake.images[(LIVE, "hq")] = b"live-image"
+    fake.images[(BLOG, "hq")] = b"blog-image"
     return fake
 
 
@@ -84,6 +87,17 @@ def test_serves_a_live_checked_video_but_no_unknown_one(
     assert client.get(f"/api/thumbnails/{LIVE}").content == b"live-image"
     assert client.get(f"/api/thumbnails/{UNKNOWN}").status_code == 404
     assert youtube.calls == [(LIVE, "hq")]  # unknown videos never reach YouTube
+
+
+def test_serves_a_blog_posts_video_listed_next_to_the_dataset(
+    tmp_path: Path, make_client: Callable[..., TestClient], youtube: FakeYouTube
+) -> None:
+    dataset = write_dataset(tmp_path / "videos.tsv", [video_row(KNOWN, "UC-data", 1.0)])
+    (tmp_path / BLOG_VIDEOS).write_text(f"# The blog's videos\n{BLOG}  # a post\n\n")
+    client = make_client(dataset, fetch_thumbnail=youtube)
+    assert client.get(f"/api/thumbnails/{BLOG}").content == b"blog-image"
+    assert client.get(f"/api/thumbnails/{UNKNOWN}").status_code == 404
+    assert client.get(f"/api/videos/{BLOG}").status_code == 404  # only its thumbnail
 
 
 @pytest.mark.parametrize("path", [f"{KNOWN}?size=maxres", "../../etc/passwd", "short"])

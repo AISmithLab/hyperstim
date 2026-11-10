@@ -34,6 +34,7 @@ from hyperstim_api.thumbnails import (
     ThumbnailCache,
     Unavailable,
     fetch_from_youtube,
+    load_blog_videos,
 )
 from hyperstim_api.usage import UsageLog
 
@@ -262,6 +263,7 @@ def create_app(
     logging.getLogger("uvicorn.access").disabled = True
     settings = settings or load_settings()
     store = DatasetStore(settings.dataset_path, settings.collected_dir, settings.collected_reload_s)
+    blog_videos = load_blog_videos(settings.dataset_path)
     if pipeline is None:
         pipeline = ResearchPipeline(settings.ytdlp_cookies, settings.youtube_api_key)
         if settings.youtube_api_key is None:
@@ -514,10 +516,15 @@ def create_app(
     )
     def thumbnail(video_id: VideoId, size: Size = "hq") -> Response:
         """A video's YouTube thumbnail, served by us so visitors' browsers don't contact YouTube.
-        Only for videos in the dataset or requested for live analysis. Cached on the server for
-        30 days; the visitor's browser keeps it for a day. While YouTube can't be reached, 502
-        without asking it again for 10 minutes."""
-        if video_id not in store.current.videos_by_id and analyzer.snapshot(video_id) is None:
+        Only for videos in the dataset, requested for live analysis, or embedded in a blog post.
+        Cached on the server for 30 days; the visitor's browser keeps it for a day. While YouTube
+        can't be reached, 502 without asking it again for 10 minutes."""
+        known = (
+            video_id in store.current.videos_by_id
+            or video_id in blog_videos
+            or analyzer.snapshot(video_id) is not None
+        )
+        if not known:
             raise HTTPException(status_code=404, detail="Video not found")
         try:
             image = thumbnails.get(video_id, size)

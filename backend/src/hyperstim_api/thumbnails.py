@@ -28,6 +28,22 @@ UNREACHABLE_S = 10 * 60  # "YouTube couldn't be reached" is remembered this long
 # by its ID; the collector checks those videos first (plan 013, decision 5).
 OFFLINE_HINTS = "offline-hints"
 
+# Next to the dataset: the videos the blog's posts embed (plan 018), one ID a line, so their
+# thumbnails show like a dataset video's, whether or not the video was ever analyzed here.
+BLOG_VIDEOS = "blog-videos.txt"
+
+
+def load_blog_videos(dataset_path: Path) -> frozenset[str]:
+    """The IDs in the blog's video list next to the dataset; none if it's missing.
+    `#` starts a comment."""
+    path = dataset_path.parent / BLOG_VIDEOS
+    if not path.exists():
+        return frozenset()
+    lines = (
+        line.split("#", 1)[0].strip() for line in path.read_text(encoding="utf-8").splitlines()
+    )
+    return frozenset(line for line in lines if line)
+
 
 class Unavailable(Exception):
     """YouTube couldn't be reached, or answered with an error."""
