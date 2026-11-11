@@ -1,0 +1,31 @@
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+import build_report  # noqa: E402
+
+
+def test_build_report(tmp_path, monkeypatch):
+    here = tmp_path / "001-variant-pairs"
+    (here / "results").mkdir(parents=True)
+    data = {"pair": {"a": "AAA", "b": "BBB"},
+            "videos": {"AAA": {"title": "</script>x", "description": "long text"}, "BBB": {"title": "é"}}}
+    (here / "results" / "demo.json").write_text(json.dumps(data))
+    (here / "report.html").write_text('<script id="data" type="application/json">__DATA__</script>')
+    video = tmp_path / "cache" / "video"
+    video.mkdir(parents=True)
+    (video / "AAA.mp4").write_bytes(b"a")
+    (video / "BBB.mp4").write_bytes(b"b")
+    out = tmp_path / "cache" / "report" / "demo"
+    out.mkdir(parents=True)
+    monkeypatch.setattr(build_report, "HERE", here)
+    monkeypatch.setattr(sys, "argv", ["build_report.py", "demo"])
+    build_report.main()
+    page = (out / "index.html").read_text()
+    assert "__DATA__" not in page and "</script>x" not in page and "é" in page
+    blob = page.split(">", 1)[1].rsplit("</script>", 1)[0]
+    shown = json.loads(blob.replace("<\\/", "</"))
+    assert shown["videos"]["AAA"] == {"title": "</script>x"}  # descriptions left out
+    assert (out / "a.mp4").read_bytes() == b"a" and (out / "b.mp4").read_bytes() == b"b"

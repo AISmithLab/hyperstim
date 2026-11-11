@@ -1,0 +1,959 @@
+<title>Five Little Ducks, Twice</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Shantell+Sans:wght@600&display=swap">
+<style>
+/* Layout: a pair inspection report in the HyperStim site look. Light only: white page, navy headings, pastel panels, pill controls.
+   A basic-info table (one column per video), one fixed-structure inspection sheet, a synced video viewer over timeline tracks, then deep dives the sheet links to. */
+:root {
+  --bg: #eef6fa;         /* sky: plot grounds and row hover */
+  --surface: #ffffff;
+  --ink: #0f2e8a;        /* navy: headings, controls, the pair's marks */
+  --ink-2: #4a5262;      /* ink: body text */
+  --muted: #6e7483;      /* ink at ~80% */
+  --line: rgb(15 46 138 / 0.10);
+  --line-2: rgb(15 46 138 / 0.15);
+  --a: #d9603f;          /* version A (side-a-strong) */
+  --b: #4f7fe0;          /* version B (side-b-strong) */
+  --a-fill: #fda28c;     /* side-a */
+  --b-fill: #9fbbf5;     /* side-b */
+  --a-soft: #fda28c59;
+  --b-soft: #9fbbf559;
+  --chip: #f8d040;       /* sunny: selected */
+  --chip-ink: #0f2e8a;
+  --primary: #0f4a9c;
+  --butter: #fef8d4;
+  --mint: #e5f6e6;
+  --sky: #eef6fa;
+  --same: #0f2e8a;       /* verdict: same, on butter rows */
+  --same-bg: #fef8d4;    /* butter */
+  --same-dot: #f8d040;   /* sunny */
+  --recolor: #eba828;    /* matches the change-map stills */
+  --redraw: #c83ca0;
+  --base: #aab5d8;       /* baseline marks, navy-tinted gray */
+  --focus: #f8d040;
+  --display: "Shantell Sans", "Comic Sans MS", cursive;
+  --body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+body {
+  background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.05; }
+h1 { font-size: clamp(2.3rem, 6vw, 4.2rem); font-weight: 800; font-stretch: 72%; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 750; font-stretch: 80%; }
+h3 { font-size: 1.1rem; font-weight: 700; font-stretch: 90%; }
+p { margin: 0; }
+.eyebrow { font: 600 0.75rem/1.2 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.2rem; color: var(--ink-2); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+a { color: inherit; text-underline-offset: 3px; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+section { display: grid; gap: 20px; scroll-margin-top: 16px; }
+.sec-head { display: grid; gap: 6px; }
+.sec-head p { color: var(--ink-2); }
+.sec-head h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.tag { display: inline-flex; align-items: center; justify-content: center; width: 1.45em; height: 1.45em; border-radius: 4px;
+  font: 700 0.8em/1 var(--mono); color: #fff; flex: none; }
+.tag.a { background: var(--a); } .tag.b { background: var(--b); }
+
+/* Info buttons and their floating tip */
+.ib { display: inline-grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 50%; border: 1px solid var(--line-2);
+  background: var(--surface); color: var(--ink-2); font: italic 600 0.75rem/1 Georgia, serif; cursor: help; padding: 0; vertical-align: 0.1em; flex: none; }
+.ib:hover, .ib[aria-expanded="true"] { border-color: var(--ink); color: var(--ink); }
+#tipbox { position: fixed; z-index: 50; max-width: min(22rem, calc(100vw - 32px)); background: var(--chip); color: var(--chip-ink);
+  padding: 10px 12px; border-radius: 8px; font: 400 0.85rem/1.45 var(--body); box-shadow: 0 8px 24px #0004; pointer-events: none; }
+
+/* Header */
+header { display: grid; gap: 22px; }
+.basics-wrap { background: var(--surface); border: 1px solid var(--line-2); border-radius: 2rem; overflow-x: auto; }
+.basics { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.basics th, .basics td { text-align: left; vertical-align: top; padding: 12px 20px; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+.basics thead th { border-top: 0; padding-block: 16px 12px; }
+.basics thead th .ch { display: flex; gap: 8px; align-items: center; font: 700 1rem/1.3 var(--body); color: var(--ink); }
+.basics th[scope=row] { width: 11rem; font-weight: 700; color: var(--ink); }
+.basics td { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.basics td small { display: block; color: var(--muted); font-size: 0.85rem; }
+.basics img { width: 100%; max-width: 320px; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-radius: 1rem; }
+
+/* Inspection sheet */
+.sheet-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.sheet { width: 100%; border-collapse: collapse; }
+.sheet th, .sheet td { text-align: left; vertical-align: top; padding: 11px 14px; border-top: 1px solid var(--line); }
+.sheet thead th { border-top: 0; font: 600 0.72rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-block: 12px; }
+.sheet .cat th { background: var(--bg); font: 700 0.95rem/1.2 var(--display); font-stretch: 90%; color: var(--ink); padding-block: 9px; }
+.sheet .cat th span { font: 400 0.82rem var(--body); color: var(--muted); margin-left: 8px; }
+.sheet tr.same td { background: var(--same-bg); }
+.sheet td.sig { font-weight: 600; width: 13rem; }
+.sheet td.v { width: 7.5rem; }
+.sheet td.find { color: var(--ink-2); }
+.sheet td.go { width: 6rem; text-align: right; white-space: nowrap; }
+.verdict { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.9rem; }
+.verdict::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--muted); }
+.verdict.same { color: var(--same); } .verdict.same::before { background: var(--same-dot); border-color: var(--same); }
+.verdict.diff { color: var(--ink-2); }
+.find .ib { margin-left: 6px; }
+.sheet-sum { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; color: var(--ink-2); font-size: 0.95rem; }
+.sheet-sum b { color: var(--ink); }
+
+/* Viewer */
+.inspector { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 14px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.tgroup { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 8px; overflow: hidden; flex-wrap: wrap; }
+.seg button { border: 0; background: transparent; padding: 7px 12px; cursor: pointer; font-size: 0.9rem; }
+.seg button + button { border-left: 1px solid var(--line-2); }
+.seg button[aria-pressed="true"] { background: var(--chip); color: var(--chip-ink); }
+.seglabel { font-size: 0.85rem; color: var(--muted); }
+.stage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.stage.single { grid-template-columns: minmax(0, 1fr); max-width: 820px; width: 100%; justify-self: center; }
+.stage.single .pane { grid-area: 1 / 1; }
+.pane { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 8px; overflow: hidden; background: #1c1f24; touch-action: pan-y; }
+.stage.single #pb { background: transparent; }
+.pane video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.pane .sprite { position: absolute; inset: 0; background-repeat: no-repeat; z-index: 1; }
+.pane .label { position: absolute; left: 8px; top: 8px; display: flex; gap: 6px; align-items: center; padding: 3px 8px 3px 4px; z-index: 2;
+  border-radius: 6px; background: #000a; color: #fff; font: 600 0.78rem/1.3 var(--mono); max-width: calc(100% - 16px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pane .label.right { left: auto; right: 8px; }
+.pane .none { position: absolute; inset: 0; display: grid; place-items: center; color: #cfd4dc; font-size: 0.95rem; text-align: center; padding: 16px; background: #1c1f24; z-index: 1; }
+.divider { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; box-shadow: 0 0 0 1px #0006; pointer-events: none; z-index: 3; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; color: var(--ink-2); align-items: center; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.transport { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.transport .tc { font: 600 0.9rem var(--mono); font-variant-numeric: tabular-nums; display: grid; gap: 2px; text-align: right; }
+.btn { border: 1px solid var(--line-2); background: var(--surface); border-radius: 8px; padding: 7px 12px; cursor: pointer; white-space: nowrap; }
+.btn:hover { border-color: var(--ink-2); }
+.btn.primary { background: var(--chip); color: var(--chip-ink); border-color: var(--chip); min-width: 5.5rem; }
+input[type="range"] { width: 100%; accent-color: var(--ink); }
+select { border: 1px solid var(--line-2); background: var(--surface); border-radius: 8px; padding: 6px 8px; }
+
+.tracks { display: grid; position: relative; }
+.track { display: grid; grid-template-columns: 11rem minmax(0, 1fr); align-items: center; border-top: 1px solid var(--line); }
+.track .tl { padding: 6px 10px 6px 0; font-size: 0.82rem; line-height: 1.25; color: var(--ink-2); }
+.track .tl b { display: block; color: var(--ink); font-weight: 600; }
+.track svg { display: block; width: 100%; cursor: crosshair; }
+.axis { display: grid; grid-template-columns: 11rem minmax(0, 1fr); font: 0.72rem var(--mono); color: var(--muted); }
+.axis div:last-child { display: flex; justify-content: space-between; }
+.tip { position: absolute; pointer-events: none; background: var(--chip); color: var(--chip-ink); border-radius: 8px; padding: 8px 10px;
+  font-size: 0.8rem; line-height: 1.4; min-width: 12rem; z-index: 5; box-shadow: 0 6px 20px #0003; }
+
+/* Deep dives */
+.board { display: grid; gap: 28px; }
+.group { display: grid; gap: 8px; }
+.group > header { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
+.rows { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.row { border-top: 1px solid var(--line); scroll-margin-top: 80px; }
+.row:first-child { border-top: 0; }
+.row > button { width: 100%; display: grid; grid-template-columns: minmax(0, 15rem) 6.5rem minmax(0, 1fr) 7.5rem; gap: 14px; align-items: center;
+  padding: 10px 14px; background: none; border: 0; text-align: left; cursor: pointer; }
+.row > button:hover { background: var(--bg); }
+.row .name { font-weight: 600; line-height: 1.25; }
+.row .name small { display: block; font-weight: 400; color: var(--muted); font-size: 0.8rem; }
+.row .val { font: 600 0.95rem var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.row svg { width: 100%; height: 38px; display: block; }
+.pill { justify-self: end; font-size: 0.8rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); white-space: nowrap; }
+.pill.on { background: var(--chip); color: var(--chip-ink); border-color: var(--chip); }
+.detail { padding: 2px 14px 14px; display: grid; gap: 10px; font-size: 0.92rem; color: var(--ink-2); }
+.detail table { border-collapse: collapse; font-size: 0.85rem; min-width: 420px; }
+.detail th, .detail td { text-align: left; padding: 4px 12px 4px 0; border-bottom: 1px solid var(--line); }
+.detail td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.scroll { overflow-x: auto; }
+.keylegend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.82rem; color: var(--muted); align-items: center; }
+.keylegend span { display: inline-flex; align-items: center; gap: 6px; }
+.ladder { display: grid; gap: 8px; }
+.rung { display: grid; grid-template-columns: 2rem minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.rung.top { border-color: var(--chip); box-shadow: inset 4px 0 0 var(--chip); }
+.rung .num { font: 700 1rem var(--mono); color: var(--muted); }
+.rung .ev { font-size: 0.88rem; color: var(--ink-2); }
+.stems { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.stem { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 4px; }
+.stem .big { font: 600 1.4rem var(--mono); }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; align-content: start; min-width: 0; overflow-wrap: anywhere; }
+.card h3 { display: flex; align-items: center; gap: 8px; }
+.bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; gap: 2px; }
+.bar div { min-width: 2px; }
+.pal { display: grid; gap: 6px; }
+.pal .strip { display: flex; height: 22px; border-radius: 5px; overflow: hidden; }
+.pal .row-l { display: flex; gap: 8px; align-items: center; font-size: 0.85rem; }
+.feat { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.feat th, .feat td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+.feat th:first-child, .feat td:first-child { text-align: left; }
+.feat td.mono { font-size: 0.82rem; }
+.tokens { display: flex; flex-wrap: wrap; gap: 5px; }
+.tok { font-size: 0.82rem; padding: 2px 8px; border-radius: 5px; border: 1px solid var(--line-2); }
+.tok.a { background: var(--a-soft); border-color: transparent; }
+.tok.b { background: var(--b-soft); border-color: transparent; }
+.tok.s { background: var(--chip); color: var(--chip-ink); border-color: var(--chip); }
+
+@media (max-width: 860px) {
+  .grid2 { grid-template-columns: minmax(0, 1fr); }
+  .row > button { grid-template-columns: minmax(0, 1fr) auto; }
+  .row svg { grid-column: 1 / -1; grid-row: 2; }
+  .row .pill { grid-column: 2; grid-row: 1; }
+  .row .val { grid-column: 1; grid-row: 3; text-align: left; }
+  .stems { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .sheet, .sheet tbody, .sheet tr, .sheet td, .sheet th { display: block; }
+  .sheet thead { display: none; }
+  .sheet tr:not(.cat) { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-top: 1px solid var(--line); }
+  .sheet tr.same { background: var(--same-bg); }
+  .sheet td { border-top: 0; width: auto !important; }
+  .sheet td.sig { grid-column: 1; padding-bottom: 2px; }
+  .sheet td.v { grid-column: 2; grid-row: 1; padding-bottom: 2px; }
+  .sheet td.find { grid-column: 1 / -1; padding-block: 2px; }
+  .sheet td.go { grid-column: 1 / -1; text-align: left; padding-top: 2px; }
+}
+@media (max-width: 560px) {
+  .basics th, .basics td { padding: 10px 10px; font-size: 0.9rem; }
+  .basics th[scope=row] { width: 5.5rem; }
+  .stage { grid-template-columns: minmax(0, 1fr); }
+  .track, .axis { grid-template-columns: minmax(0, 1fr); }
+  .track .tl { padding: 8px 0 2px; }
+  .axis div:first-child { display: none; }
+  .transport { grid-template-columns: auto minmax(0, 1fr); }
+  .transport .tc { grid-column: 1 / -1; text-align: left; grid-auto-flow: column; justify-content: start; gap: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+
+/* HyperStim site look */
+body { background: #ffffff; color: var(--ink-2); font: 400 16px/1.6 var(--body); }
+.wrap { max-width: 72rem; gap: 64px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; font-stretch: normal; letter-spacing: 0; color: var(--ink); line-height: 1.2; }
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 1.875rem); }
+h3 { font-size: 1.125rem; }
+.eyebrow { font: 700 0.8rem/1.2 var(--body); letter-spacing: 0.08em; color: var(--muted); }
+.mono, .row .val, .transport .tc, .stem .big, .detail td.n, .rung .num, .axis, .feat td { font-variant-numeric: tabular-nums; }
+a { color: var(--ink); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.tag { border-radius: 999px; color: var(--ink); font-family: var(--body); font-weight: 800; }
+.tag.a { background: var(--a-fill); } .tag.b { background: var(--b-fill); }
+.card, .rows, .inspector, .sheet-wrap { border: 1px solid var(--line-2); border-radius: 2rem; }
+.track .tl b, .row .name, .stem .big, .sheet td.sig { color: var(--ink); }
+.card { padding: 24px; }
+.inspector { padding: 24px; gap: 18px; }
+.seg { border: 1px solid var(--line-2); border-radius: 999px; background: #ffffff; padding: 3px; gap: 2px; }
+.seg button { border-radius: 999px; min-height: 38px; padding: 6px 14px; color: var(--ink); font-weight: 600; }
+.seg button + button { border-left: 0; }
+.seg button:hover { background: var(--sky); }
+.seg button[aria-pressed="true"] { background: var(--chip); color: var(--chip-ink); }
+.btn { background: var(--primary); color: #ffffff; border: 0; border-radius: 999px; min-height: 44px; padding: 8px 22px; font-weight: 700; }
+.btn:hover { background: var(--ink); border-color: transparent; }
+.btn.primary { background: var(--chip); color: var(--chip-ink); }
+.btn.primary:hover { background: #f2c21a; }
+select { border-radius: 999px; min-height: 40px; padding: 6px 12px; color: var(--ink); font-weight: 600; border-color: var(--line-2); }
+input[type="range"] { accent-color: var(--ink); }
+.pane { border-radius: 1rem; }
+.tip, #tipbox { background: #ffffff; color: var(--ink-2); border: 1px solid var(--line-2); border-radius: 1rem; padding: 12px 16px; box-shadow: 0 4px 16px rgb(15 46 138 / 0.08); }
+.ib { border-color: var(--line-2); color: var(--ink); font-family: var(--body); font-style: normal; font-weight: 800; }
+.ib:hover, .ib[aria-expanded="true"] { background: var(--chip); border-color: var(--chip); }
+.pill { color: var(--ink); border-color: var(--line-2); font-weight: 600; }
+.pill.on { background: var(--chip); color: var(--chip-ink); border-color: var(--chip); }
+.rung, .stem { border-color: var(--line-2); border-radius: 1rem; }
+.rung { padding: 14px 18px; }
+.rung.top { background: var(--butter); border-color: var(--chip); box-shadow: none; }
+.tok { border-radius: 999px; border-color: var(--line-2); }
+.tok.s { background: var(--chip); color: var(--chip-ink); border-color: var(--chip); }
+.bar { border-radius: 999px; }
+.sheet thead th { font-family: var(--body); font-weight: 700; }
+.sheet .cat th { background: var(--sky); font-family: var(--display); font-weight: 600; }
+.sheet td { padding-inline: 20px; }
+.verdict.diff { color: var(--muted); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Experiment 001 · Variant pairs · Seed pair</div>
+    <h1>Five Little Ducks, twice</h1>
+    <p class="lead" id="lead"></p>
+    <div class="basics-wrap"><table class="basics" id="basics">
+      <caption class="sr">The two videos’ basic info</caption>
+      <thead><tr><th scope="col"><span class="sr">Field</span></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </header>
+
+  <section aria-labelledby="h-sheet" id="sheet-sec">
+    <div class="sec-head">
+      <h2 id="h-sheet">Inspection sheet <span id="sheet-info"></span></h2>
+      <p>Every signal of the framework, in the same order for every pair. Same means the signal fires: the pair is closer than unrelated pairs.</p>
+    </div>
+    <div class="sheet-sum" id="sheet-sum"></div>
+    <div class="sheet-wrap"><table class="sheet" id="sheet">
+      <thead><tr><th scope="col">Signal</th><th scope="col">Verdict</th><th scope="col">What we found</th><th scope="col"><span class="sr">Details</span></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+
+  <section aria-labelledby="h-insp" id="inspect">
+    <div class="sec-head">
+      <h2 id="h-insp">Compare frame by frame <span id="insp-info"></span></h2>
+      <p>Both videos play in sync, aligned by their audio. Step through single frames or jump from cut to cut; click any track to go to that moment.</p>
+    </div>
+    <div class="inspector">
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="View" id="modes">
+          <button type="button" data-mode="side" aria-pressed="true">Side by side</button>
+          <button type="button" data-mode="swipe" aria-pressed="false">Swipe</button>
+          <button type="button" data-mode="blink" aria-pressed="false">Blink</button>
+          <button type="button" data-mode="mask" aria-pressed="false">Change map</button>
+          <button type="button" data-mode="edges" aria-pressed="false">Outlines</button>
+        </div>
+        <div class="tgroup"><span class="seglabel" id="snd-l">Sound</span>
+          <div class="seg" role="group" aria-labelledby="snd-l" id="sound">
+            <button type="button" data-snd="a" aria-pressed="true">A</button>
+            <button type="button" data-snd="b" aria-pressed="false">B</button>
+            <button type="button" data-snd="both" aria-pressed="false">Both</button>
+            <button type="button" data-snd="off" aria-pressed="false">Off</button>
+          </div>
+        </div>
+      </div>
+      <div class="stage" id="stage">
+        <div class="pane" id="pa">
+          <video id="va" src="a.mp4" preload="auto" playsinline></video>
+          <div class="label" id="la"></div>
+        </div>
+        <div class="pane" id="pb">
+          <video id="vb" src="b.mp4" preload="auto" playsinline muted></video>
+          <div class="sprite" id="spr" hidden></div>
+          <div class="none" id="nob" hidden></div>
+          <div class="label" id="lb"></div>
+          <div class="divider" id="div" hidden></div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="legend" id="legend"></div>
+        <input type="range" id="swipe" min="0" max="100" value="50" aria-label="Swipe position: left shows A, right shows B" hidden style="max-width:820px">
+      </div>
+      <div class="transport">
+        <button type="button" class="btn primary" id="play">Play</button>
+        <input type="range" id="t" min="0" step="0.04" value="15" aria-label="Moment in version A, seconds">
+        <div class="tc" id="tc"></div>
+      </div>
+      <div class="toolbar">
+        <div class="tgroup">
+          <button type="button" class="btn" id="prevcut">← Cut</button>
+          <button type="button" class="btn" id="prevf" aria-label="Previous frame">← Frame</button>
+          <button type="button" class="btn" id="nextf" aria-label="Next frame">Frame →</button>
+          <button type="button" class="btn" id="nextcut">Cut →</button>
+        </div>
+        <label class="tgroup"><span class="seglabel">Speed</span>
+          <select id="speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option></select></label>
+      </div>
+      <div class="tracks" id="tracks"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-sig" id="d-baselines">
+    <div class="sec-head">
+      <h2 id="h-sig">Signals against baselines <span id="sig-info"></span></h2>
+      <p>Each strip stacks one histogram per baseline set of unrelated pairs: top to bottom, the same song by another studio, the same channel, and random pairs (signals that need the downloads have one row so far: the same pair at other moments). Darker cells hold more pairs. Right means more alike, also for distances like days apart. The thin tick in each row is the value only 1% of that set’s pairs beat; the black bar is this pair. It fires when the bar is right of every tick. Open a row for the numbers.</p>
+    </div>
+    <div class="keylegend" id="keylegend"></div>
+    <div class="board" id="board"></div>
+  </section>
+
+  <section aria-labelledby="h-meta" id="d-meta">
+    <div class="sec-head"><h2 id="h-meta">Owner, titles and tags</h2></div>
+    <div class="grid2" id="meta"></div>
+  </section>
+
+  <section aria-labelledby="h-vis" id="d-visual">
+    <div class="sec-head"><h2 id="h-vis">Colors and changed parts</h2></div>
+    <div class="grid2" id="changed"></div>
+  </section>
+
+  <section aria-labelledby="h-audio" id="d-audio">
+    <div class="sec-head">
+      <h2 id="h-audio">Audio levels</h2>
+      <p>Four levels, from most to least alike. The pair's level is the closest one that holds.</p>
+    </div>
+    <div class="ladder" id="ladder"></div>
+    <h3>Separated stems, aligned</h3>
+    <div class="stems" id="stems"></div>
+  </section>
+
+  <section aria-labelledby="h-feat" id="d-features">
+    <div class="sec-head"><h2 id="h-feat">Our features and audience</h2></div>
+    <div class="grid2" id="features"></div>
+  </section>
+</div>
+<div id="tipbox" role="tooltip" hidden></div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const A = D.pair.a, B = D.pair.b, VA = D.videos[A], VB = D.videos[B];
+const S = D.signals, LAG = D.alignment.lag, DUR = VA.duration_s, FPS = 25;
+const $ = (s, el = document) => el.querySelector(s);
+const h = (tag, attrs = {}, ...kids) => {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') el.className = v; else if (k === 'html') el.innerHTML = v;
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v); else if (v != null) el.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) if (c != null) el.append(c.nodeType ? c : document.createTextNode(c));
+  return el;
+};
+const SVGNS = 'http://www.w3.org/2000/svg';
+const sv = (tag, attrs = {}) => { const el = document.createElementNS(SVGNS, tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); return el; };
+const f2 = x => x == null ? '–' : (+x).toFixed(2);
+const f3 = x => x == null ? '–' : (+x).toFixed(3);
+const pct = (x, d = 0) => x == null ? '–' : (100 * x).toFixed(d) + '%';
+const tc = s => { if (s == null || s < 0) return '–'; const m = Math.floor(s / 60), r = s - 60 * m; return `${m}:${r.toFixed(1).padStart(4, '0')}`; };
+const tcf = s => { if (s == null || s < 0) return '–'; const fr = Math.round(s * FPS), m = Math.floor(fr / (60 * FPS)), sec = Math.floor(fr / FPS) % 60, f = fr % FPS;
+  return `${m}:${String(sec).padStart(2, '0')}.${String(f).padStart(2, '0')}`; };
+const big = n => n >= 1e9 ? (n / 1e9).toFixed(1) + 'B' : n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e3 ? (n / 1e3).toFixed(1) + 'k' : String(n);
+const date = s => new Date(s).toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+const tagEl = v => h('span', { class: 'tag ' + v, 'aria-hidden': 'true' }, v.toUpperCase());
+const titleCase = x => (x || '–').replace(/\b(usp)\b/gi, m => m.toUpperCase()).replace(/\b[a-z]/g, m => m.toUpperCase());
+
+/* ---------- Info tips: one floating box, shown on hover, focus or tap ---------- */
+const tipbox = $('#tipbox');
+let tipOwner = null;
+function showTip(btn) {
+  tipOwner = btn; tipbox.textContent = btn.dataset.tip; tipbox.hidden = false; btn.setAttribute('aria-expanded', 'true');
+  const r = btn.getBoundingClientRect(), w = tipbox.offsetWidth, hgt = tipbox.offsetHeight;
+  const left = Math.max(16, Math.min(innerWidth - w - 16, r.left + r.width / 2 - w / 2));
+  const top = r.top - hgt - 8 > 8 ? r.top - hgt - 8 : r.bottom + 8;
+  tipbox.style.left = left + 'px'; tipbox.style.top = top + 'px';
+}
+function hideTip() { if (tipOwner) tipOwner.setAttribute('aria-expanded', 'false'); tipOwner = null; tipbox.hidden = true; }
+const info = (text, label = 'More about this') => {
+  const b = h('button', { type: 'button', class: 'ib', 'aria-label': label, 'aria-expanded': 'false', 'data-tip': text }, 'i');
+  b.addEventListener('mouseenter', () => showTip(b)); b.addEventListener('mouseleave', hideTip);
+  b.addEventListener('focus', () => showTip(b)); b.addEventListener('blur', hideTip);
+  b.addEventListener('click', e => { e.preventDefault(); tipOwner === b ? hideTip() : showTip(b); });
+  return b;
+};
+addEventListener('scroll', hideTip, { passive: true });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+
+/* ---------- Shared numbers ---------- */
+const V = S.visual, M = S.metadata, AU = S.audio, CH = S.changes;
+const own = M.owner.detail, area = CH.area, col = CH.color, parts = CH.parts;
+const onlyA = parts.only_a.reduce((s, [a, b]) => s + b - a, 0), onlyB = parts.only_b.reduce((s, [a, b]) => s + b - a, 0);
+const cutsD = V.aligned_cuts.detail, td = M.description.detail, T = M.title.detail;
+const statsA = CH.audience[A], statsB = CH.audience[B];
+const bs = D.baseline_sizes;
+const SETS = { same_song: 'Same song, other studio', same_channel: 'Same channel', random: 'Random pairs', time_shift: 'Same pair, other moment' };
+const SET_SHORT = { same_song: 'same song', same_channel: 'same channel', random: 'random', time_shift: 'other moment' };
+const META_BASE = `Baselines from the dataset: ${bs.dataset_pairs.same_song} same-song pairs (other studios), ${bs.dataset_pairs.same_channel} same-channel and ${bs.dataset_pairs.random} random pairs.`;
+const SAMPLE_BASE = `Baselines from a ${bs.sample_videos}-video sample fetched from the API: ${bs.sample_pairs.same_song} same-song, ${bs.sample_pairs.same_channel} same-channel and ${bs.sample_pairs.random} random pairs.`;
+const SHIFT_BASE = 'Baseline: the same pair at other moments (B shifted 3–30 s), until baseline videos are downloaded in a later step. The song repeats one verse five times, so other moments look alike too: this baseline is strict.';
+const FIRE_RULE = 'A signal fires when the pair is closer than the 99th percentile of unrelated pairs (below the 1st percentile for distances) in every baseline set; the strictest set decides.';
+const closer = sig => Object.entries(sig.per_set || {}).map(([k, p]) => `${SET_SHORT[k] || k} ${p.closer_than == null ? '–' : pct(p.closer_than, 1)}`).join(', ');
+const levelName = (AU.levels.find(l => l.key === AU.level) || { name: 'No shared audio' }).name;
+const seg0 = D.alignment.segments[0];
+const minDur = Math.min(VA.duration_s, VB.duration_s);
+const featFire = Object.values(CH.features_baseline).filter(f => f.fires).length, featN = Object.keys(CH.features_baseline).length;
+const viewRatio = statsB.viewCount / statsA.viewCount, likeRatio = (statsB.likeCount / statsB.viewCount) / (statsA.likeCount / statsA.viewCount);
+const ratio = x => x >= 1 ? x : 1 / x;
+
+/* ---------- Header: basic info, one column per video ---------- */
+const ago = (from, to) => { const d = (new Date(to) - new Date(from)) / 864e5, m = Math.round(d / 30.44); return d < 45 ? `${Math.round(d)} days` : m < 12 ? `${m} mo` : `${Math.floor(m / 12)} y ${m % 12} mo`; };
+const COUNTRY = { IN: 'India', US: 'United States', GB: 'United Kingdom' };
+for (const [k, v] of [['a', VA], ['b', VB]]) $('#basics thead tr').append(h('th', { scope: 'col' }, h('span', { class: 'ch' }, tagEl(k), `Version ${k.toUpperCase()}`)));
+const BASICS = [
+  ['Thumbnail', (v, id, k) => h('img', { src: `thumb-${k}.jpg`, alt: `Thumbnail of version ${k.toUpperCase()}` })],
+  ['Title', (v, id) => h('a', { href: `https://www.youtube.com/watch?v=${id}`, target: '_blank', rel: 'noopener' }, v.title)],
+  ['Channel', v => v.channel],
+  ['Channel ID', v => h('a', { href: `https://www.youtube.com/channel/${v.channel_id}`, target: '_blank', rel: 'noopener', class: 'mono' }, v.channel_id)],
+  ['Video ID', (v, id) => h('span', { class: 'mono' }, id)],
+  ['Published', v => [v.published.slice(0, 10), h('small', {}, `${v.published.slice(11, 19)} UTC`)]],
+  ['Length', v => tc(v.duration_s).replace(/\.\d+$/, '')],
+  ['Views', v => [big(v.stats.viewCount), h('small', {}, `${big(v.stats.likeCount)} likes, ${pct(v.stats.likeCount / v.stats.viewCount, 2)} of views`)]],
+  ['Channel subscribers', v => big(v.channel_subscribers)],
+  ['Channel history', v => [`Created ${v.channel_created.slice(0, 10)}, ${ago(v.channel_created, v.published)} before this video`,
+    h('small', {}, [`${big(v.channel_videos)} videos, ${big(v.channel_views)} views today`, v.channel_country ? `based in ${COUNTRY[v.channel_country] || v.channel_country}` : null].filter(Boolean).join('; '))]],
+];
+for (const [label, cell] of BASICS)
+  $('#basics tbody').append(h('tr', {}, h('th', { scope: 'row' }, label), ...[['a', A, VA], ['b', B, VB]].map(([k, id, v]) => h('td', {}, cell(v, id, k)))));
+
+/* ---------- Inspection sheet: fixed rows, generic rules ---------- */
+const sameIf = b => b ? 'same' : 'diff';
+const SHEET = [
+  ['Metadata', 'from the Data API', [
+    ['Owner', sameIf(M.owner.fires), `${M.owner.value ? 'Same company: the ' + titleCase(own.shared.copyright.slice(-1)[0]) + ' copyright line' + (own.shared.app.length ? ` and ${own.shared.app.length} shared app links` : '') : 'No shared owner evidence'}. ${own.featured.a_lists_b || own.featured.b_lists_a ? 'One channel features the other.' : 'Neither channel features the other.'}`,
+      'Strongest evidence found, in order: same channel, featured channels, a shared copyright holder, app links, emails, link domains. Patterns are matched in video and channel descriptions.', '#d-meta'],
+    ['Timing', sameIf(M.timing_days.fires), `${M.timing_days.value.toFixed(1)} days apart; upload times ${M.timing_time_of_day.value.toFixed(1)} h apart. ${VB.channel} was created ${Math.round((new Date(VB.published) - new Date(VB.channel_created)) / 864e5)} days before its version.`,
+      `${FIRE_RULE} Days apart, pair closer than: ${closer(M.timing_days)}. ${META_BASE} Time of day uses the API sample, since the dataset has dates only; many same-channel uploads share an exact hour.`, '#row-timing_days'],
+    ['Title', sameIf(M.title.fires), `No words in common besides the song name “${T.song}”. A adds “${T.rest_a}”, B adds “${T.rest_b}”.`,
+      `Word overlap after removing the longest run of words both titles share (the song). Pair closer than: ${closer(M.title)}. ${META_BASE}`, '#d-meta'],
+    ['Description and tags', sameIf(M.description.fires || M.tags.fires || M.description_lines.fires), `Tags overlap ${pct(M.tags.value)} (${td.shared_tags.length} shared); ${td.shared_lines.length} description lines shared, mostly the copyright block and video links.`,
+      `Description words, pair closer than: ${closer(M.description)}. Tags: ${closer(M.tags)}. Same-channel pairs repeat a channel’s template, so that baseline is strict for a cross-channel pair. ${SAMPLE_BASE}`, '#d-meta'],
+    ['Duration', sameIf(M.duration.fires), `${tc(VA.duration_s)} vs ${tc(VB.duration_s)}: A has a ${onlyA.toFixed(1)} s end screen; the song part is the same length in both.`,
+      `Difference in total length. Pair closer than: ${closer(M.duration)}. ${META_BASE}`, '#d-visual'],
+  ]],
+  ['Visual', 'thumbnails and storyboards without downloading; the rest on the aligned videos', [
+    ['Thumbnail', sameIf(V.thumbnail_embedding.fires || V.thumbnail_hash.fires), `Same scene and pose: image-model similarity ${f2(V.thumbnail_embedding.value)}, above every baseline. The grayscale layout hash (${f2(V.thumbnail_hash.value)}) doesn’t stand out.`,
+      `Image model (DINOv2) similarity, pair closer than: ${closer(V.thumbnail_embedding)}. ${SAMPLE_BASE}`, '#row-thumbnail_embedding'],
+    ['Storyboard', sameIf(V.storyboard.fires), `The storyboards alone line up at ${V.storyboard.detail.lag.toFixed(1)} s (the audio says ${LAG.toFixed(1)} s), with a sequence similarity of ${f2(V.storyboard.value)}. A cheap screen before downloading.`,
+      `Storyboards are YouTube’s preview tiles, one a second here. ${SHIFT_BASE}`, '#row-storyboard'],
+    ['Aligned cuts', sameIf(V.aligned_cuts.fires), `All ${cutsD.n_in_matched} cuts in the shared part land on the same frame (±1 frame). At other moments: ${pct(V.aligned_cuts.per_set.time_shift.median)}.`,
+      `Cuts are found from outlines and brightness, so recoloring doesn’t hide them. ${SHIFT_BASE}`, '#inspect'],
+    ['Motion curve', sameIf(V.motion_magnitude.fires), `Motion rises and falls together: r = ${f2(V.motion_magnitude.value)} overall, ${f2(V.motion_objects.value)} for moving characters, ${f2(V.motion_camera_y.value)} for camera tilt.`,
+      `Correlation of optical-flow curves at aligned frames. ${SHIFT_BASE}`, '#inspect'],
+    ['Structure', sameIf(V.structure_edges.fires), `Character outlines coincide, but two thirds of the frame was redrawn: edge similarity ${f2(V.structure_edges.value)} against ${f2(V.structure_edges.threshold)} at other moments, a narrow margin.`,
+      `Median SSIM of edge maps per aligned frame, independent of color. ${SHIFT_BASE}`, '#row-structure_edges'],
+    ['Frame content', sameIf(V.frame_content.fires), `The image model sees different scenes (a forest instead of a farm): ${f2(V.frame_content.value)}, below ${f2(V.frame_content.threshold)} at other moments.`,
+      `Median DINOv2 similarity per aligned frame. ${SHIFT_BASE}`, '#row-frame_content'],
+  ]],
+  ['Audio', 'on the aligned audio', [
+    ['Audio level', sameIf(['exact', 'adjusted', 'backing'].includes(AU.level)), `${levelName}: waveform r = ${f3(AU.waveform_corr)}, B ${Math.abs(AU.gain_db).toFixed(1)} dB ${AU.gain_db < 0 ? 'quieter' : 'louder'}, same speed. All four stems match, so no new overlay.`,
+      'Levels from most to least alike: exact same audio, same audio adjusted (gain, EQ, speed), same backing with a different overlay, same song re-recorded. The closest one that holds is the level. Same up to “same backing”.', '#d-audio'],
+    ['Offset and longest match', sameIf(seg0.a1 - seg0.a0 >= 0.8 * minDur), `B starts ${Math.abs(LAG).toFixed(2)} s into A. One matching stretch of ${(seg0.a1 - seg0.a0).toFixed(1)} s: all of B.`,
+      'From audio cross-correlation, refined to the sample. Same when the longest matching stretch covers at least 80% of the shorter video.', '#d-audio'],
+  ]],
+  ['What changed', 'how the versions differ, and how they did', [
+    ['Color', sameIf(col.delta_e_mean < 10), `B is more saturated (${f2(col.saturation_a)} → ${f2(col.saturation_b)}) and darker (${col.lightness_diff.toFixed(0)} L*): the mother duck turns from white to yellow, the ducklings from yellow to pastels.`,
+      `Mean color distance ${col.delta_e_mean.toFixed(0)} ΔE over aligned frames. Same below 10 ΔE.`, '#d-visual'],
+    ['Changed area', sameIf(area.changed < 0.1), `${pct(area.reshaped)} of the frame redrawn (the background), ${pct(area.recolored)} recolored with the same shapes (the ducks), ${pct(1 - area.changed)} unchanged.`,
+      'Per pixel at 320 × 180: changed above 15 ΔE; redrawn when the local gradient structure also differs. Same when under 10% changed.', '#d-visual'],
+    ['Added or cut parts', sameIf(onlyA < 1 && onlyB < 1), onlyA || onlyB ? `${onlyA ? `Only in A: ${parts.only_a.map(([a, b]) => `${tc(a)}–${tc(b)}`).join(', ')}, an end screen of other videos. ` : ''}${onlyB ? `Only in B: ${parts.only_b.map(([a, b]) => `${tc(a)}–${tc(b)}`).join(', ')}.` : 'Nothing is only in B.'}` : 'Nothing is only in one version.',
+      'Stretches of at least 1 s that the alignment finds in one version only.', '#d-visual'],
+    ['Our features', sameIf(featFire >= 0.75 * featN), `${featFire} of ${featN} features are closer than unrelated pairs. Same cuts per minute; B is far more saturated and darker, with less motion.`,
+      'The dataset’s 12 pipeline features, measured on the shared song part. Same when at least 9 of 12 beat every baseline.', '#d-features'],
+    ['Audience', sameIf(ratio(viewRatio) < 2 && ratio(likeRatio) < 1.5), `B has ${viewRatio.toFixed(1)}× the views (${big(statsB.viewCount)} vs ${big(statsA.viewCount)}) and ${likeRatio.toFixed(1)}× the like rate.`,
+      'From the Data API on 2026-11-10. Same when views are within 2× and like rates within 1.5× of each other.', '#d-features'],
+  ]],
+];
+const tbody = $('#sheet tbody');
+let nSame = 0, nAll = 0;
+for (const [cat, sub, rows] of SHEET) {
+  tbody.append(h('tr', { class: 'cat' }, h('th', { colspan: 4, scope: 'colgroup' }, cat, h('span', {}, sub))));
+  for (const [name, v, text, tip, link] of rows) {
+    nAll++; if (v === 'same') nSame++;
+    tbody.append(h('tr', { class: v === 'same' ? 'same' : '' },
+      h('td', { class: 'sig' }, name),
+      h('td', { class: 'v' }, h('span', { class: 'verdict ' + v }, v === 'same' ? 'Same' : 'Different')),
+      h('td', { class: 'find' }, text, info(tip, `How ${name.toLowerCase()} is judged`)),
+      h('td', { class: 'go' }, h('a', { href: link, onclick: e => openLink(e, link) }, 'Details ↓'))));
+  }
+}
+$('#sheet-sum').append(h('span', {}, h('b', {}, `${nSame} same`), ` · ${nAll - nSame} different, of ${nAll} signals`));
+$('#sheet-info').append(info(FIRE_RULE + ' Rows under What changed use the plain rule in each row’s note.', 'How verdicts are decided'));
+$('#lead').textContent = `One animation and one recording, re-skinned with new colors, a redrawn background and a new title. Published by one company on two channels, ${M.timing_days.value.toFixed(0)} days apart.`;
+function openLink(e, link) {
+  if (!link.startsWith('#row-')) return;
+  const r = document.getElementById(link.slice(1)); if (!r) return;
+  e.preventDefault(); const b = $('button', r);
+  if (b.getAttribute('aria-expanded') !== 'true') b.click();
+  r.scrollIntoView({ block: 'center' }); b.focus({ preventScroll: true });
+}
+
+/* ---------- Viewer: two videos, A is the clock ---------- */
+const va = $('#va'), vb = $('#vb'), tIn = $('#t'), stage = $('#stage'), SP = D.sprites;
+tIn.max = DUR.toFixed(2);
+let mode = 'side', swipeX = 0.5, blinkB = false, blinkTimer = null;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const inMatch = t => parts.matched_a.some(([a0, a1]) => t >= a0 && t < a1);
+$('#insp-info').append(info(`Times are on A’s clock unless marked B: B = A ${LAG < 0 ? '−' : '+'} ${Math.abs(LAG).toFixed(2)} s, shown as minutes:seconds.frames at 25 fps. The videos are the 360p downloads, shown only to compare the versions; they are not in the repository. Change map and outlines are precomputed once a second.`, 'About the viewer'));
+const LEG = {
+  side: [], swipe: [['Drag across the frame, or use the slider', null]], blink: [],
+  mask: [['Recolored: same shape, new color', 'var(--recolor)'], ['Redrawn: new shapes', 'var(--redraw)'], ['Unchanged (grayed)', '#6b6f76']],
+  edges: [['Outline only in A', '#ff50c8'], ['Outline only in B', '#3cdc78'], ['Outline in both', '#ffffff']],
+};
+const startBlink = () => { clearInterval(blinkTimer); blinkTimer = setInterval(() => { blinkB = !blinkB; update(); }, 700); };
+function setMode(m) {
+  mode = m; for (const b of $('#modes').children) b.setAttribute('aria-pressed', b.dataset.mode === m);
+  stage.className = 'stage' + (m === 'side' ? '' : ' single');
+  $('#swipe').hidden = m !== 'swipe'; $('#div').hidden = m !== 'swipe';
+  $('#spr').hidden = !(m === 'mask' || m === 'edges');
+  $('#la').hidden = m !== 'side' && m !== 'swipe';
+  $('#lb').classList.toggle('right', m === 'swipe');
+  const lab = (el, k, text) => el.replaceChildren(...(k ? [tagEl(k)] : []), text);
+  lab($('#la'), 'a', m === 'side' ? VA.channel : 'A');
+  if (m === 'side') lab($('#lb'), 'b', VB.channel); else if (m === 'swipe') lab($('#lb'), 'b', 'B');
+  else if (m !== 'blink') lab($('#lb'), null, m === 'mask' ? 'A, changes marked' : 'Outlines of A and B');
+  clearInterval(blinkTimer); blinkTimer = null;
+  if (m === 'blink' && !reduce.matches) startBlink();
+  const leg = LEG[m].map(([t, c]) => h('span', {}, c ? h('i', { style: `background:${c}` }) : null, t));
+  if (m === 'blink') leg.push(h('button', { type: 'button', class: 'btn', onclick: () => { blinkB = !blinkB; update(); } }, 'Flip A / B'),
+    h('label', { class: 'tgroup' }, h('input', { type: 'checkbox', id: 'auto', checked: blinkTimer ? '' : null,
+      onchange: e => { if (e.target.checked) startBlink(); else { clearInterval(blinkTimer); blinkTimer = null; } } }), 'Flip automatically'));
+  if (m === 'mask') leg.push(info('A pixel counts as changed above 15 ΔE (Lab color distance), and as redrawn when its local gradient structure also differs. Measured on 320 × 180 frames.', 'Change map method'));
+  $('#legend').replaceChildren(...leg);
+  update();
+}
+function setSound(s) {
+  for (const b of $('#sound').children) b.setAttribute('aria-pressed', b.dataset.snd === s);
+  va.muted = !(s === 'a' || s === 'both'); vb.muted = !(s === 'b' || s === 'both');
+}
+function syncB(force) {
+  const t = va.currentTime, tb = t + LAG;
+  const ok = inMatch(t) && tb >= 0 && tb < (vb.duration || VB.duration_s) - 0.02;
+  if (!ok) { if (!vb.paused) vb.pause(); if (tb < 0 && vb.currentTime > 0.05) vb.currentTime = 0; return false; }
+  const d = vb.currentTime - tb;
+  if (force || Math.abs(d) > 0.15 || va.paused) { if (Math.abs(d) > 0.01) vb.currentTime = tb; vb.playbackRate = va.playbackRate; }
+  else vb.playbackRate = va.playbackRate * (1 - Math.max(-0.08, Math.min(0.08, d * 0.8)));   // nudge B back into step
+  if (!va.paused && vb.paused) vb.play().catch(() => {});
+  return true;
+}
+function bgFor(name, i) {
+  const s = SP[name], r = Math.floor(i / s.cols), c = i % s.cols;
+  return { backgroundImage: `url(${s.file})`, backgroundSize: `${s.cols * 100}% ${s.rows * 100}%`,
+    backgroundPosition: `${s.cols > 1 ? c / (s.cols - 1) * 100 : 0}% ${s.rows > 1 ? r / (s.rows - 1) * 100 : 0}%` };
+}
+function update(force) {
+  const t = va.currentTime, hasB = syncB(force);
+  vb.style.clipPath = mode === 'swipe' ? `inset(0 0 0 ${swipeX * 100}%)` : '';
+  if (mode === 'swipe') $('#div').style.left = `calc(${swipeX * 100}% - 1px)`;
+  let showB = hasB;
+  if (mode === 'blink') { showB = blinkB && hasB; $('#lb').replaceChildren(tagEl(showB ? 'b' : 'a'), showB ? VB.channel : VA.channel); }
+  vb.style.visibility = (mode === 'swipe' || mode === 'blink') && !showB ? 'hidden' : '';
+  if (mode === 'mask' || mode === 'edges') Object.assign($('#spr').style, bgFor(mode, Math.min(SP[mode].n - 1, Math.floor(t))));
+  const none = !hasB && mode !== 'blink' && mode !== 'swipe';
+  $('#nob').hidden = !none;
+  if (none) $('#nob').textContent = `No matching moment in B: ${tc(t)} is only in A.`;
+  if (document.activeElement !== tIn) tIn.value = t.toFixed(2);
+  $('#tc').replaceChildren(h('span', {}, h('span', { style: 'color:var(--a)' }, 'A '), tcf(t)),
+    h('span', {}, h('span', { style: 'color:var(--b)' }, 'B '), hasB ? tcf(t + LAG) : '–'));
+  for (const ph of document.querySelectorAll('.playhead')) { ph.setAttribute('x1', X(t)); ph.setAttribute('x2', X(t)); }
+}
+function seek(s) { va.currentTime = Math.max(0, Math.min(DUR - 0.04, s)); update(true); }
+let raf = null;
+const loop = () => { update(); raf = va.paused ? null : requestAnimationFrame(loop); };
+va.addEventListener('play', () => { $('#play').textContent = 'Pause'; if (!raf) raf = requestAnimationFrame(loop); });
+va.addEventListener('pause', () => { $('#play').textContent = 'Play'; vb.pause(); update(true); });
+va.addEventListener('seeked', () => update(true));
+va.addEventListener('loadedmetadata', () => { va.currentTime = 15; });
+va.addEventListener('ended', () => vb.pause());
+$('#play').addEventListener('click', () => { if (va.paused) { if (va.currentTime >= DUR - 0.1) seek(0); va.play().catch(() => {}); } else va.pause(); });
+tIn.addEventListener('input', () => seek(+tIn.value));
+$('#modes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.mode); });
+$('#sound').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setSound(b.dataset.snd); });
+$('#speed').addEventListener('change', e => { va.playbackRate = +e.target.value; vb.playbackRate = +e.target.value; });
+$('#swipe').addEventListener('input', e => { swipeX = e.target.value / 100; update(); });
+{
+  const pane = $('#pb');
+  const move = e => { if (mode !== 'swipe') return; const r = pane.getBoundingClientRect(); swipeX = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)); $('#swipe').value = Math.round(swipeX * 100); update(); };
+  pane.addEventListener('pointerdown', e => { if (mode === 'swipe') { pane.setPointerCapture(e.pointerId); move(e); } });
+  pane.addEventListener('pointermove', e => { if (e.buttons) move(e); });
+}
+const step = n => { va.pause(); seek(Math.round(va.currentTime * FPS + n) / FPS + 0.001); };
+$('#prevf').addEventListener('click', () => step(-1));
+$('#nextf').addEventListener('click', () => step(1));
+const cutJump = dir => {
+  const t = va.currentTime, cs = cutsD.cuts_a;
+  const c = dir > 0 ? cs.find(x => x - 0.12 > t + 0.02) : [...cs].reverse().find(x => x - 0.12 < t - 0.02);
+  if (c != null) { va.pause(); seek(c - 0.12); }   // land 3 frames before the cut
+};
+$('#prevcut').addEventListener('click', () => cutJump(-1));
+$('#nextcut').addEventListener('click', () => cutJump(1));
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input, select, textarea')) return;
+  const box = $('#inspect').getBoundingClientRect();
+  if (box.bottom < 0 || box.top > innerHeight) return;
+  if (e.key === 'ArrowRight') { step(1); e.preventDefault(); } else if (e.key === 'ArrowLeft') { step(-1); e.preventDefault(); }
+  else if (e.key === ' ' && !e.target.matches('button')) { $('#play').click(); e.preventDefault(); }
+});
+
+/* ---------- Timeline tracks ---------- */
+const W = 1000, X = s => (s / DUR) * W;
+const track = (title, sub, height, draw) => {
+  const svg = sv('svg', { viewBox: `0 0 ${W} ${height}`, preserveAspectRatio: 'none', height, role: 'img', 'aria-label': `${title} over time` });
+  svg.append(sv('rect', { x: 0, y: 0, width: W, height, fill: 'var(--bg)' }));
+  draw(svg, height);
+  svg.append(sv('line', { class: 'playhead', y1: 0, y2: height, stroke: 'var(--ink)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }));
+  svg.append(sv('line', { class: 'hover', y1: 0, y2: height, stroke: 'var(--muted)', 'stroke-width': 1, 'stroke-dasharray': '3 3', 'vector-effect': 'non-scaling-stroke', visibility: 'hidden' }));
+  $('#tracks').append(h('div', { class: 'track' }, h('div', { class: 'tl' }, h('b', {}, title), sub), svg));
+};
+const line = (svg, xs, ys, hgt, color, lo = 0, hi = 1, width = 2) => {
+  let d = '', pen = false;
+  xs.forEach((x, k) => { const y = ys[k]; if (y == null || isNaN(y) || x < 0 || x > DUR) { pen = false; return; }
+    const yy = hgt - 3 - ((Math.min(hi, Math.max(lo, y)) - lo) / (hi - lo)) * (hgt - 6);
+    d += (pen ? 'L' : 'M') + X(x).toFixed(1) + ',' + yy.toFixed(1); pen = true; });
+  svg.append(sv('path', { d, fill: 'none', stroke: color, 'stroke-width': width, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round' }));
+};
+const hline = (svg, y, hgt, lo, hi) => {
+  const yy = hgt - 3 - ((y - lo) / (hi - lo)) * (hgt - 6);
+  svg.append(sv('line', { x1: 0, x2: W, y1: yy, y2: yy, stroke: 'var(--base)', 'stroke-width': 1, 'stroke-dasharray': '4 3', 'vector-effect': 'non-scaling-stroke' }));
+};
+const AB = (pre, post = '') => h('span', {}, pre, h('span', { style: 'color:var(--a)' }, 'A'), ' and ', h('span', { style: 'color:var(--b)' }, 'B'), post);
+const CA = D.curves.audio, CF = D.curves.frames, CM = D.curves.motion, LD = D.curves.loudness;
+const aT = CA.times.map(x => x + 1);
+track('Alignment', 'matched song part; dashed: in one version only', 40, svg => {
+  for (const [a0, a1] of parts.matched_a) svg.append(sv('rect', { x: X(a0), y: 4, width: X(a1) - X(a0), height: 14, fill: 'var(--a)', rx: 2 }));
+  for (const [a0, a1] of parts.only_a) svg.append(sv('rect', { x: X(a0), y: 4, width: X(a1) - X(a0), height: 14, fill: 'var(--a-soft)', stroke: 'var(--a)', 'stroke-dasharray': '3 2', 'vector-effect': 'non-scaling-stroke' }));
+  for (const [b0, b1] of parts.matched_b) svg.append(sv('rect', { x: X(b0 - LAG), y: 22, width: X(b1) - X(b0), height: 14, fill: 'var(--b)', rx: 2 }));
+});
+track('Cuts', h('span', {}, h('span', { style: 'color:var(--a)' }, 'A'), ' above, ', h('span', { style: 'color:var(--b)' }, 'B'), ' below'), 34, svg => {
+  for (const c of cutsD.cuts_a) svg.append(sv('line', { x1: X(c), x2: X(c), y1: 2, y2: 16, stroke: 'var(--a)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }));
+  for (const c of cutsD.cuts_b) svg.append(sv('line', { x1: X(c - LAG), x2: X(c - LAG), y1: 18, y2: 32, stroke: 'var(--b)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }));
+});
+if (LD) {
+  const lT = LD.a.map((_, k) => k / LD.rate), lTb = LD.b.map((_, k) => k / LD.rate - LAG);
+  track('Loudness', AB('', ', −45 to 0 dB'), 56, (svg, H) => { line(svg, lT, LD.a, H, 'var(--a)', -45, 0, 1.5); line(svg, lTb, LD.b, H, 'var(--b)', -45, 0, 1.5); });
+}
+track('Audio match', 'waveform correlation, 0–1; dashed: other moments’ 99th pct.', 46, (svg, H) => {
+  hline(svg, AU.summaries.waveform.baseline_p99, H, 0, 1); line(svg, aT, CA.waveform, H, 'var(--ink)');
+});
+const mT = CM.a.magnitude.map((_, k) => k / CM.fps), mMax = Math.max(...CM.a.magnitude, ...CM.b.magnitude) * 0.8;
+track('Motion', AB('optical flow, '), 46, (svg, H) => {
+  line(svg, mT, CM.a.magnitude, H, 'var(--a)', 0, mMax, 1.5); line(svg, mT.map(x => x - LAG), CM.b.magnitude, H, 'var(--b)', 0, mMax, 1.5);
+});
+track('Outline match', 'edge SSIM; dashed: other moments’ 99th pct.', 46, (svg, H) => {
+  hline(svg, V.structure_edges.threshold, H, 0, 0.6); line(svg, CF.times, CF.edge_ssim, H, 'var(--ink)', 0, 0.6);
+});
+track('Changed area', h('span', {}, 'share of frame, ', h('span', { style: 'color:var(--recolor)' }, 'recolored'), ' + ', h('span', { style: 'color:var(--redraw)' }, 'redrawn')), 46, (svg, H) => {
+  const ar = (low, high, color) => {
+    let top = '', bot = '';
+    CF.times.forEach((x, k) => { top += (k ? 'L' : 'M') + X(x).toFixed(1) + ',' + (H - 2 - high[k] * (H - 4)).toFixed(1); });
+    for (let k = CF.times.length - 1; k >= 0; k--) bot += 'L' + X(CF.times[k]).toFixed(1) + ',' + (H - 2 - low[k] * (H - 4)).toFixed(1);
+    svg.append(sv('path', { d: top + bot + 'Z', fill: color, opacity: 0.85 }));
+  };
+  const z = CF.times.map(() => 0), rec = CF.recolored, both = rec.map((r, k) => r + CF.reshaped[k]);
+  ar(z, rec, 'var(--recolor)'); ar(rec, both, 'var(--redraw)');
+});
+$('#tracks').append(h('div', { class: 'axis' }, h('div'), h('div', {}, ...[0, 0.25, 0.5, 0.75, 1].map(f => h('span', {}, tc(f * DUR))))));
+const tip = h('div', { class: 'tip', hidden: '' }); $('#tracks').append(tip);
+const near = (xs, x) => { let k = 0, best = 1e9; xs.forEach((v, j) => { const d = Math.abs(v - x); if (d < best) { best = d; k = j; } }); return k; };
+for (const svg of document.querySelectorAll('#tracks svg')) {
+  const at = e => { const r = svg.getBoundingClientRect(); return Math.max(0, Math.min(DUR, (e.clientX - r.left) / r.width * DUR)); };
+  svg.addEventListener('pointermove', e => {
+    const s = at(e);
+    for (const hv of document.querySelectorAll('#tracks .hover')) { hv.setAttribute('x1', X(s)); hv.setAttribute('x2', X(s)); hv.setAttribute('visibility', 'visible'); }
+    const kf = near(CF.times, s), ka = near(aT, s), inB = inMatch(s);
+    const la = LD ? LD.a[Math.min(LD.a.length - 1, Math.round(s * LD.rate))] : null, lbI = LD ? Math.round((s + LAG) * LD.rate) : -1;
+    tip.replaceChildren(h('div', { class: 'mono' }, `A ${tc(s)} · B ${inB ? tc(s + LAG) : 'none'}`),
+      LD ? h('div', {}, `Loudness A ${la?.toFixed(0)} dB${inB && lbI >= 0 && lbI < LD.b.length ? `, B ${LD.b[lbI].toFixed(0)} dB` : ''}`) : null,
+      h('div', {}, inB ? `Audio match ${f3(CA.waveform[ka])}` : 'Only in A'),
+      inB ? h('div', {}, `Outline match ${f2(CF.edge_ssim[kf])}`) : null,
+      inB ? h('div', {}, `Recolored ${pct(CF.recolored[kf])}, redrawn ${pct(CF.reshaped[kf])}`) : null,
+      h('div', { style: 'opacity:.7' }, 'Click to go to this moment'));
+    tip.hidden = false;
+    const host = $('#tracks').getBoundingClientRect(), r = svg.getBoundingClientRect();
+    tip.style.left = Math.min(host.width - 200, Math.max(0, e.clientX - host.left + 14)) + 'px'; tip.style.top = (r.bottom - host.top + 6) + 'px';
+  });
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; for (const hv of document.querySelectorAll('#tracks .hover')) hv.setAttribute('visibility', 'hidden'); });
+  svg.addEventListener('click', e => seek(at(e)));
+}
+
+/* ---------- Signals against baselines ---------- */
+$('#sig-info').append(info(FIRE_RULE, 'When a signal fires'));
+function svgMini(kind) {
+  const s = sv('svg', { width: 18, height: 12, viewBox: '0 0 18 12', 'aria-hidden': 'true' });
+  if (kind === 'base') s.append(sv('rect', { x: 1, y: 4, width: 16, height: 4, fill: 'var(--base)', rx: 1 }));
+  if (kind === 'tick') s.append(sv('rect', { x: 8, y: 0, width: 2, height: 12, fill: 'var(--ink-2)' }));
+  if (kind === 'pair') s.append(sv('rect', { x: 7, y: 0, width: 4, height: 12, fill: 'var(--ink)', rx: 1 }));
+  return s;
+}
+$('#keylegend').append(h('span', {}, svgMini('base'), 'Unrelated pairs, darker = more'), h('span', {}, svgMini('tick'), '99th percentile'), h('span', {}, svgMini('pair'), 'This pair'));
+function strip(sig) {
+  const sets = Object.entries(sig.per_set || {});
+  const s = sv('svg', { viewBox: '0 0 300 38', preserveAspectRatio: 'none', role: 'img', 'aria-label': 'Pair against baselines' });
+  if (!sets.length) return s;
+  let lo = Math.min(...sets.map(([, p]) => p.hist.lo)), hi = Math.max(...sets.map(([, p]) => p.hist.hi));
+  if (sig.value != null) { lo = Math.min(lo, sig.value); hi = Math.max(hi, sig.value); }
+  if (hi - lo < 1e-9) hi = lo + 1;
+  const xr = v => { const f = (v - lo) / (hi - lo); return 4 + 292 * (sig.higher_is_closer ? f : 1 - f); };
+  const rowH = 34 / sets.length;
+  sets.forEach(([, p], k) => {
+    const y0 = 2 + k * rowH, c = p.hist.counts, mx = Math.max(...c), n = c.length;
+    c.forEach((cnt, j) => { if (!cnt) return;
+      const v0 = p.hist.lo + (j / n) * (p.hist.hi - p.hist.lo), v1 = p.hist.lo + ((j + 1) / n) * (p.hist.hi - p.hist.lo);
+      const x0 = Math.min(xr(v0), xr(v1)), x1 = Math.max(xr(v0), xr(v1));
+      s.append(sv('rect', { x: x0, y: y0 + 1, width: Math.max(0.8, x1 - x0), height: rowH - 3, fill: 'var(--base)', opacity: (0.2 + 0.8 * Math.sqrt(cnt / mx)).toFixed(2) }));
+    });
+    const q = p.p99 ?? p.p1;
+    s.append(sv('rect', { x: xr(q) - 0.75, y: y0, width: 1.5, height: rowH - 1, fill: 'var(--ink-2)' }));
+  });
+  if (sig.value != null) s.append(sv('rect', { x: xr(sig.value) - 2, y: 0, width: 4, height: 38, fill: 'var(--ink)', rx: 1 }));
+  return s;
+}
+function audioStrip(sm, value) {
+  const s = sv('svg', { viewBox: '0 0 300 38', preserveAspectRatio: 'none', role: 'img', 'aria-label': 'Pair against other moments' });
+  const xr = v => 4 + 292 * (Math.max(-0.2, Math.min(1, v)) + 0.2) / 1.2;
+  s.append(sv('rect', { x: xr(sm.baseline_median) - 20, y: 14, width: 40, height: 10, fill: 'var(--base)', opacity: 0.6, rx: 2 }));
+  s.append(sv('rect', { x: xr(sm.baseline_p99) - 0.75, y: 10, width: 1.5, height: 18, fill: 'var(--ink-2)' }));
+  s.append(sv('rect', { x: xr(value) - 2, y: 0, width: 4, height: 38, fill: 'var(--ink)', rx: 1 }));
+  return s;
+}
+function detailTable(sig, fmt) {
+  const key = sig.higher_is_closer ? 'p99' : 'p1';
+  const rows = Object.entries(sig.per_set || {}).map(([name, p]) => h('tr', {},
+    h('td', {}, SETS[name] || name), h('td', { class: 'n' }, p.n), h('td', { class: 'n' }, fmt(p.median)), h('td', { class: 'n' }, fmt(p[key])),
+    h('td', { class: 'n' }, p.closer_than == null ? '–' : pct(p.closer_than, 1)),
+    h('td', {}, (sig.higher_is_closer ? sig.value > p[key] : sig.value < p[key]) ? 'beats it' : 'doesn’t')));
+  return h('div', { class: 'scroll' }, h('table', {},
+    h('thead', {}, h('tr', {}, h('th', {}, 'Baseline'), h('th', {}, 'Pairs'), h('th', {}, 'Median'), h('th', {}, sig.higher_is_closer ? '99th pct.' : '1st pct.'), h('th', {}, 'Pair closer than'), h('th', {}, 'Pair vs cut-off'))),
+    h('tbody', {}, rows)));
+}
+function row(id, name, sub, valueText, stripEl, fired, details) {
+  const btn = h('button', { type: 'button', 'aria-expanded': 'false' },
+    h('span', { class: 'name' }, name, h('small', {}, sub)), h('span', { class: 'val' }, valueText), stripEl,
+    h('span', { class: 'pill' + (fired ? ' on' : '') }, fired == null ? 'No baseline' : fired ? 'Fires' : 'Doesn’t fire'));
+  const det = h('div', { class: 'detail', hidden: '' }, details);
+  btn.addEventListener('click', () => { const open = btn.getAttribute('aria-expanded') !== 'true'; btn.setAttribute('aria-expanded', open); det.hidden = !open; });
+  return h('div', { class: 'row', id: 'row-' + id }, btn, det);
+}
+const REG = {
+  metadata: { title: 'Metadata', tip: `${META_BASE} ${SAMPLE_BASE} Dates, lengths and titles use the dataset; descriptions, tags and time of day use the sample.`, rows: [
+    ['timing_days', 'Days between publishing', 'apart', v => v.toFixed(1) + ' d'],
+    ['timing_time_of_day', 'Time-of-day gap', 'hours between upload times', v => v.toFixed(2) + ' h'],
+    ['title', 'Title overlap', 'words shared, song name removed', f2],
+    ['description', 'Description overlap', 'words shared', f2],
+    ['description_lines', 'Description lines', 'lines shared', f2],
+    ['tags', 'Tag overlap', 'tags shared', f2],
+    ['duration', 'Length difference', 'seconds', v => v.toFixed(0) + ' s'],
+  ]},
+  visual: { title: 'Visual', tip: `Thumbnails: ${SAMPLE_BASE} Storyboard and frame signals: ${SHIFT_BASE}`, rows: [
+    ['thumbnail_embedding', 'Thumbnail look', 'image-model similarity', f2],
+    ['thumbnail_hash', 'Thumbnail layout', 'grayscale hash match', f2],
+    ['storyboard', 'Storyboard sequence', 'no download needed', f2],
+    ['aligned_cuts', 'Cuts on the same frame', 'share within ±1 frame', pct],
+    ['motion_magnitude', 'Motion curve', 'overall motion', f2],
+    ['motion_objects', 'Character motion', 'moving area', f2],
+    ['motion_camera_y', 'Camera tilt', 'vertical pan', f2],
+    ['motion_camera_x', 'Camera pan', 'horizontal pan', f2],
+    ['structure_gray', 'Structure, grayscale', 'median SSIM per frame', f2],
+    ['structure_edges', 'Structure, outlines', 'median edge SSIM', f2],
+    ['frame_content', 'Frame content', 'image-model similarity per frame', f2],
+  ]},
+};
+const NOTES = {
+  timing_time_of_day: 'Channels often upload at a fixed hour, so many same-channel pairs share an exact upload time.',
+  description: 'Same-channel descriptions repeat the channel’s template.',
+  tags: 'Same-channel tags repeat a channel’s tag set.',
+  duration: 'The lengths differ by A’s end screen.',
+  motion_camera_x: 'There is almost no horizontal camera movement to correlate.',
+  frame_content: 'Reads what is depicted: a forest instead of a farm looks different, while the repeating verses make other moments look alike.',
+};
+for (const [g, spec] of Object.entries(REG)) {
+  const rows = h('div', { class: 'rows' });
+  for (const [id, name, sub, fmt] of spec.rows) {
+    const sig = S[g][id];
+    const extra = id === 'storyboard' ? ['a', 'b'].map(k => h('figure', { style: 'margin:0;display:grid;gap:6px' },
+      h('figcaption', { class: 'legend' }, tagEl(k), ` storyboard, ${SP['sb-' + k].n} tiles, one a second`),
+      h('img', { src: SP['sb-' + k].file, alt: `Storyboard tiles of version ${k.toUpperCase()}`, loading: 'lazy', style: 'width:100%;border-radius:4px' }))) : null;
+    rows.append(row(id, name, sub, fmt(sig.value), strip(sig), sig.fires,
+      [NOTES[id] ? h('p', {}, NOTES[id]) : null, detailTable(sig, fmt), extra]));
+  }
+  $('#board').append(h('div', { class: 'group' }, h('header', {}, h('h3', {}, spec.title), info(spec.tip, spec.title + ' baselines')), rows));
+}
+{
+  const rows = h('div', { class: 'rows' });
+  for (const [id, name, sub] of [['waveform', 'Waveform', 'median correlation per 2 s'], ['spectrum', 'Spectrum', 'EQ- and gain-independent'],
+    ['backing', 'Backing track', 'drums, bass, other stems'], ['vocals', 'Vocals', 'vocal stem'], ['chroma', 'Melody and harmony', 'chroma, any recording']]) {
+    const sm = AU.summaries[id];
+    rows.append(row('au-' + id, name, sub, f3(sm.median), audioStrip(sm, sm.median), sm.median > sm.baseline_p99,
+      h('p', {}, `Other moments: median ${f3(sm.baseline_median)}, 99th percentile ${f3(sm.baseline_p99)}. Longest stretch above it: ${tc(sm.longest[0])}–${tc(sm.longest[1])} on A (${sm.longest[2].toFixed(0)} s).`)));
+  }
+  $('#board').append(h('div', { class: 'group' }, h('header', {}, h('h3', {}, 'Audio'),
+    info(`Per 2-second window on the aligned audio. ${SHIFT_BASE} The strip runs from −0.2 to 1.`, 'Audio baselines')), rows));
+}
+
+/* ---------- Owner, titles, tags ---------- */
+{
+  const toks = (arr, cls) => h('div', { class: 'tokens' }, arr.map(w => h('span', { class: 'tok ' + cls }, w)));
+  $('#meta').append(
+    h('div', { class: 'card' }, h('h3', {}, 'Owner evidence', info('Free text varies by channel, so general patterns are matched: “©” lines, app store links, emails and link domains, in video and channel descriptions.', 'How owner evidence is found')),
+      h('p', {}, 'Copyright line in both descriptions: ', h('b', {}, titleCase(own.shared.copyright.slice(-1)[0]))),
+      h('p', {}, 'Same app links: ', h('span', { class: 'mono' }, own.shared.app.join(', ') || 'none')),
+      h('p', {}, `Featured channels: ${VB.channel} lists ${own.featured.n_b}, ${VA.channel} lists ${own.featured.n_a}; neither lists the other. Featured channels alone would have missed this pair.`),
+      h('p', { class: 'muted' }, `${bs.same_owner_left_out.length} same-song videos in the baseline sample carry the same copyright line; they were left out of the other-studio baseline.`)),
+    h('div', { class: 'card' }, h('h3', {}, 'Titles'),
+      h('p', {}, tagEl('a'), ' ', VA.title), h('p', {}, tagEl('b'), ' ', VB.title),
+      h('div', {}, h('div', { class: 'eyebrow' }, 'Song name, removed before comparing'), toks([T.song], 's')),
+      h('div', {}, h('div', { class: 'eyebrow' }, 'Only in A'), toks(T.only_a, 'a')),
+      h('div', {}, h('div', { class: 'eyebrow' }, 'Only in B'), toks(T.only_b, 'b'))),
+    h('div', { class: 'card' }, h('h3', {}, `Tags: ${td.shared_tags.length} shared of ${td.n_tags[0]} and ${td.n_tags[1]}`),
+      h('div', {}, h('div', { class: 'eyebrow' }, 'Shared'), toks(td.shared_tags, 's')),
+      h('div', {}, h('div', { class: 'eyebrow' }, 'Only in A'), toks(td.only_a_tags, 'a')),
+      h('div', {}, h('div', { class: 'eyebrow' }, 'Only in B'), toks(td.only_b_tags, 'b'))),
+    h('div', { class: 'card' }, h('h3', {}, `Description lines shared (${td.shared_lines.length})`),
+      h('ul', { style: 'margin:0;padding-left:18px;font-size:.88rem' }, td.shared_lines.slice(0, 14).map(l => h('li', {}, l)))));
+}
+
+/* ---------- Colors and changed parts ---------- */
+{
+  const bar = segs => h('div', { class: 'bar', role: 'img', 'aria-label': segs.map(([l, v]) => `${l} ${pct(v)}`).join(', ') },
+    segs.map(([l, v, c]) => h('div', { style: `flex:${v};background:${c}`, title: `${l} ${pct(v)}` })));
+  const leg = segs => h('div', { class: 'legend' }, segs.map(([l, v, c]) => h('span', {}, h('i', { style: `background:${c}` }), `${l} ${pct(v)}`)));
+  const segs = [['Redrawn', area.reshaped, 'var(--redraw)'], ['Recolored', area.recolored, 'var(--recolor)'], ['Unchanged', 1 - area.changed, 'var(--line-2)']];
+  const pal = (k, p) => h('div', { class: 'pal' }, h('div', { class: 'row-l' }, tagEl(k), k === 'a' ? VA.channel : VB.channel),
+    h('div', { class: 'strip', role: 'img', 'aria-label': 'Dominant colors' }, p.map(c => h('div', { style: `flex:${c.share};background:${c.hex}`, title: c.hex }))));
+  const hue = sv('svg', { viewBox: '0 0 240 80', role: 'img', 'aria-label': 'Hue distribution of A (top) and B (bottom)', style: 'width:100%;height:auto' });
+  const ha = col.hue_hist_a, hb = col.hue_hist_b, mx = Math.max(...ha, ...hb), n = ha.length, bw = 240 / n;
+  for (let k = 0; k < n; k++) {
+    const c = `hsl(${(k + 0.5) * 360 / n} 70% 50%)`;
+    hue.append(sv('rect', { x: k * bw + 1, y: 39 - ha[k] / mx * 37, width: bw - 2, height: Math.max(0.5, ha[k] / mx * 37), fill: c, rx: 1 }));
+    hue.append(sv('rect', { x: k * bw + 1, y: 41, width: bw - 2, height: Math.max(0.5, hb[k] / mx * 37), fill: c, rx: 1 }));
+  }
+  hue.append(sv('line', { x1: 0, x2: 240, y1: 40, y2: 40, stroke: 'var(--ink-2)', 'stroke-width': 0.5 }));
+  $('#changed').append(
+    h('div', { class: 'card' }, h('h3', {}, 'Colors', info('Dominant colors by k-means over aligned frames; hue bars weighted by saturation and brightness, so grays count little.', 'How colors are measured')),
+      pal('a', col.palette_a), pal('b', col.palette_b),
+      h('div', {}, h('div', { class: 'legend' }, h('span', {}, tagEl('a'), ' hue, above'), h('span', {}, tagEl('b'), ' hue, below')), hue),
+      h('p', { class: 'muted' }, `Saturation ${f2(col.saturation_a)} → ${f2(col.saturation_b)}; lightness ${col.lightness_diff.toFixed(1)} L*; mean color distance ${col.delta_e_mean.toFixed(0)} ΔE; hue overlap ${pct(col.hue_hist_overlap)}.`)),
+    h('div', { class: 'card' }, h('h3', {}, 'Share of the frame', info('Per pixel at 320 × 180: changed above 15 ΔE; redrawn when the local gradient structure also differs, recolored when only the color does.', 'How changed area is measured')),
+      bar(segs), leg(segs),
+      h('p', { class: 'muted' }, 'Over all aligned frames. Redrawn is mostly the background; recolored is mostly the ducks. See it per frame in the change map.')),
+    h('div', { class: 'card' }, h('h3', {}, 'Parts only one version has'),
+      h('p', {}, onlyA ? `A: ${parts.only_a.map(([a, b]) => `${tc(a)}–${tc(b)} (${(b - a).toFixed(1)} s)`).join(', ')}, an end screen of other videos.` : 'A: none.'),
+      h('p', {}, onlyB ? `B: ${parts.only_b.map(([a, b]) => `${tc(a)}–${tc(b)}`).join(', ')}.` : 'B: none. Everything in B is in A.'),
+      h('p', { class: 'muted' }, `B begins ${Math.abs(LAG).toFixed(2)} s into A’s song.`)));
+}
+
+/* ---------- Audio levels ---------- */
+AU.levels.forEach((lv, k) => {
+  const e = lv.evidence, top = lv.key === AU.level;
+  const ev = {
+    exact: () => `waveform r = ${f3(e.waveform_corr)}, gain ${e.gain_db.toFixed(2)} dB, fingerprint match ${pct(e.fingerprint_share)}. Needs |gain| < 0.5 dB.`,
+    adjusted: () => `waveform r = ${f3(e.waveform_corr)} after a ${Math.abs(LAG).toFixed(2)} s offset; gain ${e.gain_db.toFixed(2)} dB, speed ${e.speed.toFixed(4)}×.`,
+    backing: () => `backing r = ${f3(e.backing_corr)}, vocals r = ${f3(e.vocals_corr)}: the overlay is the same too.`,
+    rerecorded: () => `chroma ${f3(e.chroma_median)}; key ${e.key_a} / ${e.key_b}; tempo ${e.tempo_a.toFixed(0)} / ${e.tempo_b.toFixed(0)} bpm.`,
+  }[lv.key]();
+  $('#ladder').append(h('div', { class: 'rung' + (top ? ' top' : '') }, h('span', { class: 'num' }, k + 1),
+    h('div', {}, h('b', {}, lv.name), h('div', { class: 'ev' }, ev)),
+    h('span', { class: 'pill' + (top ? ' on' : '') }, top ? 'Pair’s level' : lv.holds ? 'Holds' : 'Doesn’t hold')));
+});
+for (const s of ['vocals', 'drums', 'bass', 'other']) {
+  $('#stems').append(h('div', { class: 'stem' }, h('span', { class: 'eyebrow' }, s), h('span', { class: 'big' }, f3(AU.stem_corr[s])),
+    h('span', { class: 'muted' }, `correlation · B ${AU.stem_gain_db[s].toFixed(1)} dB`)));
+}
+
+/* ---------- Features and audience ---------- */
+{
+  const F = CH.features.shared_part, FB = CH.features_baseline, FD = CH.features_dataset;
+  const NAMES = { cuts_per_min: 'Cuts per minute', inter_cut_dssim_mean: 'Change at cuts', palette_change_per_min: 'Palette changes per minute',
+    lstar_flash_per_min: 'Flashes per minute', motion_frac: 'Motion', loudness_jumps_per_min: 'Loudness jumps per minute', mean_saturation: 'Saturation',
+    mean_lstar: 'Lightness', lufs: 'Loudness (LUFS)', high_lufs_frac: 'Share loud', build_resolve_per_min: 'Builds per minute', loudness_jump_at_cut_per_min: 'Loudness jumps at cuts' };
+  const rows = Object.keys(NAMES).filter(f => !(F.a[f] === 0 && F.b[f] === 0)).map(f => h('tr', {},
+    h('td', {}, NAMES[f]), h('td', { class: 'mono' }, (+F.a[f]).toFixed(2)), h('td', { class: 'mono' }, (+F.b[f]).toFixed(2)),
+    h('td', { class: 'mono' }, pct(FD[f].a_pct) + ' / ' + pct(FD[f].b_pct)),
+    h('td', { class: 'mono' }, FB[f].per_set.same_song ? pct(FB[f].per_set.same_song.closer_than) : '–')));
+  const zero = Object.keys(NAMES).filter(f => F.a[f] === 0 && F.b[f] === 0).map(f => NAMES[f].toLowerCase());
+  $('#features').append(
+    h('div', { class: 'card' }, h('h3', {}, 'Our 12 features, shared part', info('Measured with the dataset’s pipeline from 0:30, on the song part both versions share (A’s end screen left out). Dataset pct. is where each version sits among all dataset videos.', 'How features are measured')),
+      h('div', { class: 'scroll' }, h('table', { class: 'feat' },
+        h('thead', {}, h('tr', {}, h('th', {}, 'Feature'), h('th', {}, h('span', { class: 'tag a' }, 'A')), h('th', {}, h('span', { class: 'tag b' }, 'B')), h('th', {}, 'Dataset pct. A / B'), h('th', {}, 'Closer than same-song pairs'))),
+        h('tbody', {}, rows))),
+      zero.length ? h('p', { class: 'muted' }, `Zero for both, left out: ${zero.join(', ')}.`) : null),
+    h('div', { class: 'card' }, h('h3', {}, 'Audience', info(`View and like counts from the Data API on 2026-11-10. B is the later upload, on a channel created ${Math.round((new Date(VB.published) - new Date(VB.channel_created)) / 864e5)} days before it.`, 'About the audience numbers')),
+      h('div', { class: 'scroll' }, h('table', { class: 'feat' },
+        h('thead', {}, h('tr', {}, h('th', {}, h('span', { class: 'sr' }, 'Measure')), h('th', {}, h('span', { class: 'tag a' }, 'A')), h('th', {}, h('span', { class: 'tag b' }, 'B')), h('th', {}, 'B / A'))),
+        h('tbody', {},
+          h('tr', {}, h('td', {}, 'Views'), h('td', { class: 'mono' }, big(statsA.viewCount)), h('td', { class: 'mono' }, big(statsB.viewCount)), h('td', { class: 'mono' }, viewRatio.toFixed(1) + '×')),
+          h('tr', {}, h('td', {}, 'Likes'), h('td', { class: 'mono' }, big(statsA.likeCount)), h('td', { class: 'mono' }, big(statsB.likeCount)), h('td', { class: 'mono' }, (statsB.likeCount / statsA.likeCount).toFixed(1) + '×')),
+          h('tr', {}, h('td', {}, 'Like rate'), h('td', { class: 'mono' }, pct(statsA.likeCount / statsA.viewCount, 2)), h('td', { class: 'mono' }, pct(statsB.likeCount / statsB.viewCount, 2)), h('td', { class: 'mono' }, likeRatio.toFixed(1) + '×')),
+          h('tr', {}, h('td', {}, 'Channel subscribers'), h('td', { class: 'mono' }, big(VA.channel_subscribers)), h('td', { class: 'mono' }, big(VB.channel_subscribers)), h('td', { class: 'mono' }, (VB.channel_subscribers / VA.channel_subscribers).toFixed(2) + '×')))))));
+}
+
+setSound('a'); setMode('side');
+</script>
