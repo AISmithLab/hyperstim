@@ -166,7 +166,7 @@ In the second box, one channel's uploads are small rectangles stacked by year, u
 
 ### Elements
 
-- **Check field** (shared): the home page's form (label, input, "Check video →", hint, error) moves into `CheckVideoForm`, used by the home card and step ①. Same validation, errors and navigation to the video page.
+- **Check field** (shared): the home page's form (label, input, "Check video →", hint, error) moves into `CheckVideoForm`, used by the home card and step ①. Same validation, errors and navigation to the video page. A link pasted before the page's script ran is kept (2026-11-11, plan 012: it stayed in the field, but Check said to paste one first).
 - **Step headings** (**new**): steps ①–④ are section cards whose H2 starts with a `sunny` number circle (`size-9`, `font-hand`, `aria-hidden`), with sr-only "Step 1: " in the H2 text. The questions panel has a plain H2.
 - **Timeline and measurement list** (**new**): diagram F and the list under it (see **Diagrams**). Each measurement has an anchor (`#rapid-cutting`, …), so other pages can link to it; where it lands is under **Decisions** (Measurement popovers link here). The marker number appears in both the diagram and the list, `aria-hidden` in the list (screen readers get the list alone).
 - **Accordion** (**new**): native `<details>`/`<summary>`, so there's no JavaScript.

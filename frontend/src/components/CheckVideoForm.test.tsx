@@ -1,6 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { hydrateRoot } from "react-dom/client";
+import { renderToString } from "react-dom/server";
+import { beforeEach, describe, expect, it, onTestFinished, vi } from "vitest";
 import { expectNoAxeViolations } from "@/test/axe";
 import CheckVideoForm from "./CheckVideoForm";
 
@@ -21,6 +23,24 @@ describe("CheckVideoForm", () => {
 
     await user.type(input, "d");
     expect(input).not.toHaveAttribute("aria-invalid");
+    expect(screen.queryByText("Paste a YouTube link or video ID first.")).not.toBeInTheDocument();
+  });
+
+  it("keeps a link pasted before the page's script ran", async () => {
+    const user = userEvent.setup();
+    // The page as built, with a link in the field before React takes it over.
+    const container = document.createElement("div");
+    container.innerHTML = renderToString(<CheckVideoForm />);
+    document.body.append(container);
+    screen.getByRole<HTMLInputElement>("textbox", { name: "YouTube link or video ID" }).value = "youtu.be/dQw4w9WgXcQ";
+    const root = await act(async () => hydrateRoot(container, <CheckVideoForm />));
+    onTestFinished(() => {
+      act(() => root.unmount());
+      container.remove();
+    });
+
+    await user.click(screen.getByRole("button", { name: "Check video" }));
+    expect(push).toHaveBeenCalledWith("/video?id=dQw4w9WgXcQ");
     expect(screen.queryByText("Paste a YouTube link or video ID first.")).not.toBeInTheDocument();
   });
 

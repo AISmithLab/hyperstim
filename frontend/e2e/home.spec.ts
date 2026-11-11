@@ -25,6 +25,27 @@ test.describe("home", () => {
     await expect(page.getByRole("link", { name: ANALYZED.channel })).toHaveCount(0);
   });
 
+  test("a link pasted before the page's script ran still opens its video", async ({ page }) => {
+    // The scripts wait until the link is in the field, as on a slow phone.
+    let release = () => {};
+    const pasted = new Promise<void>((resolve) => (release = resolve));
+    await page.route(/\/_next\/static\/chunks\/.*\.js$/, async (route) => {
+      await pasted;
+      await route.continue();
+    });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const field = page.getByRole("textbox", { name: "YouTube link or video ID" });
+    await field.fill(`youtu.be/${ANALYZED.id}`);
+    release();
+    // Clicked once React has taken the field over (before, the browser would submit the form itself).
+    await field.evaluate((el) => new Promise<void>((resolve) => {
+      const check = () => (Object.keys(el).some((k) => k.startsWith("__reactProps")) ? resolve() : setTimeout(check, 50));
+      check();
+    }));
+    await page.getByRole("button", { name: "Check video" }).click();
+    await expect(page.getByRole("heading", { level: 1, name: ANALYZED.title })).toBeVisible();
+  });
+
   test("a link that isn't YouTube's shows an error at the field", async ({ page }) => {
     await page.goto("/");
     const field = page.getByRole("textbox", { name: "YouTube link or video ID" });

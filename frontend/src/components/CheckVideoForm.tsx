@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { videoHref } from "@/lib/routes";
 import { parseVideoInput } from "@/lib/youtube";
 
@@ -16,6 +16,12 @@ export default function CheckVideoForm({ className = "" }: { className?: string 
   const id = useId();
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
+  // A link pasted before the page's script ran is in the field but not in `value` yet: kept.
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const early = input.current?.value;
+    if (early) setValue(early);
+  }, []);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,6 +41,7 @@ export default function CheckVideoForm({ className = "" }: { className?: string 
       </label>
       <div className="mt-2 flex flex-col gap-3 md:flex-row">
         <input
+          ref={input}
           id={`${id}-input`}
           type="text"
           inputMode="url"
