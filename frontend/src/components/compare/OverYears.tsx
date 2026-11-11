@@ -47,7 +47,7 @@ export default function CompareYears({ channels }: { channels: Record<Side, Chan
                 y2="4"
                 strokeWidth="2.5"
                 strokeDasharray={side === "b" ? "7 5" : undefined}
-                className={side === "a" ? "stroke-side-a-strong" : "stroke-side-b-strong"}
+                className="stroke-navy"
               />
             </svg>
           </li>

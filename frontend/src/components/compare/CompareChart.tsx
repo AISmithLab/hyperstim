@@ -41,10 +41,10 @@ const FOCUS_OPEN = THUMB_H + 16;
 const GROUP_GAP = 12; // between A's thumbnails and B's
 const PICK_R = 16; // a held finger picks the nearest dot this close, once spread
 
-/** Each side's look: fill for dots, a darker shade for outlines and the trend line (A solid, B dashed). */
+/** Both sides are navy (no side colours); A's trend line is solid and B's dashed, A's dots round and B's square. */
 const LOOK: Record<Side, { fill: string; stroke: string; line: string; dash?: string }> = {
-  a: { fill: "fill-side-a", stroke: "stroke-side-a-strong", line: "stroke-side-a-strong/35" },
-  b: { fill: "fill-side-b", stroke: "stroke-side-b-strong", line: "stroke-side-b-strong/35", dash: "7 5" },
+  a: { fill: "fill-white", stroke: "stroke-navy", line: "stroke-navy/35" },
+  b: { fill: "fill-white", stroke: "stroke-navy", line: "stroke-navy/35", dash: "7 5" },
 };
 
 type Dot = { side: Side; video: ChannelVideo; kind: "value" | "na"; value: number; cx: number; cy: number };

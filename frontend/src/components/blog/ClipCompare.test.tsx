@@ -55,6 +55,16 @@ describe("ClipCompare", () => {
     expect(document.querySelector("iframe")).toBeNull();
   });
 
+  it("rings each video's letter in solid navy, like the compare page's badges", () => {
+    render(<ClipCompare clips={CLIPS} />);
+    const letters = screen.getAllByText(/^[AB]$/);
+    expect(letters).toHaveLength(4); // each video's head and lane
+    for (const letter of letters) {
+      expect(letter).toHaveClass("bg-white", "ring-navy", "text-navy");
+      expect(letter).not.toHaveClass("ring-navy/35");
+    }
+  });
+
   it("starts a video's lane over when it plays, and draws the cuts as far as the video has played", async () => {
     const user = userEvent.setup();
     render(<ClipCompare clips={CLIPS} />);

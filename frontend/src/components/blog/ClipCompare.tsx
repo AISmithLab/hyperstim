@@ -151,12 +151,12 @@ export default function ClipCompare({ clips }: { clips: Clips }) {
   );
 }
 
-/** A video's letter: a white circle with a thin navy ring (quieter than the compare page's colours). */
+/** A video's letter: a white circle with a navy ring, as the compare page's badge. */
 function Letter({ side }: { side: ClipSide }) {
   return (
     <span
       aria-hidden="true"
-      className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-white font-sans text-sm font-bold text-navy ring-[1.5px] ring-navy/35 ring-inset"
+      className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-white font-sans text-sm font-bold text-navy ring-[1.5px] ring-navy ring-inset"
     >
       {side.toUpperCase()}
     </span>
