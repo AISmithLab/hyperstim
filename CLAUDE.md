@@ -61,6 +61,7 @@ Before committing, check `git diff --staged` for anything above.
   - Before handing back UI work, screenshot the changed parts next to their neighbours at phone (360 px) and desktop (1280 px) widths and compare them against `STYLE.md`.
   - Screenshots for the user to review go in an artifact page (labelled by screen size and state), not in local files. Within a session, reuse one artifact page: republish it with each round's screenshots instead of starting a new page.
   - An artifact page built to review a layout shows it at three screen sizes: phone (360 × 740), tablet (768 × 1024) and desktop (1280 × 800).
+  - Every artifact page (reviews, reports, experiment results) uses a light theme only, with no dark mode, and follows the site's look in `STYLE.md`: the `globals.css` token colors, Shantell Sans headings and Nunito body text, lots of whitespace, large rounded corners, pastel panels, pill-shaped controls, thin `navy/15` borders and no heavy shadows.
 - Images and illustrations come from the team. When one is needed, ask with a spec: what it shows (object, pose/action), colours from the palette, style (hand-drawn crayon/watercolor), aspect ratio and minimum size, and background (transparent PNG/WebP unless stated). Use no placeholder or third-party art.
 - Each change must pass lint, type check, build, and tests (including end-to-end) before commit.
 - **Tests** (plan 012 has the setup and details):
