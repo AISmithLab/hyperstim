@@ -109,9 +109,11 @@ export default function YouTubePlayer({
   );
 
   // A Play click moves focus to the player; a start from `playFrom` leaves it where it is (a lane).
+  // Without scrolling: the player is where Play was, and a page that moves it (the channel panel)
+  // places it itself. WebKit would otherwise scroll it into view later and undo that.
   const focusOnStart = useRef(true);
   useEffect(() => {
-    if (playing && focusOnStart.current) frame.current?.focus();
+    if (playing && focusOnStart.current) frame.current?.focus({ preventScroll: true });
   }, [playing]);
 
   // The player's state changes, reported once it has been told someone is listening (on load).

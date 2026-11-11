@@ -1,8 +1,23 @@
 import { channelVideos, topChannels } from "./api";
+import { type Page } from "@playwright/test";
 import { expect, expectNoAxeViolations, isPhone, tabTo, test } from "./fixtures";
 
 function escape(text: string) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+}
+
+/** Waits until the video panel's middle is at the screen's, unless the page ends first. Polled:
+ * on a slow machine the page can still be moving when the player takes focus. */
+async function expectPanelCentred(page: Page) {
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const r = document.querySelector("[aria-labelledby='video-panel-title']")!.getBoundingClientRect();
+        const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
+        return atEnd ? 0 : Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
+      }),
+    )
+    .toBeLessThan(2);
 }
 
 test.describe("channel", () => {
@@ -72,13 +87,7 @@ test.describe("channel", () => {
     const frame = panel.locator("iframe");
     // Focus moves to the player once it has grown.
     await expect(frame).toBeFocused();
-    // The panel's middle at the screen's, unless the page ends first.
-    const placed = await page.evaluate(() => {
-      const r = document.querySelector("[aria-labelledby='video-panel-title']")!.getBoundingClientRect();
-      const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
-      return { offset: r.top + r.height / 2 - window.innerHeight / 2, atEnd };
-    });
-    if (!placed.atEnd) expect(Math.abs(placed.offset)).toBeLessThan(2);
+    await expectPanelCentred(page);
     // The player is wider than the preview was, and under the title.
     const box = (await frame.boundingBox())!;
     expect(box.width).toBeGreaterThan(400);
@@ -90,6 +99,23 @@ test.describe("channel", () => {
     await expect(play).toBeFocused();
     await panel.getByRole("button", { name: "Close video panel" }).click();
     await expect(panel).toHaveCount(0);
+  });
+
+  test("a video played while the page still glides to its panel ends centred too", async ({ page, request }) => {
+    test.skip(isPhone(), "Phones have no panel: the strip's cards open the video's page");
+    const [channel] = await topChannels(request);
+    const [video] = await channelVideos(request, channel.id);
+    await page.goto(`/channel/?id=${channel.id}`);
+    const title = new RegExp(escape(video.title));
+    await page.getByRole("button", { name: title }).first().focus();
+    await page.keyboard.press("Enter");
+    // Play at once, by keyboard: a click would wait for the page to stop moving. Focused without
+    // scrolling, as Tab would find it in view: WebKit scrolls to a focused element later otherwise.
+    const panel = page.getByRole("region", { name: title });
+    await panel.getByRole("button", { name: /^Play video/ }).evaluate((el) => el.focus({ preventScroll: true }));
+    await page.keyboard.press("Enter");
+    await expect(panel.locator("iframe")).toBeFocused();
+    await expectPanelCentred(page);
   });
 
   test("links to compare", async ({ page, request }) => {

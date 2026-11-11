@@ -9,6 +9,7 @@ describe("YouTubePlayer", () => {
   it("shows only the thumbnail until Play is clicked, then the player in focus", async () => {
     const user = userEvent.setup();
     const { container } = render(<YouTubePlayer id="dQw4w9WgXcQ" title="Snail time" />);
+    const focus = vi.spyOn(HTMLIFrameElement.prototype, "focus");
 
     expect(container.querySelector("iframe")).toBeNull();
     expect(container.innerHTML).not.toContain("youtube-nocookie.com");
@@ -19,7 +20,10 @@ describe("YouTubePlayer", () => {
     const frame = screen.getByTitle("Snail time");
     expect(frame).toHaveAttribute("src", "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&playsinline=1");
     expect(frame).toHaveFocus();
+    // Without scrolling: WebKit would scroll to it later, undoing where a page put it (the channel panel).
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true });
     expect(container.querySelector("img")).toBeNull();
+    focus.mockRestore();
   });
 
   // Before Play only: axe can't reach into jsdom's iframe once the player is there.

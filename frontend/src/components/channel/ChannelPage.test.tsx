@@ -216,6 +216,58 @@ describe("ChannelPage", () => {
     scrollBy.mockRestore();
   });
 
+  it("glides to the panel without reduced motion, and stops gliding on Play or when the visitor scrolls", async () => {
+    const user = userEvent.setup();
+    open(ID);
+    await loaded();
+    vi.stubGlobal("matchMedia", (query: string) => ({ matches: !query.includes("reduced-motion"), media: query }));
+    // Animation frames run when the test says, at the times it gives.
+    const frames = new Map<number, FrameRequestCallback>();
+    let next = 0;
+    vi.stubGlobal("requestAnimationFrame", (cb: FrameRequestCallback) => (frames.set(++next, cb), next));
+    vi.stubGlobal("cancelAnimationFrame", (id: number) => frames.delete(id));
+    const tick = (now: number) => {
+      const due = [...frames];
+      frames.clear();
+      for (const [, cb] of due) cb(now);
+    };
+    vi.spyOn(performance, "now").mockReturnValue(1000);
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    const rects = layout(900, 200);
+
+    // Halfway through, half the way (eased); at the end, the panel's middle at the screen's.
+    await user.click(screen.getByRole("button", { name: "Tiny Trucks 3, Sep 6, 2024" }));
+    const panel = screen.getByRole("region", { name: "Tiny Trucks 3" });
+    tick(1200);
+    expect(scrollTo).toHaveBeenLastCalledWith({ top: (900 + 100 - 384) / 2, behavior: "instant" });
+    tick(1400);
+    expect(scrollTo).toHaveBeenLastCalledWith({ top: 900 + 100 - 384, behavior: "instant" });
+    expect(frames.size).toBe(0);
+
+    // Play during the glide stops it.
+    await user.click(screen.getByRole("button", { name: "Close video panel" }));
+    await user.click(screen.getByRole("button", { name: "Tiny Trucks 3, Sep 6, 2024" }));
+    tick(1200);
+    expect(frames.size).toBe(1);
+    await user.click(within(screen.getByRole("region", { name: "Tiny Trucks 3" })).getByRole("button", { name: /^Play video/ }));
+    expect(frames.size).toBe(0);
+
+    // So does the visitor scrolling: the page isn't where the glide put it.
+    await user.click(screen.getByRole("button", { name: "Shrink video" }));
+    await user.click(screen.getByRole("button", { name: "Close video panel" }));
+    await user.click(screen.getByRole("button", { name: "Tiny Trucks 3, Sep 6, 2024" }));
+    tick(1200);
+    scrollTo.mockClear();
+    vi.spyOn(window, "scrollY", "get").mockReturnValue(50);
+    tick(1300);
+    expect(scrollTo).not.toHaveBeenCalled();
+    expect(frames.size).toBe(0);
+    expect(panel).not.toBeInTheDocument(); // the first panel was replaced
+    rects.mockRestore();
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
   it("plays the video large under its text with the panel centred, and shrinks it back", async () => {
     const user = userEvent.setup();
     open(ID);

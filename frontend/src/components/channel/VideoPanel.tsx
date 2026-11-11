@@ -14,6 +14,31 @@ import { formatDate, measureName, pointOf, type Measure } from "./chart";
 const reduceMotion = () =>
   typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const GLIDE_MS = 400;
+
+/**
+ * Glides the page by `delta` px, one frame at a time; returns a function that stops it. Not the
+ * browser's smooth scroll: that can't be stopped reliably, and a jump made while it runs lands off
+ * (Chromium adds the jump on top of it; in WebKit the glide can start after the jump and win). Stops
+ * by itself if the visitor scrolls meanwhile, like the browser's.
+ */
+function glideBy(delta: number): () => void {
+  const from = window.scrollY;
+  const start = performance.now();
+  let frame = 0;
+  let last = from;
+  const step = (now: number) => {
+    if (Math.abs(window.scrollY - last) >= 1) return; // the visitor scrolled
+    const t = Math.min(1, (now - start) / GLIDE_MS);
+    const eased = t < 0.5 ? 4 * t ** 3 : 1 - (2 - 2 * t) ** 3 / 2;
+    window.scrollTo({ top: from + delta * eased, behavior: "instant" });
+    last = window.scrollY;
+    if (t < 1) frame = requestAnimationFrame(step);
+  };
+  frame = requestAnimationFrame(step);
+  return () => cancelAnimationFrame(frame);
+}
+
 /** The parts of the page that move when it scrolls (not the fixed consent banner). */
 const pageParts = () =>
   [...document.body.children].filter(
@@ -49,6 +74,7 @@ export default function VideoPanel({
   // Where things were on screen before a toggle, for the animation; null: no animation.
   const before = useRef<{ box: DOMRect; text: DOMRect; page: Map<HTMLElement, number> } | null>(null);
   const toggled = useRef(false);
+  const stopGlide = useRef<() => void>(() => {});
 
   useEffect(() => {
     const el = panel.current;
@@ -58,7 +84,10 @@ export default function VideoPanel({
     // To the middle of the screen, also upward; the browser stops at the page's ends.
     const r = el.getBoundingClientRect();
     const delta = r.top + r.height / 2 - window.innerHeight / 2;
-    if (Math.abs(delta) >= 1) window.scrollBy({ top: delta, behavior: reduceMotion() ? "auto" : "smooth" });
+    if (Math.abs(delta) < 1) return;
+    if (reduceMotion()) window.scrollBy({ top: delta, behavior: "auto" });
+    else stopGlide.current = glideBy(delta);
+    return () => stopGlide.current();
   }, [video.id]);
 
   const toggle = (next: boolean) => {
@@ -86,14 +115,17 @@ export default function VideoPanel({
     const t = text.current;
     const p = panel.current;
     if (!b || !t || !p) return;
-    if (playing) {
-      // The panel to the middle of the screen, never past its title.
+    // Played while the page still glides to the panel: from where it is now.
+    stopGlide.current();
+    // The panel to the middle of the screen, never past its title.
+    const place = () => {
       const r = p.getBoundingClientRect();
       let delta = r.top + r.height / 2 - window.innerHeight / 2;
       const h = heading.current?.getBoundingClientRect();
       if (h) delta = Math.min(delta, h.top - 16);
-      window.scrollTo({ top: window.scrollY + delta, behavior: "instant" });
-    }
+      if (Math.abs(delta) >= 1) window.scrollTo({ top: window.scrollY + delta, behavior: "instant" });
+    };
+    if (playing) place();
     const focus = () => b.querySelector<HTMLElement>(playing ? "iframe" : "button")?.focus({ preventScroll: true });
     const from = before.current;
     before.current = null;
@@ -103,7 +135,11 @@ export default function VideoPanel({
     const holder = slides.find((s) => s.el.contains(t))?.dy ?? 0;
     const now = t.getBoundingClientRect();
     slides.push({ el: t, dx: from.text.left - now.left, dy: from.text.top - now.top - holder });
-    grow(from.box, b, thumbnailUrl(video.id), slides, focus);
+    // Placed again once grown: WebKit, when too busy to draw, can put the page back where it was.
+    grow(from.box, b, thumbnailUrl(video.id), slides, () => {
+      if (playing) place();
+      focus();
+    });
   }, [playing, video.id]);
 
   const point = pointOf(video, measure);
