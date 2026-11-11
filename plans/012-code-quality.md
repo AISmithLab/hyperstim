@@ -65,6 +65,11 @@ Show test coverage and SonarQube Cloud's analysis (bugs, code smells, security h
   - **Safari check** (2026-10-30, plan 017): a few more E2E checks in `frontend/e2e/safari/`, with their own Playwright pinned to the newest shipping Safari's WebKit (26), as the main suite's WebKit is newer than any Safari. CI runs it after the main suite.
   - Browsers: Chromium and WebKit, each at 1280 px (desktop) and 360 px (phone): four projects, `chromium-desktop`, `webkit-desktop`, `chromium-phone`, `webkit-phone` _(human decision, 2026-10-27: people use Safari on desktops and Chrome on phones too)_. The 320 px reflow check runs in all four.
 - **CI:** a new `e2e` job in `ci.yml`, after `frontend` and `backend`: installs both (`npm ci`, `uv sync --locked`), Playwright's browsers with their system libraries (`npx playwright install --with-deps`, not cached: the system libraries need installing each run anyway), builds the site, runs `npm run test:e2e`, uploads the Playwright report on failure. `release.sh` releases only commits where CI passed, so E2E failures block releases like the Sonar gate. E2E doesn't count toward Sonar coverage.
+- **Flaky tests are fixed, not retried away** _(human decision, 2026-11-11)_. A test that fails only sometimes blocks releases at random and teaches us to ignore red CI.
+  - **Wait for the state, don't sample it.** After anything that moves or resizes (a scroll, the grow animation, layout after data loads), a test checks position and size with a retrying assertion (`expect.poll(…)`, `expect(…).toPass()`, or web-first locator assertions), never with one `page.evaluate` or `boundingBox()` read. No `waitForTimeout`, except to stand for how long a person does something (a finger held on the chart).
+  - **Find the cause first.** A flake can be a real bug that shows only on slow machines. If the end state is wrong, the fix goes into the app, under the plan that owns the page, with the test that caught it.
+  - **Reproduce under load**, like CI's slower machines: `npx playwright test <spec> -g "<test>" --project=<project> --repeat-each 40 --workers 4 --retries 0` (more workers for more load; from 8 up, WebKit starts timing out on its own). Documented in `frontend/README.md` (Testing). A fix counts as done when that run passes in full.
+  - **CI keeps 1 retry** (`retries: CI ? 1 : 0`); not raised.
 - **Existing pages get it too** _(human decision)_: E2E and axe coverage for all current pages and components, not only new work (step 12).
 - **Privacy:** no change. Tests run only in CI and locally; they add nothing to the site or backend and contact no third party.
 
@@ -97,6 +102,18 @@ Show test coverage and SonarQube Cloud's analysis (bugs, code smells, security h
     - Any bug these find is fixed in its own `fix:` commit under the plan that owns the page.
 
     Done (2026-10-27): 31 new component tests, axe in all 25 component test files; 46 E2E tests, run in each of the four projects. They found two bugs, fixed: rankings search missed titles with double spaces (plan 007), and on phones the channel page's video cards had an `aria-label` that left out their visible text, failing WCAG 2.5.3 "label in name" (plan 005).
+
+13. Flaky tests, in every E2E spec, not only when one fails _(human decision, 2026-11-11)_:
+    - `channel.spec.ts`, "plays a video large in the panel, centred on screen": failed in CI on `b210b0b` (panel 6.6 and 8.6 px off the middle, both tries). Two app bugs (plan 005), not the test:
+      - Chromium: Play pressed while the page still glided from opening the panel added the jump on top of the glide, so the panel stayed off by how far the glide got. The panel now glides by itself, frame by frame, and Play stops it. New test: Play at once after opening.
+      - WebKit: the player focused itself on start without `preventScroll`, and a busy WebKit then scrolled to it, undoing the jump (≈ 520 px off). Now `preventScroll`, and the panel is placed again once grown.
+      - Under load (40 runs × 2 desktop engines, 4 workers) both tests now pass in full; before, 26 of 120 failed at 8 workers.
+    - `pages.spec.ts`, "lands with “We measure 12 things” at the top": polled only the lower bound, then read the upper once; now polls until the title is within ±3 px of 16 px.
+    - `home.spec.ts`, "a finished live check opens with its score" (and "how it works › its check field", the same form): an app bug (plan 006). `fill()` before the page's script ran left the link in the field but not in the form's state, so Check said "Paste a YouTube link or video ID first." The form now keeps it. New tests: E2E with the scripts held back until the link is in, and a component test that hydrates a filled field.
+    - `blog.spec.ts`, "clicking a lane…": lane B's playhead shows once B's (fake) player has loaded and reports playing; waited for up to 10 s, as this spec's other player waits.
+    - The other one-shot position and size reads (`blog`, `compare`, `rankings`, `video`, `thumbnails`, `safari`) measure a layout that has settled (after load, without motion), or are already polled: unchanged. The compare spec's `waitForTimeout(500)` is a held finger.
+    - Found by running the whole suite 5 times at 16 workers and 3 times at 8. Other failures there were timeouts from overload (30 s tests, pages not loading in 5 s at 16 workers), not seen at 4.
+    - Stress command in `frontend/README.md`.
 
 **For you (team):** Automatic Analysis off and `SONAR_TOKEN` secret set (done). In the project's Administration → New Code, choose "Previous version".
 
