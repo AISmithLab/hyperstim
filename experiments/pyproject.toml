@@ -1,0 +1,47 @@
+[project]
+name = "hyperstim-experiments"
+version = "0.0.0"
+description = "Research experiments on YouTube videos (not part of the website)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy==2.4.3",
+    "opencv-python-headless==4.13.0.92",
+    "yt-dlp==2026.8.19",
+    "scipy",
+    "pillow",
+    "librosa",
+    "torch",
+    "torchaudio",
+    "demucs",
+]
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+torchaudio = { index = "pytorch-cpu" }
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["align", "audio", "baselines", "changes", "media", "metadata", "visual", "yt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "0*/tests"]
+pythonpath = ["tools"]
