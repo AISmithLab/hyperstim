@@ -234,8 +234,9 @@ test("clicking a lane pauses the playing video and plays that lane's video from 
   const box = (await lane.boundingBox())!;
   await page.mouse.click(box.x + box.width * 0.45, box.y + box.height / 2);
   await expect(block.getByTitle(/^B: .*Scene/)).toBeVisible();
+  // B's playhead once its player has loaded and reports playing; until then A's paused one shows.
+  await expect(lane.locator("[data-playhead]")).toHaveCount(1, { timeout: 10_000 });
   await expect(block.locator("[data-playhead]")).toHaveCount(1);
-  await expect(lane.locator("[data-playhead]")).toHaveCount(1);
   const value = Number(await lane.getAttribute("aria-valuenow"));
   expect(value).toBeGreaterThanOrEqual(7);
   expect(value).toBeLessThanOrEqual(18);

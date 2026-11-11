@@ -22,10 +22,9 @@ test.describe("how it works", () => {
       // The linked measurement is highlighted, also after a link followed inside the site.
       const slug = new URL(page.url()).hash;
       await expect(page.locator(slug)).toHaveCSS("background-color", "rgb(254, 248, 212)");
-      // Polled: the page sets where each item lands once its script runs.
-      const top = () => title.boundingBox().then((box) => Math.round(box!.y));
-      await expect.poll(top, { message: what }).toBeGreaterThanOrEqual(13);
-      expect(await top(), what).toBeLessThanOrEqual(19);
+      // Polled until it's there: the page sets where each item lands once its script runs.
+      const off = () => title.boundingBox().then((box) => Math.abs(Math.round(box!.y) - 16));
+      await expect.poll(off, { message: what }).toBeLessThanOrEqual(3);
     };
     for (const size of [{ width: 1280, height: 800 }, { width: 360, height: 740 }, { width: 375, height: 548 }, { width: 740, height: 340 }]) {
       await page.setViewportSize(size);
