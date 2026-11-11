@@ -1,9 +1,12 @@
+import asyncio
 import logging
 import re
+import threading
 from collections.abc import Callable
 from pathlib import Path
 
 import pytest
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from hyperstim_api.config import load_settings
@@ -439,3 +442,22 @@ def test_dataset_channel_ids_match_the_pattern() -> None:
 
     dataset = load_dataset(Path(__file__).parents[1] / "data" / "videos.tsv")
     assert all(re.match(CHANNEL_ID_PATTERN, c.id) for c in dataset.channels)
+
+
+def test_shutdown_stops_the_worker_threads_even_after_an_error(
+    tmp_path: Path, dataset_path: Path, make_client: Callable[..., TestClient]
+) -> None:
+    app = make_client(dataset_path, usage_dir=tmp_path / "usage").app
+    assert isinstance(app, FastAPI)
+
+    def running() -> set[str]:
+        return {t.name for t in threading.enumerate()} & {"analysis", "usage"}
+
+    async def run() -> None:
+        async with app.router.lifespan_context(app):
+            assert running() == {"analysis", "usage"}
+            raise RuntimeError("the app failed while running")
+
+    with pytest.raises(RuntimeError):
+        asyncio.run(run())
+    assert running() == set()

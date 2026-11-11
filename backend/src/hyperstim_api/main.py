@@ -283,11 +283,13 @@ def create_app(
         store.start()
         if usage is not None:
             usage.start()
-        yield
-        if usage is not None:
-            usage.stop()
-        store.stop()
-        analyzer.stop_worker()
+        try:
+            yield
+        finally:
+            if usage is not None:
+                usage.stop()
+            store.stop()
+            analyzer.stop_worker()
 
     usage = UsageLog(settings.usage_dir) if settings.usage_dir else None
 
