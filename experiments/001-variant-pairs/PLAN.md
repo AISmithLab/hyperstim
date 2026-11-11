@@ -85,22 +85,44 @@ Within a channel, look-alikes come from more than reuse: a shared channel templa
 - **Compilations** (longer than 10 min, or titles like "compilation", "collection", "1 hour") stay out of pairs _(human decision)_: they contain other videos rather than vary them. Counted in the report, left for later.
 - The agent also labels **re-upload** (same video, nothing changed) apart from re-skin.
 
-**Constraints** _(human decision)_: results within half a day, in one run of a few hours; API units as needed (the 2,000-a-day limit doesn't apply to this search); up to **200 player requests in one day** for this search _(human decision, 2026-11-11; accepted though 121 in 24 h caused the first block)_: downloads stop at the first failed one, and while the collector is blocked. Image requests paced at 2 a second, one at a time _(human decision: be friendly to their servers)_. Storyboards need a player request, same as a download, so the gate can't use them: it works from API and image signals, and downloads go to the pairs the agent confirms.
+**Constraints** _(human decision)_: results within half a day, in one run of a few hours; API units as needed (the 2,000-a-day limit doesn't apply to this search); up to **200 player requests in one day** for this search _(human decision, 2026-11-11; accepted though 121 in 24 h caused the first block)_: downloads stop at the first failed one, and while the collector is blocked. Storyboards need a player request, same as a download, so the gate can't use them: it works from API and image signals, and downloads go to the pairs the agent confirms.
 
-Funnel: each stage passes only some pairs on to the next, which costs more per pair; everything is saved to `results/search/`, so reruns cost nothing. Expected sizes: all 17.3 M → recall ~60–100 k → rank ~5 k → gate ~200–800 → agent confirms → download ≤ ~100.
+**Pacing** _(human decision: random gaps, be friendly to their servers)_: one request at a time, each gap drawn at random.
+- Images: gap uniform 0.5–1.5 s (mean 1 s, ~1 a second) _(human decision, 2026-11-11; was a fixed 2 a second)_.
+- Downloads: gap uniform 45–135 s (mean 90 s) after each one finishes; 200 downloads fit in ~5 h, inside the run.
+- Both in `tools/yt.py` (`EXP_IMAGE_GAP`, `EXP_PLAYER_GAP` as min–max), so every experiment gets them; README's budget section updated with it.
 
-| Stage | What | Cost |
+### Filter chain
+
+Each stage is a filter with its own queue, and all run at once: a pair moves to the next queue as soon as it passes, so the first full reports come ~1–1.5 h into the run instead of at the end _(human decision; named so it isn't confused with the analysis pipeline in `backend/pipeline/`)_. Everything is saved to `results/search/` (queues in one SQLite file, `cache/search.db`, rebuilt from the saved results if lost), so a stopped run resumes where it was and reruns cost nothing. Expected sizes: all 17.3 M → candidates ~60–100 k → scored ~5 k → gate ~200–800 → agent confirms → download ≤ ~100.
+
+| Filter | Takes | Passes on | Cost |
+|---|---|---|---|
+| 0. Inventory | Both channels' uploads: `playlistItems` (page tokens saved), then `videos.list` for title, description, tags, duration, publish time, stats | All videos, into the image queue in **random order** (so the first ~15 min are a random sample for the baselines) | ≈ 240 API units, ~5 min |
+| 1. Images | Thumbnail + middle auto-frame (`hq2.jpg`, a frame YouTube takes at ½ of every video, separate from the custom thumbnail) per video; embeddings (DINOv2) and outlines as they arrive | Each video, as soon as its two images are in | 11.8 k images at ~1 a second ≈ 3.3 h; embeddings keep up |
+| 2. Candidates | A video that arrives is compared with every video already in, of each pair type: title subject (char n-gram TF-IDF after removing channel boilerplate like "3D", "Nursery Rhymes"), thumbnail embedding, thumbnail outline (catches recolors), middle auto-frame | Pairs that beat the **99th percentile of random pairs of their type** on any one of the four. A fixed cut, not "top 10 per video", because a top 10 is only known once every video is in | local |
+| 3. Score | One screen score from all image and API signals (plus duration fit allowing an end screen, publish order), as percentiles against random pairs of the type | Pairs above a cut set so the seed pair passes with margin | local |
+| 4. Gate | Fetches `hq1`/`hq3` (¼ and ¾) for the pair's videos, ahead of the bulk images in the image queue; all 3 × 3 auto-frame pairs on outline SSIM (positions differ when one version has an end screen, and verses repeat), plus thumbnail and API signals | Pairs where an image signal beats the 99th percentile of their type. A random sample of the stopped pairs goes on as an audit of what the gate misses | up to ~8 k images ≈ 2.2 h, spread over the run |
+| 5. Agent review | Only gated pairs _(human decision: tokens are plentiful but gated first)_, in batches of ~10 on one sheet (both thumbnails + auto-frames, the signals that fired); labels: re-upload / same animation re-skinned / same song, different animation / unrelated, with a confidence. Catches what the signals miss (redrawn background, same characters) | Confident re-skins, most different strategy profiles first _(human decision)_, one queue across pair types with at least ~20 pairs of each type that has them _(human decision)_ | tokens |
+| 6. Download | Both videos, once each (a video in several pairs is reused) | Downloaded pairs | ≤ 200 player requests, paced |
+| 7. Full report | `score_pair.py` with signal order (below), then the pair's report; 2 at a time on this 8-core machine | — | ~3–7 min a pair (to measure) |
+
+**Signal order** _(human decision)_ in `score_pair.py`: signals run cheapest first, and a costly one runs only when it can still change the pair's verdict; the report then says which signal settled it (e.g. stems: "settled by waveform match, r 0.998"). Every signal still has a row. Example: stem separation decides only "same backing, different overlay", so it runs only when the waveforms don't match. Every 10th pair runs every signal, to check the order never changes a verdict. Before the run, time each signal on the seed pair to set the order.
+
+**Timeline** (estimate; the machine's load was 42 on 8 cores on 2026-11-11, which could double the scoring time):
+
+| | Image gap 0.5 s (2 a second) | Image gap ~1 s (chosen) |
 |---|---|---|
-| 0. Inventory | All uploads of both channels: `playlistItems` (page tokens saved), then `videos.list` for title, description, tags, duration, publish time, stats | ≈ 240 API units |
-| 1. Recall | Each video gets its top-k videos, of each pair type it is in, from **several independent lists**, unioned: title subject (char n-gram TF-IDF after removing channel boilerplate like "3D", "Nursery Rhymes"); thumbnail embedding (DINOv2, as in the seed); thumbnail outline (edge map, catches recolors); middle auto-frame (YouTube's `hq2.jpg`, a frame it takes at ½ of every video, separate from the custom thumbnail; `hq1`/`hq3` at ¼ and ¾ are fetched in stage 3 for candidates only, if these frames exist for these videos). A pair can enter through any one list. k ≈ 10 per list | thumbnail + `hq2` × 5,886 videos ≈ 11.8 k image requests (~1.6 h at 2 a second), stopping at the first 429 or run of errors; embeddings ~30 min CPU; the extra pair types cost no extra images |
-| 2. Rank | One screen score per pair from the image and API signals (auto-frame outline similarity, thumbnail similarity, title subject, duration fit allowing an end screen, publish order), each as a percentile against random pairs of its type, as in the signal framework. Keeps the top ~5,000 pairs (split across types by how many of each pass the 99th percentile) plus each video's best 2, with the cut set so the seed pair passes with margin | local |
-| 3. Gate (automatic) | For the ranked candidates: all 3 × 3 auto-frame pairs (positions differ when one version has an end screen, and verses repeat) on outline SSIM, plus thumbnail and API signals, each against random pairs of its type. A pair passes when an image signal beats the 99th percentile; the rest stop here. A random sample of the stopped pairs goes on as an audit of what the gate misses | `hq1` + `hq3` for the candidates' videos: up to ~8 k image requests (≤ 1.1 h) |
-| 4. Agent review | Only pairs that passed the gate _(human decision: tokens are plentiful but gated first)_: an agent looks at a side-by-side sheet (both thumbnails + auto-frames, the signals that fired) and labels each: re-upload / same animation re-skinned / same song, different animation / unrelated, with a confidence. Catches what the signals miss (redrawn background, same characters) | tokens |
-| 5. Download | Only the most suspicious: agent-confirmed re-skins with the highest confidence, most different strategy profiles first _(human decision)_, one queue across pair types, with at least ~20 pairs of each type that has them _(human decision)_. Downloads and `score_pair.py` + `build_report.py`, up to 200 player requests (~100 pairs, fewer when videos repeat), plus ~10 baseline videos. Also tells how well the agent's label agrees with the full signals | ≤ 200 player requests |
+| Image requests (~20 k) | ~2.8 h | ~5.6 h |
+| First full report | ~1–1.5 h | ~1–1.5 h (gate frames go first) |
+| All pairs through the agent | ~3 h | ~5.6 h |
+| All ~100 full reports | ~3.5–4 h with signal order | ~6 h (images and downloads both ~5–6 h, scoring keeps up) |
 
-Seed pair check first: stages 1–2 must rank the seed pair near the top, and the auto-frames must exist for 2014 videos (6 image requests). If they don't, the recall and the gate fall back to thumbnails and API signals, and the plan comes back for review.
+At ~1 a second the run is limited by images, not scoring, and still ends inside the day; signal order then matters less for time, but keeps the CPU free for the machine's other work.
 
-**Run:** one session of a few hours (stages 0–4 ≈ 4–5 h, mostly paced image requests); stage 5 starts as soon as the first pairs are confirmed, so the day ends with full reports. Progress goes to the search report as stages finish. No multi-agent orchestration for discovery: it is deterministic scripts; the agent is used only where judgment pays (stage 4).
+Seed pair check first: the auto-frames must exist for 2014 videos (6 image requests), and the filters must pass the seed pair. If not, the plan comes back for review.
+
+**Run:** one session, ~6 h; the overview is republished as stages finish. No multi-agent orchestration for the filters: they are scripts; the agent is used only where judgment pays (filter 5, run as subagents in batches while the queue fills).
 
 **Scope:** the seed channel pair only _(human decision, 2026-11-11)_. Kids Channel's "Our Family" lists 8 more (1 API unit): Kids Channel - Cartoon Videos for Kids (US, 2,784 videos) and 7 language channels (461–2,405 videos each; likely dubs, a separate localization question). All 10 would be 15,174 videos, ≈ 610 API units and 2.6× the image requests; left for later.
 
@@ -109,11 +131,11 @@ Seed pair check first: stages 1–2 must rank the seed pair near the top, and th
 - **More than 5:** one artifact with tabs: the overview first, then one tab per pair report (grouped by pair type, strongest first). Each tab loads its data, stills and videos only when opened.
   - Size: a pair report is ~18 MB today (two downloads ~8 MB, stills ~10 MB). Stills get recompressed and the pair data goes in per-pair JSON files next to the page (an artifact version holds 256 MB); the videos go in the artifact's asset store (20 MB per file). If the store's quota runs out, the lowest-ranked pairs keep their stills and storyboards but drop the synced video, and their tab says so.
   - `build_report.py` splits into a page shell and a per-pair renderer, used by both layouts.
-- Either way: the overview is republished as stages finish, built by `build_search_report.py` from `results/search/`; the seed pair is included (its existing report reused); gate-passed pairs without a download get no report, only their row in the overview with the image evidence and the agent's label.
+- Either way: the overview is republished as pairs move through the filters, built by `build_search_report.py` from `results/search/`; the seed pair is included (its existing report reused); gate-passed pairs without a download get no report, only their row in the overview with the image evidence and the agent's label.
 
 Overview sections:
 0. What stood out: the strongest pairs and the surprises (same-day releases, large audience gaps, re-skins within a channel), each linking to its pair report.
-1. Funnel: counts per stage and pair type, budget used.
+1. Filter chain: how many pairs passed each filter and wait in each queue, by pair type; budget used; time to the end.
 2. Candidates that passed the gate, by pair type: both thumbnails and auto-frames side by side, screen score, the signals that fired, the agent's label, link to the full pair report where there is one.
 3. Channel story, to test "B was built from A's catalog" vs "B was built to test variants":
    - Timeline of B's uploads, each marked re-skin of an A video or not; and the lag to its A version. Within-channel re-skins on the same timeline: does A re-skin its own videos too, before or after B existed? A burst of re-skins of old A videos right after 2014-10-30 reads as catalog reuse; repeated near-same-day releases read as testing.
