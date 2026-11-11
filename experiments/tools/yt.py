@@ -3,9 +3,11 @@
 Budget (experiments/README.md, YouTube budget):
 - API: Data API units per Pacific day, at most EXP_API_UNITS_PER_DAY (default 2000).
 - Image: thumbnails and storyboard sprites from YouTube's image servers; logged, not budgeted,
-  but paced: at least EXP_IMAGE_INTERVAL seconds (default 0.5) between requests, one at a time.
+  but paced: one at a time, with a random gap of EXP_IMAGE_GAP seconds (default 0.5-1.5) between
+  request starts.
 - Player: any yt-dlp call; at most EXP_PLAYER_PER_DAY per UTC day (default 50), one download per
-  video ever, and none while the collector is blocked (its `blocked_until`).
+  video ever, and none while the collector is blocked (its `blocked_until`); a random gap of
+  EXP_PLAYER_GAP seconds (default 45-135) after each download.
 
 Every response is cached under experiments/cache/ and reused, so a request is never repeated.
 
@@ -25,6 +27,7 @@ import csv
 import hashlib
 import json
 import os
+import random
 import shutil
 import sqlite3
 import subprocess
@@ -42,8 +45,17 @@ CACHE = ROOT / "cache"
 COLUMNS = ["at", "experiment", "kind", "what", "target", "units", "outcome", "note"]
 
 PLAYER_PER_DAY = int(os.environ.get("EXP_PLAYER_PER_DAY", "50"))
-IMAGE_INTERVAL = float(os.environ.get("EXP_IMAGE_INTERVAL", "0.5"))
-_last_image = 0.0
+
+
+def _gap(name: str, default: str) -> tuple[float, float]:
+    lo, hi = (float(x) for x in os.environ.get(name, default).split("-"))
+    return lo, hi
+
+
+# Random gaps (min, max seconds), so requests don't come at a fixed rhythm.
+IMAGE_GAP = _gap("EXP_IMAGE_GAP", "0.5-1.5")
+PLAYER_GAP = _gap("EXP_PLAYER_GAP", "45-135")
+_next_at = {"image": 0.0, "player": 0.0}
 API_UNITS_PER_DAY = int(os.environ.get("EXP_API_UNITS_PER_DAY", "2000"))
 # Data API costs in units; everything we use is 1 except search.
 UNIT_COST = {"search": 100}
@@ -153,6 +165,11 @@ def api(endpoint: str, params: dict[str, str], experiment: str, note: str = "",
 # --- Image ------------------------------------------------------------------------------
 
 
+def _wait(kind: str) -> None:
+    """Sleep until the random gap after this process's last request of this kind has passed."""
+    time.sleep(max(0.0, _next_at[kind] - time.monotonic()))
+
+
 def image(url: str, experiment: str, what: str, target: str, note: str = "") -> Path | None:
     """One file from YouTube's image servers (thumbnail, storyboard sprite); None on a 404."""
     ext = Path(urllib.parse.urlparse(url).path).suffix or ".jpg"
@@ -162,9 +179,8 @@ def image(url: str, experiment: str, what: str, target: str, note: str = "") -> 
         return path
     if missing.exists():
         return None
-    global _last_image
-    time.sleep(max(0.0, _last_image + IMAGE_INTERVAL - time.monotonic()))
-    _last_image = time.monotonic()
+    _wait("image")
+    _next_at["image"] = time.monotonic() + random.uniform(*IMAGE_GAP)
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
@@ -211,7 +227,9 @@ def download(video_id: str, experiment: str, note: str = "") -> Path:
            "--user-agent", UA, f"https://www.youtube.com/watch?v={video_id}"]
     if os.environ.get("YTDLP_COOKIES"):
         cmd[1:1] = ["--cookies", os.environ["YTDLP_COOKIES"]]
+    _wait("player")
     res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    _next_at["player"] = time.monotonic() + random.uniform(*PLAYER_GAP)
     ok = res.returncode == 0 and out.exists()
     last_error = next((ln for ln in reversed(res.stderr.splitlines()) if "ERROR" in ln), "")
     log(experiment, "player", "download", video_id, 0, "ok" if ok else "error",

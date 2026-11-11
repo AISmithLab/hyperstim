@@ -12,7 +12,7 @@ import pytest
 
 import yt
 
-ENV = ["EXP_PLAYER_PER_DAY", "EXP_IMAGE_INTERVAL", "EXP_API_UNITS_PER_DAY", "YTDLP_COOKIES",
+ENV = ["EXP_PLAYER_PER_DAY", "EXP_IMAGE_GAP", "EXP_PLAYER_GAP", "EXP_API_UNITS_PER_DAY", "YTDLP_COOKIES",
        "COLLECTOR_DATA_DIR", "COLLECTOR_USER", "YOUTUBE_API_KEY"]
 NOW = datetime(2026, 11, 11, 12, 0, tzinfo=UTC)
 
@@ -179,7 +179,7 @@ def clock(monkeypatch):
 
     monkeypatch.setattr(time, "monotonic", lambda: t[0])
     monkeypatch.setattr(time, "sleep", sleep)
-    monkeypatch.setattr(yt, "_last_image", 0.0)
+    monkeypatch.setattr(yt, "_next_at", {"image": 0.0, "player": 0.0})
     return t, sleeps
 
 
@@ -228,23 +228,41 @@ def test_image_raises_other_errors_without_remembering(monkeypatch, clock):
     assert [r["outcome"] for r in rows()] == ["error 500", "error 500"]
 
 
-def test_image_paces_requests(monkeypatch, clock):
+def test_image_paces_requests_with_random_gaps(monkeypatch, clock):
     t, sleeps = clock
     starts = []
+    draws = iter([0.7, 1.3, 0.5])
+    calls = []
+
+    def uniform(lo, hi):
+        calls.append((lo, hi))
+        return next(draws)
 
     def fake(req, timeout):
         starts.append(t[0])
         t[0] += 0.1  # the request itself takes 0.1 s
         return Response(b"x")
 
+    monkeypatch.setattr(yt.random, "uniform", uniform)
     monkeypatch.setattr(urllib.request, "urlopen", fake)
     for i in range(3):
         yt.image(f"https://i.ytimg.com/vi/v{i}/0.jpg", "001", "thumbnail", f"v{i}")
-    assert [b - a for a, b in zip(starts, starts[1:], strict=False)] == pytest.approx([0.5, 0.5])
-    assert sleeps == [0.0, 0.4, 0.4]
-    t[0] += 2  # a later request after a long pause doesn't wait
+    assert [b - a for a, b in zip(starts, starts[1:], strict=False)] == pytest.approx([0.7, 1.3])
+    assert calls == [(0.5, 1.5)] * 3
+    t[0] += 5  # a later request after a long pause doesn't wait
+    monkeypatch.setattr(yt.random, "uniform", lambda lo, hi: 1.0)
     yt.image("https://i.ytimg.com/vi/v9/0.jpg", "001", "thumbnail", "v9")
     assert sleeps[-1] == 0.0
+
+
+def test_image_gaps_vary_within_bounds(monkeypatch, clock):
+    t, _ = clock
+    starts = []
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout: starts.append(t[0]) or Response(b"x"))
+    for i in range(20):
+        yt.image(f"https://i.ytimg.com/vi/v{i}/0.jpg", "001", "thumbnail", f"v{i}")
+    gaps = [b - a for a, b in zip(starts, starts[1:], strict=False)]
+    assert all(0.5 <= g <= 1.5 for g in gaps) and len({round(g, 6) for g in gaps}) > 1
 
 
 # --- Player -----------------------------------------------------------------------------
@@ -293,6 +311,14 @@ def test_download_runs_ytdlp_once_and_logs(collector, ytdlp):
         ("player", "download", "abc", "ok", "n")
     assert yt.download("abc", "001") == path
     assert len(ytdlp) == 1 and len(rows()) == 1
+
+
+def test_download_waits_a_random_gap_after_each_download(monkeypatch, collector, ytdlp, clock):
+    _, sleeps = clock
+    monkeypatch.setattr(yt.random, "uniform", lambda lo, hi: (lo + hi) / 2)
+    yt.download("abc", "001")
+    yt.download("def", "001")
+    assert sleeps == [0.0, 90.0]
 
 
 def test_download_passes_cookies(monkeypatch, collector, ytdlp):
@@ -367,18 +393,21 @@ def test_download_logs_failure(monkeypatch, collector):
 
 
 def test_defaults():
-    assert (yt.PLAYER_PER_DAY, yt.IMAGE_INTERVAL, yt.API_UNITS_PER_DAY) == (50, 0.5, 2000)
+    assert (yt.PLAYER_PER_DAY, yt.API_UNITS_PER_DAY) == (50, 2000)
+    assert (yt.IMAGE_GAP, yt.PLAYER_GAP) == ((0.5, 1.5), (45.0, 135.0))
 
 
 def test_env_overrides(monkeypatch, tmp_path):
     monkeypatch.setenv("EXP_PLAYER_PER_DAY", "2")
-    monkeypatch.setenv("EXP_IMAGE_INTERVAL", "1.5")
+    monkeypatch.setenv("EXP_IMAGE_GAP", "1-3")
+    monkeypatch.setenv("EXP_PLAYER_GAP", "10-20")
     monkeypatch.setenv("EXP_API_UNITS_PER_DAY", "150")
     importlib.reload(yt)
     monkeypatch.setattr(yt, "LEDGER", tmp_path / "ledger.tsv")
     monkeypatch.setattr(yt, "CACHE", tmp_path / "cache")
     monkeypatch.setattr(yt, "now_utc", lambda: NOW)
-    assert (yt.PLAYER_PER_DAY, yt.IMAGE_INTERVAL, yt.API_UNITS_PER_DAY) == (2, 1.5, 150)
+    assert (yt.PLAYER_PER_DAY, yt.API_UNITS_PER_DAY) == (2, 150)
+    assert (yt.IMAGE_GAP, yt.PLAYER_GAP) == ((1.0, 3.0), (10.0, 20.0))
 
     add("2026-11-11T10:00:00Z", "API", 100)
     monkeypatch.setenv("YOUTUBE_API_KEY", "k")
@@ -391,15 +420,14 @@ def test_env_overrides(monkeypatch, tmp_path):
         yt.download("abc", "001")
 
 
-def test_env_image_interval_paces(monkeypatch, tmp_path, clock):
-    monkeypatch.setenv("EXP_IMAGE_INTERVAL", "2")
+def test_env_image_gap_paces(monkeypatch, tmp_path, clock):
+    monkeypatch.setenv("EXP_IMAGE_GAP", "2-2")
     importlib.reload(yt)
     monkeypatch.setattr(yt, "CACHE", tmp_path / "cache")
     monkeypatch.setattr(yt, "LEDGER", tmp_path / "ledger.tsv")
-    monkeypatch.setattr(yt, "_last_image", 0.0)
+    monkeypatch.setattr(yt, "_next_at", {"image": 0.0, "player": 0.0})
     monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout: Response(b"x"))
     _, sleeps = clock
     yt.image("https://i.ytimg.com/vi/a/0.jpg", "001", "thumbnail", "a")
     yt.image("https://i.ytimg.com/vi/b/0.jpg", "001", "thumbnail", "b")
     assert sleeps == [0.0, 2.0]
-

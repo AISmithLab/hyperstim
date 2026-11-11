@@ -27,12 +27,12 @@ There are two budgets, one per kind of limit YouTube has. Request kinds, cheapes
 | Kind | What | Counts against |
 |---|---|---|
 | API | Data API calls (`videos.list`, `playlistItems.list`, `channels.list`: 1 unit; `search.list`: 100 units) | **API units**: the key's official quota of 10,000 a day (Pacific time) |
-| Image | Thumbnails, storyboards (frame sprites), from YouTube's image servers | No known limit; logged, not budgeted; paced at 2 a second, one at a time, to be friendly to their servers _(human decision)_ |
+| Image | Thumbnails, storyboards (frame sprites), from YouTube's image servers | No known limit; logged, not budgeted; one at a time with a random gap of 0.5–1.5 s (~1 a second), to be friendly to their servers _(human decision, 2026-11-11)_ |
 | Player | Any yt-dlp call, including metadata-only | **Downloads**: YouTube's unpublished per-IP limit, which blocks the server when exceeded |
 
 Limits _(human decision)_:
 
-- **Downloads: at most 50 player requests a day (UTC)** _(human decision, 2026-11-11; was 10)_, no hourly limit; an experiment's plan may allow more for one run (`EXP_PLAYER_PER_DAY`). At most one download per video, ever: the whole video at ≤ 360p with audio, cached in `cache/` and reused by every signal. Wait while the collector is blocked (its `blocked_until`).
+- **Downloads: at most 50 player requests a day (UTC)** _(human decision, 2026-11-11; was 10)_, no hourly limit, but a random gap of 45–135 s after each download _(human decision)_; an experiment's plan may allow more for one run (`EXP_PLAYER_PER_DAY`; gaps: `EXP_IMAGE_GAP`, `EXP_PLAYER_GAP`). At most one download per video, ever: the whole video at ≤ 360p with audio, cached in `cache/` and reused by every signal. Wait while the collector is blocked (its `blocked_until`).
 - **API units: 2,000 a day**; more when needed, decided on the day from that day's use. The collector budgets 7,000 of the 10,000 and uses ~1,700–3,100 (2026-10-30 to 11-09). Never re-fetch a page already read: save results and page tokens.
 
 `tools/yt.py` is the only way experiments reach YouTube: it checks the limits, then writes one row per request to `ledger.tsv`. The ledger stays separate from the collector's `attempts` table (experiments never write to the prod database); the later block analysis joins the two. _(human decision)_
