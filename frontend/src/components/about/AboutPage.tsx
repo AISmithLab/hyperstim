@@ -9,11 +9,18 @@ import { asset } from "@/lib/asset";
 export const LAB_URL = "https://aismithlab.com";
 /** The repo's New issue page: the issue forms (plan 016). */
 export const ISSUES_URL = `${GITHUB_URL}/issues/new/choose`;
+/** A team member, linked to their personal site if they have one. */
+type Person = { name: string; url?: string };
 /** In alphabetical order by last name. */
-export const CONTRIBUTORS = ["Shao-Yu Chu", "Noel Mekogue"];
-export const ADVISORS = ["Haojian Jin"];
+export const CONTRIBUTORS: Person[] = [
+  { name: "Shao-Yu Chu", url: "https://shaoyuchu.github.io/" },
+  { name: "Noel Mekogue" },
+];
+export const ADVISORS: Person[] = [{ name: "Haojian Jin", url: "https://www.haojianj.in/" }];
 
 const TEXT_LINK = "font-bold text-navy underline decoration-2 underline-offset-4 hover:decoration-sunny";
+/** The lab and team names: the text's own color and weight, a thin dashed underline (STYLE.md). */
+const QUIET_LINK = "underline decoration-current/50 decoration-dashed decoration-1 underline-offset-4 hover:decoration-current";
 
 export default function AboutPage() {
   return (
@@ -27,7 +34,9 @@ export default function AboutPage() {
           about how videos differ in their pacing, colors, motion, and sound.
         </p>
         <p>
-          <Name /> is a research-based platform developed by the <External href={LAB_URL}>AI Smith Lab</External> at
+          <Name /> is a research-based platform developed by the <External href={LAB_URL} className={QUIET_LINK}>
+            AI Smith Lab
+          </External> at
           UC San Diego. By analyzing thousands of children’s YouTube videos, we measure their audiovisual stimulation
           levels and make the results accessible to parents for exploration and comparison.
         </p>
@@ -38,9 +47,13 @@ export default function AboutPage() {
       </div>
       <dl className="mt-8 grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1.5">
         <dt className="font-bold text-navy">Contributors</dt>
-        <dd>{CONTRIBUTORS.join(", ")}</dd>
+        <dd>
+          <People people={CONTRIBUTORS} />
+        </dd>
         <dt className="font-bold text-navy">{ADVISORS.length > 1 ? "Advisors" : "Advisor"}</dt>
-        <dd>{ADVISORS.join(", ")}</dd>
+        <dd>
+          <People people={ADVISORS} />
+        </dd>
       </dl>
       <Contact />
     </div>
@@ -95,14 +108,38 @@ function Contact() {
   );
 }
 
+/** Names separated by commas, each linked to its personal site if it has one. */
+function People({ people }: { people: Person[] }) {
+  return people.map(({ name, url }, i) => (
+    <span key={name}>
+      {i > 0 && ", "}
+      {url ? (
+        <External href={url} className={QUIET_LINK}>
+          {name}
+        </External>
+      ) : (
+        name
+      )}
+    </span>
+  ));
+}
+
 /** The site's name in running text, bold italic (plan 015). */
 function Name() {
   return <span className="font-bold italic">HyperStim?</span>;
 }
 
-function External({ href, children }: { href: string; children: ReactNode }) {
+function External({
+  href,
+  children,
+  className = TEXT_LINK,
+}: {
+  href: string;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={TEXT_LINK}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
       {children}
       <span className="sr-only"> (opens in a new tab)</span>
     </a>

@@ -13,13 +13,38 @@ describe("AboutPage", () => {
 
   it("lists the contributors by last name, then the advisor", () => {
     render(<AboutPage />);
-    const lastName = (name: string) => name.split(" ").at(-1)!;
+    const lastName = ({ name }: { name: string }) => name.split(" ").at(-1)!;
     expect(CONTRIBUTORS.map(lastName)).toEqual([...CONTRIBUTORS.map(lastName)].sort());
     const terms = screen.getAllByRole("term").map((dt) => [dt.textContent, dt.nextElementSibling?.textContent]);
+    const newTab = " (opens in a new tab)";
     expect(terms).toEqual([
-      ["Contributors", CONTRIBUTORS.join(", ")],
-      ["Advisor", ADVISORS.join(", ")],
+      ["Contributors", `Shao-Yu Chu${newTab}, Noel Mekogue`],
+      ["Advisor", `Haojian Jin${newTab}`],
     ]);
+  });
+
+  it("links team members to their personal sites in a new tab, the others as plain text", () => {
+    render(<AboutPage />);
+    for (const { name, url } of [...CONTRIBUTORS, ...ADVISORS]) {
+      const link = screen.queryByRole("link", { name: new RegExp(`^${name}`) });
+      if (!url) {
+        expect(link).toBeNull();
+        continue;
+      }
+      expect(link).toHaveAttribute("href", url);
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveClass("decoration-dashed");
+      expect(link).not.toHaveClass("font-bold", "text-navy");
+    }
+  });
+
+  it("styles the lab link like the team's, the contact links as text links", () => {
+    render(<AboutPage />);
+    expect(screen.getByRole("link", { name: /^AI Smith Lab/ })).toHaveClass("decoration-dashed");
+    expect(screen.getByRole("link", { name: /^AI Smith Lab/ })).not.toHaveClass("font-bold", "text-navy");
+    for (const name of [/^contact form/, /^open an issue on GitHub/]) {
+      expect(screen.getByRole("link", { name })).toHaveClass("font-bold", "text-navy");
+    }
   });
 
   it.each([
