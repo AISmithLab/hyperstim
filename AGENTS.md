@@ -51,6 +51,7 @@ Before committing, check `git diff --staged` for anything above.
 - Production quality, but keep it simple and maintainable. Prefer few dependencies and boring, well-known tools. No abstraction until there are two real uses for it.
 - Frontend: Next.js (App Router, TypeScript, static export), Tailwind CSS. No server-side features (no API routes, no SSR, no image optimization).
 - Backend: Python, FastAPI. Config only through environment variables.
+- **Paid YouTube API results are never fetched twice.** The collector, live analysis and experiments share one Data API key (10,000 units a day; a search costs 100). When paging through searches by hand, save each page's results and `nextPageToken` and continue from them. Check the day's use first: the collector's `units` table plus your own.
 - The frontend talks to the backend only through the typed API client in `frontend/src/lib/api.ts`; the backend's API contract lives in `backend/` and both change together.
 - **Site text is in American English** (color, center, gray, analyze): everything visitors read, including page metadata and messages from the API.
 - Accessibility and responsive design are requirements, not polish: every page must work on phones (from 320 px), tablets, and large desktop screens.
@@ -59,6 +60,7 @@ Before committing, check `git diff --staged` for anything above.
   - Read `STYLE.md` before any UI work. New UI reuses its surfaces and controls; plans reference them instead of restating styles.
   - A new or changed style goes into `STYLE.md` in the same change, and the plan says so.
   - If a requested style change conflicts with `STYLE.md`, point out the conflict before applying it.
+  - **Hint text needs a yes.** Don't add hint or help text to a UI interaction (e.g. "Hold and slide to…") without asking: propose the wording and placement, and build without it until approved.
   - Before handing back UI work, screenshot the changed parts next to their neighbours at phone (360 px) and desktop (1280 px) widths and compare them against `STYLE.md`.
   - Screenshots for the user to review go in an artifact page (or your agent's equivalent, such as a local HTML page), labelled by screen size and state, not in loose image files. Within a session, reuse one artifact page: republish it with each round's screenshots instead of starting a new page.
   - An artifact page built to review a layout shows it at three screen sizes: phone (360 × 740), tablet (768 × 1024) and desktop (1280 × 800).
@@ -77,7 +79,7 @@ Before committing, check `git diff --staged` for anything above.
   - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
   - **Type**, by what the change means for the live site (pick the first that fits; split the commit if it's two things):
     - `feat`: something new visitors can see or use: pages, features, text, API endpoints. → minor version.
-    - `fix`: the site or API didn't work as intended, or an existing feature is adjusted to work better (how it behaves, looks or is laid out), including security fixes (also a dependency upgrade done for one). A new blog post is `fix` too: content on an existing page, not a new feature (plan 018). → patch.
+    - `fix`: the site or API didn't work as intended, or an existing feature is adjusted to work better (how it behaves, looks or is laid out), including security fixes (also a dependency upgrade done for one). A new blog post is `fix` too: content on an existing page, not a new feature (plan 018). So is new text or UI that explains or handles a failure of an existing feature (e.g. a note for a missing thumbnail). → patch.
     - `perf`: faster or lighter, same behaviour. `refactor`: code change with no visible change. `style`: formatting only.
     - `test`: tests only. `docs`: plans, READMEs, `STYLE.md`, `AGENTS.md`, code comments. `build`: dependencies, build config, dev scripts. `ci`: CI, release and server setup (`.github/`, `release.sh`, `deploy/`). `chore`: anything else.
     - `data`: only the server's daily commit of the collected dataset (`backend/data/collected/`, plan 013); never used by hand. Not listed in the release notes and no version bump; CI and `release.sh` reject a `data:` commit that changes any other file.
