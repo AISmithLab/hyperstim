@@ -5,7 +5,7 @@
 #
 # Run in the repo. Prints the bump (major, minor or patch; none when there are only `data:`
 # commits) on the first line, then the notes in Markdown: the commit subjects grouped by their
-# Conventional Commits type (CLAUDE.md). The daily `data:` commits (plan 013) aren't listed:
+# Conventional Commits type (AGENTS.md). The daily `data:` commits (plan 013) aren't listed:
 # the last bullet under Other says how the dataset grew instead.
 set -euo pipefail
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Checks a commit message's first line: Conventional Commits, as in CLAUDE.md (plan 010).
+# Checks a commit message's first line: Conventional Commits, as in AGENTS.md (plan 010).
 # ./dev.sh turns this on for the clone (git config core.hooksPath .githooks).
 set -euo pipefail
 
@@ -13,7 +13,7 @@ types='feat|fix|perf|refactor|style|test|docs|build|ci|chore|data'
 cat >&2 <<MSG
 commit-msg: the first line must be "<type>[!]: <subject> (plan NNN)", e.g.
   feat: Add the compare page for two videos or two channels (plan 008)
-Types: ${types//|/, }. See "Commit messages" in CLAUDE.md.
+Types: ${types//|/, }. See "Commit messages" in AGENTS.md.
 Got: $subject
 MSG
 exit 1

@@ -34,6 +34,6 @@ hyperstim-release          # release the latest main on GitHub
 hyperstim-release v1.2.0   # roll back: release an older tag again, under the next patch version
 ```
 
-The version and the release notes come from the commit messages since the last release, which follow Conventional Commits (see "Commit messages" in [`CLAUDE.md`](CLAUDE.md)): a breaking change (`feat!:`) bumps the major version, a `feat:` the minor, anything else the patch. The notes are the tag's message and appear on the repo's [Releases](../../releases) page.
+The version and the release notes come from the commit messages since the last release, which follow Conventional Commits (see "Commit messages" in [`AGENTS.md`](AGENTS.md)): a breaking change (`feat!:`) bumps the major version, a `feat:` the minor, anything else the patch. The notes are the tag's message and appear on the repo's [Releases](../../releases) page.
 
 It releases what's on GitHub's `main`, not your clone's branch or uncommitted changes. It stops unless CI passed on that commit (this includes SonarQube Cloud's quality gate, [plan 012](plans/012-code-quality.md)); then it installs and tests the backend in a fresh checkout, switches the service over and checks `/api/health` (going back to the previous release if it doesn't answer), and only then pushes the tag, which deploys the frontend. You need to be in the server's release group and able to push to GitHub. The server's one-time setup: [`deploy/README.md`](deploy/README.md).

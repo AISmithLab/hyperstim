@@ -107,7 +107,7 @@ Studies of children's TV have looked at pacing this way for decades.[^pacing]
 
 ## Media rules
 
-- **Only our own material.** Images and figures come from the team. Videos are our own screen recordings, animations or talks. Never a clip downloaded from YouTube (the repo is public, `CLAUDE.md`): embed the YouTube video instead.
+- **Only our own material.** Images and figures come from the team. Videos are our own screen recordings, animations or talks. Never a clip downloaded from YouTube (the repo is public, `AGENTS.md`): embed the YouTube video instead.
 - **Images:** WebP or PNG, at most twice as wide as they show (the text column is at most about 1,100 px wide, so at most 2,200 px).
 - **Videos:** MP4 (H.264), at most 10 MB each, always with a poster image (WebP or PNG, the video's first frame or a good still).
 - **Alt text** on every figure, saying what it shows.

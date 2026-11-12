@@ -32,6 +32,28 @@ ARCHITECTURE.md             diagrams of dev, CI, prod and outside services (belo
 - **`ARCHITECTURE.md` maps the system in Mermaid diagrams** _(human decision, 2026-10-27: diagrams rather than prose, so new team members see how dev, CI, prod and the outside services connect; rendered by GitHub and by VS Code with a Mermaid extension)_: the big picture, dev environment, tests and CI, a release, the prod server, the growing dataset, a visitor's request. Each change to these areas updates its diagram; details stay in the plans and READMEs. Linked from `DEVELOPMENT.md`.
 - **Plan 010's pending switch to semantic-version tags** also changes the "Release" section: whichever change lands second updates it in `DEVELOPMENT.md` _(human decision, 2026-10-24)_.
 
+### Agent instructions _(human decision, 2026-11-12; built 2026-11-12)_
+
+Goal: a new team member's coding agent (Claude Code, Codex, Cursor, Copilot, …) follows the same rules.
+
+- **`AGENTS.md` holds the project rules** _(human decision, 2026-11-12)_: `CLAUDE.md` is moved there (`git mv`, so its history follows), and `CLAUDE.md` keeps one line, `@AGENTS.md`, so Claude Code reads the same file. `.gemini/settings.json` sets `"contextFileName": "AGENTS.md"` for Gemini CLI.
+- **The current docs point to `AGENTS.md`** _(human decision, 2026-11-12)_: `DEVELOPMENT.md`, `dev.sh`, `frontend/README.md`, `backend/README.md`, `scripts/release-notes.sh`, `.githooks/commit-msg`'s comment, and `docs` in the commit types. Older plans keep `CLAUDE.md`: they are the record.
+- **Written for Claude Code first** _(human decision, 2026-11-12: most work uses Claude Code; clarity isn't traded for compatibility)_. Where a rule depends on a Claude Code feature, a short aside covers other agents without naming them, e.g. "an artifact page (or your agent's equivalent, such as a local HTML page)" _(human decision, 2026-11-12)_. Today that's only the review screenshots rule. 001's "Claude Code asks for each one" (Visual style, Illustrations) becomes "the agent asks".
+- **Rules moved from one agent's private memory into the repo** _(human decision, 2026-11-12)_, so every agent and team member has them:
+  - `AGENTS.md`, Engineering: **Paid YouTube API results are never fetched twice.** When paging through Data API searches by hand (a search costs 100 units of the 10,000 a day the collector shares), save each page's results and `nextPageToken` and continue from them; check the day's use first (the collector's `units` table plus your own).
+  - `AGENTS.md`, next to the `STYLE.md` rules: **Hint text needs a yes.** Don't add hint or help text to a UI interaction (e.g. "Hold and slide to…") without asking; propose the wording and placement, and build without it until approved.
+  - `AGENTS.md`, commit types: **handling a failure is `fix`.** New text or UI that explains or handles a failure of an existing feature (e.g. a note for a missing thumbnail) is `fix`, not `feat`.
+  - `experiments/README.md` (on `exp/main`): **Long jobs run detached**, as a `systemd-run --user` unit, not as an agent session's background task (one died with its session's out-of-memory kill and nothing ran for 8 h). Before starting one, ask the team how much memory it may use: it depends on what else runs then (off-peak it may use most of it, at peak it could bring the server down). Measure each step's peak memory before running workers in parallel, and write a progress file the next session can read.
+  - Plan 013: the decision **not to build more block tracking** (2026-11-01): the collector's `attempts` table is the record, analyzed later once more blocks have happened.
+- **Kept out of the repo:** where the research repo is (and the design inspiration, which the repo never names) is given to team members directly.
+
+Steps (all built 2026-11-12):
+
+1. `git mv CLAUDE.md AGENTS.md`; new `CLAUDE.md` with `@AGENTS.md`; `.gemini/settings.json`.
+2. Update the references listed above, the screenshots aside, and 001's Illustrations line.
+3. Add the moved rules (`AGENTS.md`, plan 013); the experiments README rule on `exp/main`.
+4. Commit on `001-architecture` (`docs:`); the `exp/main` change separately there.
+
 ## Frontend
 
 - Next.js App Router, TypeScript, Tailwind, `output: "export"`. Deployed by a GitHub Actions workflow when a release tag is pushed, so `main` is the latest dev version and the live site can be behind it (plan 010) _(human decision, 2026-10-17)_.
@@ -85,7 +107,7 @@ Guided by `frontend/design/Design Mockup.png`. It sets the look only: its text, 
   | Accents: leaf green / sky blue / heart coral | `#448D62` / `#32ADF7` / `#FD7371` |
 
 - Light theme only (no dark mode for now). Colours are never the only way information is shown (scores also carry numbers/labels).
-- Illustrations live in `frontend/public/images/`. Claude Code asks for each one (object, pose, colours, size, background) and the team supplies it; no placeholder art is committed.
+- Illustrations live in `frontend/public/images/`. The agent asks for each one (object, pose, colours, size, background) and the team supplies it; no placeholder art is committed.
 - **The kid** _(human decision, 2026-10-16)_:
   - **Hidden below `md` (768 px) on every page**: the hero kids, the kid on the score panel, and `kid_2` above the message box. Layouts drop the room they kept for it there.
   - **The hero kids (home, rankings, compare, how it works, blog, privacy, about) have the same head size** at every width they show at: each kid's face is as wide as the home kid's (`kid_1`), compared side by side at the same breakpoint _(human decision, 2026-11-10: sized by eye distance (`kid_1`'s turned face puts its eyes close together), their heads were 10–20 % larger than the home kid's; then fine-tuned by eye against it)_.

@@ -4,7 +4,7 @@ import { asset } from "@/lib/asset";
 
 // The privacy policy (plan 009). Every statement must stay true: a change to what the site or the
 // backend stores, logs, or loads from other companies is agreed first, then updates this page in the
-// same change (CLAUDE.md).
+// same change (AGENTS.md).
 
 export const LAST_UPDATED = "October 26, 2026";
 export const CONTACT_URL = "https://forms.gle/oLbWLgE8sT6zHhLR9";

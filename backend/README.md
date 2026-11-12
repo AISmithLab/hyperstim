@@ -133,7 +133,7 @@ The privacy policy (`/privacy`, plan 009) promises what the server keeps; keep t
 
 - uvicorn's access log is off in the app (`create_app`), so no flag is needed. The reverse proxy already logs every request (deleted after 14 days); uvicorn's would be a second copy with visitors' IPs, kept as long as the server keeps the service's output. The app's own log lines contain no IPs.
 - The reverse proxy's access and error logs are deleted after 14 days.
-- Check every change to what the backend stores or logs against the policy; one the policy would have to reflect is agreed with the team first, then updates the policy in the same change (`CLAUDE.md`).
+- Check every change to what the backend stores or logs against the policy; one the policy would have to reflect is agreed with the team first, then updates the policy in the same change (`AGENTS.md`).
 
 ## Channel lookup
 

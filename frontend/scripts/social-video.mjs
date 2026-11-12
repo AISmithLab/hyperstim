@@ -7,7 +7,7 @@
 // verses to a temporary folder with the backend's yt-dlp, serves the folder and the clips on
 // localhost, records the film frame by frame in Playwright's Chromium and has ffmpeg join the
 // frames and each turn's sound into <folder>/<folder's name>.mp4. The clips are deleted afterwards.
-// Neither the clips nor the MP4 are ever committed (CLAUDE.md, Public repository).
+// Neither the clips nor the MP4 are ever committed (AGENTS.md, Public repository).
 //
 //   --serve      open the film for review instead (prints its address; Ctrl-C stops it)
 //   --clips DIR  use clips downloaded before: DIR/clips.json lists each side's file and the
