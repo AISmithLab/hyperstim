@@ -1,0 +1,12 @@
+[
+{"a":"WoeCbK5HG-E","b":"cuF6uph58zo","label":"re-skin","confidence":0.9,"note":"Bao Panda If You're Happy: same street and window shots; pandas recolored yellow/purple vs black-white."},
+{"a":"aJ5emFJWGhU","b":"1F3UMZEL9c0","label":"shared-segments","confidence":0.85,"note":"Vehicle compilations sharing the yellow taxi segment; identical midpoint frame."},
+{"a":"C5NadrBnSj8","b":"Iygt_NzD7VU","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different characters."},
+{"a":"fUR3k2eL6Mo","b":"WZ45rZRLf80","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations on one set; no shared shot sampled."},
+{"a":"AVOzjZWTNew","b":"rd4qaeKldFE","label":"shared-segments","confidence":0.85,"note":"Monsters Are Out compilations (A vs B channel) with an identical crowd shot; 484 vs 609 s."},
+{"a":"t2tKT2LSOfo","b":"C5NadrBnSj8","label":"unrelated","confidence":0.85,"note":"No No song vs Boo Boo; different content."},
+{"a":"fUR3k2eL6Mo","b":"Ym2JIL8xgVI","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the mime-heart and dinosaur episodes."},
+{"a":"41F1Fdb3tHM","b":"C5NadrBnSj8","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families."},
+{"a":"MBoA383dfOU","b":"C5NadrBnSj8","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts; both contain the pink-sweater mom holding the baby."},
+{"a":"C5NadrBnSj8","b":"1fL9dsWYLJ0","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Wheels on the Bus; different content."}
+]

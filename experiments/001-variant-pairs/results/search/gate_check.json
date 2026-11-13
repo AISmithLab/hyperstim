@@ -1,0 +1,32 @@
+{
+ "at": "2026-11-12T20:27:13Z",
+ "stages": {
+  "downloaded": {
+   "done": 991,
+   "of": 991,
+   "pct": 100.0
+  },
+  "embedded": {
+   "done": 991,
+   "of": 991,
+   "pct": 100.0
+  },
+  "pairs_ready": {
+   "done": 3912,
+   "of": 3912,
+   "pct": 100.0
+  },
+  "pairs_checked": {
+   "done": 3912,
+   "of": 3912,
+   "pct": 100.0
+  },
+  "pairs_passing": {
+   "done": 556,
+   "of": 3912,
+   "pct": 14.2
+  }
+ },
+ "errors": 0,
+ "todo_for_laptop": 0
+}

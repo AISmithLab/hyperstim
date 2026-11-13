@@ -1,0 +1,72 @@
+[
+ {
+  "a": "34zV8hDOuFs",
+  "b": "gkk96Hm-IHo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "2kLB7ZwxVv8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "S9N416aMRxk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "pKnKuQMeGlk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "FGUfrSFknik",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "DVLFCQUsuFI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "bBOI5NzGpX0",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "LQQ2DD4V_mY",
+  "b": "EX0D6k2zAM0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations; all four matched moments identical footage, different lead episode"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "34zV8hDOuFs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ }
+]

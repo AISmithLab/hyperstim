@@ -1,0 +1,12 @@
+[
+{"a":"Hp8r3sKDtQM","b":"zKQnO5qBOGQ","label":"re-skin","confidence":0.55,"note":"Thumbnail match only: fire truck recolored pink vs purple; same title/length but frames differ."},
+{"a":"O_ny92BRsXg","b":"1QyeP8GiBvw","label":"shared-segments","confidence":0.8,"note":"Bob the Train colors compilations sharing the train and purple car scene."},
+{"a":"qmwB8Yf3Vz8","b":"zKQnO5qBOGQ","label":"shared-segments","confidence":0.8,"note":"Emergency vehicle compilations sharing the mom-and-kids shop scene."},
+{"a":"MajF8x-n-Vk","b":"1QyeP8GiBvw","label":"shared-segments","confidence":0.85,"note":"Bob colors compilations sharing train/purple car and ambulance scenes."},
+{"a":"3aoEeaCHS_w","b":"El8w4iWGWEI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, fishing vs basketball."},
+{"a":"kHVGgxylqd8","b":"Q-qoF1B0i_Q","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts with different scenes."},
+{"a":"UXsXYmw3_CY","b":"zPS3ihinlZs","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, gloves vs cat."},
+{"a":"hzzGSyV_BCA","b":"8Ri1s8CTSrM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing pillow and heart episodes."},
+{"a":"KKgsTFivFJM","b":"cO1aLZ7teeg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"MstDCeu1yxM","b":"fkM9JyHWOo8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, pillow vs cupboard."}
+]

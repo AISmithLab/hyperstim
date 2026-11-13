@@ -1,0 +1,12 @@
+[
+{"a":"q8T0cDm6nSA","b":"pKnKuQMeGlk","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations on same stage set; frames show different episodes."},
+{"a":"cE3LzPQgQmk","b":"iD4Iyr_hKjE","label":"re-upload","confidence":0.6,"note":"Same Bob the Train ABC video; 2019 version adds Kids TV card, new thumbnail."},
+{"a":"Is1sSXyJz28","b":"bzcufo-BRaA","label":"unrelated","confidence":0.85,"note":"Different Halloween shorts, different songs and characters."},
+{"a":"7_oWAaYXrYA","b":"yXDsS1eglcA","label":"shared-segments","confidence":0.6,"note":"Realistic bus shorts; same bus-stop shot and wheel close-ups, different cuts (30s vs 57s)."},
+{"a":"6aBfQYlhKJs","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Spooky Zombie vs Kaboochi dance; different animation."},
+{"a":"XCGE-_TDcGI","b":"MNiZl3mNEIk","label":"re-skin","confidence":0.85,"note":"Same shots (boy with toy bus, Bob the Train); bus recolored purple vs teal."},
+{"a":"05oAs-Pqf5Y","b":"Z13ulLin2jg","label":"same-song","confidence":0.55,"note":"Christmas Kaboochi vs regular Kaboochi dance; different animation."},
+{"a":"mTsFv_5w3uU","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Old MacDonald vs Kaboochi dance; different animation."},
+{"a":"wk9I_xT1NNc","b":"E9JfZ-SIhbY","label":"unrelated","confidence":0.85,"note":"Zoo song vs Baby Shark shorts; different animation."},
+{"a":"bzcufo-BRaA","b":"t3y2AhXLjRY","label":"unrelated","confidence":0.85,"note":"Different Halloween shorts, different songs and style."}
+]

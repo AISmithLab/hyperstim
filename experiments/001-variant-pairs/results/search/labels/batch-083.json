@@ -1,0 +1,12 @@
+[
+{"a":"Td73SYRglgw","b":"CgR6YuA2Uoo","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts with the same mom and rainbow playground set; no identical frame sampled."},
+{"a":"DclM70T7jyI","b":"Td73SYRglgw","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and sets."},
+{"a":"Q95CAqmYoew","b":"9Chorjyokgw","label":"shared-segments","confidence":0.7,"note":"Larva Ice Cream short and the compilation that leads with it; same characters and set."},
+{"a":"GGQVXv4Nc-E","b":"Td73SYRglgw","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with the same mom character but no matching shot."},
+{"a":"Td73SYRglgw","b":"_aq9DIHqGnw","label":"unrelated","confidence":0.6,"note":"Boo Boo vs No No junk food song; similar mom character, different songs."},
+{"a":"Td73SYRglgw","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Kaboochi dance; different content."},
+{"a":"xTWas3C26Wc","b":"nEsdTj3wX0U","label":"shared-segments","confidence":0.8,"note":"Hector the Tractor compilations sharing the tractor-and-ambulance segment."},
+{"a":"MBoA383dfOU","b":"Td73SYRglgw","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and sets."},
+{"a":"Td73SYRglgw","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and sets."},
+{"a":"WDCPlg_DNwQ","b":"9mZnkKVN1GM","label":"shared-segments","confidence":0.55,"note":"Monster in the Dark short and long compilation share the green-shirt boy; no identical frame sampled."}
+]

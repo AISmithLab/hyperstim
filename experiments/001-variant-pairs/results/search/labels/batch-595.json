@@ -1,0 +1,12 @@
+[
+{"a":"6GZKEpZRriQ","b":"8_w7iWeqQRw","label":"same-template","confidence":0.7,"note":"Five Little Babies vs Kittens: same tune and series format, different characters and scenes."},
+{"a":"YrsmVbdtgLY","b":"Msywp-_Gl1g","label":"same-song","confidence":0.85,"note":"Kaboochi Halloween vs regular; different characters and staging at matched moments."},
+{"a":"Fs-xqnR8X7s","b":"kZk2_agCEWY","label":"same-song","confidence":0.8,"note":"Deck the Hall shorts; different shots at matched moments."},
+{"a":"riN-hgPZwHc","b":"s1EDmLV-3f0","label":"re-skin","confidence":0.5,"note":"Same street shots at matched moments; fire truck green in A, purple in B; one shot differs."},
+{"a":"ndf_-FJsPVk","b":"YASqLUId4n8","label":"same-template","confidence":0.9,"note":"Phonics letter H vs L, same template, different words."},
+{"a":"EpdOW7JpFbI","b":"GiE7R-28ZoU","label":"same-template","confidence":0.85,"note":"Finger family penguins vs frogs, same format, different characters and scenes."},
+{"a":"Msywp-_Gl1g","b":"bXcFSE7NQp8","label":"same-song","confidence":0.8,"note":"Kaboochi; B features cat/animal characters, different shots at matched moments."},
+{"a":"Jn9aklUYdQk","b":"R49NrP0fcsE","label":"shared-segments","confidence":0.6,"note":"B (31s) reuses some A Boo Boo shots identically; other matched moments differ."},
+{"a":"sJb_iV1LCXY","b":"HGsWYU8Sr10","label":"same-song","confidence":0.8,"note":"Five Little Babies shorts; human babies vs pink-cat costume girl, different shots."},
+{"a":"eAodpnlhaNI","b":"5G67PoJIcQw","label":"same-song","confidence":0.75,"note":"Boo Boo Song shorts; different shots at matched moments."}
+]

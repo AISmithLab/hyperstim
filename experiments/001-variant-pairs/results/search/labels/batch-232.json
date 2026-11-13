@@ -1,0 +1,72 @@
+[
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (gloves vs robot vacuum)."
+ },
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "W99Te7xIpX0",
+  "b": "Wes02YpdpJA",
+  "label": "re-skin",
+  "confidence": 0.7,
+  "note": "Bob Wheels on the Firetruck: same fire-car model and smiling close-up, red vs blue."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "R49NrP0fcsE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "4OREtMc8hJA",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "rWlSjxtDJGw",
+  "b": "WBX7OAOm1Qk",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Baby Toot Toot compilations; same series cast, different frames."
+ },
+ {
+  "a": "TUfD55KMKBY",
+  "b": "wG10NcSnb1s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Compilations share the shark and red bus segments."
+ },
+ {
+  "a": "u3VtdvWtgl4",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi Halloween dance vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "yElVnujAnog",
+  "b": "zEkTpgy2NcM",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Slippery Situation episode appears in the compilation; same Hector Tractor footage."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "EA8_ci9zyTI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs taxi song shorts; nothing shared."
+ }
+]

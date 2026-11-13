@@ -1,0 +1,12 @@
+[
+{"a":"VRbZYMpC6gQ","b":"HVxwiq0l91I","label":"shared-segments","confidence":0.8,"note":"Junior Squad Christmas compilations sharing snowman episode"},
+{"a":"VRbZYMpC6gQ","b":"Pf28RXSgA9g","label":"shared-segments","confidence":0.85,"note":"Christmas compilations sharing snowman and elf-door episodes"},
+{"a":"U9maOBWT6wE","b":"BWG46XOvwCA","label":"unrelated","confidence":0.85,"note":"Hush Little Baby short vs Wheels on the Bus short"},
+{"a":"BRcmpSxalwA","b":"BWG46XOvwCA","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys short vs Wheels on the Bus short"},
+{"a":"hzzGSyV_BCA","b":"klDPbXVTBzw","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"2SAG3jAYNyk","b":"fkM9JyHWOo8","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: water machine vs cupboard"},
+{"a":"R7pIlyiHmJY","b":"klDPbXVTBzw","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the big-egg episode"},
+{"a":"jRCHQ6wCTUA","b":"jvCQFkt2FwI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs picture"},
+{"a":"uzUxdwfXgWI","b":"klDPbXVTBzw","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"wJ_TfcJAIpI","b":"klDPbXVTBzw","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the big-egg episode"}
+]

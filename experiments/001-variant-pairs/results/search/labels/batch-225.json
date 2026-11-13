@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "FGUfrSFknik",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (statue/rock, pillow)."
+ },
+ {
+  "a": "5THgPTi8bDM",
+  "b": "POeOnlcEbFw",
+  "label": "re-skin",
+  "confidence": 0.55,
+  "note": "Thumbnail: same dog-bus orange vs green; frames show different segments, green interior seen."
+ },
+ {
+  "a": "POeOnlcEbFw",
+  "b": "AUDY1hIr2WM",
+  "label": "re-skin",
+  "confidence": 0.5,
+  "note": "Thumbnail: same dog-bus green vs red-orange; frames show other segments."
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "Pa7utiQUGOY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the outhouse episode."
+ },
+ {
+  "a": "5iXRqSe4KJo",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (trombone vs teleport)."
+ },
+ {
+  "a": "LQQ2DD4V_mY",
+  "b": "Pa7utiQUGOY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same set; no shared frame seen."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "U9lOcqHMY_w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Happy Halloween shorts; nothing shared."
+ },
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "ripZ0792Vx4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (outhouse, pillow)."
+ }
+]

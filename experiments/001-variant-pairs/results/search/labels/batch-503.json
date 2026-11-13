@@ -1,0 +1,12 @@
+[
+{"a":"Iw2Ntg-ggus","b":"0hmHgSFw8-M","label":"same-song","confidence":0.5,"note":"Spooky bus compilations; thumbnail bus nearly same, frames show different episodes; thumbnail-only match"},
+{"a":"_pqh8Nw-k3o","b":"TGZl_HsDj_0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing red-car and block-tower episodes"},
+{"a":"_pqh8Nw-k3o","b":"PIZj5SH8Bok","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing red-car and block-tower episodes"},
+{"a":"oAN_O9JQlfc","b":"_pqh8Nw-k3o","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing red-car and block-tower episodes"},
+{"a":"ZeldqdySrKg","b":"_pqh8Nw-k3o","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the block-tower episode"},
+{"a":"XamiKGRhams","b":"mrU14TkzuVI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: toilet vs robot vacuum"},
+{"a":"yR0IqutO_i4","b":"xEFkAQpftd4","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: space rocket vs talent show"},
+{"a":"DS8rk9NwXQc","b":"cqjfiWrwmmg","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: mime vs stones"},
+{"a":"bNuG6IapPsk","b":"xEFkAQpftd4","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: fitness ball vs talent show"},
+{"a":"CfJfPAF8El8","b":"4e1vB_kqCaY","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters and animation"}
+]

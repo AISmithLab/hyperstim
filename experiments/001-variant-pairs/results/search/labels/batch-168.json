@@ -1,0 +1,12 @@
+[
+{"a":"fo7aioou8m0","b":"r-whFfxsj_I","label":"unrelated","confidence":0.9,"note":"Five Little Ducks vs Johny Johny; different characters and sets."},
+{"a":"uaNCJzGwl3E","b":"EN7S56j6Z5Y","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus purple vs green."},
+{"a":"dDd2JCRpr2s","b":"8WuzsdjF0H0","label":"shared-segments","confidence":0.8,"note":"Sport Bots compilations sharing the same episode footage."},
+{"a":"U9maOBWT6wE","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Kaboochi dance; different songs and sets."},
+{"a":"Se_E5OOTB4s","b":"imGo4XxUMvA","label":"shared-segments","confidence":0.6,"note":"Halloween Beat shorts, same zombie and Bob shots in different order."},
+{"a":"XuD7UCm9dEk","b":"hW3TFrPJVaI","label":"shared-segments","confidence":0.5,"note":"Five Little Trains compilations; match mostly on thumbnail, sampled frames differ."},
+{"a":"1g02Uh_IuI4","b":"EN7S56j6Z5Y","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus orange vs green."},
+{"a":"Xk01xkZmr-4","b":"06JZkzANUhM","label":"shared-segments","confidence":0.8,"note":"Halloween compilations sharing the trick-or-treat street segment."},
+{"a":"lkGmcS3ArOg","b":"83xYPZ_2W1k","label":"unrelated","confidence":0.75,"note":"Loco Nuts Halloween vs Boom Buddies Halloween; different characters."},
+{"a":"3bTL4x31XTI","b":"G7PTUNLnAFk","label":"unrelated","confidence":0.75,"note":"Bath Time vs Wheels on the Train; different kids and scenes."}
+]

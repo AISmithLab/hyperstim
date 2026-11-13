@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Ry1rXTp0FrM",
+  "b": "hAOwHpTloHc",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilation across channels contains the I Don't Want To dad-with-duck shot"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "Qkur1emqs_c",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs dog"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "DS8rk9NwXQc",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs mime"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "gmRIldLgb8k",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs kung fu"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "1lYnLr7Bv0I",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: cheese vs suitcase"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "1lYnLr7Bv0I",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bicycle vs suitcase"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "1lYnLr7Bv0I",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: ventilator vs suitcase"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "e9gnACQvqRM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs door"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "wAtBG4hjCOY",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs swing"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "c3lLP39EdME",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts: suitcase vs cheese (64s)"
+ }
+]

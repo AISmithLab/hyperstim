@@ -1,0 +1,72 @@
+[
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "Qs4R686NOjg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "_GlpTSaa5EU",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic compilations; mime episode likely shared, otherwise different"
+ },
+ {
+  "a": "Th5MQB8VO3Q",
+  "b": "-OXYsniHGBM",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Boo Boo Song shorts with different character models and animation"
+ },
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, swing vs camera"
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "DF6G0YHRlV8",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cowboy vs crib"
+ },
+ {
+  "a": "i2XoutDdPoM",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Two-episode Rattic shorts, pillow vs talent show"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "xJWSNIkfOrY",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing snowman, trash bin, toy jeep episodes"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "BLOT9RM2gjU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance short vs bus song short; different animation"
+ },
+ {
+  "a": "9RUN6Q-uZm0",
+  "b": "GcZXNKTPP5U",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob alphabet songs H and R on one template"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "BZqq3eL6xSE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, stones vs high striker"
+ }
+]

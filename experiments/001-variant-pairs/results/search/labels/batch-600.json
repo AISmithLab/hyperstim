@@ -1,0 +1,72 @@
+[
+ {
+  "a": "nHT4spNAshs",
+  "b": "klDPbXVTBzw",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations; three of four matched moments identical"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "SB-7h4MW26k",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music, different gags at matched moments"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "Pa7utiQUGOY",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; one matched moment identical (cart), rest differ"
+ },
+ {
+  "a": "nHT4spNAshs",
+  "b": "wMHsxnO156E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations; three of four matched moments identical"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "QKrdD5Y9c-s",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, different gags at matched moments"
+ },
+ {
+  "a": "-8VedXc5EDU",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, different gags at matched moments"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "SB-7h4MW26k",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations; all four matched moments identical, offset 260s, different lead episodes"
+ },
+ {
+  "a": "fUR3k2eL6Mo",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, different gags at matched moments"
+ }
+]

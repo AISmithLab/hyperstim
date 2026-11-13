@@ -1,0 +1,72 @@
+[
+ {
+  "a": "nbApYhjXet4",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic compilations sharing the mime episode"
+ },
+ {
+  "a": "Qs4R686NOjg",
+  "b": "6SRokrEQBtc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "O-JkopH4vWA",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, bottle vs trombone"
+ },
+ {
+  "a": "lEvNMZQ2DT4",
+  "b": "cO1aLZ7teeg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the car kiosk episode"
+ },
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "FVuAS7z73Bs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic rocket vs Larva-style straw cartoon; side-bar match only"
+ },
+ {
+  "a": "I25m3zH47KA",
+  "b": "jPvyJ9IIRJk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, water machine vs skipping rope"
+ },
+ {
+  "a": "iJZ97cfpjhI",
+  "b": "pbfbmXohAGo",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Kaboochi dance: animal characters version vs baby/corgi version"
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "bBOI5NzGpX0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "IYU2e8WgGnY",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing trash bin and toy jeep episodes"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "Nlt_DqiIHcQ",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cheese vs mime"
+ }
+]

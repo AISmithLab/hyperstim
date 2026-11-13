@@ -1,0 +1,72 @@
+[
+ {
+  "a": "lEvNMZQ2DT4",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing outhouse and kiosk episodes"
+ },
+ {
+  "a": "gvcEcWUHZ_c",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing kiosk and pillow episodes"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing kiosk and pillow episodes"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing kiosk and heart-balloon episodes"
+ },
+ {
+  "a": "9aLZatXZCl4",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the kiosk episode"
+ },
+ {
+  "a": "BrjLq8jTPfw",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing outhouse and kiosk episodes"
+ },
+ {
+  "a": "hzzGSyV_BCA",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with the same episodes in a different order"
+ },
+ {
+  "a": "D0tOd2ZH-cQ",
+  "b": "sT3J4L19qrE",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing trash-can and toy-car episodes"
+ },
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "DF6G0YHRlV8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, teleport vs crib episodes"
+ },
+ {
+  "a": "9aLZatXZCl4",
+  "b": "Pa7utiQUGOY",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing the stones episode"
+ }
+]

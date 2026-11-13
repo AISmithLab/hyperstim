@@ -1,0 +1,72 @@
+[
+ {
+  "a": "HGsWYU8Sr10",
+  "b": "R49NrP0fcsE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Babies vs Boo Boo shorts; side bars only"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "dL9q0aobLss",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs R, shared intro/outro"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "aDyWeSAt-sI",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "9-G4JeHJiYQ",
+  "b": "Kix07nOAEBQ",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing the yellow ball episode"
+ },
+ {
+  "a": "_EZv7EJE8LE",
+  "b": "sT3J4L19qrE",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the toy jeep and teddy episode"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations sharing the mime episode"
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "aACfDyTDcL8",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "Br48ar2svbI",
+  "b": "gIMyiAxeKSk",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter B vs I, shared intro/outro"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "I25m3zH47KA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, door vs water machine gags"
+ }
+]

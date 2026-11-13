@@ -1,0 +1,12 @@
+[
+{"a":"-qxEnbH15lY","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Wheels on the Taxi shorts"},
+{"a":"B7HQQms6klA","b":"iJZ97cfpjhI","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Kaboochi shorts"},
+{"a":"kwgQ3t7X3JQ","b":"HUBZ79Rpk_c","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the family sofa segment"},
+{"a":"OFvmlD86K5Q","b":"41F1Fdb3tHM","label":"unrelated","confidence":0.8,"note":"Wheels on the Taxi vs Boo Boo shorts"},
+{"a":"aYm4u_lQpIo","b":"4e1vB_kqCaY","label":"same-song","confidence":0.65,"note":"Kaboochi shorts with different characters"},
+{"a":"Fqvzysji-zI","b":"FuiksR1Ow4U","label":"shared-segments","confidence":0.8,"note":"Finger family compilations sharing a kids segment at 1/2"},
+{"a":"wGMFLdlwsiE","b":"evV7r4kNN7g","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs Q vs Y"},
+{"a":"7Ldj5W-FyMs","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.8,"note":"Wheels on the Tractor vs Kaboochi shorts"},
+{"a":"OFvmlD86K5Q","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.8,"note":"Wheels on the Taxi vs Kaboochi shorts"},
+{"a":"iJZ97cfpjhI","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.8,"note":"Kaboochi vs Jingle Bells shorts"}
+]

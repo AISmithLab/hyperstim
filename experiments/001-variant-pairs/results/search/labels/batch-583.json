@@ -1,0 +1,65 @@
+[
+ {
+  "a": "-M02RqRMZks",
+  "b": "gDzGfavrWeI",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Two different Halloween song shorts with different characters"
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "34zV8hDOuFs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "ZPOOOfJmzp4",
+  "b": "cMOSJ1QIa3w",
+  "label": "re-skin",
+  "confidence": 0.8,
+  "note": "Baby panda Wheels on the Bus: green bus vs yellow bus, same shots and panda poses"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "vGjN_CslxSI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "AXfeoPJolIE",
+  "b": "9VsF5w_n7qA",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Jingle Bells shorts: Santa/kids animation vs Bob the Train animation"
+ },
+ {
+  "a": "GkcqRmdwKlE",
+  "b": "McACiO5dwGM",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Early phonics letter songs J and S on one template"
+ },
+ {
+  "a": "Ym2JIL8xgVI",
+  "b": "Gelbjg7SL0U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "nTzEGiBLw00",
+  "b": "Ymla-qSUkMQ",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Jingle Bells compilations with different animation"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "h2XIpJMP06c",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

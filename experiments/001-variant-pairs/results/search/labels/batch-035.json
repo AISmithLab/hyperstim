@@ -1,0 +1,12 @@
+[
+ {"a": "7xSdzGpSjl4", "b": "p5TIB-9Uiuc", "label": "re-upload", "confidence": 0.8, "note": "Rattic Mini The Gloves twice: same thumbnail and shots, B slightly shorter."},
+ {"a": "ainrmFQVbfI", "b": "fkM9JyHWOo8", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini The Rope vs The Cupboard."},
+ {"a": "XEEVejf8Kgw", "b": "6U9UX0MLvU4", "label": "unrelated", "confidence": 0.8, "note": "Five Little Elves vs Boo Boo Song; different characters and scenes."},
+ {"a": "gmRIldLgb8k", "b": "DF6G0YHRlV8", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Kung Fu vs The Crib."},
+ {"a": "gmRIldLgb8k", "b": "MnJaDuR1QKE", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Kung Fu vs Robot Vacuum Cleaner."},
+ {"a": "QLtuuZVDZ4g", "b": "fkM9JyHWOo8", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Pillow vs The Cupboard."},
+ {"a": "YJLDe0F_z7k", "b": "UPDBxhcsIRQ", "label": "shared-segments", "confidence": 0.6, "note": "Rattic Mini compilations both include the snowman episode; different lead episodes."},
+ {"a": "rnSYVHQwOcU", "b": "8YanDLyxsaY", "label": "shared-segments", "confidence": 0.85, "note": "Finger Family compilations with identical 1/4 frame, other songs differ."},
+ {"a": "YudNG_jdUs4", "b": "s0DwH0Oq5YY", "label": "unrelated", "confidence": 0.8, "note": "Zoo Song superheroes vs Boo Boo Song; different characters."},
+ {"a": "P610udrUFqE", "b": "fkM9JyHWOo8", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Seesaw vs The Cupboard."}
+]

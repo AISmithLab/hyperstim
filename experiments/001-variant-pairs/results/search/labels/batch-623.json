@@ -1,0 +1,72 @@
+[
+ {
+  "a": "TwS8SzpZrug",
+  "b": "S9N416aMRxk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "OsP-k8ZnLc4",
+  "b": "Tgp1NqPegK8",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi; A Halloween pumpkin/monster characters, B kids with corgi"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "QKrdD5Y9c-s",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "fx0aMbJwE34",
+  "b": "w7exxTCHfx8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "bdbNsMtn26Y",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "bBOI5NzGpX0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"hsciNDMYDRY","b":"KclmN1WJ-nk","label":"shared-segments","confidence":0.5,"note":"Fire truck vs bus compilations; similar fire truck scene, likely a shared song, uncertain"},
+{"a":"ea56PryuPcY","b":"gDzGfavrWeI","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts; match only on dark blurred side bars"},
+{"a":"5NCx942T-wM","b":"ea56PryuPcY","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts, different characters; side-bar match"},
+{"a":"aHbVkvKGZzE","b":"D8xN2cvyxQ0","label":"shared-segments","confidence":0.8,"note":"Christmas cars scene from Jingle Bells reappears in B's compilation"},
+{"a":"V075C-K_1K8","b":"cb_-enSiopE","label":"shared-segments","confidence":0.9,"note":"Compilations share the identical cowboy-and-robot episode"},
+{"a":"5THgPTi8bDM","b":"kGdoPDdFq5s","label":"shared-segments","confidence":0.75,"note":"Same bus driver shot and thumbnail; B is short song, A long compilation"},
+{"a":"ea56PryuPcY","b":"4e1vB_kqCaY","label":"unrelated","confidence":0.85,"note":"Halloween short vs vehicle short; side-bar match only"},
+{"a":"ea56PryuPcY","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.8,"note":"Different Halloween shorts; side-bar match only"},
+{"a":"XKHBuIHt2SU","b":"pjbLaZqWo2Q","label":"shared-segments","confidence":0.85,"note":"Bob Wheels on the Bus included identically in the firetruck compilation"},
+{"a":"0MQQADJh80Q","b":"m9Ur1BSYg2o","label":"same-template","confidence":0.5,"note":"Same bug cast, different songs; shared Bob-and-panda promo frame"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "LQQ2DD4V_mY",
+  "b": "x-80P5Mf_Y8",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (heart balloon, dinosaur)."
+ },
+ {
+  "a": "yg8D74iynoI",
+  "b": "5NCx942T-wM",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Talking Haunted House shorts with different featured characters; no shared shot seen."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "SQBTIuB0SsI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Halloween bus shorts; different shots."
+ },
+ {
+  "a": "_QwXfH5-D5g",
+  "b": "pbfbmXohAGo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Both Kaboochi dance shorts, different characters and shots."
+ },
+ {
+  "a": "X48-R_yTN-4",
+  "b": "_B5Aec29lHQ",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus shorts with different bus model and characters."
+ },
+ {
+  "a": "BRcmpSxalwA",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "_QwXfH5-D5g",
+  "b": "EA8_ci9zyTI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs taxi song shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs monsters shorts; nothing shared."
+ },
+ {
+  "a": "2b9xzvfYqD8",
+  "b": "_B5Aec29lHQ",
+  "label": "re-skin",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus short: same driver pose, yellow daytime interior vs Halloween-night background."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "163ojnwXQ98",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Talking Haunted House shorts with different featured characters; no shared shot seen."
+ }
+]

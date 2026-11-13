@@ -1,0 +1,12 @@
+[
+{"a":"EPh1bFzsVf4","b":"MnJaDuR1QKE","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Leaves vs Robot Vacuum"},
+{"a":"PoRuagin4iM","b":"AlEPz20FGnk","label":"unrelated","confidence":0.75,"note":"Peek A Boo vs Boo Boo shorts, different characters"},
+{"a":"PbchJhisS4s","b":"ewZwn2G14Wg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the jeep/no-entry-sign episode"},
+{"a":"fUR3k2eL6Mo","b":"nHT4spNAshs","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"KFwebO9sy58","b":"a7-bpUidOBo","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"_R12Qsg6sEk","b":"TtH33fR-iQM","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Cowboy vs Skates"},
+{"a":"kwXxrZQ5GaQ","b":"lQxaq4Fu-i0","label":"same-template","confidence":0.85,"note":"Bob phonics Learning Street letters L vs U"},
+{"a":"mKc2nRMF7t4","b":"VLa2W1SssVQ","label":"same-template","confidence":0.85,"note":"Bob phonics Learning Street letters E vs W"},
+{"a":"R64M1iM-FJM","b":"_GlpTSaa5EU","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing mime and dinosaur episodes"},
+{"a":"wJ_TfcJAIpI","b":"M0V1ofCOEew","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"}
+]

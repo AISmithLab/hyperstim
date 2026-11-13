@@ -1,0 +1,72 @@
+[
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing snowman and toy jeep episodes"
+ },
+ {
+  "a": "lEvNMZQ2DT4",
+  "b": "Zy0VtX5RTFM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "6YYa6ar2RN4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby short vs Kaboochi dance short; different songs"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, kung fu vs rocket"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "UGzlPPWb6Pg",
+  "b": "ainrmFQVbfI",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, fly swatter vs rope"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "UXsXYmw3_CY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, suitcase vs gloves"
+ },
+ {
+  "a": "UGzlPPWb6Pg",
+  "b": "2SAG3jAYNyk",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic fly swatter vs two-episode water machine short"
+ },
+ {
+  "a": "bNuG6IapPsk",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, fitness ball vs toilet"
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

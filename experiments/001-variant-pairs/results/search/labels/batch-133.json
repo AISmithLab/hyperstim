@@ -1,0 +1,12 @@
+[
+{"a":"F8aglE8xTlI","b":"5zrKMo2YOrc","label":"re-upload","confidence":0.9,"note":"Bob color ride: Arabic vs Spanish dub, identical frames, new thumbnail"},
+{"a":"0QDm9P-DjYg","b":"5zrKMo2YOrc","label":"re-upload","confidence":0.9,"note":"Bob color ride: Japanese vs Spanish dub, identical frames"},
+{"a":"aDyWeSAt-sI","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toy-car and snowman episodes"},
+{"a":"afyKHCB03MU","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, bottle vs basketball/pillow"},
+{"a":"YVaBFUbjzuk","b":"c3lLP39EdME","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, Christmas mailbox vs cheese"},
+{"a":"ainrmFQVbfI","b":"NL_S69qf0jg","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, rope vs butterfly"},
+{"a":"xEFkAQpftd4","b":"fOJm84LQSTw","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, talent show vs high striker; teddy prop in both"},
+{"a":"obdK23ZIr6E","b":"QLtuuZVDZ4g","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, trishaw vs pillow"},
+{"a":"R7pIlyiHmJY","b":"wMHsxnO156E","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the yellow-egg episode"},
+{"a":"jPvyJ9IIRJk","b":"Nlt_DqiIHcQ","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skipping rope vs mime"}
+]

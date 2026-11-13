@@ -1,0 +1,72 @@
+[
+ {
+  "a": "8GWPCQNXkWo",
+  "b": "MvA45O5vq3E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Kids TV compilations share the family group scene"
+ },
+ {
+  "a": "yVKvv4YMB78",
+  "b": "VnHWYMlDgwI",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; toy car episodes look shared"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "fx0aMbJwE34",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episode"
+ },
+ {
+  "a": "a7-bpUidOBo",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the snowman, bin and mime episode"
+ },
+ {
+  "a": "Tn2UZwb9RcY",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "sIdcWsoEF3s",
+  "b": "XBXyBskjSOc",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train letter songs: S vs T, same template"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "R7pIlyiHmJY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "iFpez4fPv5Y",
+  "b": "Uq5Pp5BQSm4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ },
+ {
+  "a": "RG_4B9zxJnU",
+  "b": "VJ1tu3mMRa0",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts share the man in red shirt shots; different cuts"
+ }
+]

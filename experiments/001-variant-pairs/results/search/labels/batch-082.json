@@ -1,0 +1,12 @@
+[
+{"a":"rRgRHqvsT8o","b":"r__AmlY4fxk","label":"shared-segments","confidence":0.8,"note":"Bob the Train compilations sharing the hilltop train shot."},
+{"a":"rRgRHqvsT8o","b":"hW3TFrPJVaI","label":"shared-segments","confidence":0.9,"note":"Bob the Train compilations with identical frames at 1/2 and 3/4."},
+{"a":"GGQVXv4Nc-E","b":"OEES3HmTQNw","label":"unrelated","confidence":0.6,"note":"Boo Boo song vs No No junk food song; same mom character, different songs."},
+{"a":"nyJqyZZCekg","b":"CfJfPAF8El8","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Kaboochi dance; different characters."},
+{"a":"mTsFv_5w3uU","b":"R49NrP0fcsE","label":"unrelated","confidence":0.85,"note":"Old MacDonald vs Boo Boo; different content."},
+{"a":"mTsFv_5w3uU","b":"kdLu240pkyI","label":"unrelated","confidence":0.85,"note":"Old MacDonald vs Finger Family; different content."},
+{"a":"S-mQfP0MW5w","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.85,"note":"Baa Baa Black Sheep vs Dinosaur song; different content."},
+{"a":"oRUKPowFBgM","b":"R49NrP0fcsE","label":"unrelated","confidence":0.85,"note":"Apples and Bananas vs Boo Boo; different content."},
+{"a":"R49NrP0fcsE","b":"O_KbvPekSSo","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Ten Little Racing Cars; different content."},
+{"a":"Xo3zWzIj8fM","b":"YudNG_jdUs4","label":"unrelated","confidence":0.85,"note":"Oopsie Doopsie vs Zoo song; different characters."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"Q-qoF1B0i_Q","b":"fcYBv33BuIY","label":"shared-segments","confidence":0.75,"note":"Boo Boo shorts with the same pink-sweater mom shots; 34 vs 25 s cuts."},
+{"a":"iaSPV2ZHx5U","b":"jrKMYkmA3lY","label":"shared-segments","confidence":0.75,"note":"Loco Nuts Sick Song: same pig-girl shots; 58 s vs 32 s cut."},
+{"a":"C5NadrBnSj8","b":"fcYBv33BuIY","label":"shared-segments","confidence":0.65,"note":"Boo Boo shorts with the same mom-and-baby family; different cuts."},
+{"a":"fcYBv33BuIY","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and sets."},
+{"a":"fcYBv33BuIY","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts with the same pink-sweater mom; different shots sampled."},
+{"a":"CgR6YuA2Uoo","b":"fcYBv33BuIY","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different moms and sets."},
+{"a":"jrKMYkmA3lY","b":"6U9UX0MLvU4","label":"unrelated","confidence":0.75,"note":"Sick Song vs Boo Boo song; different characters."},
+{"a":"o6VjhL9gA1A","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, carousel vs basketball gag."},
+{"a":"VBb7XUCV47g","b":"gIMyiAxeKSk","label":"same-template","confidence":0.85,"note":"Learning Street phonics episodes, C vs I, shared intro template."},
+{"a":"EX0D6k2zAM0","b":"fUR3k2eL6Mo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the dinosaur and mime episodes."}
+]

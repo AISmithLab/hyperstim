@@ -1,0 +1,12 @@
+[
+{"a":"-Rkd9UOqTS8","b":"pEdeSUiINGU","label":"shared-segments","confidence":0.9,"note":"Loco Nuts Halloween compilations sharing witch and knight episodes"},
+{"a":"ATFQTSk7Ss4","b":"ZjXejl6qnuc","label":"shared-segments","confidence":0.85,"note":"2020 compilations sharing the farmer-with-kids clip"},
+{"a":"5R9Wwue7eDU","b":"pEdeSUiINGU","label":"shared-segments","confidence":0.85,"note":"Loco Nuts Halloween compilations sharing the witch episode"},
+{"a":"ktp1KK4vpsE","b":"ATFQTSk7Ss4","label":"shared-segments","confidence":0.85,"note":"Compilation contains the Old MacDonald video (same farmer frame)"},
+{"a":"uc4gOjv-Sks","b":"DUs3ffyjD-M","label":"same-template","confidence":0.6,"note":"Super Supremes videos with shared intro card, different songs"},
+{"a":"lij2KlyDHJ8","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; no shared episode visible"},
+{"a":"jPvyJ9IIRJk","b":"o6VjhL9gA1A","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, skipping rope vs carousel"},
+{"a":"o6VjhL9gA1A","b":"XamiKGRhams","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, carousel vs toilet"},
+{"a":"gIMyiAxeKSk","b":"STRJcffvt-0","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters I vs Q; shared intro shot only"},
+{"a":"s0DwH0Oq5YY","b":"C5NadrBnSj8","label":"shared-segments","confidence":0.75,"note":"Boo Boo shorts cut from one production; same mom-and-baby shots"}
+]

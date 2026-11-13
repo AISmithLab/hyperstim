@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Jt4V3NCA-u0",
+  "b": "aZoH6w-VPjk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing crib and mime episodes"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying shark vs Five Little Babies shorts"
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Five Little Babies shorts"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween song vs Five Little Babies shorts"
+ },
+ {
+  "a": "Ka3AbnnoaOE",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Babies vs bus to camp shorts"
+ },
+ {
+  "a": "12mNC1UN38M",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween bus vs Five Little Babies shorts"
+ },
+ {
+  "a": "-dlezjbLXKU",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween bus vs Five Little Babies shorts"
+ },
+ {
+  "a": "tQlIWPUO_E0",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Ten in the Bed vs Five Little Babies shorts; different animation"
+ },
+ {
+  "a": "kdLu240pkyI",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Finger Family vs Five Little Babies shorts"
+ },
+ {
+  "a": "Ka3AbnnoaOE",
+  "b": "1fL9dsWYLJ0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Babies vs Wheels on the Bus shorts"
+ }
+]

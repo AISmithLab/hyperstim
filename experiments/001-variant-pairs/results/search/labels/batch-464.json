@@ -1,0 +1,72 @@
+[
+ {
+  "a": "8sRZShEih6o",
+  "b": "paxtQerOpmE",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Thumbnail match only; frames show different songs of two Head Shoulders compilations"
+ },
+ {
+  "a": "cg6-O9iA3Cw",
+  "b": "0wGzs4JlkdQ",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "2D beach Wheels on the Bus: same shots, teal flower bus recolored red"
+ },
+ {
+  "a": "o_8kEplrFaw",
+  "b": "0wGzs4JlkdQ",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "2D beach Wheels on the Bus: same shots, yellow/purple bus recolored red"
+ },
+ {
+  "a": "sIdcWsoEF3s",
+  "b": "27i_H-4eZLo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters S vs V"
+ },
+ {
+  "a": "U8A0s0vt5rQ",
+  "b": "27i_H-4eZLo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters U vs V"
+ },
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "pbfbmXohAGo",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi shorts with different kid characters"
+ },
+ {
+  "a": "Qs4R686NOjg",
+  "b": "YABj119wijM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share heart and shed episodes"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "PjXooPy93AM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share jeep and snowman episodes"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "_uYyO8y5Txc",
+  "b": "AlEPz20FGnk",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts; B shows other characters and scenes"
+ }
+]

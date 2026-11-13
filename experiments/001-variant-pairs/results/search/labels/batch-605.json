@@ -1,0 +1,12 @@
+[
+{"a":"OsP-k8ZnLc4","b":"Z13ulLin2jg","label":"same-song","confidence":0.75,"note":"Kaboochi: Halloween monsters in A vs babies and dog in B; different animation"},
+{"a":"OSOdLGenkS0","b":"AyZJfo2rrOc","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; shared background music, different episodes at all matched moments"},
+{"a":"DVLFCQUsuFI","b":"gkk96Hm-IHo","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; shared background music, different episodes at all matched moments"},
+{"a":"oAN_O9JQlfc","b":"ewZwn2G14Wg","label":"shared-segments","confidence":0.55,"note":"Rattic Mini compilations; both include the toy car/no-entry sign episode, other moments differ"},
+{"a":"4rcjZ1f_L4A","b":"Msywp-_Gl1g","label":"same-song","confidence":0.75,"note":"Kaboochi: Hawaiian kids on beach vs kids on rainbow disco floor; different animation"},
+{"a":"oAN_O9JQlfc","b":"Pa7utiQUGOY","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; shared background music, different episodes at all matched moments"},
+{"a":"bdbNsMtn26Y","b":"OSOdLGenkS0","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; shared background music, different episodes at all matched moments"},
+{"a":"E9t53ek7H8U","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.7,"note":"Kaboochi: occupation babies on color panels vs playroom babies; different animation"},
+{"a":"Zy0VtX5RTFM","b":"-8VedXc5EDU","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; shared background music, different episodes at all matched moments"},
+{"a":"bdbNsMtn26Y","b":"uzUxdwfXgWI","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; shared background music, different episodes at all matched moments"}
+]

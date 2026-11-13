@@ -1,0 +1,12 @@
+[
+{"a":"SPYW-UnwYi4","b":"69CsbvP2Eww","label":"shared-segments","confidence":0.55,"note":"Five Little Crayons shorts, identical thumbnail; frames show different crayon scenes; A shorter cut."},
+{"a":"icWLrZcKsWg","b":"69CsbvP2Eww","label":"shared-segments","confidence":0.55,"note":"Same Five Little Crayons footage and thumbnail, but equal-length frames differ; re-edit."},
+{"a":"Td73SYRglgw","b":"oRk8sglOG5k","label":"same-song","confidence":0.5,"note":"Boo Boo Song shorts with same mom character; different scenes shown."},
+{"a":"pbfbmXohAGo","b":"PoRuagin4iM","label":"same-template","confidence":0.5,"note":"Different songs (Kaboochi, Peek A Boo) with same character family style."},
+{"a":"xh-75gMcI_4","b":"7Ldj5W-FyMs","label":"same-song","confidence":0.5,"note":"Wheels on the Tractor shorts; different scenes and kids."},
+{"a":"UYSdO8QlFUg","b":"xU3oLsk2eF8","label":"same-song","confidence":0.6,"note":"We Wish You a Merry Christmas shorts, different animation."},
+{"a":"HDZPIAhApn8","b":"u0Iw9dozWrk","label":"shared-segments","confidence":0.85,"note":"Christmas compilations sharing the Santa snow segment (identical 1/2 frames)."},
+{"a":"aLftDG8Od_0","b":"CQs6IMN7UWU","label":"shared-segments","confidence":0.7,"note":"Christmas bus song vs compilation that starts with the same lit-up bus song."},
+{"a":"oRk8sglOG5k","b":"bVrFl7Z48so","label":"same-song","confidence":0.55,"note":"Boo Boo Song, different babies and scenes."},
+{"a":"nbI-1N_uBNs","b":"NcfiuWYdC24","label":"unrelated","confidence":0.85,"note":"Jingle Bells short vs Boo Boo Song short."}
+]

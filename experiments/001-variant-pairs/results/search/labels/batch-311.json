@@ -1,0 +1,72 @@
+[
+ {
+  "a": "tNPoYErk2rs",
+  "b": "fcYBv33BuIY",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts with same characters/footage, different cuts"
+ },
+ {
+  "a": "aACfDyTDcL8",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "fcYBv33BuIY",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts with same characters/footage, different cuts"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "19yPrd-it5I",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing claw machine and stroller episodes"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "UXsXYmw3_CY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, door vs gloves gags"
+ },
+ {
+  "a": "zPS3ihinlZs",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, cat/tree vs toilet gags"
+ },
+ {
+  "a": "t892KTYY-cE",
+  "b": "Br48ar2svbI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter A vs B, shared intro/outro"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs Z, shared intro/outro"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, bottle vs teleport gags"
+ }
+]

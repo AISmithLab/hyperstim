@@ -1,0 +1,12 @@
+[
+{"a":"UMNFIPcx56c","b":"8AwRm5jhPwI","label":"same-song","confidence":0.5,"note":"Compilations led by Five Little Babies; match only on thumbnail characters, frames differ"},
+{"a":"bdbNsMtn26Y","b":"dG7KouaFW-o","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same set, no shared episode visible"},
+{"a":"4rcjZ1f_L4A","b":"aYm4u_lQpIo","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters and animation"},
+{"a":"CfJfPAF8El8","b":"aYm4u_lQpIo","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters and animation"},
+{"a":"I25m3zH47KA","b":"2SAG3jAYNyk","label":"shared-segments","confidence":0.75,"note":"Rattic water machine: 35s and 67s shorts with same footage"},
+{"a":"ZaPOBxvKuXs","b":"fcYBv33BuIY","label":"shared-segments","confidence":0.75,"note":"Boo Boo song 96s and 25s share the same footage"},
+{"a":"GCqVNL7ZRdg","b":"YABj119wijM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the heart-balloon episode"},
+{"a":"V9fA6nrohac","b":"YgjyQIwcJy0","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags on same set"},
+{"a":"76IijP9RlJY","b":"o6VjhL9gA1A","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: cook vs carousel"},
+{"a":"gkk96Hm-IHo","b":"QKrdD5Y9c-s","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-box episode"}
+]

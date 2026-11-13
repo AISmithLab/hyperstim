@@ -1,0 +1,12 @@
+[
+{"a":"ZRd-uNE-AUA","b":"ouJSdR1OtEo","label":"shared-segments","confidence":0.75,"note":"Hawaiian Kaboochi shorts, same footage in different cuts"},
+{"a":"ouJSdR1OtEo","b":"MoftuEWtBuI","label":"shared-segments","confidence":0.75,"note":"Hawaiian Kaboochi shorts, same footage in different cuts"},
+{"a":"ixr-TMi-K8U","b":"ihvayFU4eI4","label":"same-template","confidence":0.7,"note":"Loco Nuts comedy episodes, same characters, different stories"},
+{"a":"ouJSdR1OtEo","b":"Li4873tEc6Y","label":"shared-segments","confidence":0.75,"note":"Hawaiian Kaboochi short contained in 106s version"},
+{"a":"ouJSdR1OtEo","b":"n2mneo6Owhk","label":"shared-segments","confidence":0.75,"note":"Hawaiian Kaboochi shorts, same footage in different cuts"},
+{"a":"Tgp1NqPegK8","b":"LvECrt5yV6M","label":"same-song","confidence":0.55,"note":"Kaboochi vs Halloween Kaboochi shorts, different animation"},
+{"a":"iJZ97cfpjhI","b":"CfJfPAF8El8","label":"same-song","confidence":0.55,"note":"Kaboochi shorts, animal characters vs kids"},
+{"a":"aA57PjtEfZw","b":"vCMNQHulhfo","label":"same-template","confidence":0.8,"note":"Bob phonics Learning Street letters D vs S, shared kids intro shot"},
+{"a":"cmi5_37226c","b":"klDPbXVTBzw","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"},
+{"a":"QKrdD5Y9c-s","b":"PjXooPy93AM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"}
+]

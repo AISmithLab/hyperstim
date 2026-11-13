@@ -1,0 +1,12 @@
+[
+{"a":"Tg97uPOz1Yw","b":"FvSzXF-KHqw","label":"re-upload","confidence":0.85,"note":"Five Little Mommies on both channels same day, identical frames, new thumbnail"},
+{"a":"PmUySuJoa1g","b":"phrajiOFBCY","label":"shared-segments","confidence":0.7,"note":"Builder rat short; B is a 62s version containing the same footage"},
+{"a":"hCa7SzDF6lQ","b":"FvSzXF-KHqw","label":"re-upload","confidence":0.85,"note":"Five Little Mommies re-posted 2024, identical frames, new thumbnail"},
+{"a":"8-qO0tHgMHY","b":"B_MmKCyAmpw","label":"unrelated","confidence":0.8,"note":"Animal dance vs Halloween dance, different characters"},
+{"a":"IuTvoFI2CDY","b":"dGAq3S-QsAY","label":"shared-segments","confidence":0.85,"note":"Finger family compilations sharing identical gummy bear segment"},
+{"a":"nvR3fxkl_Bc","b":"idwuB7uQA2M","label":"unrelated","confidence":0.8,"note":"Rig a Jig Jig vs Johny Johny"},
+{"a":"7Ldj5W-FyMs","b":"6U9UX0MLvU4","label":"unrelated","confidence":0.85,"note":"Tractor song vs Boo Boo song"},
+{"a":"sFhZZIPj9nE","b":"urNKg4X9kIU","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts; cleaning vs teleport gag"},
+{"a":"njSANQD1GlI","b":"7FiyQQBYTUY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; magic hat vs skates gag"},
+{"a":"DS8rk9NwXQc","b":"njSANQD1GlI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; mime vs magic hat gag"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "e9gnACQvqRM",
+  "b": "pBZoqnYJdpo",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, door vs rocket"
+ },
+ {
+  "a": "phrajiOFBCY",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Two-episode builder short vs teleport episode"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "Eif8UopFHhM",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "VJ1tu3mMRa0",
+  "b": "ZaPOBxvKuXs",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts from the same CG family footage, different edits"
+ },
+ {
+  "a": "9-G4JeHJiYQ",
+  "b": "wMHsxnO156E",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing cannon and yellow ball episodes"
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic compilations sharing the mime episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "8Ri1s8CTSrM",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

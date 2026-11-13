@@ -1,0 +1,12 @@
+[
+{"a":"xGQYPFqXJjE","b":"aW_J2JMPmG8","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"kZytosLyQEc","b":"ainrmFQVbfI","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Bicycle vs Rope"},
+{"a":"zPS3ihinlZs","b":"MnJaDuR1QKE","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Cat vs Robot Vacuum"},
+{"a":"kZytosLyQEc","b":"urNKg4X9kIU","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Bicycle vs Teleport"},
+{"a":"Ar6N0i4c36U","b":"IE7VFN8ln9Y","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Manhole vs Spot"},
+{"a":"GvP31EGA8tQ","b":"wJ_TfcJAIpI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"TwDxP5L1-VA","b":"MnJaDuR1QKE","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Teleport vs Robot Vacuum"},
+{"a":"rtUezKOrBAU","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.8,"note":"Halloween witch song vs Hawaiian Kaboochi shorts"},
+{"a":"NcfiuWYdC24","b":"C5NadrBnSj8","label":"shared-segments","confidence":0.65,"note":"Boo Boo shorts cut from the same production, girl with baby shots"},
+{"a":"dG7KouaFW-o","b":"R64M1iM-FJM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing mime and crib episodes"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "KclmN1WJ-nk",
+  "b": "YP1Mc3H7tY4",
+  "label": "shared-segments",
+  "confidence": 0.45,
+  "note": "Bus compilations; match mainly on thumbnail (bus green vs cream recolor); frames differ"
+ },
+ {
+  "a": "KclmN1WJ-nk",
+  "b": "71jEGdkljl8",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Compilations share firefighter scene; thumbnails same bus recolored green vs red"
+ },
+ {
+  "a": "virobChxE9Y",
+  "b": "KclmN1WJ-nk",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Compilations share firefighter scene; thumbnails bus recolored blue vs green"
+ },
+ {
+  "a": "V6mkgjixCoQ",
+  "b": "MWyordkvD0k",
+  "label": "re-skin",
+  "confidence": 0.93,
+  "note": "Same bus shots (bus stop, scooter, family); bus yellow vs purple"
+ },
+ {
+  "a": "yebnJe7tUqE",
+  "b": "MWyordkvD0k",
+  "label": "re-skin",
+  "confidence": 0.92,
+  "note": "Same bus shots and city; bus orange vs purple"
+ },
+ {
+  "a": "pIBlHJFJ1vs",
+  "b": "MWyordkvD0k",
+  "label": "re-skin",
+  "confidence": 0.92,
+  "note": "Same bus shots and city; bus blue vs purple"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "hrOfhQCxqL0",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "BZqq3eL6xSE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, magic hat vs high striker gags"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "wAtBG4hjCOY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, kung fu vs swing gags"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, magic hat vs teleport gags"
+ }
+]

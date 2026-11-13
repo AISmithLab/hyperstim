@@ -1,0 +1,12 @@
+[
+{"a":"ZeldqdySrKg","b":"6SRokrEQBtc","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations, identical frames at all positions; different lead episode and title."},
+{"a":"ZeldqdySrKg","b":"Qv-eMjDmTJQ","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-jeep episode."},
+{"a":"ZeldqdySrKg","b":"TGZl_HsDj_0","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing block-tower and tricycle episodes."},
+{"a":"afyKHCB03MU","b":"bNuG6IapPsk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bottle vs fitness ball."},
+{"a":"ZeldqdySrKg","b":"34zV8hDOuFs","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the toy-jeep episode."},
+{"a":"ZeldqdySrKg","b":"Gh4izthwnNM","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing block-tower and tricycle episodes."},
+{"a":"PbchJhisS4s","b":"ZeldqdySrKg","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing jeep and block-tower episodes."},
+{"a":"UGzlPPWb6Pg","b":"bNuG6IapPsk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, fly swatter vs fitness ball."},
+{"a":"bNuG6IapPsk","b":"o6VjhL9gA1A","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, fitness ball vs carousel."},
+{"a":"7FiyQQBYTUY","b":"bNuG6IapPsk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, skates vs fitness ball."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "_4x2xszMRq8",
+  "b": "YgjyQIwcJy0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, birthday vs hollow"
+ },
+ {
+  "a": "i2XoutDdPoM",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Two-episode Rattic shorts; no shared episode visible"
+ },
+ {
+  "a": "I25m3zH47KA",
+  "b": "BZqq3eL6xSE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, water machine vs high striker"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic stones vs two-episode teleport short"
+ },
+ {
+  "a": "_OlmXmG5OLM",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic lawn mower vs two-episode toilet short"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "JKmr96i2xH0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cleaning vs guard"
+ },
+ {
+  "a": "oRk8sglOG5k",
+  "b": "MoftuEWtBuI",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boo Boo Song short vs Kaboochi dance short; different songs"
+ },
+ {
+  "a": "zej8Uf5iAGk",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, teleport vs toilet"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "_GlpTSaa5EU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "ZRd-uNE-AUA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween song short vs Kaboochi beach dance short"
+ }
+]

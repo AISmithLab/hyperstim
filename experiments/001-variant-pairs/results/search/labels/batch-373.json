@@ -1,0 +1,72 @@
+[
+ {
+  "a": "xaNoEjlg14I",
+  "b": "mWPs9PFYkX0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Lion and the Mouse story; B compilation opens with the same story"
+ },
+ {
+  "a": "Z1H7LX1K4Zo",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "aACfDyTDcL8",
+  "b": "X5isLUsPsU0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episode"
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "wJ_TfcJAIpI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ },
+ {
+  "a": "Z1H7LX1K4Zo",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "vGjN_CslxSI",
+  "b": "iFpez4fPv5Y",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the sleigh and yellow ball episode"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "3aoEeaCHS_w",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "c3lLP39EdME",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "oRk8sglOG5k",
+  "b": "n2mneo6Owhk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo Song vs Kaboochi Dance shorts; different content"
+ }
+]

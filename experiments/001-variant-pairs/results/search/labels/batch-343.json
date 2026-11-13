@@ -1,0 +1,12 @@
+[
+{"a":"oAN_O9JQlfc","b":"X5isLUsPsU0","label":"same-template","confidence":0.85,"note":"Rattic Mini episodes on the same stage set, different gags"},
+{"a":"xI9-MgmErhQ","b":"HWNDED8zbjE","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus 2014: green bus recolored pink, same shots, scooter rider and family scenes"},
+{"a":"7WeaOIdnZmM","b":"HwuzyyGUwp8","label":"re-skin","confidence":0.85,"note":"Dog-face bus purple vs red in same thumbnail pose; driver shot with interior recolored green vs purple"},
+{"a":"xU3oLsk2eF8","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.8,"note":"Christmas short vs If You're Happy animal short"},
+{"a":"eAodpnlhaNI","b":"oRk8sglOG5k","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts, different characters and animation"},
+{"a":"CvFabQeSv9A","b":"oRk8sglOG5k","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts, different characters and animation"},
+{"a":"PSSZCik4NWY","b":"7WeaOIdnZmM","label":"re-skin","confidence":0.7,"note":"Dog-face bus green vs purple, same thumbnail shot; sampled frames show different compilation parts"},
+{"a":"YudNG_jdUs4","b":"NcfiuWYdC24","label":"unrelated","confidence":0.8,"note":"Zoo Song superheroes vs Boo Boo Song; different content"},
+{"a":"cXFzC5Ht5Ds","b":"c02mIyif6Ao","label":"unrelated","confidence":0.75,"note":"Spooky Wheels on the Bus vs Halloween teacher short"},
+{"a":"K71QjqJlAI0","b":"4OZ-iSU4DiM","label":"re-skin","confidence":0.75,"note":"Baby Bao Panda bus pink vs purple, same shot in thumbnail and 1/2 frame; B a compilation"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"uE-G6fKmpA4","b":"NMdfSQmTS1M","label":"unrelated","confidence":0.7,"note":"Same goggle-boy character but different outfit, pose, song and scenes (Halloween vs winter)."},
+{"a":"nbI-1N_uBNs","b":"NMdfSQmTS1M","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs We Wish You a Merry Christmas; different animation."},
+{"a":"MUhQdb8-RRU","b":"V5a11_xuIaY","label":"shared-segments","confidence":0.8,"note":"Compilations with identical mid frame (kids at table); shared episode."},
+{"a":"t2tKT2LSOfo","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.85,"note":"No No song vs Monster Finger Family; different animation."},
+{"a":"pst1AsXQWTE","b":"0yIhvJw1GK8","label":"same-song","confidence":0.6,"note":"Boo Boo song shorts with different characters and scenes."},
+{"a":"fKWJTJUkwPc","b":"oRUKPowFBgM","label":"unrelated","confidence":0.85,"note":"Five in the Bed vs Apples & Bananas; different animation."},
+{"a":"nLSh9rwThZA","b":"2CIhrX-lIIw","label":"same-template","confidence":0.5,"note":"Pretend-play story compilations of one series; different stories and frames."},
+{"a":"nbI-1N_uBNs","b":"Tgp1NqPegK8","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs Kaboochi dance; different animation."},
+{"a":"c43YA5Iq9y4","b":"y5BTqWirpe8","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs (I vs M) on shared template."},
+{"a":"wk9I_xT1NNc","b":"YaThzRybuhE","label":"unrelated","confidence":0.85,"note":"Zoo song vs Kaboochi short; different animation."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"lRK_EP7TdRk","b":"m9w2-tZfHfI","label":"shared-segments","confidence":0.9,"note":"Compilations sharing the family-with-gift and park clips"},
+{"a":"NNRX2u_XTQM","b":"45HpcZTrLU0","label":"shared-segments","confidence":0.85,"note":"Story compilations sharing the dad-with-kids park clip"},
+{"a":"YxqEYFpmSQ0","b":"2tElUmxxF34","label":"same-template","confidence":0.75,"note":"Booya episodes, same characters and garden set, different stories"},
+{"a":"nbI-1N_uBNs","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.8,"note":"Jingle Bells vs Monster Finger Family shorts"},
+{"a":"nbI-1N_uBNs","b":"2fBdfXU6Vuo","label":"unrelated","confidence":0.8,"note":"Jingle Bells vs Johny Johny shorts"},
+{"a":"CvFabQeSv9A","b":"Z13ulLin2jg","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Kaboochi shorts"},
+{"a":"R49NrP0fcsE","b":"Z13ulLin2jg","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Kaboochi shorts"},
+{"a":"aW_J2JMPmG8","b":"PjXooPy93AM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toy-car and snowman episodes"},
+{"a":"20HqqfnKxZk","b":"GvP31EGA8tQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the red-car stall episode"},
+{"a":"IYU2e8WgGnY","b":"YJLDe0F_z7k","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the bin/egg episode"}
+]

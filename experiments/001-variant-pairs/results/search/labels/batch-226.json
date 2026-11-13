@@ -1,0 +1,72 @@
+[
+ {
+  "a": "ZcZxc7AhfVg",
+  "b": "hssa3rihMe0",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Loco Nuts Halloween compilation re-released with same thumbnail; same episodes, other order."
+ },
+ {
+  "a": "hMNozLQO_2M",
+  "b": "sEfyLd3DjVU",
+  "label": "re-skin",
+  "confidence": 0.6,
+  "note": "Finger family: same hand rig and poses, cow heads swapped for spider heads."
+ },
+ {
+  "a": "NNK_O4xD7Jg",
+  "b": "lkGmcS3ArOg",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Halloween compilations; different characters and frames."
+ },
+ {
+  "a": "nEsdTj3wX0U",
+  "b": "yElVnujAnog",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Hector Tractor compilations share the blue tractor segment."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "4e1vB_kqCaY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Kaboochi shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "gDzGfavrWeI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Halloween way shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "OokGp8l_x9k",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Halloween bus shorts; different shots."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "7Ldj5W-FyMs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs tractor song shorts; nothing shared."
+ },
+ {
+  "a": "Ve-HgwE-EqE",
+  "b": "sEfyLd3DjVU",
+  "label": "re-skin",
+  "confidence": 0.6,
+  "note": "Finger family: same hand rig and hand-plus-dad shot, sheep swapped for spiders."
+ },
+ {
+  "a": "WzNff7gP49Y",
+  "b": "yElVnujAnog",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Hector Tractor compilations share segments (thumbnail tractor, opening)."
+ }
+]

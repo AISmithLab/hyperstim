@@ -1,0 +1,12 @@
+[
+{"a":"CU_QocmxLz0","b":"hsUfmH_uRjc","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags (statue vs car service with teddy jeep)."},
+{"a":"DF6G0YHRlV8","b":"hsUfmH_uRjc","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags (crib vs car service)."},
+{"a":"7FiyQQBYTUY","b":"hsUfmH_uRjc","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags (skates vs car service)."},
+{"a":"eT-HIXX8iXY","b":"ogqYnN2SIl0","label":"same-template","confidence":0.8,"note":"Bob the Train series, identical intro frame; numbers vs shapes on the same train and hills."},
+{"a":"KKgsTFivFJM","b":"-8VedXc5EDU","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no common frame seen (bubblegum vs skates episodes)."},
+{"a":"ulkPZc48Au8","b":"AlEPz20FGnk","label":"unrelated","confidence":0.6,"note":"Swimming song vs Boo Boo song, different characters and scenes; same shorts format."},
+{"a":"zG6D-FpUczM","b":"E9JfZ-SIhbY","label":"unrelated","confidence":0.8,"note":"Johny Johny vs Baby Shark shorts, different characters and settings."},
+{"a":"UN4V4ywCWxA","b":"YJLDe0F_z7k","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no common frame seen (snake charmer vs cat episodes)."},
+{"a":"6FhYNE5KFeg","b":"VqT9YA3THAE","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags (cat vs worm)."},
+{"a":"oWkIR8ZkHgo","b":"GvP31EGA8tQ","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no common frame seen (suitcase vs golf episodes)."}
+]

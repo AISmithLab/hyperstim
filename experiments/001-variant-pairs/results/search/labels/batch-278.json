@@ -1,0 +1,12 @@
+[
+{"a":"YgjyQIwcJy0","b":"NL_S69qf0jg","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, hollow vs butterfly."},
+{"a":"6FhYNE5KFeg","b":"Ar6N0i4c36U","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, cat vs manhole."},
+{"a":"SSeBjzpJLFk","b":"UN4V4ywCWxA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snake charmer and claw machine episodes."},
+{"a":"hzzGSyV_BCA","b":"aW_J2JMPmG8","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"Ia2TzzY2Vto","b":"jvCQFkt2FwI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, toilet vs picture."},
+{"a":"NL_S69qf0jg","b":"MstDCeu1yxM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, butterfly vs pillow."},
+{"a":"pe_iRGqeBlA","b":"D0tOd2ZH-cQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing car and snowman episodes."},
+{"a":"FIinrJO9po8","b":"TGZl_HsDj_0","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"l_HMLGY9XIo","b":"y5BTqWirpe8","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs L vs M."},
+{"a":"UXsXYmw3_CY","b":"El8w4iWGWEI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, gloves vs basketball."}
+]

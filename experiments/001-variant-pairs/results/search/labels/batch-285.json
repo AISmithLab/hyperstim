@@ -1,0 +1,12 @@
+[
+{"a":"EPh1bFzsVf4","b":"H3Kfst-qbzw","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, leaves vs restaurant."},
+{"a":"5iXRqSe4KJo","b":"EPh1bFzsVf4","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, trombone vs leaves."},
+{"a":"Ng85dlGMIQA","b":"lQxaq4Fu-i0","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter T vs U."},
+{"a":"tQ3LttVt_Jk","b":"obdK23ZIr6E","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, canyon vs trishaw."},
+{"a":"Br48ar2svbI","b":"VBb7XUCV47g","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter B vs C."},
+{"a":"S9N416aMRxk","b":"dG7KouaFW-o","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing balloon box and crib episodes."},
+{"a":"gmRIldLgb8k","b":"TwDxP5L1-VA","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, kung fu vs teleport."},
+{"a":"qM6hdr1DVSM","b":"sFhZZIPj9nE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, toy airplane vs cleaning."},
+{"a":"QLtuuZVDZ4g","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, pillow vs toilet."},
+{"a":"_4x2xszMRq8","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, birthday vs balloon."}
+]

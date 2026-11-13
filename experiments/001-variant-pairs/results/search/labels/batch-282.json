@@ -1,0 +1,12 @@
+[
+{"a":"vE5gwrynvDg","b":"SVc-0j7DWIQ","label":"shared-segments","confidence":0.75,"note":"Jingle Bells 178s vs 47s cut; same Santa footage."},
+{"a":"pDH1po68fP8","b":"WDCPlg_DNwQ","label":"same-song","confidence":0.65,"note":"Monster in the Dark shorts with different characters and scenes."},
+{"a":"-M02RqRMZks","b":"pDH1po68fP8","label":"unrelated","confidence":0.75,"note":"Halloween Night vs Monster in the Dark shorts, different footage."},
+{"a":"7FiyQQBYTUY","b":"TwDxP5L1-VA","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skates vs teleport."},
+{"a":"svxlLrPCzUM","b":"SP3eASDKke4","label":"shared-segments","confidence":0.6,"note":"Boo Boo Song shorts reusing the girl-and-baby footage, different edits."},
+{"a":"njSANQD1GlI","b":"UXsXYmw3_CY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, magic hat vs gloves."},
+{"a":"gkk96Hm-IHo","b":"uzUxdwfXgWI","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"3yv0GSbbCZI","b":"R7pIlyiHmJY","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"qM6hdr1DVSM","b":"e9gnACQvqRM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, toy airplane vs door."},
+{"a":"7FiyQQBYTUY","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skates vs balloon."}
+]

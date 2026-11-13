@@ -1,0 +1,72 @@
+[
+ {
+  "a": "e_wishEOKHw",
+  "b": "PZ9-N1-ePgU",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "655s Halloween compilation contains the Hello It's Halloween song (identical witch frame)."
+ },
+ {
+  "a": "e_wishEOKHw",
+  "b": "4zMgszSqBGE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Two Halloween songs with the same characters and set; different shots."
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "YVaBFUbjzuk",
+  "b": "7FiyQQBYTUY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "El8w4iWGWEI",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "YVaBFUbjzuk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "20HqqfnKxZk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; sampled frames show different episodes."
+ }
+]

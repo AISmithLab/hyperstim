@@ -1,0 +1,72 @@
+[
+ {
+  "a": "XkHOSnrgKew",
+  "b": "YudNG_jdUs4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "If You're Happy vs Zoo Song shorts; only side bars match."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "wAtBG4hjCOY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "BZqq3eL6xSE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "KKgsTFivFJM",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "afyKHCB03MU",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "cO1aLZ7teeg",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the drive-thru car episode."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "YVaBFUbjzuk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

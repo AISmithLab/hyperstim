@@ -1,0 +1,12 @@
+[
+{"a":"oRUKPowFBgM","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.85,"note":"Apples & Bananas vs If You're Happy shorts; side bars only."},
+{"a":"fKWJTJUkwPc","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.8,"note":"Five in the Bed vs If You're Happy shorts; similar Loconuts style only."},
+{"a":"IbEIByW4Fwk","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.85,"note":"Oopsie Doopsie vs If You're Happy shorts."},
+{"a":"AOC1QPiG8-4","b":"Gf_8uTV76EU","label":"shared-segments","confidence":0.7,"note":"Same If You're Happy dog and pig shots on both channels; B longer cut."},
+{"a":"QaYV4EBcrcQ","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.8,"note":"Lily's Ice Scream vs If You're Happy shorts; same Loconuts cast only."},
+{"a":"Gf_8uTV76EU","b":"mh9esb9qul8","label":"unrelated","confidence":0.8,"note":"If You're Happy vs Animal Dance shorts."},
+{"a":"6U9UX0MLvU4","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.85,"note":"Boo Boo vs If You're Happy shorts."},
+{"a":"yRbWCPlOzKM","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.85,"note":"Johny Johny vs If You're Happy shorts."},
+{"a":"yR0IqutO_i4","b":"pBZoqnYJdpo","label":"re-upload","confidence":0.85,"note":"Same Space Rocket short frame for frame, same length."},
+{"a":"DS8rk9NwXQc","b":"yR0IqutO_i4","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, mime vs space rocket gags."}
+]

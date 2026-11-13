@@ -1,0 +1,72 @@
+[
+ {
+  "a": "N8fwdq92P50",
+  "b": "h3bvPp9Jqnc",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Kaboochi Dance shorts, sampled frames show different shots; maybe cuts of one video"
+ },
+ {
+  "a": "IWeiJekM5Cs",
+  "b": "yR_WeP1dliE",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "Zoobees bus magenta vs green, same thumbnail pose and model; frames at other moments"
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "FT0mjHIs2oY",
+  "b": "h3bvPp9Jqnc",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Kaboochi Dance shorts share the hula girl shot; different lengths and cuts"
+ },
+ {
+  "a": "Q9BbiIQ6C_E",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "LzlbaXt9Yg4",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "ulkPZc48Au8",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "-t7g8JmOz5s",
+  "b": "yR_WeP1dliE",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "Zoobees bus pale pink vs green, same thumbnail pose and model; frames at other moments"
+ }
+]

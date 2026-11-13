@@ -1,0 +1,72 @@
+[
+ {
+  "a": "e4xy5DJQKJM",
+  "b": "F8aglE8xTlI",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "Same Bob color train animation, Arabic-language version with new thumbnail"
+ },
+ {
+  "a": "e4xy5DJQKJM",
+  "b": "5zrKMo2YOrc",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "Same Bob color train animation, Spanish-language version with new thumbnail"
+ },
+ {
+  "a": "hzzGSyV_BCA",
+  "b": "IYU2e8WgGnY",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "_QwXfH5-D5g",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Kaboochi shorts, different characters and animation"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, door vs teleport gags"
+ },
+ {
+  "a": "tQ3LttVt_Jk",
+  "b": "fkM9JyHWOo8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, canyon vs cupboard gags"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "gkk96Hm-IHo",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing claw machine and air dancer episodes"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "NL_S69qf0jg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, balloon vs butterfly gags"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "mJFTp8x_QZ4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, birthday vs barbell gags"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "3yv0GSbbCZI",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ }
+]

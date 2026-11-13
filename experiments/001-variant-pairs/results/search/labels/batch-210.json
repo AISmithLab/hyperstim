@@ -1,0 +1,72 @@
+[
+ {
+  "a": "zCy86zybM4w",
+  "b": "vz_GBPPVxvQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the mom-on-beach segment at midpoint."
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (toy airplane vs skates)."
+ },
+ {
+  "a": "6QKSJC1vGMs",
+  "b": "vXeaBe049TQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Zoobees compilations share the red-haired mom and dad segment."
+ },
+ {
+  "a": "M3sOUpxsrJE",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (cleaning vs skates)."
+ },
+ {
+  "a": "H64M_xwQQt0",
+  "b": "yjXnogfKzzI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Ten in the Bed compilations share the opening and boat segment."
+ },
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "6f6S5Y_1aIA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "EQIBWU18Bjk",
+  "b": "HDZPIAhApn8",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Loco Nuts Christmas compilations share the Santa-in-snow segment."
+ },
+ {
+  "a": "vWh9dyR-IGI",
+  "b": "e8qnOUvCdb0",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Both We Brush Our Teeth shorts, different scenes (bathroom vs bus stop)."
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "HWH2lpQomEk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bath song vs Five Little Monkeys shorts; nothing shared."
+ },
+ {
+  "a": "pbfbmXohAGo",
+  "b": "bVrFl7Z48so",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs Boo Boo shorts; nothing shared."
+ }
+]

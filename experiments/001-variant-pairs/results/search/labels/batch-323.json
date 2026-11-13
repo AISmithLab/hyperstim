@@ -1,0 +1,12 @@
+[
+{"a":"6L0oq3iwbS0","b":"afyKHCB03MU","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, TV vs bottle gags."},
+{"a":"9aLZatXZCl4","b":"Uq5Pp5BQSm4","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"oT6bPk4gHxM","b":"UXsXYmw3_CY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, rings vs gloves gags."},
+{"a":"NL_S69qf0jg","b":"jflAKuIuQBM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, butterfly vs talent show gags."},
+{"a":"zSf5nw7US6U","b":"gkk96Hm-IHo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-box episode."},
+{"a":"7FiyQQBYTUY","b":"6L0oq3iwbS0","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, skates vs TV gags."},
+{"a":"vbY-B_GtSvc","b":"Ng85dlGMIQA","label":"same-template","confidence":0.85,"note":"Learning Street phonics K vs T; shared intro/outro kids shots."},
+{"a":"LQQ2DD4V_mY","b":"uzUxdwfXgWI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing dino and heart balloon episodes."},
+{"a":"7ClCbBREUlU","b":"s0DwH0Oq5YY","label":"unrelated","confidence":0.7,"note":"Different Boo Boo shorts with different characters and scenes."},
+{"a":"S9N416aMRxk","b":"_GlpTSaa5EU","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing cupboard and dino episodes."}
+]

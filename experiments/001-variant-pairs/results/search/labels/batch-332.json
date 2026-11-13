@@ -1,0 +1,12 @@
+[
+{"a":"402b2yME1Wo","b":"dOZvzqc4tyE","label":"same-template","confidence":0.75,"note":"Fire-truck number song series, 1-10 vs 1-20; same set, different counting range"},
+{"a":"402b2yME1Wo","b":"eZT6hzcAlH4","label":"same-template","confidence":0.75,"note":"Fire-truck number song series, 1-10 vs 1-30; same set and truck"},
+{"a":"402b2yME1Wo","b":"t8F277vozNc","label":"same-template","confidence":0.75,"note":"Fire-truck number song series, 1-10 vs 1-40"},
+{"a":"402b2yME1Wo","b":"JrpYstX8Kz8","label":"same-template","confidence":0.75,"note":"Fire-truck number song series, 1-10 vs 1-50; truck model slightly different"},
+{"a":"cjtn_IOstAI","b":"xI9-MgmErhQ","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus: white bus vs green bus in identical shots"},
+{"a":"K71QjqJlAI0","b":"LXMGLr9uFv4","label":"re-upload","confidence":0.85,"note":"Same pink bus panda video; B is the 2x speed version"},
+{"a":"-4stEiXP1aU","b":"4kgqQgReEHQ","label":"re-upload","confidence":0.6,"note":"Same Christmas truck footage, same length; B 3/4 frame shows shape card, maybe re-edited"},
+{"a":"5ElsiB8aoIg","b":"xI9-MgmErhQ","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus: black bus vs green bus in identical shots"},
+{"a":"r2kk9DQJy_g","b":"PxVRd-kf_lM","label":"re-skin","confidence":0.75,"note":"Five Little Ducks bridge shot: multicolored ducks vs yellow ducks, same hats and poses"},
+{"a":"K71QjqJlAI0","b":"O_D2N_ulWXg","label":"re-skin","confidence":0.9,"note":"Panda Wheels on the Bus: pink bus vs blue bus, same shots"}
+]

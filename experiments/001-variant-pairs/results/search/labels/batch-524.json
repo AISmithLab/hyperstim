@@ -1,0 +1,12 @@
+[
+{"a":"bFlK2Lihqv8","b":"mFy4JcYdLwM","label":"re-upload","confidence":0.8,"note":"Same ABC song animation, same length; new thumbnail and title"},
+{"a":"rrV4pC6uNOQ","b":"cMj02iWXQEs","label":"re-upload","confidence":0.85,"note":"Bob Prepare for Fright Halloween song re-uploaded; same frames, A has intro card"},
+{"a":"aeKHB66QEVE","b":"FBZOs1gF0ug","label":"shared-segments","confidence":0.85,"note":"Compilation contains the Are You Sleeping farm song (same tractor shot)"},
+{"a":"pjbLaZqWo2Q","b":"fnchF_Zl9XQ","label":"re-skin","confidence":0.7,"note":"Compilation's Wheels on the Bus segment: red bus vs orange bus, same kids-at-door shot"},
+{"a":"ea56PryuPcY","b":"psZZrqi-Ud8","label":"unrelated","confidence":0.7,"note":"Different Halloween shorts with different characters; match on dark palette and side bars"},
+{"a":"POeOnlcEbFw","b":"kGdoPDdFq5s","label":"re-skin","confidence":0.6,"note":"Same dog-face bus model and town, green vs orange; mostly thumbnail match, frames differ"},
+{"a":"pjbLaZqWo2Q","b":"0jdJc3Oew9I","label":"re-skin","confidence":0.55,"note":"Thumbnail-only: fire car same pose blue vs orange; frames show different shots"},
+{"a":"S25FUmGNjJ4","b":"7jWyIZvNqDE","label":"shared-segments","confidence":0.85,"note":"Compilation contains the Farmer in the Dell cow-and-dog shot"},
+{"a":"0MQQADJh80Q","b":"Pju77IIqO5Y","label":"same-template","confidence":0.6,"note":"Bug-character song series, different songs; shared Bob intro"},
+{"a":"WtHliOq5kQc","b":"0MQQADJh80Q","label":"same-template","confidence":0.6,"note":"Bug-character song series, different songs; shared Bob intro"}
+]

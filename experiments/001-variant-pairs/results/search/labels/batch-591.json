@@ -1,0 +1,12 @@
+[
+{"a":"ahWBypah3WE","b":"b5VLi2_1HfE","label":"same-song","confidence":0.85,"note":"Oopsie Doopsie, different characters and shots at matched moments"},
+{"a":"SInqf3uBuxY","b":"MC-Bl52FIBA","label":"re-upload","confidence":0.95,"note":"cross-channel, matched frames identical, same 137s length"},
+{"a":"zOJtLz0KHjQ","b":"_vgXhUmsTyA","label":"re-skin","confidence":0.55,"note":"same timing/staging (tail wipe, cats bottom-left) but redrawn kittens and new backgrounds"},
+{"a":"XOCAlpWUh8o","b":"9VsF5w_n7qA","label":"same-song","confidence":0.85,"note":"Jingle Bells, baby cast vs train cast, different shots"},
+{"a":"iJZ97cfpjhI","b":"YrsmVbdtgLY","label":"same-song","confidence":0.85,"note":"Kaboochi animal dancers vs Halloween scenes, different animation"},
+{"a":"bXcFSE7NQp8","b":"_QwXfH5-D5g","label":"same-song","confidence":0.85,"note":"Kaboochi, different characters and shots at matched moments"},
+{"a":"aYm4u_lQpIo","b":"xPt-5RG1m-0","label":"same-song","confidence":0.8,"note":"Kaboochi full audio match but different cast and flat-color backgrounds"},
+{"a":"iJZ97cfpjhI","b":"ONwFOOEkasU","label":"same-song","confidence":0.85,"note":"Kaboochi animal dancers vs kid dancers, different staging"},
+{"a":"McACiO5dwGM","b":"4PhbUhrI4KE","label":"same-template","confidence":0.9,"note":"phonics letter S vs letter T, same template"},
+{"a":"YrsmVbdtgLY","b":"V5OqHZwodj4","label":"same-song","confidence":0.8,"note":"Kaboochi Halloween vs Christmas, different shots at matched moments"}
+]

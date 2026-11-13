@@ -1,0 +1,12 @@
+[
+{"a":"SEoJGGkKx7k","b":"cufl2niNsMo","label":"re-skin","confidence":0.85,"note":"Zoobees Zoo Bus: same bus and girl-giraffe shots, bus yellow-spotted in A, white cow-print in B."},
+{"a":"PbchJhisS4s","b":"x0h4qykzlsA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing red-car and block-tower episodes."},
+{"a":"_EZv7EJE8LE","b":"n6eghHp7qWw","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toy-jeep and snowman episodes."},
+{"a":"x0h4qykzlsA","b":"vyIiFiExyQQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing red-car and block-tower episodes."},
+{"a":"n6eghHp7qWw","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing snowman and jeep episodes."},
+{"a":"n6eghHp7qWw","b":"fx0aMbJwE34","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing trash-can, snowman and jeep episodes."},
+{"a":"n6eghHp7qWw","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."},
+{"a":"aDyWeSAt-sI","b":"n6eghHp7qWw","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing jeep and snowman episodes."},
+{"a":"n6eghHp7qWw","b":"UPDBxhcsIRQ","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing jeep and snowman episodes."},
+{"a":"lij2KlyDHJ8","b":"n6eghHp7qWw","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."}
+]

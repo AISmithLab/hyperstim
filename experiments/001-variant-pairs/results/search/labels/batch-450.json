@@ -1,0 +1,12 @@
+[
+{"a":"6jEgMIA_msc","b":"DhX35aiQZ-0","label":"shared-segments","confidence":0.8,"note":"Bob compilations sharing the train and car segment"},
+{"a":"HWH2lpQomEk","b":"qHf6e1CQQ5c","label":"unrelated","confidence":0.8,"note":"Five Little Monkeys vs Kaboochi shorts"},
+{"a":"t2tKT2LSOfo","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.8,"note":"No No Song vs Kaboochi shorts"},
+{"a":"dvI-yKriG80","b":"sZyaD9COry8","label":"shared-segments","confidence":0.8,"note":"Halloween compilations sharing the zombie and car segments"},
+{"a":"jxaZXdht1ig","b":"vBa31YwaxTg","label":"unrelated","confidence":0.6,"note":"Apples & Bananas compilations, no shared footage in sampled frames"},
+{"a":"T_UkjGC9NxQ","b":"gUom7eTGyA0","label":"shared-segments","confidence":0.8,"note":"Zoobees compilations sharing the elephant/mom segment"},
+{"a":"766Ja9YI7wE","b":"4P1o1CaXIuE","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the shapes boat segment"},
+{"a":"inkqQlbrdrQ","b":"QKrdD5Y9c-s","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations, same episodes in different order"},
+{"a":"aYm4u_lQpIo","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.8,"note":"Kaboochi vs Old MacDonald shorts"},
+{"a":"ZP6AWIjRa2Q","b":"21qek4m4GWQ","label":"same-song","confidence":0.55,"note":"We Wish You a Merry Christmas, Supremes compilation vs different animation"}
+]

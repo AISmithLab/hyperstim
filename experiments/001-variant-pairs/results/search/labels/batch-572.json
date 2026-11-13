@@ -1,0 +1,72 @@
+[
+ {
+  "a": "awLcqOFRHzg",
+  "b": "lEvNMZQ2DT4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "6cmE3gwaqJI",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic car alarm vs two-episode teleport short"
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic hollow vs two-episode toilet short"
+ },
+ {
+  "a": "VBb7XUCV47g",
+  "b": "vCMNQHulhfo",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters C and S on one template"
+ },
+ {
+  "a": "NcfiuWYdC24",
+  "b": "VJ1tu3mMRa0",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts cut from the same CG family footage, different edits"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, ventilator vs cowboy"
+ },
+ {
+  "a": "ihJt-oPUoYk",
+  "b": "XBXyBskjSOc",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob alphabet songs J and T on one template"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "oMEt_dTdnMg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic cheese vs Larva-style gum cartoon; side-bar match only"
+ },
+ {
+  "a": "EobtsoMFJEk",
+  "b": "TGZl_HsDj_0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic compilations sharing the wooden bike episode"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "Qs4R686NOjg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

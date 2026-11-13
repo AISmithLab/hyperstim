@@ -1,0 +1,12 @@
+[
+{"a":"T-fqQA1391Q","b":"qfUBiJmDpKc","label":"re-upload","confidence":0.85,"note":"Shapes Song 2015 re-posted 2024: identical frames, new thumbnail and end card."},
+{"a":"53Yw4roey7Y","b":"xjvbpHc3bJ8","label":"shared-segments","confidence":0.85,"note":"Christmas compilations sharing the Santa family segment; identical midpoint frame."},
+{"a":"BRcmpSxalwA","b":"CgR6YuA2Uoo","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Boo Boo song; different characters."},
+{"a":"YudNG_jdUs4","b":"O_KbvPekSSo","label":"unrelated","confidence":0.85,"note":"Zoo song vs Ten Little Racing Cars; different content."},
+{"a":"OZzQENCeeNg","b":"uQ90xr1p-eQ","label":"unrelated","confidence":0.8,"note":"Everybody Do the Dance vs Kaboochi babies; different characters."},
+{"a":"TAeO_pKB_ik","b":"aZdQk56qy0E","label":"same-template","confidence":0.7,"note":"Pretend Play story songs, Three Bears vs Red Riding Hood; different scenes."},
+{"a":"BRcmpSxalwA","b":"6U9UX0MLvU4","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Boo Boo song; different characters."},
+{"a":"i9kMX8tSKSA","b":"u3VtdvWtgl4","label":"unrelated","confidence":0.85,"note":"Chew Your Food vs Halloween Kaboochi; different content."},
+{"a":"CfJfPAF8El8","b":"ijNCfAvwMGE","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Twinkle Twinkle; different content."},
+{"a":"tQlIWPUO_E0","b":"uQ90xr1p-eQ","label":"unrelated","confidence":0.85,"note":"Ten in the Bed vs Kaboochi babies; different content."}
+]

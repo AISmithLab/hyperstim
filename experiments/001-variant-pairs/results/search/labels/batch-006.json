@@ -1,0 +1,12 @@
+[
+ {"a": "VqT9YA3THAE", "b": "DF6G0YHRlV8", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini vertical shorts, same set; worm gag vs crib gag"},
+ {"a": "gDzGfavrWeI", "b": "FZSWN3DFpGE", "label": "unrelated", "confidence": 0.6, "note": "two Halloween song shorts, different songs, casts and staging"},
+ {"a": "a0Dg0fPxACY", "b": "xEFkAQpftd4", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini vertical shorts, same set; tumbler toy gag vs teddy talent show"},
+ {"a": "s0DwH0Oq5YY", "b": "AlEPz20FGnk", "label": "shared-segments", "confidence": 0.6, "note": "Boo Boo Song: A's 57 s short reuses the mother-holding-baby shot of B's 178 s video"},
+ {"a": "KKgsTFivFJM", "b": "aDyWeSAt-sI", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations, same set and thumbnail layout; no shared shot visible"},
+ {"a": "eAodpnlhaNI", "b": "CvFabQeSv9A", "label": "same-song", "confidence": 0.75, "note": "Boo Boo Song shorts, different casts and shots (Bob baby vs girl and mother)"},
+ {"a": "eAodpnlhaNI", "b": "41F1Fdb3tHM", "label": "same-song", "confidence": 0.75, "note": "Boo Boo Song shorts, different casts and shots (Bob baby vs strawberry girl)"},
+ {"a": "Th5MQB8VO3Q", "b": "AlEPz20FGnk", "label": "shared-segments", "confidence": 0.55, "note": "both 178 s Boo Boo Song; identical capped-man shot at 3/4, 1/4 and 1/2 differ; re-edit?"},
+ {"a": "oWkIR8ZkHgo", "b": "TGZl_HsDj_0", "label": "shared-segments", "confidence": 0.85, "note": "Rattic Mini compilations; identical block-tower shot (A 1/4, B 1/2)"},
+ {"a": "oRUKPowFBgM", "b": "qCWFFPHRu1Q", "label": "unrelated", "confidence": 0.6, "note": "different songs and casts (Apples & Bananas vs Dinosaur Song)"}
+]

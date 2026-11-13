@@ -1,0 +1,12 @@
+[
+{"a":"_uYyO8y5Txc","b":"PnO51tbfqQs","label":"same-song","confidence":0.85,"note":"Boo Boo song; girl/baby vs boy scenes, different animation"},
+{"a":"cO1aLZ7teeg","b":"AyZJfo2rrOc","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"PIZj5SH8Bok","b":"SB-7h4MW26k","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; full audio match but different episodes at matched moments"},
+{"a":"YJLDe0F_z7k","b":"w7exxTCHfx8","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"CfJfPAF8El8","b":"T2UcCZAPW34","label":"same-song","confidence":0.85,"note":"Kaboochi vs Christmas Kaboochi; different characters and shots"},
+{"a":"ZeldqdySrKg","b":"zSf5nw7US6U","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; full audio match but different episodes at matched moments"},
+{"a":"1lYnLr7Bv0I","b":"hX-dN0g03eE","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, suitcase vs camera; similar falls, different props"},
+{"a":"KKgsTFivFJM","b":"FGUfrSFknik","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"Qv-eMjDmTJQ","b":"VnHWYMlDgwI","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"6YYa6ar2RN4","b":"Xx39RVmRYWE","label":"re-skin","confidence":0.9,"note":"Same kids, poses and shots; B adds Santa hats and Christmas-tree snowy background"}
+]

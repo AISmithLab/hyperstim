@@ -1,0 +1,12 @@
+[
+{"a":"5gDfGvKznXE","b":"PhhQ0GoCxbw","label":"re-skin","confidence":0.7,"note":"Bob the Train toy-bus short: same shots, toy bus pink vs red"},
+{"a":"5gDfGvKznXE","b":"XCGE-_TDcGI","label":"shared-segments","confidence":0.6,"note":"Bus shorts share the Bob brushing and Bob shots; other shots differ (boy, purple bus)"},
+{"a":"5gDfGvKznXE","b":"YKsMQOpFyp4","label":"unrelated","confidence":0.7,"note":"Wheels on the Bus short vs Bob phonics short"},
+{"a":"9aLZatXZCl4","b":"Qs4R686NOjg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-car episode"},
+{"a":"_EZv7EJE8LE","b":"h4dQ-RG7dXA","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the snowman episode"},
+{"a":"h4dQ-RG7dXA","b":"X5isLUsPsU0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing several episodes in different order"},
+{"a":"lEvNMZQ2DT4","b":"Qs4R686NOjg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing outhouse and toy-car episodes"},
+{"a":"jRCHQ6wCTUA","b":"gmRIldLgb8k","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs kung fu, same mouse/set"},
+{"a":"7m15CgRy6OU","b":"_uYyO8y5Txc","label":"re-upload","confidence":0.7,"note":"Boo Boo short: same frames, 33s vs 28s, different thumbnails"},
+{"a":"qHf6e1CQQ5c","b":"Tgp1NqPegK8","label":"shared-segments","confidence":0.65,"note":"Kaboochi shorts across channels share shots in different order"}
+]

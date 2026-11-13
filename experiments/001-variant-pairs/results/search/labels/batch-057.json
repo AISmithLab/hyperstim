@@ -1,0 +1,12 @@
+[
+{"a":"_4x2xszMRq8","b":"E1wcRx1Exec","label":"unrelated","confidence":0.75,"note":"Rattic birthday gag vs Larva rain gag, different series"},
+{"a":"414DEMcGHtU","b":"b5VLi2_1HfE","label":"unrelated","confidence":0.75,"note":"Kaboochi dance vs Oopsie Doopsie dance, different characters"},
+{"a":"_4x2xszMRq8","b":"Nlt_DqiIHcQ","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; birthday vs mime gag"},
+{"a":"_4x2xszMRq8","b":"_OlmXmG5OLM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; birthday vs lawn mower gag"},
+{"a":"_4x2xszMRq8","b":"7xSdzGpSjl4","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; birthday vs gloves gag"},
+{"a":"CvFabQeSv9A","b":"bVrFl7Z48so","label":"same-song","confidence":0.6,"note":"Boo Boo songs with different characters and animation"},
+{"a":"ijNCfAvwMGE","b":"bVrFl7Z48so","label":"unrelated","confidence":0.8,"note":"Twinkle Twinkle vs Boo Boo song, different babies"},
+{"a":"MxB4KiDF6XY","b":"UN4V4ywCWxA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snake charmer and claw machine episodes"},
+{"a":"7FiyQQBYTUY","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; skates vs birthday gag"},
+{"a":"DS8rk9NwXQc","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; mime vs birthday gag"}
+]

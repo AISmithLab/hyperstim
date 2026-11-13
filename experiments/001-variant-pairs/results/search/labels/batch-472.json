@@ -1,0 +1,12 @@
+[
+{"a":"LGYphugCB6I","b":"e-ZNf-lSt_g","label":"re-upload","confidence":0.85,"note":"Bob animal sounds disco: same frames, Chinese vs Italian version, new thumbnail"},
+{"a":"LGYphugCB6I","b":"iazRHLuPy6E","label":"re-upload","confidence":0.85,"note":"Bob animal sounds disco: same frames, Chinese vs French version"},
+{"a":"ex7xMfJ9vjI","b":"LGYphugCB6I","label":"re-upload","confidence":0.85,"note":"Bob animal sounds disco: same frames, Korean vs Chinese version"},
+{"a":"LGYphugCB6I","b":"rfxI6n7Kaog","label":"re-upload","confidence":0.85,"note":"Bob animal sounds disco: same frames, Chinese vs Portuguese version"},
+{"a":"Qs4R686NOjg","b":"pe_iRGqeBlA","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"bdbNsMtn26Y","b":"oWkIR8ZkHgo","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"bdbNsMtn26Y","b":"UN4V4ywCWxA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the snake-charmer episode"},
+{"a":"FIinrJO9po8","b":"QKrdD5Y9c-s","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-box episode"},
+{"a":"QKrdD5Y9c-s","b":"kyProT-iMwg","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"YgjyQIwcJy0","b":"2SAG3jAYNyk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: hollow tree vs water machine"}
+]

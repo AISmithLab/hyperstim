@@ -1,0 +1,72 @@
+[
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "6SRokrEQBtc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "j943phJmoIQ",
+  "b": "zrFqk1DmTk0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Baby Lemon compilation contains the Old MacDonald video; same frame"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "oXA7qx--2oI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "Jt4V3NCA-u0",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "hzzGSyV_BCA",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the kiosk toy car episode"
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "VnHWYMlDgwI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the kiosk toy car episode"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "VnHWYMlDgwI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the kiosk toy car episode"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ }
+]

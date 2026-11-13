@@ -1,0 +1,10 @@
+[
+{"a":"FT0mjHIs2oY","b":"AlEPz20FGnk","label":"unrelated","confidence":0.75,"note":"Kaboochi dance vs Boo Boo song, different characters and scenes."},
+{"a":"oRUKPowFBgM","b":"4AHTuFMPftA","label":"unrelated","confidence":0.7,"note":"Apples & Bananas vs Halloween This Is The Way, different characters and scenes."},
+{"a":"6aBfQYlhKJs","b":"CvFabQeSv9A","label":"unrelated","confidence":0.75,"note":"Halloween zombie short vs Boo Boo song, different characters."},
+{"a":"414DEMcGHtU","b":"X48-R_yTN-4","label":"unrelated","confidence":0.7,"note":"Kaboochi dance vs Wheels on the Bus, different scenes; shared kid character style."},
+{"a":"Th5MQB8VO3Q","b":"0yIhvJw1GK8","label":"shared-segments","confidence":0.65,"note":"Same red-shirt boy close-up; B (41 s) looks cut from A (178 s), same colors."},
+{"a":"57NTk3K6F6s","b":"8nB88sWMAnM","label":"shared-segments","confidence":0.85,"note":"Compilations with identical tractor and panda-boat frames; different lead songs."},
+{"a":"VXMbRH4XKtI","b":"8-qO0tHgMHY","label":"unrelated","confidence":0.7,"note":"Swimming song vs animal dance, different animals and scenes."},
+{"a":"GvP31EGA8tQ","b":"aDyWeSAt-sI","label":"same-template","confidence":0.6,"note":"Audit: Rattic Mini compilations, no clearly common frame (golf vs space rocket)."}
+]

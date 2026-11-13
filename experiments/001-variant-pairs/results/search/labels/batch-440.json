@@ -1,0 +1,12 @@
+[
+{"a":"AruenFtf5rs","b":"4P1o1CaXIuE","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the shapes boat segment"},
+{"a":"9lC5bHDXP5A","b":"y8d5M6M3zkQ","label":"shared-segments","confidence":0.8,"note":"Bob compilations sharing the car wash vehicle segment"},
+{"a":"sBtKayGZJiU","b":"QlDpRW0_nBI","label":"unrelated","confidence":0.8,"note":"Johny Johny vs Wheels on the Bus shorts"},
+{"a":"OFvmlD86K5Q","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.8,"note":"Wheels on the Taxi vs Five Little Mommies shorts"},
+{"a":"_uYyO8y5Txc","b":"ZaPOBxvKuXs","label":"shared-segments","confidence":0.7,"note":"Boo Boo Song short and longer cut with the same girl shots"},
+{"a":"DvPn0Iyel7o","b":"2MxY5SmKGzc","label":"shared-segments","confidence":0.8,"note":"Larva compilations, same length, sharing the frog piano episode"},
+{"a":"Fqvzysji-zI","b":"h18co9PvVnM","label":"shared-segments","confidence":0.85,"note":"Kids TV compilations sharing the same kids segment at 1/2"},
+{"a":"cSKj4Do1PbI","b":"wsOa7C4_TeQ","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the doctor/kids segment"},
+{"a":"GqpAJf36hrc","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.8,"note":"Halloween teacher vs Wheels on the Taxi shorts"},
+{"a":"iJZ97cfpjhI","b":"8-qO0tHgMHY","label":"unrelated","confidence":0.65,"note":"Kaboochi vs Animal Dance shorts, different characters"}
+]

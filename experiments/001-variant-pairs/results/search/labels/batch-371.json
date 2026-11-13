@@ -1,0 +1,72 @@
+[
+ {
+  "a": "3ucQA933UyQ",
+  "b": "7HOESsArCmY",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Little Eddie bus song, same shots; bus recolored blue to orange."
+ },
+ {
+  "a": "JZveVyuclhs",
+  "b": "3ucQA933UyQ",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Little Eddie bus song, same shots; bus recolored pink to blue."
+ },
+ {
+  "a": "3ucQA933UyQ",
+  "b": "VhJLn6mO7-E",
+  "label": "re-skin",
+  "confidence": 0.5,
+  "note": "Thumbnail-only: same bus pose, blue vs pink; B compilation frames show other songs."
+ },
+ {
+  "a": "3ucQA933UyQ",
+  "b": "aLftDG8Od_0",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Same bus song shots; daytime blue bus redrawn as Christmas night lit bus."
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "nHT4spNAshs",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg/strawberry episodes."
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "phrajiOFBCY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "Kix07nOAEBQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg/strawberry episodes."
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "VqT9YA3THAE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "iFpez4fPv5Y",
+  "b": "M0V1ofCOEew",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg/strawberry episodes."
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"PmUySuJoa1g","b":"g9Z1I3T6vf0","label":"shared-segments","confidence":0.75,"note":"Rattic Mini Builder: 34s short cut from the 165s version; same thumbnail and block scene."},
+{"a":"OLXeTCu2ESc","b":"r-whFfxsj_I","label":"unrelated","confidence":0.85,"note":"No No song vs Johny Johny; different animation."},
+{"a":"OLXeTCu2ESc","b":"idwuB7uQA2M","label":"unrelated","confidence":0.85,"note":"No No song vs Johny Johny; different animation."},
+{"a":"OLXeTCu2ESc","b":"kdLu240pkyI","label":"unrelated","confidence":0.85,"note":"No No song vs Finger Family; different animation."},
+{"a":"t2tKT2LSOfo","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"No No song vs Kaboochi dance; different animation."},
+{"a":"nyJqyZZCekg","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Kaboochi dance; different animation."},
+{"a":"zG6D-FpUczM","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.85,"note":"Johny Johny vs Jingle Bells shorts; different animation."},
+{"a":"PjXooPy93AM","b":"kyProT-iMwg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations on same set; frames show different episodes."},
+{"a":"Lm2OJi4yYNQ","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.85,"note":"Brush teeth vs Wheels on the Taxi; different animation."},
+{"a":"EVpoUQvcOLs","b":"_1wpVNgEi1g","label":"shared-segments","confidence":0.8,"note":"Compilations with identical mid frame; shared episode."}
+]

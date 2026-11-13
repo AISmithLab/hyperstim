@@ -1,0 +1,12 @@
+[
+{"a":"ZRd-uNE-AUA","b":"MoftuEWtBuI","label":"shared-segments","confidence":0.5,"note":"Two Kaboochi shorts, same characters/footage source, different cuts at each position"},
+{"a":"KKfXDr6uVA0","b":"A_1ApJU_amc","label":"re-skin","confidence":0.93,"note":"Same shots (violin at window, tutu dance); panda recolored red/pink/green vs black-white"},
+{"a":"-QG7hoU3k0g","b":"3HqbMJ7huAM","label":"re-skin","confidence":0.9,"note":"Same bus shots and city; bus green vs purple"},
+{"a":"ihJt-oPUoYk","b":"l_HMLGY9XIo","label":"same-template","confidence":0.9,"note":"Bob the Train letter J vs letter L episodes"},
+{"a":"P85oXrxz2nk","b":"H4_BpVuvsgU","label":"re-upload","confidence":0.85,"note":"Same Halloween bus frames, identical colors; 3s shorter re-upload"},
+{"a":"bh7LwMMuwPU","b":"sEfyLd3DjVU","label":"same-template","confidence":0.6,"note":"Finger family template: kittens vs spiders, different staging"},
+{"a":"LnDxp5QNxmA","b":"-k4oiVaekT0","label":"same-template","confidence":0.9,"note":"Phonics letter C vs Q episodes"},
+{"a":"Gvz14qtMDBo","b":"ihJt-oPUoYk","label":"same-template","confidence":0.9,"note":"Bob the Train letter G vs J episodes"},
+{"a":"7JBIEgW95kw","b":"mhrAw8pkVYA","label":"shared-segments","confidence":0.4,"note":"Compilations, match only on identical thumbnail; frames show different content"},
+{"a":"ZRd-uNE-AUA","b":"n2mneo6Owhk","label":"shared-segments","confidence":0.5,"note":"Two Kaboochi shorts from same footage, different cuts"}
+]

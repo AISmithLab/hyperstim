@@ -1,0 +1,12 @@
+[
+{"a":"xrRoJsaTbVo","b":"nk8d25-S0Dg","label":"shared-segments","confidence":0.8,"note":"Compilation contains the Rig a Jig Jig song; identical group shot of the kids."},
+{"a":"mLfMksG42wg","b":"I0FVW6-NCII","label":"same-song","confidence":0.5,"note":"Halloween bus compilations; same face-bus model in thumbnails at different angles, frames differ."},
+{"a":"k3Zte4ufODo","b":"I0FVW6-NCII","label":"re-skin","confidence":0.5,"note":"Only thumbnail match: same Halloween face bus and pose, pink vs green; frames show other songs."},
+{"a":"XOflyZkgppo","b":"GyYUEUX6LOk","label":"shared-segments","confidence":0.85,"note":"Super Supremes compilations sharing the superhero-kids segment; identical midpoint frame."},
+{"a":"7_i2hBtxCms","b":"V5a11_xuIaY","label":"shared-segments","confidence":0.85,"note":"Compilations sharing the pie-at-table segment; identical midpoint frame."},
+{"a":"Jn9aklUYdQk","b":"b5p78d-gr6w","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Monster in the Dark; different content."},
+{"a":"E6KHe0vm4Bw","b":"B_MmKCyAmpw","label":"unrelated","confidence":0.85,"note":"If You're Happy vs Oopsie Doopsie Halloween; different characters."},
+{"a":"u3VtdvWtgl4","b":"Lm494FQebI8","label":"unrelated","confidence":0.8,"note":"Halloween Kaboochi vs If You're a Monster; different characters."},
+{"a":"b5p78d-gr6w","b":"Lm494FQebI8","label":"unrelated","confidence":0.85,"note":"Monster in the Dark vs If You're a Monster; different characters."},
+{"a":"E6KHe0vm4Bw","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"If You're Happy vs Kaboochi dance; different content."}
+]

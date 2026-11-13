@@ -1,0 +1,12 @@
+[
+{"a":"LXMGLr9uFv4","b":"O_D2N_ulWXg","label":"re-skin","confidence":0.9,"note":"Same bus/panda shots; pink bus (2x speed) vs blue bus"},
+{"a":"yOq3vuvmRCQ","b":"O_D2N_ulWXg","label":"re-skin","confidence":0.9,"note":"Same bus/panda shots, same length; purple bus vs blue bus"},
+{"a":"6_ncbbzHRUo","b":"hve-OMyeWsM","label":"re-upload","confidence":0.6,"note":"Same Bob phonics classroom footage, unchanged colors; different cut/length (49s vs 58s)"},
+{"a":"ainrmFQVbfI","b":"di7g1bv5UC0","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts on same wooden-floor set, different gags"},
+{"a":"YudNG_jdUs4","b":"B_MmKCyAmpw","label":"unrelated","confidence":0.8,"note":"Zoo song superheroes vs Halloween dance; different content"},
+{"a":"YudNG_jdUs4","b":"7Ldj5W-FyMs","label":"unrelated","confidence":0.8,"note":"Zoo song vs Wheels on the Tractor, different characters and shots"},
+{"a":"Ym2JIL8xgVI","b":"gvcEcWUHZ_c","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations, same set and thumbnail layout, different episodes shown"},
+{"a":"di7g1bv5UC0","b":"fkM9JyHWOo8","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, Spot vs Cupboard episodes"},
+{"a":"oRUKPowFBgM","b":"B_MmKCyAmpw","label":"unrelated","confidence":0.8,"note":"Apples and bananas vs Halloween dance; different characters"},
+{"a":"7Ldj5W-FyMs","b":"tQlIWPUO_E0","label":"unrelated","confidence":0.8,"note":"Tractor song vs Ten in the Bed, different content"}
+]

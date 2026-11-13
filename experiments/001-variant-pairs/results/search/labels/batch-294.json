@@ -1,0 +1,12 @@
+[
+{"a":"qM6hdr1DVSM","b":"afyKHCB03MU","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, toy airplane vs bottle."},
+{"a":"Tn2UZwb9RcY","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, bucket vs balloon."},
+{"a":"UXsXYmw3_CY","b":"afyKHCB03MU","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, gloves vs bottle."},
+{"a":"P610udrUFqE","b":"i2XoutDdPoM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, seesaw vs pillow."},
+{"a":"ewZwn2G14Wg","b":"cO1aLZ7teeg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"x0h4qykzlsA","b":"awLcqOFRHzg","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the red toy car episode."},
+{"a":"c3lLP39EdME","b":"BZqq3eL6xSE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, cheese vs high striker."},
+{"a":"FIinrJO9po8","b":"Gh4izthwnNM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"skNxtYhw9Y8","b":"cO1aLZ7teeg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"7FiyQQBYTUY","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skates vs toilet."}
+]

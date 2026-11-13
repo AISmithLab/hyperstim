@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "VqT9YA3THAE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "jPvyJ9IIRJk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "Nlt_DqiIHcQ",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "El8w4iWGWEI",
+  "b": "Ar6N0i4c36U",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Two-episode Rattic shorts both containing the Manhole episode"
+ },
+ {
+  "a": "7xSdzGpSjl4",
+  "b": "Ia2TzzY2Vto",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Two-episode Rattic shorts both containing the Gloves episode"
+ },
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "ZEI_8iC_Z7E",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing identical episodes (stones, pillow)"
+ },
+ {
+  "a": "phrajiOFBCY",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"Gvz14qtMDBo","b":"c43YA5Iq9y4","label":"same-template","confidence":0.9,"note":"Bob the Train letter G vs letter I episodes"},
+{"a":"Gvz14qtMDBo","b":"l_HMLGY9XIo","label":"same-template","confidence":0.9,"note":"Bob the Train letter G vs letter L episodes"},
+{"a":"qNk1LE48d_Q","b":"N0atnBzz5-U","label":"re-skin","confidence":0.65,"note":"Wheels on the Bus shorts, same bus model and shots; bus pink vs purple"},
+{"a":"tNPoYErk2rs","b":"svxlLrPCzUM","label":"shared-segments","confidence":0.75,"note":"Boo Boo Song shorts with same footage, B a shorter cut"},
+{"a":"a7-bpUidOBo","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (snowman, etc.)"},
+{"a":"SSeBjzpJLFk","b":"2kLB7ZwxVv8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (claw machine, basket)"},
+{"a":"Br48ar2svbI","b":"aA57PjtEfZw","label":"same-template","confidence":0.85,"note":"Bob phonics letter B vs D, shared intro/outro"},
+{"a":"jflAKuIuQBM","b":"Ar6N0i4c36U","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts on same set, likely different gags"},
+{"a":"j316Y_-hFW0","b":"mksDZdIzhkI","label":"re-skin","confidence":0.8,"note":"Same bus interior shots (croc, baby, family); bus rainbow/orange vs red/pink"},
+{"a":"xers5HU02Ew","b":"MQkYufd11nU","label":"shared-segments","confidence":0.7,"note":"Boo Boo Song shorts with same footage, different cut lengths"}
+]

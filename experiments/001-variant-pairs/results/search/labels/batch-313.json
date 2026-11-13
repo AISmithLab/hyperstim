@@ -1,0 +1,12 @@
+[
+{"a":"MoftuEWtBuI","b":"Li4873tEc6Y","label":"shared-segments","confidence":0.75,"note":"Kaboochi short; B is a 106s longer cut with same thumbnail and hula shots."},
+{"a":"n2mneo6Owhk","b":"Li4873tEc6Y","label":"shared-segments","confidence":0.75,"note":"Kaboochi short; B is a 106s longer cut with same thumbnail and hula shots."},
+{"a":"ZRd-uNE-AUA","b":"Li4873tEc6Y","label":"shared-segments","confidence":0.65,"note":"Kaboochi shorts sharing the hula-boy shots; different cuts."},
+{"a":"4rcjZ1f_L4A","b":"Li4873tEc6Y","label":"shared-segments","confidence":0.65,"note":"Kaboochi shorts across channels sharing hula-boy shots; different cuts."},
+{"a":"HW8O6C_OCJQ","b":"Li4873tEc6Y","label":"shared-segments","confidence":0.65,"note":"Kaboochi shorts sharing the hula-boy shots; different cuts."},
+{"a":"_e29OQFpP7A","b":"AlEPz20FGnk","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts; long version shares the plaid-dad shots."},
+{"a":"mKc2nRMF7t4","b":"-a3PpO3jlDI","label":"same-template","confidence":0.85,"note":"Learning Street phonics E vs H; shared intro/outro kids shots."},
+{"a":"gkk96Hm-IHo","b":"KKgsTFivFJM","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"sFhZZIPj9nE","b":"3aoEeaCHS_w","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, cleaning vs fishing gags."},
+{"a":"o6VjhL9gA1A","b":"uLLqj_ibi-Y","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, carousel vs springboard gags."}
+]

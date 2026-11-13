@@ -1,0 +1,72 @@
+[
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "h3bvPp9Jqnc",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Kaboochi dance shorts with same hula kids footage, different edits."
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "Gh4izthwnNM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "IYU2e8WgGnY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "3aoEeaCHS_w",
+  "b": "cqjfiWrwmmg",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "iFpez4fPv5Y",
+  "b": "Kix07nOAEBQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the egg episode."
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "7ClCbBREUlU",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "Td73SYRglgw",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "Jyj_bwI2cs0",
+  "b": "rZWQrsYulxI",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Both Scared of the Dark shorts, different characters and shots across channels."
+ },
+ {
+  "a": "MHvLcoblyio",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "92wkK3tkeb0",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "DclM70T7jyI",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "CWLGrZFv6ww",
+  "b": "5AbgHA_RcEs",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Fire truck compilation and single share thumbnail and red fire truck footage."
+ },
+ {
+  "a": "tQlIWPUO_E0",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Ten in the Bed vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "CvFabQeSv9A",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs monsters shorts; nothing shared."
+ }
+]

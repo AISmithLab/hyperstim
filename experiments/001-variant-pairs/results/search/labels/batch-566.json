@@ -1,0 +1,72 @@
+[
+ {
+  "a": "V9fA6nrohac",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic attic stairs vs Kaboochi dance; side-bar match only"
+ },
+ {
+  "a": "gvcEcWUHZ_c",
+  "b": "Pa7utiQUGOY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the pillow episode"
+ },
+ {
+  "a": "6FhYNE5KFeg",
+  "b": "E1wcRx1Exec",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic cat episode vs Larva-style rain cartoon; side-bar match only"
+ },
+ {
+  "a": "aScyfsClZd0",
+  "b": "b5p78d-gr6w",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Boo Boo Song vs Monster in the Dark; different songs and characters"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "aDyWeSAt-sI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "JOMSMENnSIQ",
+  "b": "20HqqfnKxZk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "W5PP6fPZK0I",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi dance vs Three Little Pigs short; different songs"
+ },
+ {
+  "a": "zej8Uf5iAGk",
+  "b": "cqjfiWrwmmg",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, teleport vs stones"
+ },
+ {
+  "a": "jvCQFkt2FwI",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Two-episode picture short vs springboard; no shared episode visible"
+ }
+]

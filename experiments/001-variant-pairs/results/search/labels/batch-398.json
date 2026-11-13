@@ -1,0 +1,72 @@
+[
+ {
+  "a": "kZytosLyQEc",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "aDyWeSAt-sI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "xEFkAQpftd4",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

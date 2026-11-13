@@ -1,0 +1,72 @@
+[
+ {
+  "a": "CfJfPAF8El8",
+  "b": "Ct1dHCSwlzs",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts (dance song vs junk food song); match on vertical side bars"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: kung fu vs toilet"
+ },
+ {
+  "a": "tQ3LttVt_Jk",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: canyon vs spot"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: rings vs leaves"
+ },
+ {
+  "a": "iFpez4fPv5Y",
+  "b": "9-G4JeHJiYQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share strawberry-hat and egg episodes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "mJFTp8x_QZ4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: mime vs barbell"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "Nlt_DqiIHcQ",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bicycle vs mime"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "zSf5nw7US6U",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the claw machine episode"
+ },
+ {
+  "a": "R64M1iM-FJM",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "cAngxOmb79A",
+  "b": "7ClCbBREUlU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "eU2P1h9SIhY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "eAodpnlhaNI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "psZZrqi-Ud8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "_QkBvYROA7o",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "3ZXmeuhJ7Bc",
+  "b": "sJb_iV1LCXY",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Five Little Babies shorts: animal babies vs human babies, different animation"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "MHvLcoblyio",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "fo7aioou8m0",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ },
+ {
+  "a": "Is1sSXyJz28",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on dark blurred side bars of vertical frames"
+ }
+]

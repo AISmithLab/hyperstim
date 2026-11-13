@@ -1,0 +1,12 @@
+[
+{"a":"eT-HIXX8iXY","b":"CR4xOtDkvNU","label":"shared-segments","confidence":0.85,"note":"Transport Train compilation contains the Number Train footage (same 6-7 car frame)."},
+{"a":"AlEPz20FGnk","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.7,"note":"Boo Boo Song, different characters and settings (indoor family vs kids on grass)."},
+{"a":"UfuSoF6iy_w","b":"gszQsk7Ov9k","label":"same-song","confidence":0.6,"note":"Halloween vs Monster Finger Family; different characters and staging."},
+{"a":"TGZl_HsDj_0","b":"JOMSMENnSIQ","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same thumbnail layout; sampled frames show different episodes."},
+{"a":"vyIiFiExyQQ","b":"TGZl_HsDj_0","label":"shared-segments","confidence":0.9,"note":"Rattic Mini compilations sharing red car, tower and roller episodes, identical frames."},
+{"a":"7FiyQQBYTUY","b":"jvCQFkt2FwI","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; skates vs picture gags."},
+{"a":"PbchJhisS4s","b":"GvP31EGA8tQ","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"163ojnwXQ98","b":"b5p78d-gr6w","label":"unrelated","confidence":0.8,"note":"Talking Haunted House vs Monster in the Dark; different songs and characters."},
+{"a":"skNxtYhw9Y8","b":"nHT4spNAshs","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"2uTYZ20rXa8","b":"yOq3vuvmRCQ","label":"same-song","confidence":0.7,"note":"Wheels on the Bus: yellow faceless school bus vs purple face bus, different shots and interior."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "EX0D6k2zAM0",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing mime, dinosaur, kung fu episodes"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "R7pIlyiHmJY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "6L0oq3iwbS0",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic TV episode vs two-episode basketball short"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "TwS8SzpZrug",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the claw machine episode"
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic hollow vs two-episode toilet short"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "39Dtr0Rq-TY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, birthday vs boards"
+ },
+ {
+  "a": "Qv-eMjDmTJQ",
+  "b": "aACfDyTDcL8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "_GlpTSaa5EU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "7xSdzGpSjl4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic kung fu vs gloves short; no shared episode visible"
+ },
+ {
+  "a": "HW8O6C_OCJQ",
+  "b": "PoRuagin4iM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi beach dance vs Peek A Boo song; different songs"
+ }
+]

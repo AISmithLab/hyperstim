@@ -1,0 +1,12 @@
+[
+{"a":"V04vD3vrctU","b":"jEwfENQE5Os","label":"unrelated","confidence":0.8,"note":"Different Halloween shorts, different characters and scenes."},
+{"a":"ksTmEkp5ERM","b":"G7PTUNLnAFk","label":"unrelated","confidence":0.85,"note":"Finger Family vs Wheels on the Train shorts; different content."},
+{"a":"Is1sSXyJz28","b":"7xv-yiS3oB4","label":"unrelated","confidence":0.75,"note":"Different Halloween song shorts, different characters."},
+{"a":"0mpiPGppR0w","b":"FS-9qCEnc38","label":"shared-segments","confidence":0.75,"note":"Loco Nuts compilations sharing snow trio and elephant watermelon episodes."},
+{"a":"QidFzjRpGdM","b":"qhaDwGQUOLM","label":"re-upload","confidence":0.6,"note":"Same Five Little Mommies short footage; B shorter cut, new thumbnail."},
+{"a":"JZveVyuclhs","b":"7HOESsArCmY","label":"re-skin","confidence":0.9,"note":"Same bus song shots; bus recolored pink to orange."},
+{"a":"V6mkgjixCoQ","b":"xI9-MgmErhQ","label":"re-skin","confidence":0.9,"note":"Same bus animation; bus recolored yellow to green."},
+{"a":"KZVSZyNxSng","b":"H3sryXrlWy8","label":"re-upload","confidence":0.65,"note":"Same Ha Ha Halloween Night short footage; B shorter edit."},
+{"a":"X5isLUsPsU0","b":"AyZJfo2rrOc","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations with identical car and trash-can episode frames."},
+{"a":"IE7VFN8ln9Y","b":"uLLqj_ibi-Y","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different gags."}
+]

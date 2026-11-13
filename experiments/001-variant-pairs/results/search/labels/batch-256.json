@@ -1,0 +1,12 @@
+[
+{"a":"s5nP-7Kahdc","b":"ooPueu3Y0ds","label":"re-upload","confidence":0.75,"note":"Same Jingle Bells animation, same length; 3/4 frame differs (table vs sleigh), maybe re-edited."},
+{"a":"U9maOBWT6wE","b":"ZRd-uNE-AUA","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Kaboochi shorts; side bars only."},
+{"a":"Eoa6oDVBoNg","b":"30tipN0AniY","label":"unrelated","confidence":0.6,"note":"Christmas compilation vs a different Jingle Bells; only Santa thumbnail look shared."},
+{"a":"FIinrJO9po8","b":"-8VedXc5EDU","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-box episode."},
+{"a":"lEvNMZQ2DT4","b":"8Ri1s8CTSrM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the shed episode."},
+{"a":"seXZDKkONiU","b":"ZRd-uNE-AUA","label":"unrelated","confidence":0.85,"note":"Hindi parrot rhyme vs Kaboochi shorts."},
+{"a":"VyVoYECnHxE","b":"cmi5_37226c","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the ball episode."},
+{"a":"wZBNnb8U2dw","b":"9cs2qm_e8J8","label":"unrelated","confidence":0.7,"note":"Different Halloween songs and characters."},
+{"a":"OVlbtpG4d64","b":"qFd8upG7SMI","label":"shared-segments","confidence":0.85,"note":"Compilations sharing the farm wagon clip."},
+{"a":"U9maOBWT6wE","b":"TtbFoTBDaU8","label":"unrelated","confidence":0.8,"note":"Hush Little Baby vs Boo Boo shorts; different characters."}
+]

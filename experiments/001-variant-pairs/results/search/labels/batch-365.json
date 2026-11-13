@@ -1,0 +1,72 @@
+[
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "oHSAGotL2Vo",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "CU_QocmxLz0",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "BZqq3eL6xSE",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "njSANQD1GlI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "pe_iRGqeBlA",
+  "b": "X5isLUsPsU0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episodes"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "afyKHCB03MU",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "YABj119wijM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the pillow and toilet episodes"
+ },
+ {
+  "a": "zej8Uf5iAGk",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

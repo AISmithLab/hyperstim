@@ -1,0 +1,72 @@
+[
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "hLYn45GEWJc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Rattic Mini short vs larva cartoon short"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "WZ45rZRLf80",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "h3bvPp9Jqnc",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi dance song shorts: playroom babies vs beach hula kids"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "LQQ2DD4V_mY",
+  "b": "R7pIlyiHmJY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "5iXRqSe4KJo",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: birthday vs trombone"
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "S9N416aMRxk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share purple box and dino episodes"
+ },
+ {
+  "a": "jPvyJ9IIRJk",
+  "b": "CU_QocmxLz0",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: skipping rope vs statue"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "Eif8UopFHhM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "_OlmXmG5OLM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: gloves vs lawn mower"
+ }
+]

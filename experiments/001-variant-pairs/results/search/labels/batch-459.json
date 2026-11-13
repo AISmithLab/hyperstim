@@ -1,0 +1,72 @@
+[
+ {
+  "a": "3AQucDZcTXc",
+  "b": "K6HDbF6imr4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "2D compilations share the Humpty Dumpty segment"
+ },
+ {
+  "a": "jRCHQ6wCTUA",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "_uYyO8y5Txc",
+  "b": "fcYBv33BuIY",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts with same mom-in-pink characters; different cuts of one animation"
+ },
+ {
+  "a": "y5BTqWirpe8",
+  "b": "uFVntNVnn7k",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters M vs O"
+ },
+ {
+  "a": "GCqVNL7ZRdg",
+  "b": "VnHWYMlDgwI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the toy-car stall episode"
+ },
+ {
+  "a": "V9fA6nrohac",
+  "b": "P610udrUFqE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "uFVntNVnn7k",
+  "b": "XBXyBskjSOc",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters O vs T"
+ },
+ {
+  "a": "V9fA6nrohac",
+  "b": "ainrmFQVbfI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "QKrdD5Y9c-s",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "iJZ97cfpjhI",
+  "b": "Tgp1NqPegK8",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi dance: animal characters vs baby characters"
+ }
+]

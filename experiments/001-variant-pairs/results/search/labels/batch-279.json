@@ -1,0 +1,12 @@
+[
+{"a":"ET0nSVHzYd4","b":"awLcqOFRHzg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the red-car episode."},
+{"a":"awLcqOFRHzg","b":"OSOdLGenkS0","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the red-car episode."},
+{"a":"vyIiFiExyQQ","b":"awLcqOFRHzg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the red-car episode."},
+{"a":"awLcqOFRHzg","b":"ZEI_8iC_Z7E","label":"shared-segments","confidence":0.5,"note":"Identical thumbnail (red car) but sampled frames show different episodes; thumbnail-driven."},
+{"a":"oWkIR8ZkHgo","b":"awLcqOFRHzg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the patrol/jeep episode."},
+{"a":"qM6hdr1DVSM","b":"DS8rk9NwXQc","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, airplane vs mime gags."},
+{"a":"pe_iRGqeBlA","b":"IYU2e8WgGnY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing trash-bin and jeep episodes."},
+{"a":"hzzGSyV_BCA","b":"Pa7utiQUGOY","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the pillow episode."},
+{"a":"UXsXYmw3_CY","b":"fOJm84LQSTw","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs high striker gags."},
+{"a":"OSOdLGenkS0","b":"KKgsTFivFJM","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."}
+]

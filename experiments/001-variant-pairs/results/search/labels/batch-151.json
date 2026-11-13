@@ -1,0 +1,12 @@
+[
+{"a":"0TVZVV-IXCQ","b":"NnvOQVPXWTw","label":"same-song","confidence":0.75,"note":"2013 Wheels on the Bus: snowy mountain road animation vs city bus animation."},
+{"a":"0TVZVV-IXCQ","b":"zN8W339rP_U","label":"same-song","confidence":0.75,"note":"2013 Wheels on the Bus: snowy road animation vs yellow city bus animation."},
+{"a":"mmIVI_J4Emk","b":"9A6tYZPHROU","label":"shared-segments","confidence":0.65,"note":"Shorts sharing the same police-car footage under different song titles."},
+{"a":"-a3PpO3jlDI","b":"oHtQbh7LJjY","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters H and J, shared intro and set."},
+{"a":"Tn2UZwb9RcY","b":"El8w4iWGWEI","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bucket vs basketball."},
+{"a":"oHSAGotL2Vo","b":"oT6bPk4gHxM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bar chair vs rings."},
+{"a":"TGZl_HsDj_0","b":"ewZwn2G14Wg","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the red toy-car episode."},
+{"a":"ewZwn2G14Wg","b":"skNxtYhw9Y8","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."},
+{"a":"oHSAGotL2Vo","b":"PPVWn53Yw4M","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bar chair vs football."},
+{"a":"ewZwn2G14Wg","b":"fUR3k2eL6Mo","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."}
+]

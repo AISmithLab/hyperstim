@@ -1,0 +1,12 @@
+[
+{"a":"y5BTqWirpe8","b":"GcZXNKTPP5U","label":"same-template","confidence":0.9,"note":"Bob the Train letter M vs letter R episodes"},
+{"a":"Gvz14qtMDBo","b":"GcZXNKTPP5U","label":"same-template","confidence":0.9,"note":"Bob the Train letter G vs letter R episodes"},
+{"a":"aFbSzIMTBsY","b":"GcZXNKTPP5U","label":"same-template","confidence":0.9,"note":"Bob the Train letter N vs letter R episodes"},
+{"a":"GcZXNKTPP5U","b":"XBXyBskjSOc","label":"same-template","confidence":0.9,"note":"Bob the Train letter R vs letter T episodes"},
+{"a":"0L9EfYLMx8A","b":"GcZXNKTPP5U","label":"same-template","confidence":0.9,"note":"Bob the Train letter P vs letter R episodes"},
+{"a":"jPvyJ9IIRJk","b":"mrU14TkzuVI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: skipping rope vs robot vacuum"},
+{"a":"UXsXYmw3_CY","b":"XamiKGRhams","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: gloves vs toilet"},
+{"a":"ET0nSVHzYd4","b":"TGZl_HsDj_0","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the red-car episode"},
+{"a":"Gh4izthwnNM","b":"LQQ2DD4V_mY","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"SSeBjzpJLFk","b":"KFwebO9sy58","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-box episode"}
+]

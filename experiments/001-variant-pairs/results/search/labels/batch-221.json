@@ -1,0 +1,72 @@
+[
+ {
+  "a": "g9Z1I3T6vf0",
+  "b": "tXgJmUiG38s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini 'The Builder' short cut from the 165s version."
+ },
+ {
+  "a": "E7LWvi86hYw",
+  "b": "-310FC3iTw8",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Zoobees Halloween compilations share the pig-and-panda segment; thumbnail bus recolored red vs orange."
+ },
+ {
+  "a": "PmUySuJoa1g",
+  "b": "tXgJmUiG38s",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "Same Rattic Mini 'The Builder' short re-uploaded; same frames."
+ },
+ {
+  "a": "tXgJmUiG38s",
+  "b": "DyY7at_1WJA",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Spring Toy short opens with the Builder blocks footage, then new gag."
+ },
+ {
+  "a": "UjTWCvxRb3c",
+  "b": "yAsa7KneS8A",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Wonderful Zoo re-uploaded with new thumbnail; identical frames."
+ },
+ {
+  "a": "8iH3Q_TORXA",
+  "b": "-310FC3iTw8",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Zoobees Halloween compilations share the pig-and-panda segment."
+ },
+ {
+  "a": "4x4Yq87gtlQ",
+  "b": "N3PkLoXEje0",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Bob farm songs share the train-at-barn shot; different edit and animal segments."
+ },
+ {
+  "a": "_QAtt0NlfOM",
+  "b": "yUjUU9FVa8s",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Two different Halloween shorts; nothing shared."
+ },
+ {
+  "a": "i9kMX8tSKSA",
+  "b": "LIvbQc_In_s",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Chew your food vs sick song shorts; nothing shared."
+ },
+ {
+  "a": "fKWJTJUkwPc",
+  "b": "3xFAcRiJ1AE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five in the Bed vs Rain Rain shorts; nothing shared."
+ }
+]

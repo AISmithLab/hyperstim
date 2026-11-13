@@ -1,0 +1,12 @@
+[
+{"a":"0TMESkQq8lI","b":"mvk72WzIpmA","label":"shared-segments","confidence":0.8,"note":"Christmas compilation contains Jingle Bells footage (kids at fence frame identical)"},
+{"a":"wZBNnb8U2dw","b":"83xYPZ_2W1k","label":"unrelated","confidence":0.75,"note":"Different Halloween songs and animations"},
+{"a":"7U5-_Se7VTE","b":"cmi5_37226c","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"},
+{"a":"6L0oq3iwbS0","b":"39Dtr0Rq-TY","label":"same-template","confidence":0.55,"note":"Rattic Mini shorts on same set, different gags"},
+{"a":"NnN4n9v9Ojs","b":"Gvz14qtMDBo","label":"same-template","confidence":0.9,"note":"Bob the Train letter F vs G episodes"},
+{"a":"1fL9dsWYLJ0","b":"ZRd-uNE-AUA","label":"unrelated","confidence":0.8,"note":"Different shorts (bus song vs Kaboochi), similar vertical layout only"},
+{"a":"vTnqzIs9PNw","b":"NkrowZHe9HY","label":"shared-segments","confidence":0.8,"note":"Compilations with an identical shared frame (man in yard)"},
+{"a":"lyx6mjqn1b8","b":"OFSgVTApz4Q","label":"shared-segments","confidence":0.8,"note":"Bob Halloween compilation contains the Jack O Lantern song footage"},
+{"a":"iylbQZjg-fk","b":"bDwM-vixC8M","label":"shared-segments","confidence":0.55,"note":"Hector compilations, same series; sampled frames differ"},
+{"a":"wZBNnb8U2dw","b":"HqnP_fk78kU","label":"unrelated","confidence":0.7,"note":"Different Halloween songs and animations"}
+]

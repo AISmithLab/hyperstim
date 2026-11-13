@@ -1,0 +1,12 @@
+[
+{"a":"qXS5B2CYe8k","b":"TUy6PAiZBHA","label":"shared-segments","confidence":0.85,"note":"Christmas compilations, same length, shared car and gingerbread segments"},
+{"a":"kE5xS-j44iw","b":"y3FSBDhQ1Nk","label":"shared-segments","confidence":0.8,"note":"Christmas compilations sharing the gingerbread segment"},
+{"a":"tQlIWPUO_E0","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.75,"note":"Ten in the Bed vs Kaboochi shorts"},
+{"a":"vvl896dBRCk","b":"mG59TA1gMvo","label":"shared-segments","confidence":0.8,"note":"Halloween compilation contains the single song; same moon shot"},
+{"a":"U9maOBWT6wE","b":"qHf6e1CQQ5c","label":"unrelated","confidence":0.75,"note":"Hush Little Baby vs Kaboochi shorts"},
+{"a":"vYXkEPIElyc","b":"-OXYsniHGBM","label":"same-song","confidence":0.6,"note":"Boo Boo shorts with different characters and scenes"},
+{"a":"ethhQFANCTE","b":"DinuQf1_gZ4","label":"shared-segments","confidence":0.8,"note":"Loco Nuts compilations sharing the banana boat episode"},
+{"a":"yOq3vuvmRCQ","b":"upqIQe-_llc","label":"re-skin","confidence":0.7,"note":"Wheels on the Bus purple bus vs green bus in compilation; same street shots"},
+{"a":"sBtKayGZJiU","b":"GGQVXv4Nc-E","label":"unrelated","confidence":0.75,"note":"Johny Johny vs Boo Boo shorts"},
+{"a":"7wfgbhEY9DU","b":"rZWQrsYulxI","label":"same-template","confidence":0.5,"note":"Sick Song vs Scared of the Dark shorts, same boy character, different songs"}
+]

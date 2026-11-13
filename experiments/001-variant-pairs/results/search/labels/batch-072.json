@@ -1,0 +1,12 @@
+[
+{"a":"R49NrP0fcsE","b":"_QFj7e58XGE","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Wheels on the Train; different characters."},
+{"a":"R49NrP0fcsE","b":"MBoA383dfOU","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts with the same hurt girl and red-shirt dad shots; 31 vs 37 s cuts."},
+{"a":"gdVpv0KN_uU","b":"R49NrP0fcsE","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Boo Boo; different characters."},
+{"a":"oCiHs7agwmE","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance: babies with corgi vs Hawaiian kids; different animation."},
+{"a":"YudNG_jdUs4","b":"OokGp8l_x9k","label":"unrelated","confidence":0.85,"note":"Zoo song vs Halloween bus; different content."},
+{"a":"gdVpv0KN_uU","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Kaboochi dance; different content."},
+{"a":"BRcmpSxalwA","b":"CAg8ItLDkwg","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Wheels on the Taxi; different content."},
+{"a":"gvcEcWUHZ_c","b":"ZEI_8iC_Z7E","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations; identical pillow-and-basket shot at 3/4."},
+{"a":"CvFabQeSv9A","b":"R49NrP0fcsE","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different characters and scenes."},
+{"a":"6aBfQYlhKJs","b":"S-mQfP0MW5w","label":"unrelated","confidence":0.85,"note":"Spooky Zombie vs Baa Baa Black Sheep; different content."}
+]

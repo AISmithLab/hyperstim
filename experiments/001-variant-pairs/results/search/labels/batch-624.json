@@ -1,0 +1,72 @@
+[
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "IYU2e8WgGnY",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "JOMSMENnSIQ",
+  "b": "xGQYPFqXJjE",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "LQQ2DD4V_mY",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "QKrdD5Y9c-s",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "UN4V4ywCWxA",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "Qs4R686NOjg",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "iFpez4fPv5Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "IYU2e8WgGnY",
+  "b": "vGjN_CslxSI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ },
+ {
+  "a": "05oAs-Pqf5Y",
+  "b": "6YYa6ar2RN4",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Christmas Kaboochi vs Kaboochi; different characters and shots at matched moments"
+ },
+ {
+  "a": "gkk96Hm-IHo",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; different episodes at matched moments"
+ }
+]

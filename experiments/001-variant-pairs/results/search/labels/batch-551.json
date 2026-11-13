@@ -1,0 +1,72 @@
+[
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: skates vs springboard"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "Uq5Pp5BQSm4",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "V9fA6nrohac",
+  "b": "QLtuuZVDZ4g",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: attic stairs vs pillow"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "cO1aLZ7teeg",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "Tgp1NqPegK8",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi vs camp bus song shorts; different animation, side bars match"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "vyIiFiExyQQ",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: camera vs toilet"
+ },
+ {
+  "a": "-kMVWdZjOP8",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts: Halloween lamp vs birthday"
+ },
+ {
+  "a": "s0DwH0Oq5YY",
+  "b": "_e29OQFpP7A",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with the same family models; likely cuts of one animation, no identical shot"
+ }
+]

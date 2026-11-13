@@ -1,0 +1,72 @@
+[
+ {
+  "a": "fx0aMbJwE34",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share snowman and toy jeep episodes"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "nHT4spNAshs",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share cannon and giant ball episodes"
+ },
+ {
+  "a": "QKrdD5Y9c-s",
+  "b": "-8VedXc5EDU",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine episode"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "STRJcffvt-0",
+  "b": "vCMNQHulhfo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters Q vs S, same template"
+ },
+ {
+  "a": "evV7r4kNN7g",
+  "b": "0E1mZOYwLoU",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters Y vs Z"
+ },
+ {
+  "a": "_e29OQFpP7A",
+  "b": "fcYBv33BuIY",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts from one production (mom in pink, dad in plaid), different cuts"
+ },
+ {
+  "a": "Eif8UopFHhM",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ }
+]

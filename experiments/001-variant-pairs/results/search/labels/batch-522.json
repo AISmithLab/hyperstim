@@ -1,0 +1,72 @@
+[
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "2SAG3jAYNyk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "xe7vTAa-ufc",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Jingle Bells vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "Iygt_NzD7VU",
+  "b": "PnO51tbfqQs",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts from different animations"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "a7-bpUidOBo",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations share the mime episode"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "PjXooPy93AM",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations share the mime episode"
+ },
+ {
+  "a": "vbY-B_GtSvc",
+  "b": "vCMNQHulhfo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters K vs S, same template"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ }
+]

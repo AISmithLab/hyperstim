@@ -1,0 +1,72 @@
+[
+ {
+  "a": "pjcdeWzeoyI",
+  "b": "qu4A1W2CG1Y",
+  "label": "re-upload",
+  "confidence": 0.75,
+  "note": "Superhero finger family re-uploaded with Kids TV intro and new title; same frames."
+ },
+ {
+  "a": "rpvtKnqu7-4",
+  "b": "qmWTMNhtY9Q",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Phonics letter songs O vs U, same white-set template."
+ },
+ {
+  "a": "QmznT1yEsHc",
+  "b": "RKzQG0aXh-4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Christmas bus short cut from the long compilation; same red Santa bus."
+ },
+ {
+  "a": "GkcqRmdwKlE",
+  "b": "qmWTMNhtY9Q",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Phonics letter songs J vs U, same white-set template."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "NrKUTj5Lefs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs bugs song shorts; nothing shared."
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "U9maOBWT6wE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bath song vs Hush Little Baby shorts; nothing shared."
+ },
+ {
+  "a": "8AguNMwcvsw",
+  "b": "Hr0QlC5Nrh0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Baby Shark vs Santa sleigh shorts; nothing shared."
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "klwhxvQDOZk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Train song vs Deck the Hall shorts; nothing shared."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "1fL9dsWYLJ0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs bus song shorts; nothing shared."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "Jn9aklUYdQk",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo shorts share the mom-holding-baby shot; other shots differ."
+ }
+]

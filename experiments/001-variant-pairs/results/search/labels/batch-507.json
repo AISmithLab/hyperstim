@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Q-qoF1B0i_Q",
+  "b": "rWQWjm-AIvo",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts from one production (mom in pink sweater), different cuts"
+ },
+ {
+  "a": "El8w4iWGWEI",
+  "b": "Dv9uq-E9kbY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "ainrmFQVbfI",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "CU_QocmxLz0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "ZRd-uNE-AUA",
+  "b": "AlEPz20FGnk",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Hawaiian Kaboochi vs Boo Boo shorts; different characters"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "bdbNsMtn26Y",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share turban-snake and vending machine episodes"
+ },
+ {
+  "a": "EPh1bFzsVf4",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "5iXRqSe4KJo",
+  "b": "Tn2UZwb9RcY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ }
+]

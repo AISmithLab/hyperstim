@@ -1,0 +1,12 @@
+[
+{"a":"_i-HUb2b2Es","b":"nbI-1N_uBNs","label":"same-song","confidence":0.65,"note":"Jingle Bells shorts with different characters and animation"},
+{"a":"_i-HUb2b2Es","b":"UYSdO8QlFUg","label":"unrelated","confidence":0.75,"note":"Jingle Bells short vs We Wish You a Merry Christmas short"},
+{"a":"_i-HUb2b2Es","b":"6JwCDXQGK3w","label":"unrelated","confidence":0.75,"note":"Jingle Bells short vs Deck the Halls short"},
+{"a":"YABj119wijM","b":"klDPbXVTBzw","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"GCqVNL7ZRdg","b":"FGUfrSFknik","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the rocks-and-butterfly-net episode"},
+{"a":"G7PTUNLnAFk","b":"CfJfPAF8El8","label":"unrelated","confidence":0.85,"note":"Wheels on the Train short vs Kaboochi short"},
+{"a":"EPh1bFzsVf4","b":"TwDxP5L1-VA","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: leaves vs teleport"},
+{"a":"zej8Uf5iAGk","b":"hsUfmH_uRjc","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: teleport vs car service"},
+{"a":"oWkIR8ZkHgo","b":"X5isLUsPsU0","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"TwS8SzpZrug","b":"Eif8UopFHhM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing ladybug and toy-box episodes"}
+]

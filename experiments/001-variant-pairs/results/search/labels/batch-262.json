@@ -1,0 +1,12 @@
+[
+{"a":"1DOZoGrM-5o","b":"s604TR-uFuY","label":"shared-segments","confidence":0.8,"note":"Bob compilations with identical shared frame (car and train split)"},
+{"a":"PT7if7fHdPE","b":"s604TR-uFuY","label":"shared-segments","confidence":0.8,"note":"Bob compilations with identical shared frame (car and train split)"},
+{"a":"bcYUgMEaCMA","b":"yPexH1DUKe4","label":"shared-segments","confidence":0.8,"note":"Halloween finger family shorts cut from the same footage (vampire boy)"},
+{"a":"xqmw3bRa9GE","b":"SQBTIuB0SsI","label":"unrelated","confidence":0.85,"note":"Old MacDonald vs Halloween bus shorts"},
+{"a":"IRWTZropao4","b":"B7HQQms6klA","label":"unrelated","confidence":0.8,"note":"Different shorts; black side bars only"},
+{"a":"pbfbmXohAGo","b":"ZRd-uNE-AUA","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters and scenes"},
+{"a":"PJMQwM1Z1Ao","b":"gUom7eTGyA0","label":"shared-segments","confidence":0.85,"note":"Compilations with identical shared frames (man and pig, elephant)"},
+{"a":"OLXeTCu2ESc","b":"7I0SeirswAk","label":"unrelated","confidence":0.85,"note":"No No song vs Johny Johny shorts"},
+{"a":"uBA-DOOnkZ8","b":"Xo3zWzIj8fM","label":"unrelated","confidence":0.85,"note":"Different dance shorts, side bars only"},
+{"a":"PvwnJG2i1i4","b":"bcYUgMEaCMA","label":"shared-segments","confidence":0.8,"note":"Halloween finger family long version and short share footage"}
+]

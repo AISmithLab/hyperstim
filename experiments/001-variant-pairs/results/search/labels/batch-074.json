@@ -1,0 +1,12 @@
+[
+{"a":"CfJfPAF8El8","b":"Tgp1NqPegK8","label":"shared-segments","confidence":0.65,"note":"Kaboochi baby shorts: identical panda-baby shot; babies take turns on the same block floor."},
+{"a":"CfJfPAF8El8","b":"oCiHs7agwmE","label":"shared-segments","confidence":0.65,"note":"Kaboochi baby shorts sharing the identical panda-baby shot; different other shots."},
+{"a":"CfJfPAF8El8","b":"uQ90xr1p-eQ","label":"shared-segments","confidence":0.5,"note":"Kaboochi baby shorts from the same production (block floor, cast); no identical frame sampled."},
+{"a":"CfJfPAF8El8","b":"tQlIWPUO_E0","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Ten in the Bed; different content."},
+{"a":"CfJfPAF8El8","b":"IbEIByW4Fwk","label":"unrelated","confidence":0.85,"note":"Kaboochi babies vs Oopsie Doopsie; different characters."},
+{"a":"CfJfPAF8El8","b":"8-qO0tHgMHY","label":"unrelated","confidence":0.85,"note":"Kaboochi babies vs animal dance; different characters."},
+{"a":"CfJfPAF8El8","b":"FT0mjHIs2oY","label":"same-song","confidence":0.5,"note":"Kaboochi dance: babies indoors vs Hawaiian beach cast."},
+{"a":"CfJfPAF8El8","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance: babies indoors vs Hawaiian beach cast."},
+{"a":"CfJfPAF8El8","b":"1ssnJqJNdbM","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Five Little Babies; different content."},
+{"a":"CfJfPAF8El8","b":"7-abUIzCk5U","label":"same-song","confidence":0.5,"note":"Kaboochi dance: babies indoors vs costumed baby on patterned sets."}
+]

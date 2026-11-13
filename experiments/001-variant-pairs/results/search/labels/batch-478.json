@@ -1,0 +1,12 @@
+[
+{"a":"PjXooPy93AM","b":"cmi5_37226c","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"lij2KlyDHJ8","b":"skNxtYhw9Y8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the snake charmer episode"},
+{"a":"skNxtYhw9Y8","b":"xGQYPFqXJjE","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"fUR3k2eL6Mo","b":"Jt4V3NCA-u0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing balloon and dinosaur episodes"},
+{"a":"GvP31EGA8tQ","b":"R7pIlyiHmJY","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"7m15CgRy6OU","b":"AlEPz20FGnk","label":"shared-segments","confidence":0.65,"note":"Boo Boo short and 178s version of the same production"},
+{"a":"GvP31EGA8tQ","b":"3yv0GSbbCZI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"7m15CgRy6OU","b":"Td73SYRglgw","label":"same-song","confidence":0.6,"note":"Boo Boo shorts from different productions"},
+{"a":"s0DwH0Oq5YY","b":"_uYyO8y5Txc","label":"shared-segments","confidence":0.75,"note":"Boo Boo shorts sharing the girl and baby shots"},
+{"a":"sT3J4L19qrE","b":"Kix07nOAEBQ","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"}
+]

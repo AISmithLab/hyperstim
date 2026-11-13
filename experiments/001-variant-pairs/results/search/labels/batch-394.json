@@ -1,0 +1,72 @@
+[
+ {
+  "a": "pIBlHJFJ1vs",
+  "b": "DKTclayc5PU",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "2014 Wheels on the Bus: blue bus vs red bus, identical shots and family scene"
+ },
+ {
+  "a": "DKTclayc5PU",
+  "b": "5ElsiB8aoIg",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "2014 Wheels on the Bus: red bus vs black bus, identical shots and family scene"
+ },
+ {
+  "a": "DKTclayc5PU",
+  "b": "xI9-MgmErhQ",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "2014 Wheels on the Bus: red bus vs green bus, identical shots and family scene"
+ },
+ {
+  "a": "DKTclayc5PU",
+  "b": "cjtn_IOstAI",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "2014 Wheels on the Bus: red bus vs white bus, identical shots and family scene"
+ },
+ {
+  "a": "V6mkgjixCoQ",
+  "b": "DKTclayc5PU",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "2014 Wheels on the Bus: yellow bus vs red bus, identical shots and family scene"
+ },
+ {
+  "a": "yebnJe7tUqE",
+  "b": "DKTclayc5PU",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "2014 Wheels on the Bus: orange bus vs red bus, identical shots and family scene"
+ },
+ {
+  "a": "MWyordkvD0k",
+  "b": "DKTclayc5PU",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "2014 Wheels on the Bus: purple bus vs red bus, identical shots and family scene"
+ },
+ {
+  "a": "Xmoxqgv3KU4",
+  "b": "RYrWS3AslZQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Kids Channel learning compilations share the chick with letter O scene"
+ },
+ {
+  "a": "pVNzcpN_NQ8",
+  "b": "i8l65UgMmkk",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Kids Channel compilations share the cardboard car scene"
+ },
+ {
+  "a": "hIXOf7NePPo",
+  "b": "DKTclayc5PU",
+  "label": "same-song",
+  "confidence": 0.8,
+  "note": "2013 Wheels on the Bus, different blue-bus sunset animation vs 2014 red-bus version"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "cmi5_37226c",
+  "b": "WZ45rZRLf80",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share egg and sleigh episodes"
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "Tn2UZwb9RcY",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "ZEI_8iC_Z7E",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations share the red toy car episode"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "-OXYsniHGBM",
+  "b": "ANqdoD46Ox0",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with different characters and shots"
+ },
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "TwS8SzpZrug",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine episode"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ }
+]

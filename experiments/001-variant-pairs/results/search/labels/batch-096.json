@@ -1,0 +1,12 @@
+[
+{"a":"4OREtMc8hJA","b":"OEES3HmTQNw","label":"same-template","confidence":0.6,"note":"No No song episodes (obey parents vs junk food) with the same mom, boy and kitchen set."},
+{"a":"xqSMUstQJwc","b":"KGYkNNM0SmM","label":"shared-segments","confidence":0.9,"note":"Sport Bots compilations; identical midpoint frame."},
+{"a":"ejBvtH0Igqk","b":"P8hI5Lo1dvQ","label":"shared-segments","confidence":0.85,"note":"Wheels on the Fire Truck compilations; identical bus-and-taxi frame at the midpoint."},
+{"a":"bFzeFrnLf00","b":"KGYkNNM0SmM","label":"shared-segments","confidence":0.9,"note":"Sport Bots compilations; identical frames at 1/4 and 1/2."},
+{"a":"4OREtMc8hJA","b":"_aq9DIHqGnw","label":"same-template","confidence":0.6,"note":"No No song episodes with the same mom and kitchen set, different topics."},
+{"a":"4OREtMc8hJA","b":"cYZrTzVfiAE","label":"same-template","confidence":0.6,"note":"No No song episodes with the same mom and kitchen set, different topics."},
+{"a":"a07zOPj6CZg","b":"gIMyiAxeKSk","label":"same-template","confidence":0.85,"note":"Learning Street phonics episodes, G vs I, shared intro template."},
+{"a":"Th5MQB8VO3Q","b":"fcYBv33BuIY","label":"shared-segments","confidence":0.75,"note":"Boo Boo long version and 25 s cut share the pink-sweater mom and red-shirt dad shots."},
+{"a":"nHT4spNAshs","b":"WZ45rZRLf80","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the sleigh episode."},
+{"a":"e9gnACQvqRM","b":"c3lLP39EdME","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs cheese gag."}
+]

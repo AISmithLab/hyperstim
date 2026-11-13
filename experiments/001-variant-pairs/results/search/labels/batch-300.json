@@ -1,0 +1,12 @@
+[
+{"a":"aA57PjtEfZw","b":"-a3PpO3jlDI","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter D vs H."},
+{"a":"UXsXYmw3_CY","b":"Tn2UZwb9RcY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, gloves vs bucket."},
+{"a":"o6VjhL9gA1A","b":"ZRd-uNE-AUA","label":"unrelated","confidence":0.85,"note":"Rattic Mini short vs Kaboochi dance short."},
+{"a":"UGzlPPWb6Pg","b":"Ar6N0i4c36U","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, fly swatter vs manhole."},
+{"a":"IYU2e8WgGnY","b":"sT3J4L19qrE","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing rocket, trash can and car episodes."},
+{"a":"njSANQD1GlI","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, magic hat vs balloon."},
+{"a":"_4x2xszMRq8","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, birthday vs toilet."},
+{"a":"wAtBG4hjCOY","b":"c3lLP39EdME","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, swing vs cheese."},
+{"a":"TtbFoTBDaU8","b":"C5NadrBnSj8","label":"shared-segments","confidence":0.75,"note":"Boo Boo Song shorts across channels sharing the girl-hugging-baby shot."},
+{"a":"afyKHCB03MU","b":"yR0IqutO_i4","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, bottle vs space rocket."}
+]

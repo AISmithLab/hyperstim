@@ -1,0 +1,72 @@
+[
+ {
+  "a": "awLcqOFRHzg",
+  "b": "Gelbjg7SL0U",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "pBZoqnYJdpo",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: mime vs space rocket"
+ },
+ {
+  "a": "fx0aMbJwE34",
+  "b": "sT3J4L19qrE",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share trash can and toy jeep episodes"
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "cqjfiWrwmmg",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: space rocket vs stones"
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "Zifbjuvaqrk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs carousel"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "V9fA6nrohac",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: carousel vs attic stairs"
+ },
+ {
+  "a": "aFbSzIMTBsY",
+  "b": "wGMFLdlwsiE",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train letter songs: N vs Q on one template"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: stones vs basketball"
+ }
+]

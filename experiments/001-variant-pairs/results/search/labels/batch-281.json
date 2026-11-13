@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, cheese vs balloon gags"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, toy airplane vs birthday gags"
+ },
+ {
+  "a": "hzzGSyV_BCA",
+  "b": "M0V1ofCOEew",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, teleport vs picture gags"
+ },
+ {
+  "a": "NL_S69qf0jg",
+  "b": "i2XoutDdPoM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, butterfly vs pillow gags"
+ },
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "DS8rk9NwXQc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, swing vs mime gags"
+ },
+ {
+  "a": "VqT9YA3THAE",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, worm vs teleport gags"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "SB-7h4MW26k",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the toy jeep and sign episode"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, mime vs toilet gags"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, balloon vs talent show gags"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"DclM70T7jyI","b":"MHvLcoblyio","label":"re-upload","confidence":0.65,"note":"Boo Boo song short, same footage and colors; slightly different edit and thumbnail frame."},
+{"a":"6aLsu1cH1V4","b":"NIzsSt8iGhQ","label":"shared-segments","confidence":0.8,"note":"Bob the Train compilations; identical mid frame, other segments differ."},
+{"a":"NIzsSt8iGhQ","b":"xjS-nGCLb_c","label":"shared-segments","confidence":0.8,"note":"Bob the Train compilations; identical mid frame, shared episodes."},
+{"a":"41F1Fdb3tHM","b":"MHvLcoblyio","label":"shared-segments","confidence":0.6,"note":"Boo Boo song shorts; same mom shot appears in both, other shots differ."},
+{"a":"nbI-1N_uBNs","b":"fKWJTJUkwPc","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs Five in the Bed; different animation."},
+{"a":"eAodpnlhaNI","b":"MHvLcoblyio","label":"same-song","confidence":0.6,"note":"Boo Boo song with different characters and scenes."},
+{"a":"lij2KlyDHJ8","b":"fx0aMbJwE34","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations on same set; frames show different episodes."},
+{"a":"6aBfQYlhKJs","b":"NrKUTj5Lefs","label":"unrelated","confidence":0.85,"note":"Spooky Zombie vs Bugs song; different animation."},
+{"a":"eAodpnlhaNI","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Wheels on the Taxi; different animation."},
+{"a":"nbI-1N_uBNs","b":"3bTL4x31XTI","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs Bath Time song; different animation."}
+]

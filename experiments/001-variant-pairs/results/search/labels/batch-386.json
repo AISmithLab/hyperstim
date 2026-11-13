@@ -1,0 +1,72 @@
+[
+ {
+  "a": "N4MOP_0oV64",
+  "b": "311Cl_T56Gg",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the shapes train scene"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "4e1vB_kqCaY",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi Dance shorts with different characters and animation"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "pbfbmXohAGo",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi Dance shorts with different characters and animation"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "OZzQENCeeNg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "Tgp1NqPegK8",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi Dance shorts with different characters and animation"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "CfJfPAF8El8",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi Dance shorts with different characters and animation"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi Dance shorts with different characters and animation"
+ },
+ {
+  "a": "AlEPz20FGnk",
+  "b": "SlUYd5vQ6hw",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Boo Boo Song 178 s vs 36 s short; sampled frames show different shots"
+ }
+]

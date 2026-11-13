@@ -1,0 +1,72 @@
+[
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "3bTL4x31XTI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs bath song shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "i9kMX8tSKSA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Same girl character, but different song and shots (chew your food)."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "t2tKT2LSOfo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs No No song shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "BRcmpSxalwA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Five Little Monkeys shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "OLXeTCu2ESc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs No No song shorts; nothing shared."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "41F1Fdb3tHM",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "OZzQENCeeNg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs dance song shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "nvR3fxkl_Bc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Rig A Jig Jig shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "idwuB7uQA2M",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "G7PTUNLnAFk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs train song shorts; nothing shared."
+ }
+]

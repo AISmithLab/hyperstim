@@ -1,0 +1,12 @@
+[
+{"a":"iFpez4fPv5Y","b":"7U5-_Se7VTE","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (ornament ball, yellow egg) at shifted times"},
+{"a":"mJFTp8x_QZ4","b":"IE7VFN8ln9Y","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on one set; barbell vs spot episodes"},
+{"a":"XEEVejf8Kgw","b":"Bx-2FBZQKs0","label":"unrelated","confidence":0.8,"note":"Five Little Elves vs haunted house shorts"},
+{"a":"-qxEnbH15lY","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different animation"},
+{"a":"oRk8sglOG5k","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different animation"},
+{"a":"ksTmEkp5ERM","b":"Z13ulLin2jg","label":"unrelated","confidence":0.75,"note":"Finger Family vs Kaboochi dance shorts"},
+{"a":"vnZwDJQBIWw","b":"Td73SYRglgw","label":"unrelated","confidence":0.6,"note":"No No Song vs Boo Boo Song; same mom character model, different shots"},
+{"a":"bBOI5NzGpX0","b":"X5isLUsPsU0","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations on one set with different episodes"},
+{"a":"Z13ulLin2jg","b":"jEwfENQE5Os","label":"unrelated","confidence":0.75,"note":"Kaboochi dance vs Halloween camp shorts"},
+{"a":"-qxEnbH15lY","b":"i9kMX8tSKSA","label":"unrelated","confidence":0.75,"note":"Boo Boo Song vs Chew Your Food shorts"}
+]

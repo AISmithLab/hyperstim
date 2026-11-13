@@ -1,0 +1,12 @@
+[
+{"a":"GwRhnH9ozMc","b":"fz5LnG6HANo","label":"re-skin","confidence":0.85,"note":"Five Little Monkeys: same bandaged-monkeys shot; brown monkeys/bedroom vs colored monkeys/jungle"},
+{"a":"0gXJ6f2z_Y4","b":"L9Rsc20F4Iw","label":"unrelated","confidence":0.75,"note":"Johny Johny vs Scared of the Dark shorts"},
+{"a":"NfVPohH0z0Q","b":"JqLTfNxP-Y4","label":"shared-segments","confidence":0.75,"note":"Portuguese Bob the Train compilations sharing a train segment"},
+{"a":"FVuAS7z73Bs","b":"V9fA6nrohac","label":"unrelated","confidence":0.85,"note":"Larva short vs Rattic Mini short"},
+{"a":"2oGfT4lqFLE","b":"nxeG-sbjzXI","label":"shared-segments","confidence":0.85,"note":"Junior Squad compilation contains the Johny Johny single"},
+{"a":"zG6D-FpUczM","b":"QlDpRW0_nBI","label":"unrelated","confidence":0.8,"note":"Johny Johny vs Wheels on the Bus shorts"},
+{"a":"OFvmlD86K5Q","b":"cXFzC5Ht5Ds","label":"unrelated","confidence":0.75,"note":"Wheels on the Taxi vs spooky Wheels on the Bus, different animation"},
+{"a":"5TxpUOLZsAY","b":"idK4oRxEzT0","label":"same-template","confidence":0.7,"note":"The Supremes episodes, same characters, different songs"},
+{"a":"nvR3fxkl_Bc","b":"-OXYsniHGBM","label":"unrelated","confidence":0.8,"note":"Rig A Jig Jig vs Boo Boo shorts"},
+{"a":"t5wDGNrzpro","b":"05oAs-Pqf5Y","label":"same-song","confidence":0.55,"note":"Kaboochi vs Christmas Kaboochi shorts, different animation"}
+]

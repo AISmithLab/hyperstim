@@ -1,0 +1,12 @@
+[
+{"a":"r5hl9FFnOrI","b":"-fMMVHWmZFU","label":"re-skin","confidence":0.9,"note":"Same fire truck shots and firefighter poses; truck red in A, recolored blue in B."},
+{"a":"DHRQXGTSvw0","b":"3724uXedg0A","label":"same-template","confidence":0.95,"note":"Phonics series template, letter K vs letter P, different words."},
+{"a":"-k4oiVaekT0","b":"qmWTMNhtY9Q","label":"same-template","confidence":0.95,"note":"Phonics series template, letter Q vs letter U."},
+{"a":"iiqbyMQ9vZI","b":"XCGE-_TDcGI","label":"re-skin","confidence":0.9,"note":"Same bus/boy/girl shots and poses; bus yellow in A, gray-purple in B; B longer (63 vs 41 s)."},
+{"a":"Msywp-_Gl1g","b":"xPt-5RG1m-0","label":"same-song","confidence":0.9,"note":"Kaboochi; girl and creature animation vs baby on colored backgrounds."},
+{"a":"iJZ97cfpjhI","b":"Msywp-_Gl1g","label":"same-song","confidence":0.85,"note":"Kaboochi; animal characters vs girl/boy/creature, different shots."},
+{"a":"qDZbmgSwTJU","b":"qKpROgyEkJA","label":"same-template","confidence":0.85,"note":"Finger family template; dinosaur fingers vs number fingers, different content."},
+{"a":"VSJjVlGnmGQ","b":"DsCvHyQ10gU","label":"same-template","confidence":0.8,"note":"Finger family template; lollipop faces vs candy balloon faces, different staging."},
+{"a":"zQ7vvPa4pAk","b":"f-iL7k5jhCI","label":"same-template","confidence":0.95,"note":"Phonics series template, letter R vs letter Z."},
+{"a":"ONwFOOEkasU","b":"7-abUIzCk5U","label":"same-song","confidence":0.9,"note":"Kaboochi; kids with sunglasses vs baby in costumes."}
+]

@@ -1,0 +1,12 @@
+[
+ {"a": "07uUPfeh5D8", "b": "giVcqGlE2SU", "label": "unrelated", "confidence": 0.55, "note": "Two Halloween compilations; different characters and shots, no shared frame seen."},
+ {"a": "ZztnbLI54FI", "b": "dL9q0aobLss", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter M vs R; same intro and stage."},
+ {"a": "bBOI5NzGpX0", "b": "EX0D6k2zAM0", "label": "shared-segments", "confidence": 0.9, "note": "Rattic Mini compilations; same dinosaur and heart-balloon mime episodes."},
+ {"a": "skNxtYhw9Y8", "b": "aDyWeSAt-sI", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations on the same set; no shared frame among samples."},
+ {"a": "JOMSMENnSIQ", "b": "aW_J2JMPmG8", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations on the same set; no shared frame among samples."},
+ {"a": "3bTL4x31XTI", "b": "_QFj7e58XGE", "label": "unrelated", "confidence": 0.8, "note": "Bath time song vs wheels on the train; different characters and shots."},
+ {"a": "oHtQbh7LJjY", "b": "ZztnbLI54FI", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter J vs M; same intro and stage."},
+ {"a": "IOhRyd9CwYo", "b": "QLtuuZVDZ4g", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini shorts on the same set; mailbox vs pillow gag."},
+ {"a": "3bTL4x31XTI", "b": "h-wl3-GG_Vo", "label": "unrelated", "confidence": 0.75, "note": "Bath time vs hand washing shorts; different characters and shots."},
+ {"a": "QRuh8jPUAjI", "b": "gDzGfavrWeI", "label": "unrelated", "confidence": 0.7, "note": "Two Halloween shorts, different songs, characters and shots."}
+]

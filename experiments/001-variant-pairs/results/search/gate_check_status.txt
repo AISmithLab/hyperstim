@@ -1,0 +1,7 @@
+Gate check, 2026-11-12T20:27:13Z
+  Videos downloaded                   991 / 991     100.0%
+  Videos with frame data              991 / 991     100.0%
+  Pairs with both videos             3912 / 3912    100.0%
+  Pairs checked                      3912 / 3912    100.0%
+  Pairs passing (≥ half of each)      556 / 3912     14.2%
+  errors 0; laptop todo 0

@@ -1,0 +1,12 @@
+[
+{"a":"aA57PjtEfZw","b":"gIMyiAxeKSk","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter D vs I."},
+{"a":"tQ3LttVt_Jk","b":"NL_S69qf0jg","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, canyon vs butterfly."},
+{"a":"njSANQD1GlI","b":"zej8Uf5iAGk","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, magic hat vs teleport."},
+{"a":"hrOfhQCxqL0","b":"20HqqfnKxZk","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snack stand car episode."},
+{"a":"oCiHs7agwmE","b":"pbfbmXohAGo","label":"shared-segments","confidence":0.75,"note":"Kaboochi shorts sharing corgi and dancing girl shots, different edits."},
+{"a":"hzzGSyV_BCA","b":"PjXooPy93AM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"7FiyQQBYTUY","b":"3aoEeaCHS_w","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skates vs fishing."},
+{"a":"Ia2TzzY2Vto","b":"hsUfmH_uRjc","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, toilet vs car service."},
+{"a":"c3lLP39EdME","b":"UXsXYmw3_CY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, cheese vs gloves."},
+{"a":"YJLDe0F_z7k","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing snowman episode."}
+]

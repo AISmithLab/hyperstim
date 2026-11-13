@@ -1,0 +1,12 @@
+[
+{"a":"2CIhrX-lIIw","b":"AbzxP6U24II","label":"shared-segments","confidence":0.55,"note":"Tortoise and Hare compilation likely contains the short story; no matching frame sampled"},
+{"a":"TAeO_pKB_ik","b":"AbzxP6U24II","label":"same-template","confidence":0.7,"note":"Pretend-play story episodes, same kids cast and intro, different stories"},
+{"a":"0bgxPRujZcw","b":"pWlqehkNL1A","label":"shared-segments","confidence":0.85,"note":"Compilations sharing the Boo Boo train-and-ambulance clip"},
+{"a":"EO2DniUQfRo","b":"pWlqehkNL1A","label":"shared-segments","confidence":0.85,"note":"Bugs compilation contains the Boo Boo song (identical ambulance frame)"},
+{"a":"njSANQD1GlI","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, same set, different gags"},
+{"a":"LJN6yukuQ9A","b":"M3sOUpxsrJE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, manhole vs cleaning gags"},
+{"a":"e9gnACQvqRM","b":"7FiyQQBYTUY","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs skates gags"},
+{"a":"sFhZZIPj9nE","b":"UGzlPPWb6Pg","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, cleaning vs fly swatter gags"},
+{"a":"UPDBxhcsIRQ","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing mime, snowman and toy-car episodes"},
+{"a":"_4x2xszMRq8","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, birthday vs skipping rope gags"}
+]

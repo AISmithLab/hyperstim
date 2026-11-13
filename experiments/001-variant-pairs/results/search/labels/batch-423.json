@@ -1,0 +1,12 @@
+[
+{"a":"KEP7OO8I1ZM","b":"3gGApJMJxP0","label":"re-upload","confidence":0.9,"note":"Same Humpty Dumpty frames; A adds end screen"},
+{"a":"jRCHQ6wCTUA","b":"5u6tVBEu_tI","label":"shared-segments","confidence":0.7,"note":"Spring toy mouse: 29s short cut vs 131s longer version, same footage"},
+{"a":"wfvd_2gm_ew","b":"iJZ97cfpjhI","label":"same-song","confidence":0.6,"note":"Kaboochi dance; humans vs animal characters, poses not clearly matching"},
+{"a":"vvl896dBRCk","b":"sZyaD9COry8","label":"shared-segments","confidence":0.85,"note":"Halloween compilations sharing Bob train and zombie episodes"},
+{"a":"8ZZOTvUUcJs","b":"D8Scn7g7x58","label":"re-upload","confidence":0.75,"note":"Same Halloween compilation frames at all positions; different thumbnail/title"},
+{"a":"S0rIdxU8Fpw","b":"psZZrqi-Ud8","label":"shared-segments","confidence":0.55,"note":"Halloween finger family shorts share zombie boy shots, other frames differ"},
+{"a":"sI-dYFPPJgs","b":"X48-R_yTN-4","label":"same-song","confidence":0.55,"note":"Wheels on the Bus shorts, same series; different shots and characters"},
+{"a":"2b9xzvfYqD8","b":"sI-dYFPPJgs","label":"re-skin","confidence":0.8,"note":"Wheels on Bus short: same driver/seat shots; bus interior yellow vs pink, baby swapped"},
+{"a":"Iryl7DcJ-hw","b":"-8Te4zdaB5o","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the five little monkeys segment"},
+{"a":"zG6D-FpUczM","b":"sBtKayGZJiU","label":"same-song","confidence":0.65,"note":"Johny Johny shorts; human family vs elephant/pig characters"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "e9gnACQvqRM",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, door vs fitness ball"
+ },
+ {
+  "a": "PPVWn53Yw4M",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, football vs cowboy"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, birthday vs springboard"
+ },
+ {
+  "a": "Qv-eMjDmTJQ",
+  "b": "cO1aLZ7teeg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "ainrmFQVbfI",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic rope episode vs two-episode toilet short"
+ },
+ {
+  "a": "vyIiFiExyQQ",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic toy airplane vs two-episode basketball short"
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic hollow episode vs two-episode spot short"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "Tn2UZwb9RcY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, stones vs bucket"
+ },
+ {
+  "a": "HW8O6C_OCJQ",
+  "b": "jEwfENQE5Os",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi beach dance vs Halloween camp song; different characters and scenes"
+ }
+]

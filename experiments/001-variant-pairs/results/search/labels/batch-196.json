@@ -1,0 +1,12 @@
+[
+{"a":"hrOfhQCxqL0","b":"hzzGSyV_BCA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (car, balloon, stool scenes)."},
+{"a":"Gelbjg7SL0U","b":"hrOfhQCxqL0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the same episodes in different order."},
+{"a":"LzlbaXt9Yg4","b":"6Knlj_rhgE4","label":"same-song","confidence":0.5,"note":"Wheels on the Bus shorts (camp vs spooky); different characters and shots."},
+{"a":"G7PTUNLnAFk","b":"OZzQENCeeNg","label":"unrelated","confidence":0.85,"note":"Train song vs dance song shorts; nothing shared."},
+{"a":"opvVeJo9C0w","b":"_e29OQFpP7A","label":"same-song","confidence":0.7,"note":"Both Boo Boo Song shorts with different characters and animation."},
+{"a":"HWH2lpQomEk","b":"jrKMYkmA3lY","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Sick Song shorts; nothing shared."},
+{"a":"FVuAS7z73Bs","b":"ex7_knWJ9ak","label":"same-template","confidence":0.6,"note":"Larva cartoon shorts on same sewer set, different gags."},
+{"a":"v80qWgkingM","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Halloween short vs Boo Boo Song short; nothing shared."},
+{"a":"9ywRXy36pAg","b":"Hd7k7i4jqH4","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus: pink bus vs yellow bus, same shots, street and passengers."},
+{"a":"fKWJTJUkwPc","b":"i0Zanhlu46I","label":"unrelated","confidence":0.85,"note":"Five in the Bed vs Five Little Monsters shorts; different animation."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"kKYr9m8-fmo","b":"Q9BbiIQ6C_E","label":"shared-segments","confidence":0.5,"note":"Same Christmas set and characters; one matched moment identical, others different shots/crops"},
+{"a":"W8hBs4ZiG7U","b":"y7FElRQhklM","label":"re-skin","confidence":0.95,"note":"Identical shots and passengers; bus recolored blue (A) to pink (B)"},
+{"a":"Ye7ulpWeLfw","b":"WwhNgzir6V4","label":"re-skin","confidence":0.6,"note":"Same street set and bus staging; yellow bus (A) vs pink bus (B); shots only roughly aligned"},
+{"a":"_fmYX7C2cn0","b":"sEfyLd3DjVU","label":"same-template","confidence":0.75,"note":"Finger family series; squirrels vs spiders, same backdrops and song, different characters"},
+{"a":"y8nnK3mnV3Q","b":"BqIZ2ykihTk","label":"re-skin","confidence":0.85,"note":"Same staging (crying girl, balcony) redone: 3D Halloween (A) vs 2D flat cartoon (B)"},
+{"a":"S0rIdxU8Fpw","b":"yPexH1DUKe4","label":"shared-segments","confidence":0.6,"note":"Two of four matched moments identical, others differ; B is 119 s vs 64 s"},
+{"a":"NNK_O4xD7Jg","b":"7EO3lve1f7c","label":"shared-segments","confidence":0.85,"note":"Halloween compilations: first half identical footage, later moments differ"},
+{"a":"Xo3zWzIj8fM","b":"ahWBypah3WE","label":"same-song","confidence":0.85,"note":"Oopsie Doopsie; A kids dancing, B Halloween characters, different shots"},
+{"a":"8GXApiu2XLk","b":"rRgRHqvsT8o","label":"shared-segments","confidence":0.8,"note":"Bob the Train compilations sharing episodes; most matched moments identical, one differs"},
+{"a":"W99Te7xIpX0","b":"riN-hgPZwHc","label":"re-skin","confidence":0.85,"note":"Same firetruck close-ups and mouth poses; red truck (A) recolored green (B); B 62 s vs 39 s"}
+]

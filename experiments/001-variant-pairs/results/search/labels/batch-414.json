@@ -1,0 +1,72 @@
+[
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "M0V1ofCOEew",
+  "b": "WZ45rZRLf80",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "39Dtr0Rq-TY",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "DsKrgJF4RiM",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "8Ri1s8CTSrM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "Ik7-qK_sEq8",
+  "b": "dL9q0aobLss",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter O vs letter R, same template and kids"
+ },
+ {
+  "a": "xU3oLsk2eF8",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "Qv-eMjDmTJQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the traffic sign toy car episode"
+ }
+]

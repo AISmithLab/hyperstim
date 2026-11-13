@@ -1,0 +1,72 @@
+[
+ {
+  "a": "_4x2xszMRq8",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: birthday vs talent show"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "gvcEcWUHZ_c",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "_pqh8Nw-k3o",
+  "b": "Gh4izthwnNM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the red car/scooter and block tower episodes"
+ },
+ {
+  "a": "xEFkAQpftd4",
+  "b": "tQ3LttVt_Jk",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: talent show vs canyon"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "ZRd-uNE-AUA",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi dance song shorts with different characters and settings"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "_GlpTSaa5EU",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "hmqdid2kALU",
+  "b": "XBXyBskjSOc",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter A vs letter T"
+ },
+ {
+  "a": "7xSdzGpSjl4",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: gloves vs talent show"
+ },
+ {
+  "a": "oHtQbh7LJjY",
+  "b": "y5hNOisFVd8",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter J vs letter N, shared template shots"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

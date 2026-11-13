@@ -1,0 +1,72 @@
+[
+ {
+  "a": "xEFkAQpftd4",
+  "b": "NL_S69qf0jg",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, talent show vs butterfly"
+ },
+ {
+  "a": "aA57PjtEfZw",
+  "b": "Ng85dlGMIQA",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters D and T on one template"
+ },
+ {
+  "a": "KKgsTFivFJM",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "pbfbmXohAGo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic carousel vs Kaboochi dance; side-bar match only"
+ },
+ {
+  "a": "8Ri1s8CTSrM",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "YgjyQIwcJy0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, rocket vs hollow"
+ },
+ {
+  "a": "_uYyO8y5Txc",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boo Boo Song short vs Kaboochi dance short; different songs and characters"
+ },
+ {
+  "a": "t5wDGNrzpro",
+  "b": "ZRd-uNE-AUA",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Kaboochi dance: home/corgi version vs beach version, different animation"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "uzUxdwfXgWI",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing kung fu and dinosaur episodes"
+ },
+ {
+  "a": "O5ZoBFwS1G4",
+  "b": "ZRd-uNE-AUA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wheels on the Bus short vs Kaboochi dance short"
+ }
+]

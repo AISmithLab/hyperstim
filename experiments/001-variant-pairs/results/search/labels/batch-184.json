@@ -1,0 +1,12 @@
+[
+{"a":"syYJiqAlNVc","b":"-x5dKL_rB14","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, IN vs AT words."},
+{"a":"-x5dKL_rB14","b":"W4KOgl07P24","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, AT vs UG words."},
+{"a":"-x5dKL_rB14","b":"OKNdDQ3rJiY","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, AT vs ET words."},
+{"a":"-x5dKL_rB14","b":"C0trauXRkTw","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, AT vs UT words."},
+{"a":"PrsoqMSi0_I","b":"-x5dKL_rB14","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, AN vs AT words."},
+{"a":"qr3gskaCXtM","b":"vVG7wTGgWlU","label":"re-upload","confidence":0.85,"note":"All Aboard bus compilation, same title and frames, 5 days apart."},
+{"a":"wAtBG4hjCOY","b":"TwDxP5L1-VA","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, swing vs teleport."},
+{"a":"3bTL4x31XTI","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Bath Time vs Boo Boo Song; different characters."},
+{"a":"-pce31hLLWg","b":"4DYqIKyU1wc","label":"shared-segments","confidence":0.5,"note":"Jack and the Beanstalk single vs compilation; thumbnail match, frames differ."},
+{"a":"8Rbxmpk3bw4","b":"jCK3W4VznUc","label":"shared-segments","confidence":0.8,"note":"Loco Nuts compilations sharing the pig segment."}
+]

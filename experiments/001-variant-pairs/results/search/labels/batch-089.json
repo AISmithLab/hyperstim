@@ -1,0 +1,12 @@
+[
+{"a":"l9e0YsHBJUs","b":"849TyfHg018","label":"re-upload","confidence":0.95,"note":"Humpty Dumpty posted twice two weeks apart; identical frames and length."},
+{"a":"SrmqhX-Te2I","b":"0zptbdrcP6Y","label":"unrelated","confidence":0.85,"note":"Wheels on the Taxi vs The Boy Who Cried Wolf; different content."},
+{"a":"dG7KouaFW-o","b":"uzUxdwfXgWI","label":"shared-segments","confidence":0.6,"note":"Rattic Mini compilations both include the mime episode."},
+{"a":"dG7KouaFW-o","b":"UPDBxhcsIRQ","label":"shared-segments","confidence":0.65,"note":"Rattic Mini compilations both include the mime episode."},
+{"a":"UGzlPPWb6Pg","b":"7FiyQQBYTUY","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, fly swatter vs skates gag."},
+{"a":"UN4V4ywCWxA","b":"TwS8SzpZrug","label":"shared-segments","confidence":0.9,"note":"Rattic Mini compilations; identical glass-case and stroller shots."},
+{"a":"afyKHCB03MU","b":"o6VjhL9gA1A","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, bottle vs carousel gag."},
+{"a":"6FhYNE5KFeg","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, cat vs bottle gag."},
+{"a":"D0tOd2ZH-cQ","b":"YJLDe0F_z7k","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing trash-bin and snowman episodes."},
+{"a":"e9gnACQvqRM","b":"DS8rk9NwXQc","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs mime gag."}
+]

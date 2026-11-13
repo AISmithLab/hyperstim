@@ -1,0 +1,72 @@
+[
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, mime vs fitness ball"
+ },
+ {
+  "a": "LJN6yukuQ9A",
+  "b": "UXsXYmw3_CY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, manhole vs gloves"
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "cqjfiWrwmmg",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, skates vs stones"
+ },
+ {
+  "a": "Tgp1NqPegK8",
+  "b": "d0qkYGMwDsc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance short vs monsters short; side-bar match only"
+ },
+ {
+  "a": "i2XoutDdPoM",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Two-episode Rattic shorts; no shared episode visible"
+ },
+ {
+  "a": "aACfDyTDcL8",
+  "b": "n6eghHp7qWw",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy jeep and snowman episodes"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "xEFkAQpftd4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, stones vs talent show"
+ },
+ {
+  "a": "hmqdid2kALU",
+  "b": "aFbSzIMTBsY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob alphabet songs A and N on one template"
+ },
+ {
+  "a": "ZztnbLI54FI",
+  "b": "STRJcffvt-0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters M and Q on one template"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, bar chair vs fitness ball"
+ }
+]

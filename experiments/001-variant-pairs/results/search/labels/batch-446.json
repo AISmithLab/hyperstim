@@ -1,0 +1,12 @@
+[
+{"a":"R49NrP0fcsE","b":"-OXYsniHGBM","label":"same-song","confidence":0.6,"note":"Boo Boo shorts with different characters and animation"},
+{"a":"8-qO0tHgMHY","b":"LvECrt5yV6M","label":"unrelated","confidence":0.75,"note":"Animal Dance vs Halloween Kaboochi shorts"},
+{"a":"6U9UX0MLvU4","b":"-OXYsniHGBM","label":"same-song","confidence":0.6,"note":"Boo Boo shorts with different characters and animation"},
+{"a":"42965VL3b8Y","b":"U-9wzt3RgPw","label":"shared-segments","confidence":0.6,"note":"Zoo song vs compilation named after it; thumbnails match, sampled frames differ"},
+{"a":"_uYyO8y5Txc","b":"oRk8sglOG5k","label":"same-song","confidence":0.6,"note":"Boo Boo shorts with different characters and animation"},
+{"a":"aYm4u_lQpIo","b":"oRk8sglOG5k","label":"unrelated","confidence":0.8,"note":"Kaboochi vs Boo Boo shorts"},
+{"a":"gEJBiNIoPPg","b":"2DwPMSaJEtc","label":"shared-segments","confidence":0.8,"note":"Old MacDonald compilations sharing the family picnic segment"},
+{"a":"OLXeTCu2ESc","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.8,"note":"No No Song vs Wheels on the Taxi shorts"},
+{"a":"nbI-1N_uBNs","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.8,"note":"Jingle Bells vs Kaboochi shorts"},
+{"a":"GZQvzMCdQkI","b":"r__AmlY4fxk","label":"shared-segments","confidence":0.75,"note":"Bob the Train compilations sharing the number train segment"}
+]

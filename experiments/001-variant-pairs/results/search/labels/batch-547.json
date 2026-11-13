@@ -1,0 +1,72 @@
+[
+ {
+  "a": "UGzlPPWb6Pg",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: fly swatter vs leaves"
+ },
+ {
+  "a": "pe_iRGqeBlA",
+  "b": "n6eghHp7qWw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share toy jeep, snowman and trash can episodes"
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "aScyfsClZd0",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Two Boo Boo Song shorts with different characters and scenes"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: door vs space rocket"
+ },
+ {
+  "a": "Tn2UZwb9RcY",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bucket vs robot vacuum"
+ },
+ {
+  "a": "PIZj5SH8Bok",
+  "b": "34zV8hDOuFs",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the red car/scooter episode"
+ },
+ {
+  "a": "t892KTYY-cE",
+  "b": "aA57PjtEfZw",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter A vs letter D, shared template shots"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "Qs4R686NOjg",
+  "b": "ripZ0792Vx4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share heart-balloon, shed and lemonade stand episodes"
+ },
+ {
+  "a": "aACfDyTDcL8",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share snowman and toy jeep episodes"
+ }
+]

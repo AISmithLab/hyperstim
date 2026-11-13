@@ -1,0 +1,12 @@
+[
+{"a":"V5OqHZwodj4","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.5,"note":"Christmas Kaboochi vs beach Kaboochi dance; different scenes, frames don't match."},
+{"a":"5ZbfKj3XCh8","b":"ATp-VyjrVtg","label":"shared-segments","confidence":0.85,"note":"Nursery rhyme compilations; identical 1/2 and 3/4 frames, shared songs."},
+{"a":"NrKUTj5Lefs","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Bugs song vs Kaboochi dance; different animation."},
+{"a":"-pce31hLLWg","b":"AIoSWO6ypVg","label":"same-song","confidence":0.5,"note":"Jack and the Beanstalk; match mostly on thumbnail characters, frames show different content."},
+{"a":"Z13ulLin2jg","b":"FZSWN3DFpGE","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Monster in the Dark; different animation."},
+{"a":"Z13ulLin2jg","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.5,"note":"Kaboochi on same block set but different kids and poses; not clearly same shots."},
+{"a":"E9ITQiGR_NY","b":"-dcm4bujns4","label":"same-template","confidence":0.75,"note":"Bob the Train episodes (Five Little Ducks vs Bingo) on shared template."},
+{"a":"tQlIWPUO_E0","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Ten in the Bed vs Kaboochi dance; different animation."},
+{"a":"gdVpv0KN_uU","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Wheels on the Taxi; different animation."},
+{"a":"fKWJTJUkwPc","b":"jrKMYkmA3lY","label":"unrelated","confidence":0.7,"note":"Different songs sharing a pig-girl character; different shots."}
+]

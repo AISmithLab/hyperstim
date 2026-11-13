@@ -1,0 +1,72 @@
+[
+ {
+  "a": "PbchJhisS4s",
+  "b": "D0tOd2ZH-cQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "3yv0GSbbCZI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "LJN6yukuQ9A",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, manhole vs teleport"
+ },
+ {
+  "a": "W0RsaWG0ZeE",
+  "b": "jceEaiF00_c",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Different Apples and Bananas compilations; no shared footage visible"
+ },
+ {
+  "a": "cmi5_37226c",
+  "b": "oXA7qx--2oI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the yellow ball episode"
+ },
+ {
+  "a": "Qv-eMjDmTJQ",
+  "b": "ripZ0792Vx4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "y5hNOisFVd8",
+  "b": "Ng85dlGMIQA",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters N and T on one template"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "pbfbmXohAGo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic magic hat vs Kaboochi dance; side-bar match only"
+ },
+ {
+  "a": "VqT9YA3THAE",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic worm episode vs two-episode manhole short"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, magic hat vs springboard"
+ }
+]

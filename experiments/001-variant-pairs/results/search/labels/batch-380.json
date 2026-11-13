@@ -1,0 +1,72 @@
+[
+ {
+  "a": "aZoH6w-VPjk",
+  "b": "dG7KouaFW-o",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing mime and cradle episodes."
+ },
+ {
+  "a": "aZoH6w-VPjk",
+  "b": "uzUxdwfXgWI",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; mime-with-pirate episode appears in both."
+ },
+ {
+  "a": "Ka3AbnnoaOE",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Babies vs Kaboochi shorts; only side bars match."
+ },
+ {
+  "a": "oRk8sglOG5k",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "w7exxTCHfx8",
+  "b": "iFpez4fPv5Y",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg episode."
+ },
+ {
+  "a": "Ka3AbnnoaOE",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Babies vs Kaboochi shorts; only side bars match."
+ },
+ {
+  "a": "aZoH6w-VPjk",
+  "b": "hzzGSyV_BCA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "inkqQlbrdrQ",
+  "b": "pKnKuQMeGlk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "NqkKDg2Ysf0",
+  "b": "l_HMLGY9XIo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letter episodes, K vs L."
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

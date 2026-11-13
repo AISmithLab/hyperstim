@@ -1,0 +1,72 @@
+[
+ {
+  "a": "sg86EZwda9k",
+  "b": "FZSWN3DFpGE",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Monster(s) in the Dark shorts share the green-shirt boy brick-wall shot."
+ },
+ {
+  "a": "TJfFZqUa2lY",
+  "b": "sg86EZwda9k",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Monsters in the Dark shorts share green-shirt boy shots; cuts of one video."
+ },
+ {
+  "a": "sOdMlTse5Vc",
+  "b": "BRG1NCs2uAg",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Wheels on the Car single appears in the compilation; same green car shots."
+ },
+ {
+  "a": "gdVpv0KN_uU",
+  "b": "kHVGgxylqd8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Mommies vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "jrKMYkmA3lY",
+  "b": "Wes02YpdpJA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Sick song vs fire truck shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "2ccdfNa0OyQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Halloween dance shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "R49NrP0fcsE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "yUCPy4Bem1Y",
+  "b": "FvewFlifJao",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Boom Buddies songs with same kid cast, different songs."
+ },
+ {
+  "a": "76YlId7TLig",
+  "b": "J6M6WzPr5hw",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Finger family compilations share the monkeys-on-bed segment."
+ },
+ {
+  "a": "6U9UX0MLvU4",
+  "b": "e8qnOUvCdb0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs brush teeth shorts; nothing shared."
+ }
+]

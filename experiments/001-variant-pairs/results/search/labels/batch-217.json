@@ -1,0 +1,72 @@
+[
+ {
+  "a": "kHVGgxylqd8",
+  "b": "0yIhvJw1GK8",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "Boo Boo Song short re-uploaded a year later; same dad shots."
+ },
+ {
+  "a": "uefjFu0v-Jc",
+  "b": "5-CKSBS3rb8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Bob the Train colors vs numbers songs, same thumbnail layout and train."
+ },
+ {
+  "a": "_e29OQFpP7A",
+  "b": "kHVGgxylqd8",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo shorts cut from one video; share the plaid-dad shots."
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "Jn9aklUYdQk",
+  "b": "kHVGgxylqd8",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "tNPoYErk2rs",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo shorts cut from one video; share the plaid-dad shots."
+ },
+ {
+  "a": "tQlIWPUO_E0",
+  "b": "kHVGgxylqd8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Ten in the Bed vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "kHVGgxylqd8",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "kHVGgxylqd8",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts reuse the plaid-dad model but in different outdoor scenes."
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs camp bus shorts; nothing shared."
+ }
+]

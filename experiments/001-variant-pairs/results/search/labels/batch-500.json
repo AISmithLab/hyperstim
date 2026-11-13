@@ -1,0 +1,12 @@
+[
+{"a":"307djHCxoxM","b":"odmnFbvpSwo","label":"same-song","confidence":0.5,"note":"Identical thumbnail and title, but compilation frames show different episodes; thumbnail-only match"},
+{"a":"-kRTFYd6WkI","b":"a0Dg0fPxACY","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: ventilator vs tumbler toy"},
+{"a":"jRCHQ6wCTUA","b":"phrajiOFBCY","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs builder"},
+{"a":"nbApYhjXet4","b":"Pa7utiQUGOY","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"JOMSMENnSIQ","b":"n6eghHp7qWw","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"M3sOUpxsrJE","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: cleaning vs basketball"},
+{"a":"pKnKuQMeGlk","b":"xGQYPFqXJjE","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"X5isLUsPsU0","b":"YJLDe0F_z7k","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and trash-can episodes"},
+{"a":"GvP31EGA8tQ","b":"WZ45rZRLf80","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"oWkIR8ZkHgo","b":"yVKvv4YMB78","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the patrolman toy-car episode"}
+]

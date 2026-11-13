@@ -1,0 +1,72 @@
+[
+ {
+  "a": "5NCx942T-wM",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "Z13ulLin2jg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "X8bMaXuivrI",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "6aBfQYlhKJs",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "414DEMcGHtU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "uE-G6fKmpA4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "EA8_ci9zyTI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "b5p78d-gr6w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ }
+]

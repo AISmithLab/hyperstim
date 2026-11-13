@@ -1,0 +1,72 @@
+[
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "LufPzgH87NE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Train song vs Brother John shorts; nothing shared."
+ },
+ {
+  "a": "fKWJTJUkwPc",
+  "b": "LufPzgH87NE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five in the Bed vs Brother John shorts; nothing shared."
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "LufPzgH87NE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs Brother John shorts; nothing shared."
+ },
+ {
+  "a": "luH0EBIl2Cs",
+  "b": "4FMZS1FPwjo",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Same thumbnail art; compilation frames show other songs, beach song frames in B."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Five Little Mommies shorts; nothing shared."
+ },
+ {
+  "a": "eGvSblfi0ns",
+  "b": "_QFj7e58XGE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Monsters vs train song shorts; nothing shared."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "_e29OQFpP7A",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "-M02RqRMZks",
+  "b": "4e1vB_kqCaY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween vs Kaboochi shorts; nothing shared."
+ },
+ {
+  "a": "vYXkEPIElyc",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "8-qO0tHgMHY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs animal dance shorts; nothing shared."
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"aA57PjtEfZw","b":"vbY-B_GtSvc","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter D vs K; shared intro/outro scenes."},
+{"a":"vbY-B_GtSvc","b":"lQxaq4Fu-i0","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter K vs U."},
+{"a":"vbY-B_GtSvc","b":"VLa2W1SssVQ","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter K vs W."},
+{"a":"Br48ar2svbI","b":"vbY-B_GtSvc","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter B vs K."},
+{"a":"ZRd-uNE-AUA","b":"Q9BbiIQ6C_E","label":"unrelated","confidence":0.75,"note":"Kaboochi dance vs Christmas song shorts; match only on blurred side bars."},
+{"a":"Z13ulLin2jg","b":"ZRd-uNE-AUA","label":"same-song","confidence":0.65,"note":"Kaboochi Dance shorts with different characters and scenes."},
+{"a":"LnDxp5QNxmA","b":"qmWTMNhtY9Q","label":"same-template","confidence":0.85,"note":"Phonics letter songs C vs U, same white-background template."},
+{"a":"8Ri1s8CTSrM","b":"ripZ0792Vx4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing cupboard and heart scenes."},
+{"a":"yElVnujAnog","b":"iylbQZjg-fk","label":"shared-segments","confidence":0.6,"note":"Hector the Tractor compilations; similar truck scenes, not clearly identical frames."},
+{"a":"qr3gskaCXtM","b":"uiGkn1AYuLs","label":"shared-segments","confidence":0.55,"note":"Same bus thumbnail; A compilation frames differ from B. Thumbnail-only match."}
+]

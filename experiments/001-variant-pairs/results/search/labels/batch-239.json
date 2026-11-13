@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "cO1aLZ7teeg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (car stand, pillow, rock)."
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "FGUfrSFknik",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (car stand, pillow, rock)."
+ },
+ {
+  "a": "XKGrh9jQ2xI",
+  "b": "Ao3ysT3D0SY",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Baby Bao Rig A Jig Jig: black-white pandas vs pink/yellow pandas, same fun-fair shots."
+ },
+ {
+  "a": "nvR3fxkl_Bc",
+  "b": "sg86EZwda9k",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Same curly-haired boy model in different songs and settings."
+ },
+ {
+  "a": "sg86EZwda9k",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Monsters in the Dark vs Johny Johny; same boy model only."
+ },
+ {
+  "a": "sg86EZwda9k",
+  "b": "Td73SYRglgw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Monsters in the Dark vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "sg86EZwda9k",
+  "b": "b5p78d-gr6w",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Monster(s) in the Dark shorts with same boy model, different shots."
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "-8VedXc5EDU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same set; no shared frame seen."
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "cO1aLZ7teeg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (car stand, pillow, rock)."
+ },
+ {
+  "a": "BrjLq8jTPfw",
+  "b": "cO1aLZ7teeg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (car stand, pillow, rock)."
+ }
+]

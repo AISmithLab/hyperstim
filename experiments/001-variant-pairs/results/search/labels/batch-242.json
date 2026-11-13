@@ -1,0 +1,12 @@
+[
+{"a":"bodrABbSgfA","b":"H4_BpVuvsgU","label":"re-skin","confidence":0.8,"note":"Halloween bus: same shots (bus front, panda/girl close-up), bus and lighting recolored teal vs purple."},
+{"a":"LQQ2DD4V_mY","b":"Jt4V3NCA-u0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (balloon, dino scenes)."},
+{"a":"pe_iRGqeBlA","b":"a7-bpUidOBo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (snowman, ball, trash can scenes)."},
+{"a":"VdNRRL-aybE","b":"lTelDcaP9zY","label":"shared-segments","confidence":0.85,"note":"Larva compilations sharing episodes (vases, frog scenes identical)."},
+{"a":"bh7LwMMuwPU","b":"hMNozLQO_2M","label":"same-template","confidence":0.55,"note":"Finger family template, kittens vs cows on same backgrounds; frames not same moments, possible re-skin."},
+{"a":"zN8W339rP_U","b":"3HqbMJ7huAM","label":"re-skin","confidence":0.85,"note":"Wheels on the Bus: same shots, yellow bus recolored purple, sky/background changed."},
+{"a":"WzNff7gP49Y","b":"iylbQZjg-fk","label":"shared-segments","confidence":0.85,"note":"Vehicle compilations sharing the roller/truck episode."},
+{"a":"NnvOQVPXWTw","b":"3HqbMJ7huAM","label":"re-skin","confidence":0.85,"note":"Wheels on the Bus: same shots, blue bus recolored purple."},
+{"a":"pIBlHJFJ1vs","b":"cjtn_IOstAI","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus: identical shots and passengers, blue bus recolored white."},
+{"a":"EQIBWU18Bjk","b":"idfrlnAVLMk","label":"shared-segments","confidence":0.85,"note":"Loco Nuts Christmas compilations sharing the same dance scene."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Nj_pfXISKXc",
+  "b": "sI-dYFPPJgs",
+  "label": "re-skin",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus short: same baby/driver poses; red bus with green seats vs blue/pink interior"
+ },
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "0gXJ6f2z_Y4",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "No No Song vs Johny Johny shorts; different scenes"
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "_uYyO8y5Txc",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "3724uXedg0A",
+  "b": "-k4oiVaekT0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Phonics letter P vs Q videos, same template"
+ },
+ {
+  "a": "vTnqzIs9PNw",
+  "b": "RzmEoGxgZf4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Compilations share the dad-in-yard segment; different lead songs"
+ },
+ {
+  "a": "oNyQGqRjlnE",
+  "b": "4w905Gj-uvw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Halloween compilations share pirate dog/mummy pig and bear segments"
+ },
+ {
+  "a": "u3VtdvWtgl4",
+  "b": "OFvmlD86K5Q",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween Kaboochi vs Wheels on the Taxi; different scenes"
+ },
+ {
+  "a": "Td73SYRglgw",
+  "b": "_uYyO8y5Txc",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "S0rIdxU8Fpw",
+  "b": "I4Nh3mOaNck",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Halloween/monster finger family shorts, different characters and animation"
+ },
+ {
+  "a": "WT_BRUefDBc",
+  "b": "z-XVQ0MdjpY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Hector compilation contains the Stuck Without Tug episode"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"OSOdLGenkS0","b":"Zy0VtX5RTFM","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"VnHWYMlDgwI","b":"w7exxTCHfx8","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"TGZl_HsDj_0","b":"awLcqOFRHzg","label":"shared-segments","confidence":0.5,"note":"Same length and day, full audio match; both open with red-car episode, matched frames differ"},
+{"a":"awLcqOFRHzg","b":"2kLB7ZwxVv8","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"TGZl_HsDj_0","b":"Qv-eMjDmTJQ","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; some episodes recur (hoops) but not at matched moments"},
+{"a":"ZeldqdySrKg","b":"hzzGSyV_BCA","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"Msywp-_Gl1g","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.85,"note":"Kaboochi; disco kids vs beach kids, different animation"},
+{"a":"OSOdLGenkS0","b":"q8T0cDm6nSA","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"3yv0GSbbCZI","b":"cmi5_37226c","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"9-G4JeHJiYQ","b":"-8VedXc5EDU","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"}
+]

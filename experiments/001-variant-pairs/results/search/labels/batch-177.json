@@ -1,0 +1,12 @@
+[
+{"a":"rvWFuvJh85o","b":"Qy4EwtfCTkM","label":"re-skin","confidence":0.85,"note":"Baby Toot Toot bus song, same shots; bus light blue vs pink."},
+{"a":"tfAMtdvjMNM","b":"gzCWo4_rAr0","label":"same-template","confidence":0.55,"note":"Same robot comedy shorts series, jumping vs kayak episodes."},
+{"a":"SSeBjzpJLFk","b":"S9N416aMRxk","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; sampled episodes differ."},
+{"a":"WUbI_x69AIc","b":"Qy4EwtfCTkM","label":"re-skin","confidence":0.7,"note":"Baby Toot Toot bus: same thumbnail pose and parents scene; bus red vs pink."},
+{"a":"G7PTUNLnAFk","b":"7Ldj5W-FyMs","label":"unrelated","confidence":0.75,"note":"Wheels on the Train vs Wheels on the Tractor; different characters."},
+{"a":"EN7S56j6Z5Y","b":"Hd7k7i4jqH4","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus green vs yellow."},
+{"a":"E6KHe0vm4Bw","b":"U9maOBWT6wE","label":"unrelated","confidence":0.85,"note":"If You're Happy vs Hush Little Baby; different characters."},
+{"a":"cUQJHBo2MeA","b":"0O1ty335KVI","label":"shared-segments","confidence":0.75,"note":"Zoobees compilations sharing the mom close-up segment."},
+{"a":"Q95CAqmYoew","b":"TwDxP5L1-VA","label":"unrelated","confidence":0.9,"note":"Larva-style short vs Rattic Mini; different characters."},
+{"a":"xQmunYrE7VA","b":"OLXeTCu2ESc","label":"unrelated","confidence":0.9,"note":"Hop and Zip vs No No Song; different characters."}
+]

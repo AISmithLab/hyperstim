@@ -1,0 +1,72 @@
+[
+ {
+  "a": "EPh1bFzsVf4",
+  "b": "3aoEeaCHS_w",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, leaves gag vs fishing gag; frame match from motion blur"
+ },
+ {
+  "a": "_pqh8Nw-k3o",
+  "b": "bdbNsMtn26Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Rattic Mini compilations; one moment shows the same board set, others differ"
+ },
+ {
+  "a": "n6eghHp7qWw",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "iFpez4fPv5Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "SB-7h4MW26k",
+  "b": "pKnKuQMeGlk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "aACfDyTDcL8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "QKrdD5Y9c-s",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "iJZ97cfpjhI",
+  "b": "4rcjZ1f_L4A",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi animal dancers vs hula kids, different animation"
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "DVLFCQUsuFI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ }
+]

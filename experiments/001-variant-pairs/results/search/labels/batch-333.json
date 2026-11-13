@@ -1,0 +1,12 @@
+[
+{"a":"pIBlHJFJ1vs","b":"xI9-MgmErhQ","label":"re-skin","confidence":0.9,"note":"Same bus animation and shots; bus recolored blue to green."},
+{"a":"C8_i676Bli8","b":"Z_FpACbyW54","label":"re-upload","confidence":0.65,"note":"Same Bob the Train Three Blind Mice animation; B 8s longer, maybe extra scene; no recolor seen."},
+{"a":"K71QjqJlAI0","b":"yOq3vuvmRCQ","label":"re-skin","confidence":0.9,"note":"Same Wheels on the Bus shots with pandas; bus recolored pink to purple."},
+{"a":"aJScxrS9UD8","b":"FS-9qCEnc38","label":"shared-segments","confidence":0.85,"note":"Loco Nuts compilations sharing an episode (identical 1/2 frame)."},
+{"a":"1Q6a6XooKn8","b":"P4fKr8A960s","label":"shared-segments","confidence":0.55,"note":"Two Wheels on the Train shorts, likely cut from same video; different moments shown."},
+{"a":"7ClCbBREUlU","b":"oRk8sglOG5k","label":"re-upload","confidence":0.75,"note":"Same Boo Boo short across channels; same girl, boy, mom shots, no visible change."},
+{"a":"dEu8UBRKalc","b":"H2KaIANjQWs","label":"re-upload","confidence":0.85,"note":"Same Bob the Train transport song across channels; identical frames, new thumbnail."},
+{"a":"vIXEWEsz_60","b":"-b0iO9jy6pY","label":"same-template","confidence":0.6,"note":"Number songs 1-20 vs 1-30, same digit style, different backgrounds and lengths."},
+{"a":"DVLFCQUsuFI","b":"SB-7h4MW26k","label":"shared-segments","confidence":0.65,"note":"Rattic Mini compilations on one set; 1/2 frames look like same hoop episode."},
+{"a":"EkBM5fykH_I","b":"Ymla-qSUkMQ","label":"shared-segments","confidence":0.85,"note":"Christmas compilations sharing the pudding kitchen segment."}
+]

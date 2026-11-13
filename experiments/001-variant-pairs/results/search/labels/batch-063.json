@@ -1,0 +1,12 @@
+[
+{"a":"YVaBFUbjzuk","b":"hoNtxM3afpk","label":"re-upload","confidence":0.7,"note":"Same Rattic Christmas mailbox episode; B re-posted a year later with title card, longer"},
+{"a":"gdVpv0KN_uU","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Old MacDonald"},
+{"a":"i9kMX8tSKSA","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.8,"note":"Chew your food vs Old MacDonald"},
+{"a":"mTsFv_5w3uU","b":"whf3hzFiqzc","label":"same-song","confidence":0.6,"note":"Old MacDonald shorts, different characters and shots; similar pig in mud only"},
+{"a":"mTsFv_5w3uU","b":"oRUKPowFBgM","label":"unrelated","confidence":0.8,"note":"Old MacDonald vs Apples and Bananas"},
+{"a":"t2tKT2LSOfo","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.8,"note":"No No song vs Old MacDonald"},
+{"a":"3bTL4x31XTI","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.8,"note":"Bath time vs Old MacDonald"},
+{"a":"LJN6yukuQ9A","b":"c3lLP39EdME","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; manhole vs cheese gag"},
+{"a":"t892KTYY-cE","b":"STRJcffvt-0","label":"same-template","confidence":0.9,"note":"Learning Street phonics episodes, letter A vs Q"},
+{"a":"kwXxrZQ5GaQ","b":"STRJcffvt-0","label":"same-template","confidence":0.9,"note":"Learning Street phonics episodes, letter L vs Q"}
+]

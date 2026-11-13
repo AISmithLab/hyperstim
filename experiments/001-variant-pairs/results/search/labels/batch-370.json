@@ -1,0 +1,72 @@
+[
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episode"
+ },
+ {
+  "a": "jflAKuIuQBM",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "Ik7-qK_sEq8",
+  "b": "STRJcffvt-0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter O vs letter Q, same template and kids"
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "iFpez4fPv5Y",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "YABj119wijM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the pillow episode"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "_EZv7EJE8LE",
+  "b": "AyZJfo2rrOc",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episode"
+ }
+]

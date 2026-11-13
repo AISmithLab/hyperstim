@@ -1,0 +1,12 @@
+[
+ {"a": "TGZl_HsDj_0", "b": "-8VedXc5EDU", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations, same set and thumbnail layout; no shared shot visible"},
+ {"a": "pPw8P9W91QE", "b": "wQ6te-XZb2k", "label": "shared-segments", "confidence": 0.85, "note": "B is a Christmas compilation containing A's Jingle Bells: identical man-at-house frame"},
+ {"a": "phrajiOFBCY", "b": "7FiyQQBYTUY", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini vertical shorts, same set; builder blocks gag vs skates gag"},
+ {"a": "eAodpnlhaNI", "b": "s0DwH0Oq5YY", "label": "same-song", "confidence": 0.75, "note": "Boo Boo Song shorts with different casts and shots (Bob baby vs mother and girl)"},
+ {"a": "7FiyQQBYTUY", "b": "xEFkAQpftd4", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini vertical shorts, same set; skates gag vs teddy talent show"},
+ {"a": "_QFj7e58XGE", "b": "qCWFFPHRu1Q", "label": "same-template", "confidence": 0.5, "note": "Kids Channel song shorts in the same style; train song vs dinosaur song"},
+ {"a": "AlEPz20FGnk", "b": "cI_BJyU06go", "label": "same-template", "confidence": 0.45, "note": "Kids Channel shorts sharing a family cast; Boo Boo song vs Christmas song, different shots"},
+ {"a": "7FiyQQBYTUY", "b": "ainrmFQVbfI", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini vertical shorts, same set; skates gag vs rope gag"},
+ {"a": "7FiyQQBYTUY", "b": "MnJaDuR1QKE", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini vertical shorts, same set; skates gag vs robot vacuum gag"},
+ {"a": "ahWBypah3WE", "b": "IbEIByW4Fwk", "label": "same-song", "confidence": 0.7, "note": "Oopsie Doopsie dance shorts with different characters and staging"}
+]

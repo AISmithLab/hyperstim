@@ -1,0 +1,12 @@
+[
+ {"a": "WAA-gbyp24s", "b": "HWJc56KQtTg", "label": "shared-segments", "confidence": 0.6, "note": "Two compilations led by Five Little Shapes; same shape-character thumbnails, other frames differ."},
+ {"a": "a07zOPj6CZg", "b": "dL9q0aobLss", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter G vs R; same kids, stage and sign cheering."},
+ {"a": "c3lLP39EdME", "b": "7FiyQQBYTUY", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; cheese gag vs skates gag."},
+ {"a": "zGPsQPzB5Tk", "b": "dDd2JCRpr2s", "label": "shared-segments", "confidence": 0.9, "note": "Sport Bots compilations; identical frames at 1/2 and 3/4, different lead episodes."},
+ {"a": "7FiyQQBYTUY", "b": "o6VjhL9gA1A", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; skates vs carousel gag."},
+ {"a": "G0pDt06cZhs", "b": "R31yuujeSpU", "label": "same-song", "confidence": 0.75, "note": "Ek Mota Hathi shorts; purple elephant on dirt vs red elephant on grass, different shots."},
+ {"a": "PbchJhisS4s", "b": "oWkIR8ZkHgo", "label": "shared-segments", "confidence": 0.85, "note": "Rattic Mini compilations sharing the toy car and stacking tower episodes."},
+ {"a": "xEFkAQpftd4", "b": "jvCQFkt2FwI", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; talent show vs picture gag."},
+ {"a": "8-93_TmkKfc", "b": "2uTYZ20rXa8", "label": "re-upload", "confidence": 0.6, "note": "Same yellow bus, panda driver, street; B is the 2x speed version, no visual change."},
+ {"a": "o6VjhL9gA1A", "b": "a0Dg0fPxACY", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; carousel vs tumbler toy gag."}
+]

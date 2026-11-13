@@ -1,0 +1,72 @@
+[
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "M3sOUpxsrJE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (toy airplane vs cleaning)."
+ },
+ {
+  "a": "WKeK0Zqi5jw",
+  "b": "4ho4zx7QtR0",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Wheels on the ice cream truck vs bus shorts; different characters and shots."
+ },
+ {
+  "a": "414DEMcGHtU",
+  "b": "DkHOTeUUybU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs Humpty Dumpty shorts; nothing shared."
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "92wkK3tkeb0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bath song vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "6f6S5Y_1aIA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "6U9UX0MLvU4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "afJ8kEWkJqo",
+  "b": "cMOSJ1QIa3w",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "Baby Bao Wheels on the Bus: green bus swapped for yellow bus model, same panda-mother seat shot."
+ },
+ {
+  "a": "FVuAS7z73Bs",
+  "b": "YgjyQIwcJy0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Larva short vs Rattic Mini short; different series."
+ },
+ {
+  "a": "loH214qJLn4",
+  "b": "CR4xOtDkvNU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Bob the Train animals train vs transport train compilation; same train template, different content."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "Td73SYRglgw",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ }
+]

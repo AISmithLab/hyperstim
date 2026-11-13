@@ -1,0 +1,72 @@
+[
+ {
+  "a": "tQ3LttVt_Jk",
+  "b": "H3Kfst-qbzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (canyon vs restaurant)."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Five Little Mommies shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "HWH2lpQomEk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Five Little Monkeys shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "Z13ulLin2jg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "7ClCbBREUlU",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "lQxaq4Fu-i0",
+  "b": "VLa2W1SssVQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters U vs W, same set and kid shots."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "fKWJTJUkwPc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Five in the Bed shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "7ClCbBREUlU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "tQlIWPUO_E0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Ten in the Bed shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "mTsFv_5w3uU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Old Macdonald shorts; nothing shared."
+ }
+]

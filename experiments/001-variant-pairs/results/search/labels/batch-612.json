@@ -1,0 +1,72 @@
+[
+ {
+  "a": "a7-bpUidOBo",
+  "b": "iFpez4fPv5Y",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "ijAeNNIiKJ4",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi; A baby on flat color backdrops, B different kids and set"
+ },
+ {
+  "a": "SB-7h4MW26k",
+  "b": "S9N416aMRxk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "skNxtYhw9Y8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "FIinrJO9po8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "YJLDe0F_z7k",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "-8VedXc5EDU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "SSeBjzpJLFk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "1lYnLr7Bv0I",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same stage; different gags (airplane vs suitcase/mailbox), blurry matched frames"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "YVaBFUbjzuk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same stage; different gags (airplane vs suitcase/mailbox), blurry matched frames"
+ }
+]

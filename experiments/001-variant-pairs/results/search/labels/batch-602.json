@@ -1,0 +1,12 @@
+[
+{"a":"MxB4KiDF6XY","b":"iFpez4fPv5Y","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; shared music, different episodes at matched moments"},
+{"a":"oCiHs7agwmE","b":"V5OqHZwodj4","label":"same-song","confidence":0.85,"note":"Kaboochi vs Christmas Kaboochi with Santa; different animation"},
+{"a":"LQQ2DD4V_mY","b":"iFpez4fPv5Y","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; shared music, different episodes at matched moments"},
+{"a":"gkk96Hm-IHo","b":"S9N416aMRxk","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different gags at matched moments"},
+{"a":"4rcjZ1f_L4A","b":"lJZMkOLUxmM","label":"same-song","confidence":0.85,"note":"Kaboochi; hula kids vs 2D ghost/zombie Halloween animation"},
+{"a":"QKrdD5Y9c-s","b":"S9N416aMRxk","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"VqT9YA3THAE","b":"afyKHCB03MU","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, worm vs bottle; similar blurry tumbling shots, different gags"},
+{"a":"gkk96Hm-IHo","b":"pKnKuQMeGlk","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"nbApYhjXet4","b":"TGZl_HsDj_0","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; nearly all audio shared but different gags at matched moments"},
+{"a":"IOhRyd9CwYo","b":"V9fA6nrohac","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, mailbox vs attic stairs; similar fall shots, different props"}
+]

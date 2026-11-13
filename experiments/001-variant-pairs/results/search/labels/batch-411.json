@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Y7uU8pf9lJs",
+  "b": "Q8o0b4BIx90",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Same Santa's bus thumbnail; B likely the bus song inside A's compilation, frames differ"
+ },
+ {
+  "a": "Y7uU8pf9lJs",
+  "b": "sn15PWQ-Q7E",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Loco Nuts Christmas compilations; identical frames at 1/4 and 1/2"
+ },
+ {
+  "a": "Y7uU8pf9lJs",
+  "b": "u0Iw9dozWrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Loco Nuts Christmas compilations sharing the Santa dance scene"
+ },
+ {
+  "a": "HDZPIAhApn8",
+  "b": "Y7uU8pf9lJs",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Loco Nuts Christmas compilations sharing the Santa dance scene"
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "cmi5_37226c",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing sleigh and yellow ball episodes"
+ },
+ {
+  "a": "vyIiFiExyQQ",
+  "b": "Gh4izthwnNM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing red-car, tricycle and tower episodes"
+ },
+ {
+  "a": "y5hNOisFVd8",
+  "b": "lQxaq4Fu-i0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters N vs U on one template"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "xGQYPFqXJjE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "PjXooPy93AM",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "VJ1tu3mMRa0",
+  "b": "oRk8sglOG5k",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with different animation"
+ }
+]

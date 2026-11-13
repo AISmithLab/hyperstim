@@ -1,0 +1,12 @@
+[
+{"a":"2uTYZ20rXa8","b":"nEoTfUE6-Pk","label":"re-skin","confidence":0.9,"note":"2x speed bus song, same bus/panda shots; yellow bus vs orange bus"},
+{"a":"LXMGLr9uFv4","b":"nEoTfUE6-Pk","label":"re-skin","confidence":0.9,"note":"2x speed bus song, same shots; pink bus vs orange bus"},
+{"a":"FKIXL-VWkys","b":"sLY9_MeLxRw","label":"shared-segments","confidence":0.85,"note":"Finger family compilations sharing identical lollipop segment"},
+{"a":"nEoTfUE6-Pk","b":"yOq3vuvmRCQ","label":"re-skin","confidence":0.9,"note":"Same bus/panda shots; orange bus (2x speed) vs purple bus (normal speed)"},
+{"a":"nvR3fxkl_Bc","b":"t2tKT2LSOfo","label":"unrelated","confidence":0.8,"note":"Rig a Jig Jig vs No No song"},
+{"a":"t2tKT2LSOfo","b":"tQlIWPUO_E0","label":"unrelated","confidence":0.8,"note":"No No song vs Ten in the Bed"},
+{"a":"vSgel1xqgpE","b":"sLY9_MeLxRw","label":"shared-segments","confidence":0.85,"note":"Finger family compilations sharing identical lollipop segment"},
+{"a":"t2tKT2LSOfo","b":"9Rzd80kq53k","label":"shared-segments","confidence":0.65,"note":"No No song shorts with same footage, unchanged colors; B a longer recut"},
+{"a":"t2tKT2LSOfo","b":"OZzQENCeeNg","label":"unrelated","confidence":0.8,"note":"No No song vs dance song"},
+{"a":"t2tKT2LSOfo","b":"12mNC1UN38M","label":"unrelated","confidence":0.8,"note":"No No song vs Halloween bus short"}
+]

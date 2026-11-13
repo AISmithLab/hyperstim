@@ -1,0 +1,12 @@
+[
+{"a":"ijAeNNIiKJ4","b":"lJZMkOLUxmM","label":"same-song","confidence":0.85,"note":"Kaboochi audio; A baby dancing on color backdrops, B Halloween girl, mummy, skeletons"},
+{"a":"YrsmVbdtgLY","b":"OsP-k8ZnLc4","label":"same-song","confidence":0.8,"note":"Kaboochi Halloween shorts; matched moments show different characters and shots"},
+{"a":"JbY8yEFJs0g","b":"JAgEv328CdI","label":"same-song","confidence":0.55,"note":"Halloween compilations sharing audio; matched frames show different scenes throughout"},
+{"a":"YaThzRybuhE","b":"ONwFOOEkasU","label":"same-song","confidence":0.85,"note":"Kaboochi; A dancers on white, B kids on colorful set"},
+{"a":"-M02RqRMZks","b":"ea56PryuPcY","label":"same-song","confidence":0.8,"note":"It's Halloween Night; A ghosts and bat, B zombie and witch close-ups"},
+{"a":"O96r1dZ4Nqg","b":"-k4oiVaekT0","label":"same-template","confidence":0.95,"note":"Phonics series, letter G vs letter Q, same layout and timing"},
+{"a":"ONwFOOEkasU","b":"hSOqsVdRmeI","label":"same-song","confidence":0.85,"note":"Kaboochi; different kids and sets at matched moments"},
+{"a":"ONwFOOEkasU","b":"ijAeNNIiKJ4","label":"same-song","confidence":0.85,"note":"Kaboochi; A kids on colorful set, B baby on flat color backdrops"},
+{"a":"vIXEWEsz_60","b":"6ihQG692U_s","label":"same-template","confidence":0.7,"note":"Number songs 1-20 vs 1-50; different backgrounds and numbers at matched moments"},
+{"a":"AjfP599DrRE","b":"XEEVejf8Kgw","label":"same-song","confidence":0.5,"note":"Same 3D Santa/elf set but different shots at matched moments; maybe re-edits of one source"}
+]

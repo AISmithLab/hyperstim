@@ -1,0 +1,12 @@
+[
+{"a":"nbI-1N_uBNs","b":"-qxEnbH15lY","label":"unrelated","confidence":0.85,"note":"Jingle Bells short vs Boo Boo Song short; different content"},
+{"a":"vnZwDJQBIWw","b":"OEES3HmTQNw","label":"shared-segments","confidence":0.75,"note":"No No Song junk food: same mom shots; B is a longer cut"},
+{"a":"EcTmmxGz00c","b":"ZjXejl6qnuc","label":"shared-segments","confidence":0.75,"note":"Compilations both containing the farmer and kids scene"},
+{"a":"Om_sTl8BIgQ","b":"w9BOETCUH5o","label":"unrelated","confidence":0.75,"note":"Five Little Elves vs Jingle Bells shorts; only Christmas theme in common"},
+{"a":"F9SRocQYWo8","b":"6aHgVU60D8s","label":"shared-segments","confidence":0.8,"note":"Phonics song and a compilation containing the same classroom shot"},
+{"a":"PFPDDhGr6us","b":"s7JRVneKcao","label":"unrelated","confidence":0.6,"note":"Two Apples and Bananas compilations; no shared frame seen"},
+{"a":"t2tKT2LSOfo","b":"KmqklNBcsFE","label":"same-song","confidence":0.55,"note":"No No Song shorts with different scenes and characters"},
+{"a":"CvFabQeSv9A","b":"NcfiuWYdC24","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts: girl and mom vs boy and dad, different animation"},
+{"a":"-310FC3iTw8","b":"qBL6ZHNPdvo","label":"shared-segments","confidence":0.7,"note":"Halloween compilations sharing the witch scene; bus recolored only on thumbnails"},
+{"a":"NcfiuWYdC24","b":"vYXkEPIElyc","label":"same-song","confidence":0.55,"note":"Boo Boo song shorts with different animation"}
+]

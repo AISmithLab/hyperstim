@@ -1,0 +1,12 @@
+[
+{"a":"MxB4KiDF6XY","b":"zSf5nw7US6U","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing identical claw-machine and turban episodes"},
+{"a":"yg8D74iynoI","b":"163ojnwXQ98","label":"shared-segments","confidence":0.6,"note":"Talking Haunted House shorts from one production; same characters, different excerpts, no color change"},
+{"a":"7m15CgRy6OU","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts cut from same family production; different excerpts"},
+{"a":"7m15CgRy6OU","b":"Th5MQB8VO3Q","label":"shared-segments","confidence":0.7,"note":"Short vs full-length Boo Boo song of the same family/kitchen production"},
+{"a":"P610udrUFqE","b":"7hti1gwEK2A","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, same set, seesaw vs picture gag"},
+{"a":"7m15CgRy6OU","b":"CgR6YuA2Uoo","label":"same-song","confidence":0.7,"note":"Boo Boo song with a different family and animation"},
+{"a":"7m15CgRy6OU","b":"Iygt_NzD7VU","label":"shared-segments","confidence":0.5,"note":"Same family models; likely cuts from one Boo Boo production, frames differ"},
+{"a":"s0DwH0Oq5YY","b":"7m15CgRy6OU","label":"shared-segments","confidence":0.65,"note":"Boo Boo shorts sharing the mom-holding-baby shot"},
+{"a":"RG_4B9zxJnU","b":"7m15CgRy6OU","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts from same production; same thumbnail style, different excerpts"},
+{"a":"7m15CgRy6OU","b":"SP3eASDKke4","label":"shared-segments","confidence":0.8,"note":"Boo Boo shorts sharing identical mom/baby and kitchen footage"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "CfJfPAF8El8",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi dance song shorts: beach hula kids vs playroom babies"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "SSeBjzpJLFk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "pKnKuQMeGlk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "tQ3LttVt_Jk",
+  "b": "7hti1gwEK2A",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: canyon vs picture"
+ },
+ {
+  "a": "4OREtMc8hJA",
+  "b": "WAVrZioY18c",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "No No Song shorts with different characters and scenes"
+ },
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "Zy0VtX5RTFM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "Msywp-_Gl1g",
+  "b": "05oAs-Pqf5Y",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Kaboochi vs Christmas Kaboochi shorts; different characters and scenes"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: toy airplane vs teleport"
+ },
+ {
+  "a": "w9BOETCUH5o",
+  "b": "6OZMyx_vJXM",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Jingle Bells shorts with different Santa animation"
+ },
+ {
+  "a": "BrjLq8jTPfw",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

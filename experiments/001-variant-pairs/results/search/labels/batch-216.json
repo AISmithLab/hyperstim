@@ -1,0 +1,72 @@
+[
+ {
+  "a": "42965VL3b8Y",
+  "b": "QUZgkyItxVo",
+  "label": "re-upload",
+  "confidence": 0.75,
+  "note": "Bob Went to the Zoo re-uploaded in 2023 with new thumbnail; same shots."
+ },
+ {
+  "a": "ndf_-FJsPVk",
+  "b": "8ovG9ptOjBw",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Phonics letter songs H vs W, same white-set template."
+ },
+ {
+  "a": "Q95CAqmYoew",
+  "b": "ex7_knWJ9ak",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Larva shorts, different gags on similar sewer set."
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "S-mQfP0MW5w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Baa Baa Black Sheep shorts; nothing shared."
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "ulkPZc48Au8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs swimming shorts; nothing shared."
+ },
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "xe7vTAa-ufc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs Jingle Bells shorts; nothing shared."
+ },
+ {
+  "a": "ISJ2fM0-0dw",
+  "b": "oKEXFG0ZLZw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween roller coaster vs monster song shorts; nothing shared."
+ },
+ {
+  "a": "E9JfZ-SIhbY",
+  "b": "B7HQQms6klA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Baby Shark vs Boo Boo shorts; only black-bar framing shared."
+ },
+ {
+  "a": "4FXoc-ApjOQ",
+  "b": "Lm2OJi4yYNQ",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Bugs song vs brush teeth shorts; same animal cast only."
+ },
+ {
+  "a": "koo_B52bdgI",
+  "b": "vgvXtlvdNAo",
+  "label": "re-skin",
+  "confidence": 0.6,
+  "note": "Wheels on the Fire Truck: yellow truck vs blue truck, same thumbnail layout and firefighter girl; partial frame evidence."
+ }
+]

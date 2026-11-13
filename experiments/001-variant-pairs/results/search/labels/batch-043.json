@@ -1,0 +1,12 @@
+[
+{"a":"6U9UX0MLvU4","b":"xcmtfR5eQxQ","label":"same-song","confidence":0.55,"note":"Boo Boo song shorts, same family models, different shots; maybe cut from one long video"},
+{"a":"IWeiJekM5Cs","b":"cufl2niNsMo","label":"re-skin","confidence":0.85,"note":"Same Zoobees bus shots (front, rain side shot, driver); pink bus vs white spotted bus"},
+{"a":"_OlmXmG5OLM","b":"a0Dg0fPxACY","label":"same-template","confidence":0.8,"note":"Rat cartoon shorts, same character and set, different gags"},
+{"a":"P_PIOpt84Bc","b":"xl7KYkBbsuY","label":"shared-segments","confidence":0.55,"note":"ABC compilation includes Bob the Train phonics footage like B's compilation"},
+{"a":"PSSZCik4NWY","b":"HwuzyyGUwp8","label":"re-skin","confidence":0.45,"note":"Only thumbnail match: dog bus green vs pink, same pose; frames show other compilation songs"},
+{"a":"JuNoqM9tuKE","b":"_3je4X6k2cM","label":"shared-segments","confidence":0.85,"note":"2016 compilations sharing identical wizard boy/girl segment"},
+{"a":"ENYUiUEfM9A","b":"hV3aXsZBdbo","label":"shared-segments","confidence":0.6,"note":"Halloween compilation likely contains Pumpkin Patch song; same purple pumpkin cars, bat pumpkins"},
+{"a":"_OlmXmG5OLM","b":"dJGR_ECKwCA","label":"unrelated","confidence":0.75,"note":"Rat cartoon vs larva cartoon, different series; only dark style shared"},
+{"a":"djV64K-Y8vE","b":"ijNCfAvwMGE","label":"unrelated","confidence":0.75,"note":"Different songs and different baby characters; similar vertical short framing only"},
+{"a":"YudNG_jdUs4","b":"oRUKPowFBgM","label":"unrelated","confidence":0.8,"note":"Zoo song superhero vs apples and bananas kids; different content"}
+]

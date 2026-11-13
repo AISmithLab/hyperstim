@@ -1,0 +1,12 @@
+[
+{"a":"RKzQG0aXh-4","b":"iaAcKPREHRk","label":"shared-segments","confidence":0.75,"note":"Christmas bus shorts 59s and 121s share Santa's red bus footage"},
+{"a":"FIinrJO9po8","b":"KFwebO9sy58","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-box episode"},
+{"a":"skNxtYhw9Y8","b":"D0tOd2ZH-cQ","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"ZRd-uNE-AUA","b":"1CUDuGeV_w8","label":"unrelated","confidence":0.85,"note":"Kaboochi short vs bus-to-camp short"},
+{"a":"oHSAGotL2Vo","b":"V9fA6nrohac","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: bar chair vs attic stairs"},
+{"a":"UN4V4ywCWxA","b":"aZoH6w-VPjk","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"lEvNMZQ2DT4","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"wAtBG4hjCOY","b":"6FhYNE5KFeg","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: swing vs cat"},
+{"a":"fcYBv33BuIY","b":"svxlLrPCzUM","label":"same-song","confidence":0.55,"note":"Boo Boo shorts with same mother character, different shots"},
+{"a":"_OlmXmG5OLM","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: lawn mower vs toilet"}
+]

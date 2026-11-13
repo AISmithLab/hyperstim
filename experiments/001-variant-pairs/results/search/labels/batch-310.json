@@ -1,0 +1,12 @@
+[
+{"a":"GbLZA6PCybk","b":"bDwM-vixC8M","label":"shared-segments","confidence":0.8,"note":"Hector the Tractor compilations sharing the blue truck episode."},
+{"a":"GbLZA6PCybk","b":"WT_BRUefDBc","label":"same-template","confidence":0.6,"note":"Hector the Tractor compilations; sampled frames show different episodes."},
+{"a":"tOXi1DuQAps","b":"mu7ZX1Awz9s","label":"shared-segments","confidence":0.8,"note":"Long compilations sharing the crayons clip."},
+{"a":"cO1aLZ7teeg","b":"aDyWeSAt-sI","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"TGZl_HsDj_0","b":"cO1aLZ7teeg","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"KKgsTFivFJM","b":"Pa7utiQUGOY","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"q8T0cDm6nSA","b":"gkk96Hm-IHo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-box episode."},
+{"a":"YJLDe0F_z7k","b":"Uq5Pp5BQSm4","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"o6VjhL9gA1A","b":"YgjyQIwcJy0","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, carousel vs hollow tree gags."},
+{"a":"Eif8UopFHhM","b":"PjXooPy93AM","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."}
+]

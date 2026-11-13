@@ -1,0 +1,72 @@
+[
+ {
+  "a": "S0b-cNOME7I",
+  "b": "sI-dYFPPJgs",
+  "label": "re-upload",
+  "confidence": 0.7,
+  "note": "Same Wheels on the Bus short; driver and sleeping baby frames match"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "aYm4u_lQpIo",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Kaboochi shorts, same characters/shots in different cuts and order"
+ },
+ {
+  "a": "AZ5YlRetess",
+  "b": "zgCPimvZad0",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Identical compilation frames; only thumbnail differs"
+ },
+ {
+  "a": "ajfzu3lugQs",
+  "b": "ZfdtNICaWTI",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Same Jingle Bells car video, identical frames; different thumbnail and title"
+ },
+ {
+  "a": "t5wDGNrzpro",
+  "b": "Z13ulLin2jg",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Kaboochi shorts cut from same dance video, different shots shown"
+ },
+ {
+  "a": "s11HCj_gAWE",
+  "b": "e9LhPr3svs0",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "Same Wheels on the Bus shots, red bus recolored green; A is 2x speed"
+ },
+ {
+  "a": "QaYV4EBcrcQ",
+  "b": "AdRwOjaFizY",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Loconuts shorts, same characters, different episodes"
+ },
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "414DEMcGHtU",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Kaboochi title but B shows different characters/set"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "t5wDGNrzpro",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Kaboochi shorts sharing dance footage, different cuts"
+ },
+ {
+  "a": "Yd2dkZA9ihc",
+  "b": "yDaxszBxrFA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Loconuts episodes, same characters and park set, different stories"
+ }
+]

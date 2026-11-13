@@ -1,0 +1,72 @@
+[
+ {
+  "a": "4FXoc-ApjOQ",
+  "b": "8-qO0tHgMHY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Bugs song short vs animal dance short; different songs and characters"
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "i9kMX8tSKSA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Chew Your Food shorts; different songs"
+ },
+ {
+  "a": "nvR3fxkl_Bc",
+  "b": "U9maOBWT6wE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rig A Jig Jig vs Hush Little Baby shorts; different songs"
+ },
+ {
+  "a": "NndzvQ1wWwk",
+  "b": "X8bMaXuivrI",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Two different Halloween song shorts with different characters"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "hrOfhQCxqL0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "OSOdLGenkS0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "T2UcCZAPW34",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi dance: Christmas version vs regular, different shots and characters"
+ },
+ {
+  "a": "nyJqyZZCekg",
+  "b": "AOC1QPiG8-4",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boo Boo Song vs If You're Happy shorts; different songs"
+ },
+ {
+  "a": "phrajiOFBCY",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Two-episode builder short vs birthday episode"
+ },
+ {
+  "a": "FGUfrSFknik",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

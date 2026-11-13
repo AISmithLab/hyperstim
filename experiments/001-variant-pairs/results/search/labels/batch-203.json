@@ -1,0 +1,12 @@
+[
+{"a":"tCqhu4zzweM","b":"mWqrwHCh9_c","label":"shared-segments","confidence":0.8,"note":"Finger family compilations share the yellow bus segment; other frames differ."},
+{"a":"efop8uMcFFQ","b":"wbzm05WN8X8","label":"re-skin","confidence":0.9,"note":"Baby Bao Wheels on the Bus short: yellow bus vs red bus, same panda shots, panda outfit changed."},
+{"a":"poL6eGtjtAs","b":"AXwyC12oiEs","label":"re-upload","confidence":0.6,"note":"Five Little Shapes short, same shape footage re-edited with Bob intro; no recolor seen."},
+{"a":"oKEXFG0ZLZw","b":"i0Zanhlu46I","label":"unrelated","confidence":0.85,"note":"Two different Halloween shorts; nothing shared."},
+{"a":"AYDQM669F2E","b":"OokGp8l_x9k","label":"same-song","confidence":0.55,"note":"Both Halloween Wheels on the Bus shorts, different characters and shots."},
+{"a":"2zHVC4ndLJ0","b":"BGoVF9nhzhs","label":"re-upload","confidence":0.9,"note":"Christmas Baby Shark re-uploaded in 2023 with new thumbnail; same frames."},
+{"a":"Jn9aklUYdQk","b":"7ClCbBREUlU","label":"same-song","confidence":0.65,"note":"Boo Boo Song shorts with different characters and animation."},
+{"a":"e3ej1CBEdWk","b":"f-MdCU87axM","label":"same-song","confidence":0.6,"note":"Old MacDonald shorts with different characters and animation."},
+{"a":"ozmyDGKMhyA","b":"SrRv-n-dGmY","label":"same-template","confidence":0.5,"note":"Bob the Train Christmas episodes, different songs (snowman vs ABC)."},
+{"a":"CWkd68tLXos","b":"lLoLYPA3Z0I","label":"shared-segments","confidence":0.8,"note":"Halloween compilations share the pumpkin-table segment."}
+]

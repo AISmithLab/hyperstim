@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6cmE3gwaqJI",
+  "b": "DS8rk9NwXQc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "Tgp1NqPegK8",
+  "b": "jEwfENQE5Os",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs Halloween camp shorts; only side bars match."
+ },
+ {
+  "a": "_EZv7EJE8LE",
+  "b": "aDyWeSAt-sI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing snowman, car and mushroom episodes."
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "YABj119wijM",
+  "b": "D0tOd2ZH-cQ",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing car-with-teddy and snowman episodes."
+ },
+ {
+  "a": "kwXxrZQ5GaQ",
+  "b": "VLa2W1SssVQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics episodes L vs W; shared intro shots, different letter."
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "gvcEcWUHZ_c",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the drive-thru car episode."
+ },
+ {
+  "a": "_OlmXmG5OLM",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "ripZ0792Vx4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing drive-thru car and sausage episodes."
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "jPvyJ9IIRJk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

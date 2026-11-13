@@ -1,0 +1,72 @@
+[
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, stones vs toilet episodes"
+ },
+ {
+  "a": "5iXRqSe4KJo",
+  "b": "cqjfiWrwmmg",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, trombone vs stones episodes"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, ventilator vs manhole episodes"
+ },
+ {
+  "a": "IE7VFN8ln9Y",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spot vs robot vacuum episodes"
+ },
+ {
+  "a": "Ik7-qK_sEq8",
+  "b": "lQxaq4Fu-i0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters O vs U on one template"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, magic hat vs spot episodes"
+ },
+ {
+  "a": "9RUN6Q-uZm0",
+  "b": "aFbSzIMTBsY",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Bob the Train letter songs H vs N on one template"
+ },
+ {
+  "a": "XamiKGRhams",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, toilet vs spot episodes"
+ },
+ {
+  "a": "6cmE3gwaqJI",
+  "b": "c3lLP39EdME",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, car alarm vs cheese episodes"
+ },
+ {
+  "a": "IE7VFN8ln9Y",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spot vs skates episodes"
+ }
+]

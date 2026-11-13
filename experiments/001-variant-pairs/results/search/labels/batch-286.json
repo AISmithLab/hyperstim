@@ -1,0 +1,72 @@
+[
+ {
+  "a": "sG_f01xgWPo",
+  "b": "SQBTIuB0SsI",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Halloween bus shorts, different animation and character models"
+ },
+ {
+  "a": "sG_f01xgWPo",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Halloween bus vs monster song shorts, different animation"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "awLcqOFRHzg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing toy jeep and red car episodes"
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "5iXRqSe4KJo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, skates vs trombone gags"
+ },
+ {
+  "a": "Uq5Pp5BQSm4",
+  "b": "wMHsxnO156E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the yellow ball episode"
+ },
+ {
+  "a": "STRJcffvt-0",
+  "b": "lQxaq4Fu-i0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter Q vs U, shared intro/outro"
+ },
+ {
+  "a": "nHT4spNAshs",
+  "b": "9-G4JeHJiYQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing cannon and knitted ball episodes"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "yVKvv4YMB78",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing toy jeep and red car episodes"
+ },
+ {
+  "a": "aA57PjtEfZw",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter D vs Z, shared intro/outro"
+ },
+ {
+  "a": "7m15CgRy6OU",
+  "b": "_e29OQFpP7A",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts with same characters/footage, different cuts"
+ }
+]

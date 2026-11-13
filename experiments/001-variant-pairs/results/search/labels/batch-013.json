@@ -1,0 +1,12 @@
+[
+{"a":"Tz2SZgHgjjk","b":"c3lLP39EdME","label":"re-upload","confidence":0.75,"note":"Same Cheese short, identical frames and colors; B is 64s vs 32s, likely looped or extended."},
+{"a":"o6VjhL9gA1A","b":"jvCQFkt2FwI","label":"same-template","confidence":0.9,"note":"Rattic Mini shorts on same wooden-floor set; carousel vs picture, different gags."},
+{"a":"KKgsTFivFJM","b":"uzUxdwfXgWI","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing episodes (frog, heart balloon frames match)."},
+{"a":"_nU2w3nD-CM","b":"klwhxvQDOZk","label":"re-upload","confidence":0.9,"note":"Deck the Halls short, identical frames, same duration and day; only thumbnail/title differ."},
+{"a":"a07zOPj6CZg","b":"oHtQbh7LJjY","label":"same-template","confidence":0.95,"note":"Bob the Train phonics episodes, letter G vs J; shared intro kids, different content."},
+{"a":"F8aglE8xTlI","b":"0QDm9P-DjYg","label":"re-upload","confidence":0.9,"note":"Bob Train color ride, identical frames; Arabic vs Japanese title (dubbed upload)."},
+{"a":"12mNC1UN38M","b":"6Knlj_rhgE4","label":"re-skin","confidence":0.8,"note":"Same Halloween bus shots/poses; seats recolored (magenta to teal, teal to pink), pumpkins green to orange."},
+{"a":"c3lLP39EdME","b":"VqT9YA3THAE","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts on same set; cheese vs worm gags, different footage."},
+{"a":"o6VjhL9gA1A","b":"xEFkAQpftd4","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts on same set; carousel vs talent show, different footage."},
+{"a":"oHtQbh7LJjY","b":"kwXxrZQ5GaQ","label":"same-template","confidence":0.95,"note":"Bob the Train phonics episodes, letter J vs L; shared intro, different content."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"2b9xzvfYqD8","b":"P9QIOA_X06w","label":"re-skin","confidence":0.85,"note":"Wheels on the Bus short: same shots/poses, bus interior yellow in A, lime green in B."},
+{"a":"OW3hiiJk7H4","b":"nbXEHNGrGkc","label":"shared-segments","confidence":0.8,"note":"Loco Nuts compilations sharing the cat-and-bunny episode."},
+{"a":"ytFutj2YRBU","b":"XxecHQRjDKE","label":"same-song","confidence":0.6,"note":"Yum Yum food song, same set and characters but different shots."},
+{"a":"Jyj_bwI2cs0","b":"L9Rsc20F4Iw","label":"shared-segments","confidence":0.75,"note":"Scared of the Dark shorts cut from the same footage, different lengths."},
+{"a":"6zxe0dHglqQ","b":"wfgJx_MhK5o","label":"shared-segments","confidence":0.85,"note":"Two compilations sharing identical episode footage."},
+{"a":"hCsTxqJRkDc","b":"6aLsu1cH1V4","label":"shared-segments","confidence":0.7,"note":"Bob the Train compilation reuses shots from the shapes train video."},
+{"a":"hCsTxqJRkDc","b":"xjS-nGCLb_c","label":"shared-segments","confidence":0.7,"note":"Bob the Train compilation shares the train-on-hills shot with shapes video."},
+{"a":"Jyj_bwI2cs0","b":"lgLs0hy4eYk","label":"shared-segments","confidence":0.75,"note":"Scared of the Dark shorts sharing the boy-in-cap shots."},
+{"a":"hp3UUac8jUA","b":"XxecHQRjDKE","label":"shared-segments","confidence":0.5,"note":"Match mostly on thumbnail; compilation likely contains the Yum Yum song, frames differ."},
+{"a":"virobChxE9Y","b":"YP1Mc3H7tY4","label":"same-template","confidence":0.5,"note":"Compilations with same thumbnail layout (bus recolored on thumbnail only); frames differ."}
+]

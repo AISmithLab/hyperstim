@@ -1,0 +1,12 @@
+[
+{"a":"ejBvtH0Igqk","b":"NYMr_EvD6_s","label":"shared-segments","confidence":0.8,"note":"Bob the Train vehicle compilations sharing the bus-and-taxi street scene."},
+{"a":"NYMr_EvD6_s","b":"P8hI5Lo1dvQ","label":"shared-segments","confidence":0.75,"note":"Bob vehicle compilations across channels; identical bus-and-taxi frame, other shots differ."},
+{"a":"sFhZZIPj9nE","b":"zej8Uf5iAGk","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, cleaning vs teleport."},
+{"a":"vGjN_CslxSI","b":"9-G4JeHJiYQ","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the yellow ball episode."},
+{"a":"sFhZZIPj9nE","b":"Ar6N0i4c36U","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, cleaning vs manhole."},
+{"a":"zej8Uf5iAGk","b":"Tn2UZwb9RcY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, teleport vs bucket."},
+{"a":"wAtBG4hjCOY","b":"phrajiOFBCY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, swing vs builder."},
+{"a":"CfJfPAF8El8","b":"Gf_8uTV76EU","label":"unrelated","confidence":0.8,"note":"Kaboochi vs If You're Happy shorts; only side bars."},
+{"a":"TwDxP5L1-VA","b":"hsUfmH_uRjc","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, teleport vs car service."},
+{"a":"S9N416aMRxk","b":"PjXooPy93AM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."}
+]

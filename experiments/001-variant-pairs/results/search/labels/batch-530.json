@@ -1,0 +1,72 @@
+[
+ {
+  "a": "EX0D6k2zAM0",
+  "b": "PjXooPy93AM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations both contain the mime episode"
+ },
+ {
+  "a": "JOMSMENnSIQ",
+  "b": "cO1aLZ7teeg",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "6L0oq3iwbS0",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: TV vs carousel"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "6SRokrEQBtc",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; toy jeep with teddy episode appears in both"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: mime vs leaves"
+ },
+ {
+  "a": "2ONrfCPwygc",
+  "b": "obdK23ZIr6E",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: piano vs trishaw"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "aZoH6w-VPjk",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share purple box and crib episodes"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "pBZoqnYJdpo",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: toy airplane vs space rocket"
+ },
+ {
+  "a": "Zifbjuvaqrk",
+  "b": "_EZv7EJE8LE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "6L0oq3iwbS0",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: TV vs balloon"
+ }
+]

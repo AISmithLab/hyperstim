@@ -1,0 +1,72 @@
+[
+ {
+  "a": "KFwebO9sy58",
+  "b": "Eif8UopFHhM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the claw machine episode"
+ },
+ {
+  "a": "vCMNQHulhfo",
+  "b": "Ng85dlGMIQA",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters S and T on one template"
+ },
+ {
+  "a": "vyIiFiExyQQ",
+  "b": "n6eghHp7qWw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "sT3J4L19qrE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "P610udrUFqE",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic seesaw vs two-episode spot short"
+ },
+ {
+  "a": "6SRokrEQBtc",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "Qs4R686NOjg",
+  "b": "cO1aLZ7teeg",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing the car kiosk episode"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "urNKg4X9kIU",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic suitcase vs two-episode teleport short"
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "V9fA6nrohac",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cowboy vs attic stairs"
+ }
+]

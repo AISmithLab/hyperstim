@@ -1,0 +1,72 @@
+[
+ {
+  "a": "LJN6yukuQ9A",
+  "b": "PPVWn53Yw4M",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts: manhole vs football gags, same character and set, different content."
+ },
+ {
+  "a": "YrsmVbdtgLY",
+  "b": "CfJfPAF8El8",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi Halloween monsters vs babies; different shots at matched moments."
+ },
+ {
+  "a": "klDPbXVTBzw",
+  "b": "-8VedXc5EDU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "OSOdLGenkS0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "34zV8hDOuFs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "SB-7h4MW26k",
+  "b": "_EZv7EJE8LE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "hrOfhQCxqL0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "uzUxdwfXgWI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "hSOqsVdRmeI",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.8,
+  "note": "Kaboochi; different characters and shots at matched moments."
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ }
+]

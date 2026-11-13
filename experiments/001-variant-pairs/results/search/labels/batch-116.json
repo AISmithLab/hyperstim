@@ -1,0 +1,12 @@
+[
+{"a":"OLXeTCu2ESc","b":"zB4f-P9uBfA","label":"unrelated","confidence":0.85,"note":"No No song vs Hop and Zip cartoon; different series."},
+{"a":"jPvyJ9IIRJk","b":"7xSdzGpSjl4","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."},
+{"a":"jPvyJ9IIRJk","b":"fOJm84LQSTw","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."},
+{"a":"jPvyJ9IIRJk","b":"zPS3ihinlZs","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."},
+{"a":"AJu6WaCP-1g","b":"V5OqHZwodj4","label":"unrelated","confidence":0.8,"note":"We Wish You a Merry Christmas vs Christmas Kaboochi; different animation."},
+{"a":"v80qWgkingM","b":"YaThzRybuhE","label":"unrelated","confidence":0.85,"note":"Halloween short vs Kaboochi short; different animation."},
+{"a":"AOC1QPiG8-4","b":"fKWJTJUkwPc","label":"unrelated","confidence":0.8,"note":"If You're Happy vs Five in the Bed; different animation."},
+{"a":"2YmFl3ccv9E","b":"iD4Iyr_hKjE","label":"re-upload","confidence":0.75,"note":"Bob the Train ABC adventure; Chinese-titled upload of same animation, new thumbnail."},
+{"a":"nbI-1N_uBNs","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs Five Little Mommies; different animation."},
+{"a":"MHvLcoblyio","b":"pst1AsXQWTE","label":"same-song","confidence":0.6,"note":"Boo Boo song with different characters and scenes."}
+]

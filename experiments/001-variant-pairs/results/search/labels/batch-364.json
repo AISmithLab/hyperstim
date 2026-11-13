@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Gvz14qtMDBo",
+  "b": "9RUN6Q-uZm0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letter episodes, G vs H."
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "sFhZZIPj9nE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts, different gags (ventilator vs cleaning)."
+ },
+ {
+  "a": "jflAKuIuQBM",
+  "b": "Z1H7LX1K4Zo",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts sharing teddy-bear Talent Show shots."
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "xJWSNIkfOrY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing snowman, car, trash-can episodes."
+ },
+ {
+  "a": "MoftuEWtBuI",
+  "b": "h3bvPp9Jqnc",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Kaboochi dance shorts with same hula girl footage, different edits."
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "LJN6yukuQ9A",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts, different gags (ventilator vs manhole)."
+ },
+ {
+  "a": "Gvz14qtMDBo",
+  "b": "evV7r4kNN7g",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letter episodes, G vs Y."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween short vs Kaboochi short; only side bars match."
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "e9gnACQvqRM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts, different gags (ventilator vs door)."
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "Qv-eMjDmTJQ",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing the hoop-and-ramp episode."
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"OGSTQDin2k0","b":"I1sisugrdJQ","label":"shared-segments","confidence":0.8,"note":"Christmas compilations share the Bob skating-with-Santa segment."},
+{"a":"OGSTQDin2k0","b":"R5j7FsraGyk","label":"shared-segments","confidence":0.8,"note":"Christmas compilations share the Bob skating-with-Santa segment."},
+{"a":"5f8p3kdEbJw","b":"I-kn0Vak6b8","label":"re-skin","confidence":0.85,"note":"Halloween Wheels on the Bus: green/purple bus repainted yellow, same bus-stop and monster-seat shots."},
+{"a":"G7PTUNLnAFk","b":"OAiCA-fInkM","label":"unrelated","confidence":0.85,"note":"Train song vs Baby Shark short; nothing shared."},
+{"a":"5f8p3kdEbJw","b":"I0FVW6-NCII","label":"shared-segments","confidence":0.5,"note":"Compilation thumbnail shows the same Halloween bus; frames show other songs."},
+{"a":"t2tKT2LSOfo","b":"OAiCA-fInkM","label":"unrelated","confidence":0.85,"note":"No No song vs Baby Shark short; nothing shared."},
+{"a":"OGSTQDin2k0","b":"KPQ1iLx9I2s","label":"shared-segments","confidence":0.8,"note":"Christmas compilations share the Bob skating-with-Santa segment."},
+{"a":"dJvFOX8l4d8","b":"SQBTIuB0SsI","label":"unrelated","confidence":0.85,"note":"Halloween night vs Halloween bus shorts; different shots."},
+{"a":"6f6S5Y_1aIA","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.75,"note":"Boo Boo song vs Five Little Mommies shorts; similar mom model only."},
+{"a":"hmqdid2kALU","b":"l_HMLGY9XIo","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs A vs L, same set and structure."}
+]

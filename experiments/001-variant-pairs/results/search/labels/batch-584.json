@@ -1,0 +1,12 @@
+[
+{"a":"u3VtdvWtgl4","b":"YrsmVbdtgLY","label":"same-song","confidence":0.85,"note":"Kaboochi song, different characters and shots at matched moments"},
+{"a":"QkQmfGbdlKg","b":"Msywp-_Gl1g","label":"same-song","confidence":0.8,"note":"Kaboochi dance, different characters/shots at matched moments"},
+{"a":"XEEVejf8Kgw","b":"KQcbwwHmLY4","label":"same-song","confidence":0.75,"note":"Five Little Elves, same cast but different shots at matched moments"},
+{"a":"Msywp-_Gl1g","b":"aYm4u_lQpIo","label":"same-song","confidence":0.85,"note":"Kaboochi dance, different characters and staging"},
+{"a":"u40mx4lB20Q","b":"-dlezjbLXKU","label":"re-upload","confidence":0.85,"note":"matched frames identical; B is 61s vs A 31s, A contained in B"},
+{"a":"E9t53ek7H8U","b":"Msywp-_Gl1g","label":"same-song","confidence":0.85,"note":"Kaboochi; A flat-background babies, B rainbow stage cast, different animation"},
+{"a":"-k4oiVaekT0","b":"zQ7vvPa4pAk","label":"same-template","confidence":0.9,"note":"phonics letter Q vs letter R, same template and backing track"},
+{"a":"YrsmVbdtgLY","b":"lJZMkOLUxmM","label":"same-song","confidence":0.85,"note":"Kaboochi Halloween; different 3D vs 2D-style characters and shots"},
+{"a":"reZpGfU6csQ","b":"aYm4u_lQpIo","label":"same-song","confidence":0.85,"note":"Kaboochi dance, different characters at matched moments"},
+{"a":"rpvtKnqu7-4","b":"-k4oiVaekT0","label":"same-template","confidence":0.85,"note":"phonics letter O vs Q; match lands on B's end card"}
+]

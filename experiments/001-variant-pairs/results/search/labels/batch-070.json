@@ -1,0 +1,12 @@
+[
+{"a":"j7HfsNN3SF0","b":"QUZgkyItxVo","label":"shared-segments","confidence":0.7,"note":"Compilation contains the Bob the Train zoo shot with baby on the rocker."},
+{"a":"0ZNqZ9x_06U","b":"fAQ_c_NEM7A","label":"shared-segments","confidence":0.7,"note":"Kaboochi shorts with the same yellow-shirt boy shots; 2022 pillarboxed vs 2025 cut."},
+{"a":"BRcmpSxalwA","b":"iQtJ6U5X01A","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Three Little Kittens; different content."},
+{"a":"Tgp1NqPegK8","b":"uQ90xr1p-eQ","label":"shared-segments","confidence":0.65,"note":"Kaboochi baby shorts; same pink-outfit girl shot on the striped floor."},
+{"a":"CvFabQeSv9A","b":"DclM70T7jyI","label":"same-song","confidence":0.55,"note":"Boo Boo song shorts with different families and shots."},
+{"a":"BRcmpSxalwA","b":"YudNG_jdUs4","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Zoo song; different characters."},
+{"a":"BRcmpSxalwA","b":"U9lOcqHMY_w","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Happy Halloween; different content."},
+{"a":"BRcmpSxalwA","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.75,"note":"Five Little Monkeys vs Five Little Mommies; doctor theme only."},
+{"a":"xPt-5RG1m-0","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance shorts with different characters and sets."},
+{"a":"lc2JcbW_d2U","b":"sUz47md7Gqo","label":"shared-segments","confidence":0.7,"note":"Halloween Howl shorts sharing the pink-hat witch girl shot; 40 vs 58 s cuts."}
+]

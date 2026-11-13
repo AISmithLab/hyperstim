@@ -1,0 +1,72 @@
+[
+ {
+  "a": "LQQ2DD4V_mY",
+  "b": "PjXooPy93AM",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; both seem to include the mime episode"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: rings vs spot"
+ },
+ {
+  "a": "KFwebO9sy58",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "QKrdD5Y9c-s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine and stroller episodes"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "CU_QocmxLz0",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: birthday vs statue"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "KFwebO9sy58",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the stroller episode"
+ },
+ {
+  "a": "M3sOUpxsrJE",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: cleaning vs teleport"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "sT3J4L19qrE",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share trash can and toy jeep episodes"
+ },
+ {
+  "a": "fUR3k2eL6Mo",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; both seem to include the mime episode"
+ }
+]

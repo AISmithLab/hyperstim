@@ -1,0 +1,72 @@
+[
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "PbchJhisS4s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing red-car and tower-blocks episodes"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "a7-bpUidOBo",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing snowman and trash-can episodes"
+ },
+ {
+  "a": "zPS3ihinlZs",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, cat vs spot episodes"
+ },
+ {
+  "a": "iFpez4fPv5Y",
+  "b": "wMHsxnO156E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the yellow ball episode"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "D0tOd2ZH-cQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing toy-car and snowman episodes"
+ },
+ {
+  "a": "XBXyBskjSOc",
+  "b": "evV7r4kNN7g",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Bob the Train letter songs T vs Y on one template"
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "cmi5_37226c",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the yellow ball episode"
+ },
+ {
+  "a": "PjXooPy93AM",
+  "b": "oXA7qx--2oI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ }
+]

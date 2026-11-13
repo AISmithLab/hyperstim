@@ -1,0 +1,12 @@
+[
+{"a":"S0b-cNOME7I","b":"HDafF0-iosc","label":"shared-segments","confidence":0.7,"note":"Same pink-seat bus short footage; B a 31s cut with other baby shot."},
+{"a":"zej8Uf5iAGk","b":"BZqq3eL6xSE","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, teleport vs high striker."},
+{"a":"zej8Uf5iAGk","b":"TwDxP5L1-VA","label":"re-upload","confidence":0.75,"note":"Rattic Mini Teleport, same frames; B 60s longer version."},
+{"a":"Nj_pfXISKXc","b":"S0b-cNOME7I","label":"re-skin","confidence":0.85,"note":"Bus short, same baby and driver poses; seat green vs pink, bus red vs blue."},
+{"a":"2b9xzvfYqD8","b":"S0b-cNOME7I","label":"re-skin","confidence":0.8,"note":"Bus short, same driver shots; seats blue vs pink, bus yellow vs blue, baby swapped."},
+{"a":"XV9SIRfLb4o","b":"cZv2oJ5k6gU","label":"shared-segments","confidence":0.8,"note":"Thai Bob compilations sharing the girl and pig dance segments."},
+{"a":"S0b-cNOME7I","b":"P9QIOA_X06w","label":"re-skin","confidence":0.8,"note":"Bus short, same driver poses; seats pink vs blue, bus colors and baby swapped."},
+{"a":"xers5HU02Ew","b":"aScyfsClZd0","label":"shared-segments","confidence":0.55,"note":"Boo Boo Song shorts sharing the mom-at-railing shot."},
+{"a":"eAodpnlhaNI","b":"1dFjKYblswI","label":"shared-segments","confidence":0.5,"note":"Bob Boo Boo Song shorts with same baby; sampled shots differ."},
+{"a":"6f6S5Y_1aIA","b":"9Rzd80kq53k","label":"unrelated","confidence":0.7,"note":"Boo Boo Song vs No No Song; shared mom character only."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "B7HQQms6klA",
+  "b": "_DsjLa0POK4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different songs; match only on black side bars of 2022 shorts"
+ },
+ {
+  "a": "Ln0H_11UIwI",
+  "b": "_DsjLa0POK4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different songs; match only on black side bars of 2022 shorts"
+ },
+ {
+  "a": "wk9I_xT1NNc",
+  "b": "_DsjLa0POK4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different songs; match only on black side bars of 2022 shorts"
+ },
+ {
+  "a": "iU6ztvS5ySA",
+  "b": "N29-6Yp756o",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Loconuts songs, same animal characters, different stories"
+ },
+ {
+  "a": "QlDpRW0_nBI",
+  "b": "_DsjLa0POK4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different songs; match only on black side bars of 2022 shorts"
+ },
+ {
+  "a": "_DsjLa0POK4",
+  "b": "nbI-1N_uBNs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Baa Baa vs Jingle Bells shorts; only black side bars match"
+ },
+ {
+  "a": "N29-6Yp756o",
+  "b": "JmZyium75oc",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Loconuts songs, same animal characters, different songs"
+ },
+ {
+  "a": "_DsjLa0POK4",
+  "b": "0ZNqZ9x_06U",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Baa Baa vs Kaboochi shorts; only black side bars match"
+ },
+ {
+  "a": "GGQVXv4Nc-E",
+  "b": "_DsjLa0POK4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Baa Baa shorts; only black side bars match"
+ },
+ {
+  "a": "v80qWgkingM",
+  "b": "_DsjLa0POK4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween Night vs Baa Baa shorts; only black side bars match"
+ }
+]

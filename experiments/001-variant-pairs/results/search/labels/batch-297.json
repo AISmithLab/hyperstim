@@ -1,0 +1,12 @@
+[
+{"a":"vbY-B_GtSvc","b":"M_92V9hKIv0","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter K vs Z."},
+{"a":"UN4V4ywCWxA","b":"S9N416aMRxk","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"zej8Uf5iAGk","b":"zPS3ihinlZs","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, teleport vs cat."},
+{"a":"KFwebO9sy58","b":"gkk96Hm-IHo","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the claw machine episode."},
+{"a":"kHVGgxylqd8","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.6,"note":"Boo Boo Song shorts drawing on the same family footage, different edits."},
+{"a":"Gh4izthwnNM","b":"cO1aLZ7teeg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"jPvyJ9IIRJk","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skipping rope vs balloon."},
+{"a":"7FiyQQBYTUY","b":"EPh1bFzsVf4","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skates vs leaves."},
+{"a":"BZqq3eL6xSE","b":"a0Dg0fPxACY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, high striker vs tumbler toy."},
+{"a":"3yv0GSbbCZI","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."}
+]

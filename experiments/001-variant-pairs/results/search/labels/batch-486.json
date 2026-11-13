@@ -1,0 +1,12 @@
+[
+{"a":"DCnPwoQE0hU","b":"qbQFlAdsydo","label":"shared-segments","confidence":0.65,"note":"Wheels on the Ambulance shorts across channels share ambulance shots; endings differ"},
+{"a":"xXPv_zAPd1U","b":"fvpDSppG4N8","label":"re-upload","confidence":0.7,"note":"Same compilation frames at all positions, retitled with new thumbnail two days apart"},
+{"a":"yfbpDHTVirs","b":"xXPv_zAPd1U","label":"shared-segments","confidence":0.75,"note":"Learning compilations sharing the blob-and-monkey segment"},
+{"a":"_R12Qsg6sEk","b":"jflAKuIuQBM","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: cowboy vs talent show"},
+{"a":"njSANQD1GlI","b":"V9fA6nrohac","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: magic hat vs attic stairs"},
+{"a":"LJN6yukuQ9A","b":"TwDxP5L1-VA","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: manhole vs teleport"},
+{"a":"UN4V4ywCWxA","b":"_GlpTSaa5EU","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"9RUN6Q-uZm0","b":"y5BTqWirpe8","label":"same-template","confidence":0.9,"note":"Bob the Train letter H vs letter M episodes"},
+{"a":"Jt4V3NCA-u0","b":"uzUxdwfXgWI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing dinosaur and heart-balloon episodes"},
+{"a":"e9gnACQvqRM","b":"IE7VFN8ln9Y","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: door vs spot"}
+]

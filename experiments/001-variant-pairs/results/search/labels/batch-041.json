@@ -1,0 +1,12 @@
+[
+ {"a": "mHDPn8N5ASE", "b": "oJ_S3VH_L_I", "label": "re-skin", "confidence": 0.7, "note": "Thumbnails are the same street shot with bus rainbow vs purple; B's other sampled frames are other songs."},
+ {"a": "VXMbRH4XKtI", "b": "8bMv6zrYZ6o", "label": "same-template", "confidence": 0.7, "note": "Loco Nuts shorts: Swimming Song vs Who Took the Goodies, same characters."},
+ {"a": "oRUKPowFBgM", "b": "vYXkEPIElyc", "label": "unrelated", "confidence": 0.7, "note": "Apples and Bananas vs Ouch Got a Boo Boo; different characters."},
+ {"a": "vYXkEPIElyc", "b": "qCWFFPHRu1Q", "label": "unrelated", "confidence": 0.75, "note": "Boo Boo short vs Loco Nuts Dinosaur Song."},
+ {"a": "YudNG_jdUs4", "b": "vYXkEPIElyc", "label": "unrelated", "confidence": 0.8, "note": "Zoo Song superheroes vs Boo Boo short."},
+ {"a": "8bMv6zrYZ6o", "b": "Lm2OJi4yYNQ", "label": "same-template", "confidence": 0.65, "note": "Loco Nuts shorts: Halloween goodies vs brushing teeth, same characters."},
+ {"a": "lJvT9CbIXRc", "b": "6MqRSj6SE6o", "label": "shared-segments", "confidence": 0.85, "note": "Five Little Fruits frame reappears identically inside the long fruits compilation."},
+ {"a": "6U9UX0MLvU4", "b": "vYXkEPIElyc", "label": "same-song", "confidence": 0.5, "note": "Both boo-boo songs with different characters and scenes."},
+ {"a": "nvR3fxkl_Bc", "b": "oCiHs7agwmE", "label": "unrelated", "confidence": 0.8, "note": "Rig A Jig Jig vs Kaboochi dance."},
+ {"a": "GvP31EGA8tQ", "b": "M0V1ofCOEew", "label": "same-template", "confidence": 0.65, "note": "Rattic Mini compilations; no shared frames sampled."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "U9maOBWT6wE",
+  "b": "C5NadrBnSj8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Hush Little Baby vs Boo Boo Song shorts"
+ },
+ {
+  "a": "fx0aMbJwE34",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "jPvyJ9IIRJk",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, skipping rope vs cowboy episodes"
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "Tn2UZwb9RcY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, space rocket vs bucket episodes"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "Uq5Pp5BQSm4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "Uq5Pp5BQSm4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "loH214qJLn4",
+  "b": "JlsguWRqg_A",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Bob the Train: same train and kids intro; animal cargo vs vehicle cargo, like Number/Vegetable Train"
+ },
+ {
+  "a": "7xSdzGpSjl4",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, gloves vs balloon episodes"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, stones vs spot episodes"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, birthday vs leaves episodes"
+ }
+]

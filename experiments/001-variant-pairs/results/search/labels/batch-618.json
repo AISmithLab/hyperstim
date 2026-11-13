@@ -1,0 +1,12 @@
+[
+{"a":"bdbNsMtn26Y","b":"n6eghHp7qWw","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"_pqh8Nw-k3o","b":"q8T0cDm6nSA","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; shared music, different gags at matched moments"},
+{"a":"KKgsTFivFJM","b":"xJWSNIkfOrY","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"YrsmVbdtgLY","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.85,"note":"Kaboochi; Halloween zombie/skeleton animation vs kids and corgi"},
+{"a":"TGZl_HsDj_0","b":"bBOI5NzGpX0","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"2kLB7ZwxVv8","b":"cmi5_37226c","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; nearly all audio shared, different gags at matched moments"},
+{"a":"OSOdLGenkS0","b":"M0V1ofCOEew","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations; different episodes at matched moments"},
+{"a":"39Dtr0Rq-TY","b":"a0Dg0fPxACY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, boards vs tumbler toy; similar tumbling shots, different props"},
+{"a":"CfJfPAF8El8","b":"Xx39RVmRYWE","label":"re-skin","confidence":0.7,"note":"Same Kaboochi poses; B Christmas outfits and snowy trees, one dancer swapped for another model"},
+{"a":"oHSAGotL2Vo","b":"a0Dg0fPxACY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bar chair vs tumbler toy; similar falls, different props"}
+]

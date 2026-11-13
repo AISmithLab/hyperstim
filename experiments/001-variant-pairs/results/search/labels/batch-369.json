@@ -1,0 +1,72 @@
+[
+ {
+  "a": "IE7VFN8ln9Y",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spot vs picture episodes"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "n6eghHp7qWw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing toy-car, snowman and trash-can episodes"
+ },
+ {
+  "a": "YABj119wijM",
+  "b": "aDyWeSAt-sI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "Ik7-qK_sEq8",
+  "b": "Ng85dlGMIQA",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters O vs T on one template"
+ },
+ {
+  "a": "kyProT-iMwg",
+  "b": "oXA7qx--2oI",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini Christmas compilations sharing the yellow ball episode"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "DVLFCQUsuFI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing tower-blocks and red-car episodes"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "YJLDe0F_z7k",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing trash-can and snowman episodes"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "D0tOd2ZH-cQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing toy-car and snowman episodes"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "oT6bPk4gHxM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, ventilator vs rings episodes"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "UXsXYmw3_CY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, ventilator vs gloves episodes"
+ }
+]

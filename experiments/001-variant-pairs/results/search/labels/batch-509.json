@@ -1,0 +1,72 @@
+[
+ {
+  "a": "wXflCnqZczs",
+  "b": "ejBvtH0Igqk",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "Same Fire Truck compilation, same title and length; frames match, new thumbnail"
+ },
+ {
+  "a": "v5VfeIkKYhM",
+  "b": "Syaj9FjU7Lc",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "2014 Animal Sound Song re-posted; same frames, A has longer end screen"
+ },
+ {
+  "a": "wXflCnqZczs",
+  "b": "P8hI5Lo1dvQ",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Bob vehicle compilations share the bus-and-taxi segment; different lead video"
+ },
+ {
+  "a": "OR9T1Iak3EU",
+  "b": "wXflCnqZczs",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Bob vehicle compilations; similar thumbnail layout, no shared frame visible"
+ },
+ {
+  "a": "8GXApiu2XLk",
+  "b": "1DOZoGrM-5o",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Bob compilations share the car-and-train street segment"
+ },
+ {
+  "a": "wXflCnqZczs",
+  "b": "NYMr_EvD6_s",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Bob vehicle compilations share bus-and-taxi and Bob segments"
+ },
+ {
+  "a": "PT7if7fHdPE",
+  "b": "8GXApiu2XLk",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Bob compilations share the car-and-train street segment"
+ },
+ {
+  "a": "wGMFLdlwsiE",
+  "b": "GcZXNKTPP5U",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters Q vs R"
+ },
+ {
+  "a": "8GXApiu2XLk",
+  "b": "s604TR-uFuY",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Bob compilations share alphabet and car-and-train segments"
+ },
+ {
+  "a": "FNHXJPQIb0I",
+  "b": "wXflCnqZczs",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Bob Wheels on the Bus video appears in the Fire Truck compilation (bus-and-taxi shot)"
+ }
+]

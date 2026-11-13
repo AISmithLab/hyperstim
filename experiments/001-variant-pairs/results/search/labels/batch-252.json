@@ -1,0 +1,12 @@
+[
+{"a":"EEjEqGUwpiE","b":"tCqhu4zzweM","label":"shared-segments","confidence":0.8,"note":"Finger Family compilations sharing the yellow bus clip."},
+{"a":"EEjEqGUwpiE","b":"mWqrwHCh9_c","label":"shared-segments","confidence":0.8,"note":"Finger Family compilations sharing the yellow bus clip."},
+{"a":"GsvDQQXWbLI","b":"lMLFwzcH8_s","label":"shared-segments","confidence":0.65,"note":"Wheels on the Bus compilations sharing Humpty Dumpty clip; lead bus differs (orange vs pink)."},
+{"a":"wo2YOWfZ7y8","b":"fhE631TEWOY","label":"shared-segments","confidence":0.85,"note":"A compilation contains B's Bob Finger Family song (same hand/train shots)."},
+{"a":"MstDCeu1yxM","b":"jflAKuIuQBM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, same set, different gags."},
+{"a":"oRUKPowFBgM","b":"lZngiTw7yGo","label":"unrelated","confidence":0.8,"note":"Apples & Bananas vs Monkey Dance shorts; side bars only."},
+{"a":"9DBJvlkWDs4","b":"_e29OQFpP7A","label":"shared-segments","confidence":0.5,"note":"Boo Boo shorts with same characters and song; edits differ, no identical frame."},
+{"a":"8Ri1s8CTSrM","b":"6SRokrEQBtc","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, same set, different episodes in sampled frames."},
+{"a":"fo7aioou8m0","b":"ZRd-uNE-AUA","label":"unrelated","confidence":0.85,"note":"Five Little Ducks vs Kaboochi shorts."},
+{"a":"KX81IXOS9gw","b":"BF7egYW1f7E","label":"same-song","confidence":0.7,"note":"Five Little Monkeys with babies vs monkeys; different animation."}
+]

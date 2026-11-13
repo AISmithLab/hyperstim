@@ -1,0 +1,12 @@
+[
+{"a":"gIMyiAxeKSk","b":"VLa2W1SssVQ","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter I vs W."},
+{"a":"DS8rk9NwXQc","b":"mrU14TkzuVI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, mime vs robot vacuum."},
+{"a":"vGjN_CslxSI","b":"Uq5Pp5BQSm4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing sleigh and yellow ball episodes."},
+{"a":"s0DwH0Oq5YY","b":"92wkK3tkeb0","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different footage (family vs Bob baby/ambulance)."},
+{"a":"qA-zKbEgq1Q","b":"ainrmFQVbfI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, balloon vs rope."},
+{"a":"Ia2TzzY2Vto","b":"DF6G0YHRlV8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, toilet vs crib."},
+{"a":"5iXRqSe4KJo","b":"XamiKGRhams","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, trombone vs toilet."},
+{"a":"aDyWeSAt-sI","b":"Kix07nOAEBQ","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"gmRIldLgb8k","b":"I25m3zH47KA","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, kung fu vs water machine."},
+{"a":"7FiyQQBYTUY","b":"TtH33fR-iQM","label":"shared-segments","confidence":0.8,"note":"Skates short, 32s vs 63s version with the same footage."}
+]

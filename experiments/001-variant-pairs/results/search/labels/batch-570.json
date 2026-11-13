@@ -1,0 +1,72 @@
+[
+ {
+  "a": "X5isLUsPsU0",
+  "b": "R7pIlyiHmJY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "EX0D6k2zAM0",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the mime episode"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "QLtuuZVDZ4g",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic ventilator vs two-episode pillow short"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "CU_QocmxLz0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, suitcase vs statue"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "PjXooPy93AM",
+  "b": "xJWSNIkfOrY",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing mime, snowman, toy jeep episodes"
+ },
+ {
+  "a": "hsUfmH_uRjc",
+  "b": "JKmr96i2xH0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, car service vs guard"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "Jt4V3NCA-u0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

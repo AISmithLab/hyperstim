@@ -1,0 +1,12 @@
+[
+{"a":"GgOh8xG3j5o","b":"-xCC8XqKATU","label":"re-skin","confidence":0.9,"note":"Incy Wincy Bao Panda, identical shots; spider recolored orange to purple."},
+{"a":"aACfDyTDcL8","b":"sT3J4L19qrE","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy jeep episode."},
+{"a":"_H1Vwsm6z7Q","b":"MnwriKXX89I","label":"shared-segments","confidence":0.8,"note":"Shapes compilations sharing the shapes-on-horses segment."},
+{"a":"S9N416aMRxk","b":"sT3J4L19qrE","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; sampled episodes differ."},
+{"a":"xqmw3bRa9GE","b":"G7PTUNLnAFk","label":"unrelated","confidence":0.85,"note":"Old MacDonald vs Wheels on the Train; different characters."},
+{"a":"4FXoc-ApjOQ","b":"8bMv6zrYZ6o","label":"unrelated","confidence":0.7,"note":"Bugs song vs Halloween goodies; same Loco Nuts bear, different scenes."},
+{"a":"SHNZFqON0to","b":"hVws1PYrdsI","label":"shared-segments","confidence":0.8,"note":"Bob compilations sharing the bus and Bob segment."},
+{"a":"U9maOBWT6wE","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Boo Boo Song; different characters."},
+{"a":"_e29OQFpP7A","b":"vYXkEPIElyc","label":"same-song","confidence":0.55,"note":"Boo Boo shorts with different kids and sets."},
+{"a":"nEoTfUE6-Pk","b":"uwnBzV6vNZs","label":"re-skin","confidence":0.85,"note":"Panda bus song same shots, bus orange vs pink."}
+]

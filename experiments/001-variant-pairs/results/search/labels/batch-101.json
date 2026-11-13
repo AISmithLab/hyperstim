@@ -1,0 +1,12 @@
+[
+{"a":"oCiHs7agwmE","b":"Z13ulLin2jg","label":"shared-segments","confidence":0.5,"note":"Kaboochi shorts cut from one production on same set; different kids/moments shown"},
+{"a":"7hti1gwEK2A","b":"NL_S69qf0jg","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts, same set, different gags"},
+{"a":"-dcm4bujns4","b":"h48pV4-5rKs","label":"re-upload","confidence":0.75,"note":"Bob the Train Bingo: identical shots (train at fence), new thumbnail, 3 s longer"},
+{"a":"D0tOd2ZH-cQ","b":"IYU2e8WgGnY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-car episode"},
+{"a":"uE-G6fKmpA4","b":"29MA-0_XkAY","label":"shared-segments","confidence":0.6,"note":"Monster Finger Family short vs 2-min version; same helmet-baby shot"},
+{"a":"OZzQENCeeNg","b":"Z13ulLin2jg","label":"unrelated","confidence":0.75,"note":"Different dance songs, different sets; only kids-dancing vertical shorts"},
+{"a":"V5OqHZwodj4","b":"Z13ulLin2jg","label":"same-song","confidence":0.7,"note":"Christmas Kaboochi version: new Santa animation of same song"},
+{"a":"Z13ulLin2jg","b":"Tgp1NqPegK8","label":"shared-segments","confidence":0.5,"note":"Two Kaboochi cuts of one production; same set, different kids at same positions"},
+{"a":"EO2DniUQfRo","b":"0bgxPRujZcw","label":"shared-segments","confidence":0.85,"note":"Boo Boo song inside 13-min compilation; identical train/ambulance frame"},
+{"a":"bzcufo-BRaA","b":"IRWTZropao4","label":"unrelated","confidence":0.7,"note":"Different Halloween shorts (bus song vs Ha Ha Halloween)"}
+]

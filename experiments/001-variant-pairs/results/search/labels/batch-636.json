@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Qs4R686NOjg",
+  "b": "IYU2e8WgGnY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "yVKvv4YMB78",
+  "b": "zSf5nw7US6U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "aZoH6w-VPjk",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "FGUfrSFknik",
+  "b": "D0tOd2ZH-cQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "tXgJmUiG38s",
+  "b": "UGzlPPWb6Pg",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts; builder blocks gag vs fly swatter gag on same stage"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "_EZv7EJE8LE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "wfvd_2gm_ew",
+  "b": "4rcjZ1f_L4A",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi; A DJ disco floor, B beach/tropical kids, different shots"
+ },
+ {
+  "a": "fx0aMbJwE34",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "vGjN_CslxSI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "KKgsTFivFJM",
+  "b": "M0V1ofCOEew",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ }
+]

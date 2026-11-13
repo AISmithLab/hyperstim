@@ -1,0 +1,12 @@
+[
+{"a":"G7PTUNLnAFk","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Kaboochi dance; different characters."},
+{"a":"U9maOBWT6wE","b":"Td73SYRglgw","label":"unrelated","confidence":0.7,"note":"Hush Little Baby vs Boo Boo Song; shared mom character only."},
+{"a":"41F1Fdb3tHM","b":"aScyfsClZd0","label":"shared-segments","confidence":0.55,"note":"Boo Boo Song shorts with same girl and boy shots; B longer."},
+{"a":"7nOsX0xOiTM","b":"9lC5bHDXP5A","label":"shared-segments","confidence":0.85,"note":"Bob compilations sharing green bus and ambulance segments."},
+{"a":"GGQVXv4Nc-E","b":"B7HQQms6klA","label":"same-song","confidence":0.7,"note":"Boo Boo Song shorts with different characters and animation."},
+{"a":"02V16zHs6u4","b":"8Rbxmpk3bw4","label":"shared-segments","confidence":0.85,"note":"Loco Nuts compilations sharing the pig segment."},
+{"a":"i0Zanhlu46I","b":"12mNC1UN38M","label":"unrelated","confidence":0.75,"note":"Five Little Monsters vs Halloween bus; Halloween theme only."},
+{"a":"G7PTUNLnAFk","b":"euLhwHIdGU0","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Peek A Boo; different characters."},
+{"a":"EctujAhoLmA","b":"SHNZFqON0to","label":"shared-segments","confidence":0.8,"note":"Bob compilations sharing the bus and Bob segment."},
+{"a":"uaNCJzGwl3E","b":"m151ZBLwbhc","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus purple vs cyan."}
+]

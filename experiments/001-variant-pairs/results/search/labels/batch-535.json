@@ -1,0 +1,72 @@
+[
+ {
+  "a": "GCqVNL7ZRdg",
+  "b": "9aLZatXZCl4",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing car kiosk and stones episodes"
+ },
+ {
+  "a": "inkqQlbrdrQ",
+  "b": "TwS8SzpZrug",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing claw machine and stroller episodes"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "ET0nSVHzYd4",
+  "b": "DVLFCQUsuFI",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy car and rings episodes"
+ },
+ {
+  "a": "2SAG3jAYNyk",
+  "b": "ZRd-uNE-AUA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic short vs Kaboochi dance short; side-bar match only"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "20HqqfnKxZk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy jeep and snowman episodes"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "Qs4R686NOjg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "UXsXYmw3_CY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ }
+]

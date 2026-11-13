@@ -1,0 +1,12 @@
+[
+{"a":"Ln0H_11UIwI","b":"0ZNqZ9x_06U","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Kaboochi shorts"},
+{"a":"AXfeoPJolIE","b":"6OZMyx_vJXM","label":"same-song","confidence":0.6,"note":"Two Jingle Bells shorts with different animation"},
+{"a":"Ln0H_11UIwI","b":"b5p78d-gr6w","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Monster in the Dark shorts"},
+{"a":"bzcufo-BRaA","b":"Ln0H_11UIwI","label":"unrelated","confidence":0.8,"note":"Spooky bus vs Boo Boo shorts"},
+{"a":"fx0aMbJwE34","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and toy-car episodes"},
+{"a":"R7pIlyiHmJY","b":"vGjN_CslxSI","label":"shared-segments","confidence":0.9,"note":"Rattic Mini compilations sharing sleigh and egg episodes"},
+{"a":"PjXooPy93AM","b":"aDyWeSAt-sI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toy-car and snowman episodes"},
+{"a":"IYU2e8WgGnY","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing bin/egg and toy-car episodes"},
+{"a":"g9Z1I3T6vf0","b":"phrajiOFBCY","label":"shared-segments","confidence":0.8,"note":"The Builder: 62 s short cut from the 165 s version"},
+{"a":"VqT9YA3THAE","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts on same set, different gags"}
+]

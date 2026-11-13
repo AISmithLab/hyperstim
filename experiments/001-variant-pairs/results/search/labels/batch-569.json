@@ -1,0 +1,72 @@
+[
+ {
+  "a": "tQ3LttVt_Jk",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: canyon vs toilet"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share toy jeep and snowman episodes"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "jEwfENQE5Os",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Halloween camp shorts; different animation"
+ },
+ {
+  "a": "KKgsTFivFJM",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; both seem to include the mime episode"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "QKrdD5Y9c-s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the claw machine episode"
+ },
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: space rocket vs high striker"
+ },
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "JOMSMENnSIQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the claw machine episode"
+ },
+ {
+  "a": "Ik7-qK_sEq8",
+  "b": "VLa2W1SssVQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter O vs letter W, shared template shots"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "PoRuagin4iM",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Rattic Mini short vs Peek A Boo song short"
+ },
+ {
+  "a": "2SAG3jAYNyk",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: water machine vs talent show"
+ }
+]

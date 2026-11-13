@@ -1,0 +1,12 @@
+[
+{"a":"XFz86QUABdQ","b":"2fBdfXU6Vuo","label":"shared-segments","confidence":0.5,"note":"Johny Johny shorts from one production; different kids sampled, both appear in Gt66IXu-3jE"},
+{"a":"XFz86QUABdQ","b":"93hO6Ma5uEg","label":"unrelated","confidence":0.8,"note":"Johny Johny vs Twinkle Twinkle shorts"},
+{"a":"E1wcRx1Exec","b":"XamiKGRhams","label":"unrelated","confidence":0.75,"note":"Larva gag short vs Rattic Mini short"},
+{"a":"m9jiFWMtZvo","b":"Td73SYRglgw","label":"unrelated","confidence":0.75,"note":"Monsters Are Out vs Boo Boo song shorts"},
+{"a":"XFz86QUABdQ","b":"t2tKT2LSOfo","label":"unrelated","confidence":0.8,"note":"Johny Johny vs No No song shorts"},
+{"a":"S_FlflY4epQ","b":"SNmdaOzaA64","label":"shared-segments","confidence":0.8,"note":"Rainbow-bus song; longer version reuses the same bus footage"},
+{"a":"fKWJTJUkwPc","b":"7Ldj5W-FyMs","label":"unrelated","confidence":0.8,"note":"Five in the Bed vs Wheels on the Tractor"},
+{"a":"34zV8hDOuFs","b":"IYU2e8WgGnY","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; no shared episode visible"},
+{"a":"XFz86QUABdQ","b":"Gt66IXu-3jE","label":"shared-segments","confidence":0.75,"note":"Johny Johny: 59 s version contains the 15 s short's orange-shirt boy shots"},
+{"a":"cTs_nZcAU-A","b":"fNzp2fZKx2U","label":"same-song","confidence":0.6,"note":"Two 2015 counting songs with same number characters, different animation"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "aDyWeSAt-sI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, ventilator vs basketball episodes"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "oXA7qx--2oI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "wAtBG4hjCOY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, cheese vs swing episodes"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, balloon vs manhole episodes"
+ },
+ {
+  "a": "mJFTp8x_QZ4",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, barbell vs balloon episodes"
+ },
+ {
+  "a": "EPh1bFzsVf4",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, leaves vs spot episodes"
+ },
+ {
+  "a": "Gelbjg7SL0U",
+  "b": "lEvNMZQ2DT4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the outhouse episode"
+ },
+ {
+  "a": "sT3J4L19qrE",
+  "b": "xJWSNIkfOrY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing trash-can and toy-car episodes"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "_QkBvYROA7o",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs Ten in the Bed shorts"
+ }
+]

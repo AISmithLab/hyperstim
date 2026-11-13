@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Xc-Sk3Y3T6Y",
+  "b": "rlXh1NNZWfo",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Christmas compilations sharing the animals-and-mother bus segment"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "1CUDuGeV_w8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs bus-to-camp short; different content"
+ },
+ {
+  "a": "VXMbRH4XKtI",
+  "b": "W5PP6fPZK0I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs swimming song short; different content"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "d0qkYGMwDsc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs monsters in the house short; different content"
+ },
+ {
+  "a": "414DEMcGHtU",
+  "b": "W5PP6fPZK0I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs Kaboochi short; different content"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "cI_BJyU06go",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs Christmas short; different content"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "8-qO0tHgMHY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs animal dance short; different content"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "omvHYELlQ9o",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs finger family short; different content"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs Kaboochi short; different content"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "pbfbmXohAGo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs short vs Kaboochi short; different content"
+ }
+]

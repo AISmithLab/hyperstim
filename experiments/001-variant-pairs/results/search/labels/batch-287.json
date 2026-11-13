@@ -1,0 +1,12 @@
+[
+{"a":"2kLB7ZwxVv8","b":"skNxtYhw9Y8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing stroller and turban episodes."},
+{"a":"FIinrJO9po8","b":"cO1aLZ7teeg","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"TGZl_HsDj_0","b":"OSOdLGenkS0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing red-car and tricycle episodes."},
+{"a":"ZeldqdySrKg","b":"FIinrJO9po8","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"Ia2TzzY2Vto","b":"MnJaDuR1QKE","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, toilet/gloves vs robot vacuum gags."},
+{"a":"Th5MQB8VO3Q","b":"kHVGgxylqd8","label":"shared-segments","confidence":0.65,"note":"Boo Boo song long and short versions sharing the boy-in-plaid shots."},
+{"a":"-a3PpO3jlDI","b":"vbY-B_GtSvc","label":"same-template","confidence":0.85,"note":"Learning Street phonics H vs K; shared intro/outro kids shots."},
+{"a":"Gvz14qtMDBo","b":"aFbSzIMTBsY","label":"same-template","confidence":0.9,"note":"Bob the Train letter episodes, G vs N."},
+{"a":"vbY-B_GtSvc","b":"dL9q0aobLss","label":"same-template","confidence":0.85,"note":"Learning Street phonics K vs R."},
+{"a":"a07zOPj6CZg","b":"vbY-B_GtSvc","label":"same-template","confidence":0.85,"note":"Learning Street phonics G vs K."}
+]

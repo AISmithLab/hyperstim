@@ -1,0 +1,12 @@
+[
+ {"a": "zN8W339rP_U", "b": "NnvOQVPXWTw", "label": "re-skin", "confidence": 0.9, "note": "Same 2D street shots and passengers; bus recolored yellow to blue."},
+ {"a": "Tz2SZgHgjjk", "b": "gmRIldLgb8k", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini shorts on same set; Cheese vs Kung Fu, different action."},
+ {"a": "ZPOOOfJmzp4", "b": "lo3-hAO9RJg", "label": "re-skin", "confidence": 0.8, "note": "Same 3D bus shots (front driver panda, three-quarter view by building); bus green vs pink."},
+ {"a": "gmRIldLgb8k", "b": "c3lLP39EdME", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini Kung Fu vs Cheese; same set, different content."},
+ {"a": "gmRIldLgb8k", "b": "jvCQFkt2FwI", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini Kung Fu vs The Picture; same set and character."},
+ {"a": "k3Zte4ufODo", "b": "Iw2Ntg-ggus", "label": "shared-segments", "confidence": 0.5, "note": "Halloween compilations with identical bus thumbnail; sampled frames differ, likely share the bus song."},
+ {"a": "gmRIldLgb8k", "b": "o6VjhL9gA1A", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini Kung Fu vs Carousel; same set."},
+ {"a": "ANqdoD46Ox0", "b": "SP3eASDKke4", "label": "same-song", "confidence": 0.7, "note": "Boo Boo Song shorts, same mom model but different scenes, baby and setting."},
+ {"a": "gmRIldLgb8k", "b": "7FiyQQBYTUY", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini Kung Fu vs Skates; same set."},
+ {"a": "VBb7XUCV47g", "b": "kwXxrZQ5GaQ", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics C vs L; shared kids intro, different letter content."}
+]

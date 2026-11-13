@@ -1,0 +1,12 @@
+[
+ {"a": "PbchJhisS4s", "b": "vyIiFiExyQQ", "label": "shared-segments", "confidence": 0.9, "note": "Rattic Mini compilations; identical toy car and stacking tower frames."},
+ {"a": "UN4V4ywCWxA", "b": "JOMSMENnSIQ", "label": "shared-segments", "confidence": 0.9, "note": "Rattic Mini compilations; identical claw machine and stroller frames."},
+ {"a": "zSf5nw7US6U", "b": "JOMSMENnSIQ", "label": "shared-segments", "confidence": 0.85, "note": "Rattic Mini compilations; identical claw machine frame, stroller and turban episodes shared."},
+ {"a": "FT0mjHIs2oY", "b": "MoftuEWtBuI", "label": "shared-segments", "confidence": 0.7, "note": "Kaboochi shorts, same set; identical DJ boy shot, other shots differ (two cuts of one song)."},
+ {"a": "vyIiFiExyQQ", "b": "skNxtYhw9Y8", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations on the same set; no shared frame seen among samples."},
+ {"a": "B0m2zgHfr50", "b": "y5BTqWirpe8", "label": "same-template", "confidence": 0.9, "note": "Bob the Train letter songs, E vs M; same template, different content."},
+ {"a": "EX0D6k2zAM0", "b": "uzUxdwfXgWI", "label": "shared-segments", "confidence": 0.85, "note": "Rattic Mini compilations; same mop, dinosaur and red-cap mouse episodes, near-identical close-up."},
+ {"a": "IXRwKy0ovh4", "b": "vM4OMJ9QATQ", "label": "re-upload", "confidence": 0.9, "note": "Bob the Train shapes song; identical frames, only thumbnail and title changed, five years apart."},
+ {"a": "0mpiPGppR0w", "b": "aJScxrS9UD8", "label": "shared-segments", "confidence": 0.85, "note": "Loco Nuts compilations; identical three-animal winter frame at 1/2."},
+ {"a": "a07zOPj6CZg", "b": "kwXxrZQ5GaQ", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter G vs L; same intro and stage."}
+]

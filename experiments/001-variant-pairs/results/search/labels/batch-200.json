@@ -1,0 +1,12 @@
+[
+{"a":"hrOfhQCxqL0","b":"ripZ0792Vx4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (drive thru, stool, balloon)."},
+{"a":"J6M6WzPr5hw","b":"-8Te4zdaB5o","label":"shared-segments","confidence":0.8,"note":"Long finger family compilations share the monkeys-on-bed segment."},
+{"a":"2tElUmxxF34","b":"c5ya6KdljRg","label":"same-template","confidence":0.7,"note":"Booya animal cartoon episodes, same characters and garden set, different stories."},
+{"a":"76YlId7TLig","b":"-8Te4zdaB5o","label":"shared-segments","confidence":0.8,"note":"Compilations share the monkeys-on-bed segment; other frames differ."},
+{"a":"FGUfrSFknik","b":"ripZ0792Vx4","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing episodes (pillow, sausages scene)."},
+{"a":"xbcUfB29xss","b":"ex7_knWJ9ak","label":"shared-segments","confidence":0.65,"note":"Same Larva 'Airform' title; 122s version extends or loops the 61s short."},
+{"a":"49leN9fKryQ","b":"WUKlDCQm0sI","label":"unrelated","confidence":0.75,"note":"Different Christmas songs with Santa thumbnails; frames differ."},
+{"a":"LzlbaXt9Yg4","b":"0zptbdrcP6Y","label":"unrelated","confidence":0.85,"note":"Camp bus vs boy who cried wolf shorts; nothing shared."},
+{"a":"G7PTUNLnAFk","b":"snvdOvj-H-o","label":"unrelated","confidence":0.85,"note":"Train song vs Christmas rooftop short; nothing shared."},
+{"a":"OZzQENCeeNg","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.85,"note":"Dance song vs camp bus short; nothing shared."}
+]

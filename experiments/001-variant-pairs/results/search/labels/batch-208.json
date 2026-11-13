@@ -1,0 +1,72 @@
+[
+ {
+  "a": "nbI-1N_uBNs",
+  "b": "6JwCDXQGK3w",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Jingle Bells vs Deck the Halls shorts; different characters, only Christmas framing."
+ },
+ {
+  "a": "6JwCDXQGK3w",
+  "b": "zsEf6M5oPWM",
+  "label": "re-upload",
+  "confidence": 0.6,
+  "note": "Deck the Halls 2022 short re-cut longer in 2025; same characters and shots."
+ },
+ {
+  "a": "FGUfrSFknik",
+  "b": "Uq5Pp5BQSm4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same set; no shared frame seen."
+ },
+ {
+  "a": "i9kMX8tSKSA",
+  "b": "eGvSblfi0ns",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Chew your food vs monsters shorts; nothing shared."
+ },
+ {
+  "a": "aZdQk56qy0E",
+  "b": "4DYqIKyU1wc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Pretend-play story episodes (Red Riding Hood vs Jack and Beanstalk), same kids."
+ },
+ {
+  "a": "w7exxTCHfx8",
+  "b": "Uq5Pp5BQSm4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the egg/ball episode."
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "92wkK3tkeb0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Train song vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "ex7xMfJ9vjI",
+  "b": "rfxI6n7Kaog",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Bob animal sounds, Korean vs Portuguese version; identical frames."
+ },
+ {
+  "a": "KO5bPjkgwbM",
+  "b": "iD4Iyr_hKjE",
+  "label": "re-upload",
+  "confidence": 0.9,
+  "note": "Bob Alphabet Adventure re-upload with Kids TV intro; same frames."
+ },
+ {
+  "a": "6H4UizQh1DY",
+  "b": "B5eMP172Q98",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Apples & Bananas compilations share the doctor/shape-blocks segment."
+ }
+]

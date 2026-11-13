@@ -1,0 +1,12 @@
+[
+{"a":"cjCG5bYOgpY","b":"RRplveiAfbQ","label":"re-upload","confidence":0.85,"note":"Same Five Little Monkeys animation, identical frames; new thumbnail and title"},
+{"a":"Vh8rbxudUSU","b":"qXIjVu7veMs","label":"shared-segments","confidence":0.6,"note":"Bob vehicle compilations; tow truck workshop scene appears in both"},
+{"a":"dPsVlnAF2HU","b":"qXIjVu7veMs","label":"shared-segments","confidence":0.5,"note":"Bob vehicle compilations of same series; no identical frame seen"},
+{"a":"lij2KlyDHJ8","b":"SSeBjzpJLFk","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing claw machine and snake charmer"},
+{"a":"vbY-B_GtSvc","b":"kwXxrZQ5GaQ","label":"same-template","confidence":0.85,"note":"Bob phonics letter K vs L, shared intro/outro"},
+{"a":"DS8rk9NwXQc","b":"UXsXYmw3_CY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, mime vs gloves gags"},
+{"a":"MnJaDuR1QKE","b":"mrU14TkzuVI","label":"shared-segments","confidence":0.65,"note":"Two robot vacuum shorts from the same episode footage, different cuts"},
+{"a":"LJN6yukuQ9A","b":"Ar6N0i4c36U","label":"shared-segments","confidence":0.8,"note":"Manhole short 31s and 63s versions share footage"},
+{"a":"qM6hdr1DVSM","b":"njSANQD1GlI","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, toy airplane vs magic hat gags"},
+{"a":"oHtQbh7LJjY","b":"vbY-B_GtSvc","label":"same-template","confidence":0.85,"note":"Bob phonics letter J vs K, shared intro/outro"}
+]

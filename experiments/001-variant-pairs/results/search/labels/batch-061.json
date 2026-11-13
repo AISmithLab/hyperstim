@@ -1,0 +1,12 @@
+[
+{"a":"fx0aMbJwE34","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations, one day apart, sharing trash-can, snowman and car episodes"},
+{"a":"fx0aMbJwE34","b":"kyProT-iMwg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same set; sampled episodes differ"},
+{"a":"sFhZZIPj9nE","b":"6FhYNE5KFeg","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cleaning vs cat gag"},
+{"a":"STRJcffvt-0","b":"dL9q0aobLss","label":"same-template","confidence":0.9,"note":"Learning Street phonics episodes, letter Q vs R"},
+{"a":"njSANQD1GlI","b":"o6VjhL9gA1A","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; magic hat vs carousel gag"},
+{"a":"LJN6yukuQ9A","b":"DS8rk9NwXQc","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; manhole vs mime gag"},
+{"a":"c3lLP39EdME","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cheese vs birthday gag"},
+{"a":"c3lLP39EdME","b":"sFhZZIPj9nE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cheese vs cleaning gag"},
+{"a":"_4x2xszMRq8","b":"o6VjhL9gA1A","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; birthday vs carousel gag"},
+{"a":"7hti1gwEK2A","b":"fkM9JyHWOo8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; picture vs cupboard gag"}
+]

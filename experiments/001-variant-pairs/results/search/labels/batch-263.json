@@ -1,0 +1,12 @@
+[
+{"a":"HWH2lpQomEk","b":"6f6S5Y_1aIA","label":"unrelated","confidence":0.8,"note":"Five Little Monkeys vs Boo Boo shorts; only blurred side bars."},
+{"a":"7-abUIzCk5U","b":"pbfbmXohAGo","label":"same-song","confidence":0.6,"note":"Kaboochi Dance shorts with different characters and scenes."},
+{"a":"7ClCbBREUlU","b":"oRUKPowFBgM","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Apples and Bananas shorts; only blurred side bars."},
+{"a":"y8ZYukbUw0c","b":"fo7aioou8m0","label":"unrelated","confidence":0.8,"note":"Animals vs Five Little Ducks shorts; only blurred side bars."},
+{"a":"7ClCbBREUlU","b":"6U9UX0MLvU4","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts, different characters and scenes."},
+{"a":"4FXoc-ApjOQ","b":"eAodpnlhaNI","label":"unrelated","confidence":0.8,"note":"Bugs song vs Boo Boo shorts; only blurred side bars."},
+{"a":"ApUXMFYjTUc","b":"Z13ulLin2jg","label":"unrelated","confidence":0.8,"note":"Five in the Bed vs Kaboochi shorts; only blurred side bars."},
+{"a":"7ClCbBREUlU","b":"irZjw8gc2EU","label":"unrelated","confidence":0.8,"note":"Boo Boo vs Jingle Bells shorts; only blurred side bars."},
+{"a":"7Ldj5W-FyMs","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.75,"note":"Wheels on the Tractor vs camp bus shorts, different characters."},
+{"a":"UXsXYmw3_CY","b":"VqT9YA3THAE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, different episodes (gloves vs worm)."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"5THgPTi8bDM","b":"W5Q7SRLA9pI","label":"re-skin","confidence":0.75,"note":"Wheels on the Bus compilations: orange vs purple bus, same bus shots; living-room segment shared"},
+{"a":"W5Q7SRLA9pI","b":"HwuzyyGUwp8","label":"shared-segments","confidence":0.6,"note":"Bus compilations; B thumbnail bus recolored but frames show purple-interior bus song, other content differs"},
+{"a":"DS8rk9NwXQc","b":"76IijP9RlJY","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Mime vs The Cook"},
+{"a":"DS8rk9NwXQc","b":"oMEt_dTdnMg","label":"unrelated","confidence":0.8,"note":"Rattic Mini short vs Larva short"},
+{"a":"Gelbjg7SL0U","b":"Qs4R686NOjg","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toilet and balloon episodes"},
+{"a":"LvECrt5yV6M","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.55,"note":"Halloween Kaboochi vs Kaboochi shorts, different animation"},
+{"a":"C5NadrBnSj8","b":"ZaPOBxvKuXs","label":"shared-segments","confidence":0.7,"note":"Boo Boo short and 96s version share the girl footage"},
+{"a":"QKrdD5Y9c-s","b":"uzUxdwfXgWI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"bdbNsMtn26Y","b":"2kLB7ZwxVv8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snake charmer and soldiers episodes"},
+{"a":"qHf6e1CQQ5c","b":"6YYa6ar2RN4","label":"shared-segments","confidence":0.6,"note":"Kaboochi shorts with same cast; green-shirt boy shot recurs"}
+]

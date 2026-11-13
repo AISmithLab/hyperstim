@@ -1,0 +1,12 @@
+[
+{"a":"Nl_hbXSq9xI","b":"EN7S56j6Z5Y","label":"same-song","confidence":0.55,"note":"Wheels on Bus: similar framing but different bus model and town; likely remake, not same shots"},
+{"a":"42965VL3b8Y","b":"ZdI8qWDCwtQ","label":"shared-segments","confidence":0.75,"note":"Bob the Train zoo song vs transport compilation share the Bob-with-baby shot"},
+{"a":"uFVntNVnn7k","b":"sIdcWsoEF3s","label":"same-template","confidence":0.9,"note":"Bob the Train letter O vs letter S episodes"},
+{"a":"6f6S5Y_1aIA","b":"_uYyO8y5Txc","label":"same-song","confidence":0.75,"note":"Boo Boo song shorts with different characters and animation"},
+{"a":"QniVMtFT1e0","b":"5XZe7A9wzYM","label":"shared-segments","confidence":0.8,"note":"Halloween compilations sharing the same monster-kids episode"},
+{"a":"41F1Fdb3tHM","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.8,"note":"Boo Boo short vs Kaboochi short"},
+{"a":"Ln0H_11UIwI","b":"QlDpRW0_nBI","label":"unrelated","confidence":0.85,"note":"Boo Boo short vs Wheels on the Bus short"},
+{"a":"Ln0H_11UIwI","b":"iJZ97cfpjhI","label":"unrelated","confidence":0.85,"note":"Boo Boo short vs Kaboochi animal dance short"},
+{"a":"wk9I_xT1NNc","b":"QlDpRW0_nBI","label":"unrelated","confidence":0.85,"note":"Zoo song short vs Wheels on the Bus short"},
+{"a":"fKWJTJUkwPc","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.8,"note":"Five in the Bed short vs Wheels on the Taxi short"}
+]

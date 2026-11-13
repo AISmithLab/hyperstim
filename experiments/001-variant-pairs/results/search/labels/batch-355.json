@@ -1,0 +1,12 @@
+[
+{"a":"V04vD3vrctU","b":"6Knlj_rhgE4","label":"unrelated","confidence":0.75,"note":"Be Very Scared vs Spooky Bus shorts; similar Frankenstein kid, different shots"},
+{"a":"cAngxOmb79A","b":"L9Rsc20F4Iw","label":"unrelated","confidence":0.8,"note":"Halloween song vs Scared of the Dark shorts"},
+{"a":"EcTmmxGz00c","b":"rvWFuvJh85o","label":"re-skin","confidence":0.45,"note":"Thumbnail only: same bus design green vs blue; A frames show other compilation songs"},
+{"a":"Bx-2FBZQKs0","b":"Lm494FQebI8","label":"unrelated","confidence":0.75,"note":"Haunted House vs If You're a Monster shorts"},
+{"a":"OZzQENCeeNg","b":"jEwfENQE5Os","label":"unrelated","confidence":0.8,"note":"Different dance shorts; no shared shot"},
+{"a":"MI4XvQZDPZc","b":"c02mIyif6Ao","label":"unrelated","confidence":0.8,"note":"Flying shark vs school teacher Halloween shorts"},
+{"a":"W1k3syPn1cQ","b":"gP5U9ZLj97Y","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the dance-room scene (identical frame at 1/2)"},
+{"a":"LzlbaXt9Yg4","b":"yj8vX-Z4xAc","label":"unrelated","confidence":0.75,"note":"Bus to camp short vs monkey fire truck short; different animation"},
+{"a":"163ojnwXQ98","b":"Bx-2FBZQKs0","label":"shared-segments","confidence":0.6,"note":"Talking Haunted House shorts on both channels: same characters and set, different cuts"},
+{"a":"cAngxOmb79A","b":"pbfbmXohAGo","label":"unrelated","confidence":0.85,"note":"Halloween song vs Kaboochi dance shorts"}
+]

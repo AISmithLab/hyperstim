@@ -1,0 +1,12 @@
+[
+ {"a": "Ja2d9CLWcvU", "b": "O5L8I5IEjWo", "label": "re-skin", "confidence": 0.95, "note": "Identical shots and timing (bus front, tree, panda driver); bus recolored purple to cyan."},
+ {"a": "CgR6YuA2Uoo", "b": "AlEPz20FGnk", "label": "same-song", "confidence": 0.55, "note": "Boo Boo song; mom-and-girl scene vs dad-and-baby and cap-boy scenes, no shared shot seen."},
+ {"a": "Th5MQB8VO3Q", "b": "CgR6YuA2Uoo", "label": "same-song", "confidence": 0.55, "note": "Boo Boo song; different families and shots in samples."},
+ {"a": "s0DwH0Oq5YY", "b": "CgR6YuA2Uoo", "label": "same-song", "confidence": 0.55, "note": "Boo Boo song; bandaged girl and mom-with-baby vs kneeling mom, different shots."},
+ {"a": "xqSMUstQJwc", "b": "dpwE3xetySI", "label": "same-template", "confidence": 0.6, "note": "Sport Bots compilations; only the Kids TV logo card matches, other frames differ."},
+ {"a": "NnN4n9v9Ojs", "b": "y5BTqWirpe8", "label": "same-template", "confidence": 0.9, "note": "Bob the Train letter songs, F vs M; same template, different content."},
+ {"a": "c3lLP39EdME", "b": "CU_QocmxLz0", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini shorts on the same set; cheese vs statue gag."},
+ {"a": "414DEMcGHtU", "b": "MoftuEWtBuI", "label": "same-song", "confidence": 0.7, "note": "Kaboochi dance song; ABC-set kids vs beach hula kids, different shots."},
+ {"a": "PbchJhisS4s", "b": "UN4V4ywCWxA", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations on the same set; no shared frame among samples."},
+ {"a": "Ia-g9fkyMJ4", "b": "_glAZAdz8mg", "label": "same-template", "confidence": 0.8, "note": "Larva shorts, same worm characters; watermelon vs earthquake episodes."}
+]

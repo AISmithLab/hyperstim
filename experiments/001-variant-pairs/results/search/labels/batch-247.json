@@ -1,0 +1,12 @@
+[
+{"a":"c0-OnS0GG5c","b":"PbC30GqAanU","label":"shared-segments","confidence":0.8,"note":"B is a compilation containing A's Merry Christmas clip (pudding scene)."},
+{"a":"itkV7xxR7cg","b":"XOflyZkgppo","label":"shared-segments","confidence":0.8,"note":"Supremes compilations sharing the superhero family clip."},
+{"a":"EtnFS18O3NU","b":"5-CKSBS3rb8","label":"same-template","confidence":0.65,"note":"Bob the Train shapes vs numbers songs; same series, different content."},
+{"a":"ofRxRd3_tp0","b":"f4554LczWAk","label":"same-song","confidence":0.6,"note":"Both Finger Family Junior Squad but frames show different animation."},
+{"a":"Gvz14qtMDBo","b":"0L9EfYLMx8A","label":"same-template","confidence":0.9,"note":"Bob the Train letter episodes, G vs P."},
+{"a":"9DBJvlkWDs4","b":"kHVGgxylqd8","label":"shared-segments","confidence":0.5,"note":"Boo Boo shorts with same characters; no clearly identical frame."},
+{"a":"phSVmXpDj08","b":"mTsFv_5w3uU","label":"shared-segments","confidence":0.65,"note":"Old MacDonald shorts sharing the cow shot; other frames differ."},
+{"a":"YgjyQIwcJy0","b":"jflAKuIuQBM","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts on the same set, different episodes."},
+{"a":"y3FSBDhQ1Nk","b":"MTz3akG93_s","label":"shared-segments","confidence":0.8,"note":"Christmas compilations sharing the gingerbread clip."},
+{"a":"CaywS_FK4wE","b":"GkcqRmdwKlE","label":"same-template","confidence":0.9,"note":"Phonics letter series, F vs J."}
+]

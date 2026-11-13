@@ -1,0 +1,72 @@
+[
+ {
+  "a": "jYDMWf8Fr1U",
+  "b": "2vHSE7eJBmI",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "2D Kids TV Christmas sing-alongs; different songs, shared intro and thumbnail layout"
+ },
+ {
+  "a": "1CUDuGeV_w8",
+  "b": "asXCFgLXa_w",
+  "label": "re-skin",
+  "confidence": 0.6,
+  "note": "Camp bus shorts: identical driver shot, bus seems swapped red/yellow vs yellow/blue van; unsure"
+ },
+ {
+  "a": "OZzQENCeeNg",
+  "b": "aYm4u_lQpIo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Everybody Do the Dance vs Kaboochi; different scenes"
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "OFvmlD86K5Q",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "If You're Happy vs Wheels on the Taxi; different scenes"
+ },
+ {
+  "a": "U9lOcqHMY_w",
+  "b": "OFvmlD86K5Q",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween song vs Wheels on the Taxi; different scenes"
+ },
+ {
+  "a": "aHRHxrhw7Mo",
+  "b": "4w905Gj-uvw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Halloween compilations sharing the rowing-bunny segment"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "aYm4u_lQpIo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "It's Halloween vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "Nl_hbXSq9xI",
+  "b": "9ywRXy36pAg",
+  "label": "re-skin",
+  "confidence": 0.8,
+  "note": "Same Wheels on the Bus 3D shots; yellow flower bus recolored pink"
+ },
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "KYwjCiQCbr8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Three Little Pigs shorts; different scenes"
+ },
+ {
+  "a": "_QkBvYROA7o",
+  "b": "OFvmlD86K5Q",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Ten in the Bed vs Wheels on the Taxi; different scenes"
+ }
+]

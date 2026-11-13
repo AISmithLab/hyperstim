@@ -1,0 +1,72 @@
+[
+ {
+  "a": "EXFmnaWBhVc",
+  "b": "n0GjdM_Q484",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Baby Toot Toot Christmas compilations share the sweater-family segment."
+ },
+ {
+  "a": "BrjLq8jTPfw",
+  "b": "lEvNMZQ2DT4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing episodes (outhouse, car)."
+ },
+ {
+  "a": "MajF8x-n-Vk",
+  "b": "0XUwsIriKis",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Bob color-learning series: same white set, Bob beside different vehicles; not same shots."
+ },
+ {
+  "a": "ixr-TMi-K8U",
+  "b": "Yd2dkZA9ihc",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Loco Nuts comedy episodes with same animal cast, different stories."
+ },
+ {
+  "a": "KJ2sybgyWO8",
+  "b": "0gxZGHH1NaM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the monkey segment at midpoint."
+ },
+ {
+  "a": "MajF8x-n-Vk",
+  "b": "O_ny92BRsXg",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Bob color compilations share the purple-car shot."
+ },
+ {
+  "a": "lEvNMZQ2DT4",
+  "b": "sT3J4L19qrE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same set; no shared frame seen."
+ },
+ {
+  "a": "lEvNMZQ2DT4",
+  "b": "Uq5Pp5BQSm4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same set; no shared frame seen."
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs camp bus shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "UfuSoF6iy_w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Halloween finger family shorts; nothing shared."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "1g02Uh_IuI4",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored orange, same shots and street"
+ },
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "uaNCJzGwl3E",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored purple, same shots and street"
+ },
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "m151ZBLwbhc",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored cyan, same shots and street"
+ },
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "9ywRXy36pAg",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored pink, same shots and street"
+ },
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "EN7S56j6Z5Y",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored green, same shots and street"
+ },
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "Hd7k7i4jqH4",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored yellow, same shots and street"
+ },
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "a9lx-Xb2X0I",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored blue, same shots and street"
+ },
+ {
+  "a": "Wr8LTyW-iTA",
+  "b": "w_cD-Sb2auI",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "ABC Baby 2015 Wheels on the Bus: red bus recolored white, same shots and street"
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

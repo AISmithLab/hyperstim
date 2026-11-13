@@ -1,0 +1,72 @@
+[
+ {
+  "a": "xers5HU02Ew",
+  "b": "6f6S5Y_1aIA",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Boo Boo Song shorts sharing the mom-at-crib shot; different edits"
+ },
+ {
+  "a": "39Dtr0Rq-TY",
+  "b": "AXd66O4yEEI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic boards vs Larva-style mosquito cartoon; side-bar match only"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "n6eghHp7qWw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "XFz86QUABdQ",
+  "b": "OLXeTCu2ESc",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Johny Johny vs No No Song shorts; different songs"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "BrjLq8jTPfw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "-dlezjbLXKU",
+  "b": "Se_E5OOTB4s",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Halloween Wheels on the Bus vs Halloween dance short; different animation"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "M0V1ofCOEew",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "hzzGSyV_BCA",
+  "b": "WZ45rZRLf80",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "Zy0VtX5RTFM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "92wkK3tkeb0",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ }
+]

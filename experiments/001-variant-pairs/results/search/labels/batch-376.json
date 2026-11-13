@@ -1,0 +1,72 @@
+[
+ {
+  "a": "iazRHLuPy6E",
+  "b": "e-ZNf-lSt_g",
+  "label": "re-upload",
+  "confidence": 0.9,
+  "note": "Bob the Train Animal Sounds song, language versions; identical frames, different thumbnail"
+ },
+ {
+  "a": "e-ZNf-lSt_g",
+  "b": "rfxI6n7Kaog",
+  "label": "re-upload",
+  "confidence": 0.9,
+  "note": "Bob the Train Animal Sounds song, language versions; identical frames, different thumbnail"
+ },
+ {
+  "a": "ex7xMfJ9vjI",
+  "b": "e-ZNf-lSt_g",
+  "label": "re-upload",
+  "confidence": 0.9,
+  "note": "Bob the Train Animal Sounds song, language versions; identical frames, different thumbnail"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; toy-car scenes look similar but not clearly the same shot"
+ },
+ {
+  "a": "BZqq3eL6xSE",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the snowman and toy car episode"
+ },
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations on the same set, different episodes sampled"
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "Uq5Pp5BQSm4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "34zV8hDOuFs",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the red toy car episode"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

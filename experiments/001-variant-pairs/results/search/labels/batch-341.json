@@ -1,0 +1,12 @@
+[
+{"a":"wJ_TfcJAIpI","b":"7U5-_Se7VTE","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the egg and strawberry episodes."},
+{"a":"wJ_TfcJAIpI","b":"iFpez4fPv5Y","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the egg and strawberry episodes."},
+{"a":"KpIs4qf6HQ0","b":"wdyDrYaVdLE","label":"re-skin","confidence":0.45,"note":"Thumbnail-only match: same farmer bus pose recolored pink to yellow; B is a compilation, frames differ."},
+{"a":"-qxEnbH15lY","b":"Z13ulLin2jg","label":"unrelated","confidence":0.8,"note":"Boo Boo Song short vs Kaboochi dance short."},
+{"a":"V04vD3vrctU","b":"OokGp8l_x9k","label":"unrelated","confidence":0.7,"note":"Different Halloween shorts; only Halloween theme shared."},
+{"a":"FS-9qCEnc38","b":"flcE5VBnNW0","label":"shared-segments","confidence":0.85,"note":"Loco Nuts compilations sharing the snow trio episode."},
+{"a":"GqopL9mlxWQ","b":"eC1DuQ5HIdU","label":"same-template","confidence":0.55,"note":"Same series style and kids, different songs (lion vs monkey)."},
+{"a":"gdVpv0KN_uU","b":"qhaDwGQUOLM","label":"shared-segments","confidence":0.65,"note":"Five Little Mommies shorts sharing the doctor phone shot; different edits."},
+{"a":"uNp13TSvXWI","b":"BjJsBFK0q3k","label":"unrelated","confidence":0.7,"note":"Hickory Dickory Dock vs Humpty Dumpty shorts, different characters."},
+{"a":"-qxEnbH15lY","b":"LufPzgH87NE","label":"unrelated","confidence":0.8,"note":"Boo Boo Song vs Brother John shorts."}
+]

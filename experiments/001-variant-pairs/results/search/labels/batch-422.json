@@ -1,0 +1,12 @@
+[
+{"a":"t8F277vozNc","b":"TbbPn6IJy8A","label":"same-template","confidence":0.6,"note":"Fire car counting series 1-40 vs 1-100; same set, counting may share footage"},
+{"a":"eZT6hzcAlH4","b":"TbbPn6IJy8A","label":"same-template","confidence":0.6,"note":"Fire car counting series 1-30 vs 1-100; same set and car"},
+{"a":"402b2yME1Wo","b":"TbbPn6IJy8A","label":"same-template","confidence":0.6,"note":"Fire car counting series 1-10 vs 1-100; same set and car"},
+{"a":"dOZvzqc4tyE","b":"TbbPn6IJy8A","label":"same-template","confidence":0.6,"note":"Fire car counting series 1-20 vs 1-100; same set and car"},
+{"a":"JrpYstX8Kz8","b":"TbbPn6IJy8A","label":"same-template","confidence":0.6,"note":"Fire car counting series 1-50 vs 1-100; same set and car"},
+{"a":"qHf6e1CQQ5c","b":"Z13ulLin2jg","label":"shared-segments","confidence":0.55,"note":"Kaboochi shorts, same footage but different cut/order of shots"},
+{"a":"DC-zWKmQUl8","b":"mYlD1F34LSs","label":"same-template","confidence":0.85,"note":"Bob the Train Numbers vs ABC train; shared intro, different content"},
+{"a":"2uTYZ20rXa8","b":"e9LhPr3svs0","label":"re-skin","confidence":0.85,"note":"Wheels on the Bus, yellow bus vs green bus, same shots; A at 2x speed"},
+{"a":"nEoTfUE6-Pk","b":"e9LhPr3svs0","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus, orange bus vs green bus, same shots; A at 2x speed"},
+{"a":"Pe56BynxPlw","b":"9XRxlJ5MjbY","label":"shared-segments","confidence":0.8,"note":"Christmas compilations sharing the same Christmas tree song segment"}
+]

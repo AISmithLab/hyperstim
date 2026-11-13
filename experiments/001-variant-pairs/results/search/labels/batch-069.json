@@ -1,0 +1,12 @@
+[
+{"a":"EX0D6k2zAM0","b":"dG7KouaFW-o","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the mime episode; identical midpoint frame."},
+{"a":"DclM70T7jyI","b":"41F1Fdb3tHM","label":"shared-segments","confidence":0.55,"note":"Boo Boo song shorts with the same family characters; different cuts, no identical frame."},
+{"a":"oCiHs7agwmE","b":"uQ90xr1p-eQ","label":"shared-segments","confidence":0.65,"note":"Kaboochi baby-and-corgi shorts; same girl-on-striped-floor shot appears in both."},
+{"a":"dG7KouaFW-o","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.6,"note":"Rattic Mini compilations; both include the mime episode (B leads with it)."},
+{"a":"BRcmpSxalwA","b":"s0DwH0Oq5YY","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Boo Boo song; different characters."},
+{"a":"BRcmpSxalwA","b":"E2tDuxINEwU","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Colors song; different characters."},
+{"a":"dG7KouaFW-o","b":"M0V1ofCOEew","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations on the same set; no shared shot sampled."},
+{"a":"t2tKT2LSOfo","b":"BRcmpSxalwA","label":"unrelated","confidence":0.85,"note":"No No song vs Five Little Monkeys; different content."},
+{"a":"414DEMcGHtU","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance shorts with different characters and sets."},
+{"a":"fAQ_c_NEM7A","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance shorts with different characters and sets."}
+]

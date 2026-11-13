@@ -1,0 +1,12 @@
+[
+ {"a": "oCiHs7agwmE", "b": "Tgp1NqPegK8", "label": "shared-segments", "confidence": 0.7, "note": "Same baby-in-orange and girl-on-blocks shots; A adds corgi scenes, different cut."},
+ {"a": "8iH3Q_TORXA", "b": "aYJa4LaXliA", "label": "shared-segments", "confidence": 0.85, "note": "Halloween compilations with identical pig-and-friends frame, different lead songs."},
+ {"a": "414DEMcGHtU", "b": "Tgp1NqPegK8", "label": "same-song", "confidence": 0.65, "note": "Kaboochi Dance with different animation: flat backgrounds, rainbow-haired baby, monkey."},
+ {"a": "tQlIWPUO_E0", "b": "Tgp1NqPegK8", "label": "unrelated", "confidence": 0.8, "note": "Ten in the Bed vs Kaboochi Dance; different scenes."},
+ {"a": "OZzQENCeeNg", "b": "Tgp1NqPegK8", "label": "unrelated", "confidence": 0.7, "note": "Everybody Do the Dance vs Kaboochi; different characters and sets."},
+ {"a": "8iH3Q_TORXA", "b": "E7LWvi86hYw", "label": "shared-segments", "confidence": 0.85, "note": "Halloween compilations with identical pig frame at 1/2; different lead songs."},
+ {"a": "6U9UX0MLvU4", "b": "X5tQg9x3Nfs", "label": "same-song", "confidence": 0.7, "note": "Boo Boo Song shorts with different families and settings."},
+ {"a": "gmRIldLgb8k", "b": "6FhYNE5KFeg", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini Kung Fu vs Cat; same set."},
+ {"a": "Th5MQB8VO3Q", "b": "SP3eASDKke4", "label": "same-song", "confidence": 0.55, "note": "Boo Boo Song; shared mother model but no matching shot sampled."},
+ {"a": "pBZoqnYJdpo", "b": "jvCQFkt2FwI", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Space Rocket vs The Picture."}
+]

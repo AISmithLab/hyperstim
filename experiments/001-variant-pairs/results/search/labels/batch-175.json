@@ -1,0 +1,12 @@
+[
+{"a":"lFJe3YP7U4k","b":"_g_9KMvsInk","label":"shared-segments","confidence":0.8,"note":"Hindi rhyme compilations sharing the bear segment; same length and day."},
+{"a":"tQ3LttVt_Jk","b":"i2XoutDdPoM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, canyon vs pillow."},
+{"a":"G7PTUNLnAFk","b":"i9kMX8tSKSA","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Chew Your Food; different characters."},
+{"a":"s11HCj_gAWE","b":"uwnBzV6vNZs","label":"re-skin","confidence":0.9,"note":"Panda bus song same shots, bus red vs pink."},
+{"a":"t2tKT2LSOfo","b":"U9maOBWT6wE","label":"unrelated","confidence":0.8,"note":"No No Song vs Hush Little Baby; different characters."},
+{"a":"6QKSJC1vGMs","b":"0O1ty335KVI","label":"shared-segments","confidence":0.75,"note":"Zoobees compilations sharing the mom and dad finger family segment."},
+{"a":"U9maOBWT6wE","b":"6aBfQYlhKJs","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Spooky Zombie; different characters."},
+{"a":"c43YA5Iq9y4","b":"l_HMLGY9XIo","label":"same-template","confidence":0.85,"note":"Bob the Train phonics, letters I vs L."},
+{"a":"18jtmV-lSjg","b":"4DYqIKyU1wc","label":"shared-segments","confidence":0.6,"note":"Jack and the Beanstalk single vs compilation; same thumbnail, frames mostly differ."},
+{"a":"P85oXrxz2nk","b":"bodrABbSgfA","label":"re-skin","confidence":0.7,"note":"Zoobees Halloween bus: identical kids shot, bus purple vs teal."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Zifbjuvaqrk",
+  "b": "Pa7utiQUGOY",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing the wooden box episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "PjXooPy93AM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic compilations sharing the mime episode"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "sT3J4L19qrE",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy car, trash bin, snowman episodes"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "34zV8hDOuFs",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing the toy cars episode"
+ },
+ {
+  "a": "bNuG6IapPsk",
+  "b": "MstDCeu1yxM",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic Mini episodes, rocket vs talent show"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "Tn2UZwb9RcY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "gkk96Hm-IHo",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "PjXooPy93AM",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing mime, toy car, snowman episodes"
+ }
+]

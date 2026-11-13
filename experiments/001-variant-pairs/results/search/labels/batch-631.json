@@ -1,0 +1,72 @@
+[
+ {
+  "a": "YJLDe0F_z7k",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "VqT9YA3THAE",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts, same set and character; camera gag vs worm gag"
+ },
+ {
+  "a": "aZoH6w-VPjk",
+  "b": "cO1aLZ7teeg",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "q8T0cDm6nSA",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "lEvNMZQ2DT4",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "uzUxdwfXgWI",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "KFwebO9sy58",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ }
+]

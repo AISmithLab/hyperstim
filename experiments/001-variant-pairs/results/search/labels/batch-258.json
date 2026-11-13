@@ -1,0 +1,12 @@
+[
+{"a":"Q8eMoF47hLU","b":"9Rzd80kq53k","label":"unrelated","confidence":0.8,"note":"Vegetable Song vs No No song shorts; different scenes."},
+{"a":"uBA-DOOnkZ8","b":"Rk-54Vp2AsE","label":"unrelated","confidence":0.85,"note":"If You're Happy vs Incy Wincy shorts; different characters."},
+{"a":"U9maOBWT6wE","b":"Q8eMoF47hLU","label":"unrelated","confidence":0.8,"note":"Hush Little Baby vs Vegetable Song shorts."},
+{"a":"Q8eMoF47hLU","b":"Td73SYRglgw","label":"unrelated","confidence":0.7,"note":"Same mother character model but different scenes and songs."},
+{"a":"Q8eMoF47hLU","b":"7I0SeirswAk","label":"unrelated","confidence":0.85,"note":"Vegetable Song vs Johny Johny shorts."},
+{"a":"Q8eMoF47hLU","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.85,"note":"Vegetable Song vs camp bus shorts."},
+{"a":"64Th4wLVp3A","b":"xLR2ozN--w8","label":"shared-segments","confidence":0.85,"note":"B compilation contains A's Chew Your Food dining-table song."},
+{"a":"uBA-DOOnkZ8","b":"snvdOvj-H-o","label":"unrelated","confidence":0.7,"note":"Same girl character in different outfits and shots; different songs."},
+{"a":"U9maOBWT6wE","b":"r-whFfxsj_I","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Johny Johny shorts."},
+{"a":"B7HQQms6klA","b":"6JwCDXQGK3w","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Deck the Halls shorts; black side bars only."}
+]

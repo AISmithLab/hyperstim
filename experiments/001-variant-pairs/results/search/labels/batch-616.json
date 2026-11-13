@@ -1,0 +1,72 @@
+[
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "EX0D6k2zAM0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "uzUxdwfXgWI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "05oAs-Pqf5Y",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi; A Christmas Santa/elves, B kids with corgi on colorful set"
+ },
+ {
+  "a": "7j-PrubotPQ",
+  "b": "i2XoutDdPoM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts; bow-and-arrow gag vs pillow gag on same stage"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "_EZv7EJE8LE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "LQQ2DD4V_mY",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "q8T0cDm6nSA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "2kLB7ZwxVv8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ }
+]

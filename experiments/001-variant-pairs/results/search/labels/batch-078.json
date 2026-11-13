@@ -1,0 +1,12 @@
+[
+{"a":"nLSh9rwThZA","b":"aZdQk56qy0E","label":"shared-segments","confidence":0.85,"note":"Compilation opens with the Red Riding Hood pretend-play story; identical frames."},
+{"a":"u3VtdvWtgl4","b":"oRUKPowFBgM","label":"unrelated","confidence":0.85,"note":"Halloween Kaboochi vs Apples and Bananas; different characters."},
+{"a":"dL3INikKYGk","b":"v8wvRjQdBbo","label":"shared-segments","confidence":0.5,"note":"Boom Buddies cast in both; compilation likely includes the tooth song, no identical frame sampled."},
+{"a":"bVrFl7Z48so","b":"PpwRJrczSqg","label":"shared-segments","confidence":0.8,"note":"Boo Boo song: same crying-baby shots; 170 s version vs 14 s clip."},
+{"a":"B_MmKCyAmpw","b":"OEES3HmTQNw","label":"unrelated","confidence":0.85,"note":"Oopsie Doopsie Halloween vs No No junk food song; different content."},
+{"a":"u3VtdvWtgl4","b":"lg-NHZehFHE","label":"unrelated","confidence":0.75,"note":"Halloween Kaboochi vs It's Halloween Night; different characters and shots."},
+{"a":"4lsNWkL5c6Q","b":"zIQk_2T-ru8","label":"shared-segments","confidence":0.85,"note":"Compilations sharing the same classroom song segment; identical frames."},
+{"a":"CfJfPAF8El8","b":"05oAs-Pqf5Y","label":"same-song","confidence":0.5,"note":"Kaboochi dance: babies indoors vs Christmas cast."},
+{"a":"HW8O6C_OCJQ","b":"vYXkEPIElyc","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Boo Boo song; different characters."},
+{"a":"idwuB7uQA2M","b":"kdLu240pkyI","label":"unrelated","confidence":0.85,"note":"Johny Johny vs Finger Family; different characters."}
+]

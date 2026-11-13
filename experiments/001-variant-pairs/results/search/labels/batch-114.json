@@ -1,0 +1,12 @@
+[
+{"a":"Jdg1eQeDyvk","b":"KH9FEGPJrhM","label":"same-song","confidence":0.75,"note":"Three Little Kittens: Boom Buddies vs Bob the Train versions; different animation."},
+{"a":"7xSdzGpSjl4","b":"fOJm84LQSTw","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes (gloves vs high striker)."},
+{"a":"6aBfQYlhKJs","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.85,"note":"Spooky Zombie vs Monster Finger Family; different animation."},
+{"a":"3bTL4x31XTI","b":"fKWJTJUkwPc","label":"unrelated","confidence":0.85,"note":"Bath Time vs Five in the Bed; different animation."},
+{"a":"nbI-1N_uBNs","b":"IbEIByW4Fwk","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs Oopsie Doopsie; different animation."},
+{"a":"IRWTZropao4","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.85,"note":"Halloween vs Jingle Bells shorts; different animation."},
+{"a":"fKWJTJUkwPc","b":"qSM52VNEVSo","label":"unrelated","confidence":0.85,"note":"Five in the Bed vs School Teacher Halloween; different animation."},
+{"a":"fKWJTJUkwPc","b":"U9lOcqHMY_w","label":"unrelated","confidence":0.85,"note":"Five in the Bed vs Happy Halloween; different animation."},
+{"a":"Ia-g9fkyMJ4","b":"XamiKGRhams","label":"unrelated","confidence":0.75,"note":"Larva-style watermelon clip vs Rattic Mini short; different series."},
+{"a":"jceEaiF00_c","b":"DPJOLEO8puk","label":"same-template","confidence":0.65,"note":"Apples & Bananas compilations sharing thumbnail layout; different content."}
+]

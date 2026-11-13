@@ -1,0 +1,72 @@
+[
+ {
+  "a": "KKgsTFivFJM",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, cowboy vs toilet episodes"
+ },
+ {
+  "a": "tQ3LttVt_Jk",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, canyon vs basketball episodes"
+ },
+ {
+  "a": "a0Dg0fPxACY",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, tumbler toy vs talent show episodes"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "Dv9uq-E9kbY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, kung fu vs pirate episodes"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, cleaning vs toilet episodes"
+ },
+ {
+  "a": "_QwXfH5-D5g",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi dance shorts with different animation"
+ },
+ {
+  "a": "Th5MQB8VO3Q",
+  "b": "VJ1tu3mMRa0",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo Song: short cut sharing the dad-in-plaid shots of the longer one"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, birthday vs space rocket episodes"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"YJLDe0F_z7k","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing identical snowman and trash-can episodes"},
+{"a":"MxB4KiDF6XY","b":"xJWSNIkfOrY","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same set and thumbnail layout; sampled episodes differ"},
+{"a":"t2tKT2LSOfo","b":"CAg8ItLDkwg","label":"unrelated","confidence":0.8,"note":"No No song vs Wheels on the Taxi"},
+{"a":"nyJqyZZCekg","b":"t2tKT2LSOfo","label":"same-template","confidence":0.5,"note":"Same dad and boy character models, but Boo Boo vs No No song, different shots"},
+{"a":"93hO6Ma5uEg","b":"t2tKT2LSOfo","label":"unrelated","confidence":0.8,"note":"Twinkle Twinkle vs No No song"},
+{"a":"t2tKT2LSOfo","b":"YudNG_jdUs4","label":"unrelated","confidence":0.85,"note":"No No song vs Zoo song superheroes"},
+{"a":"t2tKT2LSOfo","b":"idwuB7uQA2M","label":"unrelated","confidence":0.8,"note":"No No song vs Johny Johny, different characters"},
+{"a":"3bTL4x31XTI","b":"t2tKT2LSOfo","label":"unrelated","confidence":0.8,"note":"Bath time vs No No song"},
+{"a":"t2tKT2LSOfo","b":"s0DwH0Oq5YY","label":"unrelated","confidence":0.8,"note":"No No song vs Boo Boo song, different families"},
+{"a":"t2tKT2LSOfo","b":"7Ldj5W-FyMs","label":"unrelated","confidence":0.85,"note":"No No song vs Wheels on the Tractor"}
+]

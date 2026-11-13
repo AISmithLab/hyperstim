@@ -1,0 +1,72 @@
+[
+ {
+  "a": "VBb7XUCV47g",
+  "b": "VLa2W1SssVQ",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters C and W on one template"
+ },
+ {
+  "a": "NnN4n9v9Ojs",
+  "b": "9RUN6Q-uZm0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob alphabet songs F and H on one template"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "cqjfiWrwmmg",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, bottle vs stones"
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; mime appears in both but shots differ"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "_pqh8Nw-k3o",
+  "b": "ewZwn2G14Wg",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy car and umbrella episodes"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "inkqQlbrdrQ",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing claw machine and stroller episodes"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "oWkIR8ZkHgo",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy jeep and block tower episodes"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "uzUxdwfXgWI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "WZ45rZRLf80",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

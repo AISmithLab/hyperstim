@@ -1,0 +1,72 @@
+[
+ {
+  "a": "vyIiFiExyQQ",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "jPvyJ9IIRJk",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: skipping rope vs toilet"
+ },
+ {
+  "a": "E1wcRx1Exec",
+  "b": "qA-zKbEgq1Q",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Larva cartoon short vs Rattic Mini short"
+ },
+ {
+  "a": "9-G4JeHJiYQ",
+  "b": "klDPbXVTBzw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the egg episode"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "h2XIpJMP06c",
+  "b": "9-G4JeHJiYQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share cannon, egg and strawberry-hat episodes"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "MstDCeu1yxM",
+  "b": "ouJSdR1OtEo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Rattic Mini short vs Kaboochi dance short"
+ },
+ {
+  "a": "GCqVNL7ZRdg",
+  "b": "Pa7utiQUGOY",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the rocks/butterfly net episode"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "6L0oq3iwbS0",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: rings vs TV"
+ }
+]

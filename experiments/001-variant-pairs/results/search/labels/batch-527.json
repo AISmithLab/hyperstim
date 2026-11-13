@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "6cmE3gwaqJI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs car alarm"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: camera vs birthday"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: ventilator vs camera"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "TRCJGQylez4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs spring toy"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bar chair vs camera"
+ },
+ {
+  "a": "c3lLP39EdME",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: cheese vs camera"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs teleport"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: camera vs carousel"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "njSANQD1GlI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs magic hat"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs birthday"
+ }
+]

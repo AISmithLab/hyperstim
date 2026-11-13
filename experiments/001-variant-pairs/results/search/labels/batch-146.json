@@ -1,0 +1,12 @@
+[
+{"a":"yOq3vuvmRCQ","b":"dGMGcPFUs6Q","label":"re-skin","confidence":0.65,"note":"Baby Bao Wheels on the Bus: purple bus in A, yellow in B's lead song; B is a compilation."},
+{"a":"4OZ-iSU4DiM","b":"dGMGcPFUs6Q","label":"re-skin","confidence":0.75,"note":"Same-title compilations: same bus shots and thumbnail layout, bus purple in A, yellow in B."},
+{"a":"WzNff7gP49Y","b":"nEsdTj3wX0U","label":"same-template","confidence":0.5,"note":"Hector Tractor compilations; frame match is the Kids TV logo card, other frames differ."},
+{"a":"BGoVF9nhzhs","b":"FV35Ci1N6TU","label":"same-song","confidence":0.6,"note":"Christmas Baby Shark, different animations and brands."},
+{"a":"oHSAGotL2Vo","b":"Tn2UZwb9RcY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, different episodes (bar chair vs bucket)."},
+{"a":"bphowM9rjos","b":"lkGmcS3ArOg","label":"unrelated","confidence":0.6,"note":"Halloween compilations from different series; no shared footage seen."},
+{"a":"PT7if7fHdPE","b":"OR9T1Iak3EU","label":"same-template","confidence":0.55,"note":"Bob the Train compilations, same thumbnail layout, different songs."},
+{"a":"zSf5nw7US6U","b":"KFwebO9sy58","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the fruit-box episode."},
+{"a":"UN4V4ywCWxA","b":"KFwebO9sy58","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing fruit-box and stroller episodes."},
+{"a":"KFwebO9sy58","b":"TwS8SzpZrug","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the stroller episode."}
+]

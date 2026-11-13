@@ -1,0 +1,72 @@
+[
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "kHVGgxylqd8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "kHVGgxylqd8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "1fL9dsWYLJ0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs bus song shorts; nothing shared."
+ },
+ {
+  "a": "DclM70T7jyI",
+  "b": "kHVGgxylqd8",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "zIqwHkg5KiQ",
+  "b": "5-CKSBS3rb8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Bob the Train farm vs numbers songs, same thumbnail layout and train."
+ },
+ {
+  "a": "dAvn2CdSeIY",
+  "b": "f5I7zitD8Q0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the bunny-and-baby segment at midpoint."
+ },
+ {
+  "a": "ukENAA-zDsg",
+  "b": "B7HQQms6klA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween vs Boo Boo shorts; only black-bar framing shared."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "Nj_pfXISKXc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs bus song shorts; nothing shared."
+ },
+ {
+  "a": "1dFjKYblswI",
+  "b": "tNPoYErk2rs",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "uE-G6fKmpA4",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Monster finger family vs camp bus shorts; nothing shared."
+ }
+]

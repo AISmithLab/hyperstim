@@ -1,0 +1,12 @@
+[
+{"a":"E1wcRx1Exec","b":"cN2LoMV0i-A","label":"same-template","confidence":0.6,"note":"Two larva-gag shorts, same characters, different scenes (rain vs ice road)"},
+{"a":"CfJfPAF8El8","b":"N8fwdq92P50","label":"same-song","confidence":0.6,"note":"Kaboochi block-set version vs Halloween vampire version, different animation"},
+{"a":"pst1AsXQWTE","b":"L9Rsc20F4Iw","label":"same-template","confidence":0.5,"note":"Same boy character in Boo Boo vs Scared of the Dark shorts"},
+{"a":"CgR6YuA2Uoo","b":"pst1AsXQWTE","label":"same-song","confidence":0.6,"note":"Two Boo Boo song shorts with different cast and animation"},
+{"a":"fKWJTJUkwPc","b":"Xo3zWzIj8fM","label":"unrelated","confidence":0.75,"note":"Five in the Bed vs Oopsie Doopsie dance"},
+{"a":"fKWJTJUkwPc","b":"IbEIByW4Fwk","label":"unrelated","confidence":0.75,"note":"Five in the Bed vs Oopsie Doopsie dance"},
+{"a":"ZKr4e59JNlA","b":"yc8M3YeKsCo","label":"shared-segments","confidence":0.85,"note":"Bob the Train: 13-min compilation contains the kids-and-train clip of the short"},
+{"a":"pKnKuQMeGlk","b":"PjXooPy93AM","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the mime episode"},
+{"a":"fKWJTJUkwPc","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.8,"note":"Five in the Bed vs Wheels on the Taxi"},
+{"a":"gdVpv0KN_uU","b":"Z13ulLin2jg","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Kaboochi"}
+]

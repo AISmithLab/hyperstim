@@ -1,0 +1,72 @@
+[
+ {
+  "a": "DKTclayc5PU",
+  "b": "HWNDED8zbjE",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Wheels on the Bus: red bus vs pink bus in the same shots"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "-8VedXc5EDU",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "ripZ0792Vx4",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing the kiosk and red-car episode"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "PPVWn53Yw4M",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs football episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs manhole episodes"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "9aLZatXZCl4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing kiosk and magic-hat episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "6FhYNE5KFeg",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs cat episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs spot episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "M3sOUpxsrJE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs cleaning episodes"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"dGMGcPFUs6Q","b":"upqIQe-_llc","label":"re-skin","confidence":0.65,"note":"Compilations; lead bus song same shot, yellow vs green bus; rest of content differs"},
+{"a":"51u9yGzHWYc","b":"Iryl7DcJ-hw","label":"shared-segments","confidence":0.8,"note":"Compilations sharing five little monkeys segment"},
+{"a":"P9QIOA_X06w","b":"sI-dYFPPJgs","label":"re-skin","confidence":0.75,"note":"Wheels on Bus short: same driver/seat shots, bus interior recolored, sleeping baby swapped"},
+{"a":"WBX7OAOm1Qk","b":"guhvDBWAx-s","label":"shared-segments","confidence":0.85,"note":"Compilations sharing the same episode frame at 1/2"},
+{"a":"e9LhPr3svs0","b":"yOq3vuvmRCQ","label":"re-skin","confidence":0.9,"note":"Same Wheels on Bus shots, green bus vs purple bus"},
+{"a":"QkQmfGbdlKg","b":"reZpGfU6csQ","label":"shared-segments","confidence":0.65,"note":"Kaboochi shorts 37s vs 61s with same footage at several points"},
+{"a":"rtUezKOrBAU","b":"Lm494FQebI8","label":"unrelated","confidence":0.6,"note":"Different Halloween shorts: witch girl song vs monster girl song"},
+{"a":"ayo0-fI_wQM","b":"O0YszFZto2o","label":"shared-segments","confidence":0.6,"note":"Bob the Train compilations; one Bob street shot matches, rest differs"},
+{"a":"89-vIiOahnY","b":"yDaxszBxrFA","label":"same-template","confidence":0.8,"note":"Loco Nuts comedy episodes, same characters and set, different stories"},
+{"a":"qHf6e1CQQ5c","b":"T2UcCZAPW34","label":"same-song","confidence":0.6,"note":"Kaboochi vs Christmas Kaboochi shorts; frames show different shots"}
+]

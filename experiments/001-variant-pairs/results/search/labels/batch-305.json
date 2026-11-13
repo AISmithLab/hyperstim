@@ -1,0 +1,12 @@
+[
+{"a":"WwhNgzir6V4","b":"eq8J_moRM6w","label":"re-skin","confidence":0.85,"note":"Baby Bao Panda bus short: same street and panda shots; bus pink vs orange, seats recolored."},
+{"a":"AKD-gwTktdc","b":"eq8J_moRM6w","label":"re-skin","confidence":0.85,"note":"Same Baby Bao Panda bus shots; pink bus recolored orange, seats green vs blue."},
+{"a":"xUKoaX3t3dY","b":"eq8J_moRM6w","label":"re-skin","confidence":0.8,"note":"Same bus front/side shots; pink vs orange bus; edit order differs."},
+{"a":"Ye7ulpWeLfw","b":"eq8J_moRM6w","label":"re-skin","confidence":0.7,"note":"Same Baby Bao Panda bus song set; yellow vs orange bus, similar shots, camera partly differs."},
+{"a":"eq8J_moRM6w","b":"v8YSR6Or2bc","label":"shared-segments","confidence":0.55,"note":"Both orange bus; shared front shot, other shots differ (lamppost, red-hat panda)."},
+{"a":"eq8J_moRM6w","b":"cMOSJ1QIa3w","label":"re-skin","confidence":0.75,"note":"Same bus front and panda-seat shots; orange vs yellow bus."},
+{"a":"24CuY0nwSX0","b":"eq8J_moRM6w","label":"re-skin","confidence":0.8,"note":"Same bus and panda-seat shots; red bus vs orange bus."},
+{"a":"lEvNMZQ2DT4","b":"hzzGSyV_BCA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the kiosk episode."},
+{"a":"mJFTp8x_QZ4","b":"TwDxP5L1-VA","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, barbell vs teleport gags."},
+{"a":"rWQWjm-AIvo","b":"SP3eASDKke4","label":"shared-segments","confidence":0.65,"note":"Boo Boo shorts sharing mother-holding-baby shot; different cuts."}
+]

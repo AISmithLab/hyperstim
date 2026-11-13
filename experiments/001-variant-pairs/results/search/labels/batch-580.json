@@ -1,0 +1,72 @@
+[
+ {
+  "a": "KFwebO9sy58",
+  "b": "hzzGSyV_BCA",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "c3lLP39EdME",
+  "b": "UGzlPPWb6Pg",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: cheese vs fly swatter"
+ },
+ {
+  "a": "SB-7h4MW26k",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; toy jeep props recur, episodes differ"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "KFwebO9sy58",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "Gelbjg7SL0U",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "fOJm84LQSTw",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: high striker vs skates"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "LQQ2DD4V_mY",
+  "b": "hzzGSyV_BCA",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "20HqqfnKxZk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "fOJm84LQSTw",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: high striker vs robot vacuum"
+ }
+]

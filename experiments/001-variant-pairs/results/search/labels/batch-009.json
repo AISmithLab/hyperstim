@@ -1,0 +1,12 @@
+[
+ {"a": "oWkIR8ZkHgo", "b": "aDyWeSAt-sI", "label": "same-template", "confidence": 0.5, "note": "Rattic Mini compilations, same set; both have a jeep gag but shots differ"},
+ {"a": "ELqcVh6D-aY", "b": "9DuDNOTEIHk", "label": "same-song", "confidence": 0.6, "note": "Five Little Babies Jumping on the Bed compilations, different casts and animation"},
+ {"a": "idwuB7uQA2M", "b": "4AHTuFMPftA", "label": "unrelated", "confidence": 0.7, "note": "Johny Johny short vs Halloween This Is the Way short, different casts"},
+ {"a": "lYxy5H6EgEY", "b": "PFPDDhGr6us", "label": "shared-segments", "confidence": 0.8, "note": "Apples & Bananas compilations; identical playground party shot (A 1/2, B 1/4)"},
+ {"a": "2oGfT4lqFLE", "b": "EAGYaTsgvsc", "label": "same-song", "confidence": 0.65, "note": "Johny Johny Yes Papa compilations with different casts and animation"},
+ {"a": "oRUKPowFBgM", "b": "IbEIByW4Fwk", "label": "unrelated", "confidence": 0.55, "note": "different songs and casts (Apples & Bananas vs Oopsie Doopsie)"},
+ {"a": "zSf5nw7US6U", "b": "GvP31EGA8tQ", "label": "same-template", "confidence": 0.5, "note": "Rattic Mini compilations, same set and layout; no shared shot visible"},
+ {"a": "WwhNgzir6V4", "b": "lo3-hAO9RJg", "label": "shared-segments", "confidence": 0.5, "note": "same pink bus with panda driver, no color change; B 31 s seems a cut of A's 48 s"},
+ {"a": "UN4V4ywCWxA", "b": "nHT4spNAshs", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations, same set and layout; no shared shot visible"},
+ {"a": "zG6D-FpUczM", "b": "r-whFfxsj_I", "label": "re-upload", "confidence": 0.5, "note": "same 51 s Johny Johny animation, same papa shots; B adds lyric captions, frame order differs"}
+]

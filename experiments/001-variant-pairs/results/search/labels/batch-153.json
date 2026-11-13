@@ -1,0 +1,12 @@
+[
+{"a":"v80qWgkingM","b":"ukENAA-zDsg","label":"same-song","confidence":0.55,"note":"Halloween Night shorts released same day, different characters and shots."},
+{"a":"ukENAA-zDsg","b":"IRWTZropao4","label":"same-song","confidence":0.55,"note":"Ha Ha Halloween shorts, different characters and shots."},
+{"a":"fAQ_c_NEM7A","b":"4e1vB_kqCaY","label":"shared-segments","confidence":0.75,"note":"Kaboochi shorts sharing the boy-in-yellow-shirt dance footage."},
+{"a":"Is1sSXyJz28","b":"ukENAA-zDsg","label":"same-song","confidence":0.55,"note":"Ha Ha Halloween shorts, different characters and shots."},
+{"a":"0ZNqZ9x_06U","b":"4e1vB_kqCaY","label":"shared-segments","confidence":0.75,"note":"Kaboochi shorts sharing the boy-in-yellow-shirt dance footage."},
+{"a":"ukENAA-zDsg","b":"t3y2AhXLjRY","label":"same-song","confidence":0.5,"note":"Halloween Night shorts, different characters and shots."},
+{"a":"1oAvPiSHKtM","b":"fAzIPHVq0vY","label":"re-upload","confidence":0.85,"note":"Bob the Train Ten in the Bed: identical frames, new thumbnail, cross-channel."},
+{"a":"OZzQENCeeNg","b":"4e1vB_kqCaY","label":"unrelated","confidence":0.6,"note":"Everybody Do the Dance vs Kaboochi short; only short framing in common."},
+{"a":"u3VtdvWtgl4","b":"4e1vB_kqCaY","label":"same-song","confidence":0.55,"note":"Halloween Kaboochi vs plain Kaboochi short; different characters."},
+{"a":"CcZ5-DXzIL0","b":"ukENAA-zDsg","label":"unrelated","confidence":0.55,"note":"Scary Pumpkin vs Halloween Night shorts; only Halloween theme and framing shared."}
+]

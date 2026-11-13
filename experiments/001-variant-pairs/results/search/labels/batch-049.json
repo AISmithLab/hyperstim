@@ -1,0 +1,12 @@
+[
+{"a":"SvOlJQlicyY","b":"JLtWbywZu5A","label":"re-upload","confidence":0.95,"note":"Identical 13s Dinobees clip posted on both channels the same day"},
+{"a":"YVaBFUbjzuk","b":"sFhZZIPj9nE","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts on same set; Christmas mailbox vs cleaning gag"},
+{"a":"phrajiOFBCY","b":"sFhZZIPj9nE","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts; builder blocks vs cleaning gag"},
+{"a":"sFhZZIPj9nE","b":"a0Dg0fPxACY","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts; cleaning vs tumbler toy gag"},
+{"a":"OZzQENCeeNg","b":"iQtJ6U5X01A","label":"unrelated","confidence":0.75,"note":"Dance song vs Three Little Kittens, different characters and sets"},
+{"a":"ogqYnN2SIl0","b":"JlsguWRqg_A","label":"same-template","confidence":0.85,"note":"Bob the Train learning episodes, same intro; shapes vs vehicles"},
+{"a":"y5hNOisFVd8","b":"SyVbbpWvE9U","label":"same-template","confidence":0.9,"note":"Learning Street phonics episodes, same shots with letter N vs V words"},
+{"a":"aH_d2uNkUn4","b":"WgfOvUic8Ug","label":"shared-segments","confidence":0.8,"note":"Johny Johny short included in the This Old Man compilation"},
+{"a":"1YroSGgyUdg","b":"fS83sH9egvI","label":"shared-segments","confidence":0.55,"note":"Five Little Babies shorts from one production, different excerpts, no color change"},
+{"a":"STRJcffvt-0","b":"vXUuaxhuTWY","label":"same-template","confidence":0.9,"note":"Learning Street phonics episodes, letter Q vs Y"}
+]

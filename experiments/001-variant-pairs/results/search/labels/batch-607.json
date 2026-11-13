@@ -1,0 +1,72 @@
+[
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "34zV8hDOuFs",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "oHSAGotL2Vo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, suitcase gag vs bar-chair gag; similar motion, different props"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "Xx39RVmRYWE",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "same Kaboochi dance shots and poses; Christmas outfits, Santa hats and tree background added"
+ },
+ {
+  "a": "Zy0VtX5RTFM",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "ndf_-FJsPVk",
+  "b": "GkcqRmdwKlE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "phonics letter H vs J, same template"
+ },
+ {
+  "a": "x0h4qykzlsA",
+  "b": "FIinrJO9po8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "uzUxdwfXgWI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "ONwFOOEkasU",
+  "b": "oCiHs7agwmE",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi, different characters and shots at matched moments"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ }
+]

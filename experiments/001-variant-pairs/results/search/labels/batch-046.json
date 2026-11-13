@@ -1,0 +1,12 @@
+[
+{"a":"zN8W339rP_U","b":"U3O9WIfjY8A","label":"re-skin","confidence":0.85,"note":"2013 2D Wheels on the Bus, same shots and timing; yellow bus vs orange bus"},
+{"a":"U3O9WIfjY8A","b":"NnvOQVPXWTw","label":"re-skin","confidence":0.85,"note":"2013 2D Wheels on the Bus, same shots; orange bus vs blue bus"},
+{"a":"Msywp-_Gl1g","b":"reZpGfU6csQ","label":"shared-segments","confidence":0.65,"note":"Kaboochi dance shorts, same dance footage in a different edit; B adds rocket scene"},
+{"a":"RG_4B9zxJnU","b":"AlEPz20FGnk","label":"shared-segments","confidence":0.7,"note":"Short cut of the long Boo Boo song; same thumbnail, family and kitchen footage"},
+{"a":"RG_4B9zxJnU","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.7,"note":"Boo Boo song with a different family and animation"},
+{"a":"RG_4B9zxJnU","b":"Iygt_NzD7VU","label":"shared-segments","confidence":0.5,"note":"Same family models (plaid dad); likely cuts from one Boo Boo production, frames differ"},
+{"a":"Msywp-_Gl1g","b":"Pgq2kiIebKY","label":"unrelated","confidence":0.8,"note":"Kaboochi dance vs Halloween night, different characters"},
+{"a":"s0DwH0Oq5YY","b":"RG_4B9zxJnU","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts cut from same production; same family, mostly different excerpts"},
+{"a":"RG_4B9zxJnU","b":"SP3eASDKke4","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts from same production; same kitchen and mom/baby shots"},
+{"a":"tQlIWPUO_E0","b":"RG_4B9zxJnU","label":"unrelated","confidence":0.85,"note":"Ten in the Bed vs Boo Boo song"}
+]

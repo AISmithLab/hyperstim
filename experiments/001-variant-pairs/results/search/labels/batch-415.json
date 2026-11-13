@@ -1,0 +1,72 @@
+[
+ {
+  "a": "PIZj5SH8Bok",
+  "b": "ewZwn2G14Wg",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the red-car episode"
+ },
+ {
+  "a": "4FXoc-ApjOQ",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bugs song vs Kaboochi dance shorts"
+ },
+ {
+  "a": "aACfDyTDcL8",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing toy-car and snowman episodes"
+ },
+ {
+  "a": "tNPoYErk2rs",
+  "b": "SP3eASDKke4",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with the same family characters, likely cut from one animation"
+ },
+ {
+  "a": "Tgp1NqPegK8",
+  "b": "h3bvPp9Jqnc",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi dance shorts with different animation"
+ },
+ {
+  "a": "jflAKuIuQBM",
+  "b": "fkM9JyHWOo8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, talent show vs cupboard episodes"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bottle vs picture episodes"
+ },
+ {
+  "a": "I25m3zH47KA",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, water machine vs carousel episodes"
+ },
+ {
+  "a": "yVKvv4YMB78",
+  "b": "ewZwn2G14Wg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing patrol-car, red-car and picnic episodes"
+ }
+]

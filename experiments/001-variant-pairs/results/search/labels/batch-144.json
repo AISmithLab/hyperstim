@@ -1,0 +1,12 @@
+[
+{"a":"j7HfsNN3SF0","b":"vdVfK1wEjFs","label":"shared-segments","confidence":0.8,"note":"Bob the Train compilations sharing identical baby-and-train footage."},
+{"a":"vdVfK1wEjFs","b":"QUZgkyItxVo","label":"shared-segments","confidence":0.7,"note":"Compilation contains the same Bob train-and-baby shot as the zoo video."},
+{"a":"7Ldj5W-FyMs","b":"Nj_pfXISKXc","label":"unrelated","confidence":0.6,"note":"Wheels on the Tractor vs Wheels on the Bus shorts; different characters and shots."},
+{"a":"YO0ZDNIG1q4","b":"QqbqYe-JRVE","label":"re-skin","confidence":0.85,"note":"Baby Bao Wheels on the Bus short: identical rain shot, double-decker red in A, green in B."},
+{"a":"yQTCDExiklA","b":"fNzp2fZKx2U","label":"same-template","confidence":0.7,"note":"2015 ABC song vs numbers song, same style and thumbnail layout, different content."},
+{"a":"q8T0cDm6nSA","b":"KFwebO9sy58","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing identical episodes."},
+{"a":"KFwebO9sy58","b":"w7exxTCHfx8","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations on one set; mostly different episodes."},
+{"a":"FVuAS7z73Bs","b":"Ia-g9fkyMJ4","label":"same-template","confidence":0.6,"note":"Larva shorts, different episodes (straw vs watermelon)."},
+{"a":"hCsTxqJRkDc","b":"NIzsSt8iGhQ","label":"shared-segments","confidence":0.75,"note":"Bob the Train compilation shares the train-on-hills shot."},
+{"a":"t2tKT2LSOfo","b":"Nj_pfXISKXc","label":"unrelated","confidence":0.8,"note":"No No song vs Wheels on the Bus short; only vertical framing."}
+]

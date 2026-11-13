@@ -1,0 +1,12 @@
+[
+ {"a": "UZo2O0gsdOc", "b": "0Koh94dtQhk", "label": "shared-segments", "confidence": 0.75, "note": "Larva Walnut compilations; same bottle and frog shots, lengths differ by 100 s."},
+ {"a": "DC-zWKmQUl8", "b": "6aLsu1cH1V4", "label": "same-template", "confidence": 0.7, "note": "Bob the Train numbers vs animals learning compilations; same train and intro."},
+ {"a": "Ng85dlGMIQA", "b": "vXUuaxhuTWY", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics T vs Y."},
+ {"a": "nvR3fxkl_Bc", "b": "tQlIWPUO_E0", "label": "unrelated", "confidence": 0.75, "note": "Rig A Jig Jig vs Ten in the Bed; different characters and scenes."},
+ {"a": "oCiHs7agwmE", "b": "8-qO0tHgMHY", "label": "unrelated", "confidence": 0.75, "note": "Kaboochi dance vs Animal Dance; different characters."},
+ {"a": "YudNG_jdUs4", "b": "AlEPz20FGnk", "label": "unrelated", "confidence": 0.8, "note": "Zoo Song superheroes vs Boo Boo Song."},
+ {"a": "mLfMksG42wg", "b": "Iw2Ntg-ggus", "label": "re-skin", "confidence": 0.5, "note": "Thumbnails show same Halloween bus model and pose, green vs purple; video frames don't overlap."},
+ {"a": "y5hNOisFVd8", "b": "dL9q0aobLss", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics N vs R."},
+ {"a": "TAeO_pKB_ik", "b": "D5H_syznRbk", "label": "shared-segments", "confidence": 0.85, "note": "Story compilations with identical kids-and-wagon frame; different lead stories."},
+ {"a": "gmRIldLgb8k", "b": "xEFkAQpftd4", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Kung Fu vs Talent Show."}
+]

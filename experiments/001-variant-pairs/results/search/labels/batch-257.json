@@ -1,0 +1,12 @@
+[
+{"a":"gkk96Hm-IHo","b":"-8VedXc5EDU","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing air dancer and claw machine episodes"},
+{"a":"FIinrJO9po8","b":"gkk96Hm-IHo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing claw machine episode"},
+{"a":"2kLB7ZwxVv8","b":"gkk96Hm-IHo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing claw machine episode"},
+{"a":"SSeBjzpJLFk","b":"gkk96Hm-IHo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing air dancer and claw machine episodes"},
+{"a":"OSOdLGenkS0","b":"gkk96Hm-IHo","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations on same set; no shared frames seen"},
+{"a":"gkk96Hm-IHo","b":"3yv0GSbbCZI","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations on same set; no shared frames seen"},
+{"a":"gkk96Hm-IHo","b":"Eif8UopFHhM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing claw machine episode"},
+{"a":"7I0SeirswAk","b":"Pgq2kiIebKY","label":"unrelated","confidence":0.85,"note":"Johny Johny vs Halloween shorts, only vertical-short layout matches"},
+{"a":"7ClCbBREUlU","b":"xe7vTAa-ufc","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Jingle Bells shorts, only blurred side bars match"},
+{"a":"e8qnOUvCdb0","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.85,"note":"Teeth brushing vs dinosaur shorts, different content"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"HW8O6C_OCJQ","b":"1fL9dsWYLJ0","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Wheels on the Bus family short; different content."},
+{"a":"1fL9dsWYLJ0","b":"_QFj7e58XGE","label":"unrelated","confidence":0.8,"note":"Wheels on the Bus vs Wheels on the Train; different characters and shots."},
+{"a":"Td73SYRglgw","b":"1fL9dsWYLJ0","label":"unrelated","confidence":0.75,"note":"Boo Boo vs Wheels on the Bus; similar family style, different songs and shots."},
+{"a":"B_MmKCyAmpw","b":"yPexH1DUKe4","label":"unrelated","confidence":0.85,"note":"Oopsie Doopsie Halloween vs Halloween Finger Family; different characters."},
+{"a":"1fL9dsWYLJ0","b":"SrmqhX-Te2I","label":"unrelated","confidence":0.85,"note":"Wheels on the Bus family vs Wheels on the Taxi monkey; different content."},
+{"a":"yPexH1DUKe4","b":"6Knlj_rhgE4","label":"unrelated","confidence":0.8,"note":"Halloween Finger Family vs Spooky Bus; Halloween theme only."},
+{"a":"gdVpv0KN_uU","b":"yPexH1DUKe4","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Halloween Finger Family; different content."},
+{"a":"gdVpv0KN_uU","b":"1fL9dsWYLJ0","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Wheels on the Bus; different content."},
+{"a":"jjRM3AXLER8","b":"lkGmcS3ArOg","label":"shared-segments","confidence":0.5,"note":"Loco Nuts Halloween song and compilation with the same costumed cast; no identical frame sampled."},
+{"a":"snvdOvj-H-o","b":"R49NrP0fcsE","label":"unrelated","confidence":0.85,"note":"Up on the Roof Top vs Boo Boo; different content."}
+]

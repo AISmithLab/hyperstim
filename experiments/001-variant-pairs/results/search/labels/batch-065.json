@@ -1,0 +1,12 @@
+[
+{"a":"12mNC1UN38M","b":"OokGp8l_x9k","label":"re-upload","confidence":0.6,"note":"Halloween bus short: same thumbnail and mid frame, same seat/pumpkin colors; 56 vs 59 s, recut likely."},
+{"a":"Xo3zWzIj8fM","b":"IbEIByW4Fwk","label":"shared-segments","confidence":0.55,"note":"Oopsie Doopsie dance shorts, same characters and set; shots reordered, likely different cuts."},
+{"a":"OokGp8l_x9k","b":"6Knlj_rhgE4","label":"re-skin","confidence":0.85,"note":"Same Halloween bus shots; chair green vs orange, pumpkins green vs orange, seat recolored."},
+{"a":"HW8O6C_OCJQ","b":"FT0mjHIs2oY","label":"shared-segments","confidence":0.5,"note":"Kaboochi Hawaiian dance shorts, same cast; sampled shots differ, likely cuts of one video."},
+{"a":"HW8O6C_OCJQ","b":"MoftuEWtBuI","label":"shared-segments","confidence":0.5,"note":"Kaboochi Hawaiian dance shorts, same cast and floor; different shots sampled."},
+{"a":"R49NrP0fcsE","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.7,"note":"Boo Boo song shorts with different characters and scenes."},
+{"a":"_73WjnueOIQ","b":"69_G4VmnOYw","label":"shared-segments","confidence":0.7,"note":"Halloween bus shorts with identical pumpkin and bus shots, same colors; different cuts."},
+{"a":"4rcjZ1f_L4A","b":"HW8O6C_OCJQ","label":"shared-segments","confidence":0.7,"note":"Kaboochi dance shorts; identical frame of curly-haired boy, 45 vs 31 s cuts."},
+{"a":"nHT4spNAshs","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.85,"note":"Rattic Mini compilations on the same wooden-floor set, different episodes."},
+{"a":"pkj2olkrqp4","b":"h051ymaaSK8","label":"shared-segments","confidence":0.9,"note":"Loco Nuts compilations sharing an identical segment at the midpoint."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "I25m3zH47KA",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, water machine vs birthday gags"
+ },
+ {
+  "a": "7m15CgRy6OU",
+  "b": "9DBJvlkWDs4",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts with same characters/footage, different cuts"
+ },
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "Pa7utiQUGOY",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, bottle vs toilet gags"
+ },
+ {
+  "a": "ZztnbLI54FI",
+  "b": "VLa2W1SssVQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter M vs W, shared intro/outro"
+ },
+ {
+  "a": "_EZv7EJE8LE",
+  "b": "pe_iRGqeBlA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing jeep and snowman episodes"
+ },
+ {
+  "a": "C5NadrBnSj8",
+  "b": "rWQWjm-AIvo",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo shorts; B 18s cut shares footage with A"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "3aoEeaCHS_w",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, magic hat vs fishing gags"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, carousel vs skates gags"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "8Ri1s8CTSrM",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing the pillow episode"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "mTsFv_5w3uU",
+  "b": "aScyfsClZd0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Old MacDonald vs Boo Boo shorts; different animation, side bars match"
+ },
+ {
+  "a": "-a3PpO3jlDI",
+  "b": "STRJcffvt-0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter H vs letter Q, shared template shots"
+ },
+ {
+  "a": "KKgsTFivFJM",
+  "b": "20HqqfnKxZk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "i2XoutDdPoM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: balloon vs pillow"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "Qv-eMjDmTJQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "vCMNQHulhfo",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter S vs letter Z, shared template shots"
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: hollow vs car service"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "C6_4QpOhR8A",
+  "b": "i2XoutDdPoM",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Loconuts animal short vs Rattic Mini short"
+ },
+ {
+  "a": "pe_iRGqeBlA",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

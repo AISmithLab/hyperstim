@@ -1,0 +1,12 @@
+[
+{"a":"E7LWvi86hYw","b":"qBL6ZHNPdvo","label":"shared-segments","confidence":0.55,"note":"Same thumbnail (Halloween bus); frames show different compilation content; thumbnail-only match"},
+{"a":"HWH2lpQomEk","b":"ksTmEkp5ERM","label":"unrelated","confidence":0.65,"note":"Five Little Monkeys vs Finger Family shorts; same baby character, different scenes"},
+{"a":"_pbN_c0Kb1U","b":"XOflyZkgppo","label":"shared-segments","confidence":0.75,"note":"Supremes compilations share superhero group and chef scenes"},
+{"a":"7ClCbBREUlU","b":"NcfiuWYdC24","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts with different characters and animation"},
+{"a":"Z3hYfJ4dDKk","b":"qhaDwGQUOLM","label":"shared-segments","confidence":0.7,"note":"Five Little Mommies shorts share the doctor phone shot; different cuts"},
+{"a":"7HOESsArCmY","b":"VhJLn6mO7-E","label":"re-skin","confidence":0.4,"note":"Thumbnail only: same school bus model orange vs pink, different pose; B frames are compilation content"},
+{"a":"Z3hYfJ4dDKk","b":"gdVpv0KN_uU","label":"shared-segments","confidence":0.65,"note":"Five Little Mommies shorts share doctor shot; B adds nurse and mother shots"},
+{"a":"Om_sTl8BIgQ","b":"XEEVejf8Kgw","label":"shared-segments","confidence":0.65,"note":"Five Little Elves shorts share the crying girl and snowman elf shots"},
+{"a":"jdKv_kGQX6Q","b":"P4fKr8A960s","label":"shared-segments","confidence":0.65,"note":"Wheels on the Train shorts share the woman close-up and same train, different shots"},
+{"a":"UCrI_HkV9gw","b":"Myk0Is5roGM","label":"re-skin","confidence":0.85,"note":"Wheels on the Bus scene in both compilations: red bus recolored orange, scooter rider redrawn, same shot"}
+]

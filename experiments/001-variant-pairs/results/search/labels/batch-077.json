@@ -1,0 +1,12 @@
+[
+{"a":"syYJiqAlNVc","b":"OKNdDQ3rJiY","label":"same-template","confidence":0.9,"note":"Bob the Train Word Play episodes, IN vs ET words, same template."},
+{"a":"OEES3HmTQNw","b":"_aq9DIHqGnw","label":"shared-segments","confidence":0.8,"note":"No No junk food song: same mom shot; 143 s version vs 30 s cut."},
+{"a":"PrsoqMSi0_I","b":"OKNdDQ3rJiY","label":"same-template","confidence":0.9,"note":"Bob the Train Word Play episodes, AN vs ET words, same template."},
+{"a":"MBoA383dfOU","b":"1WzZWyDsRw4","label":"shared-segments","confidence":0.75,"note":"Boo Boo shorts with the same hurt girl and mom-with-baby shots; 37 vs 31 s cuts."},
+{"a":"s0DwH0Oq5YY","b":"1WzZWyDsRw4","label":"shared-segments","confidence":0.8,"note":"Boo Boo shorts with identical girl, mom and dad shots; 57 vs 31 s cuts."},
+{"a":"Gh4izthwnNM","b":"34zV8hDOuFs","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the red toy car episode shot."},
+{"a":"1WzZWyDsRw4","b":"uQ90xr1p-eQ","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Kaboochi dance; different characters."},
+{"a":"uQ90xr1p-eQ","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance: babies with corgi vs Hawaiian beach cast."},
+{"a":"f5KPuwl5uSM","b":"FZSWN3DFpGE","label":"unrelated","confidence":0.6,"note":"Hello It's Halloween vs Monster in the Dark; same boy character, different songs."},
+{"a":"mxRMkO3K4Rs","b":"6U9UX0MLvU4","label":"same-song","confidence":0.55,"note":"Boo Boo song shorts with different families and shots."}
+]

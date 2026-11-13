@@ -1,0 +1,12 @@
+[
+{"a":"ksTmEkp5ERM","b":"MI4XvQZDPZc","label":"unrelated","confidence":0.85,"note":"Finger Family short vs Halloween shark short."},
+{"a":"9lC5bHDXP5A","b":"jD-Uo2VcI2E","label":"shared-segments","confidence":0.8,"note":"ABC and numbers compilations sharing the green bus slide segment."},
+{"a":"7xLhNCeTwrY","b":"MVgryxzLMGY","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the cowboy boy segment."},
+{"a":"ijNCfAvwMGE","b":"oRk8sglOG5k","label":"unrelated","confidence":0.85,"note":"Twinkle Twinkle short vs Boo Boo Song short."},
+{"a":"xh-75gMcI_4","b":"u3VtdvWtgl4","label":"unrelated","confidence":0.85,"note":"Wheels on the Tractor vs Halloween Kaboochi shorts."},
+{"a":"EA8_ci9zyTI","b":"yj8vX-Z4xAc","label":"same-song","confidence":0.5,"note":"Wheels on the Taxi vs Fire Truck shorts; different characters and animation."},
+{"a":"yckv5BgAm7I","b":"e1fBnQr8F9I","label":"shared-segments","confidence":0.85,"note":"Halloween compilations sharing the witch segment."},
+{"a":"j7HfsNN3SF0","b":"kYSSpyaKW_U","label":"shared-segments","confidence":0.85,"note":"Compilation containing the Bob the Train Old MacDonald video."},
+{"a":"5NCx942T-wM","b":"jEwfENQE5Os","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts, different characters."},
+{"a":"HO-3dteY438","b":"dSOO9PSVKA4","label":"same-template","confidence":0.75,"note":"Finger Family series: bunnies vs kittens on same hand layout, different drawings."}
+]

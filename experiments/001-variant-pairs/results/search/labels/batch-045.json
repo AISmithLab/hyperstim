@@ -1,0 +1,12 @@
+[
+{"a":"6aLsu1cH1V4","b":"xjS-nGCLb_c","label":"shared-segments","confidence":0.85,"note":"Bob the Train compilations sharing identical train and truck footage"},
+{"a":"7Ldj5W-FyMs","b":"41F1Fdb3tHM","label":"unrelated","confidence":0.8,"note":"Tractor song vs Boo Boo song, different characters"},
+{"a":"djV64K-Y8vE","b":"eAodpnlhaNI","label":"unrelated","confidence":0.7,"note":"Bob zoo song vs Boo Boo song; both feature Bob, different scenes"},
+{"a":"s0DwH0Oq5YY","b":"ANqdoD46Ox0","label":"same-song","confidence":0.6,"note":"Boo Boo song shorts, same family models, different shots and babies"},
+{"a":"6Knlj_rhgE4","b":"yUjUU9FVa8s","label":"unrelated","confidence":0.7,"note":"Spooky bus vs monster dance; Halloween theme only"},
+{"a":"6U9UX0MLvU4","b":"AlEPz20FGnk","label":"same-song","confidence":0.7,"note":"Boo Boo song with different families and animation"},
+{"a":"41F1Fdb3tHM","b":"y8nnK3mnV3Q","label":"same-song","confidence":0.6,"note":"Boo Boo song, same characters; B Halloween remake, poses differ in sampled frames"},
+{"a":"WAVrZioY18c","b":"Tgp1NqPegK8","label":"unrelated","confidence":0.8,"note":"No No song vs Kaboochi dance, different content"},
+{"a":"3bTL4x31XTI","b":"93hO6Ma5uEg","label":"unrelated","confidence":0.8,"note":"Bath time vs Twinkle Twinkle shorts, different characters"},
+{"a":"E1wcRx1Exec","b":"pBZoqnYJdpo","label":"unrelated","confidence":0.75,"note":"Larva rain gag vs Rattic rocket gag, different series"}
+]

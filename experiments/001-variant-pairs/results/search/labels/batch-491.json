@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Dk7J2UqDcGk",
+  "b": "BIAvvzhc1Do",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Compilations share the Sheepy farm song segment"
+ },
+ {
+  "a": "Pa7utiQUGOY",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "5iXRqSe4KJo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "D0tOd2ZH-cQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "YgjyQIwcJy0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "QKrdD5Y9c-s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine episode"
+ },
+ {
+  "a": "aKkecxwHm00",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Row Your Boat vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "76IijP9RlJY",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "HW8O6C_OCJQ",
+  "b": "oRk8sglOG5k",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Hawaiian Kaboochi vs Boo Boo shorts; different characters"
+ }
+]

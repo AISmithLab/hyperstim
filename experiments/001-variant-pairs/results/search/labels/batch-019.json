@@ -1,0 +1,12 @@
+[
+{"a":"3bTL4x31XTI","b":"s0DwH0Oq5YY","label":"unrelated","confidence":0.8,"note":"Bath Time Song vs Boo Boo Song; different songs, characters and sets."},
+{"a":"PbchJhisS4s","b":"TGZl_HsDj_0","label":"shared-segments","confidence":0.9,"note":"Rattic Mini compilations sharing red toy car and block tower episodes."},
+{"a":"4OZ-iSU4DiM","b":"LXMGLr9uFv4","label":"re-skin","confidence":0.75,"note":"Same bus model, pose, panda driver; purple bus vs pink, buildings recolored. A compilation, B 2x speed."},
+{"a":"skNxtYhw9Y8","b":"JOMSMENnSIQ","label":"shared-segments","confidence":0.9,"note":"Rattic Mini compilations sharing the stroller episode, identical frames."},
+{"a":"CPMWlyJSJ0w","b":"IbEIByW4Fwk","label":"unrelated","confidence":0.8,"note":"Farmer in the Dell vs Oopsie Doopsie; different songs and characters."},
+{"a":"kwXxrZQ5GaQ","b":"dL9q0aobLss","label":"same-template","confidence":0.95,"note":"Bob the Train phonics episodes, letter L vs R; shared intro, different content."},
+{"a":"uzUxdwfXgWI","b":"GvP31EGA8tQ","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same thumbnail layout; sampled frames show different episodes."},
+{"a":"c3lLP39EdME","b":"o6VjhL9gA1A","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; cheese vs carousel gags."},
+{"a":"6FhYNE5KFeg","b":"o6VjhL9gA1A","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; cat vs carousel gags."},
+{"a":"6aBfQYlhKJs","b":"b5p78d-gr6w","label":"unrelated","confidence":0.8,"note":"Spooky Zombie vs Monster in the Dark; different songs, characters, sets."}
+]

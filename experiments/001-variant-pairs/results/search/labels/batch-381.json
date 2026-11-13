@@ -1,0 +1,72 @@
+[
+ {
+  "a": "h16UUZLKlkU",
+  "b": "31aTho6zUsQ",
+  "label": "re-upload",
+  "confidence": 0.7,
+  "note": "Bob the Train Pussy Cat: same frames, Kids Channel 2023 re-edit 12 s shorter, new thumbnail"
+ },
+ {
+  "a": "iFpez4fPv5Y",
+  "b": "nHT4spNAshs",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the red knitted ball episode"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "YJLDe0F_z7k",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "oCiHs7agwmE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "CfJfPAF8El8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "a7-bpUidOBo",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the snowman and bin episode"
+ },
+ {
+  "a": "Ka3AbnnoaOE",
+  "b": "ZRd-uNE-AUA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "Pa7utiQUGOY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "rWQWjm-AIvo",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "OSOdLGenkS0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the red toy car episode"
+ }
+]

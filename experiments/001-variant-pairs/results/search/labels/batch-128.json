@@ -1,0 +1,72 @@
+[
+ {
+  "a": "e9gnACQvqRM",
+  "b": "sFhZZIPj9nE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "oT6bPk4gHxM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "jPvyJ9IIRJk",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "D0tOd2ZH-cQ",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing the jeep and snowman episodes."
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations sharing the jeep and snowman episodes."
+ },
+ {
+  "a": "zPS3ihinlZs",
+  "b": "pBZoqnYJdpo",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "c3lLP39EdME",
+  "b": "M3sOUpxsrJE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ }
+]

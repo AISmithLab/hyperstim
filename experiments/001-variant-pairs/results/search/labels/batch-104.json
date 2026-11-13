@@ -1,0 +1,12 @@
+[
+{"a":"obdK23ZIr6E","b":"NL_S69qf0jg","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts, same set, different gags (trishaw vs butterfly)"},
+{"a":"CfJfPAF8El8","b":"V5OqHZwodj4","label":"same-song","confidence":0.7,"note":"Kaboochi vs Christmas Kaboochi: different animation of same song"},
+{"a":"wk9I_xT1NNc","b":"GGQVXv4Nc-E","label":"unrelated","confidence":0.75,"note":"Zoo song vs Boo Boo song shorts; only shared vertical-short framing"},
+{"a":"Gelbjg7SL0U","b":"20HqqfnKxZk","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the pillow/basket episode"},
+{"a":"NL_S69qf0jg","b":"p5TIB-9Uiuc","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts, same set, different gags"},
+{"a":"lij2KlyDHJ8","b":"PjXooPy93AM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared episode visible in frames"},
+{"a":"Gh4izthwnNM","b":"PjXooPy93AM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared episode visible in frames"},
+{"a":"h2XIpJMP06c","b":"R7pIlyiHmJY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the yellow-egg episode"},
+{"a":"wk9I_xT1NNc","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.75,"note":"Zoo song vs Jingle Bells shorts; different content"},
+{"a":"PjXooPy93AM","b":"D0tOd2ZH-cQ","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations, same episodes (car, snowman) in different order"}
+]

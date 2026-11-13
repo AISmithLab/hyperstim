@@ -1,0 +1,12 @@
+[
+{"a":"41F1Fdb3tHM","b":"MQkYufd11nU","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts; mother-on-swing shot shared; other frames differ."},
+{"a":"V6mkgjixCoQ","b":"cjtn_IOstAI","label":"re-skin","confidence":0.9,"note":"Same shots and city set; yellow bus recolored white; family scene identical."},
+{"a":"bh7LwMMuwPU","b":"_fmYX7C2cn0","label":"same-template","confidence":0.7,"note":"Finger Family series; kittens vs squirrels with different poses and sets."},
+{"a":"WUKlDCQm0sI","b":"30tipN0AniY","label":"same-song","confidence":0.85,"note":"Both Jingle Bells; different characters and animation."},
+{"a":"B0m2zgHfr50","b":"Gvz14qtMDBo","label":"same-template","confidence":0.9,"note":"Bob the Train letter episodes, E vs G."},
+{"a":"JV497RLAJc0","b":"q4DmDIQZdgo","label":"re-upload","confidence":0.92,"note":"Same animation frame for frame, same length; thumbnail adds 4K/logo."},
+{"a":"rjmO-ieMFcc","b":"QE0cs0mnVgM","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the superhero family clip; other frames differ."},
+{"a":"EtnFS18O3NU","b":"uefjFu0v-Jc","label":"same-template","confidence":0.65,"note":"Bob the Train shapes vs colors songs; same series look, different content."},
+{"a":"tlSqV18n1Qw","b":"fwYyK58WbcU","label":"shared-segments","confidence":0.6,"note":"Row Row Halloween shorts share pig close-up; B has bunny in boat, maybe character swap."},
+{"a":"KMvlaZuF_wc","b":"DjV8JpuHKA0","label":"shared-segments","confidence":0.75,"note":"Compilations sharing the bedroom girl-and-baby clip."}
+]

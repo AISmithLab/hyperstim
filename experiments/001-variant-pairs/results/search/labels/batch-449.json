@@ -1,0 +1,72 @@
+[
+ {
+  "a": "AdRwOjaFizY",
+  "b": "4ho4zx7QtR0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Loconuts short vs Wheels on the Bus short; different scenes"
+ },
+ {
+  "a": "OFvmlD86K5Q",
+  "b": "Nj_pfXISKXc",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Wheels on the Taxi vs Wheels on the Bus shorts; different kids and shots"
+ },
+ {
+  "a": "t7YZcqp5rdc",
+  "b": "5Zo1rKlMuDQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Finger family compilations share the dad-and-baby room segment"
+ },
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "jEwfENQE5Os",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Halloween Camp shorts; different characters"
+ },
+ {
+  "a": "e9LhPr3svs0",
+  "b": "O_D2N_ulWXg",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Same Bao Panda Wheels on the Bus shots; green bus recolored blue"
+ },
+ {
+  "a": "ixr-TMi-K8U",
+  "b": "lZBg1VotJrw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Loconuts comedy episodes, same characters, different stories"
+ },
+ {
+  "a": "sBtKayGZJiU",
+  "b": "8-qO0tHgMHY",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Johny Johny vs Animal Dance; similar elephant character, different scenes"
+ },
+ {
+  "a": "-OXYsniHGBM",
+  "b": "0yIhvJw1GK8",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "fo7aioou8m0",
+  "b": "0gXJ6f2z_Y4",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Five Little Ducks vs Johny Johny shorts; different scenes"
+ },
+ {
+  "a": "ZP6AWIjRa2Q",
+  "b": "exXypaccs2o",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Supremes Christmas compilation and single; similar Santa sleigh shot"
+ }
+]

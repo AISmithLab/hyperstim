@@ -1,0 +1,72 @@
+[
+ {
+  "a": "i9kMX8tSKSA",
+  "b": "ouJSdR1OtEo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Chew Your Food vs Hawaiian Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "ouJSdR1OtEo",
+  "b": "Lm2OJi4yYNQ",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Hawaiian Kaboochi vs Brush Our Teeth animal short; different"
+ },
+ {
+  "a": "ihvayFU4eI4",
+  "b": "Yd2dkZA9ihc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Loconuts episodes, same characters, different stories"
+ },
+ {
+  "a": "iJZ97cfpjhI",
+  "b": "ouJSdR1OtEo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Kaboochi dance: animal characters vs Hawaiian kids, different animation"
+ },
+ {
+  "a": "iwMPsz9WsFU",
+  "b": "ouJSdR1OtEo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kalu Madari vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "ouJSdR1OtEo",
+  "b": "pst1AsXQWTE",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Boo Boo shorts; different characters"
+ },
+ {
+  "a": "eYZLcN1Cac4",
+  "b": "boZvu6GZ0cA",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Boo Boo compilations with different animation and characters"
+ },
+ {
+  "a": "4FXoc-ApjOQ",
+  "b": "ouJSdR1OtEo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Bugs song vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "HW8O6C_OCJQ",
+  "b": "ouJSdR1OtEo",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Two cuts of the Hawaiian Kaboochi dance; same boy, different shots"
+ },
+ {
+  "a": "ouJSdR1OtEo",
+  "b": "h3bvPp9Jqnc",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Two cuts of the Hawaiian Kaboochi dance; same boy shot appears in both"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "_4x2xszMRq8",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, birthday vs toilet"
+ },
+ {
+  "a": "KFwebO9sy58",
+  "b": "inkqQlbrdrQ",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing soldiers, claw machine, stroller episodes"
+ },
+ {
+  "a": "t892KTYY-cE",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters A and Z on one template"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "oMEt_dTdnMg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic short vs Larva-style cartoon short; side-bar match only"
+ },
+ {
+  "a": "yVKvv4YMB78",
+  "b": "SB-7h4MW26k",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the toy cars and sign episode"
+ },
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic rocket episode vs two-episode basketball short"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "mJFTp8x_QZ4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, kung fu vs barbell"
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "9aLZatXZCl4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the car kiosk episode"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "5iXRqSe4KJo",
+  "b": "V9fA6nrohac",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, trombone vs attic stairs"
+ }
+]

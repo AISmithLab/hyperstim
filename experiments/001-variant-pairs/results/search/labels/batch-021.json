@@ -1,0 +1,12 @@
+[
+{"a":"3bTL4x31XTI","b":"eAodpnlhaNI","label":"unrelated","confidence":0.8,"note":"Bath Time Song vs Boo Boo Song; different characters and sets."},
+{"a":"U9lOcqHMY_w","b":"qSM52VNEVSo","label":"unrelated","confidence":0.8,"note":"Happy Halloween witch song vs School Teacher; different characters and sets."},
+{"a":"B9iK72MSjPw","b":"_UgWOlNTpuo","label":"shared-segments","confidence":0.85,"note":"Long nursery rhyme compilations sharing the yellow car segment, identical frame."},
+{"a":"vyIiFiExyQQ","b":"KKgsTFivFJM","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, same thumbnail layout; sampled frames show different episodes."},
+{"a":"a07zOPj6CZg","b":"ZztnbLI54FI","label":"same-template","confidence":0.95,"note":"Bob the Train phonics episodes, letter G vs M; shared intro, different content."},
+{"a":"29MA-0_XkAY","b":"gszQsk7Ov9k","label":"shared-segments","confidence":0.7,"note":"Monster Finger Family 119s vs 170s; same tablet-kid shot, B adds new scenes and zombie."},
+{"a":"B0m2zgHfr50","b":"NnN4n9v9Ojs","label":"same-template","confidence":0.9,"note":"Bob the Train letter songs, E vs F; same city/train template, different content."},
+{"a":"MFn12PNKiVM","b":"07uUPfeh5D8","label":"unrelated","confidence":0.6,"note":"Halloween dance short vs Halloween compilation; sampled frames show different characters and sets."},
+{"a":"JOMSMENnSIQ","b":"kyProT-iMwg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations (B Christmas); sampled frames show different episodes."},
+{"a":"msZT5N6eNjk","b":"b5p78d-gr6w","label":"unrelated","confidence":0.8,"note":"Halloween Dance Party vs Monster in the Dark; different songs and characters."}
+]

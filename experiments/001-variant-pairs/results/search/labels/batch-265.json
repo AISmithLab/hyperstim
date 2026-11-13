@@ -1,0 +1,12 @@
+[
+{"a":"gvcEcWUHZ_c","b":"lEvNMZQ2DT4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-car kiosk episode."},
+{"a":"MxB4KiDF6XY","b":"2kLB7ZwxVv8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing turban and toy-box episodes."},
+{"a":"UXsXYmw3_CY","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs skipping rope gags."},
+{"a":"GvP31EGA8tQ","b":"BrjLq8jTPfw","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing net and kiosk episodes."},
+{"a":"t5FpH4uDIzs","b":"OKNdDQ3rJiY","label":"same-template","confidence":0.9,"note":"Bob the Train word play episodes, ED vs ET."},
+{"a":"tXgJmUiG38s","b":"phrajiOFBCY","label":"shared-segments","confidence":0.7,"note":"Same Builder short; B is a longer cut containing A's shots."},
+{"a":"aDyWeSAt-sI","b":"sT3J4L19qrE","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing rocket and jeep episodes."},
+{"a":"20HqqfnKxZk","b":"lEvNMZQ2DT4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing kiosk episode."},
+{"a":"IYU2e8WgGnY","b":"a7-bpUidOBo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing trash-bin and snowman episodes."},
+{"a":"svxlLrPCzUM","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts with same thumbnail and overlapping shots; edits differ."}
+]

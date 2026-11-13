@@ -1,0 +1,115 @@
+{
+ "at": "2026-11-11T14:16:11Z",
+ "elapsed_min": 219.1,
+ "inventory": {
+  "videos": 5887,
+  "eligible": 4066,
+  "compilations": 1821,
+  "A": 3037,
+  "B": 1029
+ },
+ "images": {
+  "videos_done": 4066,
+  "videos_total": 4066,
+  "requests_this_run": 11793,
+  "errors": 0,
+  "queue": {},
+  "rate_per_s": 0.0,
+  "eta_min": null
+ },
+ "calibrated": true,
+ "gate_calibrated": true,
+ "candidates": {
+  "videos_compared": 4066,
+  "pairs_compared": {
+   "AxB": 3125073,
+   "AxA": 4610166,
+   "BxB": 528906
+  },
+  "pairs_total": {
+   "AxB": 3125073,
+   "AxA": 4610166,
+   "BxB": 528906
+  },
+  "passed": {
+   "AxB": 133480,
+   "AxA": 193492,
+   "BxB": 23526
+  }
+ },
+ "score": {
+  "in": {
+   "AxB": 133480,
+   "AxA": 193492,
+   "BxB": 23526
+  },
+  "passed": {
+   "AxB": 1291,
+   "AxA": 7653,
+   "BxB": 770
+  },
+  "cut": 13.220217146248284
+ },
+ "gate": {
+  "in": {
+   "AxB": 1291,
+   "AxA": 7653,
+   "BxB": 770
+  },
+  "waiting_frames": {
+   "AxB": 0,
+   "AxA": 0,
+   "BxB": 0
+  },
+  "passed": {
+   "AxB": 879,
+   "AxA": 4253,
+   "BxB": 604
+  },
+  "stopped": {
+   "AxB": 412,
+   "AxA": 3400,
+   "BxB": 166
+  }
+ },
+ "review": {
+  "queued": {
+   "AxB": 0,
+   "AxA": 2,
+   "BxB": 0
+  },
+  "labelled": {
+   "AxB": 887,
+   "AxA": 4308,
+   "BxB": 604
+  },
+  "labels": {
+   "AxA|re-skin": 146,
+   "AxA|re-upload": 92,
+   "AxA|same-song": 121,
+   "AxA|same-template": 2181,
+   "AxA|shared-segments": 1128,
+   "AxA|unrelated": 640,
+   "AxB|re-skin": 34,
+   "AxB|re-upload": 53,
+   "AxB|same-song": 150,
+   "AxB|same-template": 10,
+   "AxB|shared-segments": 166,
+   "AxB|unrelated": 474,
+   "BxB|re-skin": 47,
+   "BxB|re-upload": 19,
+   "BxB|same-song": 97,
+   "BxB|same-template": 16,
+   "BxB|shared-segments": 248,
+   "BxB|unrelated": 177
+  }
+ },
+ "download": {
+  "pairs": {
+   "queued": 189
+  },
+  "videos_downloaded": 119,
+  "stopped": "",
+  "player_today": 117
+ }
+}

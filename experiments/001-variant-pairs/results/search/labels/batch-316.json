@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Q0ahCmtbs8I",
+  "b": "UQEgF2PHL1Y",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Driving Down the Road shorts with same footage, different cuts"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, balloon vs toilet gags"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "6FhYNE5KFeg",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, cat vs talent show gags"
+ },
+ {
+  "a": "Kix07nOAEBQ",
+  "b": "WZ45rZRLf80",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing sleigh and yellow ball episodes"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations sharing the mime episode"
+ },
+ {
+  "a": "Eif8UopFHhM",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "D0tOd2ZH-cQ",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing jeep and snowman episodes"
+ },
+ {
+  "a": "n6eghHp7qWw",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "i2XoutDdPoM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, hollow tree vs pillow gags"
+ }
+]

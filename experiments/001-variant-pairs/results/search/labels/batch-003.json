@@ -1,0 +1,12 @@
+[
+{"a":"TGZl_HsDj_0","b":"GvP31EGA8tQ","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same stage set, different episodes (trashcan vs golf)."},
+{"a":"xEFkAQpftd4","b":"ainrmFQVbfI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, same set and character, different gags (talent show vs rope)."},
+{"a":"h0fw1lcn5uU","b":"8HdEQNADq6k","label":"shared-segments","confidence":0.5,"note":"Same Santa bus and Santa-hat cats shots; B nearly twice as long, likely contains A."},
+{"a":"aW_J2JMPmG8","b":"w7exxTCHfx8","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same set, different episodes (cowboy vs fitness ball)."},
+{"a":"6aBfQYlhKJs","b":"gDzGfavrWeI","label":"same-template","confidence":0.5,"note":"Halloween shorts with same baby characters and set, different songs and shots."},
+{"a":"8-93_TmkKfc","b":"LXMGLr9uFv4","label":"re-skin","confidence":0.7,"note":"Yellow bus in A, pink bus in B in matching street shots; B is 2x speed (82 vs 166 s)."},
+{"a":"ZHrrikyss-k","b":"UfuSoF6iy_w","label":"same-template","confidence":0.5,"note":"Halloween shorts, same characters and spooky set, different songs and shots."},
+{"a":"8-93_TmkKfc","b":"yOq3vuvmRCQ","label":"re-skin","confidence":0.75,"note":"Yellow bus vs purple bus, same front-view street shots, near-equal length."},
+{"a":"gDzGfavrWeI","b":"4AHTuFMPftA","label":"re-upload","confidence":0.5,"note":"Same vampire-boy dance frames, same colors; B 16 s longer, may add footage."},
+{"a":"oRUKPowFBgM","b":"_QFj7e58XGE","label":"unrelated","confidence":0.6,"note":"Different songs (apples & bananas vs train), similar kid character style only."}
+]

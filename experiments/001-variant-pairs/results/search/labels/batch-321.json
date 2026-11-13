@@ -1,0 +1,12 @@
+[
+{"a":"MI4XvQZDPZc","b":"zE2zZ8S0mXk","label":"unrelated","confidence":0.85,"note":"Halloween short vs Jingle Bells short; only side bars."},
+{"a":"MI4XvQZDPZc","b":"-M02RqRMZks","label":"unrelated","confidence":0.8,"note":"Different Halloween shorts; only side bars."},
+{"a":"LufPzgH87NE","b":"MI4XvQZDPZc","label":"unrelated","confidence":0.85,"note":"Brother John vs Halloween short; only side bars."},
+{"a":"MI4XvQZDPZc","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.85,"note":"Halloween short vs Old MacDonald short; only side bars."},
+{"a":"20HqqfnKxZk","b":"_GlpTSaa5EU","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"_GlpTSaa5EU","b":"cO1aLZ7teeg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"SSeBjzpJLFk","b":"skNxtYhw9Y8","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the snake charmer episode."},
+{"a":"_GlpTSaa5EU","b":"hzzGSyV_BCA","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"o6VjhL9gA1A","b":"tQ3LttVt_Jk","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, carousel vs canyon."},
+{"a":"cO1aLZ7teeg","b":"Kix07nOAEBQ","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."}
+]

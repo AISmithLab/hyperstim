@@ -1,0 +1,72 @@
+[
+ {
+  "a": "7I0SeirswAk",
+  "b": "Qb2qYBftAzw",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Johny Johny shorts with different characters and animation."
+ },
+ {
+  "a": "nvR3fxkl_Bc",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Same curly-haired boy model, but different song and shots."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "tQlIWPUO_E0",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Ten in the Bed vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "Gt66IXu-3jE",
+  "label": "re-upload",
+  "confidence": 0.75,
+  "note": "Johny Johny short re-uploaded in 2025; same dad and boy shots."
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "Td73SYRglgw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "r-whFfxsj_I",
+  "b": "7I0SeirswAk",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Johny Johny shorts with different characters and animation."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "b5p78d-gr6w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs monster in the dark shorts; similar boy model only."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs Kaboochi dance shorts; nothing shared."
+ }
+]

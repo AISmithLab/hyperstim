@@ -1,0 +1,12 @@
+[
+ {"a": "h2XIpJMP06c", "b": "wMHsxnO156E", "label": "shared-segments", "confidence": 0.85, "note": "Rattic Mini compilations with identical yellow-ball and cannon frames, different leads."},
+ {"a": "ml1la04cXl8", "b": "KH9FEGPJrhM", "label": "re-upload", "confidence": 0.8, "note": "Bob Three Little Kittens across channels; identical frames, A has intro card, new thumbnail."},
+ {"a": "h2XIpJMP06c", "b": "nHT4spNAshs", "label": "shared-segments", "confidence": 0.8, "note": "Rattic Mini compilations sharing cannon and red-ball episodes."},
+ {"a": "kwXxrZQ5GaQ", "b": "Ng85dlGMIQA", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics L vs T."},
+ {"a": "gmRIldLgb8k", "b": "31YuCXEbFoc", "label": "same-template", "confidence": 0.75, "note": "Rattic Mini Kung Fu vs toy-motorbike episode."},
+ {"a": "ZztnbLI54FI", "b": "y5hNOisFVd8", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics M vs N."},
+ {"a": "K9GankfY2Tw", "b": "pyiBbpEWw-8", "label": "re-upload", "confidence": 0.65, "note": "Same 2D color song (boy at easel, orange splash); re-edited, A has end screen."},
+ {"a": "VBb7XUCV47g", "b": "dL9q0aobLss", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics C vs R."},
+ {"a": "M0V1ofCOEew", "b": "wMHsxnO156E", "label": "shared-segments", "confidence": 0.85, "note": "Rattic Mini compilations with identical tree and yellow-ball frames, different leads."},
+ {"a": "X8bMaXuivrI", "b": "Tgp1NqPegK8", "label": "unrelated", "confidence": 0.85, "note": "Halloween zombie short vs Kaboochi dance."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"PbchJhisS4s","b":"PjXooPy93AM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."},
+{"a":"Ng85dlGMIQA","b":"M_92V9hKIv0","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters T and Z, shared intro and set."},
+{"a":"XamiKGRhams","b":"jvCQFkt2FwI","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, toilet vs picture."},
+{"a":"El8w4iWGWEI","b":"DF6G0YHRlV8","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, basketball vs crib."},
+{"a":"ewZwn2G14Wg","b":"PjXooPy93AM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."},
+{"a":"sFhZZIPj9nE","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, cleaning vs skipping rope."},
+{"a":"UGzlPPWb6Pg","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, fly swatter vs skipping rope."},
+{"a":"aDyWeSAt-sI","b":"fx0aMbJwE34","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing snowman and toy-jeep episodes."},
+{"a":"DS8rk9NwXQc","b":"El8w4iWGWEI","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, mime vs basketball."},
+{"a":"n6eghHp7qWw","b":"YJLDe0F_z7k","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing trash-can and snowman episodes."}
+]

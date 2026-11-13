@@ -1,0 +1,12 @@
+[
+{"a":"a07zOPj6CZg","b":"VLa2W1SssVQ","label":"same-template","confidence":0.85,"note":"Bob phonics Learning Street letters G vs W, shared intro and sofa shots"},
+{"a":"ZeldqdySrKg","b":"ewZwn2G14Wg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the jeep/no-entry-sign episode"},
+{"a":"_EZv7EJE8LE","b":"UPDBxhcsIRQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing jeep and snowman episodes"},
+{"a":"uBA-DOOnkZ8","b":"CfJfPAF8El8","label":"unrelated","confidence":0.8,"note":"If You're Happy vs Kaboochi shorts"},
+{"a":"gkk96Hm-IHo","b":"aW_J2JMPmG8","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"oHtQbh7LJjY","b":"lQxaq4Fu-i0","label":"same-template","confidence":0.85,"note":"Bob phonics Learning Street letters J vs U"},
+{"a":"skNxtYhw9Y8","b":"YABj119wijM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"39Dtr0Rq-TY","b":"El8w4iWGWEI","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Boards vs Basketball"},
+{"a":"VJ1tu3mMRa0","b":"svxlLrPCzUM","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts cut from one production; no shared shot sampled"},
+{"a":"afyKHCB03MU","b":"pbfbmXohAGo","label":"unrelated","confidence":0.85,"note":"Rattic Mini short vs Kaboochi short"}
+]

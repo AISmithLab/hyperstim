@@ -1,0 +1,12 @@
+[
+{"a":"icWLrZcKsWg","b":"SPYW-UnwYi4","label":"shared-segments","confidence":0.7,"note":"Same crayon footage and thumbnail; 31s short cut from the 62s version."},
+{"a":"05oAs-Pqf5Y","b":"V5OqHZwodj4","label":"shared-segments","confidence":0.6,"note":"Christmas Kaboochi shorts, identical mid frame, other frames differ: different edits of same footage."},
+{"a":"MiTaLfR6zgY","b":"7_oWAaYXrYA","label":"shared-segments","confidence":0.55,"note":"Same bus thumbnail and mid frame; other frames differ; 30s cut vs 57s."},
+{"a":"v80qWgkingM","b":"IRWTZropao4","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts, different characters; only same-day series."},
+{"a":"20HqqfnKxZk","b":"gvcEcWUHZ_c","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations; 1/2 and 3/4 frames identical, so shared episodes."},
+{"a":"CfJfPAF8El8","b":"Z13ulLin2jg","label":"shared-segments","confidence":0.5,"note":"Kaboochi dance on same set, same kids; differently edited cuts of same footage."},
+{"a":"iD4Iyr_hKjE","b":"BSNYv67Kasw","label":"shared-segments","confidence":0.55,"note":"Bob the Train ABC; mid frame identical, other frames differ: re-edit with new thumbnail."},
+{"a":"v80qWgkingM","b":"Is1sSXyJz28","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts with different characters."},
+{"a":"V5OqHZwodj4","b":"Tgp1NqPegK8","label":"same-song","confidence":0.6,"note":"Christmas Kaboochi vs regular Kaboochi dance; different animation."},
+{"a":"v80qWgkingM","b":"t3y2AhXLjRY","label":"unrelated","confidence":0.7,"note":"Similar title but different animation, characters and style."}
+]

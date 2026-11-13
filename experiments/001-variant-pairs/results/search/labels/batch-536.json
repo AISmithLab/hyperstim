@@ -1,0 +1,72 @@
+[
+ {
+  "a": "8Ri1s8CTSrM",
+  "b": "YABj119wijM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share pillow, shed and heart-balloon episodes"
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "2SAG3jAYNyk",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: skates vs water machine"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: stones vs talent show"
+ },
+ {
+  "a": "aACfDyTDcL8",
+  "b": "xJWSNIkfOrY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share snowman and toy jeep episodes"
+ },
+ {
+  "a": "xwFH_6C6EWA",
+  "b": "Ng85dlGMIQA",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter P vs letter T, shared template shots"
+ },
+ {
+  "a": "VJ1tu3mMRa0",
+  "b": "AlEPz20FGnk",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo song short vs longer version; same characters and shots, likely cut"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "X5isLUsPsU0",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations; toy jeep episode appears in both"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "Tn2UZwb9RcY",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: magic hat vs bucket"
+ },
+ {
+  "a": "6L0oq3iwbS0",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: TV vs toilet"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"v80qWgkingM","b":"B7HQQms6klA","label":"unrelated","confidence":0.85,"note":"Halloween Night vs Boo Boo Song; different characters, vertical framing only."},
+{"a":"bzcufo-BRaA","b":"B7HQQms6klA","label":"unrelated","confidence":0.85,"note":"Spooky Bus vs Boo Boo Song; different characters, vertical framing only."},
+{"a":"B0m2zgHfr50","b":"aFbSzIMTBsY","label":"same-template","confidence":0.85,"note":"Bob the Train phonics, letters E vs N."},
+{"a":"OLXeTCu2ESc","b":"fo7aioou8m0","label":"unrelated","confidence":0.85,"note":"No No Song vs Five Little Ducks; different characters."},
+{"a":"_e29OQFpP7A","b":"n2mneo6Owhk","label":"unrelated","confidence":0.8,"note":"Boo Boo Song vs Kaboochi dance; different characters."},
+{"a":"nbI-1N_uBNs","b":"U9maOBWT6wE","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs Hush Little Baby; different characters."},
+{"a":"t2tKT2LSOfo","b":"aScyfsClZd0","label":"unrelated","confidence":0.75,"note":"No No Song vs Boo Boo Song; different scenes."},
+{"a":"uwnBzV6vNZs","b":"yOq3vuvmRCQ","label":"re-skin","confidence":0.85,"note":"Panda bus song same shots, bus pink vs purple."},
+{"a":"0mpiPGppR0w","b":"flcE5VBnNW0","label":"shared-segments","confidence":0.8,"note":"Loco Nuts compilations sharing the ice-skating segment."},
+{"a":"7ClCbBREUlU","b":"pst1AsXQWTE","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different characters."}
+]

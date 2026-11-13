@@ -1,0 +1,72 @@
+[
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "Kix07nOAEBQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "ripZ0792Vx4",
+  "b": "YABj119wijM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "X5isLUsPsU0",
+  "b": "n6eghHp7qWw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "sT3J4L19qrE",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "YABj119wijM",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible in frames."
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "YABj119wijM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "9-G4JeHJiYQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "Gh4izthwnNM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations with identical episode frames."
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

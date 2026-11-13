@@ -1,0 +1,12 @@
+[
+{"a":"t5FpH4uDIzs","b":"syYJiqAlNVc","label":"same-template","confidence":0.85,"note":"Bob the Train word-play episodes (ED vs IN words), same set and thumbnail layout."},
+{"a":"t5FpH4uDIzs","b":"PrsoqMSi0_I","label":"same-template","confidence":0.85,"note":"Bob the Train word-play episodes (ED vs AN words), same intro and set."},
+{"a":"iCbinH5esNA","b":"6H4UizQh1DY","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations; only thumbnail layout shared, frames differ."},
+{"a":"iCbinH5esNA","b":"DPJOLEO8puk","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations; only thumbnail layout shared, frames differ."},
+{"a":"iCbinH5esNA","b":"6IKneJVSxQA","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations; only thumbnail layout shared, frames differ."},
+{"a":"iCbinH5esNA","b":"jceEaiF00_c","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations; only thumbnail layout shared, frames differ."},
+{"a":"ToA7-xrEL88","b":"UbRmS6x-oOs","label":"shared-segments","confidence":0.8,"note":"Compilations share an identical segment at the midpoint; other frames differ."},
+{"a":"IOhRyd9CwYo","b":"2A6VjDfEOcw","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, different gags (mailbox vs hunter)."},
+{"a":"zG6D-FpUczM","b":"B7HQQms6klA","label":"unrelated","confidence":0.85,"note":"Johny Johny vs Boo Boo shorts; different characters and shots."},
+{"a":"G7PTUNLnAFk","b":"Q9BbiIQ6C_E","label":"unrelated","confidence":0.85,"note":"Train song vs Christmas short; nothing shared."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"J6M6WzPr5hw","b":"Iryl7DcJ-hw","label":"shared-segments","confidence":0.8,"note":"Finger family compilations sharing the Ten in the Bed monkeys segment"},
+{"a":"G7PTUNLnAFk","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.65,"note":"Wheels on the Train vs Wheels on the Taxi shorts, different animation"},
+{"a":"nnuw2tsMtc4","b":"h8MEfSjGl40","label":"shared-segments","confidence":0.8,"note":"Finger family compilations sharing the Bingo segment"},
+{"a":"2fBdfXU6Vuo","b":"0gXJ6f2z_Y4","label":"same-song","confidence":0.7,"note":"Johny Johny shorts with different characters and animation"},
+{"a":"q7xbimEegqs","b":"8sRZShEih6o","label":"shared-segments","confidence":0.8,"note":"Junior Squad compilations sharing a segment at 1/2"},
+{"a":"aYm4u_lQpIo","b":"_QFj7e58XGE","label":"unrelated","confidence":0.75,"note":"Kaboochi vs Wheels on the Train shorts, different content"},
+{"a":"Yd2dkZA9ihc","b":"lZBg1VotJrw","label":"same-template","confidence":0.7,"note":"Loco Nuts comedy episodes, same characters, different stories"},
+{"a":"0gXJ6f2z_Y4","b":"7I0SeirswAk","label":"shared-segments","confidence":0.55,"note":"Johny Johny shorts; B has blond boy shot similar to A plus other footage"},
+{"a":"qHf6e1CQQ5c","b":"V5OqHZwodj4","label":"same-song","confidence":0.6,"note":"Kaboochi vs Christmas Kaboochi shorts, different animation"},
+{"a":"qHf6e1CQQ5c","b":"tQlIWPUO_E0","label":"unrelated","confidence":0.75,"note":"Kaboochi vs Ten in the Bed shorts"}
+]

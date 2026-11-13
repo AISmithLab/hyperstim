@@ -1,0 +1,72 @@
+[
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Five Little Mommies shorts; different scenes"
+ },
+ {
+  "a": "I4Nh3mOaNck",
+  "b": "LvECrt5yV6M",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Monster Finger Family vs Halloween Kaboochi; shared monster kids, different scenes"
+ },
+ {
+  "a": "sBtKayGZJiU",
+  "b": "B7HQQms6klA",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Johny Johny vs Boo Boo shorts; different characters"
+ },
+ {
+  "a": "E9JfZ-SIhbY",
+  "b": "QlDpRW0_nBI",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Baby Shark vs Wheels on the Bus shorts; only Bob intro similar"
+ },
+ {
+  "a": "v80qWgkingM",
+  "b": "sBtKayGZJiU",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween Night vs Johny Johny shorts; different characters"
+ },
+ {
+  "a": "LvECrt5yV6M",
+  "b": "8bMv6zrYZ6o",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi Halloween vs Who Took the Goodies; different characters"
+ },
+ {
+  "a": "0gXJ6f2z_Y4",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Johny Johny vs Five Little Mommies; different scenes"
+ },
+ {
+  "a": "rtUezKOrBAU",
+  "b": "jEwfENQE5Os",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Who Took the Goodies vs Halloween Camp; different characters and scenes"
+ },
+ {
+  "a": "93hO6Ma5uEg",
+  "b": "0gXJ6f2z_Y4",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Twinkle Twinkle vs Johny Johny shorts; different scenes"
+ },
+ {
+  "a": "QkQmfGbdlKg",
+  "b": "fAQ_c_NEM7A",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi shorts with different characters and animation"
+ }
+]

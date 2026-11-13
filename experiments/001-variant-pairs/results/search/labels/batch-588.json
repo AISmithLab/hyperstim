@@ -1,0 +1,12 @@
+[
+{"a":"E9t53ek7H8U","b":"_QwXfH5-D5g","label":"same-song","confidence":0.85,"note":"Kaboochi dance; A costumed baby characters, B baby and pink bunny; different shots at matched moments"},
+{"a":"aYm4u_lQpIo","b":"_QwXfH5-D5g","label":"same-song","confidence":0.85,"note":"Kaboochi dance; A kids with heart glasses, B baby and bunny; different shots"},
+{"a":"rWlSjxtDJGw","b":"ZjXejl6qnuc","label":"shared-segments","confidence":0.75,"note":"Two compilations; one matched moment identical, others different scenes"},
+{"a":"LnDxp5QNxmA","b":"O96r1dZ4Nqg","label":"same-template","confidence":0.9,"note":"Phonics series: letter C vs letter G, same template and tune"},
+{"a":"afJ8kEWkJqo","b":"xUKoaX3t3dY","label":"re-skin","confidence":0.85,"note":"Same Wheels on the Bus shots and panda; bus green in A, pink in B"},
+{"a":"idfrlnAVLMk","b":"u0Iw9dozWrk","label":"shared-segments","confidence":0.8,"note":"Christmas compilations; two matched moments identical, two different scenes"},
+{"a":"8ovG9ptOjBw","b":"RhA10WVTmHw","label":"same-template","confidence":0.9,"note":"Phonics series: letter W vs letter X, same template and tune"},
+{"a":"ONwFOOEkasU","b":"reZpGfU6csQ","label":"same-song","confidence":0.8,"note":"Kaboochi dance; different characters and shots at matched moments"},
+{"a":"mh9esb9qul8","b":"8-qO0tHgMHY","label":"same-song","confidence":0.75,"note":"Animal Dance song; overlapping cast but different shots at matched moments"},
+{"a":"_QwXfH5-D5g","b":"4e1vB_kqCaY","label":"same-song","confidence":0.85,"note":"Kaboochi; A baby and bunny, B boy in yellow shirt; different animation"}
+]

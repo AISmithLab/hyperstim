@@ -1,0 +1,12 @@
+[
+{"a":"MxB4KiDF6XY","b":"TwS8SzpZrug","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations; identical glass-case shot at the midpoint."},
+{"a":"YudNG_jdUs4","b":"zChIOdsR6i4","label":"shared-segments","confidence":0.75,"note":"Zoo Song shorts with the same superhero group shot; 57 vs 32 s cuts."},
+{"a":"TwS8SzpZrug","b":"Ym2JIL8xgVI","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations on one set; no shared shot sampled."},
+{"a":"dpwE3xetySI","b":"bFzeFrnLf00","label":"same-template","confidence":0.7,"note":"Sport Bots compilations, same style and intro; no shared shot sampled."},
+{"a":"R49NrP0fcsE","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Dinosaur song; different characters."},
+{"a":"7-abUIzCk5U","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance: costumed baby on patterns vs babies with corgi."},
+{"a":"qCWFFPHRu1Q","b":"OokGp8l_x9k","label":"unrelated","confidence":0.85,"note":"Dinosaur song vs Halloween bus; different content."},
+{"a":"oKEXFG0ZLZw","b":"OokGp8l_x9k","label":"unrelated","confidence":0.8,"note":"If You're a Monster vs Halloween bus; Halloween theme only."},
+{"a":"tQlIWPUO_E0","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"Ten in the Bed vs Kaboochi dance; different content."},
+{"a":"MPqZwUyFdPg","b":"OokGp8l_x9k","label":"unrelated","confidence":0.75,"note":"Spooky train vs Halloween bus; different characters and shots."}
+]

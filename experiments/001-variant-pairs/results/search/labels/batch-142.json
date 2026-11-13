@@ -1,0 +1,12 @@
+[
+{"a":"yebnJe7tUqE","b":"HWNDED8zbjE","label":"re-skin","confidence":0.8,"note":"2014 Wheels on the Bus: same city shots and car, bus yellow in A, pink in B."},
+{"a":"PmUySuJoa1g","b":"DyY7at_1WJA","label":"shared-segments","confidence":0.7,"note":"Rattic shorts sharing the block-tower shots; different episodes otherwise."},
+{"a":"g9Z1I3T6vf0","b":"DyY7at_1WJA","label":"shared-segments","confidence":0.65,"note":"Rattic Builder vs Spring Toy; shared block-tower opening, other shots differ."},
+{"a":"DyY7at_1WJA","b":"5u6tVBEu_tI","label":"shared-segments","confidence":0.8,"note":"Spring Toy short and longer cut sharing the same footage."},
+{"a":"6QKSJC1vGMs","b":"cUQJHBo2MeA","label":"shared-segments","confidence":0.75,"note":"Compilations sharing an episode with the same parents shots."},
+{"a":"aWmrJyne2s0","b":"MvA45O5vq3E","label":"shared-segments","confidence":0.85,"note":"Compilations sharing identical family footage."},
+{"a":"-t7g8JmOz5s","b":"EeC9Ko328NY","label":"shared-segments","confidence":0.8,"note":"Zoobees compilations sharing identical giraffe/dad footage."},
+{"a":"6YYa6ar2RN4","b":"8-qO0tHgMHY","label":"unrelated","confidence":0.8,"note":"Kaboochi dance vs animal dance short; match only on vertical-short framing."},
+{"a":"xKl_-u0zfhg","b":"aHRHxrhw7Mo","label":"same-template","confidence":0.5,"note":"Loco Nuts Halloween compilations, same thumbnail layout and characters, frames differ."},
+{"a":"T2UcCZAPW34","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.6,"note":"Christmas Kaboochi vs Hawaiian-outfit Kaboochi short; different shots."}
+]

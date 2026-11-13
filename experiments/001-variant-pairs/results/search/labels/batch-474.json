@@ -1,0 +1,12 @@
+[
+{"a":"KuRS2ioJAjY","b":"N29-6Yp756o","label":"shared-segments","confidence":0.7,"note":"Loco Nuts Doctor Song: compilation contains the single; thumbnail duck swapped for bunny"},
+{"a":"sBtKayGZJiU","b":"_DsjLa0POK4","label":"unrelated","confidence":0.85,"note":"Johny Johny short vs Baa Baa Black Sheep short"},
+{"a":"zG6D-FpUczM","b":"_DsjLa0POK4","label":"unrelated","confidence":0.85,"note":"Johny Johny short vs Baa Baa Black Sheep short"},
+{"a":"ukENAA-zDsg","b":"_DsjLa0POK4","label":"unrelated","confidence":0.85,"note":"Halloween night short vs Baa Baa Black Sheep short"},
+{"a":"_DsjLa0POK4","b":"YaThzRybuhE","label":"unrelated","confidence":0.85,"note":"Baa Baa Black Sheep short vs Kaboochi short"},
+{"a":"VnHWYMlDgwI","b":"klDPbXVTBzw","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"Eif8UopFHhM","b":"QKrdD5Y9c-s","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-box episode"},
+{"a":"76IijP9RlJY","b":"Z1H7LX1K4Zo","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: cook vs toilet"},
+{"a":"ZaPOBxvKuXs","b":"SP3eASDKke4","label":"shared-segments","confidence":0.6,"note":"Boo Boo song 96s vs 20s, same characters; likely cut from same footage"},
+{"a":"HW8O6C_OCJQ","b":"1CUDuGeV_w8","label":"unrelated","confidence":0.85,"note":"Kaboochi short vs bus-to-camp short"}
+]

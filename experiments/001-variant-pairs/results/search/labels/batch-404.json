@@ -1,0 +1,72 @@
+[
+ {
+  "a": "QSlHkWlfSIs",
+  "b": "3jPJS95FHaA",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus shorts sharing kid-with-pets seat shot and bus; other shots differ."
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "DyY7at_1WJA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Both titled Spring Toy but B's frames show block-tower gag; no shared frames seen."
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "zej8Uf5iAGk",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "TRCJGQylez4",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "6FhYNE5KFeg",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "xJWSNIkfOrY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

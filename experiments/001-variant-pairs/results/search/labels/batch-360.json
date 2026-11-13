@@ -1,0 +1,12 @@
+[
+{"a":"X5isLUsPsU0","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the snowman and toy-car episodes"},
+{"a":"PjXooPy93AM","b":"X5isLUsPsU0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-car and snowman episodes"},
+{"a":"aACfDyTDcL8","b":"AyZJfo2rrOc","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the snowman and toy-car episodes"},
+{"a":"X5isLUsPsU0","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing several episodes"},
+{"a":"xGQYPFqXJjE","b":"kyProT-iMwg","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the barbell episode"},
+{"a":"o6VjhL9gA1A","b":"IE7VFN8ln9Y","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, carousel vs spot episodes on one set"},
+{"a":"qM6hdr1DVSM","b":"-kRTFYd6WkI","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, toy airplane vs ventilator episodes"},
+{"a":"jPvyJ9IIRJk","b":"IE7VFN8ln9Y","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, skipping rope vs spot episodes"},
+{"a":"-kRTFYd6WkI","b":"c3lLP39EdME","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, ventilator vs cheese episodes"},
+{"a":"X5isLUsPsU0","b":"fx0aMbJwE34","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the snowman, toy-car and ball episodes"}
+]

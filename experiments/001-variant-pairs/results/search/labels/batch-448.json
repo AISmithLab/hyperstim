@@ -1,0 +1,12 @@
+[
+{"a":"766Ja9YI7wE","b":"AruenFtf5rs","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the shapes-in-boat segment"},
+{"a":"766Ja9YI7wE","b":"ZkMDTaMX7X0","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the shapes-in-boat segment"},
+{"a":"sI-HPienPOA","b":"FZSWN3DFpGE","label":"unrelated","confidence":0.6,"note":"Two dark/monster Halloween shorts with different characters and shots"},
+{"a":"yDaxszBxrFA","b":"lZBg1VotJrw","label":"same-template","confidence":0.8,"note":"Loco Nuts comedy episodes, same characters and set"},
+{"a":"PVq5Odohbm4","b":"lZBg1VotJrw","label":"same-template","confidence":0.8,"note":"Loco Nuts comedy episodes, same characters and set"},
+{"a":"GGQVXv4Nc-E","b":"QlDpRW0_nBI","label":"unrelated","confidence":0.85,"note":"Boo Boo short vs Wheels on the Bus short"},
+{"a":"DiAhFhl1ySk","b":"Zdwdtve9Lk8","label":"re-skin","confidence":0.6,"note":"Compilations; one car-song shot matches with pink car vs purple car, rest differs"},
+{"a":"iwMPsz9WsFU","b":"inzes5cF7Ho","label":"unrelated","confidence":0.75,"note":"Different Hindi rhyme shorts (Kalu Madari vs Chal Mere Ghode)"},
+{"a":"QkQmfGbdlKg","b":"2ccdfNa0OyQ","label":"unrelated","confidence":0.7,"note":"Kaboochi short vs Oopsie Doopsie Halloween dance short"},
+{"a":"3bTL4x31XTI","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.8,"note":"Bath Time short vs Wheels on the Taxi short"}
+]

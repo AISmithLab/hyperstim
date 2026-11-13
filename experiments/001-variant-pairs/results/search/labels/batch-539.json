@@ -1,0 +1,72 @@
+[
+ {
+  "a": "PbchJhisS4s",
+  "b": "DVLFCQUsuFI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share red car and block tower episodes"
+ },
+ {
+  "a": "yVKvv4YMB78",
+  "b": "20HqqfnKxZk",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations share patrolman/jeep and red car episodes"
+ },
+ {
+  "a": "KKgsTFivFJM",
+  "b": "Jt4V3NCA-u0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share dino and heart-balloon mime episodes"
+ },
+ {
+  "a": "6YYa6ar2RN4",
+  "b": "SlUYd5vQ6hw",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different baby song shorts (Kaboochi vs Boo Boo); match on vertical side bars"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "3aoEeaCHS_w",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bar chair vs fishing"
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "tQ3LttVt_Jk",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: skates vs canyon"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: birthday vs robot vacuum"
+ },
+ {
+  "a": "gkk96Hm-IHo",
+  "b": "LQQ2DD4V_mY",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; mime/heart and dino episodes appear in other compilations"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "CU_QocmxLz0",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bicycle vs statue"
+ },
+ {
+  "a": "inkqQlbrdrQ",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

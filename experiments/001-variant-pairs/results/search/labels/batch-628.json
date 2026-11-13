@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Qv-eMjDmTJQ",
+  "b": "hrOfhQCxqL0",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "gvcEcWUHZ_c",
+  "b": "_EZv7EJE8LE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "pKnKuQMeGlk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "_pqh8Nw-k3o",
+  "b": "SSeBjzpJLFk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "0ZNqZ9x_06U",
+  "b": "Z13ulLin2jg",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi boy in cap vs baby dancers, different animation"
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "3yv0GSbbCZI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "s0DwH0Oq5YY",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "cross-channel; matched frames identical, A's 31s is part of B's 57s"
+ },
+ {
+  "a": "P610udrUFqE",
+  "b": "MstDCeu1yxM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, seesaw vs pillow gag; frame match from similar falls"
+ }
+]

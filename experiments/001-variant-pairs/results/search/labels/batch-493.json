@@ -1,0 +1,12 @@
+[
+{"a":"ocwiX3Sw_k4","b":"0udhhgavS_E","label":"re-skin","confidence":0.55,"note":"Supremes Wheels on the Bus: thumbnails same double-decker purple vs orange; frames mostly compilation content (thumbnail match)"},
+{"a":"5fb6X5CBcDQ","b":"ocwiX3Sw_k4","label":"shared-segments","confidence":0.85,"note":"Supremes compilations sharing the pig and superhero segments"},
+{"a":"UGzlPPWb6Pg","b":"jflAKuIuQBM","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Fly Swatter vs Talent Show"},
+{"a":"njSANQD1GlI","b":"MnJaDuR1QKE","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Magic Hat vs Robot Vacuum"},
+{"a":"FIinrJO9po8","b":"vyIiFiExyQQ","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"PjXooPy93AM","b":"wJ_TfcJAIpI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"GvP31EGA8tQ","b":"Pa7utiQUGOY","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the stones episode"},
+{"a":"GvP31EGA8tQ","b":"YABj119wijM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the balloon pump episode"},
+{"a":"7FiyQQBYTUY","b":"76IijP9RlJY","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Skates vs The Cook"},
+{"a":"Tn2UZwb9RcY","b":"ainrmFQVbfI","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Bucket vs Rope"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6JwCDXQGK3w",
+  "b": "UYSdO8QlFUg",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Deck the Halls vs Merry Christmas shorts; only black-bar framing shared."
+ },
+ {
+  "a": "nbI-1N_uBNs",
+  "b": "UYSdO8QlFUg",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Jingle Bells vs Merry Christmas shorts; only black-bar framing shared."
+ },
+ {
+  "a": "4yxGLNt0yv4",
+  "b": "vE5gwrynvDg",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Same Jingle Bells Santa/elves animation; 178s version extends the 55s one."
+ },
+ {
+  "a": "B7HQQms6klA",
+  "b": "UYSdO8QlFUg",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boo Boo vs Christmas shorts; only black-bar framing shared."
+ },
+ {
+  "a": "gdVpv0KN_uU",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Mommies vs camp bus shorts; nothing shared."
+ },
+ {
+  "a": "TAeO_pKB_ik",
+  "b": "zCy86zybM4w",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Thumbnails share wolf and kid art; compilation frames show other songs."
+ },
+ {
+  "a": "jL4xf527bwg",
+  "b": "AXwyC12oiEs",
+  "label": "re-upload",
+  "confidence": 0.6,
+  "note": "Five Little Shapes shorts, same shape footage re-edited; no recolor seen."
+ },
+ {
+  "a": "8-qO0tHgMHY",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Animal dance vs monsters shorts; nothing shared."
+ },
+ {
+  "a": "OLXeTCu2ESc",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs monsters shorts; nothing shared."
+ },
+ {
+  "a": "Gelbjg7SL0U",
+  "b": "9-G4JeHJiYQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same set; no shared frame seen."
+ }
+]

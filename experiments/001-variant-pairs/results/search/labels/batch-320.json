@@ -1,0 +1,72 @@
+[
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "9cs2qm_e8J8",
+  "label": "shared-segments",
+  "confidence": 0.45,
+  "note": "Same kid cast as B's Monster in the Dark song; short may be cut from it, no identical frame seen."
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "uE-G6fKmpA4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying Shark vs Monster Finger Family shorts; side bars only."
+ },
+ {
+  "a": "i9kMX8tSKSA",
+  "b": "MI4XvQZDPZc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Chew Your Food vs Flying Shark shorts."
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "sg86EZwda9k",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Different Halloween shorts; similar kid characters only."
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying Shark vs Johny Johny shorts."
+ },
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "MI4XvQZDPZc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi vs Flying Shark shorts."
+ },
+ {
+  "a": "BRcmpSxalwA",
+  "b": "MI4XvQZDPZc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs Flying Shark shorts."
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "12mNC1UN38M",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying Shark vs Halloween Wheels on the Bus shorts."
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "6f6S5Y_1aIA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying Shark vs Boo Boo shorts."
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "mxRMkO3K4Rs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying Shark vs Boo Boo shorts."
+ }
+]

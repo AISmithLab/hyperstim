@@ -1,0 +1,12 @@
+[
+{"a":"JOMSMENnSIQ","b":"IYU2e8WgGnY","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"e9gnACQvqRM","b":"_R12Qsg6sEk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: door vs cowboy"},
+{"a":"EPh1bFzsVf4","b":"bNuG6IapPsk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: leaves vs fitness ball"},
+{"a":"_4x2xszMRq8","b":"mrU14TkzuVI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: birthday vs robot vacuum"},
+{"a":"t5wDGNrzpro","b":"h3bvPp9Jqnc","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters and animation"},
+{"a":"UPDBxhcsIRQ","b":"9-G4JeHJiYQ","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"Zifbjuvaqrk","b":"nHT4spNAshs","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"ZeldqdySrKg","b":"yVKvv4YMB78","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the patrolman toy-car episode"},
+{"a":"_4x2xszMRq8","b":"DF6G0YHRlV8","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: birthday vs crib"},
+{"a":"7m15CgRy6OU","b":"svxlLrPCzUM","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts with same mother character; B shots differ, likely same production"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"_9or-tNWph0","b":"3JAftGI4n-s","label":"shared-segments","confidence":0.7,"note":"Five Hungry Sharks compilations; shapes-on-horse clip in both; thumbnails near-identical layout."},
+{"a":"JmZyium75oc","b":"Bo6aT8qCn8w","label":"shared-segments","confidence":0.85,"note":"B compilation contains A's If You're Happy song (dog and monkey shot)."},
+{"a":"3JAftGI4n-s","b":"MnwriKXX89I","label":"shared-segments","confidence":0.85,"note":"Compilations with different lead songs sharing the later clips at same positions."},
+{"a":"WvT05t4UpF8","b":"vJUTEgqiFbM","label":"same-song","confidence":0.75,"note":"Old MacDonald with different characters and animation."},
+{"a":"gdVpv0KN_uU","b":"rWQWjm-AIvo","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Boo Boo shorts; different scenes."},
+{"a":"Jn9aklUYdQk","b":"6f6S5Y_1aIA","label":"same-song","confidence":0.6,"note":"Both Boo Boo Song shorts with different animation and characters."},
+{"a":"sg86EZwda9k","b":"7ClCbBREUlU","label":"unrelated","confidence":0.8,"note":"Monsters in the Dark vs Boo Boo shorts."},
+{"a":"G7PTUNLnAFk","b":"ijAeNNIiKJ4","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Kaboochi shorts."},
+{"a":"-310FC3iTw8","b":"aYJa4LaXliA","label":"shared-segments","confidence":0.85,"note":"Halloween compilations sharing the pig-and-panda costume clip."},
+{"a":"tQlIWPUO_E0","b":"6f6S5Y_1aIA","label":"unrelated","confidence":0.85,"note":"Ten in the Bed vs Boo Boo shorts."}
+]

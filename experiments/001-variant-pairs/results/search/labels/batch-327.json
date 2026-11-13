@@ -1,0 +1,12 @@
+[
+{"a":"hzzGSyV_BCA","b":"nHT4spNAshs","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"8Ri1s8CTSrM","b":"PjXooPy93AM","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"o6VjhL9gA1A","b":"JKmr96i2xH0","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, carousel vs guard gags."},
+{"a":"oCiHs7agwmE","b":"_QwXfH5-D5g","label":"same-song","confidence":0.6,"note":"Kaboochi dance shorts with different characters and animation."},
+{"a":"9DBJvlkWDs4","b":"C5NadrBnSj8","label":"shared-segments","confidence":0.5,"note":"Boo Boo shorts with same characters; no identical sampled frame."},
+{"a":"id1nHgWmldk","b":"sFhZZIPj9nE","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, Christmas sleigh vs cleaning gags."},
+{"a":"q8T0cDm6nSA","b":"19yPrd-it5I","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toy-box and stroller episodes."},
+{"a":"LJN6yukuQ9A","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, manhole vs balloon gags."},
+{"a":"S9N416aMRxk","b":"uzUxdwfXgWI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the dino episode."},
+{"a":"UXsXYmw3_CY","b":"pBZoqnYJdpo","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs space rocket gags."}
+]

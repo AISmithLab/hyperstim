@@ -1,0 +1,12 @@
+[
+{"a":"G7PTUNLnAFk","b":"fKWJTJUkwPc","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Five in the Bed; different characters."},
+{"a":"m151ZBLwbhc","b":"EN7S56j6Z5Y","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus cyan vs green."},
+{"a":"TwDxP5L1-VA","b":"urNKg4X9kIU","label":"shared-segments","confidence":0.6,"note":"Rattic Mini Teleport; B reuses the hoop shot, adds weightlifting footage."},
+{"a":"U9maOBWT6wE","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Old MacDonald; different characters and sets."},
+{"a":"fwYyK58WbcU","b":"cGjGKh68l3U","label":"shared-segments","confidence":0.6,"note":"Loco Nuts Row Row Your Boat; same bunny-in-boat shot, B is a shorter cut."},
+{"a":"1g02Uh_IuI4","b":"9ywRXy36pAg","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus orange vs pink."},
+{"a":"-dlezjbLXKU","b":"SQBTIuB0SsI","label":"same-song","confidence":0.6,"note":"Halloween Wheels on the Bus, different characters and bus animation."},
+{"a":"SQBTIuB0SsI","b":"i0Zanhlu46I","label":"unrelated","confidence":0.75,"note":"Halloween bus vs Five Little Monsters; Halloween theme only."},
+{"a":"9aLZatXZCl4","b":"hzzGSyV_BCA","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the toy-car kiosk episode."},
+{"a":"uwnBzV6vNZs","b":"O_D2N_ulWXg","label":"re-skin","confidence":0.85,"note":"Panda bus song same shots, bus pink vs blue."}
+]

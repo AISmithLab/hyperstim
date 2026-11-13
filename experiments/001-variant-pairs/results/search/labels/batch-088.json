@@ -1,0 +1,12 @@
+[
+{"a":"D0tOd2ZH-cQ","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman, trash-bin and toy-jeep episodes."},
+{"a":"D0tOd2ZH-cQ","b":"fx0aMbJwE34","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman, trash-bin and toy-jeep episodes."},
+{"a":"p4hY2Ad7jKM","b":"RFR72VQ3ydg","label":"shared-segments","confidence":0.55,"note":"Loco Nuts Halloween compilations with the same spooky-train thumbnail; frames differ."},
+{"a":"snvdOvj-H-o","b":"qSM52VNEVSo","label":"unrelated","confidence":0.85,"note":"Up on the Roof Top vs School Teacher; different content."},
+{"a":"sFhZZIPj9nE","b":"M3sOUpxsrJE","label":"shared-segments","confidence":0.8,"note":"Rattic Mini Cleaning: 32 s cut vs 65 s version with the same shots."},
+{"a":"El8w4iWGWEI","b":"QLtuuZVDZ4g","label":"shared-segments","confidence":0.6,"note":"Rattic Mini shorts; the pillow gag appears in both, same thumbnail pose."},
+{"a":"KKgsTFivFJM","b":"dG7KouaFW-o","label":"shared-segments","confidence":0.6,"note":"Rattic Mini compilations both include the mime episode; other episodes differ."},
+{"a":"7FiyQQBYTUY","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, skates vs bottle gag, same set."},
+{"a":"DS8rk9NwXQc","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, mime vs bottle gag, same set."},
+{"a":"njSANQD1GlI","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, magic hat vs bottle gag, same set."}
+]

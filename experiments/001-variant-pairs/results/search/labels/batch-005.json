@@ -1,0 +1,12 @@
+[
+{"a":"Zyn-7AvEJos","b":"cBT6wytkxYE","label":"re-upload","confidence":0.7,"note":"Same farmer and pig frames, same colors; B is longer (61 vs 34 s), likely extended cut."},
+{"a":"7FiyQQBYTUY","b":"VqT9YA3THAE","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, same set, different gags (skates vs worm)."},
+{"a":"VqT9YA3THAE","b":"7xSdzGpSjl4","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, different gags (worm vs gloves); B twice as long."},
+{"a":"VqT9YA3THAE","b":"xEFkAQpftd4","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags (worm vs talent show)."},
+{"a":"VqT9YA3THAE","b":"CU_QocmxLz0","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags (worm vs statue)."},
+{"a":"aW_J2JMPmG8","b":"kyProT-iMwg","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; no common frame seen (cowboy vs Christmas episodes)."},
+{"a":"UN4V4ywCWxA","b":"GvP31EGA8tQ","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, different episodes (snake charmer vs golf)."},
+{"a":"aW_J2JMPmG8","b":"YJLDe0F_z7k","label":"shared-segments","confidence":0.75,"note":"Both compilations show the same snowman-with-purple-hat episode."},
+{"a":"aDyWeSAt-sI","b":"YJLDe0F_z7k","label":"shared-segments","confidence":0.75,"note":"Both compilations contain the snowman episode; A also has the jeep/teddy episode."},
+{"a":"tQlIWPUO_E0","b":"WAVrZioY18c","label":"unrelated","confidence":0.75,"note":"Ten in the Bed vs No No Song, different characters and scenes."}
+]

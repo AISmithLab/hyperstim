@@ -1,0 +1,12 @@
+[
+{"a":"OKNdDQ3rJiY","b":"W4KOgl07P24","label":"same-template","confidence":0.85,"note":"Bob Word Play ET vs UG words, same set and thumbnail layout."},
+{"a":"syYJiqAlNVc","b":"W4KOgl07P24","label":"same-template","confidence":0.85,"note":"Bob Word Play IN vs UG words, same set and thumbnail layout."},
+{"a":"x0h4qykzlsA","b":"yVKvv4YMB78","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the red toy-car episode."},
+{"a":"PrsoqMSi0_I","b":"W4KOgl07P24","label":"same-template","confidence":0.85,"note":"Bob Word Play AN vs UG words; shared intro signpost, same set."},
+{"a":"yVKvv4YMB78","b":"Qv-eMjDmTJQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-jeep episode."},
+{"a":"6IKneJVSxQA","b":"B5eMP172Q98","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations, same thumbnail layout, different content."},
+{"a":"vyIiFiExyQQ","b":"yVKvv4YMB78","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the red toy-car episode."},
+{"a":"PbchJhisS4s","b":"yVKvv4YMB78","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing jeep and red-car episodes."},
+{"a":"Gh4izthwnNM","b":"yVKvv4YMB78","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the red toy-car episode."},
+{"a":"yVKvv4YMB78","b":"dG7KouaFW-o","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."}
+]

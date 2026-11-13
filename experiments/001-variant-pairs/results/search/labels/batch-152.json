@@ -1,0 +1,72 @@
+[
+ {
+  "a": "nFEUpP4_-qQ",
+  "b": "DRMCFHm5kFo",
+  "label": "re-upload",
+  "confidence": 0.8,
+  "note": "Boo Boo song: identical frames at 1/4 and 1/2, new thumbnail; 2026 re-upload."
+ },
+ {
+  "a": "335nXLEvRNU",
+  "b": "DRMCFHm5kFo",
+  "label": "re-upload",
+  "confidence": 0.75,
+  "note": "Boo Boo song across channels: identical frames, new thumbnail and title."
+ },
+ {
+  "a": "HE58ikBC9nw",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters X and Z, shared intro and set."
+ },
+ {
+  "a": "-a3PpO3jlDI",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters H and Z, shared intro and set."
+ },
+ {
+  "a": "STRJcffvt-0",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters Q and Z, shared intro and set."
+ },
+ {
+  "a": "dL9q0aobLss",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters R and Z, shared intro and set."
+ },
+ {
+  "a": "VBb7XUCV47g",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters C and Z, shared intro and set."
+ },
+ {
+  "a": "kwXxrZQ5GaQ",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters L and Z, shared intro and set."
+ },
+ {
+  "a": "VBb7XUCV47g",
+  "b": "-a3PpO3jlDI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters C and H, shared intro and set."
+ },
+ {
+  "a": "a07zOPj6CZg",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters G and Z, shared intro and set."
+ }
+]

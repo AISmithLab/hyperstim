@@ -1,0 +1,72 @@
+[
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "Ng85dlGMIQA",
+  "b": "VLa2W1SssVQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter T vs letter W, same template and kids"
+ },
+ {
+  "a": "AlEPz20FGnk",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Boo Boo Song 178 s vs 18 s short; no shared shot sampled"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "cmi5_37226c",
+  "b": "M0V1ofCOEew",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ },
+ {
+  "a": "ZRd-uNE-AUA",
+  "b": "jEwfENQE5Os",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi vs Halloween camp shorts; match only on blurred side bars"
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "tXgJmUiG38s",
+  "b": "njSANQD1GlI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "XamiKGRhams",
+  "b": "JKmr96i2xH0",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

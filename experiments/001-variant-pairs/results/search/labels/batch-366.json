@@ -1,0 +1,72 @@
+[
+ {
+  "a": "IE7VFN8ln9Y",
+  "b": "DF6G0YHRlV8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spot vs crib episodes"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "X5isLUsPsU0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing toy-car and snowman episodes"
+ },
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, teleport vs spot episodes"
+ },
+ {
+  "a": "Tn2UZwb9RcY",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bucket vs spot episodes"
+ },
+ {
+  "a": "IE7VFN8ln9Y",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spot vs car service episodes"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "6cmE3gwaqJI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, door vs car alarm episodes"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bottle vs toilet episodes"
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, skates vs spot episodes"
+ },
+ {
+  "a": "Z1H7LX1K4Zo",
+  "b": "Ia2TzzY2Vto",
+  "label": "re-upload",
+  "confidence": 0.7,
+  "note": "Same Toilet episode short re-posted with a new thumbnail; identical 1/4 frame"
+ }
+]

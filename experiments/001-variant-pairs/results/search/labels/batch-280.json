@@ -1,0 +1,12 @@
+[
+{"a":"afyKHCB03MU","b":"jflAKuIuQBM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, bottle vs talent show."},
+{"a":"DS8rk9NwXQc","b":"jflAKuIuQBM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, mime vs talent show."},
+{"a":"o6VjhL9gA1A","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, carousel vs toilet."},
+{"a":"jPvyJ9IIRJk","b":"BZqq3eL6xSE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, skipping rope vs high striker."},
+{"a":"obdK23ZIr6E","b":"YgjyQIwcJy0","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, trishaw vs hollow."},
+{"a":"ainrmFQVbfI","b":"MstDCeu1yxM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, rope vs pillow."},
+{"a":"_e29OQFpP7A","b":"C5NadrBnSj8","label":"shared-segments","confidence":0.65,"note":"Boo Boo Song shorts reusing the same girl-and-baby footage, different edits."},
+{"a":"afyKHCB03MU","b":"5iXRqSe4KJo","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, bottle vs trombone."},
+{"a":"GvP31EGA8tQ","b":"hzzGSyV_BCA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snack stand and heart episodes."},
+{"a":"FIinrJO9po8","b":"lij2KlyDHJ8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing claw machine and water machine episodes."}
+]

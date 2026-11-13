@@ -1,0 +1,12 @@
+[
+{"a":"FIinrJO9po8","b":"q8T0cDm6nSA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-box episode."},
+{"a":"jPvyJ9IIRJk","b":"jflAKuIuQBM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, skipping rope vs talent show gags."},
+{"a":"sFhZZIPj9nE","b":"TwDxP5L1-VA","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, cleaning vs teleport gags."},
+{"a":"VqT9YA3THAE","b":"jflAKuIuQBM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, worm vs talent show gags."},
+{"a":"njSANQD1GlI","b":"EPh1bFzsVf4","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, magic hat vs leaves gags."},
+{"a":"nHT4spNAshs","b":"Kix07nOAEBQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the sleigh episode."},
+{"a":"TtbFoTBDaU8","b":"SP3eASDKke4","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts across channels sharing mother-holding-baby shot; B shorter cut."},
+{"a":"Kix07nOAEBQ","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"hmqdid2kALU","b":"y5BTqWirpe8","label":"same-template","confidence":0.9,"note":"Bob the Train letter episodes, A vs M."},
+{"a":"cmi5_37226c","b":"wMHsxnO156E","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode."}
+]

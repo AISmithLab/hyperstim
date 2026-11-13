@@ -1,0 +1,72 @@
+[
+ {
+  "a": "0MQQADJh80Q",
+  "b": "TYpGBwEAu0E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Same bug cast, different songs and scenes"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "afyKHCB03MU",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "UGzlPPWb6Pg",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "njSANQD1GlI",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "7FiyQQBYTUY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "jRCHQ6wCTUA",
+  "b": "1lYnLr7Bv0I",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "LJN6yukuQ9A",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ }
+]

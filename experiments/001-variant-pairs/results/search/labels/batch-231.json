@@ -1,0 +1,72 @@
+[
+ {
+  "a": "pIBlHJFJ1vs",
+  "b": "5ElsiB8aoIg",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "2014 Wheels on the Bus: blue bus vs black bus, same shots and street."
+ },
+ {
+  "a": "PT7if7fHdPE",
+  "b": "1DOZoGrM-5o",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Bob the Train compilations share the pink car and Bob shot."
+ },
+ {
+  "a": "V6mkgjixCoQ",
+  "b": "5ElsiB8aoIg",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "2014 Wheels on the Bus: yellow bus vs black bus, same bus-stop shots."
+ },
+ {
+  "a": "l1X3EPkxJxc",
+  "b": "jfdXFBhepsk",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Junior Squad ABC songs, same characters and letter style, different animation."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "1fL9dsWYLJ0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs bus song shorts; nothing shared."
+ },
+ {
+  "a": "Ln0H_11UIwI",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "fo7aioou8m0",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Ducks vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "39Dtr0Rq-TY",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (boards vs toilet)."
+ },
+ {
+  "a": "gdVpv0KN_uU",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Mommies vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "WAVrZioY18c",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Johny Johny shorts; nothing shared."
+ }
+]

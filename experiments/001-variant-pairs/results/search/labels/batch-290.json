@@ -1,0 +1,72 @@
+[
+ {
+  "a": "0U-H7JPYyuw",
+  "b": "nhlwE21asQc",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Zoo bus shorts with same footage and thumbnail, different cuts"
+ },
+ {
+  "a": "XKyEH92A4CE",
+  "b": "lKgR-msxA0A",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob the Train letter B vs letter C episodes"
+ },
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "Nlt_DqiIHcQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, teleport vs mime gags"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, toy airplane vs picture gags"
+ },
+ {
+  "a": "RG_4B9zxJnU",
+  "b": "kHVGgxylqd8",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo shorts with same characters/footage, different cuts"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "hzzGSyV_BCA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "El8w4iWGWEI",
+  "b": "i2XoutDdPoM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini shorts, basketball vs pillow; pillow prop in both"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, mime vs skates gags"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "aACfDyTDcL8",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "aA57PjtEfZw",
+  "b": "STRJcffvt-0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter D vs Q, shared intro/outro"
+ }
+]

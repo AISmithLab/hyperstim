@@ -1,0 +1,12 @@
+[
+{"a":"xwFH_6C6EWA","b":"HE58ikBC9nw","label":"same-template","confidence":0.85,"note":"Learning Street phonics P vs X; shared intro and set."},
+{"a":"NnN4n9v9Ojs","b":"aFbSzIMTBsY","label":"same-template","confidence":0.85,"note":"Bob the Train phonics, letters F vs N."},
+{"a":"7ClCbBREUlU","b":"Q9BbiIQ6C_E","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Christmas carol; different characters."},
+{"a":"mxY1KRSmoFM","b":"HvMKx0d_SIg","label":"re-upload","confidence":0.9,"note":"Bob Five Little Monkeys, same frames; English vs Portuguese version."},
+{"a":"_e29OQFpP7A","b":"CgR6YuA2Uoo","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different families and animation."},
+{"a":"U9maOBWT6wE","b":"zE2zZ8S0mXk","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Jingle Bells; different characters."},
+{"a":"G7PTUNLnAFk","b":"CvFabQeSv9A","label":"unrelated","confidence":0.8,"note":"Wheels on the Train vs Boo Boo Song; different characters."},
+{"a":"oKEXFG0ZLZw","b":"SQBTIuB0SsI","label":"unrelated","confidence":0.8,"note":"If You're a Monster vs Halloween bus; Halloween theme only."},
+{"a":"7ClCbBREUlU","b":"vYXkEPIElyc","label":"same-song","confidence":0.55,"note":"Boo Boo shorts with different kids and sets."},
+{"a":"Jn9aklUYdQk","b":"aScyfsClZd0","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different characters and shots."}
+]

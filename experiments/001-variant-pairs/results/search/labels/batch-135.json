@@ -1,0 +1,12 @@
+[
+{"a":"KYwjCiQCbr8","b":"Z13ulLin2jg","label":"unrelated","confidence":0.8,"note":"Three Little Pigs vs Kaboochi shorts"},
+{"a":"KYwjCiQCbr8","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.8,"note":"Three Little Pigs vs Dinosaur song shorts"},
+{"a":"KYwjCiQCbr8","b":"_QFj7e58XGE","label":"unrelated","confidence":0.8,"note":"Three Little Pigs vs Wheels on the Train shorts"},
+{"a":"KYwjCiQCbr8","b":"R49NrP0fcsE","label":"unrelated","confidence":0.8,"note":"Three Little Pigs vs Boo Boo shorts"},
+{"a":"oRUKPowFBgM","b":"KYwjCiQCbr8","label":"unrelated","confidence":0.8,"note":"Apples & Bananas vs Three Little Pigs shorts"},
+{"a":"t892KTYY-cE","b":"gIMyiAxeKSk","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters A vs I, shared intro"},
+{"a":"e9gnACQvqRM","b":"VqT9YA3THAE","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs worm"},
+{"a":"NL_S69qf0jg","b":"QLtuuZVDZ4g","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, butterfly vs pillow"},
+{"a":"c3lLP39EdME","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, cheese vs basketball"},
+{"a":"oT6bPk4gHxM","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, rings vs basketball"}
+]

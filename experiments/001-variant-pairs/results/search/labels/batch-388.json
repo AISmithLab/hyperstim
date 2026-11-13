@@ -1,0 +1,72 @@
+[
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "jPvyJ9IIRJk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, ventilator vs skipping rope episodes"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "SSeBjzpJLFk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing claw-machine and turban episodes"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "39Dtr0Rq-TY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, rings vs boards episodes"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "uzUxdwfXgWI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "3aoEeaCHS_w",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, fishing vs robot vacuum episodes"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, birthday vs high striker episodes"
+ },
+ {
+  "a": "VqT9YA3THAE",
+  "b": "39Dtr0Rq-TY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, worm vs boards episodes"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, door vs picture episodes"
+ },
+ {
+  "a": "a0Dg0fPxACY",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, tumbler toy vs spot episodes"
+ },
+ {
+  "a": "RG_4B9zxJnU",
+  "b": "C5NadrBnSj8",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Boo Boo Song shorts with the same family characters but different shots"
+ }
+]

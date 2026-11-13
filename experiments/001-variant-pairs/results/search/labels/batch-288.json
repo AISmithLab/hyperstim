@@ -1,0 +1,12 @@
+[
+{"a":"2YmFl3ccv9E","b":"dzudFTos4D8","label":"re-upload","confidence":0.9,"note":"Bob Alphabet Adventure, Chinese vs Japanese versions; identical frames."},
+{"a":"5A9e7U5_Zxg","b":"dzudFTos4D8","label":"re-upload","confidence":0.9,"note":"Bob Alphabet Adventure, Malay vs Japanese versions; identical frames."},
+{"a":"dzudFTos4D8","b":"KO5bPjkgwbM","label":"re-upload","confidence":0.9,"note":"Bob Alphabet Adventure, Japanese vs French versions; identical frames."},
+{"a":"dzudFTos4D8","b":"kxsXTcFJQes","label":"re-upload","confidence":0.9,"note":"Bob Alphabet Adventure, Japanese vs Indonesian versions; identical frames."},
+{"a":"Tz2SZgHgjjk","b":"UXsXYmw3_CY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, cheese vs gloves."},
+{"a":"VBb7XUCV47g","b":"vbY-B_GtSvc","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter C vs K."},
+{"a":"xJWSNIkfOrY","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing mime, snowman and car episodes."},
+{"a":"CfJfPAF8El8","b":"pbfbmXohAGo","label":"same-song","confidence":0.6,"note":"Kaboochi Dance shorts with different characters and scenes."},
+{"a":"e9gnACQvqRM","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, door vs balloon."},
+{"a":"c3lLP39EdME","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, cheese vs balloon."}
+]

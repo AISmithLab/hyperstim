@@ -1,0 +1,12 @@
+[
+{"a":"V9fA6nrohac","b":"2ONrfCPwygc","label":"same-template","confidence":0.85,"note":"Rattic Mini episodes, same mouse and dark set, different gags"},
+{"a":"mN5Yr7SsVpw","b":"yc8M3YeKsCo","label":"shared-segments","confidence":0.55,"note":"Bob the Train kids-in-field shot matches; compilation vs short song, rest differs"},
+{"a":"yZbNMjwgEN8","b":"GkcqRmdwKlE","label":"same-template","confidence":0.9,"note":"Phonics letter series I vs J"},
+{"a":"k-LOZWO7_Ak","b":"Y1gxU2ML5sI","label":"shared-segments","confidence":0.85,"note":"Compilations sharing the farmer episode"},
+{"a":"CvFabQeSv9A","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.8,"note":"Boo Boo song short vs Wheels on the Taxi short"},
+{"a":"QlDpRW0_nBI","b":"B7HQQms6klA","label":"unrelated","confidence":0.8,"note":"Wheels on Bus short vs Boo Boo short, different content"},
+{"a":"sBtKayGZJiU","b":"E9JfZ-SIhbY","label":"unrelated","confidence":0.8,"note":"Johny Johny short vs Baby Shark short"},
+{"a":"LXMGLr9uFv4","b":"e9LhPr3svs0","label":"re-skin","confidence":0.9,"note":"Same Wheels on Bus shots, pink bus (2x speed) vs green bus"},
+{"a":"kE5xS-j44iw","b":"MTz3akG93_s","label":"shared-segments","confidence":0.8,"note":"Christmas compilations sharing gingerbread kids segment"},
+{"a":"0gXJ6f2z_Y4","b":"r-whFfxsj_I","label":"same-song","confidence":0.6,"note":"Johny Johny shorts, different character designs and shots"}
+]

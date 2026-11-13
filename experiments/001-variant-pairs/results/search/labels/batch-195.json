@@ -1,0 +1,72 @@
+[
+ {
+  "a": "XGrpbyxR93k",
+  "b": "N3PkLoXEje0",
+  "label": "re-upload",
+  "confidence": 0.9,
+  "note": "Bob the Train farm song, Chinese vs Malay version; same frames."
+ },
+ {
+  "a": "N3PkLoXEje0",
+  "b": "rNHdYbq36zI",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Malay vs English Bob the Train farm song; identical frames."
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "eGvSblfi0ns",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts (train song vs monsters); match only on vertical-short framing."
+ },
+ {
+  "a": "jrKMYkmA3lY",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Sick song vs camp bus short; only vertical-short framing in common."
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wheels on the Train vs camp bus short; different characters and shots."
+ },
+ {
+  "a": "12mNC1UN38M",
+  "b": "LzlbaXt9Yg4",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Both Wheels on the Bus shorts (Halloween vs camp); different characters and shots."
+ },
+ {
+  "a": "YudNG_jdUs4",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Zoo song vs camp bus short; only vertical framing."
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "1WzZWyDsRw4",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Both Boo Boo Song shorts, different characters and animation."
+ },
+ {
+  "a": "EKTJjRx-OQE",
+  "b": "4I5f_hT3EDI",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Compilations both include the shapes counting segment; other frames differ."
+ },
+ {
+  "a": "24CuY0nwSX0",
+  "b": "LIvbQc_In_s",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bus short vs sick song short; nothing shared."
+ }
+]

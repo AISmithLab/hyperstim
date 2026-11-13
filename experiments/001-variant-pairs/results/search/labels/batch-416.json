@@ -1,0 +1,72 @@
+[
+ {
+  "a": "vVG7wTGgWlU",
+  "b": "PVVRP2qu0uo",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Kids Channel vehicle compilations share the police/fire truck scene"
+ },
+ {
+  "a": "qr3gskaCXtM",
+  "b": "PVVRP2qu0uo",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Kids Channel vehicle compilations share the police/fire truck scene"
+ },
+ {
+  "a": "Tgp1NqPegK8",
+  "b": "ZRd-uNE-AUA",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi Dance shorts with different characters and animation"
+ },
+ {
+  "a": "y5hNOisFVd8",
+  "b": "Ik7-qK_sEq8",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter N vs letter O, same template and kids"
+ },
+ {
+  "a": "fcYBv33BuIY",
+  "b": "AydSzRoGSLY",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts share the man in red shirt shots; different cuts"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "Gf_8uTV76EU",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "If You're Happy animals vs Kaboochi; match only on blurred side bars"
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "2kLB7ZwxVv8",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the claw machine and turban episodes"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "EPh1bFzsVf4",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

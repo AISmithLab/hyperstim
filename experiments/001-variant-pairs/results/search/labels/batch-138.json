@@ -1,0 +1,12 @@
+[
+{"a":"HE58ikBC9nw","b":"vXUuaxhuTWY","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters X vs Y, shared intro"},
+{"a":"yCSjhx5qiv0","b":"nEoTfUE6-Pk","label":"re-upload","confidence":0.85,"note":"Baby Bao Panda Wheels on the Bus, same orange-bus frames, B at 2x speed"},
+{"a":"AjfP599DrRE","b":"w9BOETCUH5o","label":"unrelated","confidence":0.7,"note":"Five Little Elves vs Jingle Bells; different Santa models and scenes"},
+{"a":"yCSjhx5qiv0","b":"2uTYZ20rXa8","label":"re-skin","confidence":0.9,"note":"Baby Bao Panda bus song: same street shot and camera, orange face-bus swapped for yellow school bus; B 2x speed"},
+{"a":"AjfP599DrRE","b":"AXfeoPJolIE","label":"unrelated","confidence":0.7,"note":"Five Little Elves vs Jingle Bells; different Santa scenes"},
+{"a":"R7pIlyiHmJY","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; no shared episode visible"},
+{"a":"R49NrP0fcsE","b":"AlEPz20FGnk","label":"shared-segments","confidence":0.5,"note":"Boo Boo short vs 3-min version with same red-plaid dad family; no identical frame sampled"},
+{"a":"njSANQD1GlI","b":"VqT9YA3THAE","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, magic hat vs worm"},
+{"a":"njSANQD1GlI","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, magic hat vs basketball"},
+{"a":"oT6bPk4gHxM","b":"VqT9YA3THAE","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, rings vs worm"}
+]

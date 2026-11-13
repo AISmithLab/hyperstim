@@ -1,0 +1,12 @@
+[
+{"a":"_g_9KMvsInk","b":"K6bUpDgQbfE","label":"shared-segments","confidence":0.85,"note":"Hindi compilations, same length, same segments at 1/4 and 1/2, order differs"},
+{"a":"lFJe3YP7U4k","b":"K6bUpDgQbfE","label":"shared-segments","confidence":0.85,"note":"Hindi compilations, same length, same segments at 1/4 and 1/2, order differs"},
+{"a":"7wfgbhEY9DU","b":"Td73SYRglgw","label":"unrelated","confidence":0.7,"note":"Sick Song vs Boo Boo Song shorts, different characters and scenes"},
+{"a":"xK9x6dEAZ08","b":"upqIQe-_llc","label":"re-skin","confidence":0.75,"note":"Baby Bao compilations: bus song orange vs green bus same shots; boat segment identical"},
+{"a":"wk9I_xT1NNc","b":"sBtKayGZJiU","label":"unrelated","confidence":0.8,"note":"Zoo song vs Johny Johny shorts, different content"},
+{"a":"G7PTUNLnAFk","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.8,"note":"Wheels on the Train vs Kaboochi shorts, different characters"},
+{"a":"YaThzRybuhE","b":"iJZ97cfpjhI","label":"same-song","confidence":0.6,"note":"Kaboochi shorts, glasses boy vs animal characters, different animation"},
+{"a":"X-QhvkoitP0","b":"AGdn00fQ-uE","label":"shared-segments","confidence":0.5,"note":"Color Song shorts with Bob the Train; one similar train shot, other frames differ"},
+{"a":"ayo0-fI_wQM","b":"z44z_G1QSMY","label":"same-template","confidence":0.6,"note":"Bob the Train compilations; shared intro, different episodes at 3/4"},
+{"a":"t5wDGNrzpro","b":"aYm4u_lQpIo","label":"same-song","confidence":0.7,"note":"Kaboochi Dance shorts with different characters and scenes"}
+]

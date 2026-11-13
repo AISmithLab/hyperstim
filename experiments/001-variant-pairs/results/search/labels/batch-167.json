@@ -1,0 +1,12 @@
+[
+{"a":"AZ3t77_JcwQ","b":"3CUN9mw8SOk","label":"shared-segments","confidence":0.6,"note":"Same thumbnail; A compilation likely contains B's bus song, sampled frames differ."},
+{"a":"ahWBypah3WE","b":"Yzvo_76GESg","label":"re-upload","confidence":0.8,"note":"Oopsie Doopsie dance, same frames; B retitled for Halloween, 3s shorter."},
+{"a":"x0h4qykzlsA","b":"ET0nSVHzYd4","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy car episode."},
+{"a":"E4cuOfwU8k0","b":"rjjjfXf4pjg","label":"re-skin","confidence":0.7,"note":"Bus compilations; same street truck shot, truck purple vs blue; bus red vs green."},
+{"a":"6YYa6ar2RN4","b":"pbfbmXohAGo","label":"shared-segments","confidence":0.6,"note":"Kaboochi dance shorts sharing the corgi shot; other frames differ."},
+{"a":"EN7S56j6Z5Y","b":"9ywRXy36pAg","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus green vs pink."},
+{"a":"wKN9OPV5HLc","b":"yckv5BgAm7I","label":"shared-segments","confidence":0.8,"note":"Halloween compilations sharing the witch song segment."},
+{"a":"MHvLcoblyio","b":"92wkK3tkeb0","label":"same-song","confidence":0.75,"note":"Boo Boo Song shorts with different characters and animation."},
+{"a":"l_HMLGY9XIo","b":"aFbSzIMTBsY","label":"same-template","confidence":0.85,"note":"Bob the Train phonics, letters L vs N."},
+{"a":"afJ8kEWkJqo","b":"ZPOOOfJmzp4","label":"re-skin","confidence":0.6,"note":"Green bus with pandas, same shots; headlights and seat colors differ (blue vs purple)."}
+]

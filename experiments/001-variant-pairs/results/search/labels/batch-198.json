@@ -1,0 +1,12 @@
+[
+{"a":"iCbinH5esNA","b":"gMBgWz_2NdM","label":"unrelated","confidence":0.8,"note":"Different compilations; frames and characters differ."},
+{"a":"lQxaq4Fu-i0","b":"SyVbbpWvE9U","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters U vs V, same set and kid shots."},
+{"a":"V5e2cERpluk","b":"JtWDJSPlad0","label":"shared-segments","confidence":0.8,"note":"Long compilations share the kittens segment at midpoint; other frames differ."},
+{"a":"jrKMYkmA3lY","b":"Q9BbiIQ6C_E","label":"unrelated","confidence":0.85,"note":"Sick song vs Christmas short; nothing shared."},
+{"a":"US4Ee-T3-2I","b":"KX81IXOS9gw","label":"same-song","confidence":0.8,"note":"Five Little Monkeys, monkey-hood kids vs babies; different animation and shots."},
+{"a":"G7PTUNLnAFk","b":"IbEIByW4Fwk","label":"unrelated","confidence":0.85,"note":"Train song vs dance short; nothing shared."},
+{"a":"3bTL4x31XTI","b":"i0Zanhlu46I","label":"unrelated","confidence":0.85,"note":"Bath song vs monsters short; nothing shared."},
+{"a":"G7PTUNLnAFk","b":"U9lOcqHMY_w","label":"unrelated","confidence":0.85,"note":"Train song vs Halloween short; nothing shared."},
+{"a":"jCBkyU72Riw","b":"wUVP3iCR-ZY","label":"same-template","confidence":0.6,"note":"Finger Family series: bear family vs native family, different content on similar set."},
+{"a":"qCWFFPHRu1Q","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.85,"note":"Dinosaur song vs camp bus short; nothing shared."}
+]

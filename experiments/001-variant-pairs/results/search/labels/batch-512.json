@@ -1,0 +1,12 @@
+[
+{"a":"YrsmVbdtgLY","b":"4e1vB_kqCaY","label":"same-song","confidence":0.6,"note":"Halloween Kaboochi (monster characters) vs Kaboochi with boy; different animation"},
+{"a":"8AguNMwcvsw","b":"YrsmVbdtgLY","label":"unrelated","confidence":0.8,"note":"Baby Shark short vs Halloween Kaboochi short"},
+{"a":"sIVFJDlcPo4","b":"w9kb2O5bIY8","label":"same-song","confidence":0.55,"note":"Baby Bao Panda Halloween Night songs, same night set; shown frames are different shots, possible remake"},
+{"a":"YrsmVbdtgLY","b":"fAQ_c_NEM7A","label":"same-song","confidence":0.6,"note":"Halloween Kaboochi vs Kaboochi with boy; different animation"},
+{"a":"_EZv7EJE8LE","b":"IYU2e8WgGnY","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-jeep episode"},
+{"a":"RG_4B9zxJnU","b":"Q-qoF1B0i_Q","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts 58s and 34s share mother footage"},
+{"a":"Nlt_DqiIHcQ","b":"i2XoutDdPoM","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: mime vs pillow"},
+{"a":"20HqqfnKxZk","b":"8Ri1s8CTSrM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the pillow episode"},
+{"a":"UN4V4ywCWxA","b":"Pa7utiQUGOY","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"dL9q0aobLss","b":"vCMNQHulhfo","label":"same-template","confidence":0.85,"note":"Bob phonics letter R vs letter S, shared intro/outro set"}
+]

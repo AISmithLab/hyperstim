@@ -1,0 +1,12 @@
+[
+{"a":"xJWSNIkfOrY","b":"UPDBxhcsIRQ","label":"shared-segments","confidence":0.9,"note":"Rattic Mini compilations sharing mime, snowman and toy-car episodes"},
+{"a":"KKgsTFivFJM","b":"PjXooPy93AM","label":"shared-segments","confidence":0.55,"note":"Both include a mime episode, different moments sampled"},
+{"a":"dG7KouaFW-o","b":"PjXooPy93AM","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the mime episode"},
+{"a":"oHtQbh7LJjY","b":"STRJcffvt-0","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters J vs Q, same template and intro"},
+{"a":"PjXooPy93AM","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; no shared episode visible"},
+{"a":"D0tOd2ZH-cQ","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; no shared episode visible"},
+{"a":"6FhYNE5KFeg","b":"_4x2xszMRq8","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, cat vs birthday"},
+{"a":"UGzlPPWb6Pg","b":"_4x2xszMRq8","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, fly swatter vs birthday"},
+{"a":"34zV8hDOuFs","b":"aW_J2JMPmG8","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; jeep scenes look similar but not the same shot"},
+{"a":"LJN6yukuQ9A","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, manhole vs bottle"}
+]

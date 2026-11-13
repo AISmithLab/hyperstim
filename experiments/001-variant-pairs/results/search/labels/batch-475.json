@@ -1,0 +1,12 @@
+[
+{"a":"49leN9fKryQ","b":"NzSztNcr074","label":"unrelated","confidence":0.65,"note":"Different Christmas songs, different animation; only the Santa theme matches"},
+{"a":"OGSTQDin2k0","b":"NzSztNcr074","label":"unrelated","confidence":0.65,"note":"Christmas compilation vs Jingle Bells single, no shared footage sampled"},
+{"a":"kZytosLyQEc","b":"Z1H7LX1K4Zo","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Bicycle vs Toilet"},
+{"a":"-kRTFYd6WkI","b":"zej8Uf5iAGk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Ventilator vs Teleport"},
+{"a":"X5isLUsPsU0","b":"aDyWeSAt-sI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the jeep and snowman episodes"},
+{"a":"cqjfiWrwmmg","b":"bNuG6IapPsk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Stones vs Fitness Ball"},
+{"a":"S9N416aMRxk","b":"KKgsTFivFJM","label":"shared-segments","confidence":0.6,"note":"Rattic Mini compilations; dinosaur pump episode appears in both"},
+{"a":"Gh4izthwnNM","b":"YABj119wijM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"cO1aLZ7teeg","b":"PjXooPy93AM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"cAngxOmb79A","b":"uQ90xr1p-eQ","label":"unrelated","confidence":0.8,"note":"Halloween song vs Kaboochi shorts"}
+]

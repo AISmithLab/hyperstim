@@ -1,0 +1,72 @@
+[
+ {
+  "a": "sT3J4L19qrE",
+  "b": "a7-bpUidOBo",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the trash-bin and egg episode."
+ },
+ {
+  "a": "mTsFv_5w3uU",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Old Macdonald vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "nbI-1N_uBNs",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Jingle Bells vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bath song vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "EkpDQZN-b9g",
+  "b": "4x4Yq87gtlQ",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "Bob farm song 2014 re-uploaded 2018, longer, new thumbnail; same shots."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "U9lOcqHMY_w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Happy Halloween shorts; nothing shared."
+ },
+ {
+  "a": "OZzQENCeeNg",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Dance vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "eGvSblfi0ns",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs monsters shorts; nothing shared."
+ },
+ {
+  "a": "WDHp-C9MMDg",
+  "b": "GsIHf7b47xw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Boom Buddies compilations share the pajama-family segment."
+ }
+]

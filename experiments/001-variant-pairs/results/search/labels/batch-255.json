@@ -1,0 +1,12 @@
+[
+{"a":"HMbTMw9ZAq0","b":"m7BqBjVOwqo","label":"re-skin","confidence":0.8,"note":"A compilation contains B's fire-truck shot recolored pink vs yellow; same pose, camera, riders."},
+{"a":"iylbQZjg-fk","b":"aVfCTblmhQk","label":"same-template","confidence":0.6,"note":"Hector the Tractor compilations; frames show different scenes beyond logo card."},
+{"a":"MKxeMiSv2tw","b":"w2YPCo7SOCs","label":"same-template","confidence":0.6,"note":"Loco Nuts compilations, same thumbnail characters, different scenes in frames."},
+{"a":"V5OqHZwodj4","b":"ZRd-uNE-AUA","label":"same-song","confidence":0.6,"note":"Christmas Kaboochi vs Kaboochi dance shorts, different animation."},
+{"a":"lEvNMZQ2DT4","b":"pe_iRGqeBlA","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"ZRd-uNE-AUA","b":"0zptbdrcP6Y","label":"unrelated","confidence":0.8,"note":"Kaboochi vs Boy Who Cried Wolf shorts; only blurred side bars."},
+{"a":"aA57PjtEfZw","b":"VLa2W1SssVQ","label":"same-template","confidence":0.85,"note":"Learning Street with Bob phonics, letter D vs W."},
+{"a":"oJ4FhcUkoas","b":"vXeaBe049TQ","label":"shared-segments","confidence":0.6,"note":"This Is The Way song and a Zoobees compilation; same characters, frames not identical."},
+{"a":"ihJt-oPUoYk","b":"0E1mZOYwLoU","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs J vs Z."},
+{"a":"pe_iRGqeBlA","b":"Uq5Pp5BQSm4","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."}
+]

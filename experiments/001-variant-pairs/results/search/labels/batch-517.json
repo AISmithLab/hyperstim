@@ -1,0 +1,72 @@
+[
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "w7exxTCHfx8",
+  "b": "Kix07nOAEBQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the giant egg episode"
+ },
+ {
+  "a": "oRUKPowFBgM",
+  "b": "aScyfsClZd0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Apples & Bananas vs Boo Boo shorts; different characters"
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "cmi5_37226c",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations share the egg episode region; mostly different"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "5iXRqSe4KJo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "BrjLq8jTPfw",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations share the red toy car episode"
+ },
+ {
+  "a": "gIMyiAxeKSk",
+  "b": "dL9q0aobLss",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters I vs R, same template"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "_OlmXmG5OLM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "inkqQlbrdrQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine and stroller episodes"
+ }
+]

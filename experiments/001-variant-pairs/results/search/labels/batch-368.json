@@ -1,0 +1,72 @@
+[
+ {
+  "a": "aFbSzIMTBsY",
+  "b": "evV7r4kNN7g",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter N vs letter Y on the same template"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the snowman and toy car episodes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "39Dtr0Rq-TY",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "NcfiuWYdC24",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "QLtuuZVDZ4g",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "BZqq3eL6xSE",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "IE7VFN8ln9Y",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "vGjN_CslxSI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ }
+]

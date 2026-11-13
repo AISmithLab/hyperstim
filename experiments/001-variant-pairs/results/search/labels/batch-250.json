@@ -1,0 +1,12 @@
+[
+{"a":"Jzwnkn4JucM","b":"xMTEE72y8Lw","label":"re-upload","confidence":0.8,"note":"Same Five Little Pandas animation; different edit/length, A has extra outro."},
+{"a":"OsP-k8ZnLc4","b":"ahWBypah3WE","label":"shared-segments","confidence":0.45,"note":"Same thumbnail character; frames mostly other content; thumbnail-driven match."},
+{"a":"ZRd-uNE-AUA","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.8,"note":"Kaboochi vs camp bus shorts; similar only through blurred side bars."},
+{"a":"G0pDt06cZhs","b":"C1KNIKQhejo","label":"unrelated","confidence":0.85,"note":"Different Hindi rhymes, different characters."},
+{"a":"2kLB7ZwxVv8","b":"Eif8UopFHhM","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the toy-box episode."},
+{"a":"htcQAAQHyFw","b":"9ubxPbw377Y","label":"shared-segments","confidence":0.85,"note":"Loconuts compilations sharing go-kart and guitar episodes."},
+{"a":"6L0oq3iwbS0","b":"5iXRqSe4KJo","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, same set, different gags."},
+{"a":"4rcjZ1f_L4A","b":"ZRd-uNE-AUA","label":"shared-segments","confidence":0.65,"note":"Kaboochi shorts sharing hula-boy shot; edits differ."},
+{"a":"iZaOZu8ryCQ","b":"ofIzHyo78GM","label":"same-song","confidence":0.5,"note":"Spooky song compilations with same lead song; sampled frames differ."},
+{"a":"3qxlXlNOOk0","b":"lZngiTw7yGo","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Monkey Dance shorts; blurred side bars only."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "QKrdD5Y9c-s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine and stroller episodes"
+ },
+ {
+  "a": "s0DwH0Oq5YY",
+  "b": "oRk8sglOG5k",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts from different animations (mom-in-pink vs girl production)"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "5iXRqSe4KJo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "Kix07nOAEBQ",
+  "b": "oXA7qx--2oI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the giant egg episode"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "W5PP6fPZK0I",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Three Little Pigs shorts; different scenes"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "_GlpTSaa5EU",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "fUR3k2eL6Mo",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "7m15CgRy6OU",
+  "b": "rWQWjm-AIvo",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Boo Boo shorts share mom-covering-mouth and mom-holding-baby shots"
+ }
+]

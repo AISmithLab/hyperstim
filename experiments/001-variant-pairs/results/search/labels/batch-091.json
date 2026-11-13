@@ -1,0 +1,12 @@
+[
+{"a":"C5NadrBnSj8","b":"SP3eASDKke4","label":"shared-segments","confidence":0.8,"note":"Boo Boo song: same thumbnail and mom-with-baby shots; 37 s vs 20 s cut."},
+{"a":"C5NadrBnSj8","b":"CgR6YuA2Uoo","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different moms and sets."},
+{"a":"Td73SYRglgw","b":"C5NadrBnSj8","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different moms and sets."},
+{"a":"Th5MQB8VO3Q","b":"C5NadrBnSj8","label":"shared-segments","confidence":0.7,"note":"178 s Boo Boo version with the same pink-sweater mom and family as the 37 s short."},
+{"a":"C5NadrBnSj8","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts with the same pink-sweater mom; different shots sampled."},
+{"a":"Qv-eMjDmTJQ","b":"34zV8hDOuFs","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations; identical toy-jeep-and-sign shot."},
+{"a":"Gh4izthwnNM","b":"Qv-eMjDmTJQ","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the red-board episode shot."},
+{"a":"C5NadrBnSj8","b":"Q-qoF1B0i_Q","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts with the same pink-sweater mom; different shots sampled."},
+{"a":"C5NadrBnSj8","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Kaboochi dance; different content."},
+{"a":"w9BOETCUH5o","b":"XEEVejf8Kgw","label":"unrelated","confidence":0.8,"note":"Jingle Bells Santa vs Five Little Elves; Christmas theme only."}
+]

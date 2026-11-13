@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1vJ40GbNGUY",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Different Halloween shorts (finger family vs five monsters)"
+ },
+ {
+  "a": "oKEXFG0ZLZw",
+  "b": "1vJ40GbNGUY",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Different Halloween shorts, different characters"
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "B7HQQms6klA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween vs Boo Boo shorts; black side bars only"
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "wk9I_xT1NNc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween vs zoo song shorts; black side bars only"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "hzzGSyV_BCA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing drive-thru and pillow episodes"
+ },
+ {
+  "a": "Br48ar2svbI",
+  "b": "Ng85dlGMIQA",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter B vs T, shared intro/outro"
+ },
+ {
+  "a": "zej8Uf5iAGk",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, teleport vs carousel gags"
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, gloves vs picture gags"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, cheese vs manhole gags"
+ },
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, teleport vs basketball gags"
+ }
+]

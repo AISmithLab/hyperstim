@@ -1,0 +1,12 @@
+[
+{"a":"-ZzNGE16wBk","b":"y6EGnsLK3ew","label":"shared-segments","confidence":0.8,"note":"Compilations sharing an identical classroom segment"},
+{"a":"xPt-5RG1m-0","b":"7-abUIzCk5U","label":"re-skin","confidence":0.5,"note":"Kaboochi dance, same costumed baby and dance moves; backgrounds swapped (stripes vs grid/dots); timing unverified"},
+{"a":"7-abUIzCk5U","b":"C2b403ofWSg","label":"re-skin","confidence":0.6,"note":"Kaboochi dance, same baby moves on same grid/dot sets recolored (green vs magenta, dot palette)"},
+{"a":"gmRIldLgb8k","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; kung fu vs birthday gag"},
+{"a":"Gh4izthwnNM","b":"skNxtYhw9Y8","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same set; sampled episodes differ"},
+{"a":"gmRIldLgb8k","b":"njSANQD1GlI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; kung fu vs magic hat gag"},
+{"a":"TGZl_HsDj_0","b":"Gh4izthwnNM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing toy car, tower and tricycle episodes"},
+{"a":"MxB4KiDF6XY","b":"JOMSMENnSIQ","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the claw machine episode"},
+{"a":"Tz2SZgHgjjk","b":"sFhZZIPj9nE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cheese vs cleaning gag"},
+{"a":"Tz2SZgHgjjk","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cheese vs birthday gag"}
+]

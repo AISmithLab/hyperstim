@@ -1,0 +1,72 @@
+[
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "IYU2e8WgGnY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "_pqh8Nw-k3o",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "xPt-5RG1m-0",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi; A kids on colorful set, B baby on flat color backdrops"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "hrOfhQCxqL0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "cO1aLZ7teeg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "zSf5nw7US6U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "yVKvv4YMB78",
+  "b": "19yPrd-it5I",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "3yv0GSbbCZI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same stage set; different gags at matched moments, shared music bed"
+ }
+]

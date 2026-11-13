@@ -1,0 +1,12 @@
+[
+{"a":"iJZ97cfpjhI","b":"ZRd-uNE-AUA","label":"same-song","confidence":0.6,"note":"Kaboochi shorts: animal characters vs hula kids, different animation"},
+{"a":"aYm4u_lQpIo","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters and animation"},
+{"a":"kHVGgxylqd8","b":"ZaPOBxvKuXs","label":"same-song","confidence":0.6,"note":"Boo Boo shorts with different family characters and shots"},
+{"a":"aFbSzIMTBsY","b":"uFVntNVnn7k","label":"same-template","confidence":0.9,"note":"Bob the Train letter N vs letter O episodes"},
+{"a":"V9fA6nrohac","b":"NL_S69qf0jg","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: attic stairs vs butterfly"},
+{"a":"KFwebO9sy58","b":"QKrdD5Y9c-s","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toy-box and stroller episodes"},
+{"a":"2ONrfCPwygc","b":"YgjyQIwcJy0","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: piano vs hollow tree"},
+{"a":"Qs4R686NOjg","b":"R7pIlyiHmJY","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"V9fA6nrohac","b":"obdK23ZIr6E","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: attic stairs vs trishaw"},
+{"a":"NnN4n9v9Ojs","b":"uFVntNVnn7k","label":"same-template","confidence":0.9,"note":"Bob the Train letter F vs letter O episodes"}
+]

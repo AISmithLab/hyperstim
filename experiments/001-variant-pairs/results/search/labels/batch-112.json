@@ -1,0 +1,12 @@
+[
+{"a":"B_MmKCyAmpw","b":"2ccdfNa0OyQ","label":"shared-segments","confidence":0.7,"note":"Oopsie Doopsie: 59s cut shares shots with the 114s version (same 3/4 frame)."},
+{"a":"lij2KlyDHJ8","b":"Zy0VtX5RTFM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations on same set; frames show different episodes."},
+{"a":"PjXooPy93AM","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations; same episodes in different order, identical frames."},
+{"a":"414DEMcGHtU","b":"2ccdfNa0OyQ","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Oopsie Doopsie; different animation."},
+{"a":"yUjUU9FVa8s","b":"2ccdfNa0OyQ","label":"unrelated","confidence":0.8,"note":"Monster Dance Party vs Oopsie Doopsie; different animation."},
+{"a":"FZSWN3DFpGE","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.85,"note":"Monster in the Dark vs Monster Finger Family; different animation."},
+{"a":"v80qWgkingM","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.85,"note":"Halloween vs Jingle Bells shorts; different animation."},
+{"a":"zPS3ihinlZs","b":"XamiKGRhams","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, different episodes (tree vs toilet)."},
+{"a":"fKWJTJUkwPc","b":"Lm494FQebI8","label":"unrelated","confidence":0.85,"note":"Five in the Bed vs Monster Halloween song; different animation."},
+{"a":"PjXooPy93AM","b":"R7pIlyiHmJY","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations on same set; frames show different episodes."}
+]

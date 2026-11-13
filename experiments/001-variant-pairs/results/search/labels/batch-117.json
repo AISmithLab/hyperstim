@@ -1,0 +1,12 @@
+[
+{"a":"UIY2P6AOU_Q","b":"IzP30262d8A","label":"shared-segments","confidence":0.9,"note":"Christmas compilation contains the Jingle Bells race-car video (same snowman/car frames)"},
+{"a":"2fBdfXU6Vuo","b":"yRbWCPlOzKM","label":"same-song","confidence":0.55,"note":"Johny Johny shorts; B is a Halloween-costume animation, different shots"},
+{"a":"zG6D-FpUczM","b":"2fBdfXU6Vuo","label":"same-song","confidence":0.6,"note":"Johny Johny shorts from different productions (yellow-shirt dad vs nursery kids)"},
+{"a":"XamiKGRhams","b":"_glAZAdz8mg","label":"unrelated","confidence":0.75,"note":"Rattic Mini short vs larva short"},
+{"a":"1ssnJqJNdbM","b":"BPEyTCIqxtY","label":"shared-segments","confidence":0.75,"note":"Five Little Babies 40 s and 64 s cuts share the doctor shots"},
+{"a":"XFz86QUABdQ","b":"r-whFfxsj_I","label":"same-song","confidence":0.6,"note":"Johny Johny: orange-shirt boy production vs yellow-shirt dad with captions"},
+{"a":"bzcufo-BRaA","b":"wk9I_xT1NNc","label":"unrelated","confidence":0.8,"note":"Spooky bus vs zoo song shorts"},
+{"a":"bzcufo-BRaA","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.8,"note":"Spooky bus vs Jingle Bells shorts"},
+{"a":"AOC1QPiG8-4","b":"iaSPV2ZHx5U","label":"same-template","confidence":0.5,"note":"Loco Nuts animal cast in two different songs"},
+{"a":"jceEaiF00_c","b":"PFPDDhGr6us","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations, same thumbnail layout, no shared clip visible"}
+]

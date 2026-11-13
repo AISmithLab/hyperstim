@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Ho0SGrAZnzA",
+  "b": "wnhx12-8PM0",
+  "label": "re-upload",
+  "confidence": 0.8,
+  "note": "Same Mary Had a Little Lamb animation (playground, desks); new thumbnail and title"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "oHSAGotL2Vo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs bar chair episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "7FiyQQBYTUY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs skates episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "e9gnACQvqRM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs door episodes"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "VnHWYMlDgwI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the kiosk and red-car episode"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "oT6bPk4gHxM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs rings episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs birthday episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "sFhZZIPj9nE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs cleaning episodes"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "Zy0VtX5RTFM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, bicycle vs balloon episodes"
+ }
+]

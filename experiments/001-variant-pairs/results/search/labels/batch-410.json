@@ -1,0 +1,72 @@
+[
+ {
+  "a": "yfbpDHTVirs",
+  "b": "fvpDSppG4N8",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Learning compilations sharing the balloon-and-monkey segment."
+ },
+ {
+  "a": "A5O--kdxbCg",
+  "b": "J5ISbQ_ZUCo",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Bob the Train compilations sharing the red bus and train segment."
+ },
+ {
+  "a": "gIMyiAxeKSk",
+  "b": "Ng85dlGMIQA",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics episodes I vs T; shared intro shots, different letter."
+ },
+ {
+  "a": "_e29OQFpP7A",
+  "b": "Th5MQB8VO3Q",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song 33s vs 178s with same family characters; short likely a cut."
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "DF6G0YHRlV8",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "Zy0VtX5RTFM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "AlEPz20FGnk",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo Song vs Kaboochi shorts; only side bars match."
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "WZ45rZRLf80",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "QLtuuZVDZ4g",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

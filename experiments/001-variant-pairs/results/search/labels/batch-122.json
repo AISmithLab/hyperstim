@@ -1,0 +1,12 @@
+[
+{"a":"n2mneo6Owhk","b":"MoftuEWtBuI","label":"re-upload","confidence":0.95,"note":"Kaboochi beach short posted twice 3 days apart; identical frames"},
+{"a":"5AiYAgNfj7A","b":"9cs2qm_e8J8","label":"re-upload","confidence":0.75,"note":"Monsters in the Dark across channels; same frames at 1/2, intro card differs"},
+{"a":"0yIhvJw1GK8","b":"AydSzRoGSLY","label":"shared-segments","confidence":0.7,"note":"11 s cut of the Boo Boo dad short"},
+{"a":"HW8O6C_OCJQ","b":"n2mneo6Owhk","label":"shared-segments","confidence":0.65,"note":"Kaboochi beach shorts cut from one production; same hula boy shots"},
+{"a":"5AiYAgNfj7A","b":"jRSCEegA30c","label":"shared-segments","confidence":0.75,"note":"Halloween compilation includes the Monsters in the Dark kids clip"},
+{"a":"FT0mjHIs2oY","b":"n2mneo6Owhk","label":"shared-segments","confidence":0.65,"note":"Kaboochi beach shorts from one production; same headphone-boy shot"},
+{"a":"4rcjZ1f_L4A","b":"n2mneo6Owhk","label":"shared-segments","confidence":0.6,"note":"Kaboochi beach shorts from one production; same hula boy shot"},
+{"a":"0L9EfYLMx8A","b":"XBXyBskjSOc","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters P vs T, same template"},
+{"a":"AydSzRoGSLY","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.55,"note":"Two short cuts from same Boo Boo family production"},
+{"a":"VJ1tu3mMRa0","b":"AydSzRoGSLY","label":"shared-segments","confidence":0.7,"note":"11 s cut of the 41 s Boo Boo dad short"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "VqT9YA3THAE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, swing vs worm"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "xEFkAQpftd4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, door vs talent show"
+ },
+ {
+  "a": "2ONrfCPwygc",
+  "b": "fkM9JyHWOo8",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, piano vs cupboard"
+ },
+ {
+  "a": "gkk96Hm-IHo",
+  "b": "JOMSMENnSIQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the claw machine episode"
+ },
+ {
+  "a": "LvECrt5yV6M",
+  "b": "pbfbmXohAGo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Kaboochi dance: Halloween version vs regular; no matching shot seen"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "aA57PjtEfZw",
+  "b": "ZztnbLI54FI",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters D and M on one template"
+ },
+ {
+  "a": "LJN6yukuQ9A",
+  "b": "AXd66O4yEEI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic manhole vs Larva-style mosquito cartoon; side-bar match only"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, door vs leaves"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"dOZvzqc4tyE","b":"t8F277vozNc","label":"shared-segments","confidence":0.7,"note":"Fire-truck number songs 1-20 vs 1-40, same day; longer one extends the same footage"},
+{"a":"t8F277vozNc","b":"JrpYstX8Kz8","label":"shared-segments","confidence":0.7,"note":"Fire-truck number songs 1-40 vs 1-50, same truck and number footage"},
+{"a":"LJN6yukuQ9A","b":"sFhZZIPj9nE","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts on same set; manhole vs cleaning gag"},
+{"a":"m9Ur1BSYg2o","b":"Pju77IIqO5Y","label":"same-template","confidence":0.6,"note":"Same insect cast songs; frame match is the shared Kids TV intro only"},
+{"a":"t2tKT2LSOfo","b":"SP3eASDKke4","label":"unrelated","confidence":0.8,"note":"No No song vs Boo Boo song, different families"},
+{"a":"t2tKT2LSOfo","b":"CvFabQeSv9A","label":"unrelated","confidence":0.8,"note":"No No song vs Boo Boo song, different characters"},
+{"a":"YudNG_jdUs4","b":"9Rzd80kq53k","label":"unrelated","confidence":0.85,"note":"Zoo song vs No No song"},
+{"a":"wdyDrYaVdLE","b":"LhySH8zL_Q4","label":"re-skin","confidence":0.5,"note":"Only thumbnail match: Farmees bus yellow vs red, same pose; frames show other songs"},
+{"a":"ikzRgQWlgRA","b":"Q5bfMoqqBB4","label":"shared-segments","confidence":0.8,"note":"Numbers Train episode included in Vegetable Train compilation"},
+{"a":"MBoA383dfOU","b":"vYXkEPIElyc","label":"same-song","confidence":0.6,"note":"Boo Boo songs with different families and animation"}
+]

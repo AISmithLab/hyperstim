@@ -1,0 +1,72 @@
+[
+ {
+  "a": "fUR3k2eL6Mo",
+  "b": "dG7KouaFW-o",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; one matched moment identical (wooden dummy), others different episodes"
+ },
+ {
+  "a": "PPVWn53Yw4M",
+  "b": "UGzlPPWb6Pg",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts, same set and character; football gag vs fly swatter gag"
+ },
+ {
+  "a": "hSOqsVdRmeI",
+  "b": "Tgp1NqPegK8",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Kaboochi kid-dance shorts; some identical baby shots, other moments show different kids"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "gmRIldLgb8k",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts, same set; scale/ventilator gag vs kung fu gag"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "SSeBjzpJLFk",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "YrsmVbdtgLY",
+  "b": "Tgp1NqPegK8",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Kaboochi: Halloween monsters in night city vs babies in playroom; different animation"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "2kLB7ZwxVv8",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; shared background music, different episodes at all matched moments"
+ },
+ {
+  "a": "OSOdLGenkS0",
+  "b": "ewZwn2G14Wg",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; both contain the swing episode at different offsets"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "t5wDGNrzpro",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Kaboochi kid-dance shorts; last matched shot identical, others different kids; B longer"
+ }
+]

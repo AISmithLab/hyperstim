@@ -1,0 +1,72 @@
+[
+ {
+  "a": "CfJfPAF8El8",
+  "b": "7ClCbBREUlU",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi vs Boo Boo shorts; different scenes, side bars match"
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bicycle vs robot vacuum"
+ },
+ {
+  "a": "-OXYsniHGBM",
+  "b": "AlEPz20FGnk",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Two Boo Boo Song shorts with different characters and scenes"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "xe7vTAa-ufc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Jingle Bells shorts; different animation"
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "pKnKuQMeGlk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share mime and dino episodes"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "uQ90xr1p-eQ",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Rattic Mini short vs Kaboochi dance short"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "20HqqfnKxZk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "20HqqfnKxZk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "JOMSMENnSIQ",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

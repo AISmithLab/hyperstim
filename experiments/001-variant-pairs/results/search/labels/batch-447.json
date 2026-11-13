@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Ft9nUxwKAaA",
+  "b": "aKkecxwHm00",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Garbage truck song vs Row Your Boat shorts; different scenes"
+ },
+ {
+  "a": "iJZ97cfpjhI",
+  "b": "_QwXfH5-D5g",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi dance: animal characters vs baby characters, different animation"
+ },
+ {
+  "a": "aKkecxwHm00",
+  "b": "IbEIByW4Fwk",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Row Your Boat vs Oopsie Doopsie; different scenes"
+ },
+ {
+  "a": "7wfgbhEY9DU",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Sick Song vs Johny Johny shorts; different characters"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "MI4XvQZDPZc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Scary Flying Shark; different scenes"
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "_uYyO8y5Txc",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Boo Boo shorts share mom-holding-baby shots; A longer with other footage"
+ },
+ {
+  "a": "OFvmlD86K5Q",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Wheels on the Taxi vs camp bus short; different characters"
+ },
+ {
+  "a": "Nl_hbXSq9xI",
+  "b": "1g02Uh_IuI4",
+  "label": "re-skin",
+  "confidence": 0.8,
+  "note": "ABC Baby Wheels on the Bus: same bus model and shots, yellow vs orange"
+ },
+ {
+  "a": "m9Ur1BSYg2o",
+  "b": "TYpGBwEAu0E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Kids TV bug-character songs, same characters, different songs"
+ },
+ {
+  "a": "1vJ40GbNGUY",
+  "b": "S0rIdxU8Fpw",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Halloween Finger Family shorts share the zombie-kid shot; different cuts"
+ }
+]

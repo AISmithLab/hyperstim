@@ -1,0 +1,12 @@
+[
+{"a":"ewZwn2G14Wg","b":"q8T0cDm6nSA","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations on one set, no shared episodes seen."},
+{"a":"Qv-eMjDmTJQ","b":"ewZwn2G14Wg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-jeep episode."},
+{"a":"ejBvtH0Igqk","b":"dPsVlnAF2HU","label":"same-template","confidence":0.55,"note":"Bob the Train vehicle compilations, same thumbnail layout, different frames."},
+{"a":"ewZwn2G14Wg","b":"UN4V4ywCWxA","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes on the same set."},
+{"a":"Tz2SZgHgjjk","b":"oHSAGotL2Vo","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, different episodes (cheese vs bar chair)."},
+{"a":"oHSAGotL2Vo","b":"afyKHCB03MU","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, different episodes (bar chair vs bottle)."},
+{"a":"YVaBFUbjzuk","b":"oHSAGotL2Vo","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, Christmas mailbox vs bar chair."},
+{"a":"34zV8hDOuFs","b":"ewZwn2G14Wg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing jeep, picnic and car episodes."},
+{"a":"oHSAGotL2Vo","b":"DS8rk9NwXQc","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bar chair vs mime."},
+{"a":"Tn2UZwb9RcY","b":"pBZoqnYJdpo","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bucket vs space rocket."}
+]

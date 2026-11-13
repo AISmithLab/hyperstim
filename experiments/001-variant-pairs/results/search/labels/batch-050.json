@@ -1,0 +1,12 @@
+[
+{"a":"Is1sSXyJz28","b":"IRWTZropao4","label":"unrelated","confidence":0.65,"note":"Halloween shorts posted same day, different characters and shots"},
+{"a":"j316Y_-hFW0","b":"y7FElRQhklM","label":"re-skin","confidence":0.85,"note":"Same 2018 passenger shots (crocodile, mom with baby); rainbow/red bus interior recolored pink"},
+{"a":"Is1sSXyJz28","b":"t3y2AhXLjRY","label":"unrelated","confidence":0.65,"note":"Halloween shorts posted same day, different characters and shots"},
+{"a":"2YmFl3ccv9E","b":"BSNYv67Kasw","label":"re-upload","confidence":0.8,"note":"Same Bob Alphabet Adventure footage; B re-posted 2023 with new thumbnail, slightly shorter"},
+{"a":"7m15CgRy6OU","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.7,"note":"Boo Boo song with a different family and animation"},
+{"a":"E1wcRx1Exec","b":"a0Dg0fPxACY","label":"unrelated","confidence":0.75,"note":"Larva vs rat cartoon, different series"},
+{"a":"djV64K-Y8vE","b":"6aBfQYlhKJs","label":"unrelated","confidence":0.8,"note":"Bob zoo song vs spooky zombie short"},
+{"a":"eelMhuTBC7g","b":"Ra20ukn-TOM","label":"shared-segments","confidence":0.85,"note":"Larva compilations sharing identical episodes"},
+{"a":"NnN4n9v9Ojs","b":"XBXyBskjSOc","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs, letter F vs T"},
+{"a":"93hO6Ma5uEg","b":"CAg8ItLDkwg","label":"unrelated","confidence":0.8,"note":"Twinkle Twinkle vs Wheels on the Taxi shorts"}
+]

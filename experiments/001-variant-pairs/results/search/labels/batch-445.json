@@ -1,0 +1,12 @@
+[
+{"a":"Qs4R686NOjg","b":"klDPbXVTBzw","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations, same mouse and stage set, different episodes"},
+{"a":"B0m2zgHfr50","b":"uFVntNVnn7k","label":"same-template","confidence":0.9,"note":"Bob the Train letter E vs letter O episodes"},
+{"a":"aKkecxwHm00","b":"jEwfENQE5Os","label":"unrelated","confidence":0.75,"note":"Row Your Boat short vs Halloween camp short"},
+{"a":"OFvmlD86K5Q","b":"WAVrZioY18c","label":"unrelated","confidence":0.8,"note":"Wheels on the Taxi short vs No No song short"},
+{"a":"OFvmlD86K5Q","b":"bVrFl7Z48so","label":"unrelated","confidence":0.8,"note":"Wheels on the Taxi short vs Boo Boo song"},
+{"a":"T_UkjGC9NxQ","b":"PJMQwM1Z1Ao","label":"shared-segments","confidence":0.85,"note":"Zoobees compilations sharing the same episode at 1/2"},
+{"a":"tQlIWPUO_E0","b":"t5wDGNrzpro","label":"unrelated","confidence":0.8,"note":"Ten in the Bed short vs Kaboochi short"},
+{"a":"1CUDuGeV_w8","b":"z_A_hkPDigU","label":"shared-segments","confidence":0.75,"note":"Bus to camp: 58s short and 142s version share identical footage"},
+{"a":"iD4Iyr_hKjE","b":"ayo0-fI_wQM","label":"shared-segments","confidence":0.65,"note":"Bob the Train ABC song and train compilation share street shot"},
+{"a":"U9lOcqHMY_w","b":"rtUezKOrBAU","label":"unrelated","confidence":0.65,"note":"Different Halloween shorts: Happy Halloween vs Who Took the Goodies"}
+]

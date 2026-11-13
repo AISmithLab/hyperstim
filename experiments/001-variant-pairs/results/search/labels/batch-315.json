@@ -1,0 +1,12 @@
+[
+{"a":"6L0oq3iwbS0","b":"zej8Uf5iAGk","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, TV vs teleport."},
+{"a":"cmi5_37226c","b":"kyProT-iMwg","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing yellow ball and sleigh episodes."},
+{"a":"MxB4KiDF6XY","b":"19yPrd-it5I","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the claw machine episode."},
+{"a":"pBZoqnYJdpo","b":"TwDxP5L1-VA","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, space rocket vs teleport."},
+{"a":"DS8rk9NwXQc","b":"zej8Uf5iAGk","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, mime vs teleport."},
+{"a":"TwDxP5L1-VA","b":"mrU14TkzuVI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, teleport vs robot vacuum."},
+{"a":"Gh4izthwnNM","b":"OSOdLGenkS0","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing red car and tricycle episodes."},
+{"a":"Eif8UopFHhM","b":"KKgsTFivFJM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared frames visible."},
+{"a":"TwDxP5L1-VA","b":"xEFkAQpftd4","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, teleport vs talent show."},
+{"a":"s0DwH0Oq5YY","b":"rWQWjm-AIvo","label":"shared-segments","confidence":0.65,"note":"Boo Boo Song shorts reusing the girl-and-baby footage; 57s vs 18s cut."}
+]

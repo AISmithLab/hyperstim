@@ -1,0 +1,12 @@
+[
+{"a":"VnHWYMlDgwI","b":"Qs4R686NOjg","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-car episode"},
+{"a":"bdbNsMtn26Y","b":"hzzGSyV_BCA","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible in frames"},
+{"a":"jRCHQ6wCTUA","b":"o6VjhL9gA1A","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs carousel"},
+{"a":"QKrdD5Y9c-s","b":"VnHWYMlDgwI","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible in frames"},
+{"a":"JOMSMENnSIQ","b":"QKrdD5Y9c-s","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing stroller and toy-box episodes"},
+{"a":"jRCHQ6wCTUA","b":"TwDxP5L1-VA","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs teleport"},
+{"a":"jRCHQ6wCTUA","b":"UXsXYmw3_CY","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs gloves"},
+{"a":"KKgsTFivFJM","b":"klDPbXVTBzw","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible in frames"},
+{"a":"jRCHQ6wCTUA","b":"VqT9YA3THAE","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs worm"},
+{"a":"2kLB7ZwxVv8","b":"QKrdD5Y9c-s","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-box episode"}
+]

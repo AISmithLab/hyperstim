@@ -1,0 +1,72 @@
+[
+ {
+  "a": "vXUuaxhuTWY",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter Y vs letter Z, shared template shots"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "R7pIlyiHmJY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "6YYa6ar2RN4",
+  "b": "YgjyQIwcJy0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi dance short vs Rattic Mini short"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bicycle vs robot vacuum"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "xEFkAQpftd4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: cleaning vs talent show"
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "Kix07nOAEBQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share sleigh and egg episodes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "lVAKTHWlIag",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: mime vs race driver"
+ },
+ {
+  "a": "c3lLP39EdME",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: cheese vs leaves"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: rings vs toilet"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"4OREtMc8hJA","b":"Ct1dHCSwlzs","label":"shared-segments","confidence":0.75,"note":"No No song shorts across channels cut from same mother footage"},
+{"a":"Ct1dHCSwlzs","b":"OEES3HmTQNw","label":"shared-segments","confidence":0.75,"note":"No No song 60s short and 143s version share mother footage"},
+{"a":"vnZwDJQBIWw","b":"Ct1dHCSwlzs","label":"shared-segments","confidence":0.65,"note":"No No song shorts share mother shots; A adds other scenes"},
+{"a":"Ct1dHCSwlzs","b":"_aq9DIHqGnw","label":"shared-segments","confidence":0.75,"note":"No No song shorts 60s and 30s cut from same footage"},
+{"a":"r-whFfxsj_I","b":"Ct1dHCSwlzs","label":"unrelated","confidence":0.85,"note":"Johny Johny short vs No No song short"},
+{"a":"cYZrTzVfiAE","b":"Ct1dHCSwlzs","label":"shared-segments","confidence":0.6,"note":"No No song shorts with same mother in kitchen; some shots match"},
+{"a":"Ct1dHCSwlzs","b":"7I0SeirswAk","label":"unrelated","confidence":0.85,"note":"No No song short vs Johny Johny short"},
+{"a":"fo7aioou8m0","b":"Ct1dHCSwlzs","label":"unrelated","confidence":0.85,"note":"Five Little Ducks short vs No No song short"},
+{"a":"tQlIWPUO_E0","b":"Ct1dHCSwlzs","label":"unrelated","confidence":0.85,"note":"Ten in the Bed short vs No No song short"},
+{"a":"7ClCbBREUlU","b":"Ct1dHCSwlzs","label":"unrelated","confidence":0.85,"note":"Boo Boo short vs No No song short"}
+]

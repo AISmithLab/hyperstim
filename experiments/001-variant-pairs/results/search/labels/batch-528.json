@@ -1,0 +1,72 @@
+[
+ {
+  "a": "e9gnACQvqRM",
+  "b": "hX-dN0g03eE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic Mini episodes (Suitcase vs Manhole longer cut)"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "31YuCXEbFoc",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "oT6bPk4gHxM",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "iCbinH5esNA",
+  "b": "hsciNDMYDRY",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Compilations share identical candy-park segments at 1/2 and 3/4"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "afyKHCB03MU",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "hX-dN0g03eE",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "sFhZZIPj9nE",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "7FiyQQBYTUY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ }
+]

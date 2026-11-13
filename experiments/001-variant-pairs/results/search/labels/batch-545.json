@@ -1,0 +1,72 @@
+[
+ {
+  "a": "zej8Uf5iAGk",
+  "b": "pBZoqnYJdpo",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: teleport vs space rocket"
+ },
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: space rocket vs toilet"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "OSOdLGenkS0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the red car/scooter episode"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "WZ45rZRLf80",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "VnHWYMlDgwI",
+  "b": "Zifbjuvaqrk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the lemonade stand car episode"
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "lij2KlyDHJ8",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "s0DwH0Oq5YY",
+  "b": "SlUYd5vQ6hw",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Two Boo Boo Song shorts with different characters and scenes"
+ },
+ {
+  "a": "-a3PpO3jlDI",
+  "b": "dL9q0aobLss",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter H vs letter R, shared template shots"
+ },
+ {
+  "a": "6FhYNE5KFeg",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: cat vs toilet"
+ },
+ {
+  "a": "tXgJmUiG38s",
+  "b": "7FiyQQBYTUY",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: builder vs skates"
+ }
+]

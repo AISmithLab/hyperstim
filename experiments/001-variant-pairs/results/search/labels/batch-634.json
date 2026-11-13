@@ -1,0 +1,72 @@
+[
+ {
+  "a": "JOMSMENnSIQ",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "R7pIlyiHmJY",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "DVLFCQUsuFI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "39Dtr0Rq-TY",
+  "b": "CU_QocmxLz0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, boards vs statue; similar blurry tumbling shots, different props"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "x0h4qykzlsA",
+  "b": "q8T0cDm6nSA",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "Qv-eMjDmTJQ",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "SB-7h4MW26k",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ }
+]

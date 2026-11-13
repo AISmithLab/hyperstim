@@ -1,0 +1,12 @@
+[
+{"a":"AydSzRoGSLY","b":"SP3eASDKke4","label":"same-song","confidence":0.6,"note":"Boo Boo song shorts; man/boy on green vs mother/baby in kitchen; matched moments differ."},
+{"a":"uzUxdwfXgWI","b":"aW_J2JMPmG8","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."},
+{"a":"DVLFCQUsuFI","b":"dG7KouaFW-o","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments."},
+{"a":"TGZl_HsDj_0","b":"n6eghHp7qWw","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; audio fully shared but different gags at matched moments."},
+{"a":"20HqqfnKxZk","b":"Zy0VtX5RTFM","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments."},
+{"a":"_EZv7EJE8LE","b":"iFpez4fPv5Y","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments."},
+{"a":"ripZ0792Vx4","b":"cmi5_37226c","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; different gags at matched moments, possibly some shared episodes."},
+{"a":"xGQYPFqXJjE","b":"cmi5_37226c","label":"shared-segments","confidence":0.5,"note":"Rattic Mini compilations; yellow-ball gag appears in both at different offsets, rest differs."},
+{"a":"IYU2e8WgGnY","b":"WZ45rZRLf80","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments."},
+{"a":"TGZl_HsDj_0","b":"X5isLUsPsU0","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments."}
+]

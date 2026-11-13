@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Kix07nOAEBQ",
+  "b": "klDPbXVTBzw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the giant egg episode"
+ },
+ {
+  "a": "wGMFLdlwsiE",
+  "b": "XBXyBskjSOc",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters Q vs T"
+ },
+ {
+  "a": "QKrdD5Y9c-s",
+  "b": "20HqqfnKxZk",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; B's horse/stall episodes appear in related comps"
+ },
+ {
+  "a": "_uYyO8y5Txc",
+  "b": "rWQWjm-AIvo",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Boo Boo shorts share mom-covering-mouth shot; B shorter cut"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "uQ90xr1p-eQ",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Kaboochi shorts share the girl-dance footage, different cuts"
+ },
+ {
+  "a": "M0V1ofCOEew",
+  "b": "klDPbXVTBzw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the giant egg episode"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "AyZJfo2rrOc",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share snowman, jeep and egg episodes"
+ },
+ {
+  "a": "pe_iRGqeBlA",
+  "b": "h4dQ-RG7dXA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share jeep, egg and snowman episodes"
+ },
+ {
+  "a": "MstDCeu1yxM",
+  "b": "2SAG3jAYNyk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "iJZ97cfpjhI",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Kaboochi dance: animal characters vs baby characters"
+ }
+]

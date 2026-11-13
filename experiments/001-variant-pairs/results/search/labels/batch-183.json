@@ -1,0 +1,12 @@
+[
+{"a":"Xc-Sk3Y3T6Y","b":"uwDZSa7UzSI","label":"shared-segments","confidence":0.55,"note":"Christmas compilations with matching Santa thumbnails; sampled frames differ."},
+{"a":"uwDZSa7UzSI","b":"NqJzxM62Xhk","label":"shared-segments","confidence":0.8,"note":"Christmas compilations sharing the tractor farm segment."},
+{"a":"GsgkT-kp_mM","b":"AGrnCKW4zwo","label":"shared-segments","confidence":0.65,"note":"Halloween Beat shorts sharing the striped-shirt girl shot; different cuts."},
+{"a":"LWCHzyCxJSQ","b":"gzCWo4_rAr0","label":"unrelated","confidence":0.75,"note":"Different comedy shorts, bug toy train vs robot kayak."},
+{"a":"_e29OQFpP7A","b":"VJ1tu3mMRa0","label":"shared-segments","confidence":0.6,"note":"Boo Boo Song shorts with same family characters and shots; different cuts."},
+{"a":"p5TIB-9Uiuc","b":"i2XoutDdPoM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs pillow."},
+{"a":"ukENAA-zDsg","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Halloween Night vs Boo Boo Song; different characters."},
+{"a":"39Dtr0Rq-TY","b":"TwDxP5L1-VA","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, boards vs teleport."},
+{"a":"HWH2lpQomEk","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Five Little Mommies; different characters."},
+{"a":"b5p78d-gr6w","b":"i0Zanhlu46I","label":"unrelated","confidence":0.8,"note":"Monster in the Dark vs Five Little Monsters; different characters."}
+]

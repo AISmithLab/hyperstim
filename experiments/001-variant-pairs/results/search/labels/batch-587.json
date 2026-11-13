@@ -1,0 +1,12 @@
+[
+{"a":"05oAs-Pqf5Y","b":"aYm4u_lQpIo","label":"same-song","confidence":0.9,"note":"Kaboochi song; Christmas Santa/kids animation vs different kids dancing at matched moments."},
+{"a":"V5OqHZwodj4","b":"fAQ_c_NEM7A","label":"same-song","confidence":0.9,"note":"Kaboochi; Christmas scenes vs single boy dancing on purple stage."},
+{"a":"LYyK7KurvMs","b":"-k4oiVaekT0","label":"same-template","confidence":0.95,"note":"Phonics series template, letter N vs letter Q, different words."},
+{"a":"xPt-5RG1m-0","b":"bXcFSE7NQp8","label":"same-song","confidence":0.85,"note":"Kaboochi; baby on colored backgrounds vs animal characters dancing."},
+{"a":"ijAeNNIiKJ4","b":"YrsmVbdtgLY","label":"same-song","confidence":0.9,"note":"Kaboochi; baby costumes vs Halloween monsters animation."},
+{"a":"ijAeNNIiKJ4","b":"hSOqsVdRmeI","label":"same-song","confidence":0.85,"note":"Kaboochi; baby dancing vs different kids and dog characters."},
+{"a":"dG4Nl9feXrc","b":"g9OACCqfu7A","label":"re-upload","confidence":0.55,"note":"Same train scenes and colors; B framed/cropped differently, 41 vs 60 s, no visible re-skin."},
+{"a":"YrsmVbdtgLY","b":"aYm4u_lQpIo","label":"same-song","confidence":0.9,"note":"Kaboochi; Halloween skeleton/vampire vs kids with sunglasses."},
+{"a":"ijAeNNIiKJ4","b":"aYm4u_lQpIo","label":"same-song","confidence":0.9,"note":"Kaboochi; baby on colored backgrounds vs different kids dancing."},
+{"a":"YrsmVbdtgLY","b":"xPt-5RG1m-0","label":"same-song","confidence":0.9,"note":"Kaboochi; Halloween monsters vs baby in costumes."}
+]

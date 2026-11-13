@@ -1,0 +1,12 @@
+[
+{"a":"Iygt_NzD7VU","b":"AydSzRoGSLY","label":"shared-segments","confidence":0.75,"note":"Boo Boo song: 11s clip cut from the 41s short; same footage."},
+{"a":"kHpv95zjwv4","b":"5AiYAgNfj7A","label":"same-template","confidence":0.5,"note":"Boom Buddies Halloween songs with shared kid characters; different songs and scenes."},
+{"a":"vYXkEPIElyc","b":"n2mneo6Owhk","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Kaboochi dance; different animation."},
+{"a":"0L9EfYLMx8A","b":"0E1mZOYwLoU","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs (P vs Z) on shared template."},
+{"a":"DS8rk9NwXQc","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."},
+{"a":"7FiyQQBYTUY","b":"jPvyJ9IIRJk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."},
+{"a":"pKnKuQMeGlk","b":"dG7KouaFW-o","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the Mime episode (identical frame)."},
+{"a":"pKnKuQMeGlk","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations both led by the Mime episode; other episodes differ."},
+{"a":"Zy0VtX5RTFM","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations on same set; frames show different episodes."},
+{"a":"jPvyJ9IIRJk","b":"afyKHCB03MU","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."}
+]

@@ -1,0 +1,134 @@
+{
+ "stages": [
+  {
+   "stage": "0 inventory",
+   "done": 5887,
+   "of": 5887,
+   "pct_done": 100.0,
+   "passed": 4066,
+   "pct_passed": 69.1,
+   "note": "passed = not compilations"
+  },
+  {
+   "stage": "1 images",
+   "done": 4066,
+   "of": 4066,
+   "pct_done": 100.0,
+   "passed": 4066,
+   "pct_passed": 100.0
+  },
+  {
+   "stage": "2 candidates",
+   "done": 8264145,
+   "of": 8264145,
+   "pct_done": 100.0,
+   "passed": 350498,
+   "pct_passed": 4.2
+  },
+  {
+   "stage": "3 score",
+   "done": 350498,
+   "of": 350498,
+   "pct_done": 100.0,
+   "passed": 9714,
+   "pct_passed": 2.8
+  },
+  {
+   "stage": "4 gate",
+   "done": 9714,
+   "of": 9714,
+   "pct_done": 100.0,
+   "passed": 5736,
+   "pct_passed": 59.0,
+   "note": "+621 stopped pairs reviewed as an audit"
+  },
+  {
+   "stage": "5 review",
+   "done": 5799,
+   "of": 5801,
+   "pct_done": 100.0,
+   "passed": 4508,
+   "pct_passed": 77.7,
+   "note": "passed = any label but unrelated"
+  },
+  {
+   "stage": "6 download",
+   "done": 392,
+   "of": 392,
+   "pct_done": 100.0,
+   "note": "videos of confident re-skin and re-upload pairs"
+  },
+  {
+   "stage": "6b overlap",
+   "done": 358,
+   "of": 358,
+   "pct_done": 100.0,
+   "passed": 330,
+   "pct_passed": 92.2,
+   "note": "pairs; passed = at least half of the shorter video"
+  },
+  {
+   "stage": "7 reports",
+   "done": 103,
+   "of": 103,
+   "pct_done": 100.0,
+   "passed": 103,
+   "pct_passed": 100.0,
+   "note": "0 running"
+  }
+ ],
+ "at": "2026-11-12T23:53:51Z",
+ "elapsed_h": 0.64,
+ "mem_free_gb": 23.2,
+ "downloads": {
+  "state": "done",
+  "videos_left": 0,
+  "player_used_today": 0,
+  "player_per_day": 500
+ },
+ "overlap": {
+  "aligned": 358,
+  "pass": 330,
+  "busy": false
+ },
+ "groups": {
+  "re-skin": {
+   "groups": 44,
+   "videos": 147,
+   "little_shared": 24,
+   "waiting": 0
+  },
+  "re-upload": {
+   "groups": 100,
+   "videos": 218,
+   "little_shared": 4,
+   "waiting": 0
+  },
+  "same-song": {
+   "groups": 32,
+   "videos": 135,
+   "little_shared": 0,
+   "waiting": 0
+  },
+  "same-template": {
+   "groups": 32,
+   "videos": 362,
+   "little_shared": 0,
+   "waiting": 0
+  },
+  "shared-segments": {
+   "groups": 252,
+   "videos": 804,
+   "little_shared": 0,
+   "waiting": 0
+  }
+ },
+ "reports": {
+  "selected": 103,
+  "ok": 103,
+  "failed": 0,
+  "running": [],
+  "mean_min": 13.1,
+  "eta_h_if_videos_in": 0.0
+ }
+}

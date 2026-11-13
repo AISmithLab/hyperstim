@@ -1,0 +1,72 @@
+[
+ {
+  "a": "nbApYhjXet4",
+  "b": "x-80P5Mf_Y8",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the green dinosaur episode"
+ },
+ {
+  "a": "Yl6782bfSNA",
+  "b": "STD9E9YpQgo",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Incy Wincy Spider 2015 vs 2016: yellow spider recolored red, background recolored, same shots"
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "nbApYhjXet4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the mime and dinosaur episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "pKnKuQMeGlk",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the mime and dinosaur episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "S9N416aMRxk",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the green dinosaur episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "Jt4V3NCA-u0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the green dinosaur episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "LQQ2DD4V_mY",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the green dinosaur episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "dG7KouaFW-o",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the mime episode"
+ },
+ {
+  "a": "nbApYhjXet4",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "CU_QocmxLz0",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

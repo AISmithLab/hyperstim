@@ -1,0 +1,12 @@
+[
+{"a":"0yIhvJw1GK8","b":"AlEPz20FGnk","label":"shared-segments","confidence":0.6,"note":"B (178 s) shows A's red-shirt boy shot at 3/4; B looks like a longer version containing A."},
+{"a":"TGZl_HsDj_0","b":"aDyWeSAt-sI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no common frame seen (trashcan vs space rocket)."},
+{"a":"eT-HIXX8iXY","b":"KVvaZF-PRrc","label":"same-template","confidence":0.8,"note":"Bob the Train series, identical intro; numbers vs fruits on the same train."},
+{"a":"7tPwB6pJgq4","b":"dAvn2CdSeIY","label":"shared-segments","confidence":0.85,"note":"Identical bunny-and-baby-in-bed frame; B is a 17-minute compilation containing Five in the Bed."},
+{"a":"k3vCYP_aQ3w","b":"yOq3vuvmRCQ","label":"re-skin","confidence":0.8,"note":"Red bus (2018) vs purple bus (2025): same front-view street shots and panda shots."},
+{"a":"6aBfQYlhKJs","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.75,"note":"Halloween zombie short vs dinosaur song, different characters and scenes."},
+{"a":"6aBfQYlhKJs","b":"_QFj7e58XGE","label":"unrelated","confidence":0.75,"note":"Halloween zombie short vs Wheels on the Train, different scenes."},
+{"a":"6aBfQYlhKJs","b":"eAodpnlhaNI","label":"unrelated","confidence":0.75,"note":"Halloween zombie short vs Boo Boo song with Bob the Train, different scenes."},
+{"a":"_QFj7e58XGE","b":"z_A_hkPDigU","label":"unrelated","confidence":0.6,"note":"Wheels on the Train vs Bus Going to the Camp, different shots; similar kid style."},
+{"a":"VqT9YA3THAE","b":"hsUfmH_uRjc","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, different gags (worm vs car service)."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "-3gJNjiZ0Nw",
+  "b": "SnYTSY1OOvM",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Bob compilations sharing a song (boy by yellow house frame identical)"
+ },
+ {
+  "a": "mJFTp8x_QZ4",
+  "b": "urNKg4X9kIU",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "B (62s) includes the barbell gag footage plus teleport"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, birthday vs skates gags"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "hzzGSyV_BCA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "C5NadrBnSj8",
+  "b": "tNPoYErk2rs",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo shorts cut from the same footage"
+ },
+ {
+  "a": "_e29OQFpP7A",
+  "b": "SP3eASDKke4",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo shorts cut from the same footage"
+ },
+ {
+  "a": "C5NadrBnSj8",
+  "b": "svxlLrPCzUM",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo shorts cut from the same footage"
+ },
+ {
+  "a": "n6eghHp7qWw",
+  "b": "sT3J4L19qrE",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing bin and toy jeep episodes"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "hzzGSyV_BCA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "Gvz14qtMDBo",
+  "b": "XBXyBskjSOc",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob the Train letter G vs letter T episodes"
+ }
+]

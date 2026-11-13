@@ -1,0 +1,72 @@
+[
+ {
+  "a": "kYSSpyaKW_U",
+  "b": "9eZZ4VSypjo",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Same Old MacDonald Bob video, identical frames; new thumbnail and title"
+ },
+ {
+  "a": "V9fA6nrohac",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "c3lLP39EdME",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "aDyWeSAt-sI",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share jeep and snowman episodes"
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "s0DwH0Oq5YY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Hush Little Baby vs Boo Boo shorts; different characters"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "i2XoutDdPoM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "_OlmXmG5OLM",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "hoNtxM3afpk",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "LJN6yukuQ9A",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "PjXooPy93AM",
+  "b": "fx0aMbJwE34",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share jeep and snowman episodes"
+ }
+]

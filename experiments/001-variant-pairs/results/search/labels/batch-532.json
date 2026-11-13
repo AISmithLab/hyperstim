@@ -1,0 +1,72 @@
+[
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "RG_4B9zxJnU",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Boo Boo Song shorts, same character models, different shots at each time; likely two cuts"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "5iXRqSe4KJo",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, different props"
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "skNxtYhw9Y8",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing the turban/basket episode"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "TwS8SzpZrug",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing claw machine and stroller episodes"
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic Mini episodes, birthday vs toilet"
+ },
+ {
+  "a": "Zifbjuvaqrk",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ }
+]

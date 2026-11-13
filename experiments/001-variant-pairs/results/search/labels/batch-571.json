@@ -1,0 +1,72 @@
+[
+ {
+  "a": "yVKvv4YMB78",
+  "b": "JOMSMENnSIQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "Q95CAqmYoew",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Rattic Mini short vs larva cartoon short"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bar chair vs spot"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "Ia-g9fkyMJ4",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Rattic Mini short vs larva cartoon short"
+ },
+ {
+  "a": "a0Dg0fPxACY",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: tumbler toy vs high striker"
+ },
+ {
+  "a": "NcfiuWYdC24",
+  "b": "aScyfsClZd0",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Two Boo Boo Song shorts with different characters and scenes"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: kung fu vs leaves"
+ },
+ {
+  "a": "NcfiuWYdC24",
+  "b": "SP3eASDKke4",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with the same family models; likely cuts of one animation"
+ },
+ {
+  "a": "Th5MQB8VO3Q",
+  "b": "rWQWjm-AIvo",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song long vs short cut; same family models and kitchen scenes"
+ },
+ {
+  "a": "GvP31EGA8tQ",
+  "b": "oXA7qx--2oI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ }
+]

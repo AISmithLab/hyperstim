@@ -1,0 +1,12 @@
+[
+{"a":"Snmr037PzOQ","b":"6xPW1Viz8Sg","label":"re-upload","confidence":0.85,"note":"Same animal finger family animation (pink cat in desert), different thumbnail/branding."},
+{"a":"-310FC3iTw8","b":"H4_BpVuvsgU","label":"re-skin","confidence":0.55,"note":"Thumbnail match only: yellow vs purple Halloween bus same pose; A compilation, frames differ."},
+{"a":"5krJjartqj0","b":"PJMQwM1Z1Ao","label":"shared-segments","confidence":0.85,"note":"Zoobees compilations sharing identical scenes (pig room, elephant)."},
+{"a":"aACfDyTDcL8","b":"pe_iRGqeBlA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing car and snowman episodes."},
+{"a":"FIinrJO9po8","b":"LQQ2DD4V_mY","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations on the same set; no shared frames visible."},
+{"a":"49leN9fKryQ","b":"30tipN0AniY","label":"unrelated","confidence":0.6,"note":"Different Christmas songs and characters; only similar Santa thumbnail layout."},
+{"a":"kHVGgxylqd8","b":"svxlLrPCzUM","label":"same-song","confidence":0.65,"note":"Boo Boo Song shorts, different shots/characters in frames."},
+{"a":"665zR-2cSRc","b":"N1aIp7LiBhc","label":"shared-segments","confidence":0.65,"note":"Five Little Vegetables shorts; identical Bob train frame, other veggie shots differ."},
+{"a":"6L0oq3iwbS0","b":"3aoEeaCHS_w","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, different episodes."},
+{"a":"sT3J4L19qrE","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing car episode."}
+]

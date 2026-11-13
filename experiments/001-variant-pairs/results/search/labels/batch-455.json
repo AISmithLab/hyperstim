@@ -1,0 +1,12 @@
+[
+{"a":"t5wDGNrzpro","b":"pbfbmXohAGo","label":"shared-segments","confidence":0.7,"note":"Kaboochi shorts, same corgi footage cut in different order"},
+{"a":"Th5MQB8VO3Q","b":"ZaPOBxvKuXs","label":"shared-segments","confidence":0.8,"note":"Boo Boo Song 178s and 96s cuts share the girl shots"},
+{"a":"BrjLq8jTPfw","b":"Qs4R686NOjg","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing car kiosk and toilet episodes"},
+{"a":"bdbNsMtn26Y","b":"lij2KlyDHJ8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the snake charmer and vending machine episodes"},
+{"a":"GCqVNL7ZRdg","b":"ZEI_8iC_Z7E","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing balloon and stones episodes"},
+{"a":"GCqVNL7ZRdg","b":"hzzGSyV_BCA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing balloon and car kiosk episodes"},
+{"a":"t5wDGNrzpro","b":"6YYa6ar2RN4","label":"shared-segments","confidence":0.7,"note":"Kaboochi shorts sharing baby and corgi shots, different cut"},
+{"a":"jRCHQ6wCTUA","b":"DS8rk9NwXQc","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Spring Toy vs Mime episodes"},
+{"a":"qHf6e1CQQ5c","b":"CfJfPAF8El8","label":"same-song","confidence":0.55,"note":"Kaboochi shorts with overlapping cast, no matching shot sampled"},
+{"a":"h4dQ-RG7dXA","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing two episodes"}
+]

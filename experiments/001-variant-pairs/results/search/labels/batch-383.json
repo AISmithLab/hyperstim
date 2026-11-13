@@ -1,0 +1,72 @@
+[
+ {
+  "a": "OCnnLZtJqtM",
+  "b": "NLfC0ahn9z0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Loco Nuts compilations sharing the soccer dog segment."
+ },
+ {
+  "a": "OCnnLZtJqtM",
+  "b": "WKpcp6DJUF4",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Compilation titled with Yes Yes Song vs the single; same pig character, frames differ."
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "PIZj5SH8Bok",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing car and block-tower episodes."
+ },
+ {
+  "a": "PIZj5SH8Bok",
+  "b": "TGZl_HsDj_0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing car and block-tower episodes."
+ },
+ {
+  "a": "PIZj5SH8Bok",
+  "b": "DVLFCQUsuFI",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing car and block-tower episodes."
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "PIZj5SH8Bok",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing car and block-tower episodes."
+ },
+ {
+  "a": "9RUN6Q-uZm0",
+  "b": "ihJt-oPUoYk",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letter episodes, H vs J."
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "fx0aMbJwE34",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "Q95CAqmYoew",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini short vs Larva short; different series."
+ },
+ {
+  "a": "urNKg4X9kIU",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

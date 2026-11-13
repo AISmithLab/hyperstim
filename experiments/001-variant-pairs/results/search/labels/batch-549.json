@@ -1,0 +1,72 @@
+[
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "YJLDe0F_z7k",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share trash can and snowman episodes"
+ },
+ {
+  "a": "Br48ar2svbI",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter B vs letter Z, shared template shots"
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Different song shorts (If You're Happy vs Kaboochi); match on vertical side bars"
+ },
+ {
+  "a": "RG_4B9zxJnU",
+  "b": "tNPoYErk2rs",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Boo Boo Song shorts cut from the same animation (dad with kid on shoulders shot)"
+ },
+ {
+  "a": "VqT9YA3THAE",
+  "b": "i2XoutDdPoM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: worm vs pillow"
+ },
+ {
+  "a": "Tgp1NqPegK8",
+  "b": "oRk8sglOG5k",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Kaboochi vs Boo Boo shorts; same baby character, different scenes"
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "s0DwH0Oq5YY",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Wheels on the Train vs Boo Boo shorts; different animation"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "_EZv7EJE8LE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "inkqQlbrdrQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine and toy soldiers episodes"
+ },
+ {
+  "a": "BrjLq8jTPfw",
+  "b": "hzzGSyV_BCA",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the lemonade stand car episode"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"STbxoNkCusQ","b":"I_pPwBRFp2w","label":"shared-segments","confidence":0.85,"note":"Boom Buddies compilations; identical frames at 1/4 and 1/2"},
+{"a":"Z3hYfJ4dDKk","b":"QidFzjRpGdM","label":"re-upload","confidence":0.65,"note":"Five Little Mommies short re-cut; same doctor phone shots, slightly different length"},
+{"a":"n1u8zKHNZbk","b":"w9BOETCUH5o","label":"same-song","confidence":0.55,"note":"Jingle Bells shorts; Santa in different settings, no clearly shared shot"},
+{"a":"n1u8zKHNZbk","b":"AXfeoPJolIE","label":"same-song","confidence":0.55,"note":"Jingle Bells shorts with different scenes"},
+{"a":"7xv-yiS3oB4","b":"CcZ5-DXzIL0","label":"unrelated","confidence":0.65,"note":"Different Halloween songs as shorts; only style and black side bars match"},
+{"a":"IDwshmCv_Xw","b":"5l8bgaGtGv0","label":"shared-segments","confidence":0.6,"note":"Jingle Bells shorts both include the bunny and Santa shots"},
+{"a":"xU3oLsk2eF8","b":"irZjw8gc2EU","label":"unrelated","confidence":0.6,"note":"Different Christmas songs in shorts; no shared shot"},
+{"a":"IRWTZropao4","b":"H3sryXrlWy8","label":"shared-segments","confidence":0.65,"note":"Ha Ha Halloween shorts with same monster baby and granny shots, re-cut"},
+{"a":"virobChxE9Y","b":"s7JRVneKcao","label":"shared-segments","confidence":0.85,"note":"Apples and Bananas compilations sharing a song; identical frames at 1/2 and 3/4"},
+{"a":"a1i4xSfmk-E","b":"Hr0Jl1s_ccc","label":"shared-segments","confidence":0.8,"note":"Halloween song and a compilation containing the same vampire shot"}
+]

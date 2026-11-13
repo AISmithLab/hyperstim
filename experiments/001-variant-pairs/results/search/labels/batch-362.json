@@ -1,0 +1,72 @@
+[
+ {
+  "a": "oRk8sglOG5k",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "_QFj7e58XGE",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "c43YA5Iq9y4",
+  "b": "NqkKDg2Ysf0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letter episodes, different letters."
+ },
+ {
+  "a": "s3aVKjLvoQI",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "hmqdid2kALU",
+  "b": "NqkKDg2Ysf0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letter episodes, different letters."
+ },
+ {
+  "a": "xU3oLsk2eF8",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "5krJjartqj0",
+  "b": "yR_WeP1dliE",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Zoobees compilations sharing the elephant classroom segment."
+ },
+ {
+  "a": "tQlIWPUO_E0",
+  "b": "h3bvPp9Jqnc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ }
+]

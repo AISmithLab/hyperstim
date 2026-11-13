@@ -1,0 +1,72 @@
+[
+ {
+  "a": "7ClCbBREUlU",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "6f6S5Y_1aIA",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "Td73SYRglgw",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "rWQWjm-AIvo",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Boo Boo shorts share the pink-sweater mom holding baby; likely cuts of one video."
+ },
+ {
+  "a": "AKD-gwTktdc",
+  "b": "v8YSR6Or2bc",
+  "label": "re-skin",
+  "confidence": 0.8,
+  "note": "Baby Bao Wheels on the Bus short: same bus model and panda passengers, pink vs orange bus."
+ },
+ {
+  "a": "Ln0H_11UIwI",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "cXFzC5Ht5Ds",
+  "b": "IbEIByW4Fwk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Spooky bus vs dance shorts; nothing shared."
+ },
+ {
+  "a": "pst1AsXQWTE",
+  "b": "rWQWjm-AIvo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "XFz86QUABdQ",
+  "b": "7I0SeirswAk",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Johny Johny shorts share the orange-shirt dad shots; cuts of one animation."
+ }
+]

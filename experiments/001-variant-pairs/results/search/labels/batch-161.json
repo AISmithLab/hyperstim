@@ -1,0 +1,12 @@
+[
+{"a":"seXZDKkONiU","b":"R31yuujeSpU","label":"unrelated","confidence":0.75,"note":"Hindi parrot rhyme vs elephant rhyme shorts; different content."},
+{"a":"lKgR-msxA0A","b":"c43YA5Iq9y4","label":"same-template","confidence":0.8,"note":"Bob the Train letter C vs letter I songs, same set and layout."},
+{"a":"qmtf_HY_1NQ","b":"o9DDAksGG1g","label":"shared-segments","confidence":0.7,"note":"Boom Buddies compilations both containing the same Five Little Monkeys episode."},
+{"a":"TGZl_HsDj_0","b":"yVKvv4YMB78","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the red toy-car episode."},
+{"a":"-a3PpO3jlDI","b":"kwXxrZQ5GaQ","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters H and L, shared intro and set."},
+{"a":"afyKHCB03MU","b":"a0Dg0fPxACY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bottle vs tumbler toy."},
+{"a":"LJN6yukuQ9A","b":"VqT9YA3THAE","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, manhole vs worm."},
+{"a":"7m15CgRy6OU","b":"fcYBv33BuIY","label":"shared-segments","confidence":0.7,"note":"Boo Boo song shorts cut from the same footage."},
+{"a":"pKnKuQMeGlk","b":"uzUxdwfXgWI","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing dinosaur and mime episodes."},
+{"a":"aW_J2JMPmG8","b":"IYU2e8WgGnY","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-jeep episode."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "uefjFu0v-Jc",
+  "b": "ul_Kj8QZX80",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "2015 Bob song adventures (colors vs ABC), same thumbnail layout and train"
+ },
+ {
+  "a": "SEoJGGkKx7k",
+  "b": "NpJ_yg1QJVA",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "Zoobees Zoo Wheels on the Bus: same shots, yellow bus recolored red"
+ },
+ {
+  "a": "NpJ_yg1QJVA",
+  "b": "cufl2niNsMo",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "Zoobees Zoo Wheels on the Bus: same shots, red bus recolored white/pink cow print"
+ },
+ {
+  "a": "5-CKSBS3rb8",
+  "b": "ul_Kj8QZX80",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "2015 Bob song adventures (numbers vs ABC), same thumbnail layout and train"
+ },
+ {
+  "a": "NnN4n9v9Ojs",
+  "b": "evV7r4kNN7g",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters F vs Y"
+ },
+ {
+  "a": "Tgp1NqPegK8",
+  "b": "ouJSdR1OtEo",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Kaboochi shorts: baby characters vs Hawaiian kids"
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "C5NadrBnSj8",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts from different animations"
+ },
+ {
+  "a": "gIMyiAxeKSk",
+  "b": "lQxaq4Fu-i0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters I vs U, same template"
+ },
+ {
+  "a": "jPvyJ9IIRJk",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "WZ45rZRLf80",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share sleigh, egg and snake episodes"
+ }
+]

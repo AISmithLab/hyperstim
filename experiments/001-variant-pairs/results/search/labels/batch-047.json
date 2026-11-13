@@ -1,0 +1,12 @@
+[
+{"a":"KVvaZF-PRrc","b":"JlsguWRqg_A","label":"same-template","confidence":0.85,"note":"Bob the Train learning episodes, same intro and carriages; fruits vs vehicles cargo"},
+{"a":"ainrmFQVbfI","b":"obdK23ZIr6E","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, same set, rope vs trishaw gag"},
+{"a":"obdK23ZIr6E","b":"di7g1bv5UC0","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, same set, different gags"},
+{"a":"oYgG-YAJXx8","b":"LBFC7KHdTsE","label":"same-song","confidence":0.8,"note":"Five Little Monkeys: 3D babies version vs 2D monkey cartoon"},
+{"a":"JlsguWRqg_A","b":"CR4xOtDkvNU","label":"shared-segments","confidence":0.7,"note":"Transport Train episode and a compilation led by it; other Bob segments in frames"},
+{"a":"O7KdJfqH4po","b":"-8ywUTQj2UE","label":"shared-segments","confidence":0.85,"note":"2019 compilations sharing an identical Super Supremes segment"},
+{"a":"eT-HIXX8iXY","b":"JlsguWRqg_A","label":"same-template","confidence":0.85,"note":"Bob the Train learning episodes, same intro; numbers vs vehicles"},
+{"a":"ikzRgQWlgRA","b":"CR4xOtDkvNU","label":"shared-segments","confidence":0.8,"note":"Bob compilations sharing the number train segment"},
+{"a":"8-93_TmkKfc","b":"O_D2N_ulWXg","label":"re-skin","confidence":0.75,"note":"Same 3D bus/panda street shots; yellow faceless bus vs blue bus with face"},
+{"a":"eT-HIXX8iXY","b":"ikzRgQWlgRA","label":"shared-segments","confidence":0.8,"note":"Number Train episode included in Vegetable Train compilation"}
+]

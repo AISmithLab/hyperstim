@@ -1,0 +1,12 @@
+[
+{"a":"Yp_wsRyrcvk","b":"KMr0eKc64zE","label":"re-skin","confidence":0.7,"note":"Same 2D shots (doctor identical, mother same pose/background) with mother redrawn; girl differs"},
+{"a":"TYpGBwEAu0E","b":"reUxl2Hp5ww","label":"same-template","confidence":0.65,"note":"2019 insect songs series, same bug characters, different songs"},
+{"a":"TYpGBwEAu0E","b":"QWyNX0MQAIs","label":"same-template","confidence":0.65,"note":"2019 insect songs series, same bug characters, different songs"},
+{"a":"TYpGBwEAu0E","b":"sCPOgpKqNxQ","label":"same-template","confidence":0.65,"note":"2019 insect songs series, same bug characters, different songs"},
+{"a":"lMLFwzcH8_s","b":"e9LhPr3svs0","label":"re-skin","confidence":0.6,"note":"Compilation led by pink-bus version of B's green-bus Wheels on Bus; rest differs"},
+{"a":"aYm4u_lQpIo","b":"WAVrZioY18c","label":"unrelated","confidence":0.8,"note":"Kaboochi short vs No No song short"},
+{"a":"aKkecxwHm00","b":"BjJsBFK0q3k","label":"unrelated","confidence":0.8,"note":"Row Your Boat short vs Humpty Dumpty short"},
+{"a":"-qxEnbH15lY","b":"aYm4u_lQpIo","label":"unrelated","confidence":0.8,"note":"Boo Boo short vs Kaboochi short"},
+{"a":"NkrowZHe9HY","b":"RzmEoGxgZf4","label":"shared-segments","confidence":0.8,"note":"Compilations sharing the dad-in-yard episode"},
+{"a":"aKkecxwHm00","b":"BktbsqZ00Lg","label":"unrelated","confidence":0.8,"note":"Row Your Boat short vs Five Little Ducks short"}
+]

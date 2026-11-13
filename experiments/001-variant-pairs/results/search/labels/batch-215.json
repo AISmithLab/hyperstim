@@ -1,0 +1,72 @@
+[
+ {
+  "a": "gdVpv0KN_uU",
+  "b": "xe7vTAa-ufc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Mommies vs Jingle Bells shorts; nothing shared."
+ },
+ {
+  "a": "E6KHe0vm4Bw",
+  "b": "_e29OQFpP7A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "X_l1P0abE6g",
+  "b": "nV7PY6MLqQg",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Hop & Zip episodes with shared intro shot, different stories."
+ },
+ {
+  "a": "CfrRZ0E3ssI",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Two different Halloween shorts; nothing shared."
+ },
+ {
+  "a": "VLa2W1SssVQ",
+  "b": "HE58ikBC9nw",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters W vs X, same set and kid shots."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "Jn9aklUYdQk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "E1wcRx1Exec",
+  "b": "BZqq3eL6xSE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Larva short vs Rattic Mini short; different series."
+ },
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "b5p78d-gr6w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs monster in the dark shorts; nothing shared."
+ },
+ {
+  "a": "6H4UizQh1DY",
+  "b": "jceEaiF00_c",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Apples & Bananas compilations; only thumbnail layout shared."
+ },
+ {
+  "a": "sMxyqn79r3o",
+  "b": "yVgOJKYP5NI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the shapes segment at midpoint."
+ }
+]

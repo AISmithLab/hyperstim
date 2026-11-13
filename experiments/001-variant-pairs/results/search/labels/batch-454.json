@@ -1,0 +1,72 @@
+[
+ {
+  "a": "t0Jw9cy-Yv4",
+  "b": "XBTfCjHrcIo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Soccer gag shorts, same series and stadium, different characters and gags"
+ },
+ {
+  "a": "gvcEcWUHZ_c",
+  "b": "Qs4R686NOjg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share episodes (toy car stall, horse)"
+ },
+ {
+  "a": "Zifbjuvaqrk",
+  "b": "Qs4R686NOjg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share several episodes"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "QKrdD5Y9c-s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the stroller episode"
+ },
+ {
+  "a": "t5wDGNrzpro",
+  "b": "uQ90xr1p-eQ",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Kaboochi shorts share corgi and girl dance shots, different cuts"
+ },
+ {
+  "a": "GCqVNL7ZRdg",
+  "b": "hrOfhQCxqL0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share toy car stall and heart episodes"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "QKrdD5Y9c-s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine and stroller episodes"
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "SSeBjzpJLFk",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share turban-snake and claw machine episodes"
+ },
+ {
+  "a": "t5wDGNrzpro",
+  "b": "Tgp1NqPegK8",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Kaboochi shorts share baby/corgi footage, different cuts"
+ },
+ {
+  "a": "C5NadrBnSj8",
+  "b": "_uYyO8y5Txc",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Boo Boo shorts with the same mom-and-baby footage; A longer cut"
+ }
+]

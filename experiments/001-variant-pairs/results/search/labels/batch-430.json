@@ -1,0 +1,72 @@
+[
+ {
+  "a": "7Ldj5W-FyMs",
+  "b": "OFvmlD86K5Q",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Wheels on the X shorts: tractor vs taxi, different kids and shots"
+ },
+ {
+  "a": "mN5Yr7SsVpw",
+  "b": "ZKr4e59JNlA",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Bob the Train compilations sharing the kids-with-Bob dance scene"
+ },
+ {
+  "a": "_uYyO8y5Txc",
+  "b": "CgR6YuA2Uoo",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "qHf6e1CQQ5c",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "No No Song vs Kaboochi; different characters and scenes"
+ },
+ {
+  "a": "OZzQENCeeNg",
+  "b": "aKkecxwHm00",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different songs, different scenes"
+ },
+ {
+  "a": "9RUN6Q-uZm0",
+  "b": "wGMFLdlwsiE",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters H vs Q, same template"
+ },
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "oRUKPowFBgM",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi vs Apples & Bananas shorts; different scenes"
+ },
+ {
+  "a": "T_UkjGC9NxQ",
+  "b": "5krJjartqj0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Zoobees compilations share the girl-and-elephant segment"
+ },
+ {
+  "a": "ixr-TMi-K8U",
+  "b": "yDaxszBxrFA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Loconuts episodes, same characters, different stories"
+ },
+ {
+  "a": "NqkKDg2Ysf0",
+  "b": "uFVntNVnn7k",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters K vs O, same template"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"UXsXYmw3_CY","b":"_4x2xszMRq8","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs birthday gags."},
+{"a":"UGzlPPWb6Pg","b":"MstDCeu1yxM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, fly swatter vs pillow gags."},
+{"a":"XamiKGRhams","b":"jflAKuIuQBM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, toilet vs talent show gags."},
+{"a":"y5BTqWirpe8","b":"aFbSzIMTBsY","label":"same-template","confidence":0.9,"note":"Bob the Train letter episodes, M vs N."},
+{"a":"VqT9YA3THAE","b":"TtH33fR-iQM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, worm vs skates gags."},
+{"a":"UXsXYmw3_CY","b":"6L0oq3iwbS0","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs TV gags."},
+{"a":"Gvz14qtMDBo","b":"y5BTqWirpe8","label":"same-template","confidence":0.9,"note":"Bob the Train letter episodes, G vs M."},
+{"a":"UXsXYmw3_CY","b":"7xSdzGpSjl4","label":"shared-segments","confidence":0.75,"note":"Same Gloves gag; B is a 75s longer cut containing A's shots."},
+{"a":"P610udrUFqE","b":"tQ3LttVt_Jk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, seesaw vs canyon gags."},
+{"a":"TwDxP5L1-VA","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, teleport vs toilet/gloves gags."}
+]

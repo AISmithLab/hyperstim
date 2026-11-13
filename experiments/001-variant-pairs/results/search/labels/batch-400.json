@@ -1,0 +1,72 @@
+[
+ {
+  "a": "_JnHjZrrxfg",
+  "b": "idtDk1fbCmM",
+  "label": "re-upload",
+  "confidence": 0.7,
+  "note": "Same 673s compilation re-titled a day apart; 1/2 and 3/4 frames identical."
+ },
+ {
+  "a": "0TMESkQq8lI",
+  "b": "lM2FQ_k5iEE",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "Same Jingle Bells animation; 2020 version adds sing-along lyrics and new thumbnail."
+ },
+ {
+  "a": "mvk72WzIpmA",
+  "b": "lM2FQ_k5iEE",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Christmas compilation containing the Jingle Bells kids-and-fence segment."
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "xbcUfB29xss",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini short vs Larva short; different series."
+ },
+ {
+  "a": "I25m3zH47KA",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "pBZoqnYJdpo",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"dG7KouaFW-o","b":"Kix07nOAEBQ","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"20HqqfnKxZk","b":"YABj119wijM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the pillow jump episode"},
+{"a":"afyKHCB03MU","b":"ainrmFQVbfI","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Bottle vs Rope"},
+{"a":"Bx-2FBZQKs0","b":"ZRd-uNE-AUA","label":"unrelated","confidence":0.8,"note":"Haunted House vs Hawaiian Kaboochi shorts"},
+{"a":"Eif8UopFHhM","b":"JOMSMENnSIQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the claw machine and ladybug episodes"},
+{"a":"awLcqOFRHzg","b":"YABj119wijM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"RG_4B9zxJnU","b":"_uYyO8y5Txc","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts from one production, girl and dad scenes"},
+{"a":"UN4V4ywCWxA","b":"vGjN_CslxSI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"njSANQD1GlI","b":"XamiKGRhams","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Magic Hat vs Toilet"},
+{"a":"PjXooPy93AM","b":"nHT4spNAshs","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"}
+]

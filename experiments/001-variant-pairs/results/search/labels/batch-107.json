@@ -1,0 +1,12 @@
+[
+{"a":"335nXLEvRNU","b":"nFEUpP4_-qQ","label":"re-upload","confidence":0.9,"note":"Boo Boo song, identical frames across channels; new thumbnail and watermark"},
+{"a":"fKWJTJUkwPc","b":"snvdOvj-H-o","label":"unrelated","confidence":0.7,"note":"Five in the Bed vs Up on the Roof Top shorts, different content"},
+{"a":"8FfB6sLVBsg","b":"ooNV6JXn4LI","label":"same-song","confidence":0.6,"note":"Oo and La Spanish alphabet songs, same characters, different animation (balloons vs train)"},
+{"a":"w7exxTCHfx8","b":"R7pIlyiHmJY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the yellow-egg episode"},
+{"a":"lkGmcS3ArOg","b":"yzxyqrBbzCY","label":"unrelated","confidence":0.6,"note":"Two different Halloween song compilations, different series and animations"},
+{"a":"20HqqfnKxZk","b":"PjXooPy93AM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared episode visible"},
+{"a":"iaSPV2ZHx5U","b":"fKWJTJUkwPc","label":"same-template","confidence":0.6,"note":"Loco Nuts shorts with same pig/monkey/cat cast, different songs"},
+{"a":"vGRznPzQIxo","b":"i9kMX8tSKSA","label":"unrelated","confidence":0.7,"note":"Playground song vs Chew Your Food shorts, different characters and scenes"},
+{"a":"v80qWgkingM","b":"wk9I_xT1NNc","label":"unrelated","confidence":0.75,"note":"Halloween night short vs zoo song short"},
+{"a":"34zV8hDOuFs","b":"20HqqfnKxZk","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; no shared episode visible"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"CcZ5-DXzIL0","b":"t3y2AhXLjRY","label":"unrelated","confidence":0.85,"note":"Different Halloween shorts, different characters and style."},
+{"a":"CcZ5-DXzIL0","b":"IRWTZropao4","label":"unrelated","confidence":0.85,"note":"Different Halloween shorts, different characters."},
+{"a":"v80qWgkingM","b":"CcZ5-DXzIL0","label":"unrelated","confidence":0.85,"note":"Different Halloween shorts, different characters."},
+{"a":"Is1sSXyJz28","b":"CcZ5-DXzIL0","label":"unrelated","confidence":0.85,"note":"Different Halloween shorts, different characters."},
+{"a":"bzcufo-BRaA","b":"CcZ5-DXzIL0","label":"unrelated","confidence":0.85,"note":"Spooky Bus vs Scary Pumpkin; different animation."},
+{"a":"vAEMCF7Vwbs","b":"fsMZy8P7wuI","label":"same-song","confidence":0.55,"note":"Apples & Bananas Wheels on the Bus compilations; buses differ, frames show different content."},
+{"a":"CcZ5-DXzIL0","b":"K9bq75znrw8","label":"shared-segments","confidence":0.7,"note":"2024 Halloween short reuses the 2022 short's girl-with-skull shot; other shots differ."},
+{"a":"uzUxdwfXgWI","b":"PjXooPy93AM","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"oT6bPk4gHxM","b":"o6VjhL9gA1A","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."},
+{"a":"njSANQD1GlI","b":"a0Dg0fPxACY","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different episodes."}
+]

@@ -1,0 +1,12 @@
+[
+ {"a": "6FhYNE5KFeg", "b": "DS8rk9NwXQc", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Cat vs Mime."},
+ {"a": "gmRIldLgb8k", "b": "DS8rk9NwXQc", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Kung Fu vs Mime."},
+ {"a": "DS8rk9NwXQc", "b": "7FiyQQBYTUY", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs Skates."},
+ {"a": "DS8rk9NwXQc", "b": "VqT9YA3THAE", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs The Worm."},
+ {"a": "Tz2SZgHgjjk", "b": "DS8rk9NwXQc", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Cheese vs Mime."},
+ {"a": "DS8rk9NwXQc", "b": "Nlt_DqiIHcQ", "label": "shared-segments", "confidence": 0.45, "note": "Both Mime episode shorts; sampled frames differ, likely different cuts of one episode."},
+ {"a": "DS8rk9NwXQc", "b": "o6VjhL9gA1A", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs Carousel."},
+ {"a": "WDCPlg_DNwQ", "b": "FZSWN3DFpGE", "label": "shared-segments", "confidence": 0.7, "note": "Monster in the Dark shorts reuse same boy-with-flashlight shots; different cut and order."},
+ {"a": "DS8rk9NwXQc", "b": "a0Dg0fPxACY", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs Tumbler Toy."},
+ {"a": "DS8rk9NwXQc", "b": "urNKg4X9kIU", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs The Teleport."}
+]

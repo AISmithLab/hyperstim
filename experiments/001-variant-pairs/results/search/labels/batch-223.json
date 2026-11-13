@@ -1,0 +1,72 @@
+[
+ {
+  "a": "P9QIOA_X06w",
+  "b": "_B5Aec29lHQ",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "Wheels on the Bus short: daytime vs Halloween-night background, same green bus and driver shots."
+ },
+ {
+  "a": "6aBfQYlhKJs",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Spooky zombie vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "S0b-cNOME7I",
+  "b": "_B5Aec29lHQ",
+  "label": "re-skin",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus short: same baby and driver poses, seat recolored and Halloween-night background."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "NrKUTj5Lefs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs bugs song shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "12mNC1UN38M",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Halloween bus shorts; different shots."
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Train song vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs monster song shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "uE-G6fKmpA4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs monster finger family shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "YudNG_jdUs4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs zoo song shorts; nothing shared."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "XFz86QUABdQ",
+  "b": "0gXJ6f2z_Y4",
+  "label": "re-upload",
+  "confidence": 0.65,
+  "note": "Same Johny Johny short frames; B twice as long (likely looped/extended)"
+ },
+ {
+  "a": "Z9Jg3hLBNpk",
+  "b": "g1PXfjaZk68",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Supremes Halloween songs, same monster characters, different songs and scenes"
+ },
+ {
+  "a": "0ZNqZ9x_06U",
+  "b": "iJZ97cfpjhI",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Kaboochi dance; A human kids, B animal characters, different animation"
+ },
+ {
+  "a": "Ln0H_11UIwI",
+  "b": "sBtKayGZJiU",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Different songs (Boo Boo vs Johny Johny) with different characters"
+ },
+ {
+  "a": "XkHOSnrgKew",
+  "b": "aKkecxwHm00",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Different songs with shared kid characters; different scenes"
+ },
+ {
+  "a": "yCSjhx5qiv0",
+  "b": "e9LhPr3svs0",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Same Bao Panda Wheels on the Bus shots; orange bus recolored green"
+ },
+ {
+  "a": "CgR6YuA2Uoo",
+  "b": "-OXYsniHGBM",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "AruenFtf5rs",
+  "b": "ZkMDTaMX7X0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Compilations share boat fruit segment and intro; different lead songs"
+ },
+ {
+  "a": "sI-dYFPPJgs",
+  "b": "_B5Aec29lHQ",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "Wheels on the Bus short: same driver/baby poses, daytime redrawn as Halloween night"
+ },
+ {
+  "a": "y8d5M6M3zkQ",
+  "b": "jD-Uo2VcI2E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Bob compilations share the green bus car-wash segment; different lead videos"
+ }
+]

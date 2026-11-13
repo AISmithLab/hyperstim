@@ -1,0 +1,72 @@
+[
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "iFpez4fPv5Y",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "3aoEeaCHS_w",
+  "b": "39Dtr0Rq-TY",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini shorts Fishing vs Boards; similar fast-motion shots, different gags."
+ },
+ {
+  "a": "Qs4R686NOjg",
+  "b": "aDyWeSAt-sI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "w7exxTCHfx8",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; one matched moment similar (sled), others different gags."
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "KFwebO9sy58",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "bBOI5NzGpX0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "oCiHs7agwmE",
+  "b": "Xx39RVmRYWE",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi babies vs Christmas-outfit kids in front of trees; different animation."
+ },
+ {
+  "a": "x0h4qykzlsA",
+  "b": "19yPrd-it5I",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "-8VedXc5EDU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ }
+]

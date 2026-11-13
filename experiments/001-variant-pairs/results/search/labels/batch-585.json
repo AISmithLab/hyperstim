@@ -1,0 +1,12 @@
+[
+{"a":"DclM70T7jyI","b":"MQkYufd11nU","label":"same-song","confidence":0.85,"note":"Boo Boo song; different shots and characters at matched moments"},
+{"a":"hSOqsVdRmeI","b":"aYm4u_lQpIo","label":"same-song","confidence":0.85,"note":"Kaboochi; different characters and staging at matched moments"},
+{"a":"qhaDwGQUOLM","b":"nWqwqAY0KRY","label":"re-skin","confidence":0.75,"note":"Same shots and poses; B has purple Halloween night backgrounds instead of daytime room"},
+{"a":"T2UcCZAPW34","b":"aYm4u_lQpIo","label":"same-song","confidence":0.85,"note":"Christmas Kaboochi vs Kaboochi; different characters and shots at matched moments"},
+{"a":"E9t53ek7H8U","b":"aYm4u_lQpIo","label":"same-song","confidence":0.85,"note":"Kaboochi; babies in costumes vs kids, different animation"},
+{"a":"LXMGLr9uFv4","b":"2uTYZ20rXa8","label":"re-skin","confidence":0.95,"note":"Same street shots and panda; bus pink in A, yellow in B"},
+{"a":"1v4rp78xOLE","b":"_rIvWK_TpfI","label":"re-skin","confidence":0.85,"note":"Same baby dancers and poses; bright patterned bg vs Halloween night bg with pumpkins"},
+{"a":"DgKsaJJn1lM","b":"AK32EFsK6KI","label":"shared-segments","confidence":0.7,"note":"Compilations; some matched moments identical (bandage, dog), others different vehicles"},
+{"a":"E9t53ek7H8U","b":"4e1vB_kqCaY","label":"same-song","confidence":0.85,"note":"Kaboochi; costume babies vs single boy dancing, different animation"},
+{"a":"afJ8kEWkJqo","b":"lo3-hAO9RJg","label":"re-skin","confidence":0.9,"note":"Same bus shots and panda; bus green in A, pink in B; A longer"}
+]

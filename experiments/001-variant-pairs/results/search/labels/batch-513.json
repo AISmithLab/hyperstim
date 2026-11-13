@@ -1,0 +1,12 @@
+[
+{"a":"xGQYPFqXJjE","b":"Pa7utiQUGOY","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"El8w4iWGWEI","b":"mrU14TkzuVI","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Basketball vs Robot Vacuum"},
+{"a":"aZoH6w-VPjk","b":"Kix07nOAEBQ","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"Tz2SZgHgjjk","b":"zej8Uf5iAGk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Cheese vs Teleport"},
+{"a":"xGQYPFqXJjE","b":"lEvNMZQ2DT4","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"UXsXYmw3_CY","b":"MnJaDuR1QKE","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Gloves vs Robot Vacuum"},
+{"a":"oWkIR8ZkHgo","b":"ET0nSVHzYd4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the rings episode"},
+{"a":"gvcEcWUHZ_c","b":"YABj119wijM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the pillow jump episode"},
+{"a":"_EZv7EJE8LE","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and jeep episodes"},
+{"a":"di7g1bv5UC0","b":"IE7VFN8ln9Y","label":"re-upload","confidence":0.7,"note":"Rattic Mini Spot episode, 31s vs 63s cut of the same footage"}
+]

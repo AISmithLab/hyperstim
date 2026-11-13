@@ -1,0 +1,12 @@
+[
+{"a":"poL6eGtjtAs","b":"jL4xf527bwg","label":"re-upload","confidence":0.85,"note":"Five Little Shapes short: identical thumbnail and frames; B is a shorter cut (43 vs 58 s)."},
+{"a":"XKHBuIHt2SU","b":"fnchF_Zl9XQ","label":"re-skin","confidence":0.9,"note":"Bob the Train Wheels on the Bus: same bus-door and train shots; bus red vs orange."},
+{"a":"PgOl-e0Ve74","b":"_FZgZRxHoAw","label":"re-upload","confidence":0.8,"note":"Monsters in the Dark: same shots and colors, new thumbnail; small timing offset."},
+{"a":"V6mkgjixCoQ","b":"pIBlHJFJ1vs","label":"re-skin","confidence":0.9,"note":"2014 2D Wheels on the Bus: same bus-stop, scooter and passenger shots; yellow vs blue bus."},
+{"a":"dL3INikKYGk","b":"aeKHB66QEVE","label":"shared-segments","confidence":0.8,"note":"Loose Tooth song appears inside the compilation; identical midpoint frame."},
+{"a":"R49NrP0fcsE","b":"6U9UX0MLvU4","label":"same-song","confidence":0.6,"note":"Boo Boo song shorts with different characters and scenes."},
+{"a":"e9gnACQvqRM","b":"YVaBFUbjzuk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts on the same wooden set, different gags."},
+{"a":"7xSdzGpSjl4","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, same character and set, different episodes."},
+{"a":"vGjN_CslxSI","b":"nHT4spNAshs","label":"shared-segments","confidence":0.7,"note":"Rattic Mini compilations; both contain the same sleigh episode shot."},
+{"a":"-k4oiVaekT0","b":"McACiO5dwGM","label":"same-template","confidence":0.9,"note":"Phonics letter series, Q vs S, same template."}
+]

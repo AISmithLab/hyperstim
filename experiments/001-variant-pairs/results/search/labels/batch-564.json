@@ -1,0 +1,72 @@
+[
+ {
+  "a": "PbchJhisS4s",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "jRCHQ6wCTUA",
+  "b": "DyY7at_1WJA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "62s short contains the 29s Spring Toy episode plus the builder episode"
+ },
+ {
+  "a": "wMHsxnO156E",
+  "b": "oXA7qx--2oI",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing cannon and yellow ball episodes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "7xSdzGpSjl4",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic mime vs gloves episode; different props"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "6SRokrEQBtc",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing block tower and wooden bike episodes"
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic rocket vs two-episode basketball short"
+ },
+ {
+  "a": "vCMNQHulhfo",
+  "b": "lQxaq4Fu-i0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters S and U on one template"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cheese vs fitness ball"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "EPh1bFzsVf4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, bicycle vs leaves"
+ },
+ {
+  "a": "BZqq3eL6xSE",
+  "b": "fkM9JyHWOo8",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, high striker vs cupboard"
+ }
+]

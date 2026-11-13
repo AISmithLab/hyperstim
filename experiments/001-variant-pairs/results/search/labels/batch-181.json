@@ -1,0 +1,12 @@
+[
+{"a":"LIvbQc_In_s","b":"jrKMYkmA3lY","label":"shared-segments","confidence":0.7,"note":"Loco Nuts Sick Song; same pig shot, B a 32s cut."},
+{"a":"7U5-_Se7VTE","b":"9-G4JeHJiYQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing ornament and egg episodes."},
+{"a":"49leN9fKryQ","b":"21qek4m4GWQ","label":"shared-segments","confidence":0.5,"note":"Bob Christmas carol, same set and characters, same length; sampled frames differ."},
+{"a":"92wkK3tkeb0","b":"8bMv6zrYZ6o","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Who Took the Goodies; different characters."},
+{"a":"aFbSzIMTBsY","b":"0L9EfYLMx8A","label":"same-template","confidence":0.85,"note":"Bob the Train phonics, letters N vs P."},
+{"a":"V5OqHZwodj4","b":"pbfbmXohAGo","label":"same-song","confidence":0.55,"note":"Christmas Kaboochi vs Kaboochi; different characters and sets."},
+{"a":"bBOI5NzGpX0","b":"S9N416aMRxk","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the dinosaur episode."},
+{"a":"i2XoutDdPoM","b":"di7g1bv5UC0","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, pillow vs spot."},
+{"a":"G7PTUNLnAFk","b":"41F1Fdb3tHM","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Boo Boo Song; different characters."},
+{"a":"k-JcA3kxVWU","b":"CR4xOtDkvNU","label":"shared-segments","confidence":0.55,"note":"Vegetable Train vs Bob train compilation; same wagon template, sampled frames differ."}
+]

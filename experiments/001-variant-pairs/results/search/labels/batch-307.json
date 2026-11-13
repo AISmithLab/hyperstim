@@ -1,0 +1,72 @@
+[
+ {
+  "a": "aA57PjtEfZw",
+  "b": "kwXxrZQ5GaQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter D vs L, shared intro/outro"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "e9gnACQvqRM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, swing vs door gags"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "qA-zKbEgq1Q",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, rings vs balloon gags"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, balloon vs car service gags"
+ },
+ {
+  "a": "SB-7h4MW26k",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "jvCQFkt2FwI",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, picture vs robot vacuum gags"
+ },
+ {
+  "a": "3yv0GSbbCZI",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing snowman, mime and jeep episodes"
+ },
+ {
+  "a": "IYU2e8WgGnY",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the toy jeep episode"
+ }
+]

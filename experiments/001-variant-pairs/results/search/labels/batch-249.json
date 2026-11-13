@@ -1,0 +1,12 @@
+[
+{"a":"nukXVHunv-g","b":"rrR3i8eBf4E","label":"re-upload","confidence":0.7,"note":"Same Bob underwater song, identical frames at 1/2; B 20s shorter re-upload"},
+{"a":"aA57PjtEfZw","b":"lQxaq4Fu-i0","label":"same-template","confidence":0.85,"note":"Bob phonics letter D vs U, shared intro/outro"},
+{"a":"EobtsoMFJEk","b":"6SRokrEQBtc","label":"shared-segments","confidence":0.7,"note":"Rattic Mini compilations, tricycle episode in both"},
+{"a":"w7exxTCHfx8","b":"cmi5_37226c","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"},
+{"a":"u40mx4lB20Q","b":"SQBTIuB0SsI","label":"same-song","confidence":0.55,"note":"Halloween bus shorts, different characters and shots"},
+{"a":"FIinrJO9po8","b":"2kLB7ZwxVv8","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the claw machine episode"},
+{"a":"7aj6Vpx_su8","b":"htYC4R78a_c","label":"re-skin","confidence":0.92,"note":"Same bus shots and scenery; bus red vs blue"},
+{"a":"5iXRqSe4KJo","b":"JKmr96i2xH0","label":"same-template","confidence":0.55,"note":"Rattic Mini shorts on same set, different gags"},
+{"a":"Myk0Is5roGM","b":"cjtn_IOstAI","label":"re-skin","confidence":0.7,"note":"Compilation includes B's bus song, same shots; bus yellow vs white"},
+{"a":"5iXRqSe4KJo","b":"jflAKuIuQBM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, trombone vs talent show gags"}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "ApUXMFYjTUc",
+  "b": "fKWJTJUkwPc",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Five in the Bed shorts with different characters and animation."
+ },
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "ApUXMFYjTUc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Five in the Bed shorts; nothing shared."
+ },
+ {
+  "a": "ApUXMFYjTUc",
+  "b": "G7PTUNLnAFk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five in the Bed vs train song shorts; nothing shared."
+ },
+ {
+  "a": "oajm4ygk_Ck",
+  "b": "B_MmKCyAmpw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Baa Baa Black Sheep vs Halloween dance shorts; nothing shared."
+ },
+ {
+  "a": "6aBfQYlhKJs",
+  "b": "7ClCbBREUlU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Spooky zombie vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "uE-G6fKmpA4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs monster finger family shorts; nothing shared."
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "_QFj7e58XGE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs train song shorts; nothing shared."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "xPt-5RG1m-0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "4FXoc-ApjOQ",
+  "b": "3ZXmeuhJ7Bc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bugs song vs Five Little Babies shorts; nothing shared."
+ }
+]

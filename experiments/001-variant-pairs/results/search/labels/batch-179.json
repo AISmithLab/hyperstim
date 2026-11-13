@@ -1,0 +1,12 @@
+[
+{"a":"jViz3BEN5ZI","b":"Zla2Q90UE4U","label":"re-upload","confidence":0.85,"note":"2015 Finger Family, same frames on both channels; A adds end screen."},
+{"a":"7ClCbBREUlU","b":"Td73SYRglgw","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts, shared mom character but different shots."},
+{"a":"loH214qJLn4","b":"k-JcA3kxVWU","label":"same-template","confidence":0.85,"note":"Bob train series, same intro and wagons; animals vs vegetables."},
+{"a":"CvFabQeSv9A","b":"7ClCbBREUlU","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different girls and shots."},
+{"a":"gdVpv0KN_uU","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Boo Boo Song; different characters."},
+{"a":"41F1Fdb3tHM","b":"7ClCbBREUlU","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts with different characters and animation."},
+{"a":"MHvLcoblyio","b":"7ClCbBREUlU","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts with different characters and animation."},
+{"a":"G7PTUNLnAFk","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Boo Boo Song; different characters."},
+{"a":"7ClCbBREUlU","b":"_QFj7e58XGE","label":"unrelated","confidence":0.8,"note":"Boo Boo Song vs Wheels on the Train; different characters."},
+{"a":"7ClCbBREUlU","b":"R49NrP0fcsE","label":"same-song","confidence":0.6,"note":"Boo Boo shorts in different animation styles and characters."}
+]

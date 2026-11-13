@@ -1,0 +1,72 @@
+[
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "vGjN_CslxSI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "fx0aMbJwE34",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "Zy0VtX5RTFM",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "UPDBxhcsIRQ",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "M0V1ofCOEew",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "_EZv7EJE8LE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "jrKMYkmA3lY",
+  "b": "AydSzRoGSLY",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Loconuts sick song vs Boo Boo short; different animation"
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "R7pIlyiHmJY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: hollow vs basketball"
+ }
+]

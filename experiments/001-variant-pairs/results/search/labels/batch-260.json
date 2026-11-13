@@ -1,0 +1,12 @@
+[
+{"a":"5bCr1Iktot8","b":"IWeiJekM5Cs","label":"re-skin","confidence":0.5,"note":"Thumbnail match only: blue vs pink Zoobees bus same pose; compilation frames differ."},
+{"a":"Gjd0Xyudh_g","b":"MN5_l3IQT6M","label":"shared-segments","confidence":0.7,"note":"A compilation includes B's scene: red car, Bob train, baby in high chair."},
+{"a":"b5p78d-gr6w","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.75,"note":"Halloween monster vs camp bus shorts; only blurred side bars."},
+{"a":"_QkBvYROA7o","b":"WKeK0Zqi5jw","label":"unrelated","confidence":0.75,"note":"Ten in the Bed vs ice cream wheels shorts; only blurred side bars."},
+{"a":"o5rxdgzxB3w","b":"a-q2yRxEDhc","label":"unrelated","confidence":0.6,"note":"Two Halloween compilations, different characters and scenes."},
+{"a":"E1wcRx1Exec","b":"jflAKuIuQBM","label":"unrelated","confidence":0.8,"note":"Larva short vs Rattic Mini short."},
+{"a":"YgjyQIwcJy0","b":"5Rye6bK-yIY","label":"unrelated","confidence":0.8,"note":"Rattic Mini short vs Larva short."},
+{"a":"tya8z7R__lo","b":"US4Ee-T3-2I","label":"shared-segments","confidence":0.5,"note":"Thumbnail match only (same kids); long compilation vs single song, frames differ."},
+{"a":"G7PTUNLnAFk","b":"jrKMYkmA3lY","label":"unrelated","confidence":0.8,"note":"Wheels on the Train vs Sick Song shorts; only blurred side bars."},
+{"a":"G7PTUNLnAFk","b":"Lm2OJi4yYNQ","label":"unrelated","confidence":0.8,"note":"Wheels on the Train vs Brush Teeth shorts; only blurred side bars."}
+]

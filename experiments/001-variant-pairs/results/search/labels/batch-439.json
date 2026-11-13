@@ -1,0 +1,12 @@
+[
+{"a":"OROaWM3prs4","b":"WB9fpENoOkE","label":"re-upload","confidence":0.9,"note":"Bob the Train counting: identical frames, re-uploaded on B in 2023 with new thumbnail"},
+{"a":"t5wDGNrzpro","b":"4e1vB_kqCaY","label":"same-song","confidence":0.65,"note":"Kaboochi shorts with different characters and animation"},
+{"a":"-OXYsniHGBM","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.7,"note":"Boo Boo song shorts, different animation"},
+{"a":"7ClCbBREUlU","b":"-OXYsniHGBM","label":"same-song","confidence":0.7,"note":"Boo Boo song shorts, different animation"},
+{"a":"6H4UizQh1DY","b":"vBa31YwaxTg","label":"unrelated","confidence":0.6,"note":"Apples & Bananas compilations, different songs; only thumbnail layout shared"},
+{"a":"aYm4u_lQpIo","b":"ulkPZc48Au8","label":"unrelated","confidence":0.8,"note":"Kaboochi short vs swimming song short"},
+{"a":"qHf6e1CQQ5c","b":"lg-NHZehFHE","label":"unrelated","confidence":0.8,"note":"Kaboochi short vs Halloween night short"},
+{"a":"Ws9E7lM0C40","b":"O54gqk8cJww","label":"shared-segments","confidence":0.85,"note":"Zoobees compilation contains the Peek A Boo episode"},
+{"a":"d_EDHG_qtVg","b":"OtD1f9K_-SM","label":"shared-segments","confidence":0.85,"note":"Finger family compilations sharing jelly bears segment"},
+{"a":"76YlId7TLig","b":"Iryl7DcJ-hw","label":"shared-segments","confidence":0.8,"note":"Compilations sharing five little monkeys segment"}
+]

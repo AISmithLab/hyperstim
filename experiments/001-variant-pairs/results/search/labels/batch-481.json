@@ -1,0 +1,12 @@
+[
+{"a":"GvP31EGA8tQ","b":"klDPbXVTBzw","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"G7PTUNLnAFk","b":"aScyfsClZd0","label":"unrelated","confidence":0.8,"note":"Wheels on the Train vs Boo Boo shorts"},
+{"a":"VqT9YA3THAE","b":"bNuG6IapPsk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Worm vs Fitness Ball"},
+{"a":"6FhYNE5KFeg","b":"bNuG6IapPsk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Cat vs Fitness Ball"},
+{"a":"sFhZZIPj9nE","b":"jflAKuIuQBM","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Cleaning vs Talent Show"},
+{"a":"PbchJhisS4s","b":"20HqqfnKxZk","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"KFwebO9sy58","b":"uzUxdwfXgWI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"MxB4KiDF6XY","b":"skNxtYhw9Y8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the snake charmer episode"},
+{"a":"U9maOBWT6wE","b":"SP3eASDKke4","label":"unrelated","confidence":0.8,"note":"Hush Little Baby vs Boo Boo shorts"},
+{"a":"Zifbjuvaqrk","b":"8Ri1s8CTSrM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toilet and balloon episodes"}
+]

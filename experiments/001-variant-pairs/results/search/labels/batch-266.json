@@ -1,0 +1,12 @@
+[
+{"a":"iazRHLuPy6E","b":"rfxI6n7Kaog","label":"re-upload","confidence":0.9,"note":"Bob Animal Sound song in French vs Portuguese; identical frames, new thumbnail."},
+{"a":"ex7xMfJ9vjI","b":"iazRHLuPy6E","label":"re-upload","confidence":0.9,"note":"Bob Animal Sound song in Korean vs French; identical frames."},
+{"a":"7c20EvQbPWc","b":"5enI1E7x2Ck","label":"shared-segments","confidence":0.8,"note":"Finger family compilations sharing an identical kids scene."},
+{"a":"VqT9YA3THAE","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, different episodes."},
+{"a":"fx0aMbJwE34","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and car episodes."},
+{"a":"VqT9YA3THAE","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, different episodes."},
+{"a":"GvP31EGA8tQ","b":"lEvNMZQ2DT4","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the snack stand car episode."},
+{"a":"3yv0GSbbCZI","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing mime, snowman and car episodes."},
+{"a":"t5FpH4uDIzs","b":"W4KOgl07P24","label":"same-template","confidence":0.85,"note":"Learning Street word play episodes, ED vs UG words."},
+{"a":"kHVGgxylqd8","b":"VJ1tu3mMRa0","label":"re-upload","confidence":0.9,"note":"Same Boo Boo Song short, identical frames, re-posted."}
+]

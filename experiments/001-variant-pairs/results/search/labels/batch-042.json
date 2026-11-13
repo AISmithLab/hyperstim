@@ -1,0 +1,12 @@
+[
+ {"a": "0ZNqZ9x_06U", "b": "YaThzRybuhE", "label": "same-song", "confidence": 0.55, "note": "Kaboochi shorts with different characters (cap boy vs glasses baby) and poses."},
+ {"a": "YaThzRybuhE", "b": "wfvd_2gm_ew", "label": "same-song", "confidence": 0.55, "note": "Kaboochi shorts: glasses baby vs DJ girl and kids on dance floor."},
+ {"a": "3bTL4x31XTI", "b": "YudNG_jdUs4", "label": "unrelated", "confidence": 0.8, "note": "Bath Time Song vs Zoo Song superheroes."},
+ {"a": "Fs-xqnR8X7s", "b": "SP3eASDKke4", "label": "unrelated", "confidence": 0.8, "note": "Deck the Halls vs Boo Boo Song; different characters."},
+ {"a": "o6VjhL9gA1A", "b": "xbcUfB29xss", "label": "unrelated", "confidence": 0.85, "note": "Rattic Mini vs Larva shorts; different series."},
+ {"a": "CvFabQeSv9A", "b": "Tgp1NqPegK8", "label": "unrelated", "confidence": 0.8, "note": "Boo Boo Song vs Kaboochi dance."},
+ {"a": "V6mkgjixCoQ", "b": "yebnJe7tUqE", "label": "re-skin", "confidence": 0.85, "note": "2014 2D Wheels on the Bus: same bus-stop and street shots, bus yellow vs orange."},
+ {"a": "ZztnbLI54FI", "b": "Ng85dlGMIQA", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics M vs T."},
+ {"a": "vYXkEPIElyc", "b": "X5tQg9x3Nfs", "label": "same-song", "confidence": 0.55, "note": "Boo-boo songs with different characters and scenes."},
+ {"a": "VBb7XUCV47g", "b": "ZztnbLI54FI", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics C vs M."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "wW339izcKu4",
+  "b": "_GlpTSaa5EU",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing mime, magic box and frog episodes"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "gDzGfavrWeI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; side bars only"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "IbEIByW4Fwk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying shark vs Oopsie Doopsie shorts"
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "MI4XvQZDPZc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Train song vs flying shark shorts"
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "MI4XvQZDPZc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs flying shark shorts"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "6U9UX0MLvU4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying shark vs Boo Boo shorts"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying shark vs monster song shorts"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "SQBTIuB0SsI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying shark vs Halloween bus shorts"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Flying shark vs Five Little Mommies shorts"
+ }
+]

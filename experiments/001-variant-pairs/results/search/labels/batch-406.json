@@ -1,0 +1,72 @@
+[
+ {
+  "a": "PjXooPy93AM",
+  "b": "YJLDe0F_z7k",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the snowman episode"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "a07zOPj6CZg",
+  "b": "lQxaq4Fu-i0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter G vs letter U, same template and kids"
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "xGQYPFqXJjE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "iFpez4fPv5Y",
+  "b": "WZ45rZRLf80",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the big yellow ball episode"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "ZEI_8iC_Z7E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the pillow episode"
+ },
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the mime episode"
+ },
+ {
+  "a": "Iygt_NzD7VU",
+  "b": "tNPoYErk2rs",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo Song shorts share the man in red shirt with boy shots; different cuts"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "fUR3k2eL6Mo",
+  "b": "xGQYPFqXJjE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ }
+]

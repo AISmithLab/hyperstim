@@ -1,0 +1,72 @@
+[
+ {
+  "a": "dX5ZQX5o8qU",
+  "b": "JbY8yEFJs0g",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Boom Buddies Halloween compilations with the same characters and scenes; no exact frame match"
+ },
+ {
+  "a": "Eif8UopFHhM",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "bNuG6IapPsk",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, fitness ball vs talent show episodes"
+ },
+ {
+  "a": "AydSzRoGSLY",
+  "b": "svxlLrPCzUM",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts cut from one animation (dad in plaid, mom in pink)"
+ },
+ {
+  "a": "jceEaiF00_c",
+  "b": "s7JRVneKcao",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Apples and Bananas compilations; thumbnail layout only, no shared frame"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "mJFTp8x_QZ4",
+  "b": "39Dtr0Rq-TY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, barbell vs boards episodes"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "q8T0cDm6nSA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing claw-machine and stroller episodes"
+ },
+ {
+  "a": "q8T0cDm6nSA",
+  "b": "zSf5nw7US6U",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the claw-machine episode"
+ }
+]

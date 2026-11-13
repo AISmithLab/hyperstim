@@ -1,0 +1,12 @@
+[
+ {"a": "DS8rk9NwXQc", "b": "MnJaDuR1QKE", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs Robot Vacuum Cleaner."},
+ {"a": "DS8rk9NwXQc", "b": "xEFkAQpftd4", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs Talent Show."},
+ {"a": "DS8rk9NwXQc", "b": "CU_QocmxLz0", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs Statue."},
+ {"a": "WDCPlg_DNwQ", "b": "b5p78d-gr6w", "label": "same-song", "confidence": 0.6, "note": "Monster in the Dark with different kids and scenes."},
+ {"a": "31YuCXEbFoc", "b": "DS8rk9NwXQc", "label": "same-template", "confidence": 0.75, "note": "Rattic Mini toy-motorbike vs Mime."},
+ {"a": "tQlIWPUO_E0", "b": "WKeK0Zqi5jw", "label": "unrelated", "confidence": 0.8, "note": "Ten in the Bed vs Wheels on the Ice Cream; different scenes."},
+ {"a": "3ZXmeuhJ7Bc", "b": "fS83sH9egvI", "label": "re-upload", "confidence": 0.7, "note": "Five Little Babies: same monkey and elephant shots, re-cut shorter with new thumbnail."},
+ {"a": "IbEIByW4Fwk", "b": "Tgp1NqPegK8", "label": "unrelated", "confidence": 0.75, "note": "Oopsie Doopsie vs Kaboochi dance; different characters and sets."},
+ {"a": "8-qO0tHgMHY", "b": "Tgp1NqPegK8", "label": "unrelated", "confidence": 0.8, "note": "Animal Dance vs Kaboochi dance."},
+ {"a": "uefjFu0v-Jc", "b": "zIqwHkg5KiQ", "label": "same-template", "confidence": 0.7, "note": "Bob the Train colors vs farm songs, same 2015 series layout."}
+]

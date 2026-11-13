@@ -1,0 +1,12 @@
+[
+{"a":"Sq59rWyMPvw","b":"stTQRubLSi4","label":"shared-segments","confidence":0.75,"note":"Bus camp compilations share ice-cream truck episode; thumbnail bus recolored"},
+{"a":"Ri2sw4rIrfM","b":"stTQRubLSi4","label":"shared-segments","confidence":0.75,"note":"Bus camp compilations share ice-cream truck episode; thumbnail bus recolored"},
+{"a":"stTQRubLSi4","b":"ldvdV20Fgvg","label":"shared-segments","confidence":0.8,"note":"Bus camp compilations, same episodes in different order"},
+{"a":"NvMDY9SzcdI","b":"stTQRubLSi4","label":"shared-segments","confidence":0.5,"note":"Same compilation family; frames shown differ, match mainly on recolored thumbnail bus"},
+{"a":"bdbNsMtn26Y","b":"PjXooPy93AM","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"_uYyO8y5Txc","b":"SP3eASDKke4","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts 28s and 20s cut from same footage"},
+{"a":"oMEt_dTdnMg","b":"TwDxP5L1-VA","label":"unrelated","confidence":0.85,"note":"Larva-style gum short vs Rattic Mini teleport short"},
+{"a":"_uYyO8y5Txc","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts; mother-with-baby shot similar, other shots differ"},
+{"a":"bdbNsMtn26Y","b":"FIinrJO9po8","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the vending-machine episode"},
+{"a":"aACfDyTDcL8","b":"h4dQ-RG7dXA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and toy-car episodes"}
+]

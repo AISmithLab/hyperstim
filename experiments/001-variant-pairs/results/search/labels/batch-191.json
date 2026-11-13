@@ -1,0 +1,12 @@
+[
+{"a":"cw25vfjjb0o","b":"X_l1P0abE6g","label":"same-template","confidence":0.6,"note":"Hop & Zip episodes reusing one thumbnail and opening; different episodes."},
+{"a":"G7PTUNLnAFk","b":"X48-R_yTN-4","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Apples & Bananas bus song; different characters."},
+{"a":"1F3UMZEL9c0","b":"geKNUKAHAJw","label":"shared-segments","confidence":0.8,"note":"Vehicle compilation contains the Hector Shake It taxi segment."},
+{"a":"US4Ee-T3-2I","b":"o9DDAksGG1g","label":"shared-segments","confidence":0.5,"note":"Five Little Monkeys single vs compilation; similar thumbnails, frames differ."},
+{"a":"6f6S5Y_1aIA","b":"b5p78d-gr6w","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Monster in the Dark; different characters."},
+{"a":"Msywp-_Gl1g","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Boo Boo Song; different characters."},
+{"a":"BRcmpSxalwA","b":"14B6JJO6CDM","label":"same-song","confidence":0.65,"note":"Five Little Monkeys shorts with different characters."},
+{"a":"Sch7IH7Cc28","b":"ohvegXAANME","label":"shared-segments","confidence":0.85,"note":"Bob compilation contains Transport Adventure (train and fire truck shot)."},
+{"a":"Ve-HgwE-EqE","b":"hMNozLQO_2M","label":"same-template","confidence":0.7,"note":"Animal finger family series, sheep vs cows; same hand layout, different shots."},
+{"a":"t2tKT2LSOfo","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"No No Song vs Boo Boo Song; different characters."}
+]

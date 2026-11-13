@@ -1,0 +1,72 @@
+[
+ {
+  "a": "oCiHs7agwmE",
+  "b": "W5PP6fPZK0I",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Three Little Pigs shorts; different scenes"
+ },
+ {
+  "a": "W5PP6fPZK0I",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Three Little Pigs vs Hawaiian Kaboochi; different scenes"
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "_GlpTSaa5EU",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the dino and mime episodes"
+ },
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "mJFTp8x_QZ4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "-a3PpO3jlDI",
+  "b": "lQxaq4Fu-i0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters H vs U, same template"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "awLcqOFRHzg",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the red toy car episode"
+ },
+ {
+  "a": "dL9q0aobLss",
+  "b": "HE58ikBC9nw",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters R vs X, same template"
+ },
+ {
+  "a": "oHtQbh7LJjY",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters J vs Z, same template"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ }
+]

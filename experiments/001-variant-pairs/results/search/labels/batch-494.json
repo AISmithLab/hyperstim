@@ -1,0 +1,72 @@
+[
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "ZeldqdySrKg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share block tower and tricycle episodes"
+ },
+ {
+  "a": "9aLZatXZCl4",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "DF6G0YHRlV8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "-a3PpO3jlDI",
+  "b": "VLa2W1SssVQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters H vs W, same template"
+ },
+ {
+  "a": "V9fA6nrohac",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "sT3J4L19qrE",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the toy jeep episode"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "tQ3LttVt_Jk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "FIinrJO9po8",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share vending machine and claw machine episodes"
+ }
+]

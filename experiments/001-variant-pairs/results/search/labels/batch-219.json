@@ -1,0 +1,72 @@
+[
+ {
+  "a": "FvewFlifJao",
+  "b": "JmZyium75oc",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "If You're Happy: Boom Buddies kids vs Loco Nuts animals in parks; no matching shot seen."
+ },
+ {
+  "a": "v8wvRjQdBbo",
+  "b": "FvewFlifJao",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Boom Buddies compilation vs single; thumbnail cast only, frames differ."
+ },
+ {
+  "a": "OA2vS2-Tgvo",
+  "b": "DQVJ-zH4Glo",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Halloween compilations; same Super Supremes thumbnail style, frames differ."
+ },
+ {
+  "a": "NCUDBe8GKEQ",
+  "b": "m_z07WpRZlM",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Wheels on the Bus shorts cut from one video; share the yellow-shirt dad shot."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "tQlIWPUO_E0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs Ten in the Bed shorts; nothing shared."
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "G7PTUNLnAFk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs train song shorts; nothing shared."
+ },
+ {
+  "a": "6f6S5Y_1aIA",
+  "b": "vYXkEPIElyc",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "k3Zte4ufODo",
+  "b": "5f8p3kdEbJw",
+  "label": "re-skin",
+  "confidence": 0.5,
+  "note": "Thumbnail only: same Halloween bus model recolored pink vs green; frames show other songs."
+ },
+ {
+  "a": "LzlbaXt9Yg4",
+  "b": "d0qkYGMwDsc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Camp bus vs monsters in the house shorts; nothing shared."
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "X48-R_yTN-4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs bus song shorts; nothing shared."
+ }
+]

@@ -1,0 +1,12 @@
+[
+ {"a": "GvP31EGA8tQ", "b": "gvcEcWUHZ_c", "label": "shared-segments", "confidence": 0.8, "note": "Rattic Mini compilations; identical red car and food stand shot at 1/2"},
+ {"a": "3ZXmeuhJ7Bc", "b": "1YroSGgyUdg", "label": "re-upload", "confidence": 0.6, "note": "same Five Little Babies short, same monkey and elephant shots; B cut to 38 s from 60 s"},
+ {"a": "6FhYNE5KFeg", "b": "7FiyQQBYTUY", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini shorts, same set and character, different gags (cat post vs skates)"},
+ {"a": "rO2zeIHbFdc", "b": "xl7KYkBbsuY", "label": "shared-segments", "confidence": 0.85, "note": "B is a compilation opening with A's Bob phonics song: same frames, then other songs"},
+ {"a": "KKgsTFivFJM", "b": "EX0D6k2zAM0", "label": "shared-segments", "confidence": 0.65, "note": "Rattic Mini compilations; both show the mime episode at 1/2"},
+ {"a": "TGZl_HsDj_0", "b": "aW_J2JMPmG8", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations, same set and thumbnail layout; no shared shot visible"},
+ {"a": "GvP31EGA8tQ", "b": "aW_J2JMPmG8", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations, same set and thumbnail layout; no shared shot visible"},
+ {"a": "_QFj7e58XGE", "b": "ulkPZc48Au8", "label": "same-template", "confidence": 0.55, "note": "Boo Boo song shorts, same style and layout; train song vs swimming song"},
+ {"a": "KKgsTFivFJM", "b": "aW_J2JMPmG8", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations, same set and thumbnail layout; no shared shot visible"},
+ {"a": "CN5Cpx8oEkY", "b": "yiORb49J5n0", "label": "shared-segments", "confidence": 0.85, "note": "Loco Nuts: identical pizza-time frame at 1/2; A is an 11 min compilation, B 4 min episode"}
+]

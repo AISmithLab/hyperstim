@@ -1,0 +1,72 @@
+[
+ {
+  "a": "8wz-3uhdaMo",
+  "b": "VqX9Ut1eWkg",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Same Christmas ABC Hector video, identical frames; new thumbnail and title"
+ },
+ {
+  "a": "VqT9YA3THAE",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "UN4V4ywCWxA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine episode"
+ },
+ {
+  "a": "UGzlPPWb6Pg",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "xGQYPFqXJjE",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "KFwebO9sy58",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine and stroller episodes"
+ },
+ {
+  "a": "Qs4R686NOjg",
+  "b": "ZEI_8iC_Z7E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the heart balloon episode"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "q8T0cDm6nSA",
+  "b": "QKrdD5Y9c-s",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share claw machine, tricycle and stroller episodes"
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "_R12Qsg6sEk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ }
+]

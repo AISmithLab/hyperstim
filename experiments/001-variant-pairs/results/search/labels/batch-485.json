@@ -1,0 +1,72 @@
+[
+ {
+  "a": "fEneKUJitvk",
+  "b": "9DuDNOTEIHk",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Five Little Babies single vs compilation; same characters, frames show different scenes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "_OlmXmG5OLM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "ewZwn2G14Wg",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the toy jeep and red car episodes"
+ },
+ {
+  "a": "vbY-B_GtSvc",
+  "b": "Ik7-qK_sEq8",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob Learning Street phonics letters K vs O, same template"
+ },
+ {
+  "a": "_uYyO8y5Txc",
+  "b": "Iygt_NzD7VU",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "QKrdD5Y9c-s",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "gvcEcWUHZ_c",
+  "b": "hzzGSyV_BCA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share toy stall and pillow episodes"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "P610udrUFqE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ }
+]

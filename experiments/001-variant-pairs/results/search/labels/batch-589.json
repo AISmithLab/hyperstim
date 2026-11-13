@@ -1,0 +1,12 @@
+[
+{"a":"ONwFOOEkasU","b":"V5OqHZwodj4","label":"same-song","confidence":0.9,"note":"Kaboochi song; B Christmas version with Santa, different shots at matched moments."},
+{"a":"fyRcwpgt_wE","b":"K6bUpDgQbfE","label":"same-song","confidence":0.5,"note":"Hindi poem compilations sharing audio; matched frames show different scenes and animation."},
+{"a":"zE2zZ8S0mXk","b":"snvdOvj-H-o","label":"same-template","confidence":0.6,"note":"Christmas shorts, same characters/style; matched moments show different scenes."},
+{"a":"aYm4u_lQpIo","b":"7-abUIzCk5U","label":"same-song","confidence":0.85,"note":"Kaboochi song; B uses different characters and staging at matched moments."},
+{"a":"xUOc-UwTVBA","b":"3724uXedg0A","label":"same-template","confidence":0.9,"note":"Phonics letter M vs P, same template and tune, different words/objects."},
+{"a":"YASqLUId4n8","b":"xUOc-UwTVBA","label":"same-template","confidence":0.9,"note":"Phonics letter L vs M, same template and tune, different content."},
+{"a":"ONwFOOEkasU","b":"T2UcCZAPW34","label":"same-song","confidence":0.85,"note":"Kaboochi vs Christmas Kaboochi; different characters and scenes at matched moments."},
+{"a":"9Chorjyokgw","b":"O6fMIDJyDhY","label":"shared-segments","confidence":0.85,"note":"Larva '+ More' compilations; matched moments show identical episode footage, different lead episodes."},
+{"a":"ea56PryuPcY","b":"lg-NHZehFHE","label":"same-song","confidence":0.8,"note":"Halloween Night song; different shots and characters at matched moments."},
+{"a":"ONwFOOEkasU","b":"fAQ_c_NEM7A","label":"same-song","confidence":0.85,"note":"Kaboochi song; B different boy character on stage, different staging."}
+]

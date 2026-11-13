@@ -1,0 +1,12 @@
+[
+{"a":"xers5HU02Ew","b":"DclM70T7jyI","label":"shared-segments","confidence":0.55,"note":"Boo Boo Song shorts sharing the mom-at-railing shot; other shots differ."},
+{"a":"Ia-g9fkyMJ4","b":"ex7_knWJ9ak","label":"same-template","confidence":0.55,"note":"Larva-style shorts, watermelon vs other episode."},
+{"a":"LE-F1Qt8nPs","b":"zIQk_2T-ru8","label":"re-upload","confidence":0.9,"note":"Old MacDonald, same frames and length; new thumbnail and title."},
+{"a":"B7HQQms6klA","b":"YaThzRybuhE","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Kaboochi; different characters, vertical framing only."},
+{"a":"BRcmpSxalwA","b":"6f6S5Y_1aIA","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Boo Boo Song; different characters."},
+{"a":"euLhwHIdGU0","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Peek A Boo vs Boo Boo Song; different characters."},
+{"a":"G7PTUNLnAFk","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Old MacDonald; different characters."},
+{"a":"iaSPV2ZHx5U","b":"G7PTUNLnAFk","label":"unrelated","confidence":0.85,"note":"Loco Nuts Sick Song vs Wheels on the Train; different characters."},
+{"a":"MHvLcoblyio","b":"aScyfsClZd0","label":"shared-segments","confidence":0.6,"note":"Boo Boo Song shorts sharing mom close-up and railing shots."},
+{"a":"93hO6Ma5uEg","b":"aScyfsClZd0","label":"unrelated","confidence":0.8,"note":"Twinkle Twinkle vs Boo Boo Song; different characters."}
+]

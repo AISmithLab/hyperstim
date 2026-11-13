@@ -1,0 +1,12 @@
+[
+{"a":"ApJYM0W8vvc","b":"TlRY9hDJ8Wk","label":"re-upload","confidence":0.8,"note":"Bob counting numbers, Indonesian vs Russian versions; same frames."},
+{"a":"mLfMksG42wg","b":"I-kn0Vak6b8","label":"re-skin","confidence":0.5,"note":"Same Halloween bus model green vs yellow, but only on thumbnails; frames show other shots."},
+{"a":"I-kn0Vak6b8","b":"Iw2Ntg-ggus","label":"re-skin","confidence":0.5,"note":"Same Halloween bus model yellow vs purple on thumbnails; B is a compilation, frames differ."},
+{"a":"7XCZ1eiANxA","b":"4e1vB_kqCaY","label":"unrelated","confidence":0.8,"note":"Five Little Skeletons vs Kaboochi short."},
+{"a":"yPexH1DUKe4","b":"d0qkYGMwDsc","label":"unrelated","confidence":0.6,"note":"Halloween finger family vs Monsters in the House; different footage."},
+{"a":"ukENAA-zDsg","b":"0ZNqZ9x_06U","label":"unrelated","confidence":0.75,"note":"Halloween Night vs Kaboochi short."},
+{"a":"d0qkYGMwDsc","b":"OEES3HmTQNw","label":"unrelated","confidence":0.8,"note":"Monsters in the House vs No No junk food short."},
+{"a":"ukENAA-zDsg","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.8,"note":"Halloween Night vs Jingle Bells short."},
+{"a":"tQlIWPUO_E0","b":"d0qkYGMwDsc","label":"unrelated","confidence":0.8,"note":"Ten in the Bed vs Monsters in the House short."},
+{"a":"oHSAGotL2Vo","b":"o6VjhL9gA1A","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bar chair vs carousel."}
+]

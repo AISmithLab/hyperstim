@@ -1,0 +1,12 @@
+[
+ {"a": "nHT4spNAshs", "b": "M0V1ofCOEew", "label": "same-template", "confidence": 0.7, "note": "Rattic Mini compilations on same set; sampled frames show different episodes."},
+ {"a": "KKgsTFivFJM", "b": "UPDBxhcsIRQ", "label": "same-template", "confidence": 0.6, "note": "Rattic Mini compilations; no shared frames seen, may share episodes."},
+ {"a": "uzUxdwfXgWI", "b": "UPDBxhcsIRQ", "label": "same-template", "confidence": 0.6, "note": "Rattic Mini compilations; no shared frames seen, may share episodes."},
+ {"a": "giE7ipqBKZA", "b": "dDd2JCRpr2s", "label": "shared-segments", "confidence": 0.8, "note": "Sport Bots compilations with identical 1/2 and 3/4 frames, different lead episode."},
+ {"a": "AlEPz20FGnk", "b": "SP3eASDKke4", "label": "same-song", "confidence": 0.6, "note": "Boo Boo Song; different families and scenes in sampled frames."},
+ {"a": "CgR6YuA2Uoo", "b": "SP3eASDKke4", "label": "same-song", "confidence": 0.7, "note": "Boo Boo Song shorts with different mother model, girl and setting."},
+ {"a": "XCGE-_TDcGI", "b": "PhhQ0GoCxbw", "label": "shared-segments", "confidence": 0.6, "note": "Same Bob tooth-brushing shots; other shots differ (boy with purple bus vs girl with red bus)."},
+ {"a": "m9Ur1BSYg2o", "b": "QWyNX0MQAIs", "label": "same-template", "confidence": 0.75, "note": "Same bug characters and Bob intro, different songs and scenes."},
+ {"a": "MyGZ6A4qfS8", "b": "dxjcGQZkaOM", "label": "shared-segments", "confidence": 0.8, "note": "Compilations with identical cat-boy-bear frame at 1/2; different lead songs."},
+ {"a": "gmRIldLgb8k", "b": "Nlt_DqiIHcQ", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini Kung Fu vs The Mime; same set."}
+]

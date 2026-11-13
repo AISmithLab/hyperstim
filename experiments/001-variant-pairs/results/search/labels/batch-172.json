@@ -1,0 +1,12 @@
+[
+{"a":"M0jSqgVmgws","b":"rMekO90OSPA","label":"shared-segments","confidence":0.8,"note":"2015 compilations sharing the apple-orchard segment."},
+{"a":"B7HQQms6klA","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Jingle Bells; different characters."},
+{"a":"i0Zanhlu46I","b":"Lm494FQebI8","label":"unrelated","confidence":0.8,"note":"Five Little Monsters vs If You're a Monster; different characters."},
+{"a":"HWH2lpQomEk","b":"BRcmpSxalwA","label":"same-song","confidence":0.7,"note":"Five Little Monkeys shorts with different characters and animation."},
+{"a":"4FXoc-ApjOQ","b":"VXMbRH4XKtI","label":"unrelated","confidence":0.65,"note":"Loco Nuts bugs vs swimming songs; same characters, different content."},
+{"a":"FNHXJPQIb0I","b":"P8hI5Lo1dvQ","label":"shared-segments","confidence":0.8,"note":"Bob vehicle compilations sharing the bus and taxi segment."},
+{"a":"QY6idrQO99U","b":"U9maOBWT6wE","label":"unrelated","confidence":0.8,"note":"Finger Family vs Hush Little Baby; different characters."},
+{"a":"9AHIox4FeXY","b":"Nim1ToBnWn8","label":"shared-segments","confidence":0.8,"note":"Halloween compilations sharing the costumed street segment."},
+{"a":"HWH2lpQomEk","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Kaboochi; different characters."},
+{"a":"SQBTIuB0SsI","b":"Lm494FQebI8","label":"unrelated","confidence":0.8,"note":"Halloween bus vs If You're a Monster; Halloween theme only."}
+]

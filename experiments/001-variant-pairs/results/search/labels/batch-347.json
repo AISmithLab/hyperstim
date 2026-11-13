@@ -1,0 +1,12 @@
+[
+{"a":"IE7VFN8ln9Y","b":"JKmr96i2xH0","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same set, different gags."},
+{"a":"oRk8sglOG5k","b":"CgR6YuA2Uoo","label":"shared-segments","confidence":0.65,"note":"Boo Boo Song shorts sharing girl and mom shots; B longer edit."},
+{"a":"fKWJTJUkwPc","b":"oRk8sglOG5k","label":"unrelated","confidence":0.85,"note":"Five in the Bed short vs Boo Boo Song short."},
+{"a":"41F1Fdb3tHM","b":"oRk8sglOG5k","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts with different characters and animation."},
+{"a":"UCrI_HkV9gw","b":"cjtn_IOstAI","label":"re-skin","confidence":0.7,"note":"A compilation includes red-bus version of B's white-bus shots (scooter rider same)."},
+{"a":"qBL6ZHNPdvo","b":"H4_BpVuvsgU","label":"re-skin","confidence":0.5,"note":"Thumbnail-only: Halloween bus same pose, red vs purple; frames show different content."},
+{"a":"vnZwDJQBIWw","b":"4OREtMc8hJA","label":"same-template","confidence":0.6,"note":"No No Song shorts, same mom and kids, different lessons."},
+{"a":"7xv-yiS3oB4","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.85,"note":"Jack O Lantern short vs Jingle Bells short."},
+{"a":"oRk8sglOG5k","b":"vYXkEPIElyc","label":"same-song","confidence":0.55,"note":"Boo Boo songs with different kids and settings."},
+{"a":"oKEXFG0ZLZw","b":"Bx-2FBZQKs0","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"92wkK3tkeb0","b":"NcfiuWYdC24","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts with different animation and characters"},
+{"a":"wKN9OPV5HLc","b":"e1fBnQr8F9I","label":"shared-segments","confidence":0.85,"note":"Halloween compilations sharing the witch scene (identical frame at 1/2)"},
+{"a":"7xv-yiS3oB4","b":"dJvFOX8l4d8","label":"unrelated","confidence":0.65,"note":"Different Halloween songs as shorts; only style and side bars match"},
+{"a":"b5H4Hts6eiU","b":"s7JRVneKcao","label":"unrelated","confidence":0.7,"note":"Different Apples and Bananas compilations; thumbnail layout only"},
+{"a":"MI4XvQZDPZc","b":"jEwfENQE5Os","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts; no shared shot"},
+{"a":"2TBzba6Telw","b":"Hr0QlC5Nrh0","label":"unrelated","confidence":0.75,"note":"Police car short vs Santa sleigh short"},
+{"a":"V04vD3vrctU","b":"Lm494FQebI8","label":"unrelated","confidence":0.65,"note":"Different Halloween songs; similar monster kid characters but different shots"},
+{"a":"3bTL4x31XTI","b":"NcfiuWYdC24","label":"unrelated","confidence":0.8,"note":"Bath Time Song vs Boo Boo Song shorts"},
+{"a":"ISJ2fM0-0dw","b":"V04vD3vrctU","label":"unrelated","confidence":0.7,"note":"Halloween Roller Coaster vs Be Very Scared shorts"},
+{"a":"6XEcm6fpce8","b":"DjV8JpuHKA0","label":"shared-segments","confidence":0.8,"note":"Compilations on both channels sharing the same crib scene"}
+]

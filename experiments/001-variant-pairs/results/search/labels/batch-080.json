@@ -1,0 +1,12 @@
+[
+{"a":"2MxY5SmKGzc","b":"0lEDESPwZgs","label":"shared-segments","confidence":0.85,"note":"Larva compilations sharing the frog-piano and fish episodes; identical frames."},
+{"a":"u3VtdvWtgl4","b":"sAYwBMbDfXU","label":"shared-segments","confidence":0.6,"note":"Halloween Kaboochi shorts with the same skeleton-costume cast; different cuts."},
+{"a":"P610udrUFqE","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, seesaw vs basketball gag, same set."},
+{"a":"oRUKPowFBgM","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"Apples and Bananas vs Kaboochi dance; different characters."},
+{"a":"dX5ZQX5o8qU","b":"TMGjfjCJ23E","label":"unrelated","confidence":0.6,"note":"Halloween compilations of different series; no shared shot sampled."},
+{"a":"pIBlHJFJ1vs","b":"Myk0Is5roGM","label":"re-skin","confidence":0.85,"note":"Same 2014 scooter-beside-bus shot: blue bus/red rider vs orange bus/blue rider; B a compilation."},
+{"a":"YudNG_jdUs4","b":"-dlezjbLXKU","label":"unrelated","confidence":0.85,"note":"Zoo song vs Halloween bus; different content."},
+{"a":"t2tKT2LSOfo","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"No No song vs Kaboochi dance; different content."},
+{"a":"7Ldj5W-FyMs","b":"R49NrP0fcsE","label":"unrelated","confidence":0.85,"note":"Wheels on the Tractor vs Boo Boo; different content."},
+{"a":"fAQ_c_NEM7A","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance: yellow-shirt boy vs Hawaiian beach cast."}
+]

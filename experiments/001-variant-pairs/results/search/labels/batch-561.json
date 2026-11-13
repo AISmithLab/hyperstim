@@ -1,0 +1,72 @@
+[
+ {
+  "a": "e9gnACQvqRM",
+  "b": "a0Dg0fPxACY",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: door vs tumbler toy"
+ },
+ {
+  "a": "39Dtr0Rq-TY",
+  "b": "NL_S69qf0jg",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: boards vs butterfly"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "vGjN_CslxSI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "tQlIWPUO_E0",
+  "b": "aScyfsClZd0",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Ten in the Bed vs Boo Boo shorts; different animation, side bars match"
+ },
+ {
+  "a": "9DBJvlkWDs4",
+  "b": "SP3eASDKke4",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with the same family models; likely cuts of one animation"
+ },
+ {
+  "a": "iCbinH5esNA",
+  "b": "lYxy5H6EgEY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Apples and Bananas compilations with the same thumbnail layout, different songs"
+ },
+ {
+  "a": "Ik7-qK_sEq8",
+  "b": "M_92V9hKIv0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter O vs letter Z, shared template shots"
+ },
+ {
+  "a": "gIMyiAxeKSk",
+  "b": "ZztnbLI54FI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics: letter I vs letter M, shared template shots"
+ },
+ {
+  "a": "5iXRqSe4KJo",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: trombone vs toilet"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "mJFTp8x_QZ4",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: bicycle vs barbell"
+ }
+]

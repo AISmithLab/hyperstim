@@ -1,0 +1,12 @@
+[
+{"a":"etAzWdYufkE","b":"qC6yZCpDNAM","label":"re-upload","confidence":0.85,"note":"Five Little Penguins 2016 re-posted 2018: same frames and colors, new thumbnail."},
+{"a":"UGzlPPWb6Pg","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, fly swatter vs bottle gag, same set."},
+{"a":"Ra20ukn-TOM","b":"kAzlmpF-GPA","label":"shared-segments","confidence":0.85,"note":"Larva compilations sharing the snow episode; identical midpoint frame."},
+{"a":"e9gnACQvqRM","b":"UGzlPPWb6Pg","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs fly swatter gag, same set."},
+{"a":"UGzlPPWb6Pg","b":"E1wcRx1Exec","label":"unrelated","confidence":0.75,"note":"Rattic Mini vs Larva short; different series."},
+{"a":"UGzlPPWb6Pg","b":"_OlmXmG5OLM","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, fly swatter vs lawn mower gag."},
+{"a":"BRcmpSxalwA","b":"snvdOvj-H-o","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Up on the Roof Top; different content."},
+{"a":"BTZd9XbHcuk","b":"wOZanwZes-E","label":"shared-segments","confidence":0.85,"note":"Kids Channel compilations sharing the rainbow bus segment; identical midpoint frame."},
+{"a":"rYV4h-p7O2Y","b":"lkGmcS3ArOg","label":"unrelated","confidence":0.65,"note":"Halloween compilations of different series; no shared shot sampled."},
+{"a":"lkGmcS3ArOg","b":"pMhP1BPa4rU","label":"unrelated","confidence":0.65,"note":"Halloween compilations of different series; no shared shot sampled."}
+]

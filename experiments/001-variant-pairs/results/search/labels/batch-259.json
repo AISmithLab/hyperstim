@@ -1,0 +1,12 @@
+[
+{"a":"YaThzRybuhE","b":"_QwXfH5-D5g","label":"same-song","confidence":0.7,"note":"Kaboochi shorts with different characters and animation"},
+{"a":"W99Te7xIpX0","b":"k01vR5CKf78","label":"unrelated","confidence":0.6,"note":"Different Bob the Train vehicle shorts; shared characters only"},
+{"a":"G7PTUNLnAFk","b":"414DEMcGHtU","label":"unrelated","confidence":0.85,"note":"Different shorts, match only on blurred side bars"},
+{"a":"7ClCbBREUlU","b":"4AHTuFMPftA","label":"unrelated","confidence":0.85,"note":"Different shorts, match only on blurred side bars"},
+{"a":"57xqXbUP3WI","b":"Sch7IH7Cc28","label":"shared-segments","confidence":0.8,"note":"Bob compilations with identical shared frame (Bob and firetruck)"},
+{"a":"G7PTUNLnAFk","b":"KYwjCiQCbr8","label":"unrelated","confidence":0.85,"note":"Different shorts, match only on blurred side bars"},
+{"a":"U9maOBWT6wE","b":"oEDZUGxcTSk","label":"unrelated","confidence":0.85,"note":"Different shorts, match only on blurred side bars"},
+{"a":"oEDZUGxcTSk","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Different shorts, match only on blurred side bars"},
+{"a":"ApUXMFYjTUc","b":"oEDZUGxcTSk","label":"unrelated","confidence":0.85,"note":"Different shorts, match only on blurred side bars"},
+{"a":"U9maOBWT6wE","b":"idwuB7uQA2M","label":"unrelated","confidence":0.85,"note":"Different shorts, match only on blurred side bars"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"gx6_7rtN5AA","b":"u0Iw9dozWrk","label":"shared-segments","confidence":0.8,"note":"Christmas compilations; two matched moments identical, two different"},
+{"a":"05oAs-Pqf5Y","b":"xPt-5RG1m-0","label":"same-song","confidence":0.85,"note":"Kaboochi Christmas cast vs flat-color babies, different animation"},
+{"a":"-k4oiVaekT0","b":"4PhbUhrI4KE","label":"same-template","confidence":0.9,"note":"phonics letter Q vs T, same template"},
+{"a":"9VsF5w_n7qA","b":"6OZMyx_vJXM","label":"same-song","confidence":0.85,"note":"Jingle Bells, train cast vs baby cast, different shots"},
+{"a":"CaywS_FK4wE","b":"4PhbUhrI4KE","label":"same-template","confidence":0.9,"note":"phonics letter F vs T, same template"},
+{"a":"YrsmVbdtgLY","b":"Z13ulLin2jg","label":"same-song","confidence":0.85,"note":"Kaboochi Halloween vs baby dancers, different animation"},
+{"a":"4rcjZ1f_L4A","b":"4e1vB_kqCaY","label":"same-song","confidence":0.8,"note":"Kaboochi hula kids vs boy in cap, different staging"},
+{"a":"Qv-eMjDmTJQ","b":"OSOdLGenkS0","label":"shared-segments","confidence":0.5,"note":"Rattic Mini compilations; same title card at one moment, other moments differ"},
+{"a":"ONwFOOEkasU","b":"Z13ulLin2jg","label":"same-song","confidence":0.85,"note":"Kaboochi, different characters and shots"},
+{"a":"SB-7h4MW26k","b":"UN4V4ywCWxA","label":"same-template","confidence":0.6,"note":"Rattic Mini episodes, same stage set and music bed, different gags at matched moments"}
+]

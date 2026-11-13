@@ -1,0 +1,12 @@
+[
+ {"a": "zGPsQPzB5Tk", "b": "giE7ipqBKZA", "label": "shared-segments", "confidence": 0.75, "note": "Sport Bots compilations, same length; identical 1/2 and 3/4 frames, different lead episode and thumbnail."},
+ {"a": "P8hI5Lo1dvQ", "b": "0jdJc3Oew9I", "label": "re-skin", "confidence": 0.55, "note": "Thumbnails same fire car pose, blue vs orange; sampled video frames don't overlap, verify lead song."},
+ {"a": "Nlt_DqiIHcQ", "b": "jvCQFkt2FwI", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini The Mime vs The Picture; same set."},
+ {"a": "VBb7XUCV47g", "b": "a07zOPj6CZg", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics C vs G; shared intro and outro, different letter."},
+ {"a": "gmRIldLgb8k", "b": "VqT9YA3THAE", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini Kung Fu vs The Worm; same set."},
+ {"a": "t3y2AhXLjRY", "b": "IRWTZropao4", "label": "unrelated", "confidence": 0.6, "note": "Two Halloween shorts, different songs and characters."},
+ {"a": "t892KTYY-cE", "b": "VBb7XUCV47g", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics A vs C."},
+ {"a": "4rcjZ1f_L4A", "b": "IbEIByW4Fwk", "label": "unrelated", "confidence": 0.7, "note": "Different dance songs with different characters and sets."},
+ {"a": "dL9q0aobLss", "b": "Ng85dlGMIQA", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics R vs T."},
+ {"a": "VBb7XUCV47g", "b": "oHtQbh7LJjY", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics C vs J."}
+]

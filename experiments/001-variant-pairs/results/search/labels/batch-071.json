@@ -1,0 +1,12 @@
+[
+{"a":"xqSMUstQJwc","b":"bFzeFrnLf00","label":"shared-segments","confidence":0.9,"note":"Sport Bots compilations with identical frames at 1/2 and 3/4."},
+{"a":"CWkd68tLXos","b":"xKl_-u0zfhg","label":"shared-segments","confidence":0.85,"note":"Loco Nuts Halloween compilations sharing the pumpkin-table shot."},
+{"a":"EctujAhoLmA","b":"hVws1PYrdsI","label":"shared-segments","confidence":0.85,"note":"Bob the Train compilations sharing the desert truck-and-train shot."},
+{"a":"QidFzjRpGdM","b":"gdVpv0KN_uU","label":"shared-segments","confidence":0.65,"note":"Five Little Mommies shorts with the same doctor shot; 55 vs 61 s cuts."},
+{"a":"dG7KouaFW-o","b":"wMHsxnO156E","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations on one set; no shared shot sampled."},
+{"a":"b5VLi2_1HfE","b":"uQ90xr1p-eQ","label":"unrelated","confidence":0.8,"note":"Oopsie Doopsie animals vs Kaboochi babies; different characters."},
+{"a":"414DEMcGHtU","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.5,"note":"Kaboochi dance shorts with different characters and sets."},
+{"a":"cYZrTzVfiAE","b":"OEES3HmTQNw","label":"shared-segments","confidence":0.75,"note":"No No junk food song: same mom shots; 58 s short vs 143 s version."},
+{"a":"BRcmpSxalwA","b":"vYXkEPIElyc","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs Boo Boo song; different characters."},
+{"a":"h2XIpJMP06c","b":"vGjN_CslxSI","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the yellow-ball episode."}
+]

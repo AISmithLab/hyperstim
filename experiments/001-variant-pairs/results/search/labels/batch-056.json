@@ -1,0 +1,12 @@
+[
+{"a":"njSANQD1GlI","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; magic hat vs birthday gag"},
+{"a":"1g02Uh_IuI4","b":"uaNCJzGwl3E","label":"re-skin","confidence":0.9,"note":"2015 ABC Baby Wheels on the Bus, same shots; orange bus vs purple bus"},
+{"a":"sFhZZIPj9nE","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cleaning vs birthday gag"},
+{"a":"PPVWn53Yw4M","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; football vs birthday gag"},
+{"a":"_4x2xszMRq8","b":"pBZoqnYJdpo","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; birthday vs space rocket gag"},
+{"a":"414DEMcGHtU","b":"bVrFl7Z48so","label":"unrelated","confidence":0.8,"note":"Kaboochi dance vs Boo Boo song"},
+{"a":"LJN6yukuQ9A","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; manhole vs birthday gag"},
+{"a":"YVaBFUbjzuk","b":"_4x2xszMRq8","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts; Christmas mailbox vs birthday gag"},
+{"a":"eAodpnlhaNI","b":"bVrFl7Z48so","label":"shared-segments","confidence":0.5,"note":"Same bandaged baby model and playroom, Boo Boo song; different excerpts, no color change"},
+{"a":"1g02Uh_IuI4","b":"Hd7k7i4jqH4","label":"re-skin","confidence":0.85,"note":"2015 ABC Baby Wheels on the Bus, same shots; orange bus vs yellow bus"}
+]

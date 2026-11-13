@@ -1,0 +1,72 @@
+[
+ {
+  "a": "RG_4B9zxJnU",
+  "b": "fcYBv33BuIY",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo song shorts from one production; 25s cut shares shots with the 58s version."
+ },
+ {
+  "a": "UPDBxhcsIRQ",
+  "b": "ZEI_8iC_Z7E",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; sampled frames show different episodes."
+ },
+ {
+  "a": "7FiyQQBYTUY",
+  "b": "zPS3ihinlZs",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "q8T0cDm6nSA",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations; claw-machine and pram frames identical."
+ },
+ {
+  "a": "xJWSNIkfOrY",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing mime, snowman and jeep episodes."
+ },
+ {
+  "a": "Q-qoF1B0i_Q",
+  "b": "VJ1tu3mMRa0",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo song shorts cut from one production; same characters and shots."
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations both containing the Mime episode."
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "vyIiFiExyQQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; sampled frames show different episodes."
+ },
+ {
+  "a": "AlEPz20FGnk",
+  "b": "AydSzRoGSLY",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo song: 11s clip shares footage with the 178s version."
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ }
+]

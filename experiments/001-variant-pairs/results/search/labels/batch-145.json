@@ -1,0 +1,12 @@
+[
+{"a":"2uTYZ20rXa8","b":"s11HCj_gAWE","label":"re-skin","confidence":0.9,"note":"X2 speed Baby Bao Wheels on the Bus: same shots, bus yellow in A, red in B."},
+{"a":"s11HCj_gAWE","b":"nEoTfUE6-Pk","label":"re-skin","confidence":0.9,"note":"X2 speed Wheels on the Bus: identical shots, bus red in A, orange in B."},
+{"a":"OR9T1Iak3EU","b":"iRg3LHm7d38","label":"shared-segments","confidence":0.8,"note":"Bob the Train compilations sharing the train-and-truck footage."},
+{"a":"k3vCYP_aQ3w","b":"s11HCj_gAWE","label":"re-upload","confidence":0.8,"note":"Same red-bus Baby Bao Wheels on the Bus; B is the 2x-speed version."},
+{"a":"9GRfjnqjvSI","b":"8qqANuAM4RY","label":"same-song","confidence":0.6,"note":"Boo Boo song, same characters and sun shot, but hug/tunnel shots redrawn differently."},
+{"a":"LXMGLr9uFv4","b":"s11HCj_gAWE","label":"re-skin","confidence":0.85,"note":"X2 speed Wheels on the Bus: same street and panda shots, bus pink vs red."},
+{"a":"SLsPzcHEqDM","b":"qfZXh__AWj4","label":"re-upload","confidence":0.85,"note":"Emotions song: identical frames, new thumbnail and title, slightly shorter."},
+{"a":"Ir8GhJqQ3bI","b":"57NTk3K6F6s","label":"shared-segments","confidence":0.85,"note":"Compilations sharing identical tractor and panda-boat footage."},
+{"a":"m_oTk42_WQA","b":"Ri2sw4rIrfM","label":"same-template","confidence":0.5,"note":"Wheels on the X compilations with the same cast and sets; no shared frames seen."},
+{"a":"Ir8GhJqQ3bI","b":"8nB88sWMAnM","label":"shared-segments","confidence":0.85,"note":"Compilations sharing identical tractor and panda-boat footage."}
+]

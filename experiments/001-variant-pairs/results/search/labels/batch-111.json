@@ -1,0 +1,12 @@
+[
+{"a":"3oOHgnbgtqQ","b":"V075C-K_1K8","label":"shared-segments","confidence":0.85,"note":"2018 compilations sharing the cowboy-and-robot clip"},
+{"a":"AXfeoPJolIE","b":"XOCAlpWUh8o","label":"same-song","confidence":0.6,"note":"Two Jingle Bells shorts with different animation"},
+{"a":"9AFXwElvCOw","b":"_HgBvzgQg2A","label":"shared-segments","confidence":0.9,"note":"Compilations sharing the rocket-costume kids clip"},
+{"a":"Z13ulLin2jg","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.8,"note":"Kaboochi vs Dinosaur song shorts"},
+{"a":"gDzGfavrWeI","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.75,"note":"Two different Halloween song shorts"},
+{"a":"fKWJTJUkwPc","b":"BRcmpSxalwA","label":"unrelated","confidence":0.75,"note":"Five in the Bed vs Five Little Monkeys, different cast"},
+{"a":"pst1AsXQWTE","b":"lgLs0hy4eYk","label":"same-template","confidence":0.5,"note":"Same boy character in two different song shorts (Boo Boo vs Scared of the Dark)"},
+{"a":"PjXooPy93AM","b":"IYU2e8WgGnY","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the toy-car episode"},
+{"a":"8bMv6zrYZ6o","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.75,"note":"Halloween goodies short vs Wheels on the Taxi"},
+{"a":"t2tKT2LSOfo","b":"fKWJTJUkwPc","label":"unrelated","confidence":0.75,"note":"No No song vs Five in the Bed shorts"}
+]

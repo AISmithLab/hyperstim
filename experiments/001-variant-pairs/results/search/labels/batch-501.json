@@ -1,0 +1,12 @@
+[
+{"a":"WDCPlg_DNwQ","b":"HgaOFrQctSs","label":"shared-segments","confidence":0.8,"note":"Monster in the Dark short cut from the 120s version, same doorway shot"},
+{"a":"e9gnACQvqRM","b":"fOJm84LQSTw","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Door vs High Striker"},
+{"a":"a0Dg0fPxACY","b":"Z1H7LX1K4Zo","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Tumbler Toy vs Toilet"},
+{"a":"obdK23ZIr6E","b":"i2XoutDdPoM","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Trishaw vs Pillow"},
+{"a":"Pa7utiQUGOY","b":"8Ri1s8CTSrM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing pillow and toilet episodes"},
+{"a":"qHf6e1CQQ5c","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.55,"note":"Kaboochi shorts, different characters and set"},
+{"a":"UXsXYmw3_CY","b":"cqjfiWrwmmg","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Gloves vs Stones"},
+{"a":"gkk96Hm-IHo","b":"GvP31EGA8tQ","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"rWQWjm-AIvo","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts cut from one production; overlapping characters"},
+{"a":"UGzlPPWb6Pg","b":"76IijP9RlJY","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Fly Swatter vs The Cook"}
+]

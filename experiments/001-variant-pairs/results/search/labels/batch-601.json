@@ -1,0 +1,12 @@
+[
+{"a":"4rcjZ1f_L4A","b":"414DEMcGHtU","label":"same-song","confidence":0.85,"note":"Kaboochi; Hawaiian kids animation vs rainbow-hair baby with ABC title, different shots."},
+{"a":"Xx39RVmRYWE","b":"Z13ulLin2jg","label":"re-skin","confidence":0.9,"note":"Same shots/poses; A adds Santa hats, Christmas outfits and snowy tree background vs colorful room in B."},
+{"a":"BZqq3eL6xSE","b":"xEFkAQpftd4","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same stage set; high striker vs talent show gags, different shots."},
+{"a":"OSOdLGenkS0","b":"YABj119wijM","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; matched moments show different episodes, shared audio is likely the music bed."},
+{"a":"bBOI5NzGpX0","b":"pKnKuQMeGlk","label":"same-template","confidence":0.6,"note":"Rattic Mini 'The Mime & More' compilations; matched moments show different gags; may share episodes."},
+{"a":"Zy0VtX5RTFM","b":"M0V1ofCOEew","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments."},
+{"a":"TGZl_HsDj_0","b":"20HqqfnKxZk","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations; different gags at matched moments."},
+{"a":"Xx39RVmRYWE","b":"Tgp1NqPegK8","label":"re-skin","confidence":0.9,"note":"Same shots/poses as B; A is Christmas version with Santa hats and snowy tree background."},
+{"a":"hX-dN0g03eE","b":"oT6bPk4gHxM","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, same set; camera gag vs rings gag."},
+{"a":"Gh4izthwnNM","b":"ewZwn2G14Wg","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; different gags at matched moments, some episodes may be shared."}
+]

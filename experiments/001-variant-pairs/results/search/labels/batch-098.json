@@ -1,0 +1,12 @@
+[
+{"a":"Jn9aklUYdQk","b":"Tgp1NqPegK8","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Kaboochi dance; different content."},
+{"a":"wQuhEYZsqmE","b":"Lm494FQebI8","label":"unrelated","confidence":0.85,"note":"Halloween Train vs If You're a Monster; different characters."},
+{"a":"E6KHe0vm4Bw","b":"mxRMkO3K4Rs","label":"unrelated","confidence":0.85,"note":"If You're Happy vs Boo Boo song; different characters."},
+{"a":"Jn9aklUYdQk","b":"DclM70T7jyI","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and shots."},
+{"a":"Jn9aklUYdQk","b":"Td73SYRglgw","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and shots."},
+{"a":"Jn9aklUYdQk","b":"vYXkEPIElyc","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and shots."},
+{"a":"Lm494FQebI8","b":"OokGp8l_x9k","label":"unrelated","confidence":0.85,"note":"If You're a Monster vs Halloween bus; different content."},
+{"a":"cE3LzPQgQmk","b":"2YmFl3ccv9E","label":"re-upload","confidence":0.8,"note":"Bob ABC Train 2013 and its 2018 Chinese-titled re-post; identical frames, new thumbnail."},
+{"a":"E6KHe0vm4Bw","b":"tQlIWPUO_E0","label":"unrelated","confidence":0.85,"note":"If You're Happy vs Ten in the Bed; different content."},
+{"a":"6aBfQYlhKJs","b":"Lm494FQebI8","label":"unrelated","confidence":0.8,"note":"Spooky Zombie vs If You're a Monster; Halloween theme only."}
+]

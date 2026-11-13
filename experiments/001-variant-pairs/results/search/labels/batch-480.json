@@ -1,0 +1,12 @@
+[
+{"a":"e9gnACQvqRM","b":"TtH33fR-iQM","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: door vs skates"},
+{"a":"VnHWYMlDgwI","b":"BrjLq8jTPfw","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing toy-car and hat-balloon episodes"},
+{"a":"kZytosLyQEc","b":"pBZoqnYJdpo","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: bicycle vs space rocket"},
+{"a":"bNuG6IapPsk","b":"Tn2UZwb9RcY","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: fitness ball vs bucket"},
+{"a":"Tn2UZwb9RcY","b":"hsUfmH_uRjc","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: bucket vs car service"},
+{"a":"2kLB7ZwxVv8","b":"Qs4R686NOjg","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"SB-7h4MW26k","b":"Zifbjuvaqrk","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"},
+{"a":"NcfiuWYdC24","b":"RG_4B9zxJnU","label":"shared-segments","confidence":0.65,"note":"Boo Boo shorts share the dad-holding-baby shot, other shots differ"},
+{"a":"TRCJGQylez4","b":"7xSdzGpSjl4","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts: spring toy vs gloves"},
+{"a":"20HqqfnKxZk","b":"aDyWeSAt-sI","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations, no shared episode visible"}
+]

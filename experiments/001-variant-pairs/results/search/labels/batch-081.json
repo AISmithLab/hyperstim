@@ -1,0 +1,12 @@
+[
+{"a":"h2XIpJMP06c","b":"WZ45rZRLf80","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the yellow-ball episode; identical midpoint frame."},
+{"a":"xl7KYkBbsuY","b":"DJdZWkqOO9U","label":"shared-segments","confidence":0.85,"note":"Bob the Train phonics compilations sharing the Q-for-quack segment."},
+{"a":"zA5jRniZ0t0","b":"FQUgXsDAOno","label":"shared-segments","confidence":0.85,"note":"Bob the Train compilations sharing the baby-on-rocker segment."},
+{"a":"DJdZWkqOO9U","b":"L_LmPW3R9HM","label":"shared-segments","confidence":0.8,"note":"Bob the Train phonics compilations sharing the Q-for-quack segment."},
+{"a":"vGjN_CslxSI","b":"WZ45rZRLf80","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the sleigh and yellow-ball episodes."},
+{"a":"rO2zeIHbFdc","b":"DJdZWkqOO9U","label":"shared-segments","confidence":0.85,"note":"2015 Bob phonics song reused in the 2023 compilation; identical Q-for-quack frame."},
+{"a":"R49NrP0fcsE","b":"UfuSoF6iy_w","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Halloween Finger Family; different content."},
+{"a":"QidFzjRpGdM","b":"nWqwqAY0KRY","label":"shared-segments","confidence":0.6,"note":"Five Little Mommies: B (Halloween-styled) contains the same doctor shot."},
+{"a":"CEKME9-h9bk","b":"OzTP8uz_F0U","label":"unrelated","confidence":0.6,"note":"Phonics compilations from different series; no shared shot sampled."},
+{"a":"Tgp1NqPegK8","b":"1WzZWyDsRw4","label":"unrelated","confidence":0.85,"note":"Kaboochi babies vs Boo Boo song; different characters."}
+]

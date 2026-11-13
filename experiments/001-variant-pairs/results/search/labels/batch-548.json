@@ -1,0 +1,72 @@
+[
+ {
+  "a": "pKnKuQMeGlk",
+  "b": "_GlpTSaa5EU",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing the mime episode"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "39Dtr0Rq-TY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, bicycle vs boards"
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "2SAG3jAYNyk",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic magic hat vs two-episode water machine short"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "lij2KlyDHJ8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, toy airplane vs rocket"
+ },
+ {
+  "a": "inkqQlbrdrQ",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "tQ3LttVt_Jk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, bottle vs canyon"
+ },
+ {
+  "a": "STRJcffvt-0",
+  "b": "HE58ikBC9nw",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters Q and X on one template"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "w7exxTCHfx8",
+  "b": "klDPbXVTBzw",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing yellow ball and cactus canyon episodes"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"jPvyJ9IIRJk","b":"ainrmFQVbfI","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, Skipping Rope vs hanging Rope, different episodes"},
+{"a":"oAN_O9JQlfc","b":"x0h4qykzlsA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing car and tower episodes"},
+{"a":"9-G4JeHJiYQ","b":"M0V1ofCOEew","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"},
+{"a":"lij2KlyDHJ8","b":"VnHWYMlDgwI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"QKrdD5Y9c-s","b":"aDyWeSAt-sI","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"V9fA6nrohac","b":"i2XoutDdPoM","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Attic Stairs vs Pillow"},
+{"a":"jPvyJ9IIRJk","b":"MnJaDuR1QKE","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Skipping Rope vs Robot Vacuum"},
+{"a":"20HqqfnKxZk","b":"Pa7utiQUGOY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the pillow jump episode"},
+{"a":"vyIiFiExyQQ","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; car episodes look related but no clear shared shot"},
+{"a":"afyKHCB03MU","b":"_R12Qsg6sEk","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Bottle vs Cowboy"}
+]

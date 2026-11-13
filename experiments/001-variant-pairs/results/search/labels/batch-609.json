@@ -1,0 +1,72 @@
+[
+ {
+  "a": "YrsmVbdtgLY",
+  "b": "t5wDGNrzpro",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi Halloween monsters vs babies and corgi; different shots."
+ },
+ {
+  "a": "oCiHs7agwmE",
+  "b": "fAQ_c_NEM7A",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi babies/corgi vs boy on stage; different animation."
+ },
+ {
+  "a": "IYU2e8WgGnY",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "TwS8SzpZrug",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "vGjN_CslxSI",
+  "b": "-8VedXc5EDU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "gkk96Hm-IHo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "hrOfhQCxqL0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "3aoEeaCHS_w",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts Kung Fu vs Fishing; similar running shots, different gags."
+ },
+ {
+  "a": "KFwebO9sy58",
+  "b": "pKnKuQMeGlk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "SB-7h4MW26k",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; matched moments show different gags/episodes, likely shared music only."
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"xQmunYrE7VA","b":"zB4f-P9uBfA","label":"re-upload","confidence":0.95,"note":"Hop and Zip short, identical frames on both channels."},
+{"a":"riN-hgPZwHc","b":"UDDipKeGISg","label":"re-skin","confidence":0.65,"note":"Wheels on the Firetruck: same road shot, car green in A, yellow in B."},
+{"a":"C0trauXRkTw","b":"OKNdDQ3rJiY","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, UT vs ET words."},
+{"a":"syYJiqAlNVc","b":"C0trauXRkTw","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, IN vs UT words."},
+{"a":"uQ90xr1p-eQ","b":"pbfbmXohAGo","label":"shared-segments","confidence":0.5,"note":"Kaboochi dance, same set and kids; B longer, different dancer at 1/4."},
+{"a":"SQBTIuB0SsI","b":"12mNC1UN38M","label":"shared-segments","confidence":0.55,"note":"Halloween bus: same thumbnail and 3/4 shot, 1/4 shots differ; re-edit."},
+{"a":"eAodpnlhaNI","b":"92wkK3tkeb0","label":"re-upload","confidence":0.9,"note":"Boo Boo Song short, same frames on both channels."},
+{"a":"aLnuvTGf-pk","b":"Bb2B39Z8uH0","label":"unrelated","confidence":0.7,"note":"Match only on Bob thumbnail; farm song vs colors song."},
+{"a":"MstDCeu1yxM","b":"i2XoutDdPoM","label":"shared-segments","confidence":0.6,"note":"Pillow rat short; B 61s likely extends A 30s footage."},
+{"a":"C0trauXRkTw","b":"W4KOgl07P24","label":"same-template","confidence":0.85,"note":"Bob the Train Word Play, UT vs UG words."}
+]

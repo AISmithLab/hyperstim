@@ -1,0 +1,72 @@
+[
+ {
+  "a": "V5OqHZwodj4",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "mTsFv_5w3uU",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "fo7aioou8m0",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "QY6idrQO99U",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "Ka3AbnnoaOE",
+  "b": "_QFj7e58XGE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "6aBfQYlhKJs",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "Ka3AbnnoaOE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "aZoH6w-VPjk",
+  "b": "_GlpTSaa5EU",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the mime and teddy-box episodes"
+ },
+ {
+  "a": "q8T0cDm6nSA",
+  "b": "inkqQlbrdrQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the claw machine, tricycle and pram episodes"
+ }
+]

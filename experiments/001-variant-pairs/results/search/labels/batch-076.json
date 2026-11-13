@@ -1,0 +1,12 @@
+[
+{"a":"-dlezjbLXKU","b":"OokGp8l_x9k","label":"same-song","confidence":0.7,"note":"Halloween Wheels on the Bus with a different face bus, characters and shots."},
+{"a":"-dlezjbLXKU","b":"6Knlj_rhgE4","label":"same-song","confidence":0.7,"note":"Halloween Wheels on the Bus with a different face bus, characters and shots."},
+{"a":"Ia-g9fkyMJ4","b":"hLYn45GEWJc","label":"same-template","confidence":0.7,"note":"Larva-style shorts, same characters and set, different gags."},
+{"a":"GqpAJf36hrc","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.85,"note":"Halloween School Teacher vs Five Little Mommies; different content."},
+{"a":"-dlezjbLXKU","b":"12mNC1UN38M","label":"same-song","confidence":0.7,"note":"Halloween Wheels on the Bus with a different face bus, characters and shots."},
+{"a":"OhpBUb0Pniw","b":"mxRMkO3K4Rs","label":"unrelated","confidence":0.6,"note":"If You're Happy vs Boo Boo song; same camo-shirt dad character, different songs."},
+{"a":"HW8O6C_OCJQ","b":"B_MmKCyAmpw","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Oopsie Doopsie Halloween; different characters."},
+{"a":"obdK23ZIr6E","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, trishaw vs basketball gag, same set."},
+{"a":"vGjN_CslxSI","b":"wMHsxnO156E","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the yellow-ball episode."},
+{"a":"t2tKT2LSOfo","b":"kdLu240pkyI","label":"unrelated","confidence":0.85,"note":"No No song vs Finger Family; different characters."}
+]

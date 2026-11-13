@@ -1,0 +1,72 @@
+[
+ {
+  "a": "ezMhpewwciQ",
+  "b": "yElVnujAnog",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Hector vehicle compilations share the blue truck episode"
+ },
+ {
+  "a": "5vEKwljBJp4",
+  "b": "uesXsnCHTXg",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Five Little Kittens shorts share number-4 donut and baby shots"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "xEFkAQpftd4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "PIZj5SH8Bok",
+  "b": "Gh4izthwnNM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share block tower and toy car episodes"
+ },
+ {
+  "a": "bdbNsMtn26Y",
+  "b": "FGUfrSFknik",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "nHT4spNAshs",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the sleigh episode"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "Kix07nOAEBQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "vNPsUxZBA70",
+  "b": "njSANQD1GlI",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Five Little Monsters vs Rattic Magic Hat shorts; different"
+ },
+ {
+  "a": "y5BTqWirpe8",
+  "b": "0L9EfYLMx8A",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob the Train phonics letters M vs P"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "3yv0GSbbCZI",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ }
+]

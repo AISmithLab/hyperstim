@@ -1,0 +1,12 @@
+[
+{"a":"L9Rsc20F4Iw","b":"lgLs0hy4eYk","label":"shared-segments","confidence":0.8,"note":"Scared of the Dark: same cap-boy shots; 31 s vs 15 s cut."},
+{"a":"MUCIr3OvsRo","b":"L9Rsc20F4Iw","label":"unrelated","confidence":0.6,"note":"School Teacher vs Scared of the Dark; same cap-boy character, different songs."},
+{"a":"GkcqRmdwKlE","b":"DHRQXGTSvw0","label":"same-template","confidence":0.9,"note":"2014 phonics letter series, J vs K, same template."},
+{"a":"gdVpv0KN_uU","b":"L9Rsc20F4Iw","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Scared of the Dark; different content."},
+{"a":"h-wl3-GG_Vo","b":"L9Rsc20F4Iw","label":"unrelated","confidence":0.8,"note":"Wash Your Hands vs Scared of the Dark; different content."},
+{"a":"eAodpnlhaNI","b":"L9Rsc20F4Iw","label":"unrelated","confidence":0.85,"note":"Boo Boo vs Scared of the Dark; different content."},
+{"a":"gIMyiAxeKSk","b":"kwXxrZQ5GaQ","label":"same-template","confidence":0.85,"note":"Learning Street phonics episodes, I vs L, shared intro template."},
+{"a":"VqT9YA3THAE","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, worm vs basketball gag."},
+{"a":"6FhYNE5KFeg","b":"UGzlPPWb6Pg","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, cat vs fly swatter gag."},
+{"a":"TwS8SzpZrug","b":"JOMSMENnSIQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing glass-case, stroller and ladybug episodes."}
+]

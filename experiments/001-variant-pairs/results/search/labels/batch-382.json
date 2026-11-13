@@ -1,0 +1,72 @@
+[
+ {
+  "a": "gvcEcWUHZ_c",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "6cmE3gwaqJI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, cheese vs car alarm episodes"
+ },
+ {
+  "a": "AyZJfo2rrOc",
+  "b": "fx0aMbJwE34",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing snowman, toy-car and trash-can episodes"
+ },
+ {
+  "a": "MstDCeu1yxM",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, pillow vs toilet episodes"
+ },
+ {
+  "a": "aZoH6w-VPjk",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "oRk8sglOG5k",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with different animation"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "xGQYPFqXJjE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "TGZl_HsDj_0",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing red-car and tower-blocks episodes"
+ },
+ {
+  "a": "Z1H7LX1K4Zo",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, toilet vs picture episodes"
+ }
+]

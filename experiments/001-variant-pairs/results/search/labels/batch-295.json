@@ -1,0 +1,72 @@
+[
+ {
+  "a": "0L9EfYLMx8A",
+  "b": "sIdcWsoEF3s",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob the Train letter P vs letter S episodes"
+ },
+ {
+  "a": "sIdcWsoEF3s",
+  "b": "U8A0s0vt5rQ",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob the Train letter S vs letter U episodes"
+ },
+ {
+  "a": "jrKMYkmA3lY",
+  "b": "DsKrgJF4RiM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Sick song vs wash hands shorts; side bars only"
+ },
+ {
+  "a": "EpdOW7JpFbI",
+  "b": "qDZbmgSwTJU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Finger family template, penguins vs dinosaurs, different animation"
+ },
+ {
+  "a": "DsKrgJF4RiM",
+  "b": "PSK30ESlClI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wash hands vs chew food shorts; side bars only"
+ },
+ {
+  "a": "mTsFv_5w3uU",
+  "b": "DsKrgJF4RiM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Old MacDonald vs wash hands shorts"
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "DsKrgJF4RiM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs wash hands shorts"
+ },
+ {
+  "a": "DsKrgJF4RiM",
+  "b": "6U9UX0MLvU4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wash hands vs Boo Boo shorts"
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "DsKrgJF4RiM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs wash hands shorts"
+ },
+ {
+  "a": "vbY-B_GtSvc",
+  "b": "ZztnbLI54FI",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter K vs M, shared intro/outro"
+ }
+]

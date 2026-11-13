@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "Is1sSXyJz28",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "v80qWgkingM",
+  "b": "Q5sXjav9YNc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "bzcufo-BRaA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "ukENAA-zDsg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "IRWTZropao4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "dJvFOX8l4d8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "t3y2AhXLjRY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "CcZ5-DXzIL0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different Halloween shorts; match only from black pillarbox layout."
+ },
+ {
+  "a": "fShbPnI_luI",
+  "b": "qDZbmgSwTJU",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Finger Family series, owls vs dinosaurs, different animation."
+ },
+ {
+  "a": "Q5sXjav9YNc",
+  "b": "nbI-1N_uBNs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween vs Jingle Bells shorts; black pillarbox only."
+ }
+]

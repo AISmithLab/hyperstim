@@ -1,0 +1,72 @@
+[
+ {
+  "a": "05oAs-Pqf5Y",
+  "b": "Xx39RVmRYWE",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Christmas Kaboochi shorts with different characters and shots"
+ },
+ {
+  "a": "IxhOcpR3Ygg",
+  "b": "LrmcToU6lbs",
+  "label": "re-upload",
+  "confidence": 0.95,
+  "note": "Same Name the Animal Bob video, identical frames; new thumbnail and title"
+ },
+ {
+  "a": "v80qWgkingM",
+  "b": "iJZ97cfpjhI",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween Night vs Kaboochi animal shorts; different characters"
+ },
+ {
+  "a": "sBtKayGZJiU",
+  "b": "7I0SeirswAk",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Johny Johny Yes Papa shorts with different characters and animation"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "d0qkYGMwDsc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Monsters in the House; different scenes"
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "t5wDGNrzpro",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Wheels on the Train vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "gLpN6e-D_HE",
+  "b": "SKFkClK7__4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Alphabet compilations share cowboy and boy-with-trombone segments"
+ },
+ {
+  "a": "OFvmlD86K5Q",
+  "b": "_QFj7e58XGE",
+  "label": "same-template",
+  "confidence": 0.45,
+  "note": "Wheels on the Taxi vs Wheels on the Train shorts; different kids and scenes"
+ },
+ {
+  "a": "ePXZN5eimag",
+  "b": "I1sisugrdJQ",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Christmas compilation contains the HO HO HO Santa Bob song"
+ },
+ {
+  "a": "ksTmEkp5ERM",
+  "b": "aYm4u_lQpIo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Finger Family vs Kaboochi shorts; different characters"
+ }
+]

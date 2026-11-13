@@ -1,0 +1,12 @@
+[
+{"a":"F7WyPqms5x0","b":"O96r1dZ4Nqg","label":"same-template","confidence":0.9,"note":"Phonics series: letter B vs letter G"},
+{"a":"rpvtKnqu7-4","b":"McACiO5dwGM","label":"same-template","confidence":0.9,"note":"Phonics series: letter O vs letter S"},
+{"a":"CM5WSxyRzDM","b":"JiCQD8YadRs","label":"same-song","confidence":0.8,"note":"Five Little Piggies; different pig designs and shots at matched moments"},
+{"a":"s3aVKjLvoQI","b":"5VI8gDmWreM","label":"re-skin","confidence":0.5,"note":"Same wheel close-up, gray-blue in A, purple in B; truck orange vs purple; later matched frames drift"},
+{"a":"xers5HU02Ew","b":"y8nnK3mnV3Q","label":"re-skin","confidence":0.8,"note":"Same Boo Boo shots and poses; B relit as Halloween night with pumpkins and purple fog"},
+{"a":"PvwnJG2i1i4","b":"m5k-5ZOUp-A","label":"re-upload","confidence":0.95,"note":"Matched moments identical, same length; only thumbnail and title differ"},
+{"a":"0ZNqZ9x_06U","b":"ONwFOOEkasU","label":"same-song","confidence":0.85,"note":"Kaboochi; boy in yellow shirt vs kids with heart glasses; different animation"},
+{"a":"xUOc-UwTVBA","b":"f-iL7k5jhCI","label":"same-template","confidence":0.9,"note":"Phonics series: letter M vs letter Z"},
+{"a":"E9t53ek7H8U","b":"xPt-5RG1m-0","label":"shared-segments","confidence":0.65,"note":"Same costumed-baby Kaboochi footage but shots in different order; B shorter cut"},
+{"a":"r4gs8Ddp8_w","b":"_B5Aec29lHQ","label":"re-skin","confidence":0.7,"note":"Same bus seat shots and poses; A flat 2D daytime, B 3D Halloween night"}
+]

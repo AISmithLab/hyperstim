@@ -1,0 +1,72 @@
+[
+ {
+  "a": "HVxwiq0l91I",
+  "b": "Pf28RXSgA9g",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Junior Squad Christmas compilations share the snowman-and-man segment."
+ },
+ {
+  "a": "HVxwiq0l91I",
+  "b": "lfVKXtjHwIo",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Junior Squad Christmas compilations share the snowman-and-man segment."
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (toy airplane vs robot vacuum)."
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs camp bus shorts; nothing shared."
+ },
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "9-G4JeHJiYQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on same set; no shared frame seen."
+ },
+ {
+  "a": "6H4UizQh1DY",
+  "b": "6IKneJVSxQA",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Apples & Bananas compilations; only thumbnail layout shared."
+ },
+ {
+  "a": "Nj_pfXISKXc",
+  "b": "LzlbaXt9Yg4",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Bus song vs camp bus shorts; different characters and shots."
+ },
+ {
+  "a": "O6CEVkKH0hQ",
+  "b": "7EO3lve1f7c",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Halloween compilations; different characters and frames."
+ },
+ {
+  "a": "BRcmpSxalwA",
+  "b": "rWQWjm-AIvo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "Q9BbiIQ6C_E",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bath song vs Christmas shorts; nothing shared."
+ }
+]

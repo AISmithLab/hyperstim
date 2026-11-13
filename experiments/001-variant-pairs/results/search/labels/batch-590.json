@@ -1,0 +1,12 @@
+[
+{"a":"4PhbUhrI4KE","b":"f-iL7k5jhCI","label":"same-template","confidence":0.9,"note":"Phonics series: letter T vs letter Z, same tune and layout, different words"},
+{"a":"_73WjnueOIQ","b":"sG_f01xgWPo","label":"same-song","confidence":0.7,"note":"Halloween Wheels on the Bus shorts; different shots and characters at matched moments"},
+{"a":"YASqLUId4n8","b":"-k4oiVaekT0","label":"same-template","confidence":0.9,"note":"Phonics series: letter L vs letter Q, same audio template, different words"},
+{"a":"Moo-mayOOWY","b":"7xv-yiS3oB4","label":"unrelated","confidence":0.55,"note":"Different Halloween shorts (zombie/vampire vs witch girl); matched frames all differ"},
+{"a":"fAQ_c_NEM7A","b":"xPt-5RG1m-0","label":"same-song","confidence":0.7,"note":"Kaboochi dance: boy on purple stage vs police baby on color panels; different staging"},
+{"a":"ahWBypah3WE","b":"2ccdfNa0OyQ","label":"same-song","confidence":0.65,"note":"Oopsie Doopsie: same characters/set reused but different shots at matched moments"},
+{"a":"5gDfGvKznXE","b":"iiqbyMQ9vZI","label":"re-skin","confidence":0.85,"note":"Same shots/poses; bus pink in A, yellow in B; girl's outfit and hair changed; B shorter"},
+{"a":"8ovG9ptOjBw","b":"RJH2oMKPeaw","label":"same-template","confidence":0.9,"note":"Phonics series: letter W vs letter Y, same template, different words"},
+{"a":"bzcufo-BRaA","b":"-dlezjbLXKU","label":"same-song","confidence":0.55,"note":"Halloween bus: first wheel shot matches (pumpkin vs pink hubcap), other moments differ"},
+{"a":"iaSPV2ZHx5U","b":"7wfgbhEY9DU","label":"same-song","confidence":0.8,"note":"Sick Song: animal characters in A vs human kids in B, different shots"}
+]

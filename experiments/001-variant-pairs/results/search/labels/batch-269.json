@@ -1,0 +1,12 @@
+[
+{"a":"VBb7XUCV47g","b":"aA57PjtEfZw","label":"same-template","confidence":0.85,"note":"Bob phonics letter C vs D, shared intro/outro"},
+{"a":"9DBJvlkWDs4","b":"Th5MQB8VO3Q","label":"shared-segments","confidence":0.8,"note":"Boo Boo short and longer version share the same footage"},
+{"a":"DS8rk9NwXQc","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.5,"note":"Rattic Mini shorts, mime vs balloon gags; heart balloon may be shared"},
+{"a":"ET0nSVHzYd4","b":"vyIiFiExyQQ","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the red car episode"},
+{"a":"UXsXYmw3_CY","b":"7FiyQQBYTUY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs skates gags"},
+{"a":"2kLB7ZwxVv8","b":"JOMSMENnSIQ","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing claw machine and stroller episodes"},
+{"a":"UXsXYmw3_CY","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, gloves vs balloon gags"},
+{"a":"pe_iRGqeBlA","b":"YJLDe0F_z7k","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing bin and snowman episodes"},
+{"a":"VqT9YA3THAE","b":"TwDxP5L1-VA","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, worm vs teleport gags"},
+{"a":"hzzGSyV_BCA","b":"ripZ0792Vx4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing heart balloon and pillow episodes"}
+]

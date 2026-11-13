@@ -1,0 +1,12 @@
+[
+ {"a": "YH_-oc1--30", "b": "Q3t4PhoBxVA", "label": "shared-segments", "confidence": 0.85, "note": "Christmas compilations with identical grandpa frame at 1/2, different other content."},
+ {"a": "E4cuOfwU8k0", "b": "4OZ-iSU4DiM", "label": "re-skin", "confidence": 0.75, "note": "Same street shot of panda driving pickup, truck pink vs red; buses differ (red double-decker vs purple)."},
+ {"a": "AlEPz20FGnk", "b": "ANqdoD46Ox0", "label": "same-song", "confidence": 0.6, "note": "Boo Boo Song; different families and scenes in sampled frames."},
+ {"a": "4rcjZ1f_L4A", "b": "MoftuEWtBuI", "label": "shared-segments", "confidence": 0.55, "note": "Kaboochi dance shorts with same characters and dance floor; likely different cuts of one video."},
+ {"a": "aDyWeSAt-sI", "b": "UPDBxhcsIRQ", "label": "shared-segments", "confidence": 0.85, "note": "Rattic Mini compilations with identical toy-car and snowman frames, different lead episode."},
+ {"a": "IOhRyd9CwYo", "b": "P610udrUFqE", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mailbox vs Seesaw; same set."},
+ {"a": "6U9UX0MLvU4", "b": "4AHTuFMPftA", "label": "unrelated", "confidence": 0.75, "note": "Boo Boo Song vs Halloween This Is The Way; different characters and scenes."},
+ {"a": "s0DwH0Oq5YY", "b": "SP3eASDKke4", "label": "shared-segments", "confidence": 0.75, "note": "Mother holding blue-hat baby shot appears in both; B is a shorter cut."},
+ {"a": "y5BTqWirpe8", "b": "XBXyBskjSOc", "label": "same-template", "confidence": 0.9, "note": "Bob the Train letter M vs T songs, same template."},
+ {"a": "nTssqRDqmeE", "b": "9gnzDcdflfw", "label": "shared-segments", "confidence": 0.5, "note": "Same ice cream truck model and song; different shots sampled, likely cuts of one video."}
+]

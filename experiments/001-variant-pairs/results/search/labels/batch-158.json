@@ -1,0 +1,12 @@
+[
+{"a":"_4x2xszMRq8","b":"jvCQFkt2FwI","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, birthday vs picture."},
+{"a":"YVaBFUbjzuk","b":"DS8rk9NwXQc","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, Christmas mailbox vs mime."},
+{"a":"fcYBv33BuIY","b":"AlEPz20FGnk","label":"shared-segments","confidence":0.7,"note":"Boo Boo song shorts cut from the same footage, different lengths."},
+{"a":"afyKHCB03MU","b":"fOJm84LQSTw","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, bottle vs high striker."},
+{"a":"STRJcffvt-0","b":"Ng85dlGMIQA","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters Q and T, shared intro and set."},
+{"a":"PbchJhisS4s","b":"Gh4izthwnNM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing red-car and block-tower episodes."},
+{"a":"UGzlPPWb6Pg","b":"o6VjhL9gA1A","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, fly swatter vs carousel."},
+{"a":"jPvyJ9IIRJk","b":"pBZoqnYJdpo","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, skipping rope vs space rocket."},
+{"a":"fUR3k2eL6Mo","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations, different episodes."},
+{"a":"skNxtYhw9Y8","b":"PjXooPy93AM","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."}
+]

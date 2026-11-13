@@ -1,0 +1,12 @@
+[
+ {"a": "BY1M-8DiGqY", "b": "cdyYK3q25dw", "label": "re-upload", "confidence": 0.9, "note": "Planet song: identical frames, only thumbnail and title differ."},
+ {"a": "o6VjhL9gA1A", "b": "pBZoqnYJdpo", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Carousel vs Space Rocket; same set."},
+ {"a": "oRUKPowFBgM", "b": "6U9UX0MLvU4", "label": "unrelated", "confidence": 0.7, "note": "Apples and Bananas vs Boo Boo Song; different characters and scenes."},
+ {"a": "Tob6QrEuyGA", "b": "lAzGHzMpEPw", "label": "re-upload", "confidence": 0.9, "note": "Same panda Christmas video across channels, identical frames, new thumbnail."},
+ {"a": "VqT9YA3THAE", "b": "Nlt_DqiIHcQ", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini The Worm vs The Mime; same set."},
+ {"a": "Ia-g9fkyMJ4", "b": "dJGR_ECKwCA", "label": "same-template", "confidence": 0.75, "note": "Larva shorts: Water Melon vs Ham, same characters, different set and gags."},
+ {"a": "EX0D6k2zAM0", "b": "UPDBxhcsIRQ", "label": "same-template", "confidence": 0.6, "note": "Rattic Mini compilations; similar mime scenes but no identical frames."},
+ {"a": "7_i2hBtxCms", "b": "9qAK1CDLrIs", "label": "shared-segments", "confidence": 0.85, "note": "Supremes compilations with identical kitchen frame at 1/2, different lead songs."},
+ {"a": "VBb7XUCV47g", "b": "Ng85dlGMIQA", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics C vs T."},
+ {"a": "P610udrUFqE", "b": "QLtuuZVDZ4g", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Seesaw vs Pillow; same set."}
+]

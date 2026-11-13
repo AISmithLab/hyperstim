@@ -1,0 +1,72 @@
+[
+ {
+  "a": "fkbPSpJWDOM",
+  "b": "1F3UMZEL9c0",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Same vehicle cast and garage set; identical taxi shot at mid; compilation likely includes Shake It."
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "Dv9uq-E9kbY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "zPS3ihinlZs",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "XamiKGRhams",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "YJLDe0F_z7k",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing the snowman episode (identical frame)."
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "jPvyJ9IIRJk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "njSANQD1GlI",
+  "b": "hsUfmH_uRjc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; sampled frames show different episodes."
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; sampled frames show different episodes."
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "zPS3ihinlZs",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different episodes."
+ }
+]

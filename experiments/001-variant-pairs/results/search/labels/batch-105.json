@@ -1,0 +1,12 @@
+[
+{"a":"IRWTZropao4","b":"KZVSZyNxSng","label":"re-upload","confidence":0.9,"note":"Ha Ha Halloween short re-posted a year later; same frames, blurred bars instead of black"},
+{"a":"Iygt_NzD7VU","b":"VJ1tu3mMRa0","label":"re-upload","confidence":0.85,"note":"Boo Boo short, same 41 s and same dad frames; new thumbnail"},
+{"a":"VJ1tu3mMRa0","b":"0yIhvJw1GK8","label":"re-upload","confidence":0.8,"note":"Boo Boo short re-posted; same 41 s, same dad frames"},
+{"a":"VJ1tu3mMRa0","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.6,"note":"21 s cut from same Boo Boo production; different moments sampled"},
+{"a":"VayllXySlJw","b":"VBw09JDmEjM","label":"shared-segments","confidence":0.85,"note":"Bob the Train compilations sharing the kitchen-boy clip"},
+{"a":"IYU2e8WgGnY","b":"fx0aMbJwE34","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the egg/bin and car episodes"},
+{"a":"V5OqHZwodj4","b":"414DEMcGHtU","label":"same-song","confidence":0.6,"note":"Christmas Kaboochi vs ABC Kaboochi dance: different animations"},
+{"a":"JtWDJSPlad0","b":"YrDtbpUMrX8","label":"shared-segments","confidence":0.85,"note":"2016 compilations sharing the three-kittens clip"},
+{"a":"urNKg4X9kIU","b":"XamiKGRhams","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts on same set, different gags"},
+{"a":"0ZNqZ9x_06U","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.75,"note":"Kaboochi dance short vs Jingle Bells short"}
+]

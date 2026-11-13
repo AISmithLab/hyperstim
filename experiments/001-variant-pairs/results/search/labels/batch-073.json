@@ -1,0 +1,12 @@
+[
+{"a":"eAodpnlhaNI","b":"DclM70T7jyI","label":"same-song","confidence":0.55,"note":"Boo Boo song shorts with different characters and scenes."},
+{"a":"e9gnACQvqRM","b":"El8w4iWGWEI","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs basketball gag, same set."},
+{"a":"QidFzjRpGdM","b":"CAg8ItLDkwg","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Wheels on the Taxi; different content."},
+{"a":"Xo3zWzIj8fM","b":"oRUKPowFBgM","label":"unrelated","confidence":0.85,"note":"Oopsie Doopsie vs Apples and Bananas; different characters."},
+{"a":"05oAs-Pqf5Y","b":"fAQ_c_NEM7A","label":"same-song","confidence":0.5,"note":"Christmas Kaboochi vs Kaboochi dance; different characters and sets."},
+{"a":"HW8O6C_OCJQ","b":"_QFj7e58XGE","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Wheels on the Train; different content."},
+{"a":"Ym2JIL8xgVI","b":"dG7KouaFW-o","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the crib episode shot."},
+{"a":"ZEI_8iC_Z7E","b":"kyProT-iMwg","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations on one set; no shared shot sampled."},
+{"a":"3bTL4x31XTI","b":"BRcmpSxalwA","label":"unrelated","confidence":0.85,"note":"Bath Time vs Five Little Monkeys; different content."},
+{"a":"414DEMcGHtU","b":"R49NrP0fcsE","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Boo Boo; different content."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"Gvz14qtMDBo","b":"0E1mZOYwLoU","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs, G vs Z; same set and layout, different content."},
+{"a":"6Azkwapctz0","b":"EA8_ci9zyTI","label":"same-song","confidence":0.5,"note":"Wheels on the Taxi shorts; kitten vs baby close-ups, different characters; possible re-skin, unverifiable."},
+{"a":"FIinrJO9po8","b":"SSeBjzpJLFk","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the claw machine episode."},
+{"a":"E7LWvi86hYw","b":"H4_BpVuvsgU","label":"re-skin","confidence":0.55,"note":"Thumbnail match only: red vs purple Halloween bus same pose; A is compilation, frames differ."},
+{"a":"GPMHLMTrzZc","b":"vJUTEgqiFbM","label":"shared-segments","confidence":0.75,"note":"Compilations; identical kids-walking frame, other frames differ."},
+{"a":"5iXRqSe4KJo","b":"3aoEeaCHS_w","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, different episodes on the same set."},
+{"a":"Ve-HgwE-EqE","b":"bh7LwMMuwPU","label":"same-template","confidence":0.55,"note":"Finger family template, sheep vs kittens; frames at different moments, possible re-skin."},
+{"a":"_aQtam7n0rw","b":"gpsmCBLT8-4","label":"same-template","confidence":0.8,"note":"Bob the Train Learning Street episodes, body parts vs vowels."},
+{"a":"lZngiTw7yGo","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.75,"note":"Different song shorts; match only on blurred side bars."},
+{"a":"hmqdid2kALU","b":"Gvz14qtMDBo","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs, A vs G."}
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "PVq5Odohbm4",
+  "b": "89-vIiOahnY",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Loco Nuts episodes: same characters and town set, different stories."
+ },
+ {
+  "a": "ixr-TMi-K8U",
+  "b": "89-vIiOahnY",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Loco Nuts episodes: same characters and town set, different stories."
+ },
+ {
+  "a": "89-vIiOahnY",
+  "b": "76SJdJ1iD6I",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Loco Nuts episodes: same characters and town set, different stories."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "Tn2UZwb9RcY",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "31YuCXEbFoc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "PbchJhisS4s",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ }
+]

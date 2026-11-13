@@ -1,0 +1,72 @@
+[
+ {
+  "a": "N4MOP_0oV64",
+  "b": "e427UiiOpFE",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Kids TV vs Kids Channel compilations share the shapes train scene"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "D0tOd2ZH-cQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episode"
+ },
+ {
+  "a": "xGQYPFqXJjE",
+  "b": "_GlpTSaa5EU",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "Uq5Pp5BQSm4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations on the same set; no shared shot sampled"
+ },
+ {
+  "a": "n6eghHp7qWw",
+  "b": "a7-bpUidOBo",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the snowman and bin episode"
+ },
+ {
+  "a": "6L0oq3iwbS0",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wheels on the Train vs Kaboochi shorts; match only on blurred side bars"
+ },
+ {
+  "a": "yVKvv4YMB78",
+  "b": "34zV8hDOuFs",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and umbrella picnic episode"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "PjXooPy93AM",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the mime episode"
+ },
+ {
+  "a": "3aoEeaCHS_w",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ }
+]

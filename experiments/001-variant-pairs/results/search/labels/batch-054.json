@@ -1,0 +1,12 @@
+[
+{"a":"sFhZZIPj9nE","b":"njSANQD1GlI","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts on same set; cleaning vs magic hat gag"},
+{"a":"YVaBFUbjzuk","b":"njSANQD1GlI","label":"same-template","confidence":0.7,"note":"Rat cartoon shorts; Christmas mailbox vs magic hat gag"},
+{"a":"phrajiOFBCY","b":"njSANQD1GlI","label":"same-template","confidence":0.7,"note":"Rat cartoon shorts; builder vs magic hat gag"},
+{"a":"i9kMX8tSKSA","b":"IbEIByW4Fwk","label":"unrelated","confidence":0.8,"note":"Chew your food vs Oopsie Doopsie dance, different characters"},
+{"a":"3bTL4x31XTI","b":"i9kMX8tSKSA","label":"unrelated","confidence":0.8,"note":"Bath time vs chew your food shorts"},
+{"a":"QY6idrQO99U","b":"i9kMX8tSKSA","label":"unrelated","confidence":0.8,"note":"Finger family vs chew your food shorts"},
+{"a":"njSANQD1GlI","b":"_OlmXmG5OLM","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts; magic hat vs lawn mower gag"},
+{"a":"njSANQD1GlI","b":"pBZoqnYJdpo","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts; magic hat vs space rocket gag"},
+{"a":"sFhZZIPj9nE","b":"_OlmXmG5OLM","label":"same-template","confidence":0.75,"note":"Rat cartoon shorts; cleaning vs lawn mower gag"},
+{"a":"k3vCYP_aQ3w","b":"O_D2N_ulWXg","label":"re-skin","confidence":0.9,"note":"Same Baby Bao Panda bus shots; red bus vs blue bus, panda seat recolored"}
+]

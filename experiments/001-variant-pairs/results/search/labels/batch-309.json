@@ -1,0 +1,72 @@
+[
+ {
+  "a": "FIinrJO9po8",
+  "b": "KKgsTFivFJM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "c3lLP39EdME",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, cheese vs teleport gags"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, birthday vs manhole gags"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, cheese vs toilet gags"
+ },
+ {
+  "a": "zSf5nw7US6U",
+  "b": "19yPrd-it5I",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the claw machine episode"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, rings vs manhole gags"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "19yPrd-it5I",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing claw machine episode"
+ },
+ {
+  "a": "Gh4izthwnNM",
+  "b": "Pa7utiQUGOY",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, gloves vs talent show gags"
+ },
+ {
+  "a": "BZqq3eL6xSE",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, high striker vs toilet gags"
+ }
+]

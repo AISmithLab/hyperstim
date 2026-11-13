@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: suitcase vs spot"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "jflAKuIuQBM",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: ventilator vs talent show"
+ },
+ {
+  "a": "aKkecxwHm00",
+  "b": "ZRd-uNE-AUA",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Row Your Boat vs Kaboochi shorts; different animation"
+ },
+ {
+  "a": "YVaBFUbjzuk",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: Christmas mailbox vs teleport"
+ },
+ {
+  "a": "_e29OQFpP7A",
+  "b": "Q-qoF1B0i_Q",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with the same family models; likely cuts of one animation"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations with different sampled episodes"
+ },
+ {
+  "a": "aDyWeSAt-sI",
+  "b": "xJWSNIkfOrY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share snowman and toy jeep episodes"
+ },
+ {
+  "a": "gvcEcWUHZ_c",
+  "b": "8Ri1s8CTSrM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share the pillow/sausage episode"
+ },
+ {
+  "a": "EPh1bFzsVf4",
+  "b": "jvCQFkt2FwI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Rattic Mini shorts: leaves vs picture"
+ },
+ {
+  "a": "uQ90xr1p-eQ",
+  "b": "PoRuagin4iM",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Kaboochi vs Peek A Boo shorts; different scenes"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"t5wDGNrzpro","b":"V5OqHZwodj4","label":"same-song","confidence":0.6,"note":"Kaboochi vs Christmas Kaboochi shorts; different shots and characters"},
+{"a":"YASqLUId4n8","b":"LYyK7KurvMs","label":"same-template","confidence":0.9,"note":"Phonics letter series L vs N, same layout, different letter content"},
+{"a":"3724uXedg0A","b":"zQ7vvPa4pAk","label":"same-template","confidence":0.9,"note":"Phonics letter series P vs R"},
+{"a":"AdRwOjaFizY","b":"qCWFFPHRu1Q","label":"unrelated","confidence":0.55,"note":"Different Loco Nuts-style shorts: balloon song vs dinosaur song"},
+{"a":"uBA-DOOnkZ8","b":"qHf6e1CQQ5c","label":"unrelated","confidence":0.75,"note":"If You're Happy short vs Kaboochi short, different characters/shots"},
+{"a":"PVq5Odohbm4","b":"yDaxszBxrFA","label":"same-template","confidence":0.8,"note":"Loco Nuts comedy episodes, same characters and park set"},
+{"a":"qHf6e1CQQ5c","b":"_QwXfH5-D5g","label":"same-song","confidence":0.6,"note":"Two Kaboochi shorts with different characters and shots"},
+{"a":"OFvmlD86K5Q","b":"tQlIWPUO_E0","label":"unrelated","confidence":0.8,"note":"Wheels on the Taxi vs Ten in the Bed shorts"},
+{"a":"hmqdid2kALU","b":"uFVntNVnn7k","label":"same-template","confidence":0.9,"note":"Bob the Train letter A vs letter O episodes"},
+{"a":"t5wDGNrzpro","b":"T2UcCZAPW34","label":"same-song","confidence":0.6,"note":"Kaboochi vs Christmas Kaboochi shorts; different shots"}
+]

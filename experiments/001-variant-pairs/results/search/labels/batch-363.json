@@ -1,0 +1,12 @@
+[
+{"a":"R49NrP0fcsE","b":"h3bvPp9Jqnc","label":"unrelated","confidence":0.8,"note":"Boo Boo short vs Kaboochi dance short"},
+{"a":"gdVpv0KN_uU","b":"h3bvPp9Jqnc","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Kaboochi dance shorts"},
+{"a":"Bx-2FBZQKs0","b":"h3bvPp9Jqnc","label":"unrelated","confidence":0.85,"note":"Haunted house vs Kaboochi dance shorts"},
+{"a":"HW8O6C_OCJQ","b":"h3bvPp9Jqnc","label":"shared-segments","confidence":0.65,"note":"Kaboochi hula shorts cut from the same animation; same characters and set"},
+{"a":"Li4873tEc6Y","b":"h3bvPp9Jqnc","label":"shared-segments","confidence":0.7,"note":"Kaboochi hula shorts cut from same animation; DJ boy and dancer shots shared"},
+{"a":"ZRd-uNE-AUA","b":"h3bvPp9Jqnc","label":"shared-segments","confidence":0.6,"note":"Kaboochi hula shorts from the same animation, different cuts"},
+{"a":"w7exxTCHfx8","b":"oXA7qx--2oI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing cannon and yellow ball episodes"},
+{"a":"VqT9YA3THAE","b":"IE7VFN8ln9Y","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, worm vs spot episodes"},
+{"a":"o6VjhL9gA1A","b":"Z1H7LX1K4Zo","label":"same-template","confidence":0.65,"note":"Rattic Mini shorts, carousel vs toilet episodes"},
+{"a":"YABj119wijM","b":"PjXooPy93AM","label":"same-template","confidence":0.65,"note":"Rattic Mini compilations with different episodes"}
+]

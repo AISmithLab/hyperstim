@@ -1,0 +1,12 @@
+[
+{"a":"XOCAlpWUh8o","b":"6OZMyx_vJXM","label":"re-upload","confidence":0.75,"note":"Jingle Bells short: same thumbnail and frames at all positions; 33s vs 44s, likely sped up/trimmed."},
+{"a":"Ln0H_11UIwI","b":"GGQVXv4Nc-E","label":"same-song","confidence":0.6,"note":"Boo Boo song shorts with different characters and scenes."},
+{"a":"zG6D-FpUczM","b":"Ln0H_11UIwI","label":"unrelated","confidence":0.85,"note":"Johny Johny vs Boo Boo song; different animation."},
+{"a":"Ln0H_11UIwI","b":"wk9I_xT1NNc","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Zoo song; different animation."},
+{"a":"Ln0H_11UIwI","b":"E9JfZ-SIhbY","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Baby Shark; different animation."},
+{"a":"Ln0H_11UIwI","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Jingle Bells; different animation."},
+{"a":"Ln0H_11UIwI","b":"t2tKT2LSOfo","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs No No song; different animation."},
+{"a":"v80qWgkingM","b":"Ln0H_11UIwI","label":"unrelated","confidence":0.85,"note":"Halloween short vs Boo Boo song; different animation."},
+{"a":"Ln0H_11UIwI","b":"YaThzRybuhE","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs Kaboochi short; different animation."},
+{"a":"IRWTZropao4","b":"Ln0H_11UIwI","label":"unrelated","confidence":0.85,"note":"Halloween short vs Boo Boo song; different animation."}
+]

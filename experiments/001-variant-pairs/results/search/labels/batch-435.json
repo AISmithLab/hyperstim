@@ -1,0 +1,12 @@
+[
+{"a":"Nl_hbXSq9xI","b":"uaNCJzGwl3E","label":"re-skin","confidence":0.75,"note":"Wheels on the Bus: same bus model and framings; yellow flowered bus vs purple, town redrawn"},
+{"a":"U9maOBWT6wE","b":"7wfgbhEY9DU","label":"unrelated","confidence":0.8,"note":"Hush Little Baby vs Sick Song shorts"},
+{"a":"U-9wzt3RgPw","b":"QUZgkyItxVo","label":"shared-segments","confidence":0.55,"note":"Bob the Train zoo compilations; similar thumbnails, sampled frames differ"},
+{"a":"K71QjqJlAI0","b":"e9LhPr3svs0","label":"re-skin","confidence":0.85,"note":"Wheels on the Bus, pink bus vs green bus, same length and shots"},
+{"a":"t2tKT2LSOfo","b":"OFvmlD86K5Q","label":"unrelated","confidence":0.8,"note":"No No Song vs Wheels on the Taxi shorts"},
+{"a":"wUVP3iCR-ZY","b":"ciIVpQCwlHA","label":"same-template","confidence":0.6,"note":"2D finger family: tipi family vs winter family; same format, characters differ"},
+{"a":"qHf6e1CQQ5c","b":"05oAs-Pqf5Y","label":"same-song","confidence":0.6,"note":"Kaboochi vs Christmas Kaboochi shorts, different animation"},
+{"a":"qHf6e1CQQ5c","b":"7ClCbBREUlU","label":"unrelated","confidence":0.8,"note":"Kaboochi vs Boo Boo shorts"},
+{"a":"cAngxOmb79A","b":"t5wDGNrzpro","label":"unrelated","confidence":0.8,"note":"Halloween song vs Kaboochi shorts"},
+{"a":"b7up8LTTxPc","b":"PtIc6e-co2I","label":"shared-segments","confidence":0.8,"note":"Loco Nuts vehicle compilations sharing the farm segment"}
+]

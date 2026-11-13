@@ -1,0 +1,12 @@
+[
+{"a":"euLhwHIdGU0","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Halloween Peek A Boo vs Kaboochi dance; different songs and animation."},
+{"a":"Sq59rWyMPvw","b":"Ri2sw4rIrfM","label":"shared-segments","confidence":0.65,"note":"Bus camp compilations; identical ice-cream-truck mid frame; thumbnails show recolored bus (yellow vs pink)."},
+{"a":"V5OqHZwodj4","b":"uQ90xr1p-eQ","label":"same-song","confidence":0.55,"note":"Christmas Kaboochi vs regular Kaboochi dance; different animation."},
+{"a":"v80qWgkingM","b":"bzcufo-BRaA","label":"unrelated","confidence":0.85,"note":"Different Halloween shorts, different songs and characters."},
+{"a":"zG6D-FpUczM","b":"wk9I_xT1NNc","label":"unrelated","confidence":0.85,"note":"Johny Johny vs Zoo song shorts; different animation."},
+{"a":"AXfeoPJolIE","b":"w9BOETCUH5o","label":"shared-segments","confidence":0.55,"note":"Jingle Bells shorts; same Santa shot appears in both, other footage differs."},
+{"a":"5R9Wwue7eDU","b":"-Rkd9UOqTS8","label":"shared-segments","confidence":0.8,"note":"Halloween cartoon compilations; identical mid frame, shared episode."},
+{"a":"2fBdfXU6Vuo","b":"Tgp1NqPegK8","label":"unrelated","confidence":0.85,"note":"Johny Johny vs Kaboochi dance; different songs and animation."},
+{"a":"NL_S69qf0jg","b":"di7g1bv5UC0","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts on same wooden set, different episodes."},
+{"a":"lg-NHZehFHE","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Halloween Night vs Kaboochi dance; different songs and animation."}
+]

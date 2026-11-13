@@ -1,0 +1,12 @@
+[
+{"a":"xKl_-u0zfhg","b":"lLoLYPA3Z0I","label":"shared-segments","confidence":0.8,"note":"Loco Nuts Halloween compilations sharing the pumpkin table segment."},
+{"a":"EHVv-Q9M4WU","b":"au6mLbOT61c","label":"shared-segments","confidence":0.8,"note":"Apples & Bananas compilations sharing the healthy food segment."},
+{"a":"wv6kz5dUxdU","b":"cI0HDHiiADI","label":"shared-segments","confidence":0.8,"note":"Bob compilations sharing the chef kid segment."},
+{"a":"92wkK3tkeb0","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.8,"note":"Boo Boo Song vs Wheels on the Taxi; different content."},
+{"a":"G7PTUNLnAFk","b":"eAodpnlhaNI","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Boo Boo Song; different characters."},
+{"a":"6f6S5Y_1aIA","b":"aScyfsClZd0","label":"shared-segments","confidence":0.6,"note":"Boo Boo Song shorts sharing mom and railing shots; different cuts."},
+{"a":"k-JcA3kxVWU","b":"ikzRgQWlgRA","label":"shared-segments","confidence":0.55,"note":"Vegetable Train short vs compilation; same series, sampled frames differ."},
+{"a":"ndf_-FJsPVk","b":"DHRQXGTSvw0","label":"same-template","confidence":0.85,"note":"2014 phonics letters H vs K, same layout."},
+{"a":"k-JcA3kxVWU","b":"JlsguWRqg_A","label":"same-template","confidence":0.8,"note":"Bob train series: same intro and wagons, vegetables vs vehicles."},
+{"a":"G7PTUNLnAFk","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Five Little Mommies; different characters."}
+]

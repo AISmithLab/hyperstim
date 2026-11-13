@@ -1,0 +1,12 @@
+[
+{"a":"efop8uMcFFQ","b":"afJ8kEWkJqo","label":"same-song","confidence":0.5,"note":"Yellow vs green bus with panda; matched frames show different shots, maybe re-edited recolor"},
+{"a":"ONwFOOEkasU","b":"_QwXfH5-D5g","label":"same-song","confidence":0.85,"note":"Kaboochi; kids vs baby and animal characters, different animation"},
+{"a":"bXcFSE7NQp8","b":"4e1vB_kqCaY","label":"same-song","confidence":0.85,"note":"Kaboochi; animal dancers vs boy dancing, different animation"},
+{"a":"u3VtdvWtgl4","b":"OsP-k8ZnLc4","label":"same-song","confidence":0.8,"note":"Halloween Kaboochi; different characters and shots at matched moments"},
+{"a":"xPt-5RG1m-0","b":"lJZMkOLUxmM","label":"same-song","confidence":0.85,"note":"Kaboochi; costume babies vs Halloween girl/monsters, different animation"},
+{"a":"HGsWYU8Sr10","b":"Ka3AbnnoaOE","label":"re-upload","confidence":0.9,"note":"Matched moments identical; B 57s vs A 49s, different thumbnail"},
+{"a":"zQ7vvPa4pAk","b":"McACiO5dwGM","label":"same-template","confidence":0.9,"note":"Phonics letter R vs letter S; same template, different words"},
+{"a":"ndf_-FJsPVk","b":"f-iL7k5jhCI","label":"same-template","confidence":0.9,"note":"Phonics letter H vs letter Z; same template, different words"},
+{"a":"hIXOf7NePPo","b":"0TVZVV-IXCQ","label":"same-song","confidence":0.8,"note":"Blue bus vs yellow bus in snow; different 2D animation and shots"},
+{"a":"phSVmXpDj08","b":"whf3hzFiqzc","label":"same-song","confidence":0.85,"note":"Old MacDonald; cow/baby vs farmer scenes, different animation"}
+]

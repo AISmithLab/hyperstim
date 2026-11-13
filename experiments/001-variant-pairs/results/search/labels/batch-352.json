@@ -1,0 +1,72 @@
+[
+ {
+  "a": "cAngxOmb79A",
+  "b": "qSM52VNEVSo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween song vs school teacher shorts; no shared shot"
+ },
+ {
+  "a": "nyJqyZZCekg",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo Song vs Halloween song shorts"
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bath Time Song vs Halloween song shorts"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "d0qkYGMwDsc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different Halloween shorts; no shared shot"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "Bx-2FBZQKs0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different Halloween shorts; no shared shot"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween song vs Five Little Mommies shorts"
+ },
+ {
+  "a": "fKWJTJUkwPc",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five in the Bed vs Halloween song shorts"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "bcYUgMEaCMA",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Halloween song vs Halloween Finger Family; different shots"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "DclM70T7jyI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween song vs Boo Boo Song shorts"
+ },
+ {
+  "a": "sJb_iV1LCXY",
+  "b": "lJZMkOLUxmM",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Five Little Babies vs Kaboochi zombie dance shorts"
+ }
+]

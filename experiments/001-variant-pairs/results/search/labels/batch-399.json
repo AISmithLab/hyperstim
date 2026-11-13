@@ -1,0 +1,72 @@
+[
+ {
+  "a": "5iXRqSe4KJo",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, trombone vs fitness ball episodes"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "ZRd-uNE-AUA",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Kaboochi dance shorts on both channels with different animation"
+ },
+ {
+  "a": "zPS3ihinlZs",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, cat vs springboard episodes"
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, space rocket vs toilet episodes"
+ },
+ {
+  "a": "ripZ0792Vx4",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "Zy0VtX5RTFM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "aDyWeSAt-sI",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations with different episodes"
+ },
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, teleport vs toilet episodes"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "Tn2UZwb9RcY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, mime vs bucket episodes"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, kung fu vs high striker episodes"
+ }
+]

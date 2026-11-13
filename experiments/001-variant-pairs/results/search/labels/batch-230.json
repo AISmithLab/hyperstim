@@ -1,0 +1,72 @@
+[
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "Ia2TzzY2Vto",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Toilet short opens with the Gloves short footage, then adds the outhouse gag."
+ },
+ {
+  "a": "-fMMVHWmZFU",
+  "b": "Wes02YpdpJA",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Fire truck short vs Bob train vehicles short; different animation."
+ },
+ {
+  "a": "qM6hdr1DVSM",
+  "b": "UXsXYmw3_CY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (toy airplane vs gloves)."
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (gloves vs skates)."
+ },
+ {
+  "a": "UXsXYmw3_CY",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (gloves vs teleport)."
+ },
+ {
+  "a": "zej8Uf5iAGk",
+  "b": "Ia2TzzY2Vto",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (teleport vs toilet)."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "rZWQrsYulxI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs Scared of the Dark shorts; nothing shared."
+ },
+ {
+  "a": "2fBdfXU6Vuo",
+  "b": "7I0SeirswAk",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Johny Johny shorts; the 3/4 frame shows the same curly-boy shot."
+ },
+ {
+  "a": "Ia2TzzY2Vto",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (toilet vs skates)."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "WKeK0Zqi5jw",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Johny Johny vs ice cream truck shorts; same boy model only."
+ }
+]

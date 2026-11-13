@@ -1,0 +1,12 @@
+[
+{"a":"o6VjhL9gA1A","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, carousel vs balloon."},
+{"a":"UXsXYmw3_CY","b":"o6VjhL9gA1A","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, gloves vs carousel."},
+{"a":"S9N416aMRxk","b":"x-80P5Mf_Y8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing dino and crib episodes."},
+{"a":"kHVGgxylqd8","b":"Iygt_NzD7VU","label":"shared-segments","confidence":0.65,"note":"Boo Boo Song shorts with the same dad character footage, different edit."},
+{"a":"o6VjhL9gA1A","b":"TwDxP5L1-VA","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, carousel vs teleport."},
+{"a":"gmRIldLgb8k","b":"UXsXYmw3_CY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, kung fu vs gloves."},
+{"a":"_EZv7EJE8LE","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and car episodes."},
+{"a":"_QwXfH5-D5g","b":"Tgp1NqPegK8","label":"same-song","confidence":0.65,"note":"Kaboochi Dance shorts; different baby models and sets, similar dance poses."},
+{"a":"VqT9YA3THAE","b":"BZqq3eL6xSE","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts, worm vs high striker."},
+{"a":"_EZv7EJE8LE","b":"aACfDyTDcL8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing car, snowman and garden episodes."}
+]

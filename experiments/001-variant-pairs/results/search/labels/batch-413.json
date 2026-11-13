@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1vJ40GbNGUY",
+  "b": "I4Nh3mOaNck",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Halloween/Monster Finger Family shorts with different characters."
+ },
+ {
+  "a": "ZkMDTaMX7X0",
+  "b": "4P1o1CaXIuE",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Compilations sharing the shapes-in-boat segment."
+ },
+ {
+  "a": "I4Nh3mOaNck",
+  "b": "SQBTIuB0SsI",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Monster Finger Family vs Halloween Wheels on the Bus shorts."
+ },
+ {
+  "a": "uE-G6fKmpA4",
+  "b": "I4Nh3mOaNck",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Monster Finger Family shorts sharing orange-helmet kid shot; different edits a year apart."
+ },
+ {
+  "a": "I4Nh3mOaNck",
+  "b": "29MA-0_XkAY",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Monster Finger Family 58s vs 119s; same kid and zombie shots, B longer."
+ },
+ {
+  "a": "Gelbjg7SL0U",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "UGzlPPWb6Pg",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "Uq5Pp5BQSm4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing egg and sleigh episodes."
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "R7pIlyiHmJY",
+  "b": "M0V1ofCOEew",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg episode."
+ }
+]

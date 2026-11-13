@@ -1,0 +1,12 @@
+[
+{"a":"aZdQk56qy0E","b":"PXxve2PXWGs","label":"re-upload","confidence":0.6,"note":"Same Red Riding Hood video, same shots and models; A slightly color-graded/tinted, rebranded"},
+{"a":"i2XoutDdPoM","b":"QLtuuZVDZ4g","label":"re-upload","confidence":0.85,"note":"Same Rattic Mini Pillow short, same title and footage"},
+{"a":"pKnKuQMeGlk","b":"S9N416aMRxk","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the frog episode"},
+{"a":"nHT4spNAshs","b":"Uq5Pp5BQSm4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing balloon and sleigh episodes"},
+{"a":"9DBJvlkWDs4","b":"Q-qoF1B0i_Q","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts cut from the same footage, different cuts"},
+{"a":"a7-bpUidOBo","b":"xJWSNIkfOrY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and bin episodes"},
+{"a":"t5FpH4uDIzs","b":"-x5dKL_rB14","label":"same-template","confidence":0.9,"note":"Bob Word Play ED vs AT words episodes"},
+{"a":"UN4V4ywCWxA","b":"2kLB7ZwxVv8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snake charmer and claw machine"},
+{"a":"t5FpH4uDIzs","b":"C0trauXRkTw","label":"same-template","confidence":0.9,"note":"Bob Word Play ED vs UT words episodes"},
+{"a":"YJLDe0F_z7k","b":"a7-bpUidOBo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing bin and snowman episodes"}
+]

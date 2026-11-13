@@ -1,0 +1,12 @@
+[
+{"a":"2YmFl3ccv9E","b":"5A9e7U5_Zxg","label":"re-upload","confidence":0.9,"note":"Bob ABC adventure, same frames; Chinese vs Malay title and dub."},
+{"a":"5A9e7U5_Zxg","b":"kxsXTcFJQes","label":"re-upload","confidence":0.9,"note":"Bob ABC adventure, same frames; Malay vs Indonesian versions."},
+{"a":"Msywp-_Gl1g","b":"LIvbQc_In_s","label":"unrelated","confidence":0.85,"note":"Kaboochi dance vs Loco Nuts Sick Song; different characters."},
+{"a":"lkGmcS3ArOg","b":"sXofadQcxkc","label":"same-template","confidence":0.5,"note":"Loco Nuts Halloween compilations, same characters; sampled segments differ."},
+{"a":"E9t53ek7H8U","b":"7-abUIzCk5U","label":"shared-segments","confidence":0.75,"note":"Kaboochi baby costume dance; same chef and firefighter shots, B a short cut."},
+{"a":"EHVv-Q9M4WU","b":"jxaZXdht1ig","label":"same-template","confidence":0.55,"note":"Apples & Bananas compilations, same thumbnail layout; different content."},
+{"a":"loH214qJLn4","b":"KVvaZF-PRrc","label":"same-template","confidence":0.85,"note":"Bob train series, same intro and wagons; animals vs fruits."},
+{"a":"HWH2lpQomEk","b":"t2tKT2LSOfo","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs No No Song; different characters."},
+{"a":"ijAeNNIiKJ4","b":"fAQ_c_NEM7A","label":"same-song","confidence":0.6,"note":"Kaboochi shorts, baby costumes vs boy dancing; different animation."},
+{"a":"G7PTUNLnAFk","b":"djV64K-Y8vE","label":"unrelated","confidence":0.8,"note":"Wheels on the Train vs Bob went to the Zoo; different characters."}
+]

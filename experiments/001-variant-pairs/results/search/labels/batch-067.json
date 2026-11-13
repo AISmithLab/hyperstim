@@ -1,0 +1,12 @@
+[
+{"a":"El8w4iWGWEI","b":"hoNtxM3afpk","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts on the same set, basketball vs Christmas gag."},
+{"a":"e9gnACQvqRM","b":"PPVWn53Yw4M","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs football gag, same set."},
+{"a":"R49NrP0fcsE","b":"vYXkEPIElyc","label":"same-song","confidence":0.55,"note":"Boo Boo song shorts with different characters and scenes."},
+{"a":"fx0aMbJwE34","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.8,"note":"Rattic Mini compilations, same set, different episodes sampled."},
+{"a":"2YmFl3ccv9E","b":"kxsXTcFJQes","label":"re-upload","confidence":0.85,"note":"Bob Train Alphabet Adventure, Chinese vs Indonesian dub; identical frames, new thumbnail."},
+{"a":"29MA-0_XkAY","b":"OokGp8l_x9k","label":"unrelated","confidence":0.75,"note":"Monster Finger Family vs Halloween bus; Halloween theme only."},
+{"a":"wMHsxnO156E","b":"ZEI_8iC_Z7E","label":"same-template","confidence":0.75,"note":"Rattic Mini compilations on the same set, no shared shot sampled."},
+{"a":"vGjN_CslxSI","b":"M0V1ofCOEew","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the gloves and yellow-ball episodes."},
+{"a":"YudNG_jdUs4","b":"HW8O6C_OCJQ","label":"unrelated","confidence":0.85,"note":"Zoo song with superheroes vs Kaboochi dance; different characters."},
+{"a":"41F1Fdb3tHM","b":"R49NrP0fcsE","label":"same-song","confidence":0.6,"note":"Boo Boo song shorts with different characters and scenes."}
+]

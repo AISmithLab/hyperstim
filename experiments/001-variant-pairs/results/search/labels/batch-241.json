@@ -1,0 +1,12 @@
+[
+{"a":"tlSqV18n1Qw","b":"cGjGKh68l3U","label":"shared-segments","confidence":0.5,"note":"Same short thumbnail; frames show different Halloween clips (witch, skeleton); likely shared parts."},
+{"a":"yEUHnjAXIOM","b":"30tipN0AniY","label":"re-upload","confidence":0.92,"note":"Same Jingle Bells animation frame for frame, same length; only thumbnail differs."},
+{"a":"5ElsiB8aoIg","b":"cjtn_IOstAI","label":"re-skin","confidence":0.9,"note":"Same shots; black bus recolored white; family scene identical."},
+{"a":"URGIkCHFUDQ","b":"htYC4R78a_c","label":"re-skin","confidence":0.92,"note":"Same shots and background; pink bus recolored blue."},
+{"a":"_e29OQFpP7A","b":"svxlLrPCzUM","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts, same thumbnail; B shorter cut with overlapping clips; thumbnail-driven."},
+{"a":"OsP-k8ZnLc4","b":"Yzvo_76GESg","label":"shared-segments","confidence":0.4,"note":"Match only on thumbnail character; frames show other Halloween content."},
+{"a":"y7FElRQhklM","b":"mksDZdIzhkI","label":"re-upload","confidence":0.55,"note":"Bus interior frames identical; thumbnail bus pink vs red, B 10s longer; recolor unconfirmed."},
+{"a":"HW8O6C_OCJQ","b":"ZRd-uNE-AUA","label":"shared-segments","confidence":0.6,"note":"Kaboochi shorts with same characters and clips in different order."},
+{"a":"U3O9WIfjY8A","b":"3HqbMJ7huAM","label":"re-skin","confidence":0.8,"note":"Same bus side-view shots, same length; orange bus recolored purple, background redrawn."},
+{"a":"Jt4V3NCA-u0","b":"x-80P5Mf_Y8","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing episodes (heart balloon, dino) at different positions."}
+]

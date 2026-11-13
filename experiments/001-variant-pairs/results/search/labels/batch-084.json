@@ -1,0 +1,12 @@
+[
+{"a":"MUCIr3OvsRo","b":"qSM52VNEVSo","label":"shared-segments","confidence":0.6,"note":"School Teacher shorts with the same cap boy and classroom set; different cuts."},
+{"a":"MUCIr3OvsRo","b":"GqpAJf36hrc","label":"shared-segments","confidence":0.5,"note":"Halloween School Teacher shorts on the same classroom set, different kids in focus."},
+{"a":"p2Q3-mKSQDM","b":"Nm-XAT24lQw","label":"shared-segments","confidence":0.75,"note":"Compilations share the crayon segment; lead bus differs (red rocket bus vs cyan face bus)."},
+{"a":"Q95CAqmYoew","b":"E1wcRx1Exec","label":"same-template","confidence":0.7,"note":"Larva shorts on the same set, ice cream vs rain gag."},
+{"a":"t2tKT2LSOfo","b":"R49NrP0fcsE","label":"unrelated","confidence":0.85,"note":"No No song vs Boo Boo; different content."},
+{"a":"mxRMkO3K4Rs","b":"X5tQg9x3Nfs","label":"same-song","confidence":0.5,"note":"Boo Boo song shorts with different families and scenes."},
+{"a":"3bTL4x31XTI","b":"7q-sfwyFwTw","label":"unrelated","confidence":0.85,"note":"Bath Time vs Twinkle Twinkle; different content."},
+{"a":"3bTL4x31XTI","b":"S-mQfP0MW5w","label":"unrelated","confidence":0.85,"note":"Bath Time vs Baa Baa Black Sheep; different content."},
+{"a":"wMHsxnO156E","b":"WZ45rZRLf80","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the yellow-ball episode."},
+{"a":"YJLDe0F_z7k","b":"vGjN_CslxSI","label":"shared-segments","confidence":0.7,"note":"Rattic Mini compilations both opening with The Cat; same thumbnail, other episodes differ."}
+]

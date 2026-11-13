@@ -1,0 +1,72 @@
+[
+ {
+  "a": "dFd7MG-GRKQ",
+  "b": "GD8Zgky_3CA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Vehicle cartoon episodes with same blue truck on same set, different stories"
+ },
+ {
+  "a": "AdRwOjaFizY",
+  "b": "mh9esb9qul8",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Loconuts short vs Animal Dance Song; different scenes"
+ },
+ {
+  "a": "bTpkmcApwOo",
+  "b": "VyQu5tSRZvs",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Junior Squad compilations share the boy-at-yellow-house segment"
+ },
+ {
+  "a": "76SJdJ1iD6I",
+  "b": "lZBg1VotJrw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Loconuts comedy episodes, same characters, different stories"
+ },
+ {
+  "a": "rtUezKOrBAU",
+  "b": "qSM52VNEVSo",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Who Took the Goodies vs School Teacher shorts; different characters"
+ },
+ {
+  "a": "_uYyO8y5Txc",
+  "b": "X5tQg9x3Nfs",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ },
+ {
+  "a": "OFvmlD86K5Q",
+  "b": "eU2P1h9SIhY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Wheels on the Taxi vs Five Little Monsters; different scenes"
+ },
+ {
+  "a": "fyRcwpgt_wE",
+  "b": "Gf4SogwWwXE",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Hindi rhyme compilations, same length and day; similar farm scenes, likely shared songs"
+ },
+ {
+  "a": "eAodpnlhaNI",
+  "b": "OFvmlD86K5Q",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Boo Boo vs Wheels on the Taxi shorts; different scenes"
+ },
+ {
+  "a": "GZQvzMCdQkI",
+  "b": "s604TR-uFuY",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Bob the Train learning compilations; different frames"
+ }
+]

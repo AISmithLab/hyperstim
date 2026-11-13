@@ -1,0 +1,72 @@
+[
+ {
+  "a": "LJN6yukuQ9A",
+  "b": "yR0IqutO_i4",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, manhole vs rocket"
+ },
+ {
+  "a": "_EZv7EJE8LE",
+  "b": "D0tOd2ZH-cQ",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy jeep and snowman episodes"
+ },
+ {
+  "a": "oT6bPk4gHxM",
+  "b": "bNuG6IapPsk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, rings vs fitness ball"
+ },
+ {
+  "a": "lEvNMZQ2DT4",
+  "b": "YABj119wijM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the wooden box episode"
+ },
+ {
+  "a": "yR0IqutO_i4",
+  "b": "oMEt_dTdnMg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic rocket vs Larva-style gum cartoon; side-bar match only"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "mrU14TkzuVI",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cleaning vs robot vacuum"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "kyProT-iMwg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "obdK23ZIr6E",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, balloon vs trishaw"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "6L0oq3iwbS0",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cheese vs TV"
+ },
+ {
+  "a": "El8w4iWGWEI",
+  "b": "MnJaDuR1QKE",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Two-episode basketball short vs robot vacuum episode"
+ }
+]

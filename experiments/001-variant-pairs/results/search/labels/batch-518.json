@@ -1,0 +1,72 @@
+[
+ {
+  "a": "ozm2wbIyA44",
+  "b": "JPp1_vdTV-M",
+  "label": "re-upload",
+  "confidence": 0.9,
+  "note": "Same 2D Hickory Dickory Dock video, identical frames; B 10s longer"
+ },
+ {
+  "a": "Qkur1emqs_c",
+  "b": "oMEt_dTdnMg",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Rattic Mini short vs Larva short; different series"
+ },
+ {
+  "a": "Qkur1emqs_c",
+  "b": "DS8rk9NwXQc",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "kZytosLyQEc",
+  "b": "Qkur1emqs_c",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "Qkur1emqs_c",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "Qkur1emqs_c",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "oWkIR8ZkHgo",
+  "b": "SB-7h4MW26k",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share ring-toss and toy jeep episodes"
+ },
+ {
+  "a": "-OXYsniHGBM",
+  "b": "AydSzRoGSLY",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song shorts with different characters and shots"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "Nj_pfXISKXc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Kaboochi vs Wheels on the Bus shorts; different scenes"
+ },
+ {
+  "a": "skNxtYhw9Y8",
+  "b": "IYU2e8WgGnY",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ }
+]

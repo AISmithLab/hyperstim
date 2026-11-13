@@ -1,0 +1,12 @@
+[
+{"a":"oKEXFG0ZLZw","b":"4AHTuFMPftA","label":"unrelated","confidence":0.75,"note":"Two different Halloween song shorts with different characters and sets."},
+{"a":"skNxtYhw9Y8","b":"KKgsTFivFJM","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same thumbnail layout; sampled frames show different episodes."},
+{"a":"skNxtYhw9Y8","b":"aW_J2JMPmG8","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same thumbnail layout; sampled frames show different episodes."},
+{"a":"PbchJhisS4s","b":"aW_J2JMPmG8","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations, same thumbnail layout; sampled frames show different episodes."},
+{"a":"c3lLP39EdME","b":"jvCQFkt2FwI","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts on same set; cheese vs picture gags."},
+{"a":"31YuCXEbFoc","b":"c3lLP39EdME","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; toy car vs cheese gags, different footage."},
+{"a":"UN4V4ywCWxA","b":"skNxtYhw9Y8","label":"shared-segments","confidence":0.9,"note":"Rattic Mini compilations sharing snake charmer and stroller episodes, identical frames."},
+{"a":"VqT9YA3THAE","b":"QLtuuZVDZ4g","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; worm vs pillow gags, different footage."},
+{"a":"Tz2SZgHgjjk","b":"jvCQFkt2FwI","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; cheese vs picture gags."},
+{"a":"b5p78d-gr6w","b":"12mNC1UN38M","label":"unrelated","confidence":0.8,"note":"Monster in the Dark vs Halloween Wheels on the Bus; different songs and sets."}
+]

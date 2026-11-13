@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Br48ar2svbI",
+  "b": "mKc2nRMF7t4",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter B vs E, shared intro/outro and set"
+ },
+ {
+  "a": "VBb7XUCV47g",
+  "b": "mKc2nRMF7t4",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter C vs E, shared intro/outro and set"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "kwXxrZQ5GaQ",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs L, shared intro/outro and set"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "gIMyiAxeKSk",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs I, shared intro/outro and set"
+ },
+ {
+  "a": "aA57PjtEfZw",
+  "b": "mKc2nRMF7t4",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter D vs E, shared intro/outro and set"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "vbY-B_GtSvc",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs K, shared intro/outro and set"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "a07zOPj6CZg",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs G, shared intro/outro and set"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "oHtQbh7LJjY",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs J, shared intro/outro and set"
+ },
+ {
+  "a": "mKc2nRMF7t4",
+  "b": "STRJcffvt-0",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter E vs Q, shared intro/outro and set"
+ },
+ {
+  "a": "t892KTYY-cE",
+  "b": "mKc2nRMF7t4",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter A vs E, shared intro/outro and set"
+ }
+]

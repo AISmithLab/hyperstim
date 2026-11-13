@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Qs4R686NOjg",
+  "b": "D0tOd2ZH-cQ",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "iFpez4fPv5Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ },
+ {
+  "a": "wW339izcKu4",
+  "b": "awLcqOFRHzg",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "vGjN_CslxSI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ },
+ {
+  "a": "q8T0cDm6nSA",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ },
+ {
+  "a": "aDyWeSAt-sI",
+  "b": "a7-bpUidOBo",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Rattic Mini compilations; carousel, snowman and mime gags appear in both at other offsets."
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; audio fully shared but different gags at matched moments."
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "oXA7qx--2oI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ },
+ {
+  "a": "oAN_O9JQlfc",
+  "b": "UN4V4ywCWxA",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations; different gags at matched moments; shared audio likely music bed."
+ }
+]

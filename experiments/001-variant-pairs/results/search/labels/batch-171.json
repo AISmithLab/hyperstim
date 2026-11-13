@@ -1,0 +1,12 @@
+[
+{"a":"9aLZatXZCl4","b":"BrjLq8jTPfw","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing butterfly, toy-car and balloon episodes."},
+{"a":"ZvuFlceXZ_Y","b":"IqWNp_zbshk","label":"re-upload","confidence":0.75,"note":"Noah's Ark, same animation; B drops the Kids TV intro."},
+{"a":"m151ZBLwbhc","b":"9ywRXy36pAg","label":"re-skin","confidence":0.9,"note":"Wheels on the Bus same shots, bus cyan vs pink."},
+{"a":"nazY67eIBVc","b":"m5k-5ZOUp-A","label":"shared-segments","confidence":0.5,"note":"Halloween finger family compilation vs single; match on thumbnail only, frames differ."},
+{"a":"SInqf3uBuxY","b":"VbT8JnABk0E","label":"shared-segments","confidence":0.55,"note":"Scary School Teacher single vs compilation; same thumbnail, sampled frames differ."},
+{"a":"414DEMcGHtU","b":"pbfbmXohAGo","label":"same-song","confidence":0.6,"note":"Kaboochi dance shorts with different kids and sets."},
+{"a":"G7PTUNLnAFk","b":"6aBfQYlhKJs","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Spooky Zombie; different characters."},
+{"a":"tCqhu4zzweM","b":"7c20EvQbPWc","label":"shared-segments","confidence":0.5,"note":"Finger family compilations; same thumbnail, sampled frames differ."},
+{"a":"giE7ipqBKZA","b":"8WuzsdjF0H0","label":"shared-segments","confidence":0.8,"note":"Sport Bots compilations sharing the same episode footage."},
+{"a":"LXMGLr9uFv4","b":"uwnBzV6vNZs","label":"re-upload","confidence":0.75,"note":"Same pink panda bus footage; B is a longer version."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"pTxouvqvJ3E","b":"yUjUU9FVa8s","label":"same-song","confidence":0.5,"note":"Two Monster Dance Party shorts posted the same day with different characters and shots."},
+{"a":"XBXyBskjSOc","b":"0E1mZOYwLoU","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs, T vs Z, same template."},
+{"a":"1ZJfeWoxZ0Y","b":"4uR07X11uEo","label":"shared-segments","confidence":0.85,"note":"Boom Buddies compilations sharing the dad-with-baby segment; identical midpoint frame."},
+{"a":"y5BTqWirpe8","b":"0E1mZOYwLoU","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs, M vs Z, same template."},
+{"a":"gIMyiAxeKSk","b":"y5hNOisFVd8","label":"same-template","confidence":0.85,"note":"Learning Street phonics episodes, I vs N, shared intro template."},
+{"a":"x9aY7fCygbU","b":"ZKr4e59JNlA","label":"shared-segments","confidence":0.85,"note":"Bob the Train compilations sharing the park-with-kids segment."},
+{"a":"PPVWn53Yw4M","b":"zPS3ihinlZs","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, football vs cat gag."},
+{"a":"KKgsTFivFJM","b":"fUR3k2eL6Mo","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations; identical mime-heart shot at the midpoint."},
+{"a":"fUR3k2eL6Mo","b":"uzUxdwfXgWI","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations; identical mime-heart shot at the midpoint."},
+{"a":"gIMyiAxeKSk","b":"oHtQbh7LJjY","label":"same-template","confidence":0.85,"note":"Learning Street phonics episodes, I vs J, shared intro template."}
+]

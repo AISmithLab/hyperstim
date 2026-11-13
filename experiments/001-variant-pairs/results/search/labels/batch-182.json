@@ -1,0 +1,12 @@
+[
+{"a":"aJScxrS9UD8","b":"flcE5VBnNW0","label":"shared-segments","confidence":0.8,"note":"Loco Nuts compilations sharing the snowy ice-skating segment."},
+{"a":"G7PTUNLnAFk","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Wheels on the Taxi; different characters."},
+{"a":"aJ5emFJWGhU","b":"geKNUKAHAJw","label":"shared-segments","confidence":0.75,"note":"Hector compilation contains the Shake It taxi segment."},
+{"a":"U9maOBWT6wE","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Five Little Mommies; different characters."},
+{"a":"S9N416aMRxk","b":"hzzGSyV_BCA","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations; sampled episodes differ."},
+{"a":"B7HQQms6klA","b":"0ZNqZ9x_06U","label":"unrelated","confidence":0.8,"note":"Boo Boo Song vs Kaboochi; different characters, vertical framing only."},
+{"a":"fKWJTJUkwPc","b":"4FXoc-ApjOQ","label":"unrelated","confidence":0.85,"note":"Five in the Bed vs Bugs song; different characters."},
+{"a":"gdVpv0KN_uU","b":"aScyfsClZd0","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Boo Boo Song; different scenes."},
+{"a":"gdVpv0KN_uU","b":"Q9BbiIQ6C_E","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Christmas carol; different characters."},
+{"a":"NWL1vxSbQGk","b":"8AguNMwcvsw","label":"unrelated","confidence":0.85,"note":"Christmas carol vs Baby Shark; different characters."}
+]

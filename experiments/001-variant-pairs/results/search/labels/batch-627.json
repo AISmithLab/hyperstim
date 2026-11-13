@@ -1,0 +1,72 @@
+[
+ {
+  "a": "_4x2xszMRq8",
+  "b": "Dv9uq-E9kbY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, different gags; frame match from similar tumbling shots"
+ },
+ {
+  "a": "PIZj5SH8Bok",
+  "b": "dG7KouaFW-o",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "MxB4KiDF6XY",
+  "b": "YABj119wijM",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "n6eghHp7qWw",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "2A6VjDfEOcw",
+  "b": "tQ3LttVt_Jk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, different gags; frame match from similar tumbling shots"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "19yPrd-it5I",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "S9N416aMRxk",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "awLcqOFRHzg",
+  "b": "SSeBjzpJLFk",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ },
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "_QwXfH5-D5g",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi; hula kids vs baby and blue cat; different animation"
+ },
+ {
+  "a": "TGZl_HsDj_0",
+  "b": "zSf5nw7US6U",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations; shared music, different episodes at matched moments"
+ }
+]

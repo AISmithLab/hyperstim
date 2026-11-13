@@ -1,0 +1,12 @@
+[
+{"a":"NrKUTj5Lefs","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.8,"note":"Bugs song vs Monster Finger Family shorts, different content"},
+{"a":"gdVpv0KN_uU","b":"uE-G6fKmpA4","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Monster Finger Family, different content"},
+{"a":"fKWJTJUkwPc","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.8,"note":"Five in the Bed vs Five Little Mommies, different cast and scenes"},
+{"a":"DclM70T7jyI","b":"pst1AsXQWTE","label":"same-song","confidence":0.6,"note":"Two Boo Boo song shorts with different characters and animation"},
+{"a":"YaThzRybuhE","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.8,"note":"Kaboochi short vs Jingle Bells short"},
+{"a":"HW8O6C_OCJQ","b":"N8fwdq92P50","label":"same-song","confidence":0.55,"note":"Kaboochi beach/hula version vs Halloween vampire version; poses don't clearly match"},
+{"a":"gzCWo4_rAr0","b":"t0Jw9cy-Yv4","label":"same-template","confidence":0.6,"note":"Monster gag shorts series (kayak vs soccer), same style, different content"},
+{"a":"VJ1tu3mMRa0","b":"fcYBv33BuIY","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts from same family production, different moments sampled"},
+{"a":"fKWJTJUkwPc","b":"8-qO0tHgMHY","label":"unrelated","confidence":0.75,"note":"Five in the Bed vs Animal Dance shorts"},
+{"a":"zE2zZ8S0mXk","b":"Z13ulLin2jg","label":"unrelated","confidence":0.8,"note":"Jingle Bells vs Kaboochi shorts"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"-M02RqRMZks","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Halloween Night vs Kaboochi dance; different characters."},
+{"a":"Q95CAqmYoew","b":"AXd66O4yEEI","label":"same-template","confidence":0.55,"note":"Larva-style shorts, ice cream vs mosquito episodes."},
+{"a":"6aBfQYlhKJs","b":"-M02RqRMZks","label":"unrelated","confidence":0.75,"note":"Spooky Zombie vs Halloween Night; different characters."},
+{"a":"-M02RqRMZks","b":"lg-NHZehFHE","label":"same-song","confidence":0.6,"note":"It's Halloween Night shorts, different kids and shots."},
+{"a":"euLhwHIdGU0","b":"-M02RqRMZks","label":"unrelated","confidence":0.8,"note":"Peek A Boo vs Halloween Night; different characters."},
+{"a":"-M02RqRMZks","b":"FZSWN3DFpGE","label":"unrelated","confidence":0.8,"note":"Halloween Night vs Monster in the Dark; different characters."},
+{"a":"G7PTUNLnAFk","b":"tQlIWPUO_E0","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Ten in the Bed; different characters."},
+{"a":"_e29OQFpP7A","b":"Iygt_NzD7VU","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts with the same farmer dad shots; different cuts."},
+{"a":"wAtBG4hjCOY","b":"BZqq3eL6xSE","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, swing vs high striker."},
+{"a":"nvR3fxkl_Bc","b":"7ClCbBREUlU","label":"unrelated","confidence":0.85,"note":"Rig A Jig Jig vs Boo Boo Song; different characters."}
+]

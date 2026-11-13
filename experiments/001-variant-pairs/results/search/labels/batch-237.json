@@ -1,0 +1,72 @@
+[
+ {
+  "a": "tFIfzRKIhTE",
+  "b": "DIQq8lVHew4",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Two different Boom Buddies Halloween songs; similar thumbnail style only."
+ },
+ {
+  "a": "nbI-1N_uBNs",
+  "b": "kHVGgxylqd8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Jingle Bells vs Boo Boo shorts; nothing shared."
+ },
+ {
+  "a": "1DOZoGrM-5o",
+  "b": "LRN5d-RCHPU",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Bob vegetable compilations; same characters, no shared frame seen."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "414DEMcGHtU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "tNPoYErk2rs",
+  "b": "HW8O6C_OCJQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "tNPoYErk2rs",
+  "b": "0yIhvJw1GK8",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Boo Boo shorts cut from one video; share plaid-dad shots."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "Q9BbiIQ6C_E",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs Christmas shorts; nothing shared."
+ },
+ {
+  "a": "0O1ty335KVI",
+  "b": "vXeaBe049TQ",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the red-haired mom segment."
+ },
+ {
+  "a": "Ln0H_11UIwI",
+  "b": "UYSdO8QlFUg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Christmas shorts; only black-bar framing shared."
+ },
+ {
+  "a": "nyJqyZZCekg",
+  "b": "6f6S5Y_1aIA",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "TRCJGQylez4",
+  "b": "5u6tVBEu_tI",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Same Spring Toy short; B is a longer cut adding other episodes"
+ },
+ {
+  "a": "gmRIldLgb8k",
+  "b": "TRCJGQylez4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, kung fu vs spring toy episodes"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "c3lLP39EdME",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spring toy vs cheese episodes"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "oT6bPk4gHxM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spring toy vs rings episodes"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "_4x2xszMRq8",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spring toy vs birthday episodes"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spring toy vs spot episodes"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "VqT9YA3THAE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spring toy vs worm episodes"
+ },
+ {
+  "a": "wAtBG4hjCOY",
+  "b": "TRCJGQylez4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, swing vs spring toy episodes"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "njSANQD1GlI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spring toy vs magic hat episodes"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "TwDxP5L1-VA",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, spring toy vs teleport episodes"
+ }
+]

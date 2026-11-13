@@ -1,0 +1,12 @@
+[
+{"a":"LEGedVxS4ww","b":"GgSVYIX_Xyc","label":"shared-segments","confidence":0.8,"note":"Portuguese compilations sharing the identical pig-in-barn footage."},
+{"a":"WwhNgzir6V4","b":"xUKoaX3t3dY","label":"shared-segments","confidence":0.65,"note":"Pink-bus Baby Bao Wheels on the Bus shorts, different cuts, same colors."},
+{"a":"QmIgPGT-x2s","b":"PVq5Odohbm4","label":"re-upload","confidence":0.85,"note":"Loco Nuts Throw and Fetch: identical frames, new thumbnail and title, intro trimmed."},
+{"a":"PVq5Odohbm4","b":"ixr-TMi-K8U","label":"same-template","confidence":0.6,"note":"Loco Nuts episodes, same cast and thumbnail style, different stories."},
+{"a":"uE-G6fKmpA4","b":"haeN-KwU-B8","label":"shared-segments","confidence":0.65,"note":"Halloween shorts sharing the boy-in-helmet shot; other shots differ."},
+{"a":"gdVpv0KN_uU","b":"haeN-KwU-B8","label":"unrelated","confidence":0.75,"note":"Five Little Mommies vs Monsters in the House shorts; only framing in common."},
+{"a":"a07zOPj6CZg","b":"-a3PpO3jlDI","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters G and H, same set and layout."},
+{"a":"o6VjhL9gA1A","b":"Tn2UZwb9RcY","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, different episodes (carousel vs bucket)."},
+{"a":"_EZv7EJE8LE","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the snowman and toy-jeep episodes."},
+{"a":"KFwebO9sy58","b":"JOMSMENnSIQ","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing stroller and fruit-box episodes."}
+]

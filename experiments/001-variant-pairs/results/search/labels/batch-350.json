@@ -1,0 +1,72 @@
+[
+ {
+  "a": "U_ammCltAtg",
+  "b": "sxqa0IPz2sE",
+  "label": "re-upload",
+  "confidence": 0.9,
+  "note": "Soccer-ball Finger Family, German vs Spanish version; identical frames."
+ },
+ {
+  "a": "eGvSblfi0ns",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "-M02RqRMZks",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "4e1vB_kqCaY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "NrKUTj5Lefs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "FZSWN3DFpGE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "oRk8sglOG5k",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "92wkK3tkeb0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "V5OqHZwodj4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "tQlIWPUO_E0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ }
+]

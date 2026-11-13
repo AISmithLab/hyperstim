@@ -1,0 +1,12 @@
+[
+{"a":"3bTL4x31XTI","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.8,"note":"Bath time vs Five Little Mommies shorts"},
+{"a":"gdVpv0KN_uU","b":"vYXkEPIElyc","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Boo Boo song"},
+{"a":"HDZPIAhApn8","b":"sn15PWQ-Q7E","label":"shared-segments","confidence":0.75,"note":"Christmas compilations sharing the same snowy Santa footage"},
+{"a":"t2tKT2LSOfo","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.75,"note":"No No song vs Five Little Mommies; similar mom model only"},
+{"a":"ZdnpWPRKNUg","b":"gdVpv0KN_uU","label":"same-song","confidence":0.7,"note":"Five Little Mommies: kitten version vs human version, different animation"},
+{"a":"tQlIWPUO_E0","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.8,"note":"Ten in the Bed vs Five Little Mommies"},
+{"a":"gdVpv0KN_uU","b":"ulkPZc48Au8","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs swimming song"},
+{"a":"gdVpv0KN_uU","b":"bVrFl7Z48so","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Boo Boo song"},
+{"a":"gdVpv0KN_uU","b":"_QFj7e58XGE","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Wheels on the Train"},
+{"a":"gdVpv0KN_uU","b":"414DEMcGHtU","label":"unrelated","confidence":0.8,"note":"Five Little Mommies vs Kaboochi dance"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"Gge3fse0rWg","b":"TorgTWOjjX8","label":"shared-segments","confidence":0.85,"note":"A 636s compilation contains B's Junior Squad Kaboochi song (same shots)."},
+{"a":"19yPrd-it5I","b":"fUR3k2eL6Mo","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"UGzlPPWb6Pg","b":"qA-zKbEgq1Q","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, fly swatter vs balloon gags."},
+{"a":"UN4V4ywCWxA","b":"gkk96Hm-IHo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the toy-box episode."},
+{"a":"3yv0GSbbCZI","b":"M0V1ofCOEew","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"YgjyQIwcJy0","b":"XamiKGRhams","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, hollow tree vs toilet gags."},
+{"a":"sT3J4L19qrE","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the jeep episode."},
+{"a":"PjXooPy93AM","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing mime, snowman and jeep episodes."},
+{"a":"yR0IqutO_i4","b":"urNKg4X9kIU","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, space rocket vs teleport/barbell gags."},
+{"a":"VqT9YA3THAE","b":"yR0IqutO_i4","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, worm vs space rocket gags."}
+]

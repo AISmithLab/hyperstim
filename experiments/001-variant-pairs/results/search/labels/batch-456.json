@@ -1,0 +1,72 @@
+[
+ {
+  "a": "tFJvtq4m36Q",
+  "b": "gv52jUTMIMY",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Baby Toot Toot Christmas compilations; same teal living-room song appears in both"
+ },
+ {
+  "a": "gv52jUTMIMY",
+  "b": "xV9XAtzHums",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Baby Toot Toot compilations with same thumbnail layout, different content"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "Zy0VtX5RTFM",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share snowman and toy jeep episodes"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "fx0aMbJwE34",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share mailbox/egg, snowman and jeep episodes"
+ },
+ {
+  "a": "t5wDGNrzpro",
+  "b": "oCiHs7agwmE",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Kaboochi shorts share girl and corgi footage; B is a shorter cut"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "oCiHs7agwmE",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Kaboochi shorts share girl dance footage, different cuts"
+ },
+ {
+  "a": "GCqVNL7ZRdg",
+  "b": "ripZ0792Vx4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share toy stall and heart episodes"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "aW_J2JMPmG8",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share jeep and snowman episodes"
+ },
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "uQ90xr1p-eQ",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi shorts with different kid characters"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "n6eghHp7qWw",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share jeep, snowman and egg episodes"
+ }
+]

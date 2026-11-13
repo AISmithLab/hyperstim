@@ -1,0 +1,72 @@
+[
+ {
+  "a": "icK8mCcje7c",
+  "b": "ATp-VyjrVtg",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "Twinkle single vs compilation; thumbnail match, compilation frames show other songs"
+ },
+ {
+  "a": "iJZ97cfpjhI",
+  "b": "h3bvPp9Jqnc",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Kaboochi dance: animal characters vs Hawaiian kids"
+ },
+ {
+  "a": "El8w4iWGWEI",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "fUR3k2eL6Mo",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "cqjfiWrwmmg",
+  "b": "o6VjhL9gA1A",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "GvP31EGA8tQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share toy stall and heart episodes"
+ },
+ {
+  "a": "LufPzgH87NE",
+  "b": "Tgp1NqPegK8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Are You Sleeping vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "D0tOd2ZH-cQ",
+  "b": "UPDBxhcsIRQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share jeep and snowman episodes"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "x-80P5Mf_Y8",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the crib episode"
+ }
+]

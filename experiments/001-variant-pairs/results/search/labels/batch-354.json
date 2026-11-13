@@ -1,0 +1,72 @@
+[
+ {
+  "a": "n1u8zKHNZbk",
+  "b": "AJu6WaCP-1g",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts and scenes; no shared shots"
+ },
+ {
+  "a": "EcTmmxGz00c",
+  "b": "ATFQTSk7Ss4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the farmers with turtle scene"
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "-qxEnbH15lY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts and scenes; no shared shots"
+ },
+ {
+  "a": "7xv-yiS3oB4",
+  "b": "B7HQQms6klA",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts and scenes; no shared shots"
+ },
+ {
+  "a": "sCPOgpKqNxQ",
+  "b": "muebjvoRDjQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Bug-friends series: same characters and Bob the Train intro, different songs"
+ },
+ {
+  "a": "7nOsX0xOiTM",
+  "b": "jD-Uo2VcI2E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Bob compilations share the green bus ball-pit scene"
+ },
+ {
+  "a": "fKWJTJUkwPc",
+  "b": "xU3oLsk2eF8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts and scenes; no shared shots"
+ },
+ {
+  "a": "B_MmKCyAmpw",
+  "b": "jEwfENQE5Os",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts and scenes; no shared shots"
+ },
+ {
+  "a": "TJfFZqUa2lY",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts and scenes; no shared shots"
+ },
+ {
+  "a": "4AHTuFMPftA",
+  "b": "Bx-2FBZQKs0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts and scenes; no shared shots"
+ }
+]

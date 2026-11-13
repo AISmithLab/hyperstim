@@ -1,0 +1,2235 @@
+2026-11-11T10:23:24Z  inventory: 4737 uploads listed for A
+2026-11-11T10:23:29Z  inventory: 1150 uploads listed for B
+2026-11-11T10:23:52Z  inventory: 5887 videos with metadata of 5887 listed
+2026-11-11T10:23:54Z  loaded 5887 videos, 2481 eligible (3406 compilations left out)
+2026-11-11T10:24:40Z  loaded 5887 videos, 2486 eligible (3401 compilations left out)
+2026-11-11T10:37:06Z  loaded 5887 videos, 4066 eligible (1821 compilations left out)
+2026-11-11T10:44:02Z  calibration on 500 videos, pairs {'AxB': 51051, 'AxA': 63546, 'BxB': 10153}: seed score 17.63, target cut 14.47, cut 13.22
+2026-11-11T10:54:18Z  gate calibration on 210 videos, pairs {'AxB': 9000, 'AxA': 11175, 'BxB': 1770}: p99 {'AxB': {'frames_outline': 0.4802563640999875, 'frames_emb': 0.783095824122429}, 'AxA': {'frames_outline': 0.5237827196657259, 'frames_emb': 0.7865800046920777}, 'BxB': {'frames_outline': 0.4617270398845004, 'frames_emb': 0.784102156162262}}
+2026-11-11T10:55:19Z  labels read: batch-001.json (10 pairs)
+2026-11-11T10:56:22Z  labels read: batch-002.json (10 pairs)
+2026-11-11T10:56:22Z  download LXMGLr9uFv4: ok
+2026-11-11T10:57:24Z  labels read: batch-003.json (10 pairs)
+2026-11-11T10:57:24Z  labels read: batch-004.json (10 pairs)
+2026-11-11T10:57:24Z  labels read: batch-005.json (10 pairs)
+2026-11-11T10:57:24Z  labels read: batch-006.json (10 pairs)
+2026-11-11T10:57:24Z  labels read: batch-007.json (10 pairs)
+2026-11-11T10:58:25Z  labels read: batch-008.json (10 pairs)
+2026-11-11T10:58:25Z  labels read: batch-009.json (10 pairs)
+2026-11-11T10:58:25Z  labels read: batch-010.json (8 pairs)
+2026-11-11T10:58:25Z  labels read: batch-011.json (9 pairs)
+2026-11-11T10:58:25Z  labels read: batch-012.json (1 pairs)
+2026-11-11T10:58:25Z  download yOq3vuvmRCQ: ok
+2026-11-11T10:58:25Z  download pRPe05YfXxg: ok
+2026-11-11T10:58:25Z  download AJ1vEJXC0-M: ok
+2026-11-11T11:00:26Z  download 8-93_TmkKfc: ok
+2026-11-11T11:00:26Z  download LXMGLr9uFv4: ok
+2026-11-11T11:00:26Z  download 8-93_TmkKfc: ok
+2026-11-11T11:00:26Z  download yOq3vuvmRCQ: ok
+2026-11-11T11:01:26Z  download k3vCYP_aQ3w: ok
+2026-11-11T11:01:26Z  download yOq3vuvmRCQ: ok
+2026-11-11T11:09:05Z  report AxB-pRPe05YfXxg-AJ1vEJXC0-M done in 13.4 min
+2026-11-11T11:09:10Z  report AxA-LXMGLr9uFv4-yOq3vuvmRCQ failed at score: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-11-11T11:09:43Z  labels read: batch-013.json (10 pairs)
+2026-11-11T11:09:43Z  labels read: batch-014.json (10 pairs)
+2026-11-11T11:10:43Z  labels read: batch-015.json (10 pairs)
+2026-11-11T11:10:43Z  labels read: batch-016.json (10 pairs)
+2026-11-11T11:10:43Z  labels read: batch-018.json (10 pairs)
+2026-11-11T11:10:43Z  download 12mNC1UN38M: ok
+2026-11-11T11:11:47Z  labels read: batch-017.json (10 pairs)
+2026-11-11T11:11:47Z  labels read: batch-019.json (10 pairs)
+2026-11-11T11:11:47Z  labels read: batch-020.json (10 pairs)
+2026-11-11T11:11:47Z  labels read: batch-021.json (10 pairs)
+2026-11-11T11:11:47Z  download 6Knlj_rhgE4: ok
+2026-11-11T11:12:48Z  labels read: batch-022.json (10 pairs)
+2026-11-11T11:12:48Z  labels read: batch-023.json (10 pairs)
+2026-11-11T11:12:48Z  labels read: batch-024.json (10 pairs)
+2026-11-11T11:13:49Z  labels read: batch-025.json (10 pairs)
+2026-11-11T11:13:49Z  labels read: batch-026.json (10 pairs)
+2026-11-11T11:13:49Z  labels read: batch-027.json (1 pairs)
+2026-11-11T11:13:49Z  labels read: batch-028.json (3 pairs)
+2026-11-11T11:13:49Z  download MiTaLfR6zgY: ok
+2026-11-11T11:15:52Z  download yXDsS1eglcA: ok
+2026-11-11T11:17:57Z  download 4OZ-iSU4DiM: ok
+2026-11-11T11:17:57Z  download LXMGLr9uFv4: ok
+2026-11-11T11:20:00Z  download lo3-hAO9RJg: ok
+2026-11-11T11:20:25Z  report AxA-LXMGLr9uFv4-yOq3vuvmRCQ failed at score: IndexError: index 2050 is out of bounds for axis 0 with size 2050
+2026-11-11T11:21:00Z  labels read: batch-029.json (10 pairs)
+2026-11-11T11:21:09Z  report AxA-8-93_TmkKfc-LXMGLr9uFv4 failed at score: ValueError: need at least one array to concatenate
+2026-11-11T11:22:08Z  labels read: batch-030.json (10 pairs)
+2026-11-11T11:22:08Z  labels read: batch-031.json (10 pairs)
+2026-11-11T11:22:08Z  download 6nacOLqpcPk: ok
+2026-11-11T11:23:09Z  labels read: batch-032.json (10 pairs)
+2026-11-11T11:23:09Z  labels read: batch-033.json (10 pairs)
+2026-11-11T11:24:10Z  labels read: batch-034.json (10 pairs)
+2026-11-11T11:24:10Z  labels read: batch-035.json (10 pairs)
+2026-11-11T11:25:12Z  labels read: batch-036.json (10 pairs)
+2026-11-11T11:25:12Z  labels read: batch-037.json (10 pairs)
+2026-11-11T11:25:12Z  download Ja2d9CLWcvU: ok
+2026-11-11T11:26:13Z  labels read: batch-038.json (10 pairs)
+2026-11-11T11:26:13Z  labels read: batch-039.json (10 pairs)
+2026-11-11T11:26:13Z  labels read: batch-040.json (10 pairs)
+2026-11-11T11:26:13Z  download O5L8I5IEjWo: ok
+2026-11-11T11:26:18Z  report AxA-LXMGLr9uFv4-yOq3vuvmRCQ failed at score: ValueError: need at least one array to concatenate
+2026-11-11T11:27:14Z  labels read: batch-041.json (10 pairs)
+2026-11-11T11:27:14Z  labels read: batch-042.json (10 pairs)
+2026-11-11T11:28:15Z  download ZPOOOfJmzp4: ok
+2026-11-11T11:28:15Z  download lo3-hAO9RJg: ok
+2026-11-11T11:29:18Z  download zN8W339rP_U: ok
+2026-11-11T11:30:18Z  labels read: batch-043.json (10 pairs)
+2026-11-11T11:30:18Z  labels read: batch-044.json (10 pairs)
+2026-11-11T11:30:18Z  labels read: batch-045.json (10 pairs)
+2026-11-11T11:30:43Z  report BxB-12mNC1UN38M-6Knlj_rhgE4 failed at score: AssertionError: different frame rates: resample first
+2026-11-11T11:31:18Z  labels read: batch-046.json (10 pairs)
+2026-11-11T11:31:18Z  download NnvOQVPXWTw: ok
+2026-11-11T11:32:19Z  labels read: batch-047.json (10 pairs)
+2026-11-11T11:32:19Z  labels read: batch-048.json (10 pairs)
+2026-11-11T11:32:19Z  labels read: batch-049.json (10 pairs)
+2026-11-11T11:32:19Z  download E4cuOfwU8k0: ok
+2026-11-11T11:32:19Z  download 4OZ-iSU4DiM: ok
+2026-11-11T11:32:46Z  report AxA-LXMGLr9uFv4-yOq3vuvmRCQ done in 4.4 min
+2026-11-11T11:33:20Z  labels read: batch-050.json (10 pairs)
+2026-11-11T11:33:20Z  labels read: batch-051.json (10 pairs)
+2026-11-11T11:33:20Z  labels read: batch-052.json (10 pairs)
+2026-11-11T11:34:23Z  labels read: batch-053.json (10 pairs)
+2026-11-11T11:34:23Z  labels read: batch-054.json (10 pairs)
+2026-11-11T11:34:23Z  labels read: batch-055.json (10 pairs)
+2026-11-11T11:35:24Z  labels read: batch-056.json (10 pairs)
+2026-11-11T11:35:24Z  labels read: batch-057.json (10 pairs)
+2026-11-11T11:35:24Z  labels read: batch-058.json (10 pairs)
+2026-11-11T11:35:24Z  download 88K00Gg-R8k: ok
+2026-11-11T11:36:24Z  labels read: batch-059.json (10 pairs)
+2026-11-11T11:36:24Z  labels read: batch-060.json (10 pairs)
+2026-11-11T11:36:24Z  labels read: batch-061.json (10 pairs)
+2026-11-11T11:36:24Z  download XnLSlBusv-U: ok
+2026-11-11T11:37:19Z  report AxA-8-93_TmkKfc-LXMGLr9uFv4 done in 4.5 min
+2026-11-11T11:37:25Z  labels read: batch-062.json (10 pairs)
+2026-11-11T11:37:25Z  labels read: batch-063.json (10 pairs)
+2026-11-11T11:37:25Z  labels read: batch-064.json (10 pairs)
+2026-11-11T11:38:25Z  download mHDPn8N5ASE: ok
+2026-11-11T11:39:01Z  report AxA-8-93_TmkKfc-yOq3vuvmRCQ done in 29.8 min
+2026-11-11T11:40:29Z  download oJ_S3VH_L_I: ok
+2026-11-11T11:41:34Z  labels read: batch-065.json (10 pairs)
+2026-11-11T11:41:34Z  labels read: batch-066.json (10 pairs)
+2026-11-11T11:42:36Z  labels read: batch-067.json (10 pairs)
+2026-11-11T11:42:36Z  labels read: batch-068.json (10 pairs)
+2026-11-11T11:42:36Z  download V6mkgjixCoQ: ok
+2026-11-11T11:43:38Z  labels read: batch-069.json (10 pairs)
+2026-11-11T11:43:38Z  labels read: batch-070.json (10 pairs)
+2026-11-11T11:43:38Z  labels read: batch-071.json (10 pairs)
+2026-11-11T11:43:38Z  download yebnJe7tUqE: ok
+2026-11-11T11:43:38Z  download LXMGLr9uFv4: ok
+2026-11-11T11:44:05Z  report AxA-Ja2d9CLWcvU-O5L8I5IEjWo done in 12.9 min
+2026-11-11T11:44:40Z  labels read: batch-072.json (10 pairs)
+2026-11-11T11:44:40Z  labels read: batch-073.json (10 pairs)
+2026-11-11T11:44:40Z  download O_D2N_ulWXg: ok
+2026-11-11T11:45:40Z  labels read: batch-074.json (10 pairs)
+2026-11-11T11:45:40Z  labels read: batch-075.json (10 pairs)
+2026-11-11T11:45:40Z  labels read: batch-076.json (10 pairs)
+2026-11-11T11:46:42Z  labels read: batch-077.json (10 pairs)
+2026-11-11T11:46:42Z  labels read: batch-078.json (10 pairs)
+2026-11-11T11:46:42Z  labels read: batch-079.json (10 pairs)
+2026-11-11T11:46:42Z  download IWeiJekM5Cs: ok
+2026-11-11T11:47:45Z  labels read: batch-080.json (10 pairs)
+2026-11-11T11:47:45Z  labels read: batch-081.json (10 pairs)
+2026-11-11T11:47:45Z  download cufl2niNsMo: ok
+2026-11-11T11:47:45Z  download yOq3vuvmRCQ: ok
+2026-11-11T11:47:45Z  download O_D2N_ulWXg: ok
+2026-11-11T11:48:46Z  labels read: batch-082.json (10 pairs)
+2026-11-11T11:48:46Z  labels read: batch-083.json (10 pairs)
+2026-11-11T11:48:46Z  download U3O9WIfjY8A: ok
+2026-11-11T11:48:46Z  download NnvOQVPXWTw: ok
+2026-11-11T11:48:46Z  download zN8W339rP_U: ok
+2026-11-11T11:48:46Z  download U3O9WIfjY8A: ok
+2026-11-11T11:48:46Z  download 8-93_TmkKfc: ok
+2026-11-11T11:48:46Z  download O_D2N_ulWXg: ok
+2026-11-11T11:49:47Z  labels read: batch-084.json (10 pairs)
+2026-11-11T11:49:47Z  labels read: batch-085.json (10 pairs)
+2026-11-11T11:49:47Z  labels read: batch-086.json (10 pairs)
+2026-11-11T11:50:54Z  labels read: batch-087.json (10 pairs)
+2026-11-11T11:50:54Z  labels read: batch-088.json (10 pairs)
+2026-11-11T11:50:54Z  labels read: batch-089.json (10 pairs)
+2026-11-11T11:50:54Z  download 2uTYZ20rXa8: ok
+2026-11-11T11:51:55Z  labels read: batch-090.json (10 pairs)
+2026-11-11T11:51:55Z  labels read: batch-091.json (10 pairs)
+2026-11-11T11:52:58Z  labels read: batch-092.json (10 pairs)
+2026-11-11T11:52:58Z  labels read: batch-093.json (10 pairs)
+2026-11-11T11:52:58Z  labels read: batch-094.json (10 pairs)
+2026-11-11T11:52:58Z  download nEoTfUE6-Pk: ok
+2026-11-11T11:52:58Z  download LXMGLr9uFv4: ok
+2026-11-11T11:52:58Z  download nEoTfUE6-Pk: ok
+2026-11-11T11:52:58Z  download nEoTfUE6-Pk: ok
+2026-11-11T11:52:58Z  download yOq3vuvmRCQ: ok
+2026-11-11T11:53:08Z  report AxA-ZPOOOfJmzp4-lo3-hAO9RJg done in 8.9 min
+2026-11-11T11:53:20Z  report BxB-12mNC1UN38M-6Knlj_rhgE4 done in 14.0 min
+2026-11-11T11:53:59Z  labels read: batch-095.json (10 pairs)
+2026-11-11T11:53:59Z  labels read: batch-096.json (10 pairs)
+2026-11-11T11:53:59Z  labels read: batch-097.json (10 pairs)
+2026-11-11T11:55:00Z  labels read: batch-098.json (10 pairs)
+2026-11-11T11:55:00Z  labels read: batch-099.json (10 pairs)
+2026-11-11T11:55:00Z  download j316Y_-hFW0: ok
+2026-11-11T11:56:01Z  download y7FElRQhklM: ok
+2026-11-11T11:56:01Z  download k3vCYP_aQ3w: ok
+2026-11-11T11:56:01Z  download O_D2N_ulWXg: ok
+2026-11-11T11:58:02Z  download 1g02Uh_IuI4: ok
+2026-11-11T12:00:03Z  download uaNCJzGwl3E: ok
+2026-11-11T12:00:03Z  download 1g02Uh_IuI4: ok
+2026-11-11T12:01:41Z  report AxA-zN8W339rP_U-NnvOQVPXWTw done in 22.5 min
+2026-11-11T12:02:06Z  download Hd7k7i4jqH4: ok
+2026-11-11T12:03:06Z  labels read: batch-100.json (10 pairs)
+2026-11-11T12:03:06Z  labels read: batch-101.json (10 pairs)
+2026-11-11T12:03:06Z  labels read: batch-102.json (10 pairs)
+2026-11-11T12:03:06Z  labels read: batch-104.json (10 pairs)
+2026-11-11T12:04:09Z  labels read: batch-103.json (10 pairs)
+2026-11-11T12:04:09Z  labels read: batch-105.json (10 pairs)
+2026-11-11T12:04:09Z  labels read: batch-106.json (10 pairs)
+2026-11-11T12:04:09Z  labels read: batch-107.json (10 pairs)
+2026-11-11T12:04:09Z  download o_8kEplrFaw: ok
+2026-11-11T12:05:12Z  labels read: batch-108.json (10 pairs)
+2026-11-11T12:05:12Z  labels read: batch-109.json (10 pairs)
+2026-11-11T12:05:12Z  labels read: batch-110.json (10 pairs)
+2026-11-11T12:05:12Z  labels read: batch-111.json (10 pairs)
+2026-11-11T12:05:12Z  labels read: batch-112.json (10 pairs)
+2026-11-11T12:05:12Z  labels read: batch-113.json (10 pairs)
+2026-11-11T12:05:12Z  download cg6-O9iA3Cw: ok
+2026-11-11T12:06:14Z  labels read: batch-114.json (10 pairs)
+2026-11-11T12:06:14Z  labels read: batch-115.json (10 pairs)
+2026-11-11T12:06:14Z  labels read: batch-116.json (10 pairs)
+2026-11-11T12:06:14Z  labels read: batch-117.json (10 pairs)
+2026-11-11T12:06:14Z  labels read: batch-118.json (10 pairs)
+2026-11-11T12:06:14Z  labels read: batch-119.json (10 pairs)
+2026-11-11T12:07:15Z  labels read: batch-120.json (10 pairs)
+2026-11-11T12:07:15Z  labels read: batch-121.json (10 pairs)
+2026-11-11T12:07:15Z  labels read: batch-122.json (10 pairs)
+2026-11-11T12:07:15Z  labels read: batch-123.json (10 pairs)
+2026-11-11T12:07:15Z  download OokGp8l_x9k: ok
+2026-11-11T12:07:15Z  download 6Knlj_rhgE4: ok
+2026-11-11T12:08:16Z  labels read: batch-124.json (10 pairs)
+2026-11-11T12:08:16Z  labels read: batch-125.json (10 pairs)
+2026-11-11T12:08:16Z  labels read: batch-126.json (10 pairs)
+2026-11-11T12:08:16Z  labels read: batch-127.json (10 pairs)
+2026-11-11T12:08:16Z  labels read: batch-128.json (10 pairs)
+2026-11-11T12:08:16Z  labels read: batch-129.json (10 pairs)
+2026-11-11T12:08:16Z  labels read: batch-130.json (10 pairs)
+2026-11-11T12:08:58Z  report AxA-2uTYZ20rXa8-nEoTfUE6-Pk done in 15.8 min
+2026-11-11T12:09:17Z  labels read: batch-131.json (10 pairs)
+2026-11-11T12:09:17Z  labels read: batch-132.json (10 pairs)
+2026-11-11T12:09:17Z  labels read: batch-133.json (10 pairs)
+2026-11-11T12:09:17Z  labels read: batch-134.json (10 pairs)
+2026-11-11T12:09:17Z  labels read: batch-135.json (10 pairs)
+2026-11-11T12:09:17Z  download XKHBuIHt2SU: ok
+2026-11-11T12:10:18Z  labels read: batch-136.json (10 pairs)
+2026-11-11T12:10:18Z  labels read: batch-137.json (10 pairs)
+2026-11-11T12:10:18Z  labels read: batch-138.json (10 pairs)
+2026-11-11T12:10:18Z  labels read: batch-139.json (10 pairs)
+2026-11-11T12:10:18Z  download fnchF_Zl9XQ: ok
+2026-11-11T12:10:18Z  download V6mkgjixCoQ: ok
+2026-11-11T12:11:19Z  download pIBlHJFJ1vs: ok
+2026-11-11T12:11:19Z  download pIBlHJFJ1vs: ok
+2026-11-11T12:11:19Z  download yebnJe7tUqE: ok
+2026-11-11T12:11:19Z  download pIBlHJFJ1vs: ok
+2026-11-11T12:12:20Z  download Myk0Is5roGM: ok
+2026-11-11T12:13:20Z  labels read: batch-140.json (10 pairs)
+2026-11-11T12:13:20Z  download WoeCbK5HG-E: ok
+2026-11-11T12:14:22Z  labels read: batch-141.json (10 pairs)
+2026-11-11T12:14:22Z  labels read: batch-142.json (10 pairs)
+2026-11-11T12:14:22Z  labels read: batch-143.json (10 pairs)
+2026-11-11T12:15:06Z  report AxB-LXMGLr9uFv4-O_D2N_ulWXg done in 5.9 min
+2026-11-11T12:15:24Z  labels read: batch-144.json (10 pairs)
+2026-11-11T12:15:24Z  labels read: batch-145.json (10 pairs)
+2026-11-11T12:15:24Z  download cuF6uph58zo: ok
+2026-11-11T12:16:17Z  report AxA-zN8W339rP_U-U3O9WIfjY8A done in 14.6 min
+2026-11-11T12:16:24Z  labels read: batch-146.json (10 pairs)
+2026-11-11T12:16:24Z  labels read: batch-147.json (10 pairs)
+2026-11-11T12:16:24Z  labels read: batch-148.json (10 pairs)
+2026-11-11T12:16:24Z  labels read: batch-149.json (10 pairs)
+2026-11-11T12:17:25Z  labels read: batch-150.json (10 pairs)
+2026-11-11T12:17:25Z  labels read: batch-151.json (10 pairs)
+2026-11-11T12:17:25Z  labels read: batch-152.json (10 pairs)
+2026-11-11T12:17:25Z  labels read: batch-153.json (10 pairs)
+2026-11-11T12:17:25Z  download XCGE-_TDcGI: ok
+2026-11-11T12:18:26Z  labels read: batch-154.json (10 pairs)
+2026-11-11T12:18:26Z  labels read: batch-155.json (10 pairs)
+2026-11-11T12:18:26Z  labels read: batch-156.json (10 pairs)
+2026-11-11T12:18:26Z  download MNiZl3mNEIk: ok
+2026-11-11T12:19:26Z  labels read: batch-157.json (10 pairs)
+2026-11-11T12:19:26Z  labels read: batch-158.json (10 pairs)
+2026-11-11T12:19:26Z  labels read: batch-159.json (10 pairs)
+2026-11-11T12:19:26Z  labels read: batch-160.json (10 pairs)
+2026-11-11T12:20:26Z  labels read: batch-161.json (10 pairs)
+2026-11-11T12:20:26Z  labels read: batch-162.json (10 pairs)
+2026-11-11T12:20:26Z  labels read: batch-163.json (10 pairs)
+2026-11-11T12:20:26Z  download yCSjhx5qiv0: ok
+2026-11-11T12:20:26Z  download 2uTYZ20rXa8: ok
+2026-11-11T12:21:27Z  labels read: batch-164.json (10 pairs)
+2026-11-11T12:21:27Z  download 2b9xzvfYqD8: ok
+2026-11-11T12:22:28Z  download P9QIOA_X06w: ok
+2026-11-11T12:24:29Z  download Nj_pfXISKXc: ok
+2026-11-11T12:24:29Z  download 2b9xzvfYqD8: ok
+2026-11-11T12:24:29Z  download yebnJe7tUqE: ok
+2026-11-11T12:25:42Z  report AxB-XKHBuIHt2SU-fnchF_Zl9XQ done in 10.5 min
+2026-11-11T12:26:31Z  download HWNDED8zbjE: ok
+2026-11-11T12:26:31Z  download LXMGLr9uFv4: ok
+2026-11-11T12:28:33Z  download s11HCj_gAWE: ok
+2026-11-11T12:28:33Z  download 2uTYZ20rXa8: ok
+2026-11-11T12:28:33Z  download s11HCj_gAWE: ok
+2026-11-11T12:29:34Z  download YO0ZDNIG1q4: ok
+2026-11-11T12:31:35Z  labels read: batch-165.json (10 pairs)
+2026-11-11T12:31:35Z  labels read: batch-166.json (10 pairs)
+2026-11-11T12:31:35Z  download QqbqYe-JRVE: ok
+2026-11-11T12:31:35Z  download s11HCj_gAWE: ok
+2026-11-11T12:31:35Z  download nEoTfUE6-Pk: ok
+2026-11-11T12:31:35Z  download 4OZ-iSU4DiM: ok
+2026-11-11T12:32:26Z  report BxB-OokGp8l_x9k-6Knlj_rhgE4 done in 6.7 min
+2026-11-11T12:32:36Z  labels read: batch-167.json (10 pairs)
+2026-11-11T12:32:36Z  labels read: batch-168.json (10 pairs)
+2026-11-11T12:32:36Z  labels read: batch-169.json (10 pairs)
+2026-11-11T12:32:36Z  download dGMGcPFUs6Q: ok
+2026-11-11T12:32:39Z  report AxB-yOq3vuvmRCQ-O_D2N_ulWXg done in 15.9 min
+2026-11-11T12:33:36Z  labels read: batch-170.json (10 pairs)
+2026-11-11T12:33:36Z  labels read: batch-171.json (10 pairs)
+2026-11-11T12:33:36Z  labels read: batch-172.json (10 pairs)
+2026-11-11T12:34:37Z  labels read: batch-173.json (10 pairs)
+2026-11-11T12:34:37Z  labels read: batch-174.json (10 pairs)
+2026-11-11T12:34:37Z  labels read: batch-175.json (10 pairs)
+2026-11-11T12:34:37Z  download SEoJGGkKx7k: ok
+2026-11-11T12:34:37Z  download cufl2niNsMo: ok
+2026-11-11T12:35:39Z  labels read: batch-176.json (10 pairs)
+2026-11-11T12:35:39Z  labels read: batch-177.json (10 pairs)
+2026-11-11T12:35:39Z  labels read: batch-178.json (10 pairs)
+2026-11-11T12:36:40Z  labels read: batch-179.json (10 pairs)
+2026-11-11T12:36:40Z  labels read: batch-180.json (10 pairs)
+2026-11-11T12:36:40Z  labels read: batch-181.json (10 pairs)
+2026-11-11T12:36:40Z  labels read: batch-182.json (10 pairs)
+2026-11-11T12:36:40Z  download SQBTIuB0SsI: ok
+2026-11-11T12:36:40Z  download 6Knlj_rhgE4: ok
+2026-11-11T12:36:40Z  download uaNCJzGwl3E: ok
+2026-11-11T12:37:42Z  labels read: batch-183.json (10 pairs)
+2026-11-11T12:37:42Z  labels read: batch-184.json (10 pairs)
+2026-11-11T12:37:42Z  labels read: batch-185.json (10 pairs)
+2026-11-11T12:37:42Z  labels read: batch-186.json (10 pairs)
+2026-11-11T12:37:42Z  download 9ywRXy36pAg: ok
+2026-11-11T12:37:42Z  download 1g02Uh_IuI4: ok
+2026-11-11T12:38:43Z  labels read: batch-187.json (10 pairs)
+2026-11-11T12:38:43Z  labels read: batch-188.json (10 pairs)
+2026-11-11T12:38:43Z  labels read: batch-189.json (10 pairs)
+2026-11-11T12:39:44Z  labels read: batch-190.json (10 pairs)
+2026-11-11T12:39:44Z  labels read: batch-191.json (10 pairs)
+2026-11-11T12:39:44Z  download m151ZBLwbhc: ok
+2026-11-11T12:40:45Z  labels read: batch-192.json (10 pairs)
+2026-11-11T12:40:45Z  labels read: batch-193.json (10 pairs)
+2026-11-11T12:40:45Z  labels read: batch-194.json (10 pairs)
+2026-11-11T12:40:45Z  labels read: batch-195.json (10 pairs)
+2026-11-11T12:40:45Z  download EN7S56j6Z5Y: ok
+2026-11-11T12:40:45Z  download 9ywRXy36pAg: ok
+2026-11-11T12:40:45Z  download 1g02Uh_IuI4: ok
+2026-11-11T12:40:45Z  download EN7S56j6Z5Y: ok
+2026-11-11T12:41:46Z  labels read: batch-196.json (10 pairs)
+2026-11-11T12:41:46Z  labels read: batch-197.json (10 pairs)
+2026-11-11T12:42:41Z  report AxA-s11HCj_gAWE-nEoTfUE6-Pk done in 10.0 min
+2026-11-11T12:42:46Z  report AxA-2uTYZ20rXa8-s11HCj_gAWE done in 10.1 min
+2026-11-11T12:42:47Z  labels read: batch-198.json (10 pairs)
+2026-11-11T12:42:47Z  labels read: batch-199.json (10 pairs)
+2026-11-11T12:42:47Z  labels read: batch-200.json (10 pairs)
+2026-11-11T12:42:47Z  labels read: batch-201.json (10 pairs)
+2026-11-11T12:42:47Z  download uwnBzV6vNZs: ok
+2026-11-11T12:42:47Z  download O_D2N_ulWXg: ok
+2026-11-11T12:42:47Z  download uaNCJzGwl3E: ok
+2026-11-11T12:42:47Z  download EN7S56j6Z5Y: ok
+2026-11-11T12:42:47Z  download E4cuOfwU8k0: ok
+2026-11-11T12:42:48Z  report BxB-uaNCJzGwl3E-9ywRXy36pAg failed at prepare: IndexError: list index out of range
+2026-11-11T12:43:18Z  report BxB-1g02Uh_IuI4-m151ZBLwbhc failed at prepare: IndexError: list index out of range
+2026-11-11T12:43:49Z  labels read: batch-202.json (10 pairs)
+2026-11-11T12:43:49Z  labels read: batch-203.json (10 pairs)
+2026-11-11T12:43:49Z  labels read: batch-204.json (10 pairs)
+2026-11-11T12:43:49Z  download rjjjfXf4pjg: ok
+2026-11-11T12:43:49Z  download m151ZBLwbhc: ok
+2026-11-11T12:43:49Z  download EN7S56j6Z5Y: ok
+2026-11-11T12:43:49Z  download 1g02Uh_IuI4: ok
+2026-11-11T12:43:49Z  download 9ywRXy36pAg: ok
+2026-11-11T12:43:49Z  download m151ZBLwbhc: ok
+2026-11-11T12:43:49Z  download 9ywRXy36pAg: ok
+2026-11-11T12:43:49Z  download uaNCJzGwl3E: ok
+2026-11-11T12:43:49Z  download m151ZBLwbhc: ok
+2026-11-11T12:43:49Z  download s11HCj_gAWE: ok
+2026-11-11T12:43:49Z  download uwnBzV6vNZs: ok
+2026-11-11T12:44:50Z  labels read: batch-205.json (10 pairs)
+2026-11-11T12:44:50Z  labels read: batch-206.json (10 pairs)
+2026-11-11T12:44:50Z  labels read: batch-207.json (10 pairs)
+2026-11-11T12:44:50Z  download P85oXrxz2nk: ok
+2026-11-11T12:45:08Z  report AxA-pIBlHJFJ1vs-Myk0Is5roGM failed at score: ValueError: All-NaN slice encountered
+2026-11-11T12:45:52Z  labels read: batch-208.json (10 pairs)
+2026-11-11T12:45:52Z  labels read: batch-209.json (10 pairs)
+2026-11-11T12:45:52Z  labels read: batch-210.json (10 pairs)
+2026-11-11T12:45:52Z  labels read: batch-211.json (10 pairs)
+2026-11-11T12:46:52Z  labels read: batch-212.json (10 pairs)
+2026-11-11T12:46:52Z  labels read: batch-213.json (10 pairs)
+2026-11-11T12:46:52Z  labels read: batch-214.json (10 pairs)
+2026-11-11T12:46:52Z  labels read: batch-215.json (10 pairs)
+2026-11-11T12:46:52Z  download bodrABbSgfA: ok
+2026-11-11T12:46:52Z  download EN7S56j6Z5Y: ok
+2026-11-11T12:46:52Z  download Hd7k7i4jqH4: ok
+2026-11-11T12:47:53Z  labels read: batch-216.json (10 pairs)
+2026-11-11T12:47:53Z  labels read: batch-217.json (10 pairs)
+2026-11-11T12:48:54Z  labels read: batch-218.json (10 pairs)
+2026-11-11T12:48:54Z  labels read: batch-219.json (10 pairs)
+2026-11-11T12:48:54Z  labels read: batch-220.json (10 pairs)
+2026-11-11T12:48:54Z  download rvWFuvJh85o: ok
+2026-11-11T12:49:55Z  labels read: batch-221.json (10 pairs)
+2026-11-11T12:49:55Z  labels read: batch-222.json (10 pairs)
+2026-11-11T12:49:55Z  download Qy4EwtfCTkM: ok
+2026-11-11T12:50:57Z  labels read: batch-223.json (10 pairs)
+2026-11-11T12:50:57Z  labels read: batch-224.json (10 pairs)
+2026-11-11T12:50:57Z  labels read: batch-225.json (10 pairs)
+2026-11-11T12:50:57Z  download WUbI_x69AIc: ok
+2026-11-11T12:50:57Z  download Qy4EwtfCTkM: ok
+2026-11-11T12:50:57Z  download uwnBzV6vNZs: ok
+2026-11-11T12:50:57Z  download yOq3vuvmRCQ: ok
+2026-11-11T12:50:57Z  download Nj_pfXISKXc: ok
+2026-11-11T12:51:31Z  report AxB-lo3-hAO9RJg-6nacOLqpcPk done in 6.0 min
+2026-11-11T12:51:58Z  labels read: batch-226.json (10 pairs)
+2026-11-11T12:51:58Z  labels read: batch-227.json (10 pairs)
+2026-11-11T12:51:58Z  labels read: batch-228.json (10 pairs)
+2026-11-11T12:53:00Z  labels read: batch-229.json (10 pairs)
+2026-11-11T12:53:00Z  labels read: batch-230.json (10 pairs)
+2026-11-11T12:53:00Z  labels read: batch-231.json (10 pairs)
+2026-11-11T12:53:00Z  download S0b-cNOME7I: ok
+2026-11-11T12:53:00Z  download 2b9xzvfYqD8: ok
+2026-11-11T12:53:00Z  download S0b-cNOME7I: ok
+2026-11-11T12:53:00Z  download S0b-cNOME7I: ok
+2026-11-11T12:53:00Z  download P9QIOA_X06w: ok
+2026-11-11T12:53:07Z  report AxA-yebnJe7tUqE-HWNDED8zbjE done in 9.4 min
+2026-11-11T12:54:01Z  labels read: batch-232.json (10 pairs)
+2026-11-11T12:54:01Z  labels read: batch-233.json (10 pairs)
+2026-11-11T12:54:01Z  labels read: batch-234.json (10 pairs)
+2026-11-11T12:54:01Z  labels read: batch-235.json (10 pairs)
+2026-11-11T12:55:04Z  labels read: batch-236.json (10 pairs)
+2026-11-11T12:55:04Z  labels read: batch-237.json (10 pairs)
+2026-11-11T12:55:04Z  labels read: batch-238.json (10 pairs)
+2026-11-11T12:55:04Z  labels read: batch-239.json (10 pairs)
+2026-11-11T12:55:04Z  download NovvKhrggso: ok
+2026-11-11T12:55:04Z  download MiTaLfR6zgY: ok
+2026-11-11T12:56:05Z  labels read: batch-240.json (10 pairs)
+2026-11-11T12:56:05Z  download -QG7hoU3k0g: ok
+2026-11-11T12:56:05Z  download U3O9WIfjY8A: ok
+2026-11-11T12:56:05Z  download nEoTfUE6-Pk: ok
+2026-11-11T12:56:05Z  download uwnBzV6vNZs: ok
+2026-11-11T12:58:08Z  download GgOh8xG3j5o: ok
+2026-11-11T12:59:09Z  download -xCC8XqKATU: ok
+2026-11-11T12:59:09Z  download -QG7hoU3k0g: ok
+2026-11-11T12:59:09Z  download zN8W339rP_U: ok
+2026-11-11T12:59:09Z  download -QG7hoU3k0g: ok
+2026-11-11T12:59:09Z  download NnvOQVPXWTw: ok
+2026-11-11T12:59:09Z  download 9ywRXy36pAg: ok
+2026-11-11T12:59:09Z  download Hd7k7i4jqH4: ok
+2026-11-11T13:01:12Z  download afJ8kEWkJqo: ok
+2026-11-11T13:02:13Z  download AKD-gwTktdc: ok
+2026-11-11T13:03:05Z  report AxB-k3vCYP_aQ3w-O_D2N_ulWXg done in 22.5 min
+2026-11-11T13:03:14Z  labels read: batch-241.json (10 pairs)
+2026-11-11T13:03:14Z  labels read: batch-242.json (10 pairs)
+2026-11-11T13:03:14Z  labels read: batch-243.json (10 pairs)
+2026-11-11T13:03:14Z  labels read: batch-244.json (10 pairs)
+2026-11-11T13:03:14Z  labels read: batch-246.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-245.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-247.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-248.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-249.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-250.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-251.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-252.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-253.json (10 pairs)
+2026-11-11T13:04:15Z  labels read: batch-254.json (10 pairs)
+2026-11-11T13:04:15Z  download efop8uMcFFQ: ok
+2026-11-11T13:05:17Z  labels read: batch-255.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-256.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-257.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-258.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-259.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-260.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-261.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-262.json (10 pairs)
+2026-11-11T13:05:17Z  labels read: batch-263.json (10 pairs)
+2026-11-11T13:05:55Z  report AxB-SEoJGGkKx7k-cufl2niNsMo done in 22.7 min
+2026-11-11T13:06:15Z  report AxA--QG7hoU3k0g-U3O9WIfjY8A failed at prepare: prepare_pair.py: error: the following arguments are required: b
+2026-11-11T13:06:19Z  labels read: batch-264.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-265.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-266.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-267.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-268.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-269.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-270.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-271.json (10 pairs)
+2026-11-11T13:06:19Z  labels read: batch-272.json (10 pairs)
+2026-11-11T13:06:19Z  download wbzm05WN8X8: ok
+2026-11-11T13:07:20Z  labels read: batch-273.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-274.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-275.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-276.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-277.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-278.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-279.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-280.json (10 pairs)
+2026-11-11T13:07:20Z  labels read: batch-281.json (10 pairs)
+2026-11-11T13:07:20Z  download 5f8p3kdEbJw: ok
+2026-11-11T13:08:21Z  labels read: batch-282.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-283.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-284.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-285.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-286.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-287.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-288.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-289.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-290.json (10 pairs)
+2026-11-11T13:08:21Z  labels read: batch-291.json (10 pairs)
+2026-11-11T13:08:21Z  download I-kn0Vak6b8: ok
+2026-11-11T13:08:21Z  download afJ8kEWkJqo: ok
+2026-11-11T13:09:23Z  labels read: batch-292.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-293.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-294.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-295.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-296.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-297.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-298.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-299.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-300.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-301.json (10 pairs)
+2026-11-11T13:09:23Z  labels read: batch-303.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-302.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-304.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-305.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-306.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-307.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-308.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-309.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-310.json (10 pairs)
+2026-11-11T13:10:25Z  labels read: batch-311.json (10 pairs)
+2026-11-11T13:10:25Z  download cMOSJ1QIa3w: ok
+2026-11-11T13:10:25Z  download P9QIOA_X06w: ok
+2026-11-11T13:11:26Z  labels read: batch-312.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-313.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-314.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-315.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-316.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-317.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-318.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-319.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-320.json (10 pairs)
+2026-11-11T13:11:26Z  labels read: batch-321.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-322.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-323.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-324.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-325.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-326.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-327.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-328.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-329.json (10 pairs)
+2026-11-11T13:12:28Z  labels read: batch-330.json (10 pairs)
+2026-11-11T13:12:28Z  download _B5Aec29lHQ: ok
+2026-11-11T13:12:28Z  download S0b-cNOME7I: ok
+2026-11-11T13:12:28Z  download _B5Aec29lHQ: ok
+2026-11-11T13:12:28Z  download 2b9xzvfYqD8: ok
+2026-11-11T13:12:28Z  download _B5Aec29lHQ: ok
+2026-11-11T13:13:30Z  labels read: batch-331.json (10 pairs)
+2026-11-11T13:14:32Z  download 7aj6Vpx_su8: ok
+2026-11-11T13:15:32Z  download URGIkCHFUDQ: ok
+2026-11-11T13:16:33Z  download SAL_Q82UfJg: ok
+2026-11-11T13:16:34Z  report BxB-NovvKhrggso-MiTaLfR6zgY done in 9.8 min
+2026-11-11T13:16:46Z  report AxA-GgOh8xG3j5o--xCC8XqKATU failed at prepare: prepare_pair.py: error: the following arguments are required: b
+2026-11-11T13:16:53Z  report AxA-rvWFuvJh85o-Qy4EwtfCTkM done in 23.7 min
+2026-11-11T13:17:01Z  report AxB-8-93_TmkKfc-O_D2N_ulWXg done in 25.5 min
+2026-11-11T13:18:36Z  download ldBEt3sySV8: ok
+2026-11-11T13:18:36Z  download V6mkgjixCoQ: ok
+2026-11-11T13:18:54Z  report AxA-YO0ZDNIG1q4-QqbqYe-JRVE done in 15.4 min
+2026-11-11T13:20:39Z  download 5ElsiB8aoIg: ok
+2026-11-11T13:20:39Z  download pIBlHJFJ1vs: ok
+2026-11-11T13:20:39Z  download 5ElsiB8aoIg: ok
+2026-11-11T13:21:40Z  labels read: batch-332.json (10 pairs)
+2026-11-11T13:21:40Z  labels read: batch-333.json (10 pairs)
+2026-11-11T13:21:40Z  labels read: batch-334.json (10 pairs)
+2026-11-11T13:21:40Z  labels read: batch-335.json (10 pairs)
+2026-11-11T13:21:40Z  labels read: batch-336.json (10 pairs)
+2026-11-11T13:21:40Z  labels read: batch-337.json (10 pairs)
+2026-11-11T13:21:40Z  download W99Te7xIpX0: ok
+2026-11-11T13:22:42Z  labels read: batch-338.json (10 pairs)
+2026-11-11T13:22:42Z  labels read: batch-339.json (10 pairs)
+2026-11-11T13:22:42Z  labels read: batch-340.json (10 pairs)
+2026-11-11T13:22:42Z  labels read: batch-341.json (10 pairs)
+2026-11-11T13:22:42Z  labels read: batch-342.json (10 pairs)
+2026-11-11T13:22:42Z  labels read: batch-344.json (10 pairs)
+2026-11-11T13:22:42Z  labels read: batch-345.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-343.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-346.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-347.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-348.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-349.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-350.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-351.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-352.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-353.json (10 pairs)
+2026-11-11T13:23:43Z  labels read: batch-354.json (10 pairs)
+2026-11-11T13:23:43Z  download Wes02YpdpJA: ok
+2026-11-11T13:23:43Z  download AKD-gwTktdc: ok
+2026-11-11T13:24:44Z  labels read: batch-355.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-356.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-357.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-358.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-359.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-360.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-361.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-362.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-363.json (10 pairs)
+2026-11-11T13:24:44Z  labels read: batch-364.json (10 pairs)
+2026-11-11T13:24:44Z  download v8YSR6Or2bc: ok
+2026-11-11T13:25:46Z  labels read: batch-365.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-366.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-367.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-368.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-369.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-370.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-371.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-372.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-373.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-374.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-375.json (10 pairs)
+2026-11-11T13:25:46Z  labels read: batch-376.json (10 pairs)
+2026-11-11T13:25:52Z  report AxA-pIBlHJFJ1vs-Myk0Is5roGM done in 34.3 min
+2026-11-11T13:26:48Z  labels read: batch-377.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-378.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-379.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-380.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-381.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-382.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-383.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-384.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-385.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-386.json (10 pairs)
+2026-11-11T13:26:48Z  labels read: batch-387.json (10 pairs)
+2026-11-11T13:26:48Z  download XKGrh9jQ2xI: ok
+2026-11-11T13:27:41Z  report AxA-2b9xzvfYqD8-P9QIOA_X06w done in 10.5 min
+2026-11-11T13:27:49Z  labels read: batch-388.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-389.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-390.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-391.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-392.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-393.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-394.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-395.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-396.json (10 pairs)
+2026-11-11T13:27:49Z  labels read: batch-397.json (10 pairs)
+2026-11-11T13:28:07Z  report AxA-P9QIOA_X06w-_B5Aec29lHQ done in 10.9 min
+2026-11-11T13:28:15Z  report AxA--QG7hoU3k0g-zN8W339rP_U failed at prepare: prepare_pair.py: error: the following arguments are required: b
+2026-11-11T13:28:50Z  labels read: batch-398.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-399.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-400.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-401.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-402.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-403.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-404.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-405.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-406.json (10 pairs)
+2026-11-11T13:28:50Z  labels read: batch-407.json (10 pairs)
+2026-11-11T13:28:50Z  download Ao3ysT3D0SY: ok
+2026-11-11T13:28:50Z  download bodrABbSgfA: ok
+2026-11-11T13:29:51Z  labels read: batch-408.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-409.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-410.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-411.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-412.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-413.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-414.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-415.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-416.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-417.json (10 pairs)
+2026-11-11T13:29:51Z  labels read: batch-418.json (10 pairs)
+2026-11-11T13:30:47Z  report AxA-Nj_pfXISKXc-2b9xzvfYqD8 done in 13.7 min
+2026-11-11T13:30:52Z  labels read: batch-419.json (10 pairs)
+2026-11-11T13:30:52Z  labels read: batch-420.json (10 pairs)
+2026-11-11T13:30:52Z  labels read: batch-421.json (10 pairs)
+2026-11-11T13:30:52Z  download H4_BpVuvsgU: ok
+2026-11-11T13:30:52Z  download URGIkCHFUDQ: ok
+2026-11-11T13:31:53Z  download htYC4R78a_c: ok
+2026-11-11T13:31:53Z  download -QG7hoU3k0g: ok
+2026-11-11T13:32:49Z  report BxB-1g02Uh_IuI4-uaNCJzGwl3E done in 5.1 min
+2026-11-11T13:32:55Z  download 3HqbMJ7huAM: ok
+2026-11-11T13:32:55Z  download 5ElsiB8aoIg: ok
+2026-11-11T13:34:58Z  download cjtn_IOstAI: ok
+2026-11-11T13:34:58Z  download U3O9WIfjY8A: ok
+2026-11-11T13:34:58Z  download 3HqbMJ7huAM: ok
+2026-11-11T13:34:58Z  download V6mkgjixCoQ: ok
+2026-11-11T13:34:58Z  download cjtn_IOstAI: ok
+2026-11-11T13:34:58Z  download NnvOQVPXWTw: ok
+2026-11-11T13:34:58Z  download 3HqbMJ7huAM: ok
+2026-11-11T13:34:58Z  download zN8W339rP_U: ok
+2026-11-11T13:34:58Z  download 3HqbMJ7huAM: ok
+2026-11-11T13:34:58Z  download pIBlHJFJ1vs: ok
+2026-11-11T13:34:58Z  download cjtn_IOstAI: ok
+2026-11-11T13:37:01Z  download KKfXDr6uVA0: ok
+2026-11-11T13:38:03Z  download A_1ApJU_amc: ok
+2026-11-11T13:38:03Z  download 7aj6Vpx_su8: ok
+2026-11-11T13:38:03Z  download htYC4R78a_c: ok
+2026-11-11T13:38:03Z  download j316Y_-hFW0: ok
+2026-11-11T13:38:59Z  report AxA-SAL_Q82UfJg-ldBEt3sySV8 done in 10.3 min
+2026-11-11T13:40:06Z  download mksDZdIzhkI: ok
+2026-11-11T13:40:06Z  download Myk0Is5roGM: ok
+2026-11-11T13:40:06Z  download cjtn_IOstAI: ok
+2026-11-11T13:42:09Z  labels read: batch-422.json (10 pairs)
+2026-11-11T13:42:09Z  labels read: batch-423.json (10 pairs)
+2026-11-11T13:42:09Z  labels read: batch-424.json (10 pairs)
+2026-11-11T13:42:09Z  labels read: batch-425.json (10 pairs)
+2026-11-11T13:42:09Z  labels read: batch-426.json (10 pairs)
+2026-11-11T13:42:09Z  labels read: batch-427.json (10 pairs)
+2026-11-11T13:42:09Z  labels read: batch-428.json (10 pairs)
+2026-11-11T13:42:09Z  download HMbTMw9ZAq0: ok
+2026-11-11T13:43:05Z  report AxA-k3vCYP_aQ3w-yOq3vuvmRCQ done in 24.0 min
+2026-11-11T13:43:11Z  labels read: batch-429.json (10 pairs)
+2026-11-11T13:43:11Z  labels read: batch-430.json (10 pairs)
+2026-11-11T13:43:11Z  labels read: batch-431.json (10 pairs)
+2026-11-11T13:43:11Z  labels read: batch-432.json (10 pairs)
+2026-11-11T13:43:11Z  labels read: batch-433.json (10 pairs)
+2026-11-11T13:43:11Z  labels read: batch-434.json (10 pairs)
+2026-11-11T13:43:11Z  labels read: batch-436.json (10 pairs)
+2026-11-11T13:43:11Z  labels read: batch-437.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-435.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-438.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-439.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-440.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-441.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-442.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-443.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-444.json (10 pairs)
+2026-11-11T13:44:14Z  labels read: batch-445.json (10 pairs)
+2026-11-11T13:44:14Z  download m7BqBjVOwqo: ok
+2026-11-11T13:45:16Z  labels read: batch-446.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-447.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-448.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-449.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-450.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-451.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-452.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-453.json (10 pairs)
+2026-11-11T13:45:16Z  labels read: batch-454.json (10 pairs)
+2026-11-11T13:45:16Z  download s3aVKjLvoQI: ok
+2026-11-11T13:46:17Z  labels read: batch-455.json (10 pairs)
+2026-11-11T13:46:17Z  labels read: batch-456.json (10 pairs)
+2026-11-11T13:46:17Z  labels read: batch-457.json (10 pairs)
+2026-11-11T13:46:17Z  labels read: batch-458.json (10 pairs)
+2026-11-11T13:46:17Z  labels read: batch-459.json (10 pairs)
+2026-11-11T13:46:17Z  labels read: batch-460.json (10 pairs)
+2026-11-11T13:46:17Z  labels read: batch-461.json (10 pairs)
+2026-11-11T13:46:17Z  labels read: batch-462.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-463.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-464.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-465.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-466.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-467.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-468.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-469.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-470.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-471.json (10 pairs)
+2026-11-11T13:47:20Z  labels read: batch-472.json (10 pairs)
+2026-11-11T13:47:20Z  download 0k76HQnSwt8: ok
+2026-11-11T13:48:23Z  labels read: batch-473.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-474.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-475.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-476.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-477.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-478.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-479.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-480.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-481.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-482.json (10 pairs)
+2026-11-11T13:48:23Z  labels read: batch-483.json (10 pairs)
+2026-11-11T13:48:23Z  download ppyGLiHU4Hg: ok
+2026-11-11T13:48:23Z  download s3aVKjLvoQI: ok
+2026-11-11T13:48:23Z  download yebnJe7tUqE: ok
+2026-11-11T13:49:24Z  labels read: batch-484.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-485.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-486.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-487.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-488.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-489.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-490.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-491.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-492.json (10 pairs)
+2026-11-11T13:49:24Z  labels read: batch-494.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-493.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-495.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-496.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-497.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-498.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-499.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-500.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-501.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-502.json (10 pairs)
+2026-11-11T13:50:27Z  labels read: batch-503.json (10 pairs)
+2026-11-11T13:50:27Z  download MWyordkvD0k: ok
+2026-11-11T13:50:27Z  download pIBlHJFJ1vs: ok
+2026-11-11T13:50:27Z  download MWyordkvD0k: ok
+2026-11-11T13:50:27Z  download V6mkgjixCoQ: ok
+2026-11-11T13:50:27Z  download MWyordkvD0k: ok
+2026-11-11T13:50:27Z  download AKD-gwTktdc: ok
+2026-11-11T13:51:21Z  report AxA-V6mkgjixCoQ-yebnJe7tUqE done in 20.3 min
+2026-11-11T13:51:29Z  labels read: batch-504.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-505.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-506.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-507.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-508.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-509.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-510.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-511.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-513.json (10 pairs)
+2026-11-11T13:51:29Z  labels read: batch-514.json (10 pairs)
+2026-11-11T13:51:29Z  download eq8J_moRM6w: ok
+2026-11-11T13:52:30Z  labels read: batch-512.json (10 pairs)
+2026-11-11T13:52:30Z  labels read: batch-515.json (10 pairs)
+2026-11-11T13:52:30Z  labels read: batch-516.json (10 pairs)
+2026-11-11T13:52:30Z  labels read: batch-517.json (10 pairs)
+2026-11-11T13:52:30Z  labels read: batch-518.json (10 pairs)
+2026-11-11T13:52:30Z  labels read: batch-519.json (10 pairs)
+2026-11-11T13:53:19Z  report AxA-afJ8kEWkJqo-cMOSJ1QIa3w done in 9.8 min
+2026-11-11T13:53:32Z  labels read: batch-520.json (10 pairs)
+2026-11-11T13:53:32Z  labels read: batch-521.json (10 pairs)
+2026-11-11T13:53:32Z  labels read: batch-522.json (10 pairs)
+2026-11-11T13:53:32Z  labels read: batch-523.json (10 pairs)
+2026-11-11T13:53:32Z  download WwhNgzir6V4: ok
+2026-11-11T13:53:32Z  download eq8J_moRM6w: ok
+2026-11-11T13:55:35Z  download xUKoaX3t3dY: ok
+2026-11-11T13:55:35Z  download eq8J_moRM6w: ok
+2026-11-11T13:56:37Z  labels read: batch-524.json (10 pairs)
+2026-11-11T13:56:37Z  labels read: batch-525.json (10 pairs)
+2026-11-11T13:56:37Z  labels read: batch-526.json (10 pairs)
+2026-11-11T13:56:37Z  labels read: batch-527.json (10 pairs)
+2026-11-11T13:56:37Z  labels read: batch-528.json (10 pairs)
+2026-11-11T13:56:37Z  labels read: batch-529.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-530.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-531.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-532.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-533.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-534.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-535.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-536.json (10 pairs)
+2026-11-11T13:57:39Z  labels read: batch-537.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-538.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-539.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-540.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-541.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-542.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-543.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-544.json (10 pairs)
+2026-11-11T13:58:40Z  labels read: batch-545.json (10 pairs)
+2026-11-11T13:58:41Z  download Ye7ulpWeLfw: ok
+2026-11-11T13:58:41Z  download eq8J_moRM6w: ok
+2026-11-11T13:59:42Z  labels read: batch-546.json (10 pairs)
+2026-11-11T13:59:42Z  labels read: batch-547.json (10 pairs)
+2026-11-11T13:59:42Z  labels read: batch-548.json (10 pairs)
+2026-11-11T13:59:42Z  labels read: batch-549.json (10 pairs)
+2026-11-11T13:59:42Z  labels read: batch-550.json (10 pairs)
+2026-11-11T13:59:42Z  labels read: batch-551.json (10 pairs)
+2026-11-11T14:00:44Z  labels read: batch-552.json (10 pairs)
+2026-11-11T14:00:44Z  labels read: batch-553.json (10 pairs)
+2026-11-11T14:00:44Z  labels read: batch-554.json (10 pairs)
+2026-11-11T14:00:44Z  labels read: batch-555.json (10 pairs)
+2026-11-11T14:00:44Z  labels read: batch-556.json (10 pairs)
+2026-11-11T14:00:45Z  labels read: batch-557.json (10 pairs)
+2026-11-11T14:00:45Z  labels read: batch-558.json (10 pairs)
+2026-11-11T14:00:45Z  download 24CuY0nwSX0: ok
+2026-11-11T14:00:45Z  download eq8J_moRM6w: ok
+2026-11-11T14:00:45Z  download eq8J_moRM6w: ok
+2026-11-11T14:00:45Z  download cMOSJ1QIa3w: ok
+2026-11-11T14:01:37Z  report AxA-nEoTfUE6-Pk-yOq3vuvmRCQ done in 5.1 min
+2026-11-11T14:01:46Z  labels read: batch-559.json (10 pairs)
+2026-11-11T14:01:46Z  labels read: batch-560.json (10 pairs)
+2026-11-11T14:01:46Z  labels read: batch-561.json (10 pairs)
+2026-11-11T14:01:46Z  labels read: batch-562.json (10 pairs)
+2026-11-11T14:01:46Z  labels read: batch-563.json (10 pairs)
+2026-11-11T14:01:46Z  labels read: batch-564.json (10 pairs)
+2026-11-11T14:01:46Z  labels read: batch-565.json (10 pairs)
+2026-11-11T14:01:46Z  labels read: batch-566.json (10 pairs)
+2026-11-11T14:01:46Z  download K71QjqJlAI0: ok
+2026-11-11T14:01:46Z  download O_D2N_ulWXg: ok
+2026-11-11T14:01:46Z  download K71QjqJlAI0: ok
+2026-11-11T14:01:46Z  download yOq3vuvmRCQ: ok
+2026-11-11T14:02:48Z  labels read: batch-567.json (10 pairs)
+2026-11-11T14:02:48Z  labels read: batch-568.json (10 pairs)
+2026-11-11T14:02:48Z  labels read: batch-569.json (10 pairs)
+2026-11-11T14:02:48Z  labels read: batch-570.json (10 pairs)
+2026-11-11T14:02:48Z  labels read: batch-571.json (10 pairs)
+2026-11-11T14:02:48Z  labels read: batch-572.json (10 pairs)
+2026-11-11T14:02:48Z  labels read: batch-573.json (10 pairs)
+2026-11-11T14:02:48Z  labels read: batch-574.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-575.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-576.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-577.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-578.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-579.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-580.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-581.json (10 pairs)
+2026-11-11T14:03:50Z  labels read: batch-582.json (10 pairs)
+2026-11-11T14:03:50Z  download r2kk9DQJy_g: ok
+2026-11-11T14:04:52Z  labels read: batch-583.json (9 pairs)
+2026-11-11T14:05:53Z  download PxVRd-kf_lM: ok
+2026-11-11T14:05:53Z  download cjtn_IOstAI: ok
+2026-11-11T14:06:55Z  download xI9-MgmErhQ: ok
+2026-11-11T14:06:55Z  download 5ElsiB8aoIg: ok
+2026-11-11T14:06:55Z  download xI9-MgmErhQ: ok
+2026-11-11T14:06:55Z  download V6mkgjixCoQ: ok
+2026-11-11T14:06:55Z  download xI9-MgmErhQ: ok
+2026-11-11T14:08:58Z  download JZveVyuclhs: ok
+2026-11-11T14:09:44Z  report AxB-uwnBzV6vNZs-O_D2N_ulWXg done in 13.2 min
+2026-11-11T14:10:00Z  download 7HOESsArCmY: ok
+2026-11-11T14:10:00Z  download pIBlHJFJ1vs: ok
+2026-11-11T14:10:00Z  download xI9-MgmErhQ: ok
+2026-11-11T14:10:00Z  download k3vCYP_aQ3w: ok
+2026-11-11T14:10:00Z  download K71QjqJlAI0: ok
+2026-11-11T14:10:25Z  report AxA-LXMGLr9uFv4-s11HCj_gAWE done in 13.9 min
+2026-11-11T14:12:03Z  download UCrI_HkV9gw: ok
+2026-11-11T14:12:03Z  download Myk0Is5roGM: ok
+2026-11-11T14:13:05Z  download PSSZCik4NWY: ok
+2026-11-11T14:15:09Z  download 7WeaOIdnZmM: ok
+2026-11-11T14:16:10Z  download a9lx-Xb2X0I: ok
+2026-11-11T14:16:10Z  download 9ywRXy36pAg: ok
+2026-11-11T14:16:10Z  download a9lx-Xb2X0I: ok
+2026-11-11T14:16:10Z  download 1g02Uh_IuI4: ok
+2026-11-11T14:16:10Z  download a9lx-Xb2X0I: ok
+2026-11-11T14:16:10Z  download uaNCJzGwl3E: ok
+2026-11-11T14:16:10Z  download 7WeaOIdnZmM: ok
+2026-11-11T22:26:59Z  download DKTclayc5PU: ok
+2026-11-11T22:28:09Z  download Wr8LTyW-iTA: ok
+2026-11-11T22:30:21Z  download e9LhPr3svs0: ok
+2026-11-11T22:32:21Z  overlap BxB-ppyGLiHU4Hg-s3aVKjLvoQI failed: index -1 is out of bounds for axis 0 with size 0
+2026-11-11T22:32:38Z  download 3ucQA933UyQ: ok
+2026-11-11T22:34:01Z  download 5gDfGvKznXE: ok
+2026-11-11T22:35:00Z  download PhhQ0GoCxbw: ok
+2026-11-11T22:35:50Z  download Yp_wsRyrcvk: ok
+2026-11-11T22:37:01Z  downloads stopped: stopped: KMr0eKc64zE: download failed: ERROR: unable to download video data: HTTP Error 403: Forbidden
+2026-11-11T22:53:08Z  download KMr0eKc64zE: ok
+2026-11-11T22:55:33Z  overlap BxB-ppyGLiHU4Hg-s3aVKjLvoQI failed: index -1 is out of bounds for axis 0 with size 0
+2026-11-11T23:03:35Z  overlap BxB-ppyGLiHU4Hg-s3aVKjLvoQI failed: index -1 is out of bounds for axis 0 with size 0
+2026-11-11T23:11:00Z  overlap: 25 pairs aligned
+2026-11-11T23:13:48Z  import 8qSizvcVeNU: ok (downloaded elsewhere)
+2026-11-11T23:13:48Z  import sI-dYFPPJgs: ok (downloaded elsewhere)
+2026-11-11T23:14:11Z  overlap: 5 pairs aligned
+2026-11-11T23:14:18Z  import Yl6782bfSNA: ok (downloaded elsewhere)
+2026-11-11T23:14:48Z  import 1caHOwNs4yY: ok (downloaded elsewhere)
+2026-11-11T23:15:19Z  import 2e1XB0UJosc: ok (downloaded elsewhere)
+2026-11-11T23:15:50Z  overlap: 1 pairs aligned
+2026-11-11T23:16:19Z  import 5THgPTi8bDM: ok (downloaded elsewhere)
+2026-11-11T23:16:19Z  import W5Q7SRLA9pI: ok (downloaded elsewhere)
+2026-11-11T23:16:50Z  import xK9x6dEAZ08: ok (downloaded elsewhere)
+2026-11-11T23:17:20Z  import s3_DkTgl-bw: ok (downloaded elsewhere)
+2026-11-11T23:17:20Z  import upqIQe-_llc: ok (downloaded elsewhere)
+2026-11-11T23:17:50Z  import PS1pHA17mNI: ok (downloaded elsewhere)
+2026-11-11T23:18:21Z  import GwRhnH9ozMc: ok (downloaded elsewhere)
+2026-11-11T23:18:21Z  import fz5LnG6HANo: ok (downloaded elsewhere)
+2026-11-11T23:18:51Z  import STD9E9YpQgo: ok (downloaded elsewhere)
+2026-11-11T23:20:22Z  import 0wGzs4JlkdQ: ok (downloaded elsewhere)
+2026-11-11T23:20:22Z  import yR_WeP1dliE: ok (downloaded elsewhere)
+2026-11-11T23:20:31Z  overlap: 2 pairs aligned
+2026-11-11T23:20:53Z  import NpJ_yg1QJVA: ok (downloaded elsewhere)
+2026-11-11T23:22:00Z  report AxA-V6mkgjixCoQ-pIBlHJFJ1vs done in 10.6 min, peak 1586 MB
+2026-11-11T23:22:23Z  import pjbLaZqWo2Q: ok (downloaded elsewhere)
+2026-11-11T23:22:54Z  import Nl_hbXSq9xI: ok (downloaded elsewhere)
+2026-11-11T23:23:14Z  report AxA-V6mkgjixCoQ-MWyordkvD0k done in 11.5 min, peak 1562 MB
+2026-11-11T23:23:18Z  report AxA-V6mkgjixCoQ-5ElsiB8aoIg done in 10.9 min, peak 1656 MB
+2026-11-11T23:23:24Z  import -t7g8JmOz5s: ok (downloaded elsewhere)
+2026-11-11T23:23:54Z  import w_cD-Sb2auI: ok (downloaded elsewhere)
+2026-11-11T23:24:54Z  import HwuzyyGUwp8: ok (downloaded elsewhere)
+2026-11-11T23:24:54Z  import aLftDG8Od_0: ok (downloaded elsewhere)
+2026-11-11T23:25:25Z  import xQmunYrE7VA: ok (downloaded elsewhere)
+2026-11-11T23:25:25Z  import zB4f-P9uBfA: ok (downloaded elsewhere)
+2026-11-11T23:25:43Z  report AxA-V6mkgjixCoQ-DKTclayc5PU done in 13.7 min, peak 1911 MB
+2026-11-11T23:25:55Z  import JLtWbywZu5A: ok (downloaded elsewhere)
+2026-11-11T23:25:55Z  import SvOlJQlicyY: ok (downloaded elsewhere)
+2026-11-11T23:26:55Z  import 6OZMyx_vJXM: ok (downloaded elsewhere)
+2026-11-11T23:26:55Z  import XOCAlpWUh8o: ok (downloaded elsewhere)
+2026-11-11T23:27:25Z  import poL6eGtjtAs: ok (downloaded elsewhere)
+2026-11-11T23:27:56Z  import jL4xf527bwg: ok (downloaded elsewhere)
+2026-11-11T23:28:26Z  import 4IQY_AgRD2g: ok (downloaded elsewhere)
+2026-11-11T23:28:26Z  import zyvI7zhO2CE: ok (downloaded elsewhere)
+2026-11-11T23:28:53Z  overlap: 11 pairs aligned
+2026-11-11T23:28:56Z  import V3cEq4F1TFk: ok (downloaded elsewhere)
+2026-11-11T23:29:26Z  import X025pZ7jSFI: ok (downloaded elsewhere)
+2026-11-11T23:29:26Z  import Zyn-7AvEJos: ok (downloaded elsewhere)
+2026-11-11T23:29:57Z  import cBT6wytkxYE: ok (downloaded elsewhere)
+2026-11-11T23:29:57Z  import ozm2wbIyA44: ok (downloaded elsewhere)
+2026-11-11T23:30:27Z  import JPp1_vdTV-M: ok (downloaded elsewhere)
+2026-11-11T23:31:27Z  import wXflCnqZczs: ok (downloaded elsewhere)
+2026-11-11T23:31:57Z  import ejBvtH0Igqk: ok (downloaded elsewhere)
+2026-11-11T23:31:57Z  import i2XoutDdPoM: ok (downloaded elsewhere)
+2026-11-11T23:32:28Z  import QLtuuZVDZ4g: ok (downloaded elsewhere)
+2026-11-11T23:32:58Z  import yEUHnjAXIOM: ok (downloaded elsewhere)
+2026-11-11T23:33:28Z  import 30tipN0AniY: ok (downloaded elsewhere)
+2026-11-11T23:33:28Z  import jRCHQ6wCTUA: ok (downloaded elsewhere)
+2026-11-11T23:33:58Z  import TRCJGQylez4: ok (downloaded elsewhere)
+2026-11-11T23:34:28Z  import MoftuEWtBuI: ok (downloaded elsewhere)
+2026-11-11T23:34:29Z  import n2mneo6Owhk: ok (downloaded elsewhere)
+2026-11-11T23:34:59Z  import 8wz-3uhdaMo: ok (downloaded elsewhere)
+2026-11-11T23:35:29Z  import VqX9Ut1eWkg: ok (downloaded elsewhere)
+2026-11-11T23:35:59Z  import 7xSdzGpSjl4: ok (downloaded elsewhere)
+2026-11-11T23:35:59Z  import p5TIB-9Uiuc: ok (downloaded elsewhere)
+2026-11-11T23:36:15Z  overlap: 15 pairs aligned
+2026-11-11T23:36:29Z  import 6xPW1Viz8Sg: ok (downloaded elsewhere)
+2026-11-11T23:36:29Z  import Snmr037PzOQ: ok (downloaded elsewhere)
+2026-11-11T23:37:00Z  import IRWTZropao4: ok (downloaded elsewhere)
+2026-11-11T23:37:00Z  import KZVSZyNxSng: ok (downloaded elsewhere)
+2026-11-11T23:37:30Z  import 4GiWPysyj48: ok (downloaded elsewhere)
+2026-11-11T23:38:31Z  import NcOdNYYKAmU: ok (downloaded elsewhere)
+2026-11-11T23:38:31Z  import Tz2SZgHgjjk: ok (downloaded elsewhere)
+2026-11-11T23:38:31Z  import c3lLP39EdME: ok (downloaded elsewhere)
+2026-11-11T23:38:51Z  overlap: 11 pairs aligned
+2026-11-11T23:39:01Z  import jViz3BEN5ZI: ok (downloaded elsewhere)
+2026-11-11T23:39:32Z  import Zla2Q90UE4U: ok (downloaded elsewhere)
+2026-11-11T23:39:32Z  import eAodpnlhaNI: ok (downloaded elsewhere)
+2026-11-11T23:40:02Z  import 92wkK3tkeb0: ok (downloaded elsewhere)
+2026-11-11T23:40:14Z  overlap: 3 pairs aligned
+2026-11-11T23:40:32Z  import Syaj9FjU7Lc: ok (downloaded elsewhere)
+2026-11-11T23:40:32Z  import v5VfeIkKYhM: ok (downloaded elsewhere)
+2026-11-11T23:41:03Z  import PjY6rRG6uMI: ok (downloaded elsewhere)
+2026-11-11T23:41:19Z  overlap: 2 pairs aligned
+2026-11-11T23:41:33Z  import Xe9joJ0T-TQ: ok (downloaded elsewhere)
+2026-11-11T23:42:03Z  import Lm494FQebI8: ok (downloaded elsewhere)
+2026-11-11T23:42:03Z  import oKEXFG0ZLZw: ok (downloaded elsewhere)
+2026-11-11T23:42:25Z  overlap: 2 pairs aligned
+2026-11-11T23:42:33Z  import Tg97uPOz1Yw: ok (downloaded elsewhere)
+2026-11-11T23:43:04Z  import FvSzXF-KHqw: ok (downloaded elsewhere)
+2026-11-11T23:43:04Z  import l9e0YsHBJUs: ok (downloaded elsewhere)
+2026-11-11T23:43:27Z  overlap: 1 pairs aligned
+2026-11-11T23:44:04Z  import 849TyfHg018: ok (downloaded elsewhere)
+2026-11-11T23:44:04Z  import s5nP-7Kahdc: ok (downloaded elsewhere)
+2026-11-11T23:44:29Z  overlap: 1 pairs aligned
+2026-11-11T23:44:34Z  import ooPueu3Y0ds: ok (downloaded elsewhere)
+2026-11-11T23:45:05Z  import 2YmFl3ccv9E: ok (downloaded elsewhere)
+2026-11-11T23:45:32Z  overlap: 1 pairs aligned
+2026-11-11T23:45:35Z  import 7m15CgRy6OU: ok (downloaded elsewhere)
+2026-11-11T23:45:35Z  import dzudFTos4D8: ok (downloaded elsewhere)
+2026-11-11T23:46:05Z  import _uYyO8y5Txc: ok (downloaded elsewhere)
+2026-11-11T23:46:36Z  import kHVGgxylqd8: ok (downloaded elsewhere)
+2026-11-11T23:46:53Z  overlap: 2 pairs aligned
+2026-11-11T23:47:06Z  import VJ1tu3mMRa0: ok (downloaded elsewhere)
+2026-11-11T23:47:36Z  import TtbFoTBDaU8: ok (downloaded elsewhere)
+2026-11-11T23:47:36Z  import s0DwH0Oq5YY: ok (downloaded elsewhere)
+2026-11-11T23:47:56Z  overlap: 2 pairs aligned
+2026-11-11T23:48:07Z  import KEP7OO8I1ZM: ok (downloaded elsewhere)
+2026-11-11T23:48:37Z  import 3gGApJMJxP0: ok (downloaded elsewhere)
+2026-11-11T23:48:37Z  import 5AiYAgNfj7A: ok (downloaded elsewhere)
+2026-11-11T23:48:59Z  overlap: 1 pairs aligned
+2026-11-11T23:49:37Z  import 9cs2qm_e8J8: ok (downloaded elsewhere)
+2026-11-11T23:50:05Z  overlap: 1 pairs aligned
+2026-11-11T23:50:38Z  import qr3gskaCXtM: ok (downloaded elsewhere)
+2026-11-11T23:50:45Z  report AxA-k3vCYP_aQ3w-K71QjqJlAI0 done in 14.5 min, peak 1795 MB
+2026-11-11T23:51:08Z  import PmUySuJoa1g: ok (downloaded elsewhere)
+2026-11-11T23:51:09Z  import tXgJmUiG38s: ok (downloaded elsewhere)
+2026-11-11T23:51:09Z  import vVG7wTGgWlU: ok (downloaded elsewhere)
+2026-11-11T23:52:09Z  import iazRHLuPy6E: ok (downloaded elsewhere)
+2026-11-11T23:52:40Z  import e-ZNf-lSt_g: ok (downloaded elsewhere)
+2026-11-11T23:53:01Z  report AxB-e9LhPr3svs0-O_D2N_ulWXg done in 16.5 min, peak 1860 MB
+2026-11-11T23:53:10Z  import _nU2w3nD-CM: ok (downloaded elsewhere)
+2026-11-11T23:53:10Z  import klwhxvQDOZk: ok (downloaded elsewhere)
+2026-11-11T23:53:32Z  overlap: 2 pairs aligned
+2026-11-11T23:54:11Z  import 8ZZOTvUUcJs: ok (downloaded elsewhere)
+2026-11-11T23:54:41Z  overlap: 2 pairs aligned
+2026-11-11T23:54:51Z  report AxA-K71QjqJlAI0-4OZ-iSU4DiM done in 18.0 min, peak 2029 MB
+2026-11-11T23:55:11Z  import D8Scn7g7x58: ok (downloaded elsewhere)
+2026-11-11T23:55:41Z  import 5A9e7U5_Zxg: ok (downloaded elsewhere)
+2026-11-11T23:55:41Z  import etAzWdYufkE: ok (downloaded elsewhere)
+2026-11-11T23:55:41Z  import qC6yZCpDNAM: ok (downloaded elsewhere)
+2026-11-11T23:56:12Z  import KO5bPjkgwbM: ok (downloaded elsewhere)
+2026-11-11T23:56:12Z  import ahWBypah3WE: ok (downloaded elsewhere)
+2026-11-11T23:56:42Z  import Yzvo_76GESg: ok (downloaded elsewhere)
+2026-11-11T23:56:42Z  import h16UUZLKlkU: ok (downloaded elsewhere)
+2026-11-11T23:57:07Z  overlap: 1 pairs aligned
+2026-11-11T23:57:09Z  report AxA-yOq3vuvmRCQ-upqIQe-_llc done in 19.9 min, peak 2044 MB
+2026-11-11T23:57:12Z  import 31aTho6zUsQ: ok (downloaded elsewhere)
+2026-11-11T23:57:42Z  import LGYphugCB6I: ok (downloaded elsewhere)
+2026-11-11T23:58:13Z  import IxNBzmx_kuM: ok (downloaded elsewhere)
+2026-11-11T23:58:13Z  import lsBUlWbYIHw: ok (downloaded elsewhere)
+2026-11-11T23:58:43Z  import BY1M-8DiGqY: ok (downloaded elsewhere)
+2026-11-11T23:59:13Z  import cdyYK3q25dw: ok (downloaded elsewhere)
+2026-11-11T23:59:44Z  import Jzwnkn4JucM: ok (downloaded elsewhere)
+2026-11-11T23:59:44Z  import xMTEE72y8Lw: ok (downloaded elsewhere)
+2026-11-11T23:59:56Z  overlap: 10 pairs aligned
+2026-11-12T00:00:44Z  import AZ5YlRetess: ok (downloaded elsewhere)
+2026-11-12T00:01:07Z  overlap: 3 pairs aligned
+2026-11-12T00:01:15Z  import zgCPimvZad0: ok (downloaded elsewhere)
+2026-11-12T00:01:45Z  import ZfdtNICaWTI: ok (downloaded elsewhere)
+2026-11-12T00:01:45Z  import ajfzu3lugQs: ok (downloaded elsewhere)
+2026-11-12T00:02:15Z  import RRplveiAfbQ: ok (downloaded elsewhere)
+2026-11-12T00:02:15Z  import cjCG5bYOgpY: ok (downloaded elsewhere)
+2026-11-12T00:02:27Z  overlap: 2 pairs aligned
+2026-11-12T00:02:46Z  import 0QDm9P-DjYg: ok (downloaded elsewhere)
+2026-11-12T00:02:46Z  import F8aglE8xTlI: ok (downloaded elsewhere)
+2026-11-12T00:03:16Z  import 0yIhvJw1GK8: ok (downloaded elsewhere)
+2026-11-12T00:03:38Z  overlap: 4 pairs aligned
+2026-11-12T00:03:46Z  import PgOl-e0Ve74: ok (downloaded elsewhere)
+2026-11-12T00:04:47Z  import -dcm4bujns4: ok (downloaded elsewhere)
+2026-11-12T00:04:47Z  import _FZgZRxHoAw: ok (downloaded elsewhere)
+2026-11-12T00:05:17Z  import h48pV4-5rKs: ok (downloaded elsewhere)
+2026-11-12T00:05:47Z  import _JnHjZrrxfg: ok (downloaded elsewhere)
+2026-11-12T00:05:47Z  overlap: 2 pairs aligned
+2026-11-12T00:06:18Z  import 7ClCbBREUlU: ok (downloaded elsewhere)
+2026-11-12T00:06:18Z  import idtDk1fbCmM: ok (downloaded elsewhere)
+2026-11-12T00:06:48Z  import oRk8sglOG5k: ok (downloaded elsewhere)
+2026-11-12T00:07:19Z  import dEu8UBRKalc: ok (downloaded elsewhere)
+2026-11-12T00:07:24Z  overlap: 1 pairs aligned
+2026-11-12T00:07:29Z  report AxA-V6mkgjixCoQ-cjtn_IOstAI done in 10.0 min, peak 1902 MB
+2026-11-12T00:07:49Z  import H2KaIANjQWs: ok (downloaded elsewhere)
+2026-11-12T00:07:49Z  import UjTWCvxRb3c: ok (downloaded elsewhere)
+2026-11-12T00:08:04Z  report AxA-yCSjhx5qiv0-e9LhPr3svs0 done in 17.2 min, peak 1787 MB
+2026-11-12T00:08:19Z  import bFlK2Lihqv8: ok (downloaded elsewhere)
+2026-11-12T00:08:19Z  import yAsa7KneS8A: ok (downloaded elsewhere)
+2026-11-12T00:08:33Z  overlap: 3 pairs aligned
+2026-11-12T00:09:20Z  import 1oAvPiSHKtM: ok (downloaded elsewhere)
+2026-11-12T00:09:20Z  import mFy4JcYdLwM: ok (downloaded elsewhere)
+2026-11-12T00:09:36Z  overlap: 1 pairs aligned
+2026-11-12T00:09:50Z  import fAzIPHVq0vY: ok (downloaded elsewhere)
+2026-11-12T00:10:20Z  import XGrpbyxR93k: ok (downloaded elsewhere)
+2026-11-12T00:10:39Z  overlap: 1 pairs aligned
+2026-11-12T00:10:51Z  import 0TMESkQq8lI: ok (downloaded elsewhere)
+2026-11-12T00:10:51Z  import N3PkLoXEje0: ok (downloaded elsewhere)
+2026-11-12T00:11:21Z  import lM2FQ_k5iEE: ok (downloaded elsewhere)
+2026-11-12T00:11:50Z  overlap: 2 pairs aligned
+2026-11-12T00:11:51Z  import rrV4pC6uNOQ: ok (downloaded elsewhere)
+2026-11-12T00:12:22Z  import cMj02iWXQEs: ok (downloaded elsewhere)
+2026-11-12T00:12:52Z  import 9eZZ4VSypjo: ok (downloaded elsewhere)
+2026-11-12T00:12:52Z  import kYSSpyaKW_U: ok (downloaded elsewhere)
+2026-11-12T00:12:54Z  overlap: 1 pairs aligned
+2026-11-12T00:13:22Z  import _e29OQFpP7A: ok (downloaded elsewhere)
+2026-11-12T00:13:23Z  import tNPoYErk2rs: ok (downloaded elsewhere)
+2026-11-12T00:13:53Z  import xers5HU02Ew: ok (downloaded elsewhere)
+2026-11-12T00:13:59Z  overlap: 2 pairs aligned
+2026-11-12T00:14:23Z  import ZOgPaEm9Cvk: ok (downloaded elsewhere)
+2026-11-12T00:14:23Z  import zej8Uf5iAGk: ok (downloaded elsewhere)
+2026-11-12T00:14:54Z  import TwDxP5L1-VA: ok (downloaded elsewhere)
+2026-11-12T00:15:02Z  overlap: 2 pairs aligned
+2026-11-12T00:15:24Z  import Iygt_NzD7VU: ok (downloaded elsewhere)
+2026-11-12T00:15:24Z  import yR0IqutO_i4: ok (downloaded elsewhere)
+2026-11-12T00:16:06Z  overlap: 2 pairs aligned
+2026-11-12T00:16:24Z  import ml1la04cXl8: ok (downloaded elsewhere)
+2026-11-12T00:16:24Z  import pBZoqnYJdpo: ok (downloaded elsewhere)
+2026-11-12T00:16:55Z  import KH9FEGPJrhM: ok (downloaded elsewhere)
+2026-11-12T00:16:55Z  import xurjiOp9RBU: ok (downloaded elsewhere)
+2026-11-12T00:17:10Z  overlap: 2 pairs aligned
+2026-11-12T00:17:55Z  import h-T7ByzoSJ8: ok (downloaded elsewhere)
+2026-11-12T00:18:15Z  overlap: 1 pairs aligned
+2026-11-12T00:18:25Z  import rfxI6n7Kaog: ok (downloaded elsewhere)
+2026-11-12T00:18:56Z  import YVaBFUbjzuk: ok (downloaded elsewhere)
+2026-11-12T00:19:26Z  import 335nXLEvRNU: ok (downloaded elsewhere)
+2026-11-12T00:19:26Z  import hoNtxM3afpk: ok (downloaded elsewhere)
+2026-11-12T00:19:28Z  report AxA-V6mkgjixCoQ-xI9-MgmErhQ done in 11.9 min, peak 1919 MB
+2026-11-12T00:19:41Z  overlap: 3 pairs aligned
+2026-11-12T00:19:56Z  import nFEUpP4_-qQ: ok (downloaded elsewhere)
+2026-11-12T00:20:27Z  import nukXVHunv-g: ok (downloaded elsewhere)
+2026-11-12T00:20:27Z  import rrR3i8eBf4E: ok (downloaded elsewhere)
+2026-11-12T00:20:49Z  overlap: 3 pairs aligned
+2026-11-12T00:20:57Z  import JV497RLAJc0: ok (downloaded elsewhere)
+2026-11-12T00:21:27Z  import q4DmDIQZdgo: ok (downloaded elsewhere)
+2026-11-12T00:21:51Z  overlap: 1 pairs aligned
+2026-11-12T00:21:57Z  import Ia2TzzY2Vto: ok (downloaded elsewhere)
+2026-11-12T00:21:57Z  import Z1H7LX1K4Zo: ok (downloaded elsewhere)
+2026-11-12T00:22:28Z  import 5zrKMo2YOrc: ok (downloaded elsewhere)
+2026-11-12T00:22:28Z  import ex7xMfJ9vjI: ok (downloaded elsewhere)
+2026-11-12T00:22:58Z  import DRMCFHm5kFo: ok (downloaded elsewhere)
+2026-11-12T00:23:28Z  import NcfiuWYdC24: ok (downloaded elsewhere)
+2026-11-12T00:23:35Z  overlap: 7 pairs aligned
+2026-11-12T00:23:59Z  import ApJYM0W8vvc: ok (downloaded elsewhere)
+2026-11-12T00:23:59Z  import TlRY9hDJ8Wk: ok (downloaded elsewhere)
+2026-11-12T00:24:29Z  import QmIgPGT-x2s: ok (downloaded elsewhere)
+2026-11-12T00:24:59Z  import PVq5Odohbm4: ok (downloaded elsewhere)
+2026-11-12T00:25:30Z  import 6zyqtdigBiM: ok (downloaded elsewhere)
+2026-11-12T00:25:51Z  overlap: 4 pairs aligned
+2026-11-12T00:26:00Z  import 42965VL3b8Y: ok (downloaded elsewhere)
+2026-11-12T00:26:00Z  import ucf8dVqYkgA: ok (downloaded elsewhere)
+2026-11-12T00:26:31Z  import QUZgkyItxVo: ok (downloaded elsewhere)
+2026-11-12T00:26:39Z  report AxA-UCrI_HkV9gw-5ElsiB8aoIg done in 18.2 min, peak 3303 MB
+2026-11-12T00:27:01Z  import ZvuFlceXZ_Y: ok (downloaded elsewhere)
+2026-11-12T00:27:02Z  overlap: 3 pairs aligned
+2026-11-12T00:27:31Z  import IqWNp_zbshk: ok (downloaded elsewhere)
+2026-11-12T00:28:01Z  import IXRwKy0ovh4: ok (downloaded elsewhere)
+2026-11-12T00:28:02Z  import vM4OMJ9QATQ: ok (downloaded elsewhere)
+2026-11-12T00:28:13Z  overlap: 2 pairs aligned
+2026-11-12T00:28:32Z  import kxsXTcFJQes: ok (downloaded elsewhere)
+2026-11-12T00:29:32Z  import Tob6QrEuyGA: ok (downloaded elsewhere)
+2026-11-12T00:29:33Z  import lAzGHzMpEPw: ok (downloaded elsewhere)
+2026-11-12T00:30:03Z  import NOeV7t9O6iE: ok (downloaded elsewhere)
+2026-11-12T00:30:23Z  overlap: 4 pairs aligned
+2026-11-12T00:30:33Z  import 7I0SeirswAk: ok (downloaded elsewhere)
+2026-11-12T00:30:33Z  import ohvegXAANME: ok (downloaded elsewhere)
+2026-11-12T00:31:04Z  import Gt66IXu-3jE: ok (downloaded elsewhere)
+2026-11-12T00:31:18Z  report BxB-Nl_hbXSq9xI-1g02Uh_IuI4 done in 11.8 min, peak 1556 MB
+2026-11-12T00:31:34Z  import SLsPzcHEqDM: ok (downloaded elsewhere)
+2026-11-12T00:31:50Z  overlap: 3 pairs aligned
+2026-11-12T00:32:04Z  import qfZXh__AWj4: ok (downloaded elsewhere)
+2026-11-12T00:32:04Z  import t9jRzN_dZ_w: ok (downloaded elsewhere)
+2026-11-12T00:32:35Z  import f-mql8Hj28M: ok (downloaded elsewhere)
+2026-11-12T00:33:01Z  overlap: 2 pairs aligned
+2026-11-12T00:33:05Z  import e4xy5DJQKJM: ok (downloaded elsewhere)
+2026-11-12T00:33:35Z  import U_ammCltAtg: ok (downloaded elsewhere)
+2026-11-12T00:34:06Z  import sxqa0IPz2sE: ok (downloaded elsewhere)
+2026-11-12T00:34:16Z  overlap: 2 pairs aligned
+2026-11-12T00:34:36Z  import rNHdYbq36zI: ok (downloaded elsewhere)
+2026-11-12T00:35:06Z  import pjcdeWzeoyI: ok (downloaded elsewhere)
+2026-11-12T00:35:36Z  import qu4A1W2CG1Y: ok (downloaded elsewhere)
+2026-11-12T00:35:57Z  overlap: 3 pairs aligned
+2026-11-12T00:36:07Z  import cE3LzPQgQmk: ok (downloaded elsewhere)
+2026-11-12T00:36:37Z  import BSNYv67Kasw: ok (downloaded elsewhere)
+2026-11-12T00:37:07Z  import opvVeJo9C0w: ok (downloaded elsewhere)
+2026-11-12T00:37:38Z  import T-fqQA1391Q: ok (downloaded elsewhere)
+2026-11-12T00:38:08Z  import qfUBiJmDpKc: ok (downloaded elsewhere)
+2026-11-12T00:38:39Z  import hCa7SzDF6lQ: ok (downloaded elsewhere)
+2026-11-12T00:39:39Z  import fvpDSppG4N8: ok (downloaded elsewhere)
+2026-11-12T00:39:39Z  import xXPv_zAPd1U: ok (downloaded elsewhere)
+2026-11-12T00:40:08Z  report BxB-Nl_hbXSq9xI-uaNCJzGwl3E done in 13.1 min, peak 1841 MB
+2026-11-12T00:40:09Z  import LE-F1Qt8nPs: ok (downloaded elsewhere)
+2026-11-12T00:40:10Z  import zIQk_2T-ru8: ok (downloaded elsewhere)
+2026-11-12T00:40:40Z  import mxY1KRSmoFM: ok (downloaded elsewhere)
+2026-11-12T00:41:10Z  import HvMKx0d_SIg: ok (downloaded elsewhere)
+2026-11-12T00:41:40Z  import 3ZXmeuhJ7Bc: ok (downloaded elsewhere)
+2026-11-12T00:41:41Z  import fS83sH9egvI: ok (downloaded elsewhere)
+2026-11-12T00:41:56Z  overlap: 5 pairs aligned
+2026-11-12T00:42:11Z  import OROaWM3prs4: ok (downloaded elsewhere)
+2026-11-12T00:42:41Z  import WB9fpENoOkE: ok (downloaded elsewhere)
+2026-11-12T00:43:11Z  import Ho0SGrAZnzA: ok (downloaded elsewhere)
+2026-11-12T00:43:26Z  report BxB-Nl_hbXSq9xI-9ywRXy36pAg done in 12.0 min, peak 1642 MB
+2026-11-12T00:43:42Z  import wnhx12-8PM0: ok (downloaded elsewhere)
+2026-11-12T00:44:08Z  overlap: 7 pairs aligned
+2026-11-12T00:44:12Z  import Xa6t1Cn1yRc: ok (downloaded elsewhere)
+2026-11-12T00:44:12Z  import nhOCiCPGlTU: ok (downloaded elsewhere)
+2026-11-12T00:44:42Z  import 2zHVC4ndLJ0: ok (downloaded elsewhere)
+2026-11-12T00:45:12Z  import BGoVF9nhzhs: ok (downloaded elsewhere)
+2026-11-12T00:45:13Z  import di7g1bv5UC0: ok (downloaded elsewhere)
+2026-11-12T00:45:18Z  overlap: 2 pairs aligned
+2026-11-12T00:45:43Z  import IE7VFN8ln9Y: ok (downloaded elsewhere)
+2026-11-12T00:46:13Z  import fs08CRz2c-E: ok (downloaded elsewhere)
+2026-11-12T00:46:13Z  import iD4Iyr_hKjE: ok (downloaded elsewhere)
+2026-11-12T00:47:14Z  import 4x4Yq87gtlQ: ok (downloaded elsewhere)
+2026-11-12T00:47:44Z  import IxhOcpR3Ygg: ok (downloaded elsewhere)
+2026-11-12T00:48:14Z  import LrmcToU6lbs: ok (downloaded elsewhere)
+2026-11-12T00:48:15Z  import MUCIr3OvsRo: ok (downloaded elsewhere)
+2026-11-12T00:48:23Z  report AxA-E4cuOfwU8k0-4OZ-iSU4DiM done in 55.1 min, peak 4818 MB
+2026-11-12T00:48:45Z  import c02mIyif6Ao: ok (downloaded elsewhere)
+2026-11-12T00:48:45Z  import mxRMkO3K4Rs: ok (downloaded elsewhere)
+2026-11-12T00:49:46Z  import EkpDQZN-b9g: ok (downloaded elsewhere)
+2026-11-12T00:50:34Z  overlap: 5 pairs aligned
+2026-11-12T00:51:45Z  overlap: 4 pairs aligned
+2026-11-12T00:57:28Z  report BxB-Wr8LTyW-iTA-1g02Uh_IuI4 done in 16.9 min, peak 2052 MB
+2026-11-12T00:58:39Z  report BxB-a9lx-Xb2X0I-1g02Uh_IuI4 done in 14.7 min, peak 1910 MB
+2026-11-12T01:03:01Z  report BxB-1g02Uh_IuI4-m151ZBLwbhc done in 14.6 min, peak 1975 MB
+2026-11-12T01:12:12Z  report AxB-E4cuOfwU8k0-rjjjfXf4pjg done in 77.1 min, peak 4976 MB
+2026-11-12T01:12:19Z  report BxB-1g02Uh_IuI4-EN7S56j6Z5Y done in 14.4 min, peak 1905 MB
+2026-11-12T01:12:36Z  report BxB-1g02Uh_IuI4-Hd7k7i4jqH4 done in 13.8 min, peak 1959 MB
+2026-11-12T01:17:18Z  report BxB-Wr8LTyW-iTA-w_cD-Sb2auI done in 14.1 min, peak 1960 MB
+2026-11-12T01:18:53Z  report AxA-Nj_pfXISKXc-S0b-cNOME7I done in 6.7 min, peak 1730 MB
+2026-11-12T01:19:05Z  report AxA-2b9xzvfYqD8-_B5Aec29lHQ done in 5.7 min, peak 1344 MB
+2026-11-12T01:19:47Z  report AxA-Nj_pfXISKXc-sI-dYFPPJgs done in 6.7 min, peak 1728 MB
+2026-11-12T01:22:20Z  report AxA-ZPOOOfJmzp4-cMOSJ1QIa3w done in 5.0 min, peak 1306 MB
+2026-11-12T01:24:08Z  report AxA-afJ8kEWkJqo-AKD-gwTktdc done in 4.9 min, peak 1276 MB
+2026-11-12T01:29:58Z  report AxA--QG7hoU3k0g-U3O9WIfjY8A done in 9.6 min, peak 1858 MB
+2026-11-12T01:30:57Z  report AxA--QG7hoU3k0g-NnvOQVPXWTw done in 8.2 min, peak 1534 MB
+2026-11-12T01:31:20Z  report AxA--QG7hoU3k0g-zN8W339rP_U done in 11.8 min, peak 1902 MB
+2026-11-12T01:36:13Z  report AxA--QG7hoU3k0g-3HqbMJ7huAM done in 11.6 min, peak 1938 MB
+2026-11-12T01:37:34Z  report AxA-LXMGLr9uFv4-nEoTfUE6-Pk done in 7.5 min, peak 1487 MB
+2026-11-12T01:37:46Z  report BxB-SQBTIuB0SsI-6Knlj_rhgE4 done in 6.0 min, peak 1735 MB
+2026-11-12T01:40:39Z  report AxA-s11HCj_gAWE-uwnBzV6vNZs done in 9.2 min, peak 1670 MB
+2026-11-12T01:42:27Z  report AxA-Ye7ulpWeLfw-eq8J_moRM6w done in 5.8 min, peak 1290 MB
+2026-11-12T01:43:21Z  report AxA-WwhNgzir6V4-eq8J_moRM6w done in 5.3 min, peak 1309 MB
+2026-11-12T01:43:54Z  report AxA-24CuY0nwSX0-eq8J_moRM6w done in 5.5 min, peak 1298 MB
+2026-11-12T01:58:41Z  report AxA-JZveVyuclhs-3ucQA933UyQ done in 17.9 min, peak 1835 MB
+2026-11-12T01:58:52Z  report AxA-SEoJGGkKx7k-NpJ_yg1QJVA done in 14.6 min, peak 1735 MB
+2026-11-12T02:00:16Z  report AxA-JZveVyuclhs-7HOESsArCmY done in 17.7 min, peak 1870 MB
+2026-11-12T02:00:31Z  report AxA-3ucQA933UyQ-aLftDG8Od_0 done in 17.1 min, peak 1808 MB
+2026-11-12T02:02:22Z  report BxB-ppyGLiHU4Hg-s3aVKjLvoQI failed at score: IndexError: index -1 is out of bounds for axis 0 with size 0
+2026-11-12T02:07:34Z  report BxB-s3aVKjLvoQI-0k76HQnSwt8 done in 6.9 min, peak 1335 MB
+2026-11-12T02:20:01Z  report AxB-IWeiJekM5Cs-cufl2niNsMo done in 21.1 min, peak 2442 MB
+2026-11-12T02:20:57Z  report AxA-o_8kEplrFaw-cg6-O9iA3Cw done in 20.0 min, peak 1801 MB
+2026-11-12T02:24:33Z  report AxA-7aj6Vpx_su8-URGIkCHFUDQ done in 16.7 min, peak 1695 MB
+2026-11-12T02:25:09Z  report AxA-o_8kEplrFaw-0wGzs4JlkdQ done in 22.3 min, peak 2116 MB
+2026-11-12T02:29:06Z  report BxB-ppyGLiHU4Hg-s3aVKjLvoQI done in 8.7 min, peak 1706 MB
+2026-11-12T02:34:52Z  report AxA-7aj6Vpx_su8-htYC4R78a_c done in 14.4 min, peak 2067 MB
+2026-11-12T02:35:25Z  report AxA-Yl6782bfSNA-STD9E9YpQgo done in 10.6 min, peak 1515 MB
+2026-11-12T02:38:08Z  report AxA-8qSizvcVeNU-Yl6782bfSNA done in 16.8 min, peak 1964 MB
+2026-11-12T02:43:13Z  report BxB-MiTaLfR6zgY-yXDsS1eglcA done in 7.2 min, peak 1714 MB
+2026-11-12T02:43:39Z  report AxA-P85oXrxz2nk-bodrABbSgfA done in 18.1 min, peak 1828 MB
+2026-11-12T02:52:21Z  report AxA-WUbI_x69AIc-Qy4EwtfCTkM done in 14.0 min, peak 1681 MB
+2026-11-12T02:52:24Z  report AxB-bodrABbSgfA-H4_BpVuvsgU done in 17.3 min, peak 1847 MB
+2026-11-12T02:55:42Z  report AxB-pjbLaZqWo2Q-fnchF_Zl9XQ done in 12.4 min, peak 2002 MB
+2026-11-12T03:02:25Z  report AxA-j316Y_-hFW0-y7FElRQhklM done in 18.3 min, peak 1946 MB
+2026-11-12T03:02:49Z  report AxA-j316Y_-hFW0-mksDZdIzhkI done in 10.2 min, peak 1975 MB
+2026-11-12T03:03:45Z  report AxA-GgOh8xG3j5o--xCC8XqKATU done in 10.8 min, peak 1526 MB
+2026-11-12T03:08:22Z  report AxA-1caHOwNs4yY-2e1XB0UJosc done in 12.5 min, peak 1578 MB
+2026-11-12T03:09:06Z  report AxB-5gDfGvKznXE-PhhQ0GoCxbw done in 5.9 min, peak 1337 MB
+2026-11-12T03:21:57Z  report BxB-88K00Gg-R8k-XnLSlBusv-U done in 17.9 min, peak 1996 MB
+2026-11-12T03:23:27Z  report AxA-XKGrh9jQ2xI-Ao3ysT3D0SY done in 14.1 min, peak 1529 MB
+2026-11-12T03:27:25Z  report AxA-5f8p3kdEbJw-I-kn0Vak6b8 done in 24.5 min, peak 2079 MB
+2026-11-12T03:34:25Z  report AxA-GwRhnH9ozMc-fz5LnG6HANo done in 12.5 min, peak 1524 MB
+2026-11-12T03:35:41Z  report AxA-Yp_wsRyrcvk-KMr0eKc64zE done in 7.9 min, peak 1703 MB
+2026-11-12T03:39:21Z  report AxA-KKfXDr6uVA0-A_1ApJU_amc done in 30.9 min, peak 2195 MB
+2026-11-12T03:40:48Z  report AxA-XCGE-_TDcGI-MNiZl3mNEIk done in 6.0 min, peak 1301 MB
+2026-11-12T03:42:27Z  report AxB-HMbTMw9ZAq0-m7BqBjVOwqo done in 18.6 min, peak 2348 MB
+2026-11-12T03:42:46Z  report AxA-s3_DkTgl-bw-PS1pHA17mNI done in 6.6 min, peak 1332 MB
+2026-11-12T03:45:48Z  report AxB-W99Te7xIpX0-Wes02YpdpJA done in 4.9 min, peak 1270 MB
+2026-11-12T03:50:48Z  report AxA-efop8uMcFFQ-wbzm05WN8X8 done in 7.2 min, peak 1758 MB
+2026-11-12T03:51:21Z  report AxA-r2kk9DQJy_g-PxVRd-kf_lM done in 11.8 min, peak 1518 MB
+2026-11-12T03:54:15Z  report AxA-WoeCbK5HG-E-cuF6uph58zo done in 11.5 min, peak 1532 MB
+2026-11-12T04:05:54Z  report AxB-mHDPn8N5ASE-oJ_S3VH_L_I done in 19.9 min, peak 2078 MB
+2026-11-12T04:06:13Z  run_reports: all done
+2026-11-12T09:03:59Z  import YrsmVbdtgLY: ok (downloaded elsewhere)
+2026-11-12T09:04:12Z  import Z13ulLin2jg: ok (downloaded elsewhere)
+2026-11-12T09:04:27Z  import aYm4u_lQpIo: ok (downloaded elsewhere)
+2026-11-12T09:04:56Z  import u3VtdvWtgl4: ok (downloaded elsewhere)
+2026-11-12T09:05:19Z  import qHf6e1CQQ5c: ok (downloaded elsewhere)
+2026-11-12T09:05:42Z  import 4rcjZ1f_L4A: ok (downloaded elsewhere)
+2026-11-12T09:06:06Z  import Tgp1NqPegK8: ok (downloaded elsewhere)
+2026-11-12T09:06:27Z  import idwuB7uQA2M: ok (downloaded elsewhere)
+2026-11-12T09:06:34Z  import 0gXJ6f2z_Y4: ok (downloaded elsewhere)
+2026-11-12T09:06:55Z  import GqpAJf36hrc: ok (downloaded elsewhere)
+2026-11-12T09:07:40Z  import SSeBjzpJLFk: ok (downloaded elsewhere)
+2026-11-12T09:09:56Z  import 414DEMcGHtU: ok (downloaded elsewhere)
+2026-11-12T09:09:56Z  import 4e1vB_kqCaY: ok (downloaded elsewhere)
+2026-11-12T09:09:56Z  import C5NadrBnSj8: ok (downloaded elsewhere)
+2026-11-12T09:09:56Z  import E9t53ek7H8U: ok (downloaded elsewhere)
+2026-11-12T09:09:56Z  import SB-7h4MW26k: ok (downloaded elsewhere)
+2026-11-12T09:09:57Z  import dG7KouaFW-o: ok (downloaded elsewhere)
+2026-11-12T09:10:18Z  import DS8rk9NwXQc: ok (downloaded elsewhere)
+2026-11-12T09:10:19Z  import hX-dN0g03eE: ok (downloaded elsewhere)
+2026-11-12T09:10:34Z  import t5wDGNrzpro: ok (downloaded elsewhere)
+2026-11-12T09:11:09Z  import hSOqsVdRmeI: ok (downloaded elsewhere)
+2026-11-12T09:11:18Z  import Moo-mayOOWY: ok (downloaded elsewhere)
+2026-11-12T09:11:18Z  import ijAeNNIiKJ4: ok (downloaded elsewhere)
+2026-11-12T09:11:46Z  import v80qWgkingM: ok (downloaded elsewhere)
+2026-11-12T09:12:03Z  import ainrmFQVbfI: ok (downloaded elsewhere)
+2026-11-12T09:12:31Z  import tQ3LttVt_Jk: ok (downloaded elsewhere)
+2026-11-12T09:12:52Z  import hzzGSyV_BCA: ok (downloaded elsewhere)
+2026-11-12T09:13:36Z  import AyZJfo2rrOc: ok (downloaded elsewhere)
+2026-11-12T09:13:57Z  import QkQmfGbdlKg: ok (downloaded elsewhere)
+2026-11-12T09:14:17Z  import Msywp-_Gl1g: ok (downloaded elsewhere)
+2026-11-12T09:14:58Z  import YABj119wijM: ok (downloaded elsewhere)
+2026-11-12T09:15:39Z  import h4dQ-RG7dXA: ok (downloaded elsewhere)
+2026-11-12T09:19:56Z  import AdRwOjaFizY: ok (downloaded elsewhere)
+2026-11-12T09:19:56Z  import C6_4QpOhR8A: ok (downloaded elsewhere)
+2026-11-12T09:19:56Z  import FT0mjHIs2oY: ok (downloaded elsewhere)
+2026-11-12T09:19:56Z  import ONwFOOEkasU: ok (downloaded elsewhere)
+2026-11-12T09:19:56Z  import OSOdLGenkS0: ok (downloaded elsewhere)
+2026-11-12T09:19:56Z  import Qv-eMjDmTJQ: ok (downloaded elsewhere)
+2026-11-12T09:19:57Z  import UGzlPPWb6Pg: ok (downloaded elsewhere)
+2026-11-12T09:19:58Z  import UN4V4ywCWxA: ok (downloaded elsewhere)
+2026-11-12T09:19:58Z  import VqT9YA3THAE: ok (downloaded elsewhere)
+2026-11-12T09:19:58Z  import ZRd-uNE-AUA: ok (downloaded elsewhere)
+2026-11-12T09:19:58Z  import fOJm84LQSTw: ok (downloaded elsewhere)
+2026-11-12T09:19:59Z  import fUR3k2eL6Mo: ok (downloaded elsewhere)
+2026-11-12T09:19:59Z  import kZytosLyQEc: ok (downloaded elsewhere)
+2026-11-12T09:19:59Z  import oCiHs7agwmE: ok (downloaded elsewhere)
+2026-11-12T09:24:30Z  import -kRTFYd6WkI: ok (downloaded elsewhere)
+2026-11-12T09:24:30Z  import 2oGfT4lqFLE: ok (downloaded elsewhere)
+2026-11-12T09:24:31Z  import 6L0oq3iwbS0: ok (downloaded elsewhere)
+2026-11-12T09:24:31Z  import KQcbwwHmLY4: ok (downloaded elsewhere)
+2026-11-12T09:24:31Z  import MN5_l3IQT6M: ok (downloaded elsewhere)
+2026-11-12T09:24:32Z  import NMdfSQmTS1M: ok (downloaded elsewhere)
+2026-11-12T09:24:32Z  import NWL1vxSbQGk: ok (downloaded elsewhere)
+2026-11-12T09:24:32Z  import SHNZFqON0to: ok (downloaded elsewhere)
+2026-11-12T09:24:32Z  import UO5QZEQaMyo: ok (downloaded elsewhere)
+2026-11-12T09:24:33Z  import XEEVejf8Kgw: ok (downloaded elsewhere)
+2026-11-12T09:24:33Z  import gmRIldLgb8k: ok (downloaded elsewhere)
+2026-11-12T09:24:33Z  import qM6hdr1DVSM: ok (downloaded elsewhere)
+2026-11-12T09:30:26Z  import -dlezjbLXKU: ok (downloaded elsewhere)
+2026-11-12T09:30:26Z  import 3aoEeaCHS_w: ok (downloaded elsewhere)
+2026-11-12T09:30:26Z  import Nlt_DqiIHcQ: ok (downloaded elsewhere)
+2026-11-12T09:30:26Z  import _R12Qsg6sEk: ok (downloaded elsewhere)
+2026-11-12T09:30:27Z  import a0Dg0fPxACY: ok (downloaded elsewhere)
+2026-11-12T09:30:27Z  import fAQ_c_NEM7A: ok (downloaded elsewhere)
+2026-11-12T09:30:27Z  import hrOfhQCxqL0: ok (downloaded elsewhere)
+2026-11-12T09:30:27Z  import iCbinH5esNA: ok (downloaded elsewhere)
+2026-11-12T09:30:27Z  import iFpez4fPv5Y: ok (downloaded elsewhere)
+2026-11-12T09:30:27Z  import jEwfENQE5Os: ok (downloaded elsewhere)
+2026-11-12T09:30:27Z  import ukENAA-zDsg: ok (downloaded elsewhere)
+2026-11-12T09:30:28Z  import uzUxdwfXgWI: ok (downloaded elsewhere)
+2026-11-12T09:30:28Z  import vBa31YwaxTg: ok (downloaded elsewhere)
+2026-11-12T09:30:28Z  import xJWSNIkfOrY: ok (downloaded elsewhere)
+2026-11-12T09:30:28Z  import zPS3ihinlZs: ok (downloaded elsewhere)
+2026-11-12T09:31:19Z  import 7hti1gwEK2A: ok (downloaded elsewhere)
+2026-11-12T09:31:19Z  import Os54pbJoLsE: ok (downloaded elsewhere)
+2026-11-12T09:31:19Z  import ewZwn2G14Wg: ok (downloaded elsewhere)
+2026-11-12T09:36:05Z  import 34zV8hDOuFs: ok (downloaded elsewhere)
+2026-11-12T09:36:05Z  import 6FhYNE5KFeg: ok (downloaded elsewhere)
+2026-11-12T09:36:05Z  import AOC1QPiG8-4: ok (downloaded elsewhere)
+2026-11-12T09:36:06Z  import BZqq3eL6xSE: ok (downloaded elsewhere)
+2026-11-12T09:36:06Z  import MRC5ZioSGUk: ok (downloaded elsewhere)
+2026-11-12T09:36:06Z  import VnHWYMlDgwI: ok (downloaded elsewhere)
+2026-11-12T09:36:06Z  import XkHOSnrgKew: ok (downloaded elsewhere)
+2026-11-12T09:36:06Z  import Zy0VtX5RTFM: ok (downloaded elsewhere)
+2026-11-12T09:36:06Z  import _EZv7EJE8LE: ok (downloaded elsewhere)
+2026-11-12T09:36:07Z  import _QwXfH5-D5g: ok (downloaded elsewhere)
+2026-11-12T09:36:07Z  import jflAKuIuQBM: ok (downloaded elsewhere)
+2026-11-12T09:36:07Z  import oHSAGotL2Vo: ok (downloaded elsewhere)
+2026-11-12T09:41:26Z  import -qxEnbH15lY: ok (downloaded elsewhere)
+2026-11-12T09:41:26Z  import 2kLB7ZwxVv8: ok (downloaded elsewhere)
+2026-11-12T09:41:26Z  import BRcmpSxalwA: ok (downloaded elsewhere)
+2026-11-12T09:41:26Z  import CU_QocmxLz0: ok (downloaded elsewhere)
+2026-11-12T09:41:27Z  import CfJfPAF8El8: ok (downloaded elsewhere)
+2026-11-12T09:41:27Z  import G7PTUNLnAFk: ok (downloaded elsewhere)
+2026-11-12T09:41:27Z  import LJN6yukuQ9A: ok (downloaded elsewhere)
+2026-11-12T09:41:27Z  import UPDBxhcsIRQ: ok (downloaded elsewhere)
+2026-11-12T09:41:27Z  import V5OqHZwodj4: ok (downloaded elsewhere)
+2026-11-12T09:41:28Z  import aACfDyTDcL8: ok (downloaded elsewhere)
+2026-11-12T09:41:28Z  import afyKHCB03MU: ok (downloaded elsewhere)
+2026-11-12T09:41:28Z  import fo7aioou8m0: ok (downloaded elsewhere)
+2026-11-12T09:41:28Z  import jvCQFkt2FwI: ok (downloaded elsewhere)
+2026-11-12T09:41:29Z  import nHT4spNAshs: ok (downloaded elsewhere)
+2026-11-12T09:41:29Z  import qA-zKbEgq1Q: ok (downloaded elsewhere)
+2026-11-12T09:41:29Z  import ripZ0792Vx4: ok (downloaded elsewhere)
+2026-11-12T09:41:30Z  import xEFkAQpftd4: ok (downloaded elsewhere)
+2026-11-12T09:42:51Z  import MxB4KiDF6XY: ok (downloaded elsewhere)
+2026-11-12T09:42:51Z  import dJvFOX8l4d8: ok (downloaded elsewhere)
+2026-11-12T09:42:51Z  import oT6bPk4gHxM: ok (downloaded elsewhere)
+2026-11-12T09:42:52Z  import u40mx4lB20Q: ok (downloaded elsewhere)
+2026-11-12T09:43:10Z  import 05oAs-Pqf5Y: ok (downloaded elsewhere)
+2026-11-12T09:43:30Z  import IbEIByW4Fwk: ok (downloaded elsewhere)
+2026-11-12T09:45:25Z  import EPh1bFzsVf4: ok (downloaded elsewhere)
+2026-11-12T09:45:25Z  import Pa7utiQUGOY: ok (downloaded elsewhere)
+2026-11-12T09:45:25Z  import X5isLUsPsU0: ok (downloaded elsewhere)
+2026-11-12T09:45:26Z  import mJFTp8x_QZ4: ok (downloaded elsewhere)
+2026-11-12T09:57:43Z  import -OXYsniHGBM: ok (downloaded elsewhere)
+2026-11-12T09:57:43Z  import -k4oiVaekT0: ok (downloaded elsewhere)
+2026-11-12T09:57:43Z  import 19yPrd-it5I: ok (downloaded elsewhere)
+2026-11-12T09:57:43Z  import 6aBfQYlhKJs: ok (downloaded elsewhere)
+2026-11-12T09:57:44Z  import DVLFCQUsuFI: ok (downloaded elsewhere)
+2026-11-12T09:57:44Z  import El8w4iWGWEI: ok (downloaded elsewhere)
+2026-11-12T09:57:44Z  import FIinrJO9po8: ok (downloaded elsewhere)
+2026-11-12T09:57:44Z  import Gh4izthwnNM: ok (downloaded elsewhere)
+2026-11-12T09:57:44Z  import HWH2lpQomEk: ok (downloaded elsewhere)
+2026-11-12T09:57:44Z  import KxLPa2_O8iY: ok (downloaded elsewhere)
+2026-11-12T09:57:45Z  import LIvbQc_In_s: ok (downloaded elsewhere)
+2026-11-12T09:57:45Z  import M3sOUpxsrJE: ok (downloaded elsewhere)
+2026-11-12T09:57:45Z  import MI4XvQZDPZc: ok (downloaded elsewhere)
+2026-11-12T09:57:45Z  import OLXeTCu2ESc: ok (downloaded elsewhere)
+2026-11-12T09:57:45Z  import R7pIlyiHmJY: ok (downloaded elsewhere)
+2026-11-12T09:57:45Z  import TGZl_HsDj_0: ok (downloaded elsewhere)
+2026-11-12T09:57:46Z  import UXsXYmw3_CY: ok (downloaded elsewhere)
+2026-11-12T09:57:46Z  import ZEI_8iC_Z7E: ok (downloaded elsewhere)
+2026-11-12T09:57:46Z  import aW_J2JMPmG8: ok (downloaded elsewhere)
+2026-11-12T09:57:46Z  import bdbNsMtn26Y: ok (downloaded elsewhere)
+2026-11-12T09:57:46Z  import cmi5_37226c: ok (downloaded elsewhere)
+2026-11-12T09:57:47Z  import euLhwHIdGU0: ok (downloaded elsewhere)
+2026-11-12T09:57:47Z  import h2XIpJMP06c: ok (downloaded elsewhere)
+2026-11-12T09:57:47Z  import iAgf2jZes0w: ok (downloaded elsewhere)
+2026-11-12T09:57:47Z  import iaSPV2ZHx5U: ok (downloaded elsewhere)
+2026-11-12T09:57:47Z  import lJZMkOLUxmM: ok (downloaded elsewhere)
+2026-11-12T09:57:48Z  import s1EDmLV-3f0: ok (downloaded elsewhere)
+2026-11-12T09:57:48Z  import sAYwBMbDfXU: ok (downloaded elsewhere)
+2026-11-12T09:57:48Z  import sFhZZIPj9nE: ok (downloaded elsewhere)
+2026-11-12T09:57:48Z  import uBA-DOOnkZ8: ok (downloaded elsewhere)
+2026-11-12T09:57:48Z  import wAtBG4hjCOY: ok (downloaded elsewhere)
+2026-11-12T09:57:49Z  import zE2zZ8S0mXk: ok (downloaded elsewhere)
+2026-11-12T09:57:49Z  import zQ7vvPa4pAk: ok (downloaded elsewhere)
+2026-11-12T10:05:43Z  import 41F1Fdb3tHM: ok (downloaded elsewhere)
+2026-11-12T10:05:43Z  import 7FiyQQBYTUY: ok (downloaded elsewhere)
+2026-11-12T10:05:43Z  import 9Rzd80kq53k: ok (downloaded elsewhere)
+2026-11-12T10:05:43Z  import CvFabQeSv9A: ok (downloaded elsewhere)
+2026-11-12T10:05:44Z  import Ln0H_11UIwI: ok (downloaded elsewhere)
+2026-11-12T10:05:44Z  import M0V1ofCOEew: ok (downloaded elsewhere)
+2026-11-12T10:05:44Z  import NndzvQ1wWwk: ok (downloaded elsewhere)
+2026-11-12T10:05:44Z  import T2UcCZAPW34: ok (downloaded elsewhere)
+2026-11-12T10:05:44Z  import U9maOBWT6wE: ok (downloaded elsewhere)
+2026-11-12T10:05:44Z  import cO1aLZ7teeg: ok (downloaded elsewhere)
+2026-11-12T10:05:45Z  import evV7r4kNN7g: ok (downloaded elsewhere)
+2026-11-12T10:05:45Z  import gkk96Hm-IHo: ok (downloaded elsewhere)
+2026-11-12T10:05:45Z  import klDPbXVTBzw: ok (downloaded elsewhere)
+2026-11-12T10:05:45Z  import l-FY043o7kY: ok (downloaded elsewhere)
+2026-11-12T10:05:45Z  import lg-NHZehFHE: ok (downloaded elsewhere)
+2026-11-12T10:05:46Z  import n6eghHp7qWw: ok (downloaded elsewhere)
+2026-11-12T10:05:46Z  import njSANQD1GlI: ok (downloaded elsewhere)
+2026-11-12T10:05:46Z  import r-sDLAjsniA: ok (downloaded elsewhere)
+2026-11-12T10:05:46Z  import reZpGfU6csQ: ok (downloaded elsewhere)
+2026-11-12T10:05:46Z  import rpvtKnqu7-4: ok (downloaded elsewhere)
+2026-11-12T10:05:47Z  import w9BOETCUH5o: ok (downloaded elsewhere)
+2026-11-12T10:05:47Z  import xU3oLsk2eF8: ok (downloaded elsewhere)
+2026-11-12T10:05:47Z  import y5BTqWirpe8: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import 6JwCDXQGK3w: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import AydSzRoGSLY: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import E6KHe0vm4Bw: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import Qkur1emqs_c: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import UDDipKeGISg: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import ZeldqdySrKg: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import ea56PryuPcY: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import kKYr9m8-fmo: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import mbzZMGA6huI: ok (downloaded elsewhere)
+2026-11-12T10:10:10Z  import o6VjhL9gA1A: ok (downloaded elsewhere)
+2026-11-12T10:10:11Z  import oAN_O9JQlfc: ok (downloaded elsewhere)
+2026-11-12T10:10:11Z  import phrajiOFBCY: ok (downloaded elsewhere)
+2026-11-12T10:10:11Z  import q8T0cDm6nSA: ok (downloaded elsewhere)
+2026-11-12T10:10:11Z  import snvdOvj-H-o: ok (downloaded elsewhere)
+2026-11-12T10:13:34Z  import 3yv0GSbbCZI: ok (downloaded elsewhere)
+2026-11-12T10:13:34Z  import 6QvmU6F2Fu8: ok (downloaded elsewhere)
+2026-11-12T10:13:34Z  import GCqVNL7ZRdg: ok (downloaded elsewhere)
+2026-11-12T10:13:34Z  import OZzQENCeeNg: ok (downloaded elsewhere)
+2026-11-12T10:13:34Z  import SP3eASDKke4: ok (downloaded elsewhere)
+2026-11-12T10:13:34Z  import U9lOcqHMY_w: ok (downloaded elsewhere)
+2026-11-12T10:13:35Z  import _R1LYMF-KLY: ok (downloaded elsewhere)
+2026-11-12T10:13:35Z  import cAngxOmb79A: ok (downloaded elsewhere)
+2026-11-12T10:13:35Z  import nbI-1N_uBNs: ok (downloaded elsewhere)
+2026-11-12T10:13:35Z  import wMHsxnO156E: ok (downloaded elsewhere)
+2026-11-12T10:17:16Z  import CgR6YuA2Uoo: ok (downloaded elsewhere)
+2026-11-12T10:17:16Z  import DclM70T7jyI: ok (downloaded elsewhere)
+2026-11-12T10:17:16Z  import MQkYufd11nU: ok (downloaded elsewhere)
+2026-11-12T10:17:17Z  import OUeFIYCci58: ok (downloaded elsewhere)
+2026-11-12T10:17:17Z  import QKrdD5Y9c-s: ok (downloaded elsewhere)
+2026-11-12T10:17:17Z  import YKsMQOpFyp4: ok (downloaded elsewhere)
+2026-11-12T10:17:17Z  import e9gnACQvqRM: ok (downloaded elsewhere)
+2026-11-12T10:17:17Z  import pKnKuQMeGlk: ok (downloaded elsewhere)
+2026-11-12T10:17:17Z  import uE-G6fKmpA4: ok (downloaded elsewhere)
+2026-11-12T10:25:11Z  import -8VedXc5EDU: ok (downloaded elsewhere)
+2026-11-12T10:25:11Z  import 2fBdfXU6Vuo: ok (downloaded elsewhere)
+2026-11-12T10:25:11Z  import D5tEBPw8acs: ok (downloaded elsewhere)
+2026-11-12T10:25:11Z  import Dv9uq-E9kbY: ok (downloaded elsewhere)
+2026-11-12T10:25:11Z  import FGUfrSFknik: ok (downloaded elsewhere)
+2026-11-12T10:25:11Z  import Fs-xqnR8X7s: ok (downloaded elsewhere)
+2026-11-12T10:25:12Z  import IYU2e8WgGnY: ok (downloaded elsewhere)
+2026-11-12T10:25:12Z  import KYwjCiQCbr8: ok (downloaded elsewhere)
+2026-11-12T10:25:12Z  import NL_S69qf0jg: ok (downloaded elsewhere)
+2026-11-12T10:25:12Z  import W5PP6fPZK0I: ok (downloaded elsewhere)
+2026-11-12T10:25:12Z  import WUKlDCQm0sI: ok (downloaded elsewhere)
+2026-11-12T10:25:13Z  import Xx39RVmRYWE: ok (downloaded elsewhere)
+2026-11-12T10:25:13Z  import Y8CY6E8qvxE: ok (downloaded elsewhere)
+2026-11-12T10:25:13Z  import Yh98cBs4J08: ok (downloaded elsewhere)
+2026-11-12T10:25:13Z  import bXcFSE7NQp8: ok (downloaded elsewhere)
+2026-11-12T10:25:13Z  import fKWJTJUkwPc: ok (downloaded elsewhere)
+2026-11-12T10:25:14Z  import jPvyJ9IIRJk: ok (downloaded elsewhere)
+2026-11-12T10:25:14Z  import mChBy4WGtqo: ok (downloaded elsewhere)
+2026-11-12T10:25:14Z  import nvR3fxkl_Bc: ok (downloaded elsewhere)
+2026-11-12T10:25:14Z  import nyJqyZZCekg: ok (downloaded elsewhere)
+2026-11-12T10:25:14Z  import ouJSdR1OtEo: ok (downloaded elsewhere)
+2026-11-12T10:25:15Z  import tfAMtdvjMNM: ok (downloaded elsewhere)
+2026-11-12T10:25:15Z  import uQ90xr1p-eQ: ok (downloaded elsewhere)
+2026-11-12T10:25:15Z  import xe7vTAa-ufc: ok (downloaded elsewhere)
+2026-11-12T10:25:15Z  import zsEf6M5oPWM: ok (downloaded elsewhere)
+2026-11-12T10:25:51Z  import 39Dtr0Rq-TY: ok (downloaded elsewhere)
+2026-11-12T10:25:51Z  import bBOI5NzGpX0: ok (downloaded elsewhere)
+2026-11-12T10:26:14Z  import Is1sSXyJz28: ok (downloaded elsewhere)
+2026-11-12T10:35:59Z  import 0guDIT04MDk: ok (downloaded elsewhere)
+2026-11-12T10:35:59Z  import 20HqqfnKxZk: ok (downloaded elsewhere)
+2026-11-12T10:36:00Z  import 76IijP9RlJY: ok (downloaded elsewhere)
+2026-11-12T10:36:00Z  import 89-vIiOahnY: ok (downloaded elsewhere)
+2026-11-12T10:36:00Z  import BktbsqZ00Lg: ok (downloaded elsewhere)
+2026-11-12T10:36:00Z  import I25m3zH47KA: ok (downloaded elsewhere)
+2026-11-12T10:36:00Z  import IDwshmCv_Xw: ok (downloaded elsewhere)
+2026-11-12T10:36:00Z  import LQQ2DD4V_mY: ok (downloaded elsewhere)
+2026-11-12T10:36:01Z  import MnJaDuR1QKE: ok (downloaded elsewhere)
+2026-11-12T10:36:01Z  import OFvmlD86K5Q: ok (downloaded elsewhere)
+2026-11-12T10:36:01Z  import S9N416aMRxk: ok (downloaded elsewhere)
+2026-11-12T10:36:01Z  import TwS8SzpZrug: ok (downloaded elsewhere)
+2026-11-12T10:36:01Z  import WvT05t4UpF8: ok (downloaded elsewhere)
+2026-11-12T10:36:01Z  import X48-R_yTN-4: ok (downloaded elsewhere)
+2026-11-12T10:36:01Z  import X8bMaXuivrI: ok (downloaded elsewhere)
+2026-11-12T10:36:02Z  import YgjyQIwcJy0: ok (downloaded elsewhere)
+2026-11-12T10:36:02Z  import irZjw8gc2EU: ok (downloaded elsewhere)
+2026-11-12T10:36:02Z  import mrU14TkzuVI: ok (downloaded elsewhere)
+2026-11-12T10:36:02Z  import nWqwqAY0KRY: ok (downloaded elsewhere)
+2026-11-12T10:36:02Z  import orHGmg81Nug: ok (downloaded elsewhere)
+2026-11-12T10:36:02Z  import qhaDwGQUOLM: ok (downloaded elsewhere)
+2026-11-12T10:36:02Z  import vGjN_CslxSI: ok (downloaded elsewhere)
+2026-11-12T10:36:03Z  import vNPsUxZBA70: ok (downloaded elsewhere)
+2026-11-12T10:36:03Z  import xgI2f3OPmyc: ok (downloaded elsewhere)
+2026-11-12T10:36:03Z  import xh-75gMcI_4: ok (downloaded elsewhere)
+2026-11-12T10:36:03Z  import zrFqk1DmTk0: ok (downloaded elsewhere)
+2026-11-12T10:43:45Z  import 5vLpH7GuIHU: ok (downloaded elsewhere)
+2026-11-12T10:43:45Z  import 6VZYmd3fUwM: ok (downloaded elsewhere)
+2026-11-12T10:43:45Z  import AJu6WaCP-1g: ok (downloaded elsewhere)
+2026-11-12T10:43:45Z  import GcZXNKTPP5U: ok (downloaded elsewhere)
+2026-11-12T10:43:45Z  import I5Ug22dnXxQ: ok (downloaded elsewhere)
+2026-11-12T10:43:46Z  import IOhRyd9CwYo: ok (downloaded elsewhere)
+2026-11-12T10:43:46Z  import LvECrt5yV6M: ok (downloaded elsewhere)
+2026-11-12T10:43:46Z  import MstDCeu1yxM: ok (downloaded elsewhere)
+2026-11-12T10:43:46Z  import PjXooPy93AM: ok (downloaded elsewhere)
+2026-11-12T10:43:46Z  import QaYV4EBcrcQ: ok (downloaded elsewhere)
+2026-11-12T10:43:46Z  import SlUYd5vQ6hw: ok (downloaded elsewhere)
+2026-11-12T10:43:47Z  import Td73SYRglgw: ok (downloaded elsewhere)
+2026-11-12T10:43:47Z  import Uq5Pp5BQSm4: ok (downloaded elsewhere)
+2026-11-12T10:43:47Z  import V9fA6nrohac: ok (downloaded elsewhere)
+2026-11-12T10:43:47Z  import XFz86QUABdQ: ok (downloaded elsewhere)
+2026-11-12T10:43:47Z  import Ymla-qSUkMQ: ok (downloaded elsewhere)
+2026-11-12T10:43:47Z  import e3ej1CBEdWk: ok (downloaded elsewhere)
+2026-11-12T10:43:47Z  import nbApYhjXet4: ok (downloaded elsewhere)
+2026-11-12T10:43:48Z  import rWQWjm-AIvo: ok (downloaded elsewhere)
+2026-11-12T10:43:48Z  import sT3J4L19qrE: ok (downloaded elsewhere)
+2026-11-12T10:43:48Z  import tQlIWPUO_E0: ok (downloaded elsewhere)
+2026-11-12T10:43:48Z  import w7exxTCHfx8: ok (downloaded elsewhere)
+2026-11-12T10:43:48Z  import xPt-5RG1m-0: ok (downloaded elsewhere)
+2026-11-12T10:43:48Z  import xqmw3bRa9GE: ok (downloaded elsewhere)
+2026-11-12T10:45:10Z  import O5ZoBFwS1G4: ok (downloaded elsewhere)
+2026-11-12T10:45:10Z  import WZ45rZRLf80: ok (downloaded elsewhere)
+2026-11-12T10:45:10Z  import YJLDe0F_z7k: ok (downloaded elsewhere)
+2026-11-12T10:50:12Z  import 1YroSGgyUdg: ok (downloaded elsewhere)
+2026-11-12T10:50:12Z  import 4yxGLNt0yv4: ok (downloaded elsewhere)
+2026-11-12T10:50:12Z  import EX0D6k2zAM0: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import GBZzsivo0aQ: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import HqnP_fk78kU: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import Tn2UZwb9RcY: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import aDyWeSAt-sI: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import kV9x9j_u_r8: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import lkGmcS3ArOg: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import nxeG-sbjzXI: ok (downloaded elsewhere)
+2026-11-12T10:50:13Z  import skNxtYhw9Y8: ok (downloaded elsewhere)
+2026-11-12T10:53:54Z  import -b0iO9jy6pY: ok (downloaded elsewhere)
+2026-11-12T10:53:55Z  import 1v4rp78xOLE: ok (downloaded elsewhere)
+2026-11-12T10:53:55Z  import AjfP599DrRE: ok (downloaded elsewhere)
+2026-11-12T10:53:55Z  import _73WjnueOIQ: ok (downloaded elsewhere)
+2026-11-12T10:53:55Z  import _rIvWK_TpfI: ok (downloaded elsewhere)
+2026-11-12T10:53:56Z  import bvyWJKgpTpQ: ok (downloaded elsewhere)
+2026-11-12T10:53:56Z  import h-wl3-GG_Vo: ok (downloaded elsewhere)
+2026-11-12T10:53:56Z  import jceEaiF00_c: ok (downloaded elsewhere)
+2026-11-12T10:53:56Z  import n1u8zKHNZbk: ok (downloaded elsewhere)
+2026-11-12T10:53:57Z  import qmtf_HY_1NQ: ok (downloaded elsewhere)
+2026-11-12T10:56:43Z  import 4FXoc-ApjOQ: ok (downloaded elsewhere)
+2026-11-12T10:56:43Z  import 6ihQG692U_s: ok (downloaded elsewhere)
+2026-11-12T10:56:44Z  import 7-abUIzCk5U: ok (downloaded elsewhere)
+2026-11-12T10:56:44Z  import DgKsaJJn1lM: ok (downloaded elsewhere)
+2026-11-12T10:56:44Z  import K9Q8nHTS-wQ: ok (downloaded elsewhere)
+2026-11-12T10:56:44Z  import TtH33fR-iQM: ok (downloaded elsewhere)
+2026-11-12T10:56:44Z  import sJb_iV1LCXY: ok (downloaded elsewhere)
+2026-11-12T10:59:48Z  import 2ONrfCPwygc: ok (downloaded elsewhere)
+2026-11-12T10:59:48Z  import 9aLZatXZCl4: ok (downloaded elsewhere)
+2026-11-12T10:59:48Z  import AK32EFsK6KI: ok (downloaded elsewhere)
+2026-11-12T10:59:49Z  import OhpBUb0Pniw: ok (downloaded elsewhere)
+2026-11-12T10:59:49Z  import P610udrUFqE: ok (downloaded elsewhere)
+2026-11-12T10:59:49Z  import Rk-54Vp2AsE: ok (downloaded elsewhere)
+2026-11-12T10:59:49Z  import _GlpTSaa5EU: ok (downloaded elsewhere)
+2026-11-12T10:59:49Z  import oWkIR8ZkHgo: ok (downloaded elsewhere)
+2026-11-12T11:11:12Z  import 1fL9dsWYLJ0: ok (downloaded elsewhere)
+2026-11-12T11:11:12Z  import 31YuCXEbFoc: ok (downloaded elsewhere)
+2026-11-12T11:11:13Z  import 6cmE3gwaqJI: ok (downloaded elsewhere)
+2026-11-12T11:11:13Z  import 6f6S5Y_1aIA: ok (downloaded elsewhere)
+2026-11-12T11:11:13Z  import 7Ldj5W-FyMs: ok (downloaded elsewhere)
+2026-11-12T11:11:13Z  import GvP31EGA8tQ: ok (downloaded elsewhere)
+2026-11-12T11:11:13Z  import H3Kfst-qbzw: ok (downloaded elsewhere)
+2026-11-12T11:11:13Z  import JAgEv328CdI: ok (downloaded elsewhere)
+2026-11-12T11:11:14Z  import KKgsTFivFJM: ok (downloaded elsewhere)
+2026-11-12T11:11:14Z  import Ka3AbnnoaOE: ok (downloaded elsewhere)
+2026-11-12T11:11:14Z  import Li4873tEc6Y: ok (downloaded elsewhere)
+2026-11-12T11:11:14Z  import LufPzgH87NE: ok (downloaded elsewhere)
+2026-11-12T11:11:14Z  import LzlbaXt9Yg4: ok (downloaded elsewhere)
+2026-11-12T11:11:15Z  import N8fwdq92P50: ok (downloaded elsewhere)
+2026-11-12T11:11:15Z  import OsP-k8ZnLc4: ok (downloaded elsewhere)
+2026-11-12T11:11:15Z  import Qw33r-OZh5Q: ok (downloaded elsewhere)
+2026-11-12T11:11:15Z  import _4x2xszMRq8: ok (downloaded elsewhere)
+2026-11-12T11:11:15Z  import _OlmXmG5OLM: ok (downloaded elsewhere)
+2026-11-12T11:11:15Z  import _QkBvYROA7o: ok (downloaded elsewhere)
+2026-11-12T11:11:16Z  import bVrFl7Z48so: ok (downloaded elsewhere)
+2026-11-12T11:11:16Z  import fX_CYuoA9zQ: ok (downloaded elsewhere)
+2026-11-12T11:11:16Z  import h0fw1lcn5uU: ok (downloaded elsewhere)
+2026-11-12T11:11:16Z  import kZk2_agCEWY: ok (downloaded elsewhere)
+2026-11-12T11:11:17Z  import lij2KlyDHJ8: ok (downloaded elsewhere)
+2026-11-12T11:11:17Z  import oRUKPowFBgM: ok (downloaded elsewhere)
+2026-11-12T11:11:17Z  import oajm4ygk_Ck: ok (downloaded elsewhere)
+2026-11-12T11:11:17Z  import r-whFfxsj_I: ok (downloaded elsewhere)
+2026-11-12T11:11:17Z  import sgwyEv91NfM: ok (downloaded elsewhere)
+2026-11-12T11:11:17Z  import urNKg4X9kIU: ok (downloaded elsewhere)
+2026-11-12T11:11:17Z  import w2AoNZp8IVM: ok (downloaded elsewhere)
+2026-11-12T11:11:18Z  import yVKvv4YMB78: ok (downloaded elsewhere)
+2026-11-12T11:11:19Z  import zSf5nw7US6U: ok (downloaded elsewhere)
+2026-11-12T11:16:30Z  import 3bTL4x31XTI: ok (downloaded elsewhere)
+2026-11-12T11:16:30Z  import 5NCx942T-wM: ok (downloaded elsewhere)
+2026-11-12T11:16:30Z  import 93hO6Ma5uEg: ok (downloaded elsewhere)
+2026-11-12T11:16:30Z  import D0tOd2ZH-cQ: ok (downloaded elsewhere)
+2026-11-12T11:16:30Z  import FZSWN3DFpGE: ok (downloaded elsewhere)
+2026-11-12T11:16:30Z  import KmqklNBcsFE: ok (downloaded elsewhere)
+2026-11-12T11:16:31Z  import UYSdO8QlFUg: ok (downloaded elsewhere)
+2026-11-12T11:16:31Z  import XKyEH92A4CE: ok (downloaded elsewhere)
+2026-11-12T11:16:31Z  import YxqEYFpmSQ0: ok (downloaded elsewhere)
+2026-11-12T11:16:32Z  import ama07VhnPQM: ok (downloaded elsewhere)
+2026-11-12T11:16:32Z  import c43YA5Iq9y4: ok (downloaded elsewhere)
+2026-11-12T11:16:32Z  import eGvSblfi0ns: ok (downloaded elsewhere)
+2026-11-12T11:16:32Z  import g9Z1I3T6vf0: ok (downloaded elsewhere)
+2026-11-12T11:16:32Z  import pDH1po68fP8: ok (downloaded elsewhere)
+2026-11-12T11:16:33Z  import piXZphFuybY: ok (downloaded elsewhere)
+2026-11-12T11:16:33Z  import qNk1LE48d_Q: ok (downloaded elsewhere)
+2026-11-12T11:16:33Z  import t2tKT2LSOfo: ok (downloaded elsewhere)
+2026-11-12T11:16:53Z  import HW8O6C_OCJQ: ok (downloaded elsewhere)
+2026-11-12T11:16:54Z  import pbfbmXohAGo: ok (downloaded elsewhere)
+2026-11-12T11:17:14Z  import 2TBzba6Telw: ok (downloaded elsewhere)
+2026-11-12T11:17:15Z  import iQtJ6U5X01A: ok (downloaded elsewhere)
+2026-11-12T11:17:55Z  import KFwebO9sy58: ok (downloaded elsewhere)
+2026-11-12T11:18:16Z  import ANqdoD46Ox0: ok (downloaded elsewhere)
+2026-11-12T11:18:16Z  import AYDQM669F2E: ok (downloaded elsewhere)
+2026-11-12T11:18:37Z  import Gf_8uTV76EU: ok (downloaded elsewhere)
+2026-11-12T11:19:37Z  import inrJE3iroTs: ok (downloaded elsewhere)
+2026-11-12T11:19:58Z  import QBw9W6_fBvc: ok (downloaded elsewhere)
+2026-11-12T11:19:58Z  import YaThzRybuhE: ok (downloaded elsewhere)
+2026-11-12T11:19:58Z  import idvkWqeQVtQ: ok (downloaded elsewhere)
+2026-11-12T11:20:19Z  import hLYn45GEWJc: ok (downloaded elsewhere)
+2026-11-12T11:20:39Z  import dJGR_ECKwCA: ok (downloaded elsewhere)
+2026-11-12T11:21:20Z  import Yd2dkZA9ihc: ok (downloaded elsewhere)
+2026-11-12T11:21:20Z  import hsUfmH_uRjc: ok (downloaded elsewhere)
+2026-11-12T11:21:40Z  import aKkecxwHm00: ok (downloaded elsewhere)
+2026-11-12T11:22:01Z  import sg86EZwda9k: ok (downloaded elsewhere)
+2026-11-12T11:22:21Z  import -M02RqRMZks: ok (downloaded elsewhere)
+2026-11-12T11:22:42Z  import fcYBv33BuIY: ok (downloaded elsewhere)
+2026-11-12T11:23:22Z  import PIZj5SH8Bok: ok (downloaded elsewhere)
+2026-11-12T11:24:03Z  import Q8o0b4BIx90: ok (downloaded elsewhere)
+2026-11-12T11:24:24Z  import 1lYnLr7Bv0I: ok (downloaded elsewhere)
+2026-11-12T11:24:44Z  import Vd8UEW0g-Xg: ok (downloaded elsewhere)
+2026-11-12T11:25:04Z  import wW339izcKu4: ok (downloaded elsewhere)
+2026-11-12T11:25:45Z  import wJ_TfcJAIpI: ok (downloaded elsewhere)
+2026-11-12T11:26:46Z  import _KOIkyMVcRo: ok (downloaded elsewhere)
+2026-11-12T11:26:47Z  import ndf_-FJsPVk: ok (downloaded elsewhere)
+2026-11-12T11:27:07Z  import GkcqRmdwKlE: ok (downloaded elsewhere)
+2026-11-12T11:27:08Z  import SVc-0j7DWIQ: ok (downloaded elsewhere)
+2026-11-12T11:27:08Z  import Xo3zWzIj8fM: ok (downloaded elsewhere)
+2026-11-12T11:27:28Z  import O96r1dZ4Nqg: ok (downloaded elsewhere)
+2026-11-12T11:27:48Z  import 7wfgbhEY9DU: ok (downloaded elsewhere)
+2026-11-12T11:28:29Z  import x0h4qykzlsA: ok (downloaded elsewhere)
+2026-11-12T11:28:49Z  import -kMVWdZjOP8: ok (downloaded elsewhere)
+2026-11-12T11:28:50Z  import 2ahvNoPjNDI: ok (downloaded elsewhere)
+2026-11-12T11:29:10Z  import 6U9UX0MLvU4: ok (downloaded elsewhere)
+2026-11-12T11:29:30Z  import Ym-tXlbrq-w: ok (downloaded elsewhere)
+2026-11-12T11:29:51Z  import 2ccdfNa0OyQ: ok (downloaded elsewhere)
+2026-11-12T11:30:12Z  import 29MA-0_XkAY: ok (downloaded elsewhere)
+2026-11-12T11:30:12Z  import zVkCXecLf5c: ok (downloaded elsewhere)
+2026-11-12T11:30:33Z  import V04vD3vrctU: ok (downloaded elsewhere)
+2026-11-12T11:30:53Z  import gzCWo4_rAr0: ok (downloaded elsewhere)
+2026-11-12T11:31:13Z  import LnDxp5QNxmA: ok (downloaded elsewhere)
+2026-11-12T11:31:34Z  import vIXEWEsz_60: ok (downloaded elsewhere)
+2026-11-12T11:32:14Z  import gCwNvjROFGA: ok (downloaded elsewhere)
+2026-11-12T11:32:35Z  import B7HQQms6klA: ok (downloaded elsewhere)
+2026-11-12T11:32:55Z  import fx0aMbJwE34: ok (downloaded elsewhere)
+2026-11-12T11:33:16Z  import 6Oc5_Gdc5jU: ok (downloaded elsewhere)
+2026-11-12T11:33:36Z  import 8AguNMwcvsw: ok (downloaded elsewhere)
+2026-11-12T11:34:17Z  import Qs4R686NOjg: ok (downloaded elsewhere)
+2026-11-12T11:34:17Z  import obdK23ZIr6E: ok (downloaded elsewhere)
+2026-11-12T11:34:58Z  import a7-bpUidOBo: ok (downloaded elsewhere)
+2026-11-12T11:35:18Z  import ksTmEkp5ERM: ok (downloaded elsewhere)
+2026-11-12T11:35:38Z  import AlEPz20FGnk: ok (downloaded elsewhere)
+2026-11-12T11:36:39Z  import M5huAfowxlI: ok (downloaded elsewhere)
+2026-11-12T11:37:20Z  import FvstpFHqzjk: ok (downloaded elsewhere)
+2026-11-12T11:37:20Z  import pywCPv77TJM: ok (downloaded elsewhere)
+2026-11-12T11:37:40Z  import tz822vf2spg: ok (downloaded elsewhere)
+2026-11-12T11:37:40Z  import xBBLcX1A16A: ok (downloaded elsewhere)
+2026-11-12T11:38:01Z  import w-zm91YvUUo: ok (downloaded elsewhere)
+2026-11-12T11:38:21Z  import xL-uQXaoHhg: ok (downloaded elsewhere)
+2026-11-12T11:38:42Z  import 5iXRqSe4KJo: ok (downloaded elsewhere)
+2026-11-12T11:39:02Z  import OAiCA-fInkM: ok (downloaded elsewhere)
+2026-11-12T11:39:43Z  import gvcEcWUHZ_c: ok (downloaded elsewhere)
+2026-11-12T11:40:03Z  import hmqdid2kALU: ok (downloaded elsewhere)
+2026-11-12T11:40:44Z  import B0m2zgHfr50: ok (downloaded elsewhere)
+2026-11-12T11:40:44Z  import Hr0QlC5Nrh0: ok (downloaded elsewhere)
+2026-11-12T11:41:04Z  import XBXyBskjSOc: ok (downloaded elsewhere)
+2026-11-12T11:41:25Z  import PbchJhisS4s: ok (downloaded elsewhere)
+2026-11-12T11:42:26Z  import sZyaD9COry8: ok (downloaded elsewhere)
+2026-11-12T11:42:46Z  import LYyK7KurvMs: ok (downloaded elsewhere)
+2026-11-12T11:43:06Z  import pe_iRGqeBlA: ok (downloaded elsewhere)
+2026-11-12T11:43:27Z  import AXfeoPJolIE: ok (downloaded elsewhere)
+2026-11-12T11:43:27Z  import Q0ahCmtbs8I: ok (downloaded elsewhere)
+2026-11-12T11:43:47Z  import -9jHKobJxI4: ok (downloaded elsewhere)
+2026-11-12T11:44:08Z  import Kix07nOAEBQ: ok (downloaded elsewhere)
+2026-11-12T11:44:28Z  import YudNG_jdUs4: ok (downloaded elsewhere)
+2026-11-12T11:44:49Z  import NX6gaNB9ZWQ: ok (downloaded elsewhere)
+2026-11-12T11:45:09Z  import Pgq2kiIebKY: ok (downloaded elsewhere)
+2026-11-12T11:45:09Z  import fANocoJWqbM: ok (downloaded elsewhere)
+2026-11-12T11:45:30Z  import nn6rsa6rSTM: ok (downloaded elsewhere)
+2026-11-12T11:46:11Z  import Gelbjg7SL0U: ok (downloaded elsewhere)
+2026-11-12T11:46:31Z  import R49NrP0fcsE: ok (downloaded elsewhere)
+2026-11-12T11:47:11Z  import awLcqOFRHzg: ok (downloaded elsewhere)
+2026-11-12T11:47:32Z  import 9-G4JeHJiYQ: ok (downloaded elsewhere)
+2026-11-12T11:47:32Z  import Bq7Jzyb347k: ok (downloaded elsewhere)
+2026-11-12T11:47:52Z  import bNuG6IapPsk: ok (downloaded elsewhere)
+2026-11-12T11:47:53Z  import vYXkEPIElyc: ok (downloaded elsewhere)
+2026-11-12T11:48:33Z  import cI_BJyU06go: ok (downloaded elsewhere)
+2026-11-12T11:49:14Z  import dUVLr4oJ_1A: ok (downloaded elsewhere)
+2026-11-12T11:49:55Z  import aYJa4LaXliA: ok (downloaded elsewhere)
+2026-11-12T11:49:55Z  import dG4Nl9feXrc: ok (downloaded elsewhere)
+2026-11-12T11:50:15Z  import g9OACCqfu7A: ok (downloaded elsewhere)
+2026-11-12T11:50:16Z  import lc2JcbW_d2U: ok (downloaded elsewhere)
+2026-11-12T11:50:56Z  import iJZ97cfpjhI: ok (downloaded elsewhere)
+2026-11-12T11:51:17Z  import EA8_ci9zyTI: ok (downloaded elsewhere)
+2026-11-12T11:51:37Z  import 9RUN6Q-uZm0: ok (downloaded elsewhere)
+2026-11-12T11:51:58Z  import 7XCZ1eiANxA: ok (downloaded elsewhere)
+2026-11-12T11:51:58Z  import sG_f01xgWPo: ok (downloaded elsewhere)
+2026-11-12T11:52:18Z  import Om_sTl8BIgQ: ok (downloaded elsewhere)
+2026-11-12T11:52:59Z  import fL8yTbFLRGI: ok (downloaded elsewhere)
+2026-11-12T11:53:19Z  import cqjfiWrwmmg: ok (downloaded elsewhere)
+2026-11-12T11:53:40Z  import NzSztNcr074: ok (downloaded elsewhere)
+2026-11-12T11:54:00Z  import 4ho4zx7QtR0: ok (downloaded elsewhere)
+2026-11-12T11:54:00Z  import Q9BbiIQ6C_E: ok (downloaded elsewhere)
+2026-11-12T11:55:01Z  import rWlSjxtDJGw: ok (downloaded elsewhere)
+2026-11-12T11:56:02Z  import ZjXejl6qnuc: ok (downloaded elsewhere)
+2026-11-12T11:56:02Z  import _i-HUb2b2Es: ok (downloaded elsewhere)
+2026-11-12T11:56:23Z  import Bb2B39Z8uH0: ok (downloaded elsewhere)
+2026-11-12T11:56:23Z  import BjJsBFK0q3k: ok (downloaded elsewhere)
+2026-11-12T11:56:24Z  import riN-hgPZwHc: ok (downloaded elsewhere)
+2026-11-12T11:56:44Z  import cMBM09O3Bm4: ok (downloaded elsewhere)
+2026-11-12T11:57:05Z  import lerSczmXX7c: ok (downloaded elsewhere)
+2026-11-12T11:57:25Z  import 2SAG3jAYNyk: ok (downloaded elsewhere)
+2026-11-12T11:57:45Z  import 1vJ40GbNGUY: ok (downloaded elsewhere)
+2026-11-12T11:58:06Z  import cXFzC5Ht5Ds: ok (downloaded elsewhere)
+2026-11-12T11:58:26Z  import QidFzjRpGdM: ok (downloaded elsewhere)
+2026-11-12T11:58:46Z  import oZKH1YlFIIY: ok (downloaded elsewhere)
+2026-11-12T11:59:27Z  import jjRM3AXLER8: ok (downloaded elsewhere)
+2026-11-12T11:59:47Z  import 4yi5sV2-CI0: ok (downloaded elsewhere)
+2026-11-12T12:00:08Z  import Jn9aklUYdQk: ok (downloaded elsewhere)
+2026-11-12T12:00:48Z  import idfrlnAVLMk: ok (downloaded elsewhere)
+2026-11-12T12:01:29Z  import u0Iw9dozWrk: ok (downloaded elsewhere)
+2026-11-12T12:01:49Z  import 2A6VjDfEOcw: ok (downloaded elsewhere)
+2026-11-12T12:01:49Z  import ijNCfAvwMGE: ok (downloaded elsewhere)
+2026-11-12T12:02:50Z  import EXFmnaWBhVc: ok (downloaded elsewhere)
+2026-11-12T12:03:10Z  import -cg0VD78pwI: ok (downloaded elsewhere)
+2026-11-12T12:03:31Z  import exXypaccs2o: ok (downloaded elsewhere)
+2026-11-12T12:03:51Z  import SrmqhX-Te2I: ok (downloaded elsewhere)
+2026-11-12T12:03:52Z  import X5tQg9x3Nfs: ok (downloaded elsewhere)
+2026-11-12T12:04:52Z  import 4rQIqi-fQ9w: ok (downloaded elsewhere)
+2026-11-12T12:04:52Z  import 6Azkwapctz0: ok (downloaded elsewhere)
+2026-11-12T12:05:13Z  import i9kMX8tSKSA: ok (downloaded elsewhere)
+2026-11-12T12:05:13Z  import yxM5eSSrc3U: ok (downloaded elsewhere)
+2026-11-12T12:05:34Z  import 7j-PrubotPQ: ok (downloaded elsewhere)
+2026-11-12T12:05:54Z  import xGQYPFqXJjE: ok (downloaded elsewhere)
+2026-11-12T12:06:15Z  import Qmd7WSUIsdE: ok (downloaded elsewhere)
+2026-11-12T12:06:55Z  import 8Ri1s8CTSrM: ok (downloaded elsewhere)
+2026-11-12T12:07:16Z  import _pqh8Nw-k3o: ok (downloaded elsewhere)
+2026-11-12T12:07:37Z  import mr-757RHm8g: ok (downloaded elsewhere)
+2026-11-12T12:08:17Z  import s7fhoksgu6Q: ok (downloaded elsewhere)
+2026-11-12T12:08:38Z  import 8ovG9ptOjBw: ok (downloaded elsewhere)
+2026-11-12T12:08:38Z  import Ah-s30bj8jU: ok (downloaded elsewhere)
+2026-11-12T12:08:58Z  import RhA10WVTmHw: ok (downloaded elsewhere)
+2026-11-12T12:09:39Z  import aZoH6w-VPjk: ok (downloaded elsewhere)
+2026-11-12T12:09:59Z  import y8ZYukbUw0c: ok (downloaded elsewhere)
+2026-11-12T12:10:20Z  import PnO51tbfqQs: ok (downloaded elsewhere)
+2026-11-12T12:10:40Z  import BrjLq8jTPfw: ok (downloaded elsewhere)
+2026-11-12T12:11:21Z  import e2Jas4VHTvo: ok (downloaded elsewhere)
+2026-11-12T12:11:41Z  import 4cghAWCvGwY: ok (downloaded elsewhere)
+2026-11-12T12:11:41Z  import ex7_knWJ9ak: ok (downloaded elsewhere)
+2026-11-12T12:12:02Z  import 8-qO0tHgMHY: ok (downloaded elsewhere)
+2026-11-12T12:12:02Z  import mh9esb9qul8: ok (downloaded elsewhere)
+2026-11-12T12:12:43Z  import Ym2JIL8xgVI: ok (downloaded elsewhere)
+2026-11-12T12:13:03Z  import 1GtrRPMfvUE: ok (downloaded elsewhere)
+2026-11-12T12:13:04Z  import QY6idrQO99U: ok (downloaded elsewhere)
+2026-11-12T12:13:44Z  import JOMSMENnSIQ: ok (downloaded elsewhere)
+2026-11-12T12:14:05Z  import MHvLcoblyio: ok (downloaded elsewhere)
+2026-11-12T12:14:46Z  import fyRcwpgt_wE: ok (downloaded elsewhere)
+2026-11-12T12:15:26Z  import K6bUpDgQbfE: ok (downloaded elsewhere)
+2026-11-12T12:15:47Z  import O_KbvPekSSo: ok (downloaded elsewhere)
+2026-11-12T12:15:47Z  import t3y2AhXLjRY: ok (downloaded elsewhere)
+2026-11-12T12:16:07Z  import 0L9EfYLMx8A: ok (downloaded elsewhere)
+2026-11-12T12:16:48Z  import KPQ1iLx9I2s: ok (downloaded elsewhere)
+2026-11-12T12:17:09Z  import BFien9ZcPDg: ok (downloaded elsewhere)
+2026-11-12T12:17:29Z  import sdqXvtcWfIw: ok (downloaded elsewhere)
+2026-11-12T12:17:49Z  import b5VLi2_1HfE: ok (downloaded elsewhere)
+2026-11-12T12:17:50Z  import phSVmXpDj08: ok (downloaded elsewhere)
+2026-11-12T12:18:30Z  import 1P1_42hgVhE: ok (downloaded elsewhere)
+2026-11-12T12:18:30Z  import H0OvKe1PqLk: ok (downloaded elsewhere)
+2026-11-12T12:18:51Z  import 49leN9fKryQ: ok (downloaded elsewhere)
+2026-11-12T12:19:52Z  import OGSTQDin2k0: ok (downloaded elsewhere)
+2026-11-12T12:20:12Z  import 3724uXedg0A: ok (downloaded elsewhere)
+2026-11-12T12:20:12Z  import xUOc-UwTVBA: ok (downloaded elsewhere)
+2026-11-12T12:20:53Z  import bADOVfNgqbY: ok (downloaded elsewhere)
+2026-11-12T12:21:13Z  import BPEyTCIqxtY: ok (downloaded elsewhere)
+2026-11-12T12:22:34Z  import Jt4V3NCA-u0: ok (downloaded elsewhere)
+2026-11-12T12:22:55Z  import DYkMDyopMSs: ok (downloaded elsewhere)
+2026-11-12T12:23:15Z  import i0Zanhlu46I: ok (downloaded elsewhere)
+2026-11-12T12:23:15Z  import o_UU1gvtCxs: ok (downloaded elsewhere)
+2026-11-12T12:23:35Z  import wuLB6tV-EIE: ok (downloaded elsewhere)
+2026-11-12T12:24:16Z  import t7YZcqp5rdc: ok (downloaded elsewhere)
+2026-11-12T12:24:57Z  import a5F46p9TXaI: ok (downloaded elsewhere)
+2026-11-12T12:25:17Z  import f5KPuwl5uSM: ok (downloaded elsewhere)
+2026-11-12T12:25:17Z  import wfvd_2gm_ew: ok (downloaded elsewhere)
+2026-11-12T12:25:58Z  import 9Chorjyokgw: ok (downloaded elsewhere)
+2026-11-12T12:26:39Z  import O6fMIDJyDhY: ok (downloaded elsewhere)
+2026-11-12T12:26:59Z  import gdVpv0KN_uU: ok (downloaded elsewhere)
+2026-11-12T12:27:20Z  import vyIiFiExyQQ: ok (downloaded elsewhere)
+2026-11-12T12:27:40Z  import L9Rsc20F4Iw: ok (downloaded elsewhere)
+2026-11-12T12:27:40Z  import dTdnDn9FEww: ok (downloaded elsewhere)
+2026-11-12T12:28:21Z  import qiWbvWxWsg4: ok (downloaded elsewhere)
+2026-11-12T12:29:01Z  import 7FA7IUSqAts: ok (downloaded elsewhere)
+2026-11-12T12:29:01Z  import NrKUTj5Lefs: ok (downloaded elsewhere)
+2026-11-12T12:29:22Z  import svxlLrPCzUM: ok (downloaded elsewhere)
+2026-11-12T12:29:42Z  import Ft9nUxwKAaA: ok (downloaded elsewhere)
+2026-11-12T12:30:03Z  import 1CUDuGeV_w8: ok (downloaded elsewhere)
+2026-11-12T12:30:23Z  import PpwRJrczSqg: ok (downloaded elsewhere)
+2026-11-12T12:30:23Z  import xcmtfR5eQxQ: ok (downloaded elsewhere)
+2026-11-12T12:30:44Z  import uLLqj_ibi-Y: ok (downloaded elsewhere)
+2026-11-12T12:31:25Z  import 0nFRhZAXDw4: ok (downloaded elsewhere)
+2026-11-12T12:31:45Z  import Ct1dHCSwlzs: ok (downloaded elsewhere)
+2026-11-12T12:32:05Z  import 5QCLbephl9k: ok (downloaded elsewhere)
+2026-11-12T12:32:26Z  import 4PhbUhrI4KE: ok (downloaded elsewhere)
+2026-11-12T12:32:46Z  import f-iL7k5jhCI: ok (downloaded elsewhere)
+2026-11-12T12:33:48Z  import nTzEGiBLw00: ok (downloaded elsewhere)
+2026-11-12T12:34:28Z  import Se_E5OOTB4s: ok (downloaded elsewhere)
+2026-11-12T12:34:28Z  import TarKYUD056Y: ok (downloaded elsewhere)
+2026-11-12T12:34:49Z  import 6xMOojpslMI: ok (downloaded elsewhere)
+2026-11-12T12:34:49Z  import Eif8UopFHhM: ok (downloaded elsewhere)
+2026-11-12T12:35:09Z  import aScyfsClZd0: ok (downloaded elsewhere)
+2026-11-12T12:35:10Z  import fkM9JyHWOo8: ok (downloaded elsewhere)
+2026-11-12T12:35:50Z  import Th5MQB8VO3Q: ok (downloaded elsewhere)
+2026-11-12T12:36:11Z  import Qb2qYBftAzw: ok (downloaded elsewhere)
+2026-11-12T12:36:51Z  import kU-7emDfMe4: ok (downloaded elsewhere)
+2026-11-12T12:37:11Z  import 5V2iPFEguiM: ok (downloaded elsewhere)
+2026-11-12T12:37:32Z  import Gge3fse0rWg: ok (downloaded elsewhere)
+2026-11-12T12:37:32Z  import a_zebPqXA7c: ok (downloaded elsewhere)
+2026-11-12T12:37:53Z  import XgoixwiYjro: ok (downloaded elsewhere)
+2026-11-12T12:38:33Z  import x-80P5Mf_Y8: ok (downloaded elsewhere)
+2026-11-12T12:38:54Z  import kdLu240pkyI: ok (downloaded elsewhere)
+2026-11-12T12:38:54Z  import rZWQrsYulxI: ok (downloaded elsewhere)
+2026-11-12T12:39:14Z  import YsSkgxSEC9k: ok (downloaded elsewhere)
+2026-11-12T12:39:55Z  import O_w-zcDFMOs: ok (downloaded elsewhere)
+2026-11-12T12:39:55Z  import vnZwDJQBIWw: ok (downloaded elsewhere)
+2026-11-12T12:40:16Z  import WAVrZioY18c: ok (downloaded elsewhere)
+2026-11-12T12:40:36Z  import 9VsF5w_n7qA: ok (downloaded elsewhere)
+2026-11-12T12:41:17Z  import km1nI6-op2A: ok (downloaded elsewhere)
+2026-11-12T12:41:37Z  import VSJjVlGnmGQ: ok (downloaded elsewhere)
+2026-11-12T12:41:38Z  import rJUj0ZbgPkw: ok (downloaded elsewhere)
+2026-11-12T12:41:58Z  import GiE7R-28ZoU: ok (downloaded elsewhere)
+2026-11-12T12:42:19Z  import Q5sXjav9YNc: ok (downloaded elsewhere)
+2026-11-12T12:42:39Z  import xbcUfB29xss: ok (downloaded elsewhere)
+2026-11-12T12:43:00Z  import CAg8ItLDkwg: ok (downloaded elsewhere)
+2026-11-12T12:43:20Z  import HGsWYU8Sr10: ok (downloaded elsewhere)
+2026-11-12T12:43:40Z  import 7xv-yiS3oB4: ok (downloaded elsewhere)
+2026-11-12T12:44:01Z  import PoRuagin4iM: ok (downloaded elsewhere)
+2026-11-12T12:44:21Z  import CPr73wYNfm4: ok (downloaded elsewhere)
+2026-11-12T12:44:42Z  import Zpd_RKK-SoA: ok (downloaded elsewhere)
+2026-11-12T12:45:02Z  import wGMFLdlwsiE: ok (downloaded elsewhere)
+2026-11-12T12:45:23Z  import djV64K-Y8vE: ok (downloaded elsewhere)
+2026-11-12T12:45:43Z  import mTsFv_5w3uU: ok (downloaded elsewhere)
+2026-11-12T12:46:04Z  import gDzGfavrWeI: ok (downloaded elsewhere)
+2026-11-12T12:46:24Z  import lVAKTHWlIag: ok (downloaded elsewhere)
+2026-11-12T12:46:44Z  import 14B6JJO6CDM: ok (downloaded elsewhere)
+2026-11-12T12:47:05Z  import S-mQfP0MW5w: ok (downloaded elsewhere)
+2026-11-12T12:47:25Z  import eU2P1h9SIhY: ok (downloaded elsewhere)
+2026-11-12T12:48:26Z  import lEvNMZQ2DT4: ok (downloaded elsewhere)
+2026-11-12T12:48:47Z  import Z3hYfJ4dDKk: ok (downloaded elsewhere)
+2026-11-12T12:49:07Z  import iiqbyMQ9vZI: ok (downloaded elsewhere)
+2026-11-12T12:49:28Z  import S0rIdxU8Fpw: ok (downloaded elsewhere)
+2026-11-12T12:49:28Z  import oEDZUGxcTSk: ok (downloaded elsewhere)
+2026-11-12T12:49:48Z  import zFtxm0xaQNc: ok (downloaded elsewhere)
+2026-11-12T12:50:09Z  import RG_4B9zxJnU: ok (downloaded elsewhere)
+2026-11-12T12:50:09Z  import RJH2oMKPeaw: ok (downloaded elsewhere)
+2026-11-12T12:50:50Z  import T5U81A-7CwY: ok (downloaded elsewhere)
+2026-11-12T12:51:10Z  import tFEx_mG4gAg: ok (downloaded elsewhere)
+2026-11-12T12:51:31Z  import 0E1mZOYwLoU: ok (downloaded elsewhere)
+2026-11-12T12:51:51Z  import 1cF46kj6jPo: ok (downloaded elsewhere)
+2026-11-12T12:52:12Z  import bzcufo-BRaA: ok (downloaded elsewhere)
+2026-11-12T12:52:32Z  import pst1AsXQWTE: ok (downloaded elsewhere)
+2026-11-12T12:52:52Z  import SInqf3uBuxY: ok (downloaded elsewhere)
+2026-11-12T12:53:33Z  import MC-Bl52FIBA: ok (downloaded elsewhere)
+2026-11-12T12:53:53Z  import 6_ncbbzHRUo: ok (downloaded elsewhere)
+2026-11-12T12:53:54Z  import ApUXMFYjTUc: ok (downloaded elsewhere)
+2026-11-12T12:54:34Z  import zOJtLz0KHjQ: ok (downloaded elsewhere)
+2026-11-12T12:54:55Z  import _vgXhUmsTyA: ok (downloaded elsewhere)
+2026-11-12T12:55:15Z  import wk9I_xT1NNc: ok (downloaded elsewhere)
+2026-11-12T12:55:56Z  import Xk01xkZmr-4: ok (downloaded elsewhere)
+2026-11-12T12:56:16Z  import C2b403ofWSg: ok (downloaded elsewhere)
+2026-11-12T12:56:16Z  import PvwnJG2i1i4: ok (downloaded elsewhere)
+2026-11-12T12:56:37Z  import Ia-g9fkyMJ4: ok (downloaded elsewhere)
+2026-11-12T12:56:57Z  import 6xccYhT7cT8: ok (downloaded elsewhere)
+2026-11-12T12:57:17Z  import 9Pj0r-La1mw: ok (downloaded elsewhere)
+2026-11-12T12:57:58Z  import uNp13TSvXWI: ok (downloaded elsewhere)
+2026-11-12T12:58:19Z  import XamiKGRhams: ok (downloaded elsewhere)
+2026-11-12T12:58:39Z  import riH6ctp6EAo: ok (downloaded elsewhere)
+2026-11-12T12:58:59Z  import 7qcpiseSgUo: ok (downloaded elsewhere)
+2026-11-12T12:59:20Z  import _JGLYw6u1HE: ok (downloaded elsewhere)
+2026-11-12T12:59:40Z  import hbibkRNAA0s: ok (downloaded elsewhere)
+2026-11-12T13:00:21Z  import oXA7qx--2oI: ok (downloaded elsewhere)
+2026-11-12T13:01:01Z  import Hr0Jl1s_ccc: ok (downloaded elsewhere)
+2026-11-12T13:01:42Z  import Zifbjuvaqrk: ok (downloaded elsewhere)
+2026-11-12T13:01:42Z  import yzxyqrBbzCY: ok (downloaded elsewhere)
+2026-11-12T13:02:02Z  import asXCFgLXa_w: ok (downloaded elsewhere)
+2026-11-12T13:02:22Z  import o9DDAksGG1g: ok (downloaded elsewhere)
+2026-11-12T13:03:03Z  import 83xYPZ_2W1k: ok (downloaded elsewhere)
+2026-11-12T13:03:03Z  import hiJd1soF2aE: ok (downloaded elsewhere)
+2026-11-12T13:03:23Z  import sI-HPienPOA: ok (downloaded elsewhere)
+2026-11-12T13:03:43Z  import 1wkUg4vl3O8: ok (downloaded elsewhere)
+2026-11-12T13:04:04Z  import OA2vS2-Tgvo: ok (downloaded elsewhere)
+2026-11-12T13:05:04Z  import 6lGiJL4qKT0: ok (downloaded elsewhere)
+2026-11-12T13:05:24Z  import GsgkT-kp_mM: ok (downloaded elsewhere)
+2026-11-12T13:05:24Z  import h3bvPp9Jqnc: ok (downloaded elsewhere)
+2026-11-12T13:05:24Z  import jCBkyU72Riw: ok (downloaded elsewhere)
+2026-11-12T13:05:44Z  import fShbPnI_luI: ok (downloaded elsewhere)
+2026-11-12T13:06:05Z  import McACiO5dwGM: ok (downloaded elsewhere)
+2026-11-12T13:06:25Z  import N0atnBzz5-U: ok (downloaded elsewhere)
+2026-11-12T13:06:45Z  import CPMWlyJSJ0w: ok (downloaded elsewhere)
+2026-11-12T13:07:05Z  import AXd66O4yEEI: ok (downloaded elsewhere)
+2026-11-12T13:07:25Z  import cN2LoMV0i-A: ok (downloaded elsewhere)
+2026-11-12T13:08:46Z  import 5fW-nqGz-iE: ok (downloaded elsewhere)
+2026-11-12T13:09:06Z  import lZBg1VotJrw: ok (downloaded elsewhere)
+2026-11-12T13:09:06Z  import yPexH1DUKe4: ok (downloaded elsewhere)
+2026-11-12T13:09:26Z  import iwMPsz9WsFU: ok (downloaded elsewhere)
+2026-11-12T13:09:27Z  import yvek6RG3p7U: ok (downloaded elsewhere)
+2026-11-12T13:10:07Z  import Q8eMoF47hLU: ok (downloaded elsewhere)
+2026-11-12T13:10:27Z  import DyY7at_1WJA: ok (downloaded elsewhere)
+2026-11-12T13:10:47Z  import XBTfCjHrcIo: ok (downloaded elsewhere)
+2026-11-12T13:11:08Z  import -CgCNvA1_ag: ok (downloaded elsewhere)
+2026-11-12T13:11:48Z  import dX5ZQX5o8qU: ok (downloaded elsewhere)
+2026-11-12T13:12:08Z  import EqKEVpt1s3Y: ok (downloaded elsewhere)
+2026-11-12T13:12:08Z  import Q-qoF1B0i_Q: ok (downloaded elsewhere)
+2026-11-12T13:12:08Z  import m60YZzzGZsk: ok (downloaded elsewhere)
+2026-11-12T13:12:29Z  import qDZbmgSwTJU: ok (downloaded elsewhere)
+2026-11-12T13:13:09Z  import dSOO9PSVKA4: ok (downloaded elsewhere)
+2026-11-12T13:13:29Z  import 0ZNqZ9x_06U: ok (downloaded elsewhere)
+2026-11-12T13:13:49Z  import Bx-2FBZQKs0: ok (downloaded elsewhere)
+2026-11-12T13:14:10Z  import _DsjLa0POK4: ok (downloaded elsewhere)
+2026-11-12T13:14:30Z  import aLnuvTGf-pk: ok (downloaded elsewhere)
+2026-11-12T13:14:50Z  import hIXOf7NePPo: ok (downloaded elsewhere)
+2026-11-12T13:15:31Z  import 0TVZVV-IXCQ: ok (downloaded elsewhere)
+2026-11-12T13:15:51Z  import whf3hzFiqzc: ok (downloaded elsewhere)
+2026-11-12T13:16:11Z  import ZdnpWPRKNUg: ok (downloaded elsewhere)
+2026-11-12T13:16:31Z  import HgaOFrQctSs: ok (downloaded elsewhere)
+2026-11-12T13:16:52Z  import lgLs0hy4eYk: ok (downloaded elsewhere)
+2026-11-12T13:17:32Z  import F7WyPqms5x0: ok (downloaded elsewhere)
+2026-11-12T13:17:52Z  import CM5WSxyRzDM: ok (downloaded elsewhere)
+2026-11-12T13:17:52Z  import DIZkW_hQGA0: ok (downloaded elsewhere)
+2026-11-12T13:18:13Z  import JiCQD8YadRs: ok (downloaded elsewhere)
+2026-11-12T13:18:33Z  import 5VI8gDmWreM: ok (downloaded elsewhere)
+2026-11-12T13:18:53Z  import FAFuRYr3OuY: ok (downloaded elsewhere)
+2026-11-12T13:19:13Z  import Ncxrq2oh3KY: ok (downloaded elsewhere)
+2026-11-12T13:19:34Z  import y8nnK3mnV3Q: ok (downloaded elsewhere)
+2026-11-12T13:19:54Z  import m5k-5ZOUp-A: ok (downloaded elsewhere)
+2026-11-12T13:19:54Z  import pGKvuZ2Qwhs: ok (downloaded elsewhere)
+2026-11-12T13:20:35Z  import OR9T1Iak3EU: ok (downloaded elsewhere)
+2026-11-12T13:21:15Z  import DIQq8lVHew4: ok (downloaded elsewhere)
+2026-11-12T13:21:35Z  import Z9Jg3hLBNpk: ok (downloaded elsewhere)
+2026-11-12T13:21:55Z  import 8NDfBsuUtBU: ok (downloaded elsewhere)
+2026-11-12T13:22:16Z  import inkqQlbrdrQ: ok (downloaded elsewhere)
+2026-11-12T13:22:36Z  import b5p78d-gr6w: ok (downloaded elsewhere)
+2026-11-12T13:22:56Z  import qCWFFPHRu1Q: ok (downloaded elsewhere)
+2026-11-12T13:23:16Z  import m9jiFWMtZvo: ok (downloaded elsewhere)
+2026-11-12T13:23:17Z  import wkxyNC1N0_M: ok (downloaded elsewhere)
+2026-11-12T13:23:37Z  import mujtwJxyRG0: ok (downloaded elsewhere)
+2026-11-12T13:24:17Z  import r4gs8Ddp8_w: ok (downloaded elsewhere)
+2026-11-12T13:24:37Z  import 7BSxJrEbDGQ: ok (downloaded elsewhere)
+2026-11-12T13:24:58Z  import V-G9JDBlCXA: ok (downloaded elsewhere)
+2026-11-12T13:25:38Z  import 7q-sfwyFwTw: ok (downloaded elsewhere)
+2026-11-12T13:25:38Z  import EC-ox4o2vL8: ok (downloaded elsewhere)
+2026-11-12T13:25:58Z  import r5hl9FFnOrI: ok (downloaded elsewhere)
+2026-11-12T13:26:19Z  import -fMMVHWmZFU: ok (downloaded elsewhere)
+2026-11-12T13:26:39Z  import vE5gwrynvDg: ok (downloaded elsewhere)
+2026-11-12T13:26:59Z  import ciIVpQCwlHA: ok (downloaded elsewhere)
+2026-11-12T13:27:19Z  import sTtB1JwFZpk: ok (downloaded elsewhere)
+2026-11-12T13:27:59Z  import 06JZkzANUhM: ok (downloaded elsewhere)
+2026-11-12T13:28:20Z  import DX63QmI5YAw: ok (downloaded elsewhere)
+2026-11-12T13:28:40Z  import Elguwfdb1pw: ok (downloaded elsewhere)
+2026-11-12T13:29:00Z  import JKmr96i2xH0: ok (downloaded elsewhere)
+2026-11-12T13:29:20Z  import 7kE0JKKpcxw: ok (downloaded elsewhere)
+2026-11-12T13:29:41Z  import K9bq75znrw8: ok (downloaded elsewhere)
+2026-11-12T13:30:01Z  import yiORb49J5n0: ok (downloaded elsewhere)
+2026-11-12T13:30:21Z  import DHRQXGTSvw0: ok (downloaded elsewhere)
+2026-11-12T13:30:41Z  import lKgR-msxA0A: ok (downloaded elsewhere)
+2026-11-12T13:31:01Z  import qmWTMNhtY9Q: ok (downloaded elsewhere)
+2026-11-12T13:31:02Z  import sFaRkeNeF9U: ok (downloaded elsewhere)
+2026-11-12T13:31:22Z  import jrKMYkmA3lY: ok (downloaded elsewhere)
+2026-11-12T13:32:22Z  import R5j7FsraGyk: ok (downloaded elsewhere)
+2026-11-12T13:32:42Z  import DsCvHyQ10gU: ok (downloaded elsewhere)
+2026-11-12T13:32:43Z  import qKpROgyEkJA: ok (downloaded elsewhere)
+2026-11-12T13:33:03Z  import ulkPZc48Au8: ok (downloaded elsewhere)
+2026-11-12T13:33:43Z  import 1ssnJqJNdbM: ok (downloaded elsewhere)
+2026-11-12T13:33:43Z  import O-JkopH4vWA: ok (downloaded elsewhere)
+2026-11-12T13:34:44Z  import 1ZJfeWoxZ0Y: ok (downloaded elsewhere)
+2026-11-12T13:35:24Z  import cREbN-4BzHE: ok (downloaded elsewhere)
+2026-11-12T13:35:44Z  import vbizsxmXjaY: ok (downloaded elsewhere)
+2026-11-12T13:36:25Z  import CcSX6Ns_9lA: ok (downloaded elsewhere)
+2026-11-12T13:36:25Z  import vWh9dyR-IGI: ok (downloaded elsewhere)
+2026-11-12T13:36:45Z  import 6GZKEpZRriQ: ok (downloaded elsewhere)
+2026-11-12T13:36:45Z  import msZT5N6eNjk: ok (downloaded elsewhere)
+2026-11-12T13:37:05Z  import 8_w7iWeqQRw: ok (downloaded elsewhere)
+2026-11-12T13:37:46Z  import rtUezKOrBAU: ok (downloaded elsewhere)
+2026-11-12T13:38:06Z  import bcYUgMEaCMA: ok (downloaded elsewhere)
+2026-11-12T13:38:26Z  import 1sy_uqZ1zNQ: ok (downloaded elsewhere)
+2026-11-12T13:38:47Z  import tTsvJ7A6zpI: ok (downloaded elsewhere)
+2026-11-12T13:39:47Z  import S94jeWvuu08: ok (downloaded elsewhere)
+2026-11-12T13:40:07Z  import id1nHgWmldk: ok (downloaded elsewhere)
+2026-11-12T13:40:07Z  import t0Jw9cy-Yv4: ok (downloaded elsewhere)
+2026-11-12T13:40:48Z  import CTxI-fIyCeo: ok (downloaded elsewhere)
+2026-11-12T13:41:28Z  import GZQvzMCdQkI: ok (downloaded elsewhere)
+2026-11-12T13:41:48Z  import GFlARu67aIc: ok (downloaded elsewhere)
+2026-11-12T13:42:09Z  import L_LmPW3R9HM: ok (downloaded elsewhere)
+2026-11-12T13:42:49Z  import 6SRokrEQBtc: ok (downloaded elsewhere)
+2026-11-12T13:43:09Z  import v8wvRjQdBbo: ok (downloaded elsewhere)
+2026-11-12T13:43:30Z  import 1Z9D2xj6ss0: ok (downloaded elsewhere)
+2026-11-12T13:43:30Z  import inzes5cF7Ho: ok (downloaded elsewhere)
+2026-11-12T13:44:10Z  import EpdOW7JpFbI: ok (downloaded elsewhere)
+2026-11-12T13:44:50Z  import 1zZm6e5Os4U: ok (downloaded elsewhere)
+2026-11-12T13:45:11Z  import B_MmKCyAmpw: ok (downloaded elsewhere)
+2026-11-12T13:45:51Z  import cUQJHBo2MeA: ok (downloaded elsewhere)
+2026-11-12T13:46:11Z  import 5WxHoU6wLiA: ok (downloaded elsewhere)
+2026-11-12T13:46:32Z  import TMGjfjCJ23E: ok (downloaded elsewhere)
+2026-11-12T13:46:52Z  import 98vtCeS4srQ: ok (downloaded elsewhere)
+2026-11-12T13:47:12Z  import SAlfaCFVQqo: ok (downloaded elsewhere)
+2026-11-12T13:47:32Z  import E1wcRx1Exec: ok (downloaded elsewhere)
+2026-11-12T13:47:32Z  import qSM52VNEVSo: ok (downloaded elsewhere)
+2026-11-12T13:47:53Z  import O4KtJ3785ts: ok (downloaded elsewhere)
+2026-11-12T13:48:13Z  import 5zGfak4nfkk: ok (downloaded elsewhere)
+2026-11-12T13:48:53Z  import f2LK4qkvC1E: ok (downloaded elsewhere)
+2026-11-12T13:49:34Z  import Z54o757OS3U: ok (downloaded elsewhere)
+2026-11-12T13:49:34Z  import seXZDKkONiU: ok (downloaded elsewhere)
+2026-11-12T13:49:34Z  import yUjUU9FVa8s: ok (downloaded elsewhere)
+2026-11-12T13:50:34Z  import PT5i_AcSbwk: ok (downloaded elsewhere)
+2026-11-12T13:50:54Z  import 4z3srHDpcao: ok (downloaded elsewhere)
+2026-11-12T13:50:55Z  import I4Nh3mOaNck: ok (downloaded elsewhere)
+2026-11-12T13:50:55Z  import ISJ2fM0-0dw: ok (downloaded elsewhere)
+2026-11-12T13:51:15Z  import wQuhEYZsqmE: ok (downloaded elsewhere)
+2026-11-12T13:51:55Z  import aZdQk56qy0E: ok (downloaded elsewhere)
+2026-11-12T13:52:16Z  import vXbh-h6JGgg: ok (downloaded elsewhere)
+2026-11-12T13:52:56Z  import ELqcVh6D-aY: ok (downloaded elsewhere)
+2026-11-12T13:52:56Z  import urDH9Tn7i2c: ok (downloaded elsewhere)
+2026-11-12T13:53:16Z  import 5G67PoJIcQw: ok (downloaded elsewhere)
+2026-11-12T13:53:16Z  import 5PJld2Za7kM: ok (downloaded elsewhere)
+2026-11-12T13:53:57Z  import W8hBs4ZiG7U: ok (downloaded elsewhere)
+2026-11-12T13:54:17Z  import LWCHzyCxJSQ: ok (downloaded elsewhere)
+2026-11-12T13:54:57Z  import IeY9hKckmeA: ok (downloaded elsewhere)
+2026-11-12T13:55:17Z  import 4AHTuFMPftA: ok (downloaded elsewhere)
+2026-11-12T13:55:18Z  import yRbWCPlOzKM: ok (downloaded elsewhere)
+2026-11-12T13:55:38Z  import 0U-H7JPYyuw: ok (downloaded elsewhere)
+2026-11-12T13:55:58Z  import BLOT9RM2gjU: ok (downloaded elsewhere)
+2026-11-12T13:56:38Z  import NnN4n9v9Ojs: ok (downloaded elsewhere)
+2026-11-12T13:56:58Z  import 5Guu53F9Yno: ok (downloaded elsewhere)
+2026-11-12T13:56:58Z  import QRuh8jPUAjI: ok (downloaded elsewhere)
+2026-11-12T13:57:59Z  import _3je4X6k2cM: ok (downloaded elsewhere)
+2026-11-12T13:58:19Z  import LfDjZqiXf3E: ok (downloaded elsewhere)
+2026-11-12T13:58:59Z  import tFJvtq4m36Q: ok (downloaded elsewhere)
+2026-11-12T13:59:20Z  import CMnolNK2Z5s: ok (downloaded elsewhere)
+2026-11-12T13:59:40Z  import J0LTFHYu9LY: ok (downloaded elsewhere)
+2026-11-12T14:00:21Z  import WKvQ-c8dk20: ok (downloaded elsewhere)
+2026-11-12T14:01:01Z  import SGlNyx-Unow: ok (downloaded elsewhere)
+2026-11-12T14:01:41Z  import WT_BRUefDBc: ok (downloaded elsewhere)
+2026-11-12T14:02:21Z  import _fmYX7C2cn0: ok (downloaded elsewhere)
+2026-11-12T14:02:21Z  import d0qkYGMwDsc: ok (downloaded elsewhere)
+2026-11-12T14:02:42Z  import sEfyLd3DjVU: ok (downloaded elsewhere)
+2026-11-12T14:03:02Z  import rRyTv48qWKs: ok (downloaded elsewhere)
+2026-11-12T14:03:22Z  import xKtqNMxfWWg: ok (downloaded elsewhere)
+2026-11-12T14:03:42Z  import yDaxszBxrFA: ok (downloaded elsewhere)
+2026-11-12T14:04:03Z  import BqIZ2ykihTk: ok (downloaded elsewhere)
+2026-11-12T14:04:43Z  import EobtsoMFJEk: ok (downloaded elsewhere)
+2026-11-12T14:05:03Z  import Q95CAqmYoew: ok (downloaded elsewhere)
+2026-11-12T14:05:03Z  import oMEt_dTdnMg: ok (downloaded elsewhere)
+2026-11-12T14:05:44Z  import NNK_O4xD7Jg: ok (downloaded elsewhere)
+2026-11-12T14:06:04Z  import 1dFjKYblswI: ok (downloaded elsewhere)
+2026-11-12T14:06:24Z  import 7EO3lve1f7c: ok (downloaded elsewhere)
+2026-11-12T14:06:44Z  import BdKe3nbGavw: ok (downloaded elsewhere)
+2026-11-12T14:07:05Z  import QpghmUkqLdU: ok (downloaded elsewhere)
+2026-11-12T14:07:45Z  import zA5jRniZ0t0: ok (downloaded elsewhere)
+2026-11-12T14:08:25Z  import 0lEDESPwZgs: ok (downloaded elsewhere)
+2026-11-12T14:08:45Z  import -pce31hLLWg: ok (downloaded elsewhere)
+2026-11-12T14:09:06Z  import 0Koh94dtQhk: ok (downloaded elsewhere)
+2026-11-12T14:09:26Z  import nhlwE21asQc: ok (downloaded elsewhere)
+2026-11-12T14:10:06Z  import 8GXApiu2XLk: ok (downloaded elsewhere)
+2026-11-12T14:10:26Z  import fizRQ-UR3Pg: ok (downloaded elsewhere)
+2026-11-12T14:10:46Z  import rRgRHqvsT8o: ok (downloaded elsewhere)
+2026-11-12T14:11:07Z  import zG6D-FpUczM: ok (downloaded elsewhere)
+2026-11-12T14:11:27Z  import 9DBJvlkWDs4: ok (downloaded elsewhere)
+2026-11-12T14:11:27Z  import m9P3GHkoBEQ: ok (downloaded elsewhere)
+2026-11-12T14:12:47Z  import gx6_7rtN5AA: ok (downloaded elsewhere)
+2026-11-12T14:13:08Z  import -_gvYhgbDG4: ok (downloaded elsewhere)
+2026-11-12T14:13:08Z  import P4fKr8A960s: ok (downloaded elsewhere)
+2026-11-12T14:13:08Z  import TJfFZqUa2lY: ok (downloaded elsewhere)
+2026-11-12T14:13:48Z  import uFVntNVnn7k: ok (downloaded elsewhere)
+2026-11-12T14:14:09Z  import v5K5rTsZa_s: ok (downloaded elsewhere)
+2026-11-12T14:14:29Z  import q9tsJqZujdQ: ok (downloaded elsewhere)
+2026-11-12T14:14:49Z  import Gvz14qtMDBo: ok (downloaded elsewhere)
+2026-11-12T14:15:29Z  import 76SJdJ1iD6I: ok (downloaded elsewhere)
+2026-11-12T14:15:49Z  import P2AACaYi5vI: ok (downloaded elsewhere)
+2026-11-12T14:16:30Z  import kyProT-iMwg: ok (downloaded elsewhere)
+2026-11-12T14:17:10Z  import l_HMLGY9XIo: ok (downloaded elsewhere)
+2026-11-12T14:17:50Z  import 0bgxPRujZcw: ok (downloaded elsewhere)
+2026-11-12T14:18:31Z  import 5krJjartqj0: ok (downloaded elsewhere)
+2026-11-12T14:18:31Z  import vGRznPzQIxo: ok (downloaded elsewhere)
+2026-11-12T14:19:31Z  import 8V6HeD3JUuM: ok (downloaded elsewhere)
+2026-11-12T14:20:11Z  import l63amkDadss: ok (downloaded elsewhere)
+2026-11-12T14:31:56Z  import ofIzHyo78GM: ok (downloaded elsewhere)
+2026-11-12T14:32:36Z  import 21qek4m4GWQ: ok (downloaded elsewhere)
+2026-11-12T14:32:56Z  import LZZL6JVIRa4: ok (downloaded elsewhere)
+2026-11-12T14:33:17Z  import TAeO_pKB_ik: ok (downloaded elsewhere)
+2026-11-12T14:33:37Z  import qI_oHIZzQJ0: ok (downloaded elsewhere)
+2026-11-12T14:33:57Z  import WAA-gbyp24s: ok (downloaded elsewhere)
+2026-11-12T14:34:17Z  import sBtKayGZJiU: ok (downloaded elsewhere)
+2026-11-12T14:34:37Z  import UMNFIPcx56c: ok (downloaded elsewhere)
+2026-11-12T14:35:18Z  import A03pajuM_CU: ok (downloaded elsewhere)
+2026-11-12T14:36:18Z  import w320IQzxGkA: ok (downloaded elsewhere)
+2026-11-12T14:36:38Z  import Ar6N0i4c36U: ok (downloaded elsewhere)
+2026-11-12T14:36:39Z  import CaywS_FK4wE: ok (downloaded elsewhere)
+2026-11-12T14:36:39Z  import PPVWn53Yw4M: ok (downloaded elsewhere)
+2026-11-12T14:37:19Z  import 6YYa6ar2RN4: ok (downloaded elsewhere)
+2026-11-12T14:37:19Z  import JbY8yEFJs0g: ok (downloaded elsewhere)
+2026-11-12T14:38:00Z  import w2vyDCnd7VU: ok (downloaded elsewhere)
+2026-11-12T14:38:20Z  import YASqLUId4n8: ok (downloaded elsewhere)
+2026-11-12T14:38:40Z  import GGQVXv4Nc-E: ok (downloaded elsewhere)
+2026-11-12T14:39:00Z  import DF6G0YHRlV8: ok (downloaded elsewhere)
+2026-11-12T14:39:20Z  import 0zptbdrcP6Y: ok (downloaded elsewhere)
+2026-11-12T20:02:03Z  gate check worker 5: done
+2026-11-12T20:04:16Z  gate check worker 4: done
+2026-11-12T20:07:18Z  gate check worker 7: done
+2026-11-12T20:08:43Z  gate check worker 3: done
+2026-11-12T20:13:26Z  gate check worker 2: done
+2026-11-12T20:16:13Z  gate check worker 6: done
+2026-11-12T20:18:03Z  gate check worker 1: done
+2026-11-12T20:27:03Z  gate check worker 0: done
+2026-11-12T20:27:13Z  gate check feed: done
+2026-11-12T23:15:23Z  labels read: batch-584.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-585.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-586.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-587.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-588.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-589.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-590.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-591.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-592.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-593.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-594.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-595.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-596.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-597.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-598.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-599.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-600.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-601.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-602.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-603.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-604.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-605.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-606.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-607.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-608.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-609.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-610.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-611.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-612.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-613.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-614.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-615.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-616.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-617.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-618.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-619.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-620.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-621.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-622.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-623.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-624.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-625.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-626.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-627.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-628.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-629.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-630.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-631.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-632.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-633.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-634.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-635.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-636.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-637.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-638.json (10 pairs)
+2026-11-12T23:15:23Z  labels read: batch-639.json (6 pairs)
+2026-11-12T23:22:51Z  report AxA-CfJfPAF8El8-Xx39RVmRYWE done in 6.2 min, peak 1260 MB
+2026-11-12T23:24:23Z  report AxA-qHf6e1CQQ5c-Xx39RVmRYWE done in 8.4 min, peak 1300 MB
+2026-11-12T23:24:44Z  report AxB-Xx39RVmRYWE-Z13ulLin2jg done in 8.4 min, peak 1305 MB
+2026-11-12T23:27:31Z  report AxA-r4gs8Ddp8_w-_B5Aec29lHQ done in 11.9 min, peak 1384 MB
+2026-11-12T23:30:54Z  report AxB-Xx39RVmRYWE-Tgp1NqPegK8 done in 7.7 min, peak 1305 MB
+2026-11-12T23:31:59Z  report AxA-afJ8kEWkJqo-xUKoaX3t3dY done in 4.2 min, peak 1225 MB
+2026-11-12T23:32:20Z  report AxA-6YYa6ar2RN4-Xx39RVmRYWE done in 6.9 min, peak 1304 MB
+2026-11-12T23:33:41Z  report AxA-t5wDGNrzpro-Xx39RVmRYWE done in 9.1 min, peak 1734 MB
+2026-11-12T23:35:15Z  report AxA-afJ8kEWkJqo-lo3-hAO9RJg done in 4.0 min, peak 1765 MB
+2026-11-12T23:37:48Z  report AxA-iiqbyMQ9vZI-XCGE-_TDcGI done in 4.9 min, peak 1241 MB
+2026-11-12T23:38:30Z  report AxA-5gDfGvKznXE-iiqbyMQ9vZI done in 6.4 min, peak 1771 MB
+2026-11-12T23:42:03Z  report AxA-LXMGLr9uFv4-2uTYZ20rXa8 done in 8.3 min, peak 1470 MB
+2026-11-12T23:43:34Z  report AxA-xers5HU02Ew-y8nnK3mnV3Q done in 5.6 min, peak 1260 MB
+2026-11-12T23:43:53Z  report AxA-y8nnK3mnV3Q-BqIZ2ykihTk done in 5.0 min, peak 1244 MB
+2026-11-12T23:48:38Z  report AxA-W8hBs4ZiG7U-y7FElRQhklM done in 13.0 min, peak 1638 MB
+2026-11-12T23:49:15Z  report AxA-W99Te7xIpX0-riN-hgPZwHc done in 4.8 min, peak 1242 MB
+2026-11-12T23:50:42Z  report AxA-1v4rp78xOLE-_rIvWK_TpfI done in 7.1 min, peak 1353 MB
+2026-11-12T23:50:52Z  report AxA-r5hl9FFnOrI--fMMVHWmZFU done in 8.6 min, peak 1787 MB
+2026-11-12T23:53:31Z  report AxA-qhaDwGQUOLM-nWqwqAY0KRY done in 4.6 min, peak 1660 MB
+2026-11-12T23:53:51Z  run_reports: all done

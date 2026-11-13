@@ -1,0 +1,12 @@
+[
+{"a":"0ZNqZ9x_06U","b":"wfvd_2gm_ew","label":"same-song","confidence":0.6,"note":"Kaboochi dance shorts with different kid characters and stages."},
+{"a":"6zyqtdigBiM","b":"ucf8dVqYkgA","label":"re-upload","confidence":0.7,"note":"Same lollipop ABC song, letters on same colored backgrounds; new thumbnail/title, A has end card."},
+{"a":"eT-HIXX8iXY","b":"Q5bfMoqqBB4","label":"shared-segments","confidence":0.6,"note":"Same Number Train footage (identical 6-10 cars frame); B 57s is a shorter cut of A 73s."},
+{"a":"lo3-hAO9RJg","b":"6nacOLqpcPk","label":"re-skin","confidence":0.7,"note":"Wheels on the Bus shorts: same face bus, panda driver, blue house set; pink vs blue bus."},
+{"a":"oHtQbh7LJjY","b":"vXUuaxhuTWY","label":"same-template","confidence":0.95,"note":"Bob the Train phonics episodes, letter J vs Y; shared intro, different content."},
+{"a":"QLtuuZVDZ4g","b":"CU_QocmxLz0","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; pillow vs statue gags."},
+{"a":"vyIiFiExyQQ","b":"aW_J2JMPmG8","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"s0DwH0Oq5YY","b":"b5p78d-gr6w","label":"unrelated","confidence":0.8,"note":"Boo Boo Song vs Monster in the Dark; different songs and characters."},
+{"a":"3bTL4x31XTI","b":"OZzQENCeeNg","label":"unrelated","confidence":0.8,"note":"Bath Time Song vs Everybody Do The Dance; different characters and sets."},
+{"a":"PbchJhisS4s","b":"aDyWeSAt-sI","label":"same-template","confidence":0.7,"note":"Rattic Mini compilations; sampled frames show different episodes."}
+]

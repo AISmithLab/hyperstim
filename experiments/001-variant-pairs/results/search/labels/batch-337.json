@@ -1,0 +1,12 @@
+[
+{"a":"itkV7xxR7cg","b":"_pbN_c0Kb1U","label":"shared-segments","confidence":0.75,"note":"Supremes compilations share the superhero group scene; other frames differ"},
+{"a":"u0Iw9dozWrk","b":"sn15PWQ-Q7E","label":"shared-segments","confidence":0.75,"note":"Christmas compilations share the Santa in snow scene; rest differs"},
+{"a":"Q5sXjav9YNc","b":"7xv-yiS3oB4","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts, different characters"},
+{"a":"dvI-yKriG80","b":"mG59TA1gMvo","label":"shared-segments","confidence":0.75,"note":"Bob the Train Halloween compilation contains the same song as the single video"},
+{"a":"bzcufo-BRaA","b":"7xv-yiS3oB4","label":"unrelated","confidence":0.8,"note":"Spooky Bus vs Jack O Lantern shorts; different characters"},
+{"a":"R49NrP0fcsE","b":"jEwfENQE5Os","label":"unrelated","confidence":0.75,"note":"Boo Boo short vs Halloween camp short; different scenes"},
+{"a":"k3vCYP_aQ3w","b":"K71QjqJlAI0","label":"re-skin","confidence":0.85,"note":"Baby Bao Panda Wheels on the Bus; red bus recolored pink, same shots and panda poses"},
+{"a":"MorDYKukHmE","b":"fHYKNPcEqp4","label":"shared-segments","confidence":0.75,"note":"2016 compilations share the monkey doctor scene; other frames differ"},
+{"a":"dvI-yKriG80","b":"PBBLDp9ZdZM","label":"shared-segments","confidence":0.75,"note":"Bob the Train Halloween compilations share the same train scene"},
+{"a":"vnZwDJQBIWw","b":"cYZrTzVfiAE","label":"shared-segments","confidence":0.6,"note":"No No Song shorts, same kitchen mother shots; likely two cuts of one video"}
+]

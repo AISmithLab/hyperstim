@@ -1,0 +1,12 @@
+[
+{"a":"FVuAS7z73Bs","b":"5Rye6bK-yIY","label":"shared-segments","confidence":0.7,"note":"Larva Straw shorts, different cuts of the same episode footage."},
+{"a":"0k76HQnSwt8","b":"5VI8gDmWreM","label":"shared-segments","confidence":0.65,"note":"Wheels on the Firetruck shorts sharing the girl-in-firetruck shots."},
+{"a":"6YYa6ar2RN4","b":"Z13ulLin2jg","label":"same-song","confidence":0.55,"note":"Kaboochi dance shorts with different characters and shots."},
+{"a":"tQlIWPUO_E0","b":"6YYa6ar2RN4","label":"unrelated","confidence":0.85,"note":"Ten in the Bed vs Kaboochi; only vertical-short framing in common."},
+{"a":"IWeiJekM5Cs","b":"vJUTEgqiFbM","label":"shared-segments","confidence":0.8,"note":"Compilations sharing identical elephant/mom episode footage."},
+{"a":"Tn2UZwb9RcY","b":"E1wcRx1Exec","label":"unrelated","confidence":0.9,"note":"Rattic Mini vs Larva short; different shows."},
+{"a":"Nj_pfXISKXc","b":"2b9xzvfYqD8","label":"re-skin","confidence":0.75,"note":"Wheels on the Bus short: same driver/seatbelt shots, red-green bus vs yellow-blue, baby swapped for girl."},
+{"a":"OW3hiiJk7H4","b":"aJScxrS9UD8","label":"same-template","confidence":0.5,"note":"Loco Nuts compilations, same characters and layout, no shared frames seen."},
+{"a":"bphowM9rjos","b":"9cs2qm_e8J8","label":"shared-segments","confidence":0.45,"note":"Halloween compilation likely contains Monster in the Dark; frames differ, weak match."},
+{"a":"XGrpbyxR93k","b":"rNHdYbq36zI","label":"re-upload","confidence":0.75,"note":"Chinese version of Bob the Train farm video; same frames at 1/2, 3/4."}
+]

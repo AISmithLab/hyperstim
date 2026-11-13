@@ -1,0 +1,12 @@
+[
+{"a":"ukENAA-zDsg","b":"dJvFOX8l4d8","label":"same-song","confidence":0.5,"note":"Halloween Night shorts, different characters; match on vertical framing and song title."},
+{"a":"v80qWgkingM","b":"dJvFOX8l4d8","label":"same-song","confidence":0.5,"note":"Halloween Night shorts, different characters; match on vertical framing and song title."},
+{"a":"IRWTZropao4","b":"dJvFOX8l4d8","label":"same-song","confidence":0.45,"note":"Halloween shorts, different characters and shots; framing match only."},
+{"a":"Is1sSXyJz28","b":"dJvFOX8l4d8","label":"same-song","confidence":0.5,"note":"Halloween Night shorts, different characters; match on vertical framing and song title."},
+{"a":"t3y2AhXLjRY","b":"dJvFOX8l4d8","label":"same-song","confidence":0.5,"note":"Halloween Night shorts, different characters; match on vertical framing and song title."},
+{"a":"CcZ5-DXzIL0","b":"dJvFOX8l4d8","label":"unrelated","confidence":0.7,"note":"Scary Pumpkin vs Halloween Night; different characters, framing match only."},
+{"a":"bzcufo-BRaA","b":"dJvFOX8l4d8","label":"unrelated","confidence":0.75,"note":"Spooky Bus vs Halloween Night; different characters, framing match only."},
+{"a":"gdVpv0KN_uU","b":"i0Zanhlu46I","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Five Little Monsters; different characters."},
+{"a":"4FXoc-ApjOQ","b":"w2vyDCnd7VU","label":"unrelated","confidence":0.85,"note":"Bugs song vs Vegetable song; different characters."},
+{"a":"DclM70T7jyI","b":"aScyfsClZd0","label":"shared-segments","confidence":0.65,"note":"Boo Boo Song shorts sharing the mom close-up; different cuts."}
+]

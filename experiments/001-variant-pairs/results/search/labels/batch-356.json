@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1caHOwNs4yY",
+  "b": "2e1XB0UJosc",
+  "label": "re-skin",
+  "confidence": 0.95,
+  "note": "Junior Squad Wheels on the Fire Truck: red truck recolored pink, identical shots and timing"
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "oRk8sglOG5k",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "oRk8sglOG5k",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "-qxEnbH15lY",
+  "b": "IbEIByW4Fwk",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "pst1AsXQWTE",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "dEu8UBRKalc",
+  "b": "iRg3LHm7d38",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Bob the Train vehicle videos share the Bob with yellow truck scene"
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "oRk8sglOG5k",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "0k76HQnSwt8",
+  "b": "yj8vX-Z4xAc",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Wheels on the Firetruck shorts: girl firefighter vs monkey, different animation"
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "AGrnCKW4zwo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "_pbN_c0Kb1U",
+  "b": "GyYUEUX6LOk",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Kids TV compilations share the Supremes superhero group scene"
+ }
+]

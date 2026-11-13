@@ -1,0 +1,12 @@
+[
+{"a":"S9N416aMRxk","b":"LQQ2DD4V_mY","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the dinosaur episode."},
+{"a":"ijAeNNIiKJ4","b":"4e1vB_kqCaY","label":"same-song","confidence":0.6,"note":"Kaboochi shorts, baby in costumes vs boy dancing; different animation."},
+{"a":"ijAeNNIiKJ4","b":"xPt-5RG1m-0","label":"shared-segments","confidence":0.65,"note":"Kaboochi baby costume dance; same doctor shot, other costumes and order differ."},
+{"a":"wk9I_xT1NNc","b":"B7HQQms6klA","label":"unrelated","confidence":0.85,"note":"Going to the Zoo vs Boo Boo Song; different characters."},
+{"a":"Gelbjg7SL0U","b":"hzzGSyV_BCA","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing balloon and pillow episodes."},
+{"a":"fAQ_c_NEM7A","b":"pbfbmXohAGo","label":"same-song","confidence":0.55,"note":"Kaboochi shorts, boy dancing vs kids with corgi; different animation."},
+{"a":"NOeV7t9O6iE","b":"ohvegXAANME","label":"re-upload","confidence":0.9,"note":"Transport Adventure 2014 re-uploaded 2023; same frames, new thumbnail."},
+{"a":"zGPsQPzB5Tk","b":"8WuzsdjF0H0","label":"shared-segments","confidence":0.8,"note":"Sport Bots compilations sharing the same episode footage."},
+{"a":"G7PTUNLnAFk","b":"_QFj7e58XGE","label":"shared-segments","confidence":0.6,"note":"Wheels on the Train; identical mom shot, but kid character and other shots differ."},
+{"a":"t2tKT2LSOfo","b":"G7PTUNLnAFk","label":"unrelated","confidence":0.8,"note":"No No Song vs Wheels on the Train; different characters."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"AdRwOjaFizY","b":"xU3oLsk2eF8","label":"unrelated","confidence":0.8,"note":"Loco Nuts short vs Christmas song short"},
+{"a":"AdRwOjaFizY","b":"mbzZMGA6huI","label":"unrelated","confidence":0.8,"note":"Loco Nuts short vs Wheels on the Ambulance short"},
+{"a":"jRCHQ6wCTUA","b":"TRCJGQylez4","label":"re-upload","confidence":0.7,"note":"Rattic Mini Spring Toy, same episode; B longer cut (29s vs 60s)"},
+{"a":"klDPbXVTBzw","b":"WZ45rZRLf80","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"},
+{"a":"wMHsxnO156E","b":"klDPbXVTBzw","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"},
+{"a":"20HqqfnKxZk","b":"Qs4R686NOjg","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the car kiosk episode"},
+{"a":"Q-qoF1B0i_Q","b":"ZaPOBxvKuXs","label":"shared-segments","confidence":0.8,"note":"Boo Boo short contained in the longer 96s version"},
+{"a":"9DBJvlkWDs4","b":"ZaPOBxvKuXs","label":"shared-segments","confidence":0.8,"note":"Boo Boo short contained in the longer 96s version"},
+{"a":"h2XIpJMP06c","b":"klDPbXVTBzw","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode"},
+{"a":"GvP31EGA8tQ","b":"Qs4R686NOjg","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing car kiosk and balloon episodes"}
+]

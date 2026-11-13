@@ -1,0 +1,12 @@
+[
+ {"a": "88K00Gg-R8k", "b": "XnLSlBusv-U", "label": "re-skin", "confidence": 0.75, "note": "Same sky, rainbow and title-balloon layout; balloons recolored, outlined vs colored letters."},
+ {"a": "p5TIB-9Uiuc", "b": "fkM9JyHWOo8", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini The Gloves vs The Cupboard."},
+ {"a": "U6fyg6vsWbM", "b": "585k-0LrXL8", "label": "shared-segments", "confidence": 0.85, "note": "Crayon learning compilations with identical shapes frame at 1/2, different leads."},
+ {"a": "34a688xg1-Q", "b": "c8TbxmLPBNs", "label": "shared-segments", "confidence": 0.85, "note": "Compilations with identical superhero-kids frame at 1/2, different lead songs."},
+ {"a": "Tgp1NqPegK8", "b": "FT0mjHIs2oY", "label": "same-song", "confidence": 0.65, "note": "Kaboochi Dance: baby dance version vs hula-kids version."},
+ {"a": "a07zOPj6CZg", "b": "y5hNOisFVd8", "label": "same-template", "confidence": 0.9, "note": "Bob the Train phonics G vs N."},
+ {"a": "DS8rk9NwXQc", "b": "QLtuuZVDZ4g", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Mime vs Pillow."},
+ {"a": "DS8rk9NwXQc", "b": "E1wcRx1Exec", "label": "unrelated", "confidence": 0.85, "note": "Rattic Mini short vs Larva rain short; different series."},
+ {"a": "4rcjZ1f_L4A", "b": "oRUKPowFBgM", "label": "unrelated", "confidence": 0.75, "note": "Kaboochi dance vs Apples and Bananas; different characters."},
+ {"a": "pBZoqnYJdpo", "b": "hsUfmH_uRjc", "label": "same-template", "confidence": 0.8, "note": "Rattic Mini Space Rocket vs Car Service."}
+]

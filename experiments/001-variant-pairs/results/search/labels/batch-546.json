@@ -1,0 +1,72 @@
+[
+ {
+  "a": "njSANQD1GlI",
+  "b": "hoNtxM3afpk",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, magic hat vs Christmas mailbox"
+ },
+ {
+  "a": "NL_S69qf0jg",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic butterfly episode vs two-episode manhole short"
+ },
+ {
+  "a": "MstDCeu1yxM",
+  "b": "XamiKGRhams",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, pillow vs toilet"
+ },
+ {
+  "a": "hrOfhQCxqL0",
+  "b": "gvcEcWUHZ_c",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic compilations sharing the car kiosk episode"
+ },
+ {
+  "a": "jPvyJ9IIRJk",
+  "b": "QLtuuZVDZ4g",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Rattic skipping rope vs two-episode pillow short"
+ },
+ {
+  "a": "9RUN6Q-uZm0",
+  "b": "0L9EfYLMx8A",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob alphabet songs H and P on one template"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "NL_S69qf0jg",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, carousel vs butterfly"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "UXsXYmw3_CY",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, cleaning vs gloves"
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "TRCJGQylez4",
+  "b": "El8w4iWGWEI",
+  "label": "same-template",
+  "confidence": 0.8,
+  "note": "Two-episode Rattic shorts; no shared episode visible"
+ }
+]

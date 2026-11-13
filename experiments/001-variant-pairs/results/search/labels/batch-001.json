@@ -1,0 +1,12 @@
+[
+ {"a": "V3cEq4F1TFk", "b": "X025pZ7jSFI", "label": "re-upload", "confidence": 0.95, "note": "identical short on both channels: same thumbnail, frames and title"},
+ {"a": "PrsoqMSi0_I", "b": "syYJiqAINVc", "label": "same-template", "confidence": 0.85, "note": "Learning Street series: same thumbnail layout and characters, different word families (AN vs IN)"},
+ {"a": "UN4V4ywCWxA", "b": "zSf5nw7US6U", "label": "shared-segments", "confidence": 0.8, "note": "two ~11 min Rattic Mini compilations that share episodes (snake charmer, billiards)"},
+ {"a": "PjY6rRG6uMI", "b": "Xe9joJ0T-TQ", "label": "re-upload", "confidence": 0.85, "note": "same frames at 1/4, 1/2, 3/4; new thumbnail and title on Kids Channel"},
+ {"a": "aW_J2JMPmG8", "b": "aDyWeSAt-sI", "label": "shared-segments", "confidence": 0.75, "note": "Rattic Mini compilations sharing episodes in a different order"},
+ {"a": "CPEt9dGaD9I", "b": "I8A3ZdmW3t4", "label": "re-upload", "confidence": 0.85, "note": "same frames, same length; new thumbnail"},
+ {"a": "ogqYnN2SIl0", "b": "KVvaZF-PRrc", "label": "same-template", "confidence": 0.85, "note": "Bob the Train series: same intro and train, shapes vs fruits"},
+ {"a": "LXMGLr9uFv4", "b": "yOq3vuvmRCQ", "label": "re-skin", "confidence": 0.85, "note": "same shots and camera, bus recolored pink to purple; B twice as long"},
+ {"a": "pRPe05YfXxg", "b": "AJ1vEJXC0-M", "label": "re-skin", "confidence": 0.95, "note": "seed pair: same animation, recolored ducks, redrawn background"},
+ {"a": "kwXxrZQ5GaQ", "b": "ZztnbLI54FI", "label": "same-template", "confidence": 0.85, "note": "Phonics series: same kids and set, letter L vs M"}
+]

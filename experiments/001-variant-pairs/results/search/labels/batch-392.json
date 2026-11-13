@@ -1,0 +1,72 @@
+[
+ {
+  "a": "XkHOSnrgKew",
+  "b": "Gf_8uTV76EU",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "If You're Happy shorts: kids vs animal characters, different shots"
+ },
+ {
+  "a": "XkHOSnrgKew",
+  "b": "5zGfak4nfkk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "XkHOSnrgKew",
+  "b": "BRcmpSxalwA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "XkHOSnrgKew",
+  "b": "oRUKPowFBgM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "nyJqyZZCekg",
+  "b": "XkHOSnrgKew",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "XkHOSnrgKew",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "If You're A Monster parody vs If You're Happy; different animation"
+ },
+ {
+  "a": "XkHOSnrgKew",
+  "b": "Xo3zWzIj8fM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "XkHOSnrgKew",
+  "b": "IbEIByW4Fwk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "bXiOmynGh18",
+  "b": "XkHOSnrgKew",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "XkHOSnrgKew",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on blurred side bars"
+ }
+]

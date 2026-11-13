@@ -1,0 +1,72 @@
+[
+ {
+  "a": "ISJ2fM0-0dw",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween roller coaster vs monster song shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "oRUKPowFBgM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Apples & Bananas shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "U9maOBWT6wE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs Hush Little Baby shorts; nothing shared."
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "qCWFFPHRu1Q",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs dinosaur song shorts; nothing shared."
+ },
+ {
+  "a": "MstDCeu1yxM",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts with different gags (pillow vs manhole)."
+ },
+ {
+  "a": "OAiCA-fInkM",
+  "b": "Xo3zWzIj8fM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Baby Shark vs dance shorts; nothing shared."
+ },
+ {
+  "a": "1dFjKYblswI",
+  "b": "41F1Fdb3tHM",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "14B6JJO6CDM",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Five Little Monkeys shorts with same characters (girl on phone, green monkey); likely cuts of one video."
+ },
+ {
+  "a": "_e29OQFpP7A",
+  "b": "pbfbmXohAGo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Kaboochi dance shorts; nothing shared."
+ },
+ {
+  "a": "Q9BbiIQ6C_E",
+  "b": "EA8_ci9zyTI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Christmas vs taxi song shorts; similar baby character only."
+ }
+]

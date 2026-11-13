@@ -1,0 +1,12 @@
+[
+ {"a": "zG6D-FpUczM", "b": "GGQVXv4Nc-E", "label": "same-template", "confidence": 0.5, "note": "Same family characters and house, different songs (Johny Johny vs Boo Boo); different shots."},
+ {"a": "PPVWn53Yw4M", "b": "o6VjhL9gA1A", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; football vs carousel gag."},
+ {"a": "xl7KYkBbsuY", "b": "L_LmPW3R9HM", "label": "shared-segments", "confidence": 0.6, "note": "Bob phonics compilations share the Q and easel scenes; Bob's face may differ (4K redo?)."},
+ {"a": "uzUxdwfXgWI", "b": "-8VedXc5EDU", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations on the same set; no shared frame among samples."},
+ {"a": "Iygt_NzD7VU", "b": "0yIhvJw1GK8", "label": "re-upload", "confidence": 0.85, "note": "Boo Boo song short, same 41s; identical shots of boy in cap, only thumbnail differs."},
+ {"a": "DF6G0YHRlV8", "b": "jvCQFkt2FwI", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; crib vs picture gag."},
+ {"a": "o6VjhL9gA1A", "b": "hsUfmH_uRjc", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; carousel vs car service gag."},
+ {"a": "oWkIR8ZkHgo", "b": "vyIiFiExyQQ", "label": "shared-segments", "confidence": 0.9, "note": "Rattic Mini compilations; identical stacking tower and toy car episodes."},
+ {"a": "oKEXFG0ZLZw", "b": "12mNC1UN38M", "label": "same-template", "confidence": 0.4, "note": "Halloween shorts with monster-costume kids, different songs and shots."},
+ {"a": "r__AmlY4fxk", "b": "hW3TFrPJVaI", "label": "shared-segments", "confidence": 0.85, "note": "Bob the Train compilations; identical Bob-in-park frame, different lead songs."}
+]

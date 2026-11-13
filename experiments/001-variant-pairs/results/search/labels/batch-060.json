@@ -1,0 +1,12 @@
+[
+{"a":"41F1Fdb3tHM","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.8,"note":"Boo Boo song vs Five Little Mommies"},
+{"a":"gdVpv0KN_uU","b":"oRUKPowFBgM","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Apples and Bananas"},
+{"a":"gdVpv0KN_uU","b":"b5p78d-gr6w","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Halloween monster short"},
+{"a":"gdVpv0KN_uU","b":"imGo4XxUMvA","label":"unrelated","confidence":0.85,"note":"Five Little Mommies vs Halloween dance"},
+{"a":"OZzQENCeeNg","b":"gdVpv0KN_uU","label":"unrelated","confidence":0.85,"note":"Dance song vs Five Little Mommies"},
+{"a":"gdVpv0KN_uU","b":"XEEVejf8Kgw","label":"unrelated","confidence":0.65,"note":"Five Little Mommies vs Five Little Elves; similar counting format, different animation"},
+{"a":"Tz2SZgHgjjk","b":"njSANQD1GlI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cheese vs magic hat gag"},
+{"a":"Tz2SZgHgjjk","b":"LJN6yukuQ9A","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cheese vs manhole gag"},
+{"a":"sFhZZIPj9nE","b":"DS8rk9NwXQc","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cleaning vs mime gag"},
+{"a":"6FhYNE5KFeg","b":"njSANQD1GlI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cat vs magic hat gag"}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"kt7mWHClxqk","b":"T7IelDcY9Ns","label":"shared-segments","confidence":0.85,"note":"Larva compilations; identical frames at 1/2 and 3/4"},
+{"a":"T7IelDcY9Ns","b":"QJIDcHtViyc","label":"shared-segments","confidence":0.85,"note":"Larva compilations; identical frame at 1/2, shared episodes"},
+{"a":"U9maOBWT6wE","b":"cAngxOmb79A","label":"unrelated","confidence":0.85,"note":"Hush Little Baby vs Halloween song shorts"},
+{"a":"cAngxOmb79A","b":"yPexH1DUKe4","label":"unrelated","confidence":0.75,"note":"Different Halloween shorts; no shared shot"},
+{"a":"cAngxOmb79A","b":"gDzGfavrWeI","label":"unrelated","confidence":0.75,"note":"Different Halloween songs; no shared shot"},
+{"a":"cAngxOmb79A","b":"7I0SeirswAk","label":"unrelated","confidence":0.85,"note":"Halloween song vs Johny Johny shorts"},
+{"a":"uBA-DOOnkZ8","b":"cAngxOmb79A","label":"unrelated","confidence":0.85,"note":"If You're Happy vs Halloween song shorts"},
+{"a":"cAngxOmb79A","b":"rZWQrsYulxI","label":"unrelated","confidence":0.8,"note":"Halloween song vs Scared of the Dark shorts"},
+{"a":"t2tKT2LSOfo","b":"cAngxOmb79A","label":"unrelated","confidence":0.85,"note":"No No Song vs Halloween song shorts"},
+{"a":"cAngxOmb79A","b":"2ccdfNa0OyQ","label":"unrelated","confidence":0.8,"note":"Different Halloween songs; no shared shot"}
+]

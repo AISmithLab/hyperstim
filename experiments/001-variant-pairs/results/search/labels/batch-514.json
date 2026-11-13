@@ -1,0 +1,72 @@
+[
+ {
+  "a": "EPh1bFzsVf4",
+  "b": "NL_S69qf0jg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "xEFkAQpftd4",
+  "b": "YgjyQIwcJy0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "9Rzd80kq53k",
+  "b": "aScyfsClZd0",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "No No Song vs Boo Boo shorts; different characters and scenes"
+ },
+ {
+  "a": "tNPoYErk2rs",
+  "b": "ZaPOBxvKuXs",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Boo Boo shorts from one production (mom in pink, dad in plaid); B longer cut"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "GvP31EGA8tQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "klDPbXVTBzw",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "sFhZZIPj9nE",
+  "b": "Z1H7LX1K4Zo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat and set, different gags"
+ },
+ {
+  "a": "Q95CAqmYoew",
+  "b": "Nlt_DqiIHcQ",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Larva short vs Rattic Mini short; different series"
+ },
+ {
+  "a": "Uq5Pp5BQSm4",
+  "b": "Kix07nOAEBQ",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share egg and sleigh episodes"
+ },
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "IYU2e8WgGnY",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations; no shared episode visible in frames"
+ }
+]

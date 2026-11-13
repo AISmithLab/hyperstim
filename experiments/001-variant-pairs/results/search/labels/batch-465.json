@@ -1,0 +1,12 @@
+[
+{"a":"cO1aLZ7teeg","b":"klDPbXVTBzw","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"l_HMLGY9XIo","b":"uFVntNVnn7k","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs L vs O, same chalkboard template"},
+{"a":"Gvz14qtMDBo","b":"uFVntNVnn7k","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs G vs O"},
+{"a":"Gvz14qtMDBo","b":"wGMFLdlwsiE","label":"same-template","confidence":0.85,"note":"Bob the Train letter songs G vs Q"},
+{"a":"7FiyQQBYTUY","b":"V9fA6nrohac","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Skates vs Attic Stairs"},
+{"a":"_uYyO8y5Txc","b":"Q-qoF1B0i_Q","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts cut from one production, same girl shots"},
+{"a":"9DBJvlkWDs4","b":"_uYyO8y5Txc","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts cut from one production, same girl shots"},
+{"a":"iJZ97cfpjhI","b":"HW8O6C_OCJQ","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters"},
+{"a":"_e29OQFpP7A","b":"-OXYsniHGBM","label":"same-song","confidence":0.6,"note":"Boo Boo shorts from different productions"},
+{"a":"6YYa6ar2RN4","b":"aYm4u_lQpIo","label":"same-song","confidence":0.6,"note":"Kaboochi shorts with different characters"}
+]

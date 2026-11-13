@@ -1,0 +1,12 @@
+[
+{"a":"2YmFl3ccv9E","b":"KO5bPjkgwbM","label":"re-upload","confidence":0.95,"note":"Bob Alphabet Adventure, Chinese vs French version; identical frames, new thumbnail."},
+{"a":"5A9e7U5_Zxg","b":"KO5bPjkgwbM","label":"re-upload","confidence":0.95,"note":"Bob Alphabet Adventure, Malay vs French version; identical frames."},
+{"a":"KO5bPjkgwbM","b":"kxsXTcFJQes","label":"re-upload","confidence":0.95,"note":"Bob Alphabet Adventure, French vs Indonesian; identical frames."},
+{"a":"6Oc5_Gdc5jU","b":"YgjyQIwcJy0","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts with different gags (drive thru vs hollow)."},
+{"a":"KO5bPjkgwbM","b":"BSNYv67Kasw","label":"re-upload","confidence":0.85,"note":"2023 re-upload of Bob Alphabet Adventure, slightly shorter; same frames, new thumbnail."},
+{"a":"hLYn45GEWJc","b":"ex7_knWJ9ak","label":"same-template","confidence":0.6,"note":"Larva shorts, different episodes and sets."},
+{"a":"iaSPV2ZHx5U","b":"4FXoc-ApjOQ","label":"unrelated","confidence":0.85,"note":"Sick song vs bugs song shorts; nothing shared."},
+{"a":"G7PTUNLnAFk","b":"QY6idrQO99U","label":"unrelated","confidence":0.85,"note":"Train song vs finger family short; nothing shared."},
+{"a":"dJvFOX8l4d8","b":"nbI-1N_uBNs","label":"unrelated","confidence":0.85,"note":"Halloween vs Jingle Bells shorts; only framing in common."},
+{"a":"klwhxvQDOZk","b":"92wkK3tkeb0","label":"unrelated","confidence":0.8,"note":"Christmas vs Boo Boo shorts; similar baby character only."}
+]

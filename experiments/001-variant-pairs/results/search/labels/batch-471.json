@@ -1,0 +1,72 @@
+[
+ {
+  "a": "X48-R_yTN-4",
+  "b": "O5ZoBFwS1G4",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Wheels on the Bus shorts: same girl and green bus footage, re-edited in different order"
+ },
+ {
+  "a": "sI-dYFPPJgs",
+  "b": "O5ZoBFwS1G4",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus shorts with different animation (bus seats vs green bus)"
+ },
+ {
+  "a": "O5ZoBFwS1G4",
+  "b": "EA8_ci9zyTI",
+  "label": "same-template",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus vs Wheels on the Taxi shorts; different kids and shots"
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "O5ZoBFwS1G4",
+  "label": "same-template",
+  "confidence": 0.45,
+  "note": "Wheels on the Train vs Wheels on the Bus shorts; different scenes"
+ },
+ {
+  "a": "O5ZoBFwS1G4",
+  "b": "_B5Aec29lHQ",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus shorts: green bus vs Halloween driver version, different animation"
+ },
+ {
+  "a": "O5ZoBFwS1G4",
+  "b": "LzlbaXt9Yg4",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Wheels on the Bus shorts: green bus vs camp bus, different animation"
+ },
+ {
+  "a": "B7HQQms6klA",
+  "b": "O5ZoBFwS1G4",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boo Boo vs Wheels on the Bus shorts; different scenes"
+ },
+ {
+  "a": "O5ZoBFwS1G4",
+  "b": "SQBTIuB0SsI",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Halloween Wheels on the Bus vs green-bus version, different animation"
+ },
+ {
+  "a": "h4dQ-RG7dXA",
+  "b": "xJWSNIkfOrY",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations share snowman, egg and jeep episodes"
+ },
+ {
+  "a": "qHf6e1CQQ5c",
+  "b": "pbfbmXohAGo",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Kaboochi shorts share the girl dance shot, different cuts"
+ }
+]

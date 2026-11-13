@@ -1,0 +1,72 @@
+[
+ {
+  "a": "vNPsUxZBA70",
+  "b": "7FiyQQBYTUY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monsters song short vs Rattic Skates; side-bar match only"
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "QLtuuZVDZ4g",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, balloon vs pillow"
+ },
+ {
+  "a": "XamiKGRhams",
+  "b": "uLLqj_ibi-Y",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, toilet vs springboard"
+ },
+ {
+  "a": "gIMyiAxeKSk",
+  "b": "vCMNQHulhfo",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters I and S on one template"
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "uzUxdwfXgWI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic compilations; no shared episode visible in frames"
+ },
+ {
+  "a": "Gelbjg7SL0U",
+  "b": "ZEI_8iC_Z7E",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing pillow and heart balloon episodes"
+ },
+ {
+  "a": "ZztnbLI54FI",
+  "b": "Ik7-qK_sEq8",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob phonics letters M and O on one template"
+ },
+ {
+  "a": "DS8rk9NwXQc",
+  "b": "fkM9JyHWOo8",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Rattic Mini episodes, mime vs cupboard"
+ },
+ {
+  "a": "uFVntNVnn7k",
+  "b": "GcZXNKTPP5U",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob alphabet songs O and R on one template"
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.9,
+  "note": "Rattic compilations sharing toy jeep, snowman, mime episodes"
+ }
+]

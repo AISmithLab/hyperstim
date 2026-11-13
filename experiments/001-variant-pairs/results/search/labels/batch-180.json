@@ -1,0 +1,12 @@
+[
+{"a":"DclM70T7jyI","b":"7ClCbBREUlU","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different characters and shots."},
+{"a":"eAodpnlhaNI","b":"7ClCbBREUlU","label":"same-song","confidence":0.6,"note":"Boo Boo Song shorts with different characters and animation."},
+{"a":"7ClCbBREUlU","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Old MacDonald; different characters."},
+{"a":"7ClCbBREUlU","b":"aScyfsClZd0","label":"same-song","confidence":0.55,"note":"Boo Boo Song shorts with different characters and shots."},
+{"a":"7ClCbBREUlU","b":"KYwjCiQCbr8","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Three Little Pigs; different characters."},
+{"a":"7ClCbBREUlU","b":"1fL9dsWYLJ0","label":"unrelated","confidence":0.65,"note":"Boo Boo Song vs bus song; same girl character, different scenes."},
+{"a":"7ClCbBREUlU","b":"CgR6YuA2Uoo","label":"shared-segments","confidence":0.75,"note":"Same girl and mom Boo Boo shots; A is a 25s cut of B."},
+{"a":"7ClCbBREUlU","b":"Z13ulLin2jg","label":"unrelated","confidence":0.85,"note":"Boo Boo Song vs Kaboochi dance; different characters."},
+{"a":"WvT05t4UpF8","b":"P2AACaYi5vI","label":"same-song","confidence":0.8,"note":"Old MacDonald by Loco Nuts vs Zoobees; different animation."},
+{"a":"k-JcA3kxVWU","b":"KVvaZF-PRrc","label":"same-template","confidence":0.85,"note":"Bob train series, same intro and wagons; vegetables vs fruits."}
+]

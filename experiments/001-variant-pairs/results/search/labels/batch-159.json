@@ -1,0 +1,12 @@
+[
+{"a":"4GiWPysyj48","b":"NcOdNYYKAmU","label":"re-upload","confidence":0.9,"note":"Hop and Zip clip: identical frames, same day, other channel, new thumbnail."},
+{"a":"6IKneJVSxQA","b":"DPJOLEO8puk","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations, same thumbnail layout, different content."},
+{"a":"6IKneJVSxQA","b":"jceEaiF00_c","label":"same-template","confidence":0.5,"note":"Apples & Bananas compilations, same thumbnail layout, different content."},
+{"a":"DS8rk9NwXQc","b":"XamiKGRhams","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, mime vs toilet."},
+{"a":"UGzlPPWb6Pg","b":"XamiKGRhams","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, fly swatter vs toilet."},
+{"a":"gIMyiAxeKSk","b":"M_92V9hKIv0","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters I and Z, shared intro and set."},
+{"a":"skNxtYhw9Y8","b":"fUR3k2eL6Mo","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, different episodes."},
+{"a":"KKgsTFivFJM","b":"WZ45rZRLf80","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations, different episodes."},
+{"a":"Gelbjg7SL0U","b":"GvP31EGA8tQ","label":"shared-segments","confidence":0.7,"note":"Rattic Mini compilations sharing the heart-balloon pump episode."},
+{"a":"-a3PpO3jlDI","b":"ZztnbLI54FI","label":"same-template","confidence":0.85,"note":"Bob the Train phonics letters H and M, shared intro and set."}
+]

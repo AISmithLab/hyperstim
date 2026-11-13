@@ -1,0 +1,12 @@
+[
+{"a":"tlbHK-V8U-o","b":"WKpcp6DJUF4","label":"shared-segments","confidence":0.8,"note":"Loco Nuts compilation vs Yes Yes song; same pig and monkey segment."},
+{"a":"3US0BFFaZnM","b":"KGYkNNM0SmM","label":"shared-segments","confidence":0.8,"note":"Sport Bots compilations sharing the same episode footage."},
+{"a":"MHvLcoblyio","b":"6f6S5Y_1aIA","label":"shared-segments","confidence":0.6,"note":"Boo Boo Song shorts with same mom and kids scenes; different cuts and thumbnails."},
+{"a":"7hti1gwEK2A","b":"i2XoutDdPoM","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, picture vs pillow."},
+{"a":"mRuNLpBEaLE","b":"yXDsS1eglcA","label":"re-skin","confidence":0.6,"note":"Realistic bus at stop 47, same shot; bus blue vs dark gray. Other frames differ."},
+{"a":"G7PTUNLnAFk","b":"ijNCfAvwMGE","label":"unrelated","confidence":0.85,"note":"Wheels on the Train vs Twinkle Twinkle; different characters."},
+{"a":"SQBTIuB0SsI","b":"b5p78d-gr6w","label":"unrelated","confidence":0.8,"note":"Halloween bus vs Monster in the Dark; different characters."},
+{"a":"6f6S5Y_1aIA","b":"mTsFv_5w3uU","label":"unrelated","confidence":0.75,"note":"Boo Boo Song vs Old MacDonald; different scenes."},
+{"a":"aFbSzIMTBsY","b":"XBXyBskjSOc","label":"same-template","confidence":0.85,"note":"Bob the Train phonics, letters N vs T."},
+{"a":"nbI-1N_uBNs","b":"G7PTUNLnAFk","label":"unrelated","confidence":0.85,"note":"Jingle Bells vs Wheels on the Train; different characters."}
+]

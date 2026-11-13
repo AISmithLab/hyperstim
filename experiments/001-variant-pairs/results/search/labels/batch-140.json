@@ -1,0 +1,12 @@
+[
+{"a":"05oAs-Pqf5Y","b":"T2UcCZAPW34","label":"shared-segments","confidence":0.75,"note":"Two Christmas Kaboochi shorts cut from the same footage; one shot identical, others differ."},
+{"a":"T2UcCZAPW34","b":"V5OqHZwodj4","label":"shared-segments","confidence":0.75,"note":"Christmas Kaboochi shorts; same red-sweater shot at 1/2, other shots differ."},
+{"a":"6YYa6ar2RN4","b":"uQ90xr1p-eQ","label":"shared-segments","confidence":0.75,"note":"Kaboochi dance shorts sharing the corgi and baby shots, different cuts."},
+{"a":"lsBUlWbYIHw","b":"IxNBzmx_kuM","label":"re-upload","confidence":0.85,"note":"Sammy Ice Cream: identical frames at 1/2 and 3/4, shorter cut, new thumbnail/title."},
+{"a":"4x4Yq87gtlQ","b":"rNHdYbq36zI","label":"shared-segments","confidence":0.6,"note":"Bob the Train farm videos; same train-at-barn shot, other frames differ."},
+{"a":"6YYa6ar2RN4","b":"Tgp1NqPegK8","label":"shared-segments","confidence":0.7,"note":"Kaboochi shorts sharing the baby in orange shirt shot."},
+{"a":"T2UcCZAPW34","b":"Z13ulLin2jg","label":"same-song","confidence":0.6,"note":"Christmas Kaboochi vs plain Kaboochi; same dance song, no shared frames seen."},
+{"a":"CfJfPAF8El8","b":"6YYa6ar2RN4","label":"shared-segments","confidence":0.7,"note":"Kaboochi shorts sharing the orange-shirt baby shot, different other shots."},
+{"a":"T2UcCZAPW34","b":"Tgp1NqPegK8","label":"same-song","confidence":0.6,"note":"Christmas Kaboochi vs plain Kaboochi short; no shared frames seen."},
+{"a":"oCiHs7agwmE","b":"6YYa6ar2RN4","label":"shared-segments","confidence":0.75,"note":"Kaboochi shorts sharing baby, corgi and girl shots in different order."}
+]

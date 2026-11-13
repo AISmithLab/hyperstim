@@ -1,0 +1,72 @@
+[
+ {
+  "a": "9-G4JeHJiYQ",
+  "b": "Uq5Pp5BQSm4",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg episode."
+ },
+ {
+  "a": "Z13ulLin2jg",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs monsters shorts; nothing shared."
+ },
+ {
+  "a": "eGvSblfi0ns",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Monsters vs camp bus shorts; nothing shared."
+ },
+ {
+  "a": "iCbinH5esNA",
+  "b": "PFPDDhGr6us",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Apples & Bananas compilations; only thumbnail layout shared."
+ },
+ {
+  "a": "G7PTUNLnAFk",
+  "b": "i0Zanhlu46I",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Train song vs monsters shorts; nothing shared."
+ },
+ {
+  "a": "nyJqyZZCekg",
+  "b": "HWH2lpQomEk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Five Little Monkeys shorts; nothing shared."
+ },
+ {
+  "a": "B7HQQms6klA",
+  "b": "i9kMX8tSKSA",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Same girl model in thumbnail only; different songs and shots."
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "b5p78d-gr6w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hush Little Baby vs monster in the dark shorts; nothing shared."
+ },
+ {
+  "a": "ulkPZc48Au8",
+  "b": "LzlbaXt9Yg4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Swimming vs camp bus shorts; nothing shared."
+ },
+ {
+  "a": "7ClCbBREUlU",
+  "b": "X5tQg9x3Nfs",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation."
+ }
+]

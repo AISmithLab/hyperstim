@@ -1,0 +1,12 @@
+[
+{"a":"71jEGdkljl8","b":"YP1Mc3H7tY4","label":"same-template","confidence":0.5,"note":"Apples & Bananas bus compilations, same thumbnail layout with recolored bus; frames differ."},
+{"a":"vAEMCF7Vwbs","b":"71jEGdkljl8","label":"shared-segments","confidence":0.75,"note":"Apples & Bananas compilations sharing the firefighter street shot; same red-bus thumbnail."},
+{"a":"O0YszFZto2o","b":"z44z_G1QSMY","label":"shared-segments","confidence":0.65,"note":"Bob the Train compilations sharing the Bob-on-street shot."},
+{"a":"5fW-nqGz-iE","b":"_Wd2xzsukFE","label":"shared-segments","confidence":0.8,"note":"Super Supremes compilations sharing the group-on-beach footage."},
+{"a":"LYyK7KurvMs","b":"zQ7vvPa4pAk","label":"same-template","confidence":0.8,"note":"2014 phonics letters N and R, same format and end card."},
+{"a":"virobChxE9Y","b":"71jEGdkljl8","label":"shared-segments","confidence":0.8,"note":"Apples & Bananas compilations sharing the firefighter street shot."},
+{"a":"LYyK7KurvMs","b":"f-iL7k5jhCI","label":"same-template","confidence":0.8,"note":"2014 phonics letters N and Z, same format."},
+{"a":"KKgsTFivFJM","b":"Zy0VtX5RTFM","label":"shared-segments","confidence":0.5,"note":"Rattic Mini compilations; both seem to include the mime episode."},
+{"a":"Tz2SZgHgjjk","b":"O_KbvPekSSo","label":"unrelated","confidence":0.85,"note":"Rattic cheese short vs Ten Little Racing Cars short."},
+{"a":"IYU2e8WgGnY","b":"UPDBxhcsIRQ","label":"shared-segments","confidence":0.75,"note":"Rattic Mini compilations sharing the toy-jeep episode."}
+]

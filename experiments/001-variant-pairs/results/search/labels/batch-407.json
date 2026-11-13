@@ -1,0 +1,72 @@
+[
+ {
+  "a": "9XIGBh7fnSw",
+  "b": "KA6q5p8w9Z8",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Boom Buddies compilations both opening with the same Ice Cream Truck song; thumbnails redrawn."
+ },
+ {
+  "a": "oHSAGotL2Vo",
+  "b": "BZqq3eL6xSE",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "aW_J2JMPmG8",
+  "b": "cmi5_37226c",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "uzUxdwfXgWI",
+  "b": "3yv0GSbbCZI",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations sharing mime and snowman/car episodes."
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "wMHsxnO156E",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg episode."
+ },
+ {
+  "a": "wJ_TfcJAIpI",
+  "b": "WZ45rZRLf80",
+  "label": "shared-segments",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilations sharing the egg episode."
+ },
+ {
+  "a": "qA-zKbEgq1Q",
+  "b": "urNKg4X9kIU",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts on same set, different gags."
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "PjXooPy93AM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ },
+ {
+  "a": "s0DwH0Oq5YY",
+  "b": "kHVGgxylqd8",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Boo Boo Song shorts with same family characters; different cuts."
+ },
+ {
+  "a": "JOMSMENnSIQ",
+  "b": "_GlpTSaa5EU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations on one set; no shared episode visible."
+ }
+]

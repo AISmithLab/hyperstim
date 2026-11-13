@@ -1,0 +1,12 @@
+[
+ {"a": "YNZTlJ64Q6E", "b": "8mb4Eg57mUs", "label": "shared-segments", "confidence": 0.85, "note": "ABC compilations; identical kids-with-book frame and same animal-friends scene."},
+ {"a": "t892KTYY-cE", "b": "kwXxrZQ5GaQ", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter A vs L; same intro and stage."},
+ {"a": "t892KTYY-cE", "b": "a07zOPj6CZg", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter A vs G; same intro and stage."},
+ {"a": "t892KTYY-cE", "b": "dL9q0aobLss", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter A vs R; same intro and stage."},
+ {"a": "t892KTYY-cE", "b": "oHtQbh7LJjY", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter A vs J; same intro and stage."},
+ {"a": "c3lLP39EdME", "b": "QLtuuZVDZ4g", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini shorts on the same set; cheese vs pillow gag."},
+ {"a": "c3lLP39EdME", "b": "DF6G0YHRlV8", "label": "same-template", "confidence": 0.85, "note": "Rattic Mini shorts on the same set; cheese vs crib gag."},
+ {"a": "oKEXFG0ZLZw", "b": "oRUKPowFBgM", "label": "unrelated", "confidence": 0.85, "note": "Halloween monster short vs apples and bananas short; different characters."},
+ {"a": "fs08CRz2c-E", "b": "vM4OMJ9QATQ", "label": "re-upload", "confidence": 0.9, "note": "Bob the Train shapes song, both 198s; identical frames, new thumbnail and title in 2023."},
+ {"a": "4OZ-iSU4DiM", "b": "yOq3vuvmRCQ", "label": "shared-segments", "confidence": 0.75, "note": "Vehicle compilation includes the purple bus song; same purple bus side shot, panda riders."}
+]

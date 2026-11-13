@@ -1,0 +1,12 @@
+[
+{"a":"awLcqOFRHzg","b":"skNxtYhw9Y8","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations; sampled frames show different episodes."},
+{"a":"ZztnbLI54FI","b":"lQxaq4Fu-i0","label":"same-template","confidence":0.85,"note":"Learning Street phonics M vs U; shared intro/outro kids shots."},
+{"a":"Tz2SZgHgjjk","b":"TwDxP5L1-VA","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, cheese vs teleport gags."},
+{"a":"aA57PjtEfZw","b":"a07zOPj6CZg","label":"same-template","confidence":0.85,"note":"Learning Street phonics D vs G; shared intro/outro kids shots."},
+{"a":"kHVGgxylqd8","b":"AlEPz20FGnk","label":"shared-segments","confidence":0.65,"note":"Boo Boo shorts; B longer version sharing the dad-in-plaid shots."},
+{"a":"gmRIldLgb8k","b":"Ia2TzzY2Vto","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, kung fu vs toilet/gloves gags."},
+{"a":"9DBJvlkWDs4","b":"fcYBv33BuIY","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts sharing girl and dad shots; different cut and thumbnail."},
+{"a":"XamiKGRhams","b":"Ia2TzzY2Vto","label":"shared-segments","confidence":0.85,"note":"B joins A's toilet short with the gloves short."},
+{"a":"eT-HIXX8iXY","b":"k-JcA3kxVWU","label":"same-template","confidence":0.6,"note":"Same train/kids shots with numbers swapped for vegetables; borderline re-skin of a learning template."},
+{"a":"h2XIpJMP06c","b":"Uq5Pp5BQSm4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the ball episode."}
+]

@@ -1,0 +1,12 @@
+[
+{"a":"NovvKhrggso","b":"MiTaLfR6zgY","label":"re-skin","confidence":0.8,"note":"Realistic bus song: same stop and taxi shots; bus white vs dark gray."},
+{"a":"NovvKhrggso","b":"7_oWAaYXrYA","label":"shared-segments","confidence":0.7,"note":"Same white-bus footage; B a 30s cut adding the stop-47 shot."},
+{"a":"LzlbaXt9Yg4","b":"EA8_ci9zyTI","label":"unrelated","confidence":0.85,"note":"Bus to Camp vs Wheels on the Taxi; different characters."},
+{"a":"EkpDQZN-b9g","b":"rNHdYbq36zI","label":"shared-segments","confidence":0.6,"note":"Bob Went to the Farm 2014 vs 2018; same farm train shot, other shots differ."},
+{"a":"_QFj7e58XGE","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.7,"note":"Wheels on the Train vs Bus to Camp; similar moms, different characters."},
+{"a":"LzlbaXt9Yg4","b":"B_MmKCyAmpw","label":"unrelated","confidence":0.85,"note":"Bus to Camp vs Oopsie Doopsie Halloween; different characters."},
+{"a":"LzlbaXt9Yg4","b":"OokGp8l_x9k","label":"unrelated","confidence":0.85,"note":"Bus to Camp vs Halloween bus; different characters."},
+{"a":"z_A_hkPDigU","b":"LzlbaXt9Yg4","label":"shared-segments","confidence":0.75,"note":"Bus Going to the Camp; same mom shot, B a 59s cut of A."},
+{"a":"LzlbaXt9Yg4","b":"Q9BbiIQ6C_E","label":"unrelated","confidence":0.85,"note":"Bus to Camp vs Christmas carol; different characters."},
+{"a":"snvdOvj-H-o","b":"LzlbaXt9Yg4","label":"unrelated","confidence":0.85,"note":"Up on the Rooftop vs Bus to Camp; different characters."}
+]

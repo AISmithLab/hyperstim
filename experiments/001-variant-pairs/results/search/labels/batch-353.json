@@ -1,0 +1,72 @@
+[
+ {
+  "a": "8AguNMwcvsw",
+  "b": "2TBzba6Telw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "UCrI_HkV9gw",
+  "b": "xI9-MgmErhQ",
+  "label": "re-skin",
+  "confidence": 0.7,
+  "note": "A compilation includes red-bus version of B's green-bus shot (scooter rider same)."
+ },
+ {
+  "a": "fKWJTJUkwPc",
+  "b": "Bx-2FBZQKs0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "cAngxOmb79A",
+  "b": "Ym-tXlbrq-w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "jxaZXdht1ig",
+  "b": "s7JRVneKcao",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Apples & Bananas compilations, same thumbnail layout, different content."
+ },
+ {
+  "a": "yt7FiUHFO68",
+  "b": "JpuB_7cGFro",
+  "label": "re-skin",
+  "confidence": 0.5,
+  "note": "Thumbnail-only: same bus pose purple vs orange; compilation frames differ."
+ },
+ {
+  "a": "DPJOLEO8puk",
+  "b": "s7JRVneKcao",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Apples & Bananas compilations, same thumbnail layout, different content."
+ },
+ {
+  "a": "7xv-yiS3oB4",
+  "b": "Ln0H_11UIwI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "Bx-2FBZQKs0",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Both titled Talking Haunted House; different characters and shots."
+ },
+ {
+  "a": "xU3oLsk2eF8",
+  "b": "jrKMYkmA3lY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Different shorts; match only on vertical-short blurred side bars."
+ }
+]

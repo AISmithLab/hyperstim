@@ -1,0 +1,12 @@
+[
+{"a":"eZT6hzcAlH4","b":"t8F277vozNc","label":"shared-segments","confidence":0.7,"note":"Fire-truck number songs 1-30 vs 1-40, same day, same truck and number footage"},
+{"a":"dOZvzqc4tyE","b":"eZT6hzcAlH4","label":"shared-segments","confidence":0.7,"note":"Fire-truck number songs 1-20 vs 1-30, same footage extended"},
+{"a":"eZT6hzcAlH4","b":"JrpYstX8Kz8","label":"shared-segments","confidence":0.7,"note":"Fire-truck number songs 1-30 vs 1-50, same footage extended"},
+{"a":"Th5MQB8VO3Q","b":"Q-qoF1B0i_Q","label":"shared-segments","confidence":0.8,"note":"Short cut from the full Boo Boo song; identical mom-with-flower shot"},
+{"a":"Q-qoF1B0i_Q","b":"SP3eASDKke4","label":"shared-segments","confidence":0.55,"note":"Boo Boo shorts from same family production, different excerpts"},
+{"a":"Iygt_NzD7VU","b":"Q-qoF1B0i_Q","label":"shared-segments","confidence":0.5,"note":"Boo Boo shorts from same family production; dad vs mom excerpts"},
+{"a":"c3lLP39EdME","b":"njSANQD1GlI","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cheese vs magic hat gag"},
+{"a":"VBb7XUCV47g","b":"STRJcffvt-0","label":"same-template","confidence":0.9,"note":"Learning Street phonics episodes, letter C vs Q"},
+{"a":"sFhZZIPj9nE","b":"7FiyQQBYTUY","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; cleaning vs skates gag"},
+{"a":"VqT9YA3THAE","b":"_4x2xszMRq8","label":"same-template","confidence":0.75,"note":"Rattic Mini shorts; worm vs birthday gag"}
+]

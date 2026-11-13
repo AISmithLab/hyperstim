@@ -1,0 +1,12 @@
+[
+{"a":"e9gnACQvqRM","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, door vs bottle gag, same set."},
+{"a":"YVaBFUbjzuk","b":"afyKHCB03MU","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, Christmas mailbox vs bottle gag, same set."},
+{"a":"lkGmcS3ArOg","b":"oNyQGqRjlnE","label":"same-template","confidence":0.6,"note":"Loco Nuts Halloween compilations, same cast; no shared shot sampled."},
+{"a":"t2tKT2LSOfo","b":"snvdOvj-H-o","label":"unrelated","confidence":0.85,"note":"No No song vs Up on the Roof Top; different content."},
+{"a":"snvdOvj-H-o","b":"YudNG_jdUs4","label":"unrelated","confidence":0.85,"note":"Up on the Roof Top vs Zoo song; different content."},
+{"a":"snvdOvj-H-o","b":"XEEVejf8Kgw","label":"unrelated","confidence":0.8,"note":"Up on the Roof Top vs Five Little Elves; Christmas theme only."},
+{"a":"U9lOcqHMY_w","b":"snvdOvj-H-o","label":"unrelated","confidence":0.75,"note":"Happy Halloween vs Up on the Roof Top; same girl character, different songs."},
+{"a":"afyKHCB03MU","b":"E1wcRx1Exec","label":"unrelated","confidence":0.75,"note":"Rattic Mini bottle gag vs Larva rain short; different series."},
+{"a":"afyKHCB03MU","b":"_OlmXmG5OLM","label":"same-template","confidence":0.8,"note":"Rattic Mini shorts, bottle vs lawn mower gag, same set."},
+{"a":"OZzQENCeeNg","b":"snvdOvj-H-o","label":"unrelated","confidence":0.85,"note":"Everybody Do the Dance vs Up on the Roof Top; different content."}
+]

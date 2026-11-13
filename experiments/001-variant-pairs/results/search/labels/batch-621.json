@@ -1,0 +1,72 @@
+[
+ {
+  "a": "TtbFoTBDaU8",
+  "b": "R49NrP0fcsE",
+  "label": "re-upload",
+  "confidence": 0.85,
+  "note": "matched frames identical; B is a 31s cut of A's 58s"
+ },
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "bXcFSE7NQp8",
+  "label": "same-song",
+  "confidence": 0.85,
+  "note": "Kaboochi hula kids vs animal dancers, different animation"
+ },
+ {
+  "a": "FIinrJO9po8",
+  "b": "S9N416aMRxk",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "fUR3k2eL6Mo",
+  "b": "VnHWYMlDgwI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "zSf5nw7US6U",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "SB-7h4MW26k",
+  "b": "n6eghHp7qWw",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "lij2KlyDHJ8",
+  "b": "wW339izcKu4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "fx0aMbJwE34",
+  "b": "WZ45rZRLf80",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "ZeldqdySrKg",
+  "b": "X5isLUsPsU0",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini compilations, same set and music bed, different gags at matched moments"
+ },
+ {
+  "a": "tNPoYErk2rs",
+  "b": "pst1AsXQWTE",
+  "label": "same-song",
+  "confidence": 0.8,
+  "note": "Boo Boo Song, different characters and shots at matched moments"
+ }
+]

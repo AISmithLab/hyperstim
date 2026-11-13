@@ -1,0 +1,72 @@
+[
+ {
+  "a": "s3_DkTgl-bw",
+  "b": "PS1pHA17mNI",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "Baby Bao Panda Hot Cross Buns: magenta/green pandas vs black/white pandas, identical shots"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "AyZJfo2rrOc",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations on the same set; sampled frames show different episodes"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "DS8rk9NwXQc",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "El8w4iWGWEI",
+  "b": "IE7VFN8ln9Y",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "XamiKGRhams",
+  "b": "Z1H7LX1K4Zo",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini The Toilet: 30 s cut and 63 s version share the toilet shots"
+ },
+ {
+  "a": "Tz2SZgHgjjk",
+  "b": "-kRTFYd6WkI",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini shorts on the same attic set, different gags"
+ },
+ {
+  "a": "PjXooPy93AM",
+  "b": "AyZJfo2rrOc",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episodes"
+ },
+ {
+  "a": "_EZv7EJE8LE",
+  "b": "X5isLUsPsU0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the toy car and snowman episodes"
+ },
+ {
+  "a": "YABj119wijM",
+  "b": "ZEI_8iC_Z7E",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Rattic Mini compilations share the heart balloon and pillow episodes"
+ }
+]

@@ -1,0 +1,12 @@
+[
+{"a":"bNuG6IapPsk","b":"Ar6N0i4c36U","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts with different gags (fitness ball vs manhole)."},
+{"a":"39Dtr0Rq-TY","b":"Ar6N0i4c36U","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts with different gags (boards vs manhole)."},
+{"a":"TwDxP5L1-VA","b":"Ar6N0i4c36U","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts with different gags (teleport vs manhole)."},
+{"a":"MnwriKXX89I","b":"F1jyrzRTmdA","label":"shared-segments","confidence":0.8,"note":"Compilations share the shapes-on-horses segment at midpoint."},
+{"a":"1WzZWyDsRw4","b":"pbfbmXohAGo","label":"unrelated","confidence":0.85,"note":"Boo Boo song vs dance song shorts; nothing shared."},
+{"a":"HWH2lpQomEk","b":"Xo3zWzIj8fM","label":"unrelated","confidence":0.85,"note":"Five Little Monkeys vs dance shorts; nothing shared."},
+{"a":"eGvSblfi0ns","b":"SQBTIuB0SsI","label":"unrelated","confidence":0.85,"note":"Monsters short vs Halloween bus short; different shots."},
+{"a":"afJ8kEWkJqo","b":"AKD-gwTktdc","label":"re-skin","confidence":0.9,"note":"Baby Bao Wheels on the Bus short: green bus vs pink bus, same panda shots, seats recolored."},
+{"a":"WvT05t4UpF8","b":"Mv7e5oDUvQM","label":"same-song","confidence":0.5,"note":"Old Macdonald single vs compilation; frames show different animation."},
+{"a":"TAeO_pKB_ik","b":"kkh-zgniHXU","label":"same-template","confidence":0.75,"note":"Pretend-play story episodes, same intro card and kid characters, different stories."}
+]

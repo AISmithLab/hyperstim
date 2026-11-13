@@ -1,0 +1,72 @@
+[
+ {
+  "a": "HWH2lpQomEk",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Monkeys vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "7aj6Vpx_su8",
+  "b": "URGIkCHFUDQ",
+  "label": "re-skin",
+  "confidence": 0.9,
+  "note": "2014 Wheels on the Bus: red bus vs pink bus, same shots and mountain background."
+ },
+ {
+  "a": "Xo3zWzIj8fM",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Dance vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "-M02RqRMZks",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "e3ej1CBEdWk",
+  "b": "oEDZUGxcTSk",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Old Macdonald shorts with the same blue cat and mouse cast; different shots seen."
+ },
+ {
+  "a": "KYwjCiQCbr8",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Three Little Pigs vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "fKWJTJUkwPc",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five in the Bed vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "A7LOToRCqR4",
+  "b": "FHmDzUZVf3g",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Bus song compilations with same thumbnail style; different vehicle footage."
+ },
+ {
+  "a": "oRUKPowFBgM",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Apples & Bananas vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "7ClCbBREUlU",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Boo Boo shorts; nothing shared."
+ }
+]

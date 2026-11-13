@@ -1,0 +1,12 @@
+[
+{"a":"El8w4iWGWEI","b":"JKmr96i2xH0","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Basketball vs The Guard"},
+{"a":"CvFabQeSv9A","b":"aScyfsClZd0","label":"same-song","confidence":0.6,"note":"Boo Boo shorts from different productions"},
+{"a":"NcfiuWYdC24","b":"kHVGgxylqd8","label":"shared-segments","confidence":0.7,"note":"Boo Boo shorts cut from the same production, shared boy/dad shots"},
+{"a":"njSANQD1GlI","b":"Z1H7LX1K4Zo","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Magic Hat vs Toilet"},
+{"a":"fkM9JyHWOo8","b":"mrU14TkzuVI","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Cupboard vs Robot Vacuum"},
+{"a":"DS8rk9NwXQc","b":"6L0oq3iwbS0","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Mime vs TV"},
+{"a":"TRCJGQylez4","b":"EPh1bFzsVf4","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Spring Toy vs Leaves"},
+{"a":"aDyWeSAt-sI","b":"klDPbXVTBzw","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, no shared episode in sampled frames"},
+{"a":"fx0aMbJwE34","b":"a7-bpUidOBo","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and trashcan episodes"},
+{"a":"gmRIldLgb8k","b":"Tn2UZwb9RcY","label":"same-template","confidence":0.7,"note":"Rattic Mini shorts, Kung Fu vs Bucket"}
+]

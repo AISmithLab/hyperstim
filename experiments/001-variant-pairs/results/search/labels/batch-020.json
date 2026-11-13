@@ -1,0 +1,12 @@
+[
+ {"a": "dL9q0aobLss", "b": "vXUuaxhuTWY", "label": "same-template", "confidence": 0.95, "note": "Bob the Train phonics episodes, letter R vs Y; same intro and stage."},
+ {"a": "skNxtYhw9Y8", "b": "zSf5nw7US6U", "label": "shared-segments", "confidence": 0.9, "note": "Rattic Mini compilations; identical turban/snake-basket frame, stroller and claw machine shared."},
+ {"a": "S2v2Wh9re6w", "b": "P85oXrxz2nk", "label": "shared-segments", "confidence": 0.9, "note": "Halloween compilation contains the Zoobees Halloween bus song; identical costume-kids frame."},
+ {"a": "MiTaLfR6zgY", "b": "yXDsS1eglcA", "label": "re-skin", "confidence": 0.75, "note": "Same bus-stop, wheel and traffic shots and camera; swapped stop sign, buildings, traffic cars, hubcap."},
+ {"a": "PPVWn53Yw4M", "b": "jvCQFkt2FwI", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; football vs picture gag."},
+ {"a": "yUCPy4Bem1Y", "b": "v8wvRjQdBbo", "label": "shared-segments", "confidence": 0.8, "note": "Boom Buddies compilation contains the Johny Johny song; identical dad-and-baby frame."},
+ {"a": "VqT9YA3THAE", "b": "jvCQFkt2FwI", "label": "same-template", "confidence": 0.9, "note": "Rattic Mini shorts on the same set; worm vs picture gag."},
+ {"a": "o6VjhL9gA1A", "b": "Ia-g9fkyMJ4", "label": "unrelated", "confidence": 0.85, "note": "Rattic Mini carousel short vs Larva-style worms on a watermelon; different shows."},
+ {"a": "PbchJhisS4s", "b": "KKgsTFivFJM", "label": "same-template", "confidence": 0.55, "note": "Rattic Mini compilations on the same set; no shared frame among samples."},
+ {"a": "vSgel1xqgpE", "b": "FKIXL-VWkys", "label": "shared-segments", "confidence": 0.85, "note": "Finger family compilations; identical lollipop finger family frame, different lead songs."}
+]

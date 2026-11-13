@@ -1,0 +1,72 @@
+[
+ {
+  "a": "tQ3LttVt_Jk",
+  "b": "QLtuuZVDZ4g",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, canyon vs pillow gags"
+ },
+ {
+  "a": "hzzGSyV_BCA",
+  "b": "Uq5Pp5BQSm4",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, no shared frames seen"
+ },
+ {
+  "a": "e9gnACQvqRM",
+  "b": "BZqq3eL6xSE",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, door vs high striker gags"
+ },
+ {
+  "a": "YgjyQIwcJy0",
+  "b": "fkM9JyHWOo8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, hollow tree vs cupboard gags"
+ },
+ {
+  "a": "TwDxP5L1-VA",
+  "b": "TtH33fR-iQM",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, teleport vs skates gags"
+ },
+ {
+  "a": "t892KTYY-cE",
+  "b": "vbY-B_GtSvc",
+  "label": "same-template",
+  "confidence": 0.85,
+  "note": "Bob phonics letter A vs K, shared intro/outro"
+ },
+ {
+  "a": "afyKHCB03MU",
+  "b": "Ar6N0i4c36U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, bottle vs manhole gags"
+ },
+ {
+  "a": "ihJt-oPUoYk",
+  "b": "y5BTqWirpe8",
+  "label": "same-template",
+  "confidence": 0.9,
+  "note": "Bob the Train letter J vs letter M episodes"
+ },
+ {
+  "a": "jPvyJ9IIRJk",
+  "b": "zej8Uf5iAGk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, skipping rope vs teleport gags"
+ },
+ {
+  "a": "jflAKuIuQBM",
+  "b": "fOJm84LQSTw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, talent show vs high striker gags"
+ }
+]

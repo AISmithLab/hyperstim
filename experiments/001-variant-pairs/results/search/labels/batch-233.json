@@ -1,0 +1,72 @@
+[
+ {
+  "a": "t9jRzN_dZ_w",
+  "b": "f-mql8Hj28M",
+  "label": "re-upload",
+  "confidence": 0.8,
+  "note": "Bob Incy Wincy Spider re-uploaded in 2020 with intro and new thumbnail; same shots."
+ },
+ {
+  "a": "41F1Fdb3tHM",
+  "b": "7I0SeirswAk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo vs Johny Johny shorts; nothing shared."
+ },
+ {
+  "a": "t2tKT2LSOfo",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "5NCx942T-wM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Happy song vs haunted house shorts; nothing shared."
+ },
+ {
+  "a": "kKYr9m8-fmo",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Christmas vs Old Macdonald shorts; nothing shared."
+ },
+ {
+  "a": "CeUAFs_KyIc",
+  "b": "pPtodbpI5o0",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "Compilations share the dad-at-door segment at midpoint."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "b5p78d-gr6w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs monster in the dark shorts; nothing shared."
+ },
+ {
+  "a": "7I0SeirswAk",
+  "b": "4ho4zx7QtR0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Johny Johny vs bus song shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "tQlIWPUO_E0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Ten in the Bed shorts; nothing shared."
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "Hr0QlC5Nrh0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Haunted house vs Santa sleigh shorts; nothing shared."
+ }
+]

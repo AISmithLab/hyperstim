@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Q95CAqmYoew",
+  "b": "oMEt_dTdnMg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Larva comedy shorts, same characters and set, different gags"
+ },
+ {
+  "a": "AXd66O4yEEI",
+  "b": "oMEt_dTdnMg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Larva comedy shorts, same characters, different gags"
+ },
+ {
+  "a": "E1wcRx1Exec",
+  "b": "oMEt_dTdnMg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Larva comedy shorts, same characters, different gags"
+ },
+ {
+  "a": "HO-3dteY438",
+  "b": "GiE7R-28ZoU",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "2D finger family series: bunny vs frogs, same layout"
+ },
+ {
+  "a": "GiE7R-28ZoU",
+  "b": "dSOO9PSVKA4",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "2D finger family series: frogs vs kittens, same layout"
+ },
+ {
+  "a": "GqpAJf36hrc",
+  "b": "aYm4u_lQpIo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween teacher vs Kaboochi shorts; different scenes"
+ },
+ {
+  "a": "0gXJ6f2z_Y4",
+  "b": "Gt66IXu-3jE",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Johny Johny shorts share orange-shirt boy shots; B has extra footage"
+ },
+ {
+  "a": "V9fA6nrohac",
+  "b": "2SAG3jAYNyk",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts, same rat character, different gags"
+ },
+ {
+  "a": "8-93_TmkKfc",
+  "b": "e9LhPr3svs0",
+  "label": "re-skin",
+  "confidence": 0.85,
+  "note": "Wheels on the Bus: same road shots, yellow bus recolored green"
+ },
+ {
+  "a": "41F1Fdb3tHM",
+  "b": "_uYyO8y5Txc",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Boo Boo Song shorts with different characters and animation"
+ }
+]

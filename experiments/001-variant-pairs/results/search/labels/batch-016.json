@@ -1,0 +1,12 @@
+[
+{"a":"dOZvzqc4tyE","b":"JrpYstX8Kz8","label":"same-template","confidence":0.6,"note":"Same fire-truck number song style, 1-20 vs 1-50; may share the first numbers' footage."},
+{"a":"VqT9YA3THAE","b":"o6VjhL9gA1A","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts on same set; worm vs carousel gags, different footage."},
+{"a":"UN4V4ywCWxA","b":"bBOI5NzGpX0","label":"same-template","confidence":0.6,"note":"Rattic Mini compilations, same thumbnail layout; sampled frames show different episodes."},
+{"a":"dKWIFPVgwfo","b":"J_z12HMJiI8","label":"shared-segments","confidence":0.85,"note":"Nursery rhyme compilations sharing the pirate-kids segment; lead songs firetruck vs taxi differ."},
+{"a":"Tz2SZgHgjjk","b":"o6VjhL9gA1A","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts on same set; cheese vs carousel gags."},
+{"a":"o6VjhL9gA1A","b":"MnJaDuR1QKE","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; carousel vs robot vacuum, different footage."},
+{"a":"o6VjhL9gA1A","b":"DF6G0YHRlV8","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; carousel vs crib, different footage."},
+{"a":"xEFkAQpftd4","b":"urNKg4X9kIU","label":"same-template","confidence":0.85,"note":"Rattic Mini shorts; talent show vs teleport, different footage."},
+{"a":"oHtQbh7LJjY","b":"dL9q0aobLss","label":"same-template","confidence":0.95,"note":"Bob the Train phonics episodes, letter J vs R; shared intro, different content."},
+{"a":"FZSWN3DFpGE","b":"b5p78d-gr6w","label":"same-song","confidence":0.5,"note":"Same title and bedroom set, new kid characters and cobwebs in B; poses not seen to match. Possible re-skin."}
+]

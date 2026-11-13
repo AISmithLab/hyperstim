@@ -1,0 +1,12 @@
+[
+{"a":"ppyGLiHU4Hg","b":"s3aVKjLvoQI","label":"re-skin","confidence":0.85,"note":"Same firetruck short shots (driver, kids in window); truck magenta vs orange/white"},
+{"a":"s3aVKjLvoQI","b":"0k76HQnSwt8","label":"re-skin","confidence":0.85,"note":"Same firetruck short shots; truck orange/white vs purple/blue"},
+{"a":"19yPrd-it5I","b":"bBOI5NzGpX0","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations, no shared frames seen"},
+{"a":"19yPrd-it5I","b":"Ym2JIL8xgVI","label":"same-template","confidence":0.55,"note":"Rattic Mini compilations, no shared frames seen"},
+{"a":"19yPrd-it5I","b":"Eif8UopFHhM","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the claw machine episode"},
+{"a":"_ojoYfbCJl4","b":"HIQBjbLrMYU","label":"shared-segments","confidence":0.8,"note":"Christmas bus song (2x speed) contained in the compilation; same Santa frame"},
+{"a":"skNxtYhw9Y8","b":"19yPrd-it5I","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the stroller episode"},
+{"a":"7FiyQQBYTUY","b":"BZqq3eL6xSE","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, skates vs high striker gags"},
+{"a":"vbY-B_GtSvc","b":"STRJcffvt-0","label":"same-template","confidence":0.85,"note":"Bob phonics letter K vs Q, shared intro/outro"},
+{"a":"Ia2TzzY2Vto","b":"CU_QocmxLz0","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, toilet vs statue gags"}
+]

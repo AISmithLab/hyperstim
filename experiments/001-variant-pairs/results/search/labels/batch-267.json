@@ -1,0 +1,12 @@
+[
+{"a":"omvHYELlQ9o","b":"lZngiTw7yGo","label":"unrelated","confidence":0.85,"note":"Finger Family vs Monkey Dance shorts; side bars only."},
+{"a":"TtbFoTBDaU8","b":"s0DwH0Oq5YY","label":"re-upload","confidence":0.85,"note":"Same Boo Boo short frame for frame on both channels; near-same length."},
+{"a":"9aLZatXZCl4","b":"lEvNMZQ2DT4","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the kiosk episode."},
+{"a":"pKnKuQMeGlk","b":"LQQ2DD4V_mY","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing the dino and mime episodes."},
+{"a":"34zV8hDOuFs","b":"OSOdLGenkS0","label":"shared-segments","confidence":0.8,"note":"Rattic Mini compilations sharing the red-car episode."},
+{"a":"2kLB7ZwxVv8","b":"zSf5nw7US6U","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing toy-box and turban episodes."},
+{"a":"_e29OQFpP7A","b":"ANqdoD46Ox0","label":"shared-segments","confidence":0.6,"note":"Boo Boo shorts with same thumbnail and overlapping shots, different edits."},
+{"a":"ripZ0792Vx4","b":"ZEI_8iC_Z7E","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing heart balloon and pillow episodes."},
+{"a":"qM6hdr1DVSM","b":"Tz2SZgHgjjk","label":"same-template","confidence":0.6,"note":"Rattic Mini shorts, airplane vs cheese gags."},
+{"a":"n6eghHp7qWw","b":"3yv0GSbbCZI","label":"shared-segments","confidence":0.85,"note":"Rattic Mini compilations sharing snowman and jeep episodes."}
+]
