@@ -1,0 +1,143 @@
+<meta charset="utf-8">
+<title>Re-skin Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Shantell+Sans:wght@600&display=swap">
+<style>
+/* Layout: the search's base page in the pair report's look (light only, like the site): facts row,
+   the filter chain as a table (stages down, pair types across), then one card per label page.
+   The label pages (build_search_site.py) reuse this style block. */
+:root {
+  --bg: #eef6fa;
+  --surface: #ffffff;
+  --ink: #0f2e8a;
+  --ink-2: #4a5262;
+  --muted: #6e7483;
+  --line: rgb(15 46 138 / 0.10);
+  --line-2: rgb(15 46 138 / 0.15);
+  --a: #d9603f;
+  --b: #4f7fe0;
+  --axb: #159a6b;      /* across-channel pairs; with --a and --b checked as a set (dataviz validator) */
+  --chip: #f8d040;
+  --butter: #fef8d4;
+  --mint: #e5f6e6;
+  --rose: #fde6ef;
+  --lilac: #ece8fb;
+  --focus: #f8d040;
+  --display: "Shantell Sans", "Comic Sans MS", cursive;
+  --body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px; }
+.wrap { max-width: 1320px; margin: 0 auto; display: grid; gap: 48px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+h3 { font-size: 1.1rem; margin-top: 8px; }
+p { margin: 0; }
+a { color: inherit; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.eyebrow { font: 700 0.72rem/1.2 var(--body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+header { display: grid; gap: 14px; }
+.lead { font-size: 1.15rem; color: var(--ink-2); max-width: 70ch; }
+section { display: grid; gap: 18px; }
+.sec-head { display: grid; gap: 6px; }
+.sec-head p { color: var(--ink-2); max-width: 75ch; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.fact { background: var(--surface); border: 1px solid var(--line-2); border-radius: 1.2rem; padding: 14px 16px; display: grid; gap: 2px; min-width: 0; }
+.fact b { font: 800 1.5rem/1.2 var(--body); font-variant-numeric: tabular-nums; }
+.fact span:last-child { color: var(--ink-2); font-size: 0.85rem; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line-2); border-radius: 1.5rem; }
+.chain { border-collapse: collapse; width: 100%; min-width: 720px; font-variant-numeric: tabular-nums; }
+.chain th, .chain td { text-align: left; vertical-align: top; padding: 12px 16px; border-top: 1px solid var(--line); }
+.chain thead th { border-top: 0; font-family: var(--display); font-size: 1rem; }
+.chain th span, .chain td span { display: block; font: 400 0.82rem/1.35 var(--body); color: var(--muted); }
+.chain tbody th { width: 34%; font-weight: 400; }
+.chain td b { font-size: 1.15rem; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line-2); font-size: 0.82rem; white-space: nowrap; }
+.lab.re-skin { background: var(--chip); border-color: transparent; font-weight: 700; }
+.lab.re-upload { background: var(--mint); }
+.lab.same-song { background: var(--lilac); }
+.lab.same-template, .lab.shared-segments { background: var(--rose); }
+.ptype { background: var(--surface); border: 1px solid var(--line-2); border-radius: 2rem; padding: clamp(16px, 3vw, 28px); }
+.pair { display: grid; gap: 8px; padding-block: 14px; border-top: 1px solid var(--line); min-width: 0; }
+.pair .strip { width: 100%; aspect-ratio: 1286 / 90; border-radius: 8px; background-color: var(--bg);
+  background-repeat: no-repeat; background-size: 100% 2500%; }  /* 25 strips a sheet */
+.titles { display: grid; gap: 2px; font-size: 0.92rem; }
+.titles p { min-width: 0; overflow-wrap: anywhere; }
+.tag { display: inline-flex; align-items: center; justify-content: center; width: 1.4em; height: 1.4em; border-radius: 4px; margin-right: 6px;
+  font: 700 0.75em/1 var(--body); color: #fff; vertical-align: 0.05em; }
+.tag.a { background: var(--a); } .tag.b { background: var(--b); }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: 0.85rem; color: var(--ink-2); }
+.note { font-size: 0.9rem; color: var(--ink-2); }
+.rep { font-weight: 700; }
+/* Section 3 and 4: charts and tables. Text in ink tokens; color only on marks. */
+.legend-row { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.85rem; color: var(--ink-2); }
+.legend-row i { display: inline-block; width: 14px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: 0.2em; }
+.legend-row i.tickkey { width: 2px; height: 12px; background: var(--muted); opacity: 0.6; vertical-align: -0.1em; }
+.viz-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line-2); border-radius: 1.5rem; padding: 8px 4px; }
+.viz { display: block; font-family: var(--body); }
+.viz .grid { stroke: var(--line); stroke-width: 1; }
+.viz .tick { fill: var(--muted); font-size: 11px; }
+.viz .lab { fill: var(--ink-2); font-size: 12px; font-weight: 700; }
+.viz .mark { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 4 3; }
+.viz .up { stroke: var(--muted); stroke-width: 1; opacity: 0.35; }
+.viz .link .ln { fill: none; stroke-width: 1.5; opacity: 0.75; }
+.viz .link .hit, .viz .pt .hit { fill: none; stroke: transparent; stroke-width: 10; }
+.viz .pt .hit { fill: transparent; stroke: none; }
+.viz .link:hover .ln { stroke-width: 3; opacity: 1; }
+.viz .ln2 { fill: none; stroke-width: 2; stroke-linejoin: round; }
+.viz .ln-a { stroke: var(--a); } .viz .ln-b { stroke: var(--b); }
+.viz .dot { stroke: var(--surface); stroke-width: 2; } .viz .dot-a { fill: var(--a); } .viz .dot-b { fill: var(--b); }
+.minis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 12px; }
+.mini { margin: 0; background: var(--surface); border: 1px solid var(--line-2); border-radius: 1.2rem; padding: 10px; }
+.mini svg { width: 100%; height: auto; }
+.mini figcaption { font-size: 0.82rem; color: var(--muted); padding: 2px 6px; }
+.data { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.data th, .data td { text-align: left; vertical-align: top; padding: 8px 12px; border-top: 1px solid var(--line); }
+.data thead th { border-top: 0; font-size: 0.82rem; color: var(--ink-2); }
+.data tbody th { font-weight: 600; }
+.data .num { text-align: right; white-space: nowrap; }
+.data.fam { min-width: 860px; } .data.fam .notes { color: var(--ink-2); font-size: 0.85rem; min-width: 260px; }
+.data.sig .cat { display: block; font: 400 0.75rem/1.2 var(--body); color: var(--muted); }
+.data .barcell { width: 40%; min-width: 80px; } .data .bar { display: block; height: 8px; border-radius: 0 4px 4px 0; background: var(--ink); opacity: 0.75; }
+details summary { cursor: pointer; font-weight: 700; padding: 6px 0; }
+details > .scroll { margin-top: 8px; }
+.dis { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 0.92rem; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.audit { color: var(--ink-2); font-size: 0.92rem; max-width: 75ch; }
+@media (max-width: 640px) { .chain tbody th { width: auto; } }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Experiment 001 · Variant pairs · updated __UPDATED__</span>
+    <h1>Re-skin Search</h1>
+    <p class="lead">Kids TV (A) and Kids Channel (B), one company's two channels: which of their videos are the same animation re-skinned (new colors, backgrounds or characters over the same timing), and how was it changed? Every pair of their videos goes through a chain of filters, cheapest first; the agent labels what passes. Re-skins are downloaded and count only when their main content overlaps; their groups have their own page.</p>
+    <div class="facts">__FACTS__</div>
+  </header>
+  <section>
+    <div class="sec-head"><h2>What stood out</h2><p>__STOOD__</p></div>
+  </section>
+  <section>
+    <div class="sec-head"><h2>Filter chain</h2><p>How many pairs passed each filter, by pair type. Every threshold is set against random pairs of the same type. From row 5 on, only re-skins: the agent's other labels (re-uploads, same song, same template, shared segments) are left out here.</p></div>
+    <div class="scroll">__CHAIN__</div>
+    <p class="audit">__AUDIT__</p>
+  </section>
+  <section>
+    <div class="sec-head"><h2>Re-skin groups</h2><p>Re-skins of one animation form a group, its versions shown together on the groups page with their full reports.</p></div>
+    __LABELS__
+  </section>
+  <section>
+    <div class="sec-head"><h2>Channel story</h2><p>Was Kids Channel built from Kids TV's catalog, or to test versions against each other? Catalog reuse would show as a burst of re-skins of old Kids TV videos soon after 2014-10-30; testing as repeated releases of two versions close together. Only confident re-skins (agent confidence 70% or more) whose main content overlaps count here.</p></div>
+    __STORY__
+  </section>
+  <section>
+    <div class="sec-head"><h2>Strategy profiles</h2><p>From the full reports of downloaded pairs: which signals say the two versions are the same, and how the agent's label compares with what the full report finds.</p></div>
+    __PROFILES__
+  </section>
+</div>

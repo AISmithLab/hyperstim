@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All Versions Together</title>
+__HEAD__
+__STYLE__
+<style>
+/* Layout: one re-skin group's versions together (build_search_site.py, group-data.json): every
+   version's video in a grid, played in sync on the earliest version's clock, with the pair reports'
+   frame-by-frame views (change map, outlines) over each tile and their timeline tracks below, one
+   lane per version; then their measures side by side in one sortable table. Opened in the groups
+   page's side panel as group.html#g=<k>. */
+body { padding-block: 20px 48px; }
+.wrap { gap: 28px; }
+.lead { color: var(--ink-2); max-width: 75ch; }
+.controls { position: sticky; top: 0; z-index: 3; display: grid; gap: 8px;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 1.2rem; padding: 10px 14px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.controls button, .controls select { font: 700 0.92rem var(--body); color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.controls button[aria-pressed=true] { background: var(--chip); border-color: var(--chip); }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.controls button:focus-visible, .controls select:focus-visible, .controls input:focus-visible,
+.tile button:focus-visible, .sort:focus-visible, .lanes svg:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.controls input[type=range] { flex: 1 1 200px; min-width: 140px; accent-color: var(--ink); }
+.controls .time { font-variant-numeric: tabular-nums; min-width: 11ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.82rem; color: var(--ink-2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+.tile { background: var(--surface); border: 1px solid var(--line-2); border-radius: 1rem; padding: 8px; display: grid; gap: 6px; min-width: 0; margin: 0; }
+.screen { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 0.6rem; overflow: hidden; background: #0b1a4a; }
+.screen video, .screen .none, .screen .spr { position: absolute; inset: 0; width: 100%; height: 100%; }
+.screen .spr { background-repeat: no-repeat; }
+.screen .none { display: grid; place-items: center; color: #fff; font-size: 0.9rem; text-align: center; padding: 8px; }
+.tile.out video, .tile.out .spr { opacity: 0.35; }
+.tile .cap { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; font-size: 0.88rem; min-width: 0; }
+.tile .cap > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.tile .vs { font-size: 0.8rem; color: var(--ink-2); }
+.tile button { font: 700 0.8rem var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line-2);
+  border-radius: 999px; padding: 3px 10px; cursor: pointer; flex: none; }
+.tile button[aria-pressed=true] { background: var(--chip); border-color: var(--chip); }
+/* Timeline tracks on #1's clock: one lane per version; click a lane to go to that moment. */
+.lanes { display: grid; gap: 14px; }
+.lanes h3 { font-size: 1rem; margin: 0 0 4px; }
+.lanes .sub { font-size: 0.82rem; color: var(--ink-2); font-weight: 400; margin-left: 6px; }
+.lane { display: grid; grid-template-columns: 3.2em 1fr; align-items: center; gap: 8px; }
+.lane b { font-size: 0.82rem; text-align: right; font-variant-numeric: tabular-nums; }
+.lane svg { width: 100%; height: 22px; display: block; background: var(--bg); border-radius: 4px; cursor: pointer; }
+.lane svg.tall { height: 30px; }
+.axis { display: grid; grid-template-columns: 3.2em 1fr; gap: 8px; font-size: 0.78rem; color: var(--muted); }
+.axis div:last-child { display: flex; justify-content: space-between; }
+td .tag, .cap .tag { margin-right: 6px; }
+td.nw { white-space: nowrap; }
+.muted { color: var(--muted); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 9px; border-top: 1px solid var(--line); vertical-align: top; }
+thead th { border-top: 0; white-space: nowrap; font-size: 0.82rem; color: var(--ink-2); }
+td.num, th.num { text-align: right; white-space: nowrap; }
+tbody th { font-weight: 400; min-width: 200px; }
+.sort { font: inherit; font-weight: 700; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.sort .arrow { margin-left: 4px; color: var(--muted); }
+th[aria-sort=ascending] .arrow, th[aria-sort=descending] .arrow { color: var(--ink); }
+.note { color: var(--ink-2); font-size: 0.88rem; max-width: 80ch; }
+@media (max-width: 640px) { .controls { position: static; } }   /* sticky would cover the tiles */
+:root { --recolor: #eba828; --redraw: #c83ca0; }   /* as the pair report: match the change-map stills */
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Experiment 001 · Re-skin group</span>
+    <h1 id="title">All versions together</h1>
+    <p class="lead" id="lead">This page needs JavaScript: it plays every version of one re-skin group in sync, compares them frame by frame, and lists their measures side by side.</p>
+  </header>
+  <section aria-labelledby="play-h">
+    <div class="sec-head"><h2 id="play-h">Play together, compare frame by frame</h2>
+      <p class="note">Every version is shifted to line up with the earliest (#1) by the lag its alignment found; a version dims while it has nothing at that moment. Change map and Outlines show, on each tile, that version against the one its full report links it to (named under the tile), once a second. All play muted except the one you pick to hear.</p></div>
+    <div class="controls" role="group" aria-label="Playback and view">
+      <div class="row">
+        <div class="seg" role="group" aria-label="View" id="modes">
+          <button type="button" data-mode="video" aria-pressed="true">Videos</button>
+          <button type="button" data-mode="mask" aria-pressed="false">Change map</button>
+          <button type="button" data-mode="edges" aria-pressed="false">Outlines</button>
+        </div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="row">
+        <button type="button" id="play">Play</button>
+        <label class="sr" for="seek">Moment on #1's clock, seconds</label>
+        <input type="range" id="seek" min="0" max="1" step="0.04" value="0">
+        <span class="time" id="time">0:00.00</span>
+      </div>
+      <div class="row">
+        <div class="seg">
+          <button type="button" id="prevcut">← Cut</button>
+          <button type="button" id="prevf" aria-label="Previous frame">← Frame</button>
+          <button type="button" id="nextf" aria-label="Next frame">Frame →</button>
+          <button type="button" id="nextcut">Cut →</button>
+        </div>
+        <label>Speed <select id="speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+  <section aria-labelledby="t-h">
+    <div class="sec-head"><h2 id="t-h">Timeline</h2>
+      <p class="note">All on #1's clock. Cuts: each version's own cuts. Changed area and Outline match: each version against the one its full report links it to (recolored + redrawn share of the frame; edge SSIM, 0–0.6). Click a lane to go to that moment.</p></div>
+    <div class="lanes" id="lanes"></div>
+  </section>
+  <section aria-labelledby="m-h">
+    <div class="sec-head"><h2 id="m-h">Measures side by side</h2>
+      <p class="note">Measures come from the site's pipeline on each video's dataset clip (the 5 minutes after 0:30). Visual intensity and visual brightness are the site's percentiles of color saturation and of lightness (L*). "Vs. its link" is the full report linking the version back towards #1: the share of the picture that changed and what happened to the audio.</p></div>
+    <div class="scroll"><table class="sortable" id="measures"></table></div>
+  </section>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const FPS = 25;
+  const fmtT = (s) => { s = Math.max(0, s); const m = Math.floor(s / 60), r = s - 60 * m; return m + ':' + r.toFixed(2).padStart(5, '0'); };
+  const NS = 'http://www.w3.org/2000/svg';
+  const sv = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+  const k = Number(new URLSearchParams(location.hash.slice(1)).get('g'));
+  fetch('group-data.json').then((r) => r.json()).then((all) => {
+    const g = all.find((x) => x.k === k);
+    if (!g) { $('lead').textContent = 'No group ' + k + ' on this page.'; return; }
+    document.title = g.k + '. ' + g.name + ': all versions';
+    $('title').textContent = g.k + '. ' + g.name;
+    $('lead').textContent = 'All ' + g.versions.length + ' versions of this re-skin group, numbered by publish date, played together from the beginning.';
+    build(g);
+    table(g);
+  }).catch(() => { $('lead').textContent = 'The group data could not be loaded.'; });
+
+  // A sprite cell cut from a report's stills sheet (as the pair report's sheetBg).
+  function cell(sp, i) {
+    const r = Math.floor(i / sp.cols), c = i % sp.cols, x = sp.x + c * sp.w, y = sp.y + r * sp.h;
+    return { backgroundImage: 'url(' + sp.sheet + ')', backgroundSize: (sp.W / sp.w * 100) + '% ' + (sp.H / sp.h * 100) + '%',
+      backgroundPosition: (sp.W === sp.w ? 0 : x / (sp.W - sp.w) * 100) + '% ' + (sp.H === sp.h ? 0 : y / (sp.H - sp.h) * 100) + '%' };
+  }
+
+  function build(g) {
+    const num = Object.fromEntries(g.versions.map((v) => [v.id, v.n]));
+    const off = Object.fromEntries(g.versions.map((v) => [v.id, v.offset]));
+    const grid = $('grid'), tiles = [];
+    let hear = null, mode = 'video';
+    for (const v of g.versions) {
+      const t = document.createElement('figure'); t.className = 'tile';
+      const screen = document.createElement('div'); screen.className = 'screen';
+      const cap = document.createElement('figcaption'); cap.className = 'cap';
+      const name = document.createElement('span');
+      name.innerHTML = '<b>#' + v.n + '</b> <span class="tag ' + (v.side === 'B' ? 'b' : 'a') + '">' + v.side + '</span>';
+      name.append(v.title); name.title = v.title;
+      cap.append(name);
+      const lf = v.link && v.link.frames;
+      const other = lf ? (lf.a === v.id ? lf.b : lf.a) : null;
+      const vs = document.createElement('div'); vs.className = 'vs';
+      vs.textContent = v.n === 1 ? 'The reference: the others line up to it.' : other ? 'Change map and outlines: against #' + num[other] + '.' : 'No full report linking it, so no change map.';
+      const x = { v, el: null, btn: null, box: t, spr: null, lf, vs, vsText: vs.textContent };
+      if (v.url && v.offset !== null) {
+        const el = document.createElement('video');
+        el.src = v.url; el.muted = true; el.playsInline = true; el.preload = 'auto';
+        el.setAttribute('aria-label', '#' + v.n + ': ' + v.title);
+        el.addEventListener('loadedmetadata', () => place(clock));
+        screen.append(el); x.el = el;
+        const b = document.createElement('button');
+        b.type = 'button'; b.textContent = 'Hear'; b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', 'Hear #' + v.n);
+        b.addEventListener('click', () => {
+          for (const y of tiles) if (y.btn) { y.btn.setAttribute('aria-pressed', 'false'); y.el.muted = true; }
+          b.setAttribute('aria-pressed', 'true'); el.muted = false; hear = el;
+        });
+        cap.append(b); x.btn = b;
+      } else {
+        const none = document.createElement('div'); none.className = 'none';
+        none.textContent = v.url ? 'Not aligned to #1' : 'Video not in this page';
+        screen.append(none);
+      }
+      if (lf && lf.sprites.mask) {
+        const spr = document.createElement('div'); spr.className = 'spr'; spr.hidden = true;
+        spr.setAttribute('role', 'img'); screen.append(spr); x.spr = spr;
+      }
+      t.append(screen, cap, vs); grid.append(t); tiles.push(x);
+    }
+    const first = tiles.find((x) => x.btn);
+    if (first) first.btn.click();
+    const rootDur = g.versions[0].measures.duration_s || Math.max(...tiles.filter((x) => x.el).map((x) => x.el.duration || 0), 60);
+    const seek = $('seek'); seek.max = String(rootDur);
+    let clock = 0, playing = false, last = 0, rate = 1;
+
+    function overlays(t) {
+      for (const x of tiles) {
+        if (x.lf) x.vs.textContent = mode === 'edges' ? 'Outlines: pink only in #' + num[x.lf.a] + ', green only in #' + num[x.lf.b] + '.' : x.vsText;
+        if (!x.spr) continue;
+        x.spr.hidden = mode === 'video';
+        if (mode === 'video') continue;
+        const sp = x.lf.sprites[mode];
+        const i = Math.floor(t + off[x.lf.a]);   // the sprites are one a second on the report's A clock
+        if (!sp || i < 0 || i >= sp.n) { x.spr.style.backgroundImage = 'none'; continue; }
+        Object.assign(x.spr.style, cell(sp, i));
+        x.spr.setAttribute('aria-label', '#' + x.v.n + (mode === 'mask' ? ': changed parts' : ': outlines') + ' at second ' + i);
+      }
+    }
+    function place(t, force = true) {
+      for (const x of tiles) {
+        if (!x.el) continue;
+        const want = t + x.v.offset, d = x.el.duration || Infinity;
+        const out = want < 0 || want >= d;
+        x.box.classList.toggle('out', out);
+        if (out) { if (!x.el.paused) x.el.pause(); if (want < 0 && x.el.currentTime !== 0) x.el.currentTime = 0; continue; }
+        if (force || Math.abs(x.el.currentTime - want) > 0.3) x.el.currentTime = want;
+        if (playing && x.el.paused) x.el.play().catch(() => {});
+      }
+      overlays(t);
+      seek.value = String(t); $('time').textContent = fmtT(t);
+      for (const ph of document.querySelectorAll('#lanes .ph')) { ph.setAttribute('x1', t); ph.setAttribute('x2', t); }
+    }
+    function go(t) { clock = Math.max(0, Math.min(rootDur, t)); place(clock); }
+    function tick(now) {
+      if (!playing) return;
+      // The heard video, when it's playing, is the clock; else wall time.
+      if (hear && !hear.paused && hear.readyState > 2) {
+        const h = tiles.find((x) => x.el === hear);
+        clock = hear.currentTime - h.v.offset;
+      } else clock += ((now - last) / 1000) * rate;
+      last = now;
+      if (clock >= rootDur) { stop(); clock = rootDur; }
+      place(clock, false);
+      if (playing) requestAnimationFrame(tick);
+    }
+    function stop() {
+      playing = false; $('play').textContent = 'Play';
+      for (const x of tiles) if (x.el) x.el.pause();
+    }
+    $('play').addEventListener('click', () => {
+      if (playing) { stop(); return; }
+      if (clock >= rootDur) clock = 0;
+      playing = true; $('play').textContent = 'Pause'; last = performance.now();
+      place(clock); requestAnimationFrame(tick);
+    });
+    seek.addEventListener('input', () => go(Number(seek.value)));
+    $('speed').addEventListener('change', (e) => {
+      rate = Number(e.target.value);
+      for (const x of tiles) if (x.el) x.el.playbackRate = rate;
+    });
+    // Frames and cuts step on #1's clock; cuts are #1's own.
+    const rootCuts = (g.versions[0].cuts || []).slice().sort((a, b) => a - b);
+    $('prevf').addEventListener('click', () => { stop(); go(clock - 1 / FPS); });
+    $('nextf').addEventListener('click', () => { stop(); go(clock + 1 / FPS); });
+    $('nextcut').addEventListener('click', () => { stop(); const c = rootCuts.find((c) => c > clock + 0.05); if (c !== undefined) go(c); });
+    $('prevcut').addEventListener('click', () => { stop(); const c = [...rootCuts].reverse().find((c) => c < clock - 0.05); go(c === undefined ? 0 : c); });
+    const LEG = {
+      video: [],
+      mask: [['Recolored: same shape, new color', 'var(--recolor)'], ['Redrawn: new shapes', 'var(--redraw)'], ['Unchanged (grayed)', '#6b6f76']],
+      edges: [['Outline only in one (named under each tile)', '#ff50c8'], ['Only in the other', '#3cdc78'], ['In both', '#ffffff']],
+    };
+    for (const b of document.querySelectorAll('#modes button')) b.addEventListener('click', () => {
+      mode = b.dataset.mode;
+      for (const o of document.querySelectorAll('#modes button')) o.setAttribute('aria-pressed', String(o === b));
+      $('legend').innerHTML = LEG[mode].map(([t, c]) => '<span><i style="background:' + c + '"></i>' + t + '</span>').join('');
+      overlays(clock);
+    });
+    lanes(g, num, off, rootDur, go);
+    place(0);
+  }
+
+  // One lane per version on #1's clock (viewBox x = seconds), each with a playhead.
+  function lanes(g, num, off, dur, go) {
+    const host = $('lanes');
+    function lane(label, draw, tall) {
+      const row = document.createElement('div'); row.className = 'lane';
+      const b = document.createElement('b'); b.textContent = label;
+      const svg = sv('svg', { viewBox: '0 0 ' + dur + ' 1', preserveAspectRatio: 'none', role: 'img', 'aria-label': label });
+      if (tall) svg.classList.add('tall');
+      draw(svg);
+      svg.append(sv('line', { class: 'ph', x1: 0, x2: 0, y1: 0, y2: 1, stroke: 'var(--ink)', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' }));
+      svg.addEventListener('click', (e) => { const r = svg.getBoundingClientRect(); go((e.clientX - r.left) / r.width * dur); });
+      row.append(b, svg); return row;
+    }
+    function group(title, sub, rows) {
+      if (!rows.length) return;
+      const box = document.createElement('div');
+      const h = document.createElement('h3'); h.textContent = title;
+      const s = document.createElement('span'); s.className = 'sub'; s.textContent = sub; h.append(s);
+      box.append(h, ...rows); host.append(box);
+    }
+    group('Cuts', 'each version’s own', g.versions.filter((v) => v.offset !== null).map((v) => lane('#' + v.n, (svg) => {
+      for (const c of v.cuts || []) {
+        const x = c - v.offset;
+        if (x >= 0 && x <= dur) svg.append(sv('line', { x1: x, x2: x, y1: 0.1, y2: 0.9, stroke: v.side === 'B' ? 'var(--b)' : 'var(--a)', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' }));
+      }
+    })));
+    const linked = g.versions.filter((v) => v.link && v.link.frames && v.link.frames.times.length);
+    const vsName = (v) => { const f = v.link.frames, o = f.a === v.id ? f.b : f.a; return '#' + v.n + ' vs #' + num[o]; };
+    group('Changed area', 'recolored + redrawn share of the frame', linked.map((v) => lane('#' + v.n, (svg) => {
+      const f = v.link.frames, sh = off[f.a];
+      const xs = f.times.map((t) => t - sh);
+      const area = (lo, hi, color) => {
+        let d = '';
+        xs.forEach((x, i) => { d += (i ? 'L' : 'M') + x + ',' + (1 - (hi[i] || 0)); });
+        for (let i = xs.length - 1; i >= 0; i--) d += 'L' + xs[i] + ',' + (1 - (lo[i] || 0));
+        svg.append(sv('path', { d: d + 'Z', fill: color, opacity: 0.85 }));
+      };
+      const z = xs.map(() => 0), rec = f.recolored, both = rec.map((r, i) => (r || 0) + (f.reshaped[i] || 0));
+      area(z, rec, 'var(--recolor)'); area(rec, both, 'var(--redraw)');
+      svg.setAttribute('aria-label', vsName(v) + ': changed area');
+    }, true)));
+    group('Outline match', 'edge SSIM, 0–0.6', linked.map((v) => lane('#' + v.n, (svg) => {
+      const f = v.link.frames, sh = off[f.a];
+      let d = '';
+      f.times.forEach((t, i) => { if (f.edge[i] != null) d += (d ? 'L' : 'M') + (t - sh) + ',' + (1 - Math.min(1, f.edge[i] / 0.6)); });
+      svg.append(sv('path', { d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' }));
+      svg.setAttribute('aria-label', vsName(v) + ': outline match');
+    }, true)));
+    const ax = document.createElement('div'); ax.className = 'axis';
+    ax.innerHTML = '<div></div><div>' + [0, 0.25, 0.5, 0.75, 1].map((f) => '<span>' + fmtT(f * dur).replace(/\.\d\d$/, '') + '</span>').join('') + '</div>';
+    host.append(ax);
+  }
+
+  const COLS = [
+    ['#', 'num', (v) => v.n, (v) => '#' + v.n],
+    ['Title', 'text', (v) => v.title.toLowerCase(), null],
+    ['Channel', 'text', (v) => v.side, (v) => '<span class="tag ' + (v.side === 'B' ? 'b' : 'a') + '">' + v.side + '</span>' + (v.side === 'B' ? 'Kids Channel' : 'Kids TV')],
+    ['Published', 'text', (v) => v.published, (v) => v.published],
+    ['Length', 'num', (v) => v.measures.duration_s, (v) => v.measures.duration_s == null ? '–' : fmtT(v.measures.duration_s).replace(/\.\d\d$/, '')],
+    ['Shift vs. #1', 'num', (v) => v.offset, (v) => v.offset == null ? '–' : (v.offset >= 0 ? '+' : '−') + Math.abs(v.offset).toFixed(1) + ' s'],
+    ['Cuts / min', 'num', (v) => v.measures.cuts_per_min, (v) => num(v.measures.cuts_per_min, 1)],
+    ['Flashes / min', 'num', (v) => v.measures.lstar_flash_per_min, (v) => num(v.measures.lstar_flash_per_min, 1)],
+    ['Palette changes / min', 'num', (v) => v.measures.palette_change_per_min, (v) => num(v.measures.palette_change_per_min, 1)],
+    ['Motion', 'num', (v) => v.measures.motion_frac, (v) => v.measures.motion_frac == null ? '–' : Math.round(100 * v.measures.motion_frac) + '%'],
+    ['Visual intensity', 'num', (v) => v.intensity, (v) => v.intensity == null ? '<span class="muted">not measured</span>' : '<b>' + Math.round(v.intensity) + '</b>'],
+    ['Visual brightness', 'num', (v) => v.brightness, (v) => v.brightness == null ? '<span class="muted">not measured</span>' : '<b>' + Math.round(v.brightness) + '</b>'],
+    ['Brightness (L*)', 'num', (v) => v.measures.mean_lstar, (v) => num(v.measures.mean_lstar, 0)],
+    ['Loudness (LUFS)', 'num', (v) => v.measures.lufs, (v) => num(v.measures.lufs, 1)],
+    ['Views', 'num', (v) => v.views, (v) => v.views == null ? '–' : v.views.toLocaleString('en-US')],
+    ['Likes', 'num', (v) => v.likes, (v) => v.likes == null ? '–' : v.likes.toLocaleString('en-US')],
+    ['Like rate', 'num', (v) => rateOf(v), (v) => rateOf(v) == null ? '–' : (100 * rateOf(v)).toFixed(2) + '%'],
+    ['Vs. its link: picture changed', 'num', (v) => v.link && v.link.changed, (v) => v.link && v.link.changed != null ? Math.round(100 * v.link.changed) + '%' : '–'],
+    ['Vs. its link: audio', 'text', (v) => v.link && v.link.audio, (v) => v.link && v.link.audio ? esc(v.link.audio) : '–'],
+  ];
+  function rateOf(v) { return v.views && v.likes != null ? v.likes / v.views : null; }
+  function num(x, d) { return x == null ? '–' : Number(x).toFixed(d); }
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function table(g) {
+    const t = $('measures');
+    const head = COLS.map((c, i) => '<th scope="col" class="' + (c[1] === 'num' ? 'num' : '') + '" aria-sort="none"><button type="button" class="sort" data-col="' + i + '" data-kind="' + c[1] + '">' + c[0] + '<span class="arrow" aria-hidden="true">↕</span></button></th>').join('');
+    const rows = g.versions.map((v) => '<tr>' + COLS.map((c, i) => {
+      const key = c[2](v), val = key == null ? '' : String(key);
+      if (i === 1) return '<th scope="row" data-v="' + esc(val) + '"><a href="https://www.youtube.com/watch?v=' + esc(v.id) + '" target="_blank" rel="noopener">' + esc(v.title) + '</a></th>';
+      return '<td class="' + (c[1] === 'num' ? 'num' : i === 2 || i === 3 ? 'nw' : '') + '" data-v="' + esc(val) + '">' + c[3](v) + '</td>';
+    }).join('') + '</tr>').join('');
+    t.innerHTML = '<caption class="sr">Measures of each version</caption><thead><tr>' + head + '</tr></thead><tbody>' + rows + '</tbody>';
+    sortable(t);
+  }
+  // Same sorting as the groups page: numbers high to low first, text A to Z; blanks always last.
+  function sortable(t) {
+    for (const b of t.querySelectorAll('.sort')) b.addEventListener('click', () => {
+      const th = b.closest('th'), col = Number(b.dataset.col), numeric = b.dataset.kind === 'num';
+      const next = th.getAttribute('aria-sort') === (numeric ? 'descending' : 'ascending') ? (numeric ? 'ascending' : 'descending') : (numeric ? 'descending' : 'ascending');
+      for (const o of t.querySelectorAll('thead th')) { o.setAttribute('aria-sort', 'none'); o.querySelector('.arrow').textContent = '↕'; }
+      th.setAttribute('aria-sort', next); b.querySelector('.arrow').textContent = next === 'ascending' ? '▲' : '▼';
+      const body = t.tBodies[0], dir = next === 'ascending' ? 1 : -1;
+      const rows = [...body.rows].sort((r1, r2) => {
+        const x = r1.cells[col].dataset.v, y = r2.cells[col].dataset.v;
+        if (x === '' || y === '') return (x === '') - (y === '');
+        return dir * (numeric ? Number(x) - Number(y) : x.localeCompare(y));
+      });
+      body.append(...rows);
+    });
+  }
+})();
+</script>

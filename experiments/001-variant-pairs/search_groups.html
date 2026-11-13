@@ -1,0 +1,358 @@
+<meta charset="utf-8">
+<title>__TITLE__</title>
+__HEAD__
+__STYLE__
+<style>
+/* Layout: one label's groups (build_search_site.py), in the base page's style: each group a card with
+   its versions as strips (thumbnail, frames at 1/4, 1/2, 3/4), its pairs, and for re-skins its full
+   reports, each opened in place. */
+.group { background: var(--surface); border: 1px solid var(--line-2); border-radius: 2rem; padding: clamp(16px, 3vw, 28px);
+  display: grid; gap: 14px; min-width: 0; }
+.group > *, .reps > *, .lpair > * { min-width: 0; }
+/* A group's versions: one table row per video, its strip on the left, then title, channel, date,
+   views, likes and visual intensity. Under 640 px each row becomes a card: strip, title, then
+   the other columns as labelled lines. */
+.vscroll { overflow-x: auto; min-width: 0; }
+.vtable { border-collapse: collapse; width: 100%; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+.vtable th, .vtable td { text-align: left; vertical-align: middle; padding: 8px 10px; border-top: 1px solid var(--line); }
+.vtable thead th { border-top: 0; font-size: 0.82rem; color: var(--ink-2); font-weight: 700; white-space: nowrap; }
+.vtable .img { width: 34%; min-width: 220px; max-width: 400px; padding-left: 0; }
+.vtable .ttl { font-weight: 400; min-width: 180px; overflow-wrap: anywhere; }
+.vtable .ttl .num { font-weight: 800; margin-right: 6px; }
+.vtable .num { text-align: right; white-space: nowrap; }
+.vtable .date, .vtable .chan { white-space: nowrap; }
+.vtable td .tag { margin-right: 6px; }
+.vtable .raw { display: block; font-size: 0.78rem; }
+.vstrip { width: 100%; aspect-ratio: 640 / 90; border-radius: 6px; background-color: var(--bg);
+  background-repeat: no-repeat; background-size: 100% 2500%; }  /* 25 strips a sheet */
+.note { color: var(--ink-2); font-size: 0.9rem; max-width: 80ch; }
+.more > summary, .pairs > summary { font-weight: 700; }
+.more .vscroll { margin-top: 8px; }
+.pairs .scroll { margin-top: 8px; }
+.data .notes { color: var(--ink-2); font-size: 0.85rem; min-width: 220px; }
+.reps { display: grid; gap: 8px; }
+.replist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.rep { width: 100%; text-align: left; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line-2);
+  border-radius: 1rem; padding: 8px 14px; cursor: pointer; }
+.rep:hover, .rep[aria-current=true] { border-color: var(--ink); }
+.replist li:first-child .rep { background: var(--butter); font-weight: 700; }
+.rep:focus-visible, .sort:focus-visible, .star:focus-visible, .more:focus-visible, .show button:focus-visible,
+.panel button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+/* Sortable version tables: every header is a button; the arrow shows the order. */
+.sort { font: inherit; font-weight: 700; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; white-space: nowrap; }
+.sort .arrow { margin-left: 4px; color: var(--muted); }
+.vtable th[aria-sort=ascending] .arrow, .vtable th[aria-sort=descending] .arrow { color: var(--ink); }
+.vtable tr.hide { display: none; }
+.more { justify-self: start; font: 700 0.95rem var(--body); color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+/* A group's head: its number and name, then the star. */
+.ghead { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.gnum { font-variant-numeric: tabular-nums; }
+.star { flex: none; font-size: 1.5rem; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: 999px; width: 44px; height: 44px; cursor: pointer; }
+.star[aria-pressed=true] { background: var(--chip); border-color: var(--chip); }
+.show { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.show button { font: 700 0.95rem var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.show button[aria-pressed=true] { background: var(--chip); border-color: var(--chip); }
+.show .muted { font-size: 0.88rem; }
+.group[hidden] { display: none; }
+/* A group's note: its text under the head, edited in place. */
+.gnote { display: grid; gap: 6px; margin-top: 6px; }
+.note-text { margin: 0; white-space: pre-wrap; background: var(--butter); border-radius: 0.75rem; padding: 8px 12px; }
+.note-form { display: grid; gap: 6px; max-width: 640px; }
+.note-form label { font-weight: 700; font-size: 0.9rem; }
+.note-form textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line-2);
+  border-radius: 0.75rem; padding: 8px 10px; resize: vertical; width: 100%; box-sizing: border-box; }
+.note-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.gnote[hidden], .note-form[hidden], .note-edit[hidden] { display: none; }
+.note-edit, .note-actions button { justify-self: start; font: 700 0.9rem var(--body); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.note-edit:focus-visible, .note-actions button:focus-visible, .note-form textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+/* Reports open in a panel on the right; on narrow screens it covers the page. */
+/* The panel's width is --panel-w, set by dragging its left edge (or the arrow keys on it). */
+:root { --panel-w: min(1000px, 62vw); }
+.panel { position: fixed; top: 0; right: 0; bottom: 0; width: var(--panel-w); z-index: 10; background: var(--surface);
+  border-left: 1px solid var(--line-2); box-shadow: -12px 0 32px rgb(15 46 138 / 0.12); display: grid; grid-template-rows: auto 1fr; }
+.panel[hidden] { display: none; }
+.panel .bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.panel .bar h2 { font-size: 1.05rem; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.panel .bar button { font: 700 0.95rem var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line-2);
+  border-radius: 999px; padding: 6px 14px; cursor: pointer; flex: none; }
+.panel iframe { width: 100%; height: 100%; border: 0; }
+.grip { position: absolute; left: -7px; top: 0; bottom: 0; width: 14px; cursor: col-resize; z-index: 1; touch-action: none; }
+.grip::after { content: ""; position: absolute; left: 5px; top: 50%; width: 4px; height: 56px; margin-top: -28px;
+  border-radius: 2px; background: var(--line-2); }
+.grip:hover::after, .grip:focus-visible::after, .panel.dragging .grip::after { background: var(--ink); }
+.grip:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+.panel.dragging iframe { pointer-events: none; }
+@media (min-width: 1600px) { body.panel-open { padding-right: calc(var(--panel-w) + 16px); } }
+@media (max-width: 900px) { .panel { width: 100%; } .grip { display: none; } }
+.lpair { display: grid; gap: 6px; padding-top: 12px; border-top: 1px solid var(--line); }
+.back { font-size: 0.95rem; }
+@media (max-width: 640px) {
+  .vtable, .vtable tbody, .vtable tr, .vtable th, .vtable td { display: block; width: auto; min-width: 0; max-width: none; }
+  .vtable tr { padding: 10px 0; border-top: 1px solid var(--line); }
+  /* The headers stay as a row of sort buttons above the cards. */
+  .vtable thead { display: block; }
+  .vtable thead tr { display: flex; flex-wrap: wrap; gap: 6px 14px; border-top: 0; padding: 0 0 6px; }
+  .vtable thead th { width: auto; min-width: 0; padding: 0; }
+  .vtable th, .vtable td { border: 0; padding: 2px 0; text-align: left; }
+  .vtable td.img { width: auto; min-width: 0; max-width: 480px; padding-bottom: 6px; }
+  .vtable td[data-label] { display: flex; justify-content: space-between; gap: 12px; }
+  .vtable td[data-label]::before { content: attr(data-label); color: var(--muted); }
+  .vtable td[data-label] > span { text-align: right; }
+  .vtable .raw { display: inline; margin-left: 6px; }
+}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Experiment 001 · Variant pairs · updated __UPDATED__</span>
+    <h1>__H1__</h1>
+    <p class="lead">__LEAD__ Videos linked by this label form a group; each group's versions are numbered by publish date. Strips show each video's thumbnail and its frames at 1/4, 1/2 and 3/4.</p>
+    <p class="note">Visual intensity and visual brightness are the site's measures: how saturated the colors are and how bright the picture is, each as a percentile among the dataset's videos (0 least, 100 most), from the 5 minutes after 0:30. Videos that were never downloaded aren't measured.</p>
+    <p class="back">← __BACK__</p>
+    <div class="facts">__FACTS__</div>
+    <div class="show" role="group" aria-label="Which groups to show" hidden>
+      <button type="button" data-show="all" aria-pressed="true">All groups</button>
+      <button type="button" data-show="starred" aria-pressed="false">Starred only (<span class="n-star">0</span>)</button>
+      <span class="muted" id="star-note"></span>
+    </div>
+    <p class="muted" id="none-starred" hidden>No starred groups yet: star a group with ☆ next to its name.</p>
+  </header>
+  __GROUPS__
+</div>
+<aside class="panel" id="panel" aria-labelledby="panel-h" hidden>
+  <div class="grip" id="grip" role="separator" aria-orientation="vertical" aria-label="Report panel width: drag, or use the left and right arrow keys" tabindex="0"></div>
+  <div class="bar"><h2 id="panel-h">Report</h2><button type="button" id="panel-close">Close</button></div>
+</aside>
+<script>
+/* Reports open in the side panel, each loaded only when opened; #<report id> opens one. */
+(() => {
+  const panel = document.getElementById('panel'), head = document.getElementById('panel-h');
+  let current = null, returnTo = null;   // the report's button, and what opened it (focus goes back there)
+  function open(b, push = true, from = b) {
+    if (current) current.removeAttribute('aria-current');
+    current = b; returnTo = from; b.setAttribute('aria-current', 'true');
+    panel.querySelector('iframe')?.remove();
+    const f = document.createElement('iframe');
+    f.src = b.dataset.src; f.title = b.dataset.title;
+    panel.append(f);
+    head.textContent = b.dataset.title;
+    panel.hidden = false; document.body.classList.add('panel-open');
+    if (push) history.replaceState(null, '', '#' + encodeURIComponent(b.dataset.id));
+    document.getElementById('panel-close').focus();
+  }
+  function close() {
+    panel.hidden = true; document.body.classList.remove('panel-open');
+    panel.querySelector('iframe')?.remove();
+    history.replaceState(null, '', location.pathname + location.search);
+    if (current) current.removeAttribute('aria-current');
+    // Back to what opened it, where the reader is: a timeline link stays in view instead of the page
+    // jumping down to the report's button in its group.
+    returnTo?.focus({ preventScroll: true });
+    current = returnTo = null;
+  }
+  for (const b of document.querySelectorAll('button.rep')) b.addEventListener('click', () => open(b));
+  document.getElementById('panel-close').addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) close(); });
+  const byId = (id) => [...document.querySelectorAll('button.rep')].find((b) => b.dataset.id === id);
+  const id = location.hash && decodeURIComponent(location.hash.slice(1));
+  const hit = id && byId(id);
+  if (hit) { hit.scrollIntoView({ block: 'center' }); open(hit, false); }
+  // A link to a report (the channel story's pair links) opens it in the panel; group links just jump.
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a');
+    const href = a && a.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    const b = byId(decodeURIComponent(href.slice(1)));
+    if (b) { e.preventDefault(); open(b, true, a); }
+  });
+})();
+
+/* The panel's width: drag its left edge, or arrow keys on it; remembered in this browser. */
+(() => {
+  const panel = document.getElementById('panel'), grip = document.getElementById('grip'), root = document.documentElement;
+  const KEY = 'panel-w:' + location.pathname, MIN = 320;
+  const set = (w) => {
+    w = Math.round(Math.max(MIN, Math.min(window.innerWidth - 120, w)));
+    root.style.setProperty('--panel-w', w + 'px');
+    grip.setAttribute('aria-valuenow', String(w));
+    return w;
+  };
+  try { const w = Number(localStorage.getItem(KEY)); if (w) set(w); } catch { /* default width */ }
+  const save = () => { try { localStorage.setItem(KEY, String(panel.getBoundingClientRect().width)); } catch { /* not kept */ } };
+  grip.setAttribute('aria-valuemin', String(MIN));
+  grip.addEventListener('pointerdown', (e) => {
+    e.preventDefault(); grip.setPointerCapture(e.pointerId); panel.classList.add('dragging');
+    const move = (ev) => set(window.innerWidth - ev.clientX);
+    const up = () => { panel.classList.remove('dragging'); grip.removeEventListener('pointermove', move); grip.removeEventListener('pointerup', up); save(); };
+    grip.addEventListener('pointermove', move); grip.addEventListener('pointerup', up);
+  });
+  grip.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 120 : 40, w = panel.getBoundingClientRect().width;
+    if (e.key === 'ArrowLeft') { set(w + step); save(); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { set(w - step); save(); e.preventDefault(); }
+  });
+})();
+
+/* Sorting: every column header sorts its table; numbers high to low first, text A to Z, unknowns last.
+   Rows past data-shown stay hidden until "Show all", whatever the order. */
+(() => {
+  for (const t of document.querySelectorAll('table.sortable')) {
+    const shown = Number(t.dataset.shown) || Infinity, body = t.tBodies[0];
+    const more = t.closest('.vscroll')?.nextElementSibling?.matches('button.more') ? t.closest('.vscroll').nextElementSibling : null;
+    let all = !more;
+    const fold = () => [...body.rows].forEach((r, i) => r.classList.toggle('hide', !all && i >= shown));
+    fold();
+    if (more) more.addEventListener('click', () => {
+      all = !all; fold();
+      more.setAttribute('aria-expanded', String(all));
+      more.textContent = all ? 'Show fewer' : 'Show all ' + body.rows.length + ' versions';
+    });
+    for (const b of t.querySelectorAll('.sort')) b.addEventListener('click', () => {
+      const th = b.closest('th'), col = Number(b.dataset.col), numeric = b.dataset.kind === 'num';
+      const firstDir = col === 0 ? 'ascending' : numeric ? 'descending' : 'ascending';
+      const other = firstDir === 'ascending' ? 'descending' : 'ascending';
+      const next = th.getAttribute('aria-sort') === firstDir ? other : firstDir;
+      for (const o of t.querySelectorAll('thead th')) { o.setAttribute('aria-sort', 'none'); o.querySelector('.arrow').textContent = '↕'; }
+      th.setAttribute('aria-sort', next); b.querySelector('.arrow').textContent = next === 'ascending' ? '▲' : '▼';
+      const dir = next === 'ascending' ? 1 : -1;
+      const rows = [...body.rows].sort((r1, r2) => {
+        const x = r1.cells[col].dataset.v, y = r2.cells[col].dataset.v;
+        if (x === '' || y === '') return (x === '') - (y === '');
+        return dir * (numeric ? Number(x) - Number(y) : x.localeCompare(y));
+      });
+      body.append(...rows); fold();
+    });
+  }
+})();
+
+/* Stars: shared with everyone who opens this page (the artifact's db, collection "stars", one
+   document per starred group, keyed by its earliest video); this browser only when the db isn't
+   available. "Starred only" hides the other groups. */
+(() => {
+  const groups = [...document.querySelectorAll('section.group[data-key]')];
+  const little = document.querySelector('section.group.little');
+  const bar = document.querySelector('.show'), note = document.getElementById('star-note');
+  const none = document.getElementById('none-starred');
+  let starred = new Set(), only = false, store = null;
+  const LOCAL = 'stars:' + location.pathname;
+  function render() {
+    for (const s of groups) {
+      const on = starred.has(s.dataset.key), b = s.querySelector('.star');
+      b.setAttribute('aria-pressed', String(on)); b.textContent = on ? '★' : '☆';
+      s.hidden = only && !on;
+    }
+    if (little) little.hidden = only;
+    const n = groups.filter((s) => starred.has(s.dataset.key)).length;
+    bar.querySelector('.n-star').textContent = n;
+    none.hidden = !(only && n === 0);
+    for (const b of bar.querySelectorAll('[data-show]')) b.setAttribute('aria-pressed', String((b.dataset.show === 'starred') === only));
+  }
+  function local() {
+    try { starred = new Set(JSON.parse(localStorage.getItem(LOCAL) || '[]')); } catch { starred = new Set(); }
+    note.textContent = 'Stars and notes are saved in this browser only.';
+  }
+  function saveLocal() { try { localStorage.setItem(LOCAL, JSON.stringify([...starred])); } catch { /* not kept */ } }
+  async function toggle(s) {
+    const key = s.dataset.key, on = !starred.has(key);
+    on ? starred.add(key) : starred.delete(key); render();
+    if (!store) { saveLocal(); return; }
+    try {
+      const ref = store.collection('stars').doc(key);
+      if (on) await ref.set({ starred: true, group: s.querySelector('h2').textContent.trim(), at: new Date().toISOString() });
+      else await ref.delete();
+    } catch (e) {
+      on ? starred.delete(key) : starred.add(key); render();
+      note.textContent = e && e.code === 'invalid_argument' ? 'You can view stars here but not change them.' : 'That star could not be saved; try again.';
+    }
+  }
+  for (const s of groups) {
+    const b = s.querySelector('.star'); b.hidden = false;
+    b.addEventListener('click', () => toggle(s));
+  }
+  for (const b of bar.querySelectorAll('[data-show]')) b.addEventListener('click', () => { only = b.dataset.show === 'starred'; render(); });
+  bar.hidden = false;
+  local(); render();
+  const use = window.claude && window.claude.use ? window.claude.use('db') : Promise.resolve(null);
+  Promise.resolve(use).then((db) => {
+    if (!db) return;
+    store = db; note.textContent = 'Loading stars…';
+    const timer = setTimeout(() => { note.textContent = 'Shared stars can’t be reached yet.'; }, 10000);
+    db.collection('stars').onSnapshot((snap) => {
+      starred = new Set(snap.docs.filter((d) => d.exists).map((d) => d.id));
+      if (!snap.metadata.fromCache) { clearTimeout(timer); note.textContent = 'Stars and notes are shared with everyone who can open this page.'; }
+      render();
+    }, () => { clearTimeout(timer); store = null; local(); render(); });
+  }).catch(() => {});
+})();
+
+/* Notes: a short note per group, shared like the stars (the artifact's db, collection "notes", one
+   document per group with a note, keyed by its earliest video); this browser only when the db isn't
+   available. Saving an empty note removes it. */
+(() => {
+  const groups = [...document.querySelectorAll('section.group[data-key]')];
+  let notes = {}, store = null;
+  const LOCAL = 'notes:' + location.pathname;
+  const part = (s) => ({
+    box: s.querySelector('.gnote'), text: s.querySelector('.note-text'), edit: s.querySelector('.note-edit'),
+    form: s.querySelector('.note-form'), area: s.querySelector('.note-form textarea'),
+    status: s.querySelector('.note-status'), cancel: s.querySelector('.note-cancel'),
+  });
+  function show(s) {
+    const p = part(s), t = notes[s.dataset.key] || '';
+    p.text.textContent = t; p.text.hidden = !t;
+    p.edit.textContent = t ? 'Edit note' : 'Add note';
+  }
+  const renderAll = () => groups.forEach(show);
+  function local() { try { notes = JSON.parse(localStorage.getItem(LOCAL) || '{}') || {}; } catch { notes = {}; } }
+  function saveLocal() { try { localStorage.setItem(LOCAL, JSON.stringify(notes)); } catch { /* not kept */ } }
+  function closeForm(s, focus = true) {
+    const p = part(s); p.form.hidden = true; p.edit.hidden = false; p.edit.setAttribute('aria-expanded', 'false');
+    if (focus) p.edit.focus({ preventScroll: true });
+  }
+  async function save(s) {
+    const p = part(s), key = s.dataset.key, text = p.area.value.trim(), before = notes[key];
+    if (text) notes[key] = text; else delete notes[key];
+    show(s);
+    if (!store) { saveLocal(); closeForm(s); return; }
+    p.status.textContent = 'Saving…';
+    try {
+      const ref = store.collection('notes').doc(key);
+      if (text) await ref.set({ text, group: s.querySelector('h2').textContent.trim(), at: new Date().toISOString() });
+      else await ref.delete();
+      p.status.textContent = ''; closeForm(s);
+    } catch (e) {
+      if (before) notes[key] = before; else delete notes[key];
+      show(s);
+      p.status.textContent = e && e.code === 'invalid_argument' ? 'You can read notes here but not change them.'
+        : 'That note could not be saved; try again.';
+    }
+  }
+  for (const s of groups) {
+    const p = part(s); p.box.hidden = false;
+    p.edit.addEventListener('click', () => {
+      p.area.value = notes[s.dataset.key] || ''; p.status.textContent = '';
+      p.form.hidden = false; p.edit.hidden = true; p.edit.setAttribute('aria-expanded', 'true'); p.area.focus();
+    });
+    p.cancel.addEventListener('click', () => closeForm(s));
+    p.form.addEventListener('submit', (e) => { e.preventDefault(); save(s); });
+    p.area.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { e.stopPropagation(); closeForm(s); }
+      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); save(s); }
+    });
+  }
+  local(); renderAll();
+  const use = window.claude && window.claude.use ? window.claude.use('db') : Promise.resolve(null);
+  Promise.resolve(use).then((db) => {
+    if (!db) return;
+    store = db;
+    db.collection('notes').onSnapshot((snap) => {
+      notes = {};
+      for (const d of snap.docs) if (d.exists && d.data().text) notes[d.id] = d.data().text;
+      renderAll();
+    }, () => { store = null; local(); renderAll(); });
+  }).catch(() => {});
+})();
+</script>
