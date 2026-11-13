@@ -13,7 +13,7 @@ import pytest
 import yt
 
 ENV = ["EXP_PLAYER_PER_DAY", "EXP_IMAGE_GAP", "EXP_PLAYER_GAP", "EXP_API_UNITS_PER_DAY", "YTDLP_COOKIES",
-       "COLLECTOR_DATA_DIR", "COLLECTOR_USER", "YOUTUBE_API_KEY"]
+       "COLLECTOR_DATA_DIR", "COLLECTOR_USER", "EXP_YOUTUBE_API_KEY", "YOUTUBE_API_KEY"]
 NOW = datetime(2026, 11, 11, 12, 0, tzinfo=UTC)
 
 
@@ -37,6 +37,7 @@ def sandbox(monkeypatch, tmp_path):
     importlib.reload(yt)
     monkeypatch.setattr(yt, "LEDGER", tmp_path / "ledger.tsv")
     monkeypatch.setattr(yt, "CACHE", tmp_path / "cache")
+    monkeypatch.setattr(yt, "ENV_FILE", tmp_path / ".env")
     monkeypatch.setattr(yt, "now_utc", lambda: NOW)
 
     def refuse(*a, **k):
@@ -107,7 +108,7 @@ def test_units_used_today_follows_daylight_saving():
 
 
 def test_api_fetches_logs_and_caches(monkeypatch):
-    monkeypatch.setenv("YOUTUBE_API_KEY", "k")
+    monkeypatch.setenv("EXP_YOUTUBE_API_KEY", "k")
     urls = []
 
     def fake(url, timeout):
@@ -124,10 +125,10 @@ def test_api_fetches_logs_and_caches(monkeypatch):
 
 
 def test_api_cached_response_needs_no_request_key_or_budget(monkeypatch):
-    monkeypatch.setenv("YOUTUBE_API_KEY", "k")
+    monkeypatch.setenv("EXP_YOUTUBE_API_KEY", "k")
     monkeypatch.setattr(urllib.request, "urlopen", lambda url, timeout: Response(b'{"a": 1}'))
     yt.api("videos", {"id": "abc", "part": "snippet"}, "001")
-    monkeypatch.delenv("YOUTUBE_API_KEY")
+    monkeypatch.delenv("EXP_YOUTUBE_API_KEY")
     monkeypatch.setattr(yt, "API_UNITS_PER_DAY", 0)
     monkeypatch.setattr(urllib.request, "urlopen", lambda *a, **k: pytest.fail("request made"))
     assert yt.api("videos", {"id": "abc", "part": "snippet"}, "001") == {"a": 1}
@@ -135,7 +136,8 @@ def test_api_cached_response_needs_no_request_key_or_budget(monkeypatch):
 
 
 def test_api_refuses_over_budget(monkeypatch):
-    monkeypatch.setenv("YOUTUBE_API_KEY", "k")
+    monkeypatch.setenv("EXP_YOUTUBE_API_KEY", "k")
+    monkeypatch.setattr(yt, "API_UNITS_PER_DAY", 2000)
     add("2026-11-11T10:00:00Z", "API", 1950)
     with pytest.raises(yt.BudgetError, match="1950 of 2000"):
         yt.api("search", {"q": "x"}, "001")
@@ -146,13 +148,31 @@ def test_api_refuses_over_budget(monkeypatch):
 
 
 def test_api_refuses_without_key():
-    with pytest.raises(yt.BudgetError, match="YOUTUBE_API_KEY"):
+    with pytest.raises(yt.BudgetError, match="EXP_YOUTUBE_API_KEY"):
         yt.api("videos", {"id": "a"}, "001")
     assert rows() == []
 
 
+def test_api_never_uses_the_sites_key(monkeypatch):
+    monkeypatch.setenv("YOUTUBE_API_KEY", "site")
+    with pytest.raises(yt.BudgetError, match="EXP_YOUTUBE_API_KEY"):
+        yt.api("videos", {"id": "a"}, "001")
+    assert rows() == []
+
+
+def test_api_key_from_env_file_and_env_wins(monkeypatch, sandbox):
+    (sandbox / ".env").write_text("OTHER=1\nEXP_YOUTUBE_API_KEY = 'filekey'\n")
+    urls = []
+    monkeypatch.setattr(urllib.request, "urlopen", lambda url, timeout: urls.append(url) or Response(b"{}"))
+    yt.api("videos", {"id": "a"}, "001")
+    assert "key=filekey" in urls[-1]
+    monkeypatch.setenv("EXP_YOUTUBE_API_KEY", "envkey")
+    yt.api("videos", {"id": "b"}, "001")
+    assert "key=envkey" in urls[-1]
+
+
 def test_api_logs_errors_and_does_not_cache(monkeypatch, sandbox):
-    monkeypatch.setenv("YOUTUBE_API_KEY", "k")
+    monkeypatch.setenv("EXP_YOUTUBE_API_KEY", "k")
 
     def fail(url, timeout):
         raise http_error(403)
@@ -393,7 +413,7 @@ def test_download_logs_failure(monkeypatch, collector):
 
 
 def test_defaults():
-    assert (yt.PLAYER_PER_DAY, yt.API_UNITS_PER_DAY) == (50, 2000)
+    assert (yt.PLAYER_PER_DAY, yt.API_UNITS_PER_DAY) == (50, 9500)
     assert (yt.IMAGE_GAP, yt.PLAYER_GAP) == ((0.5, 1.5), (45.0, 135.0))
 
 
@@ -410,7 +430,7 @@ def test_env_overrides(monkeypatch, tmp_path):
     assert (yt.IMAGE_GAP, yt.PLAYER_GAP) == ((1.0, 3.0), (10.0, 20.0))
 
     add("2026-11-11T10:00:00Z", "API", 100)
-    monkeypatch.setenv("YOUTUBE_API_KEY", "k")
+    monkeypatch.setenv("EXP_YOUTUBE_API_KEY", "k")
     with pytest.raises(yt.BudgetError, match="100 of 150"):
         yt.api("search", {"q": "x"}, "001")
 

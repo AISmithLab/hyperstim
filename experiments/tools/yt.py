@@ -1,7 +1,8 @@
 """The only way experiments reach YouTube: checks the budget, then logs one ledger row per request.
 
 Budget (experiments/README.md, YouTube budget):
-- API: Data API units per Pacific day, at most EXP_API_UNITS_PER_DAY (default 2000).
+- API: Data API units per Pacific day, at most EXP_API_UNITS_PER_DAY (default 9500) of the
+  experiments' own project's 10,000.
 - Image: thumbnails and storyboard sprites from YouTube's image servers; logged, not budgeted,
   but paced: one at a time, with a random gap of EXP_IMAGE_GAP seconds (default 0.5-1.5) between
   request starts.
@@ -12,7 +13,9 @@ Budget (experiments/README.md, YouTube budget):
 Every response is cached under experiments/cache/ and reused, so a request is never repeated.
 
 Env vars:
-- YOUTUBE_API_KEY: Data API key (never commit it).
+- EXP_YOUTUBE_API_KEY: the experiments' own Data API key, from their own Google Cloud project
+  (never commit it). Read from the environment, else from experiments/.env. The site's
+  YOUTUBE_API_KEY is never used.
 - COLLECTOR_DATA_DIR: folder of the collector's collector.db, to read `blocked_until`.
 - COLLECTOR_USER: if set and collector.db isn't readable, read it through `sudo -n -u` this user.
 - YTDLP_COOKIES: optional cookies file for yt-dlp.
@@ -41,6 +44,7 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent.parent  # experiments/
 LEDGER = ROOT / "ledger.tsv"
+ENV_FILE = ROOT / ".env"
 CACHE = ROOT / "cache"
 COLUMNS = ["at", "experiment", "kind", "what", "target", "units", "outcome", "note"]
 
@@ -56,7 +60,7 @@ def _gap(name: str, default: str) -> tuple[float, float]:
 IMAGE_GAP = _gap("EXP_IMAGE_GAP", "0.5-1.5")
 PLAYER_GAP = _gap("EXP_PLAYER_GAP", "45-135")
 _next_at = {"image": 0.0, "player": 0.0}
-API_UNITS_PER_DAY = int(os.environ.get("EXP_API_UNITS_PER_DAY", "2000"))
+API_UNITS_PER_DAY = int(os.environ.get("EXP_API_UNITS_PER_DAY", "9500"))
 # Data API costs in units; everything we use is 1 except search.
 UNIT_COST = {"search": 100}
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
@@ -131,23 +135,50 @@ def collector_blocked_until() -> float:
 # --- API --------------------------------------------------------------------------------
 
 
+def _api_target(params: dict[str, str], target: str = "") -> tuple[str, str]:
+    key = "&".join(f"{k}={params[k]}" for k in sorted(params))
+    return key, target or params.get("id") or params.get("channelId") or params.get("playlistId") or key
+
+
+def api_cache_path(endpoint: str, params: dict[str, str], target: str = "") -> Path:
+    """Where api() saves (and finds) the response to this request."""
+    key, target = _api_target(params, target)
+    digest = hashlib.sha1(f"{endpoint}?{key}".encode()).hexdigest()[:12]
+    return CACHE / "api" / f"{endpoint}-{_safe(target)[:80]}-{digest}.json"
+
+
+def api_cached(endpoint: str, params: dict[str, str], target: str = "") -> dict | None:
+    """The saved response to this request, or None; never makes a request."""
+    path = api_cache_path(endpoint, params, target)
+    return json.loads(path.read_text()) if path.exists() else None
+
+
+def api_key_from_env() -> str | None:
+    """The experiments' own key: EXP_YOUTUBE_API_KEY from the environment, else from experiments/.env."""
+    key = os.environ.get("EXP_YOUTUBE_API_KEY", "").strip()
+    if not key and ENV_FILE.exists():
+        for line in ENV_FILE.read_text().splitlines():
+            name, _, value = line.partition("=")
+            if name.strip() == "EXP_YOUTUBE_API_KEY":
+                key = value.strip().strip("'\"")
+    return key or None
+
+
 def api(endpoint: str, params: dict[str, str], experiment: str, note: str = "",
         target: str = "") -> dict:
     """One Data API GET (e.g. api("videos", {"id": "a,b", "part": "snippet"}, "001")).
     Cached by endpoint and params; a cached response costs nothing and isn't logged."""
-    key = "&".join(f"{k}={params[k]}" for k in sorted(params))
-    target = target or params.get("id") or params.get("channelId") or params.get("playlistId") or key
-    digest = hashlib.sha1(f"{endpoint}?{key}".encode()).hexdigest()[:12]
-    path = CACHE / "api" / f"{endpoint}-{_safe(target)[:80]}-{digest}.json"
+    _, target = _api_target(params, target)
+    path = api_cache_path(endpoint, params, target)
     if path.exists():
         return json.loads(path.read_text())
     units = UNIT_COST.get(endpoint, 1)
     used = units_used_today()
     if used + units > API_UNITS_PER_DAY:
         raise BudgetError(f"API budget: {used} of {API_UNITS_PER_DAY} units used today (Pacific)")
-    api_key = os.environ.get("YOUTUBE_API_KEY")
+    api_key = api_key_from_env()
     if not api_key:
-        raise BudgetError("YOUTUBE_API_KEY is not set")
+        raise BudgetError("EXP_YOUTUBE_API_KEY is not set (environment or experiments/.env)")
     url = (f"https://www.googleapis.com/youtube/v3/{endpoint}?"
            + urllib.parse.urlencode({**params, "key": api_key}))
     try:
