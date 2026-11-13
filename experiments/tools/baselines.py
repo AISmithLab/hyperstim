@@ -43,13 +43,43 @@ def has_run(title: str, run: list[str]) -> bool:
     return any(t[i:i + len(run)] == run for i in range(len(t) - len(run) + 1))
 
 
+MIN_STUDIOS = 10   # fewer studios share the subject: fill the set up (PLAN.md, Signal framework)
+SUBJECT_CAP = 40   # at most this many subject videos: each costs an image request in the sample
+
+
+def subject_videos(rows: dict[str, dict], song: list[str], exclude_channels: set[str],
+                   pair_titles: list[str], fill_to: int = 16, seed: int = 1) -> tuple[list[str], str]:
+    """Other studios' videos on the pair's subject (the run of title words the pair shares), and
+    how the set was built. With fewer than MIN_STUDIOS studios (or no shared words), it is filled
+    up with the videos whose titles are closest to the pair's (word overlap; thumbnails would cost
+    a request per dataset video). Capped at SUBJECT_CAP, at random."""
+    ok = {v for v, r in rows.items()
+          if r["channel_id"] not in exclude_channels and float(r["duration_s"] or 0) <= 600}
+    match = sorted(v for v in ok if song and has_run(rows[v]["title"], song))
+    how = "shared title words"
+    if len({rows[v]["channel_id"] for v in match}) < MIN_STUDIOS:
+        words = [set(md.tokens(t)) for t in pair_titles]
+        def closeness(v):  # noqa: E306
+            t = set(md.tokens(rows[v]["title"]))
+            return max(len(t & w) / len(t | w) if t | w else 0.0 for w in words)
+        rest = sorted((v for v in ok if v not in set(match)), key=lambda v: (-closeness(v), v))
+        match = match + rest[:max(0, fill_to - len(match))]
+        how = "filled up by title similarity" if song else "closest titles (no shared title words)"
+    if len(match) > SUBJECT_CAP:
+        rng = np.random.default_rng(seed)
+        match = sorted(str(v) for v in rng.choice(match, SUBJECT_CAP, replace=False))
+    return match, how
+
+
 def sample_sets(rows: dict[str, dict], song: list[str], exclude_channels: set[str], seed: int = 1,
-                n_random: int = 120, n_channels: int = 8, per_channel: int = 6) -> dict[str, list[str]]:
-    """Video IDs per baseline set (before the owner filter): the snippet/thumbnail sample."""
+                n_random: int = 120, n_channels: int = 8, per_channel: int = 6,
+                subject: list[str] | None = None) -> dict[str, list[str]]:
+    """Video IDs per baseline set (before the owner filter): the snippet/thumbnail sample.
+    `subject`: the same-subject videos (subject_videos); without it, the videos sharing `song`."""
     rng = np.random.default_rng(seed)
-    same_song = sorted(v for v, r in rows.items()
-                       if has_run(r["title"], song) and r["channel_id"] not in exclude_channels
-                       and float(r["duration_s"] or 0) <= 600)
+    same_song = sorted(subject) if subject is not None else sorted(
+        v for v, r in rows.items() if has_run(r["title"], song) and r["channel_id"] not in exclude_channels
+        and float(r["duration_s"] or 0) <= 600)
     others = sorted(v for v, r in rows.items()
                     if v not in same_song and r["channel_id"] not in exclude_channels)
     rand = list(rng.choice(others, n_random, replace=False))
@@ -102,13 +132,14 @@ def pairs_for(sets: dict[str, list[str]], rows: dict[str, dict], pair: tuple[str
 
 def dataset_pairs(rows: dict[str, dict], song: list[str], exclude_channels: set[str],
                   same_owner_channels: set[str], n: int = 5000,
-                  seed: int = 3) -> dict[str, list[tuple[str, str]]]:
+                  seed: int = 3, subject: list[str] | None = None) -> dict[str, list[tuple[str, str]]]:
     """Larger pair sets from the whole dataset, for the free signals (timing, duration, title,
     features)."""
     rng = np.random.default_rng(seed)
     ids = sorted(v for v, r in rows.items() if r["channel_id"] not in exclude_channels)
-    song_ids = [v for v in ids if has_run(rows[v]["title"], song) and float(rows[v]["duration_s"] or 0) <= 600
-                and rows[v]["channel_id"] not in same_owner_channels]
+    in_subject = (lambda v: v in set(subject)) if subject is not None else (  # noqa: E731
+        lambda v: has_run(rows[v]["title"], song) and float(rows[v]["duration_s"] or 0) <= 600)
+    song_ids = [v for v in ids if in_subject(v) and rows[v]["channel_id"] not in same_owner_channels]
     ss = [(x, y) for x, y in itertools.combinations(song_ids, 2)
           if rows[x]["channel_id"] != rows[y]["channel_id"]]
     rnd = []

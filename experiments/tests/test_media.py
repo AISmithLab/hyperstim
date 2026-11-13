@@ -59,3 +59,48 @@ def test_audio(run):
     assert y.tolist() == [0.5, -0.25] and y.flags.writeable
     cmd = calls[0][0]
     assert cmd[cmd.index("-ar") + 1] == "16000" and cmd[cmd.index("-ac") + 1] == "1"
+
+
+class FakePopen:
+    """Replaces subprocess.Popen: stdout is a stream over the given bytes."""
+
+    def __init__(self, data: bytes, code: int = 0):
+        import io
+
+        self.data, self.code, self.cmds = data, code, []
+
+        def make(cmd, **kwargs):
+            self.cmds.append(cmd)
+            self.stdout = io.BytesIO(self.data)
+            self.returncode = self.code
+            return self
+
+        self.make = make
+
+    def wait(self):
+        return self.code
+
+
+def test_frames_at_keeps_only_asked_frames(monkeypatch):
+    w, h = 4, 2
+    fake = FakePopen(bytes(range(4 * w * h * 3)) * 1 + b"\0")  # 4 frames and a partial one
+    monkeypatch.setattr(media.subprocess, "Popen", fake.make)
+    f = media.frames_at(Path("v.mp4"), (w, h), {1, 3, 9}, fps=2)
+    full = np.frombuffer(bytes(range(4 * w * h * 3)), np.uint8).reshape(4, h, w, 3)
+    assert len(f) == 4 and set(f.kept) == {1, 3}
+    assert np.array_equal(f[3], full[3]) and np.array_equal(f[[3, 1]], full[[3, 1]])
+    assert f[[]].shape == (0, h, w, 3)
+    with pytest.raises(KeyError):
+        f[0]
+    cmd = fake.cmds[0]
+    assert cmd[cmd.index("-vf") + 1] == "fps=2,scale=4:2:flags=area"
+
+
+def test_frames_at_gray_and_failure(monkeypatch):
+    fake = FakePopen(bytes(3 * 8))
+    monkeypatch.setattr(media.subprocess, "Popen", fake.make)
+    f = media.frames_at(Path("v.mp4"), (4, 2), {0}, gray=True)
+    assert len(f) == 3 and f[0].shape == (2, 4)
+    fake.code = 1
+    with pytest.raises(subprocess.CalledProcessError):
+        media.frames_at(Path("v.mp4"), (4, 2), {0}, gray=True)

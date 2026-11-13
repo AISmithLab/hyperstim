@@ -1,4 +1,4 @@
-<title>Five Little Ducks, Twice</title>
+<title>Variant Pair Report</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -220,6 +220,13 @@ select { border: 1px solid var(--line-2); background: var(--surface); border-rad
 @media (max-width: 560px) {
   .basics th, .basics td { padding: 10px 10px; font-size: 0.9rem; }
   .basics th[scope=row] { width: 5.5rem; }
+  .basics thead th .ch { font-size: 0.9rem; overflow-wrap: normal; white-space: nowrap; gap: 6px; }
+  .basics thead th { overflow-wrap: normal; }
+}
+@media (max-width: 400px) {
+  .basics th, .basics td { padding: 10px 8px; }
+  .basics th[scope=row] { width: 5.4rem; font-size: 0.82rem; hyphens: auto; }
+  .basics .vw { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .stage { grid-template-columns: minmax(0, 1fr); }
   .track, .axis { grid-template-columns: minmax(0, 1fr); }
   .track .tl { padding: 8px 0 2px; }
@@ -277,8 +284,8 @@ input[type="range"] { accent-color: var(--ink); }
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">Experiment 001 · Variant pairs · Seed pair</div>
-    <h1>Five Little Ducks, twice</h1>
+    <div class="eyebrow" id="eyebrow">Experiment 001 · Variant pairs</div>
+    <h1 id="h1">Two versions compared</h1>
     <p class="lead" id="lead"></p>
     <div class="basics-wrap"><table class="basics" id="basics">
       <caption class="sr">The two videos’ basic info</caption>
@@ -324,11 +331,11 @@ input[type="range"] { accent-color: var(--ink); }
       </div>
       <div class="stage" id="stage">
         <div class="pane" id="pa">
-          <video id="va" src="a.mp4" preload="auto" playsinline></video>
+          <video id="va" preload="auto" playsinline></video>
           <div class="label" id="la"></div>
         </div>
         <div class="pane" id="pb">
-          <video id="vb" src="b.mp4" preload="auto" playsinline muted></video>
+          <video id="vb" preload="auto" playsinline muted></video>
           <div class="sprite" id="spr" hidden></div>
           <div class="none" id="nob" hidden></div>
           <div class="label" id="lb"></div>
@@ -394,11 +401,33 @@ input[type="range"] { accent-color: var(--ink); }
 </div>
 <div id="tipbox" role="tooltip" hidden></div>
 
-<script id="data" type="application/json">__DATA__</script>
+<script id="data" type="application/json" data-src="__SRC__" data-videos="__VIDEOS__" data-name="__NAME__">__DATA__</script>
 <script>
-const D = JSON.parse(document.getElementById('data').textContent);
+/* The page shell: data inline (standalone report) or fetched from data.json (a tab of the search site),
+   and the two videos from a.mp4 / b.mp4 or from the site's videos.json, which can point anywhere. */
+(async () => {
+  const el = document.getElementById('data'), ds = el.dataset;
+  const real = v => v && !v.startsWith('__');
+  try {
+    const D = real(ds.src) ? await (await fetch(ds.src)).json() : JSON.parse(el.textContent);
+    let VID = { a: 'a.mp4', b: 'b.mp4' };
+    if (real(ds.videos)) {
+      const url = new URL(ds.videos, location.href);
+      const map = await fetch(url).then(r => r.ok ? r.json() : {}).catch(() => ({}));
+      const v = map[ds.name];
+      VID = v && v.a && v.b ? { a: new URL(v.a, url).href, b: new URL(v.b, url).href } : null;
+    }
+    render(D, VID);
+  } catch (e) {
+    const p = document.createElement('p'); p.className = 'lead';
+    p.textContent = 'This report couldn’t load its data. Reload the page to try again.';
+    document.querySelector('.wrap').prepend(p); throw e;
+  }
+})();
+
+function render(D, VID) {
 const A = D.pair.a, B = D.pair.b, VA = D.videos[A], VB = D.videos[B];
-const S = D.signals, LAG = D.alignment.lag, DUR = VA.duration_s, FPS = 25;
+const S = D.signals, LAG = D.alignment.lag ?? 0, DUR = VA.duration_s, FPS = 25;
 const $ = (s, el = document) => el.querySelector(s);
 const h = (tag, attrs = {}, ...kids) => {
   const el = document.createElement(tag);
@@ -406,14 +435,15 @@ const h = (tag, attrs = {}, ...kids) => {
     if (k === 'class') el.className = v; else if (k === 'html') el.innerHTML = v;
     else if (k.startsWith('on')) el.addEventListener(k.slice(2), v); else if (v != null) el.setAttribute(k, v);
   }
-  for (const c of kids.flat()) if (c != null) el.append(c.nodeType ? c : document.createTextNode(c));
+  for (const c of kids.flat(Infinity)) if (c != null) el.append(c.nodeType ? c : document.createTextNode(c));
   return el;
 };
 const SVGNS = 'http://www.w3.org/2000/svg';
 const sv = (tag, attrs = {}) => { const el = document.createElementNS(SVGNS, tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); return el; };
-const f2 = x => x == null ? '–' : (+x).toFixed(2);
-const f3 = x => x == null ? '–' : (+x).toFixed(3);
-const pct = (x, d = 0) => x == null ? '–' : (100 * x).toFixed(d) + '%';
+const bad = x => x == null || !isFinite(x);
+const f2 = x => bad(x) ? '–' : (+x).toFixed(2);
+const f3 = x => bad(x) ? '–' : (+x).toFixed(3);
+const pct = (x, d = 0) => bad(x) ? '–' : (100 * x).toFixed(d) + '%';
 const tc = s => { if (s == null || s < 0) return '–'; const m = Math.floor(s / 60), r = s - 60 * m; return `${m}:${r.toFixed(1).padStart(4, '0')}`; };
 const tcf = s => { if (s == null || s < 0) return '–'; const fr = Math.round(s * FPS), m = Math.floor(fr / (60 * FPS)), sec = Math.floor(fr / FPS) % 60, f = fr % FPS;
   return `${m}:${String(sec).padStart(2, '0')}.${String(f).padStart(2, '0')}`; };
@@ -454,22 +484,38 @@ const SETS = { same_song: 'Same song, other studio', same_channel: 'Same channel
 const SET_SHORT = { same_song: 'same song', same_channel: 'same channel', random: 'random', time_shift: 'other moment' };
 const META_BASE = `Baselines from the dataset: ${bs.dataset_pairs.same_song} same-song pairs (other studios), ${bs.dataset_pairs.same_channel} same-channel and ${bs.dataset_pairs.random} random pairs.`;
 const SAMPLE_BASE = `Baselines from a ${bs.sample_videos}-video sample fetched from the API: ${bs.sample_pairs.same_song} same-song, ${bs.sample_pairs.same_channel} same-channel and ${bs.sample_pairs.random} random pairs.`;
-const SHIFT_BASE = 'Baseline: the same pair at other moments (B shifted 3–30 s), until baseline videos are downloaded in a later step. The song repeats one verse five times, so other moments look alike too: this baseline is strict.';
+const SHIFT_BASE = 'Baseline: the same pair at other moments (B shifted 3–30 s), until baseline videos are downloaded in a later step. Repeating verses make other moments look alike too, which makes this baseline strict.';
 const FIRE_RULE = 'A signal fires when the pair is closer than the 99th percentile of unrelated pairs (below the 1st percentile for distances) in every baseline set; the strictest set decides.';
 const closer = sig => Object.entries(sig.per_set || {}).map(([k, p]) => `${SET_SHORT[k] || k} ${p.closer_than == null ? '–' : pct(p.closer_than, 1)}`).join(', ');
 const levelName = (AU.levels.find(l => l.key === AU.level) || { name: 'No shared audio' }).name;
-const seg0 = D.alignment.segments[0];
+const seg0 = D.alignment.segments[0] || null;
 const minDur = Math.min(VA.duration_s, VB.duration_s);
-const featFire = Object.values(CH.features_baseline).filter(f => f.fires).length, featN = Object.keys(CH.features_baseline).length;
-const viewRatio = statsB.viewCount / statsA.viewCount, likeRatio = (statsB.likeCount / statsB.viewCount) / (statsA.likeCount / statsA.viewCount);
-const ratio = x => x >= 1 ? x : 1 / x;
+const featFire = Object.values(CH.features_baseline || {}).filter(f => f.fires).length, featN = Object.keys(CH.features_baseline || {}).length;
+const div = (x, y) => (x > 0 && y > 0) ? x / y : null;
+const viewRatio = div(statsB.viewCount, statsA.viewCount), likeRatio = div(div(statsB.likeCount, statsB.viewCount), div(statsA.likeCount, statsA.viewCount));
+const ratio = x => x == null ? Infinity : x >= 1 ? x : 1 / x;
+const fx = (x, d = 1) => x == null || isNaN(x) ? '–' : (+x).toFixed(d);
+const sameChannel = VA.channel_id === VB.channel_id;
+const listWords = (ws, n = 6) => ws.slice(0, n).map(w => `“${w}”`).join(', ') + (ws.length > n ? ` and ${ws.length - n} more` : '');
+const plural = (n, one, many = one + 's') => `${n} ${n === 1 ? one : many}`;
+const cap = x => x ? x[0].toUpperCase() + x.slice(1) : x;
+const TM = M.timing_days.detail || {}, FIRST = TM.first === 'b' ? 'b' : 'a', LATER = FIRST === 'a' ? 'b' : 'a';
+const VL = LATER === 'a' ? VA : VB;
+const daysBefore = (v) => Math.round((new Date(v.published) - new Date(v.channel_created)) / 864e5);
+/* Where a part only one version has sits in that version: start, end or middle. */
+const where = ([a0, a1], dur) => a0 < 1 ? 'at the start' : a1 > dur - 1.5 ? 'at the end' : 'in the middle';
+const partsText = (list, dur) => list.map(p => `${tc(p[0])}–${tc(p[1])} (${(p[1] - p[0]).toFixed(1)} s, ${where(p, dur)})`).join(', ');
+/* Offset in words: B time = A time + LAG. */
+const offsetText = () => Math.abs(LAG) < 0.05 ? 'Both start the matched part together.'
+  : LAG < 0 ? `B starts ${Math.abs(LAG).toFixed(2)} s into A.` : `A starts ${LAG.toFixed(2)} s into B.`;
+const settled = sig => sig && sig.settled_by ? ` Settled by ${sig.settled_by}.` : '';
 
 /* ---------- Header: basic info, one column per video ---------- */
 const ago = (from, to) => { const d = (new Date(to) - new Date(from)) / 864e5, m = Math.round(d / 30.44); return d < 45 ? `${Math.round(d)} days` : m < 12 ? `${m} mo` : `${Math.floor(m / 12)} y ${m % 12} mo`; };
 const COUNTRY = { IN: 'India', US: 'United States', GB: 'United Kingdom' };
-for (const [k, v] of [['a', VA], ['b', VB]]) $('#basics thead tr').append(h('th', { scope: 'col' }, h('span', { class: 'ch' }, tagEl(k), `Version ${k.toUpperCase()}`)));
+for (const [k, v] of [['a', VA], ['b', VB]]) $('#basics thead tr').append(h('th', { scope: 'col' }, h('span', { class: 'ch' }, tagEl(k), h('span', {}, h('span', { class: 'vw' }, 'Version '), k.toUpperCase()))));
 const BASICS = [
-  ['Thumbnail', (v, id, k) => h('img', { src: `thumb-${k}.jpg`, alt: `Thumbnail of version ${k.toUpperCase()}` })],
+  ['Thumbnail', (v, id, k) => h('img', { src: (D.thumbs && D.thumbs[k]) || `thumb-${k}.jpg`, alt: `Thumbnail of version ${k.toUpperCase()}` })],
   ['Title', (v, id) => h('a', { href: `https://www.youtube.com/watch?v=${id}`, target: '_blank', rel: 'noopener' }, v.title)],
   ['Channel', v => v.channel],
   ['Channel ID', v => h('a', { href: `https://www.youtube.com/channel/${v.channel_id}`, target: '_blank', rel: 'noopener', class: 'mono' }, v.channel_id)],
@@ -486,50 +532,183 @@ for (const [label, cell] of BASICS)
 
 /* ---------- Inspection sheet: fixed rows, generic rules ---------- */
 const sameIf = b => b ? 'same' : 'diff';
+/* Findings, written from the data: one function per row. */
+const F_TXT = {
+  owner() {
+    if (sameChannel) return `Same channel: both videos are on ${VA.channel}.`;
+    const sh = own.shared || {}, ev = [];
+    if (own.featured.a_lists_b || own.featured.b_lists_a)
+      ev.push(own.featured.a_lists_b && own.featured.b_lists_a ? 'each channel features the other' : `${own.featured.a_lists_b ? VA.channel : VB.channel} features the other channel`);
+    if ((sh.copyright || []).length) ev.push(`the “${titleCase(sh.copyright.slice(-1)[0])}” copyright line`);
+    if ((sh.app || []).length) ev.push(plural(sh.app.length, 'shared app link'));
+    if ((sh.email || []).length) ev.push(plural(sh.email.length, 'shared email'));
+    if ((sh.domain || []).length) ev.push(`shared link domains (${sh.domain.slice(0, 3).join(', ')})`);
+    if (!ev.length) return 'No shared owner evidence. Neither channel features the other.';
+    const feat = own.featured.a_lists_b || own.featured.b_lists_a ? '' : ' Neither channel features the other.';
+    return `Same company: ${ev.join(', ')}.${feat}`;
+  },
+  timing() {
+    const laterDays = daysBefore(VL);
+    let t = `${fx(M.timing_days.value)} days apart, ${FIRST.toUpperCase()} first; upload times ${fx(M.timing_time_of_day.value)} h apart.`;
+    if (!sameChannel && laterDays >= 0 && laterDays <= 90) t += ` ${VL.channel} was created ${plural(laterDays, 'day')} before its version.`;
+    return t;
+  },
+  title() {
+    const shared = T.shared || [];
+    if (!T.song) return shared.length ? `The titles share ${listWords(shared)}, but no run of two or more words.` : 'The titles share no words.';
+    let t = `Both titles name “${T.song}”. `;
+    t += shared.length ? `Besides it they share ${listWords(shared)}.` : 'No other words in common.';
+    if (T.rest_a) t += ` A adds “${T.rest_a}”`;
+    if (T.rest_b) t += `${T.rest_a ? ',' : ''} B adds “${T.rest_b}”`;
+    return t + (T.rest_a || T.rest_b ? '.' : '');
+  },
+  text() {
+    const nt = td.n_tags || [0, 0];
+    const tags = !nt[0] && !nt[1] ? 'Neither video has tags' : !nt[0] || !nt[1] ? `Only ${nt[0] ? 'A' : 'B'} has tags`
+      : `Tags overlap ${pct(M.tags.value)} (${td.shared_tags.length} shared)`;
+    return `${tags}; ${plural(td.shared_lines.length, 'description line')} shared.`;
+  },
+  duration() {
+    const d = M.duration.detail || {}, a = d.a ?? VA.duration_s, b = d.b ?? VB.duration_s, diff = Math.abs(a - b);
+    let t = `${tc(a)} vs ${tc(b)}`;
+    if (diff < 1) return t + ': the same length.';
+    const longer = a > b ? 'A' : 'B', only = longer === 'A' ? onlyA : onlyB, list = longer === 'A' ? parts.only_a : parts.only_b;
+    t += `: ${longer} is ${diff.toFixed(0)} s longer`;
+    if (only >= 0.8 * diff && list.length) t += `, in a part only it has (${where(list[list.length - 1], longer === 'A' ? VA.duration_s : VB.duration_s)})`;
+    return t + '.';
+  },
+  thumbnail() {
+    const e = V.thumbnail_embedding, hs = V.thumbnail_hash;
+    return `Image-model similarity ${f2(e.value)}, ${e.fires ? 'beyond every baseline' : e.fires == null ? 'with no full baseline' : 'within the range of unrelated pairs'}. `
+      + (hs.fires ? `The grayscale layout hash matches too (${f2(hs.value)}).` : `The grayscale layout hash (${f2(hs.value)}) doesn’t stand out.`);
+  },
+  storyboard() {
+    const sb = V.storyboard, d = sb.detail || {};
+    if (sb.value == null) return 'No storyboard comparison.';
+    return `The storyboards alone line up at ${fx(d.lag)} s (the audio says ${fx(LAG)} s), with a sequence similarity of ${f2(sb.value)}`
+      + (sb.fires ? ', above other moments.' : ', no better than other moments.');
+  },
+  cuts() {
+    const n = cutsD.n_in_matched || 0, share = V.aligned_cuts.value;
+    if (!n || share == null) return 'No cuts in the shared part to compare.';
+    const hit = Math.round(share * n), med = V.aligned_cuts.per_set?.time_shift?.median;
+    return `${hit === n ? `All ${n}` : `${hit} of ${n}`} cuts in the shared part land on the same frame (±1 frame). At other moments: ${pct(med)}.`;
+  },
+  motion() {
+    return `${V.motion_magnitude.fires ? 'Motion rises and falls together' : 'Motion doesn’t follow the same curve'}: r = ${f2(V.motion_magnitude.value)} overall, ${f2(V.motion_objects.value)} for moving characters, ${f2(V.motion_camera_y.value)} for camera tilt.`;
+  },
+  structure() {
+    const s = V.structure_edges, margin = s.value != null && s.threshold != null && s.value - s.threshold < 0.05;
+    const redrawn = area && area.reshaped > 0.3 ? ` ${pct(area.reshaped)} of the frame was redrawn.` : '';
+    return s.fires ? `Outlines coincide: edge similarity ${f2(s.value)} against ${f2(s.threshold)} at other moments${margin ? ', a narrow margin' : ''}.${redrawn}`
+      : `Outlines don’t coincide more than at other moments: edge similarity ${f2(s.value)} against ${f2(s.threshold)}.${redrawn}`;
+  },
+  content() {
+    const c = V.frame_content;
+    return c.fires ? `The image model sees the same scenes: ${f2(c.value)}, above ${f2(c.threshold)} at other moments.`
+      : `The image model sees different scenes: ${f2(c.value)}, below ${f2(c.threshold)} at other moments.`;
+  },
+  audio() {
+    if (AU.level === 'none' || AU.level == null) return `No shared audio found: waveform r = ${f3(AU.waveform_corr)}.${settled(AU)}`;
+    let t = `${levelName}: waveform r = ${f3(AU.waveform_corr)}`;
+    if (AU.gain_db != null) t += Math.abs(AU.gain_db) < 0.1 ? ', same loudness' : `, B ${Math.abs(AU.gain_db).toFixed(1)} dB ${AU.gain_db < 0 ? 'quieter' : 'louder'}`;
+    if (AU.speed != null) t += Math.abs(AU.speed - 1) < 1e-3 ? ', same speed.' : `, B at ${(+AU.speed).toFixed(3)}× speed.`;
+    else t += '.';
+    if (AU.stems_skipped) return `${t} Stems not separated.${settled(AU)}`;
+    const sc = AU.stem_corr || {}, names = Object.keys(sc).filter(k => sc[k] != null);
+    if (!names.length) return t + settled(AU);
+    const match = names.filter(k => sc[k] >= 0.8), differ = names.filter(k => sc[k] < 0.8);
+    if (!differ.length) return `${t} All ${names.length === 4 ? 'four' : names.length} stems match, so no new overlay.${settled(AU)}`;
+    return `${t} ${match.length ? `${cap(match.join(', '))} match; ` : ''}${differ.join(', ')} ${differ.length === 1 ? 'differs' : 'differ'}${differ.includes('vocals') ? ', so the overlay changed' : ''}.${settled(AU)}`;
+  },
+  offset() {
+    if (!seg0) return 'No matching stretch found.';
+    const len = seg0.a1 - seg0.a0, n = D.alignment.segments.length;
+    const cover = len >= VB.duration_s - 1 && len >= VA.duration_s - 1 ? 'all of both' : len >= VB.duration_s - 1 ? 'all of B' : len >= VA.duration_s - 1 ? 'all of A' : `${pct(len / minDur)} of the shorter video`;
+    return `${offsetText()} ${n === 1 ? 'One matching stretch' : `${n} matching stretches; the longest is`} ${len.toFixed(1)} s: ${cover}.`;
+  },
+  color() {
+    const ds = col.saturation_b - col.saturation_a, dl = col.lightness_diff;
+    const sat = Math.abs(ds) < 0.03 ? 'equally saturated' : `${ds > 0 ? 'more' : 'less'} saturated (${f2(col.saturation_a)} → ${f2(col.saturation_b)})`;
+    const lig = Math.abs(dl) < 2 ? 'equally bright' : `${dl < 0 ? 'darker' : 'lighter'} (${dl > 0 ? '+' : '−'}${Math.abs(dl).toFixed(0)} L*)`;
+    return `B is ${sat} and ${lig}; mean color distance ${fx(col.delta_e_mean, 0)} ΔE.`;
+  },
+  area() {
+    return `${pct(area.reshaped)} of the frame redrawn, ${pct(area.recolored)} recolored with the same shapes, ${pct(1 - area.changed)} unchanged.`;
+  },
+  parts() {
+    if (!onlyA && !onlyB) return 'Nothing is only in one version.';
+    return [onlyA ? `Only in A: ${partsText(parts.only_a, VA.duration_s)}.` : 'Nothing is only in A.',
+      onlyB ? `Only in B: ${partsText(parts.only_b, VB.duration_s)}.` : 'Nothing is only in B.'].join(' ');
+  },
+  features() {
+    const Fp = CH.features?.shared_part;
+    let t = `${featFire} of ${featN} features ${featFire === 1 ? 'is' : 'are'} closer than unrelated pairs.`;
+    if (!Fp || !Fp.a || !Fp.b) return t;
+    const a = Fp.a, b = Fp.b, cl = [];
+    const rel = (x, y) => Math.abs(x - y) / Math.max(Math.abs(x), Math.abs(y), 1e-9);
+    if (a.cuts_per_min != null && b.cuts_per_min != null) cl.push(rel(a.cuts_per_min, b.cuts_per_min) < 0.1 ? 'Same cuts per minute' : `${fx(a.cuts_per_min)} vs ${fx(b.cuts_per_min)} cuts per minute`);
+    if (a.mean_saturation != null && Math.abs(b.mean_saturation - a.mean_saturation) > 10) cl.push(`B is ${b.mean_saturation > a.mean_saturation ? 'more' : 'less'} saturated`);
+    if (a.mean_lstar != null && Math.abs(b.mean_lstar - a.mean_lstar) > 5) cl.push(`B is ${b.mean_lstar < a.mean_lstar ? 'darker' : 'lighter'}`);
+    if (a.motion_frac != null && rel(a.motion_frac, b.motion_frac) > 0.25) cl.push(`B has ${b.motion_frac < a.motion_frac ? 'less' : 'more'} motion`);
+    return cl.length ? `${t} ${cl.join('; ')}.` : t;
+  },
+  audience() {
+    if (viewRatio == null) return `Views: ${big(statsA.viewCount)} vs ${big(statsB.viewCount)}.`;
+    const [hi, r] = viewRatio >= 1 ? ['B', viewRatio] : ['A', 1 / viewRatio];
+    let t = `${hi} has ${r.toFixed(1)}× the views (${big(Math.max(statsA.viewCount, statsB.viewCount))} vs ${big(Math.min(statsA.viewCount, statsB.viewCount))})`;
+    if (likeRatio != null) {
+      const [lh, lr] = likeRatio >= 1 ? ['B', likeRatio] : ['A', 1 / likeRatio];
+      t += lh === hi ? ` and ${lr.toFixed(1)}× the like rate` : `; ${lh} has ${lr.toFixed(1)}× the like rate`;
+    }
+    return t + '.';
+  },
+};
+const FETCHED = D.fetched_at ? ` on ${D.fetched_at.slice(0, 10)}` : '';
 const SHEET = [
   ['Metadata', 'from the Data API', [
-    ['Owner', sameIf(M.owner.fires), `${M.owner.value ? 'Same company: the ' + titleCase(own.shared.copyright.slice(-1)[0]) + ' copyright line' + (own.shared.app.length ? ` and ${own.shared.app.length} shared app links` : '') : 'No shared owner evidence'}. ${own.featured.a_lists_b || own.featured.b_lists_a ? 'One channel features the other.' : 'Neither channel features the other.'}`,
+    ['Owner', sameIf(M.owner.fires), F_TXT.owner(),
       'Strongest evidence found, in order: same channel, featured channels, a shared copyright holder, app links, emails, link domains. Patterns are matched in video and channel descriptions.', '#d-meta'],
-    ['Timing', sameIf(M.timing_days.fires), `${M.timing_days.value.toFixed(1)} days apart; upload times ${M.timing_time_of_day.value.toFixed(1)} h apart. ${VB.channel} was created ${Math.round((new Date(VB.published) - new Date(VB.channel_created)) / 864e5)} days before its version.`,
+    ['Timing', sameIf(M.timing_days.fires), F_TXT.timing(),
       `${FIRE_RULE} Days apart, pair closer than: ${closer(M.timing_days)}. ${META_BASE} Time of day uses the API sample, since the dataset has dates only; many same-channel uploads share an exact hour.`, '#row-timing_days'],
-    ['Title', sameIf(M.title.fires), `No words in common besides the song name “${T.song}”. A adds “${T.rest_a}”, B adds “${T.rest_b}”.`,
+    ['Title', sameIf(M.title.fires), F_TXT.title(),
       `Word overlap after removing the longest run of words both titles share (the song). Pair closer than: ${closer(M.title)}. ${META_BASE}`, '#d-meta'],
-    ['Description and tags', sameIf(M.description.fires || M.tags.fires || M.description_lines.fires), `Tags overlap ${pct(M.tags.value)} (${td.shared_tags.length} shared); ${td.shared_lines.length} description lines shared, mostly the copyright block and video links.`,
+    ['Description and tags', sameIf(M.description.fires || M.tags.fires || M.description_lines.fires), F_TXT.text(),
       `Description words, pair closer than: ${closer(M.description)}. Tags: ${closer(M.tags)}. Same-channel pairs repeat a channel’s template, so that baseline is strict for a cross-channel pair. ${SAMPLE_BASE}`, '#d-meta'],
-    ['Duration', sameIf(M.duration.fires), `${tc(VA.duration_s)} vs ${tc(VB.duration_s)}: A has a ${onlyA.toFixed(1)} s end screen; the song part is the same length in both.`,
+    ['Duration', sameIf(M.duration.fires), F_TXT.duration(),
       `Difference in total length. Pair closer than: ${closer(M.duration)}. ${META_BASE}`, '#d-visual'],
   ]],
   ['Visual', 'thumbnails and storyboards without downloading; the rest on the aligned videos', [
-    ['Thumbnail', sameIf(V.thumbnail_embedding.fires || V.thumbnail_hash.fires), `Same scene and pose: image-model similarity ${f2(V.thumbnail_embedding.value)}, above every baseline. The grayscale layout hash (${f2(V.thumbnail_hash.value)}) doesn’t stand out.`,
+    ['Thumbnail', sameIf(V.thumbnail_embedding.fires || V.thumbnail_hash.fires), F_TXT.thumbnail(),
       `Image model (DINOv2) similarity, pair closer than: ${closer(V.thumbnail_embedding)}. ${SAMPLE_BASE}`, '#row-thumbnail_embedding'],
-    ['Storyboard', sameIf(V.storyboard.fires), `The storyboards alone line up at ${V.storyboard.detail.lag.toFixed(1)} s (the audio says ${LAG.toFixed(1)} s), with a sequence similarity of ${f2(V.storyboard.value)}. A cheap screen before downloading.`,
+    ['Storyboard', sameIf(V.storyboard.fires), F_TXT.storyboard() + settled(V.storyboard),
       `Storyboards are YouTube’s preview tiles, one a second here. ${SHIFT_BASE}`, '#row-storyboard'],
-    ['Aligned cuts', sameIf(V.aligned_cuts.fires), `All ${cutsD.n_in_matched} cuts in the shared part land on the same frame (±1 frame). At other moments: ${pct(V.aligned_cuts.per_set.time_shift.median)}.`,
+    ['Aligned cuts', sameIf(V.aligned_cuts.fires), F_TXT.cuts() + settled(V.aligned_cuts),
       `Cuts are found from outlines and brightness, so recoloring doesn’t hide them. ${SHIFT_BASE}`, '#inspect'],
-    ['Motion curve', sameIf(V.motion_magnitude.fires), `Motion rises and falls together: r = ${f2(V.motion_magnitude.value)} overall, ${f2(V.motion_objects.value)} for moving characters, ${f2(V.motion_camera_y.value)} for camera tilt.`,
+    ['Motion curve', sameIf(V.motion_magnitude.fires), F_TXT.motion() + settled(V.motion_magnitude),
       `Correlation of optical-flow curves at aligned frames. ${SHIFT_BASE}`, '#inspect'],
-    ['Structure', sameIf(V.structure_edges.fires), `Character outlines coincide, but two thirds of the frame was redrawn: edge similarity ${f2(V.structure_edges.value)} against ${f2(V.structure_edges.threshold)} at other moments, a narrow margin.`,
+    ['Structure', sameIf(V.structure_edges.fires), F_TXT.structure() + settled(V.structure_edges),
       `Median SSIM of edge maps per aligned frame, independent of color. ${SHIFT_BASE}`, '#row-structure_edges'],
-    ['Frame content', sameIf(V.frame_content.fires), `The image model sees different scenes (a forest instead of a farm): ${f2(V.frame_content.value)}, below ${f2(V.frame_content.threshold)} at other moments.`,
+    ['Frame content', sameIf(V.frame_content.fires), F_TXT.content() + settled(V.frame_content),
       `Median DINOv2 similarity per aligned frame. ${SHIFT_BASE}`, '#row-frame_content'],
   ]],
   ['Audio', 'on the aligned audio', [
-    ['Audio level', sameIf(['exact', 'adjusted', 'backing'].includes(AU.level)), `${levelName}: waveform r = ${f3(AU.waveform_corr)}, B ${Math.abs(AU.gain_db).toFixed(1)} dB ${AU.gain_db < 0 ? 'quieter' : 'louder'}, same speed. All four stems match, so no new overlay.`,
-      'Levels from most to least alike: exact same audio, same audio adjusted (gain, EQ, speed), same backing with a different overlay, same song re-recorded. The closest one that holds is the level. Same up to “same backing”.', '#d-audio'],
-    ['Offset and longest match', sameIf(seg0.a1 - seg0.a0 >= 0.8 * minDur), `B starts ${Math.abs(LAG).toFixed(2)} s into A. One matching stretch of ${(seg0.a1 - seg0.a0).toFixed(1)} s: all of B.`,
+    ['Audio level', sameIf(['exact', 'adjusted', 'backing'].includes(AU.level)), F_TXT.audio(),
+      'Levels from most to least alike: exact same audio, same audio adjusted (gain, EQ, speed), same backing with a different overlay, same song re-recorded. The closest one that holds is the level. Same up to “same backing”. Costly checks (stem separation) run only when the cheaper ones leave the level open.', '#d-audio'],
+    ['Offset and longest match', sameIf(seg0 && seg0.a1 - seg0.a0 >= 0.8 * minDur), F_TXT.offset(),
       'From audio cross-correlation, refined to the sample. Same when the longest matching stretch covers at least 80% of the shorter video.', '#d-audio'],
   ]],
   ['What changed', 'how the versions differ, and how they did', [
-    ['Color', sameIf(col.delta_e_mean < 10), `B is more saturated (${f2(col.saturation_a)} → ${f2(col.saturation_b)}) and darker (${col.lightness_diff.toFixed(0)} L*): the mother duck turns from white to yellow, the ducklings from yellow to pastels.`,
-      `Mean color distance ${col.delta_e_mean.toFixed(0)} ΔE over aligned frames. Same below 10 ΔE.`, '#d-visual'],
-    ['Changed area', sameIf(area.changed < 0.1), `${pct(area.reshaped)} of the frame redrawn (the background), ${pct(area.recolored)} recolored with the same shapes (the ducks), ${pct(1 - area.changed)} unchanged.`,
+    ['Color', sameIf(col.delta_e_mean < 10), F_TXT.color(),
+      `Mean color distance ${fx(col.delta_e_mean, 0)} ΔE over aligned frames. Same below 10 ΔE.`, '#d-visual'],
+    ['Changed area', sameIf(area.changed < 0.1), F_TXT.area(),
       'Per pixel at 320 × 180: changed above 15 ΔE; redrawn when the local gradient structure also differs. Same when under 10% changed.', '#d-visual'],
-    ['Added or cut parts', sameIf(onlyA < 1 && onlyB < 1), onlyA || onlyB ? `${onlyA ? `Only in A: ${parts.only_a.map(([a, b]) => `${tc(a)}–${tc(b)}`).join(', ')}, an end screen of other videos. ` : ''}${onlyB ? `Only in B: ${parts.only_b.map(([a, b]) => `${tc(a)}–${tc(b)}`).join(', ')}.` : 'Nothing is only in B.'}` : 'Nothing is only in one version.',
+    ['Added or cut parts', sameIf(onlyA < 1 && onlyB < 1), F_TXT.parts(),
       'Stretches of at least 1 s that the alignment finds in one version only.', '#d-visual'],
-    ['Our features', sameIf(featFire >= 0.75 * featN), `${featFire} of ${featN} features are closer than unrelated pairs. Same cuts per minute; B is far more saturated and darker, with less motion.`,
+    ['Our features', sameIf(featN && featFire >= 0.75 * featN), F_TXT.features(),
       'The dataset’s 12 pipeline features, measured on the shared song part. Same when at least 9 of 12 beat every baseline.', '#d-features'],
-    ['Audience', sameIf(ratio(viewRatio) < 2 && ratio(likeRatio) < 1.5), `B has ${viewRatio.toFixed(1)}× the views (${big(statsB.viewCount)} vs ${big(statsA.viewCount)}) and ${likeRatio.toFixed(1)}× the like rate.`,
-      'From the Data API on 2026-11-10. Same when views are within 2× and like rates within 1.5× of each other.', '#d-features'],
+    ['Audience', sameIf(ratio(viewRatio) < 2 && ratio(likeRatio) < 1.5), F_TXT.audience(),
+      `From the Data API${FETCHED}. Same when views are within 2× and like rates within 1.5× of each other.`, '#d-features'],
   ]],
 ];
 const tbody = $('#sheet tbody');
@@ -547,7 +726,22 @@ for (const [cat, sub, rows] of SHEET) {
 }
 $('#sheet-sum').append(h('span', {}, h('b', {}, `${nSame} same`), ` · ${nAll - nSame} different, of ${nAll} signals`));
 $('#sheet-info').append(info(FIRE_RULE + ' Rows under What changed use the plain rule in each row’s note.', 'How verdicts are decided'));
-$('#lead').textContent = `One animation and one recording, re-skinned with new colors, a redrawn background and a new title. Published by one company on two channels, ${M.timing_days.value.toFixed(0)} days apart.`;
+{
+  const anim = V.aligned_cuts.fires || V.motion_magnitude.fires || V.structure_edges.fires;
+  const rec = { exact: 'one recording', adjusted: 'one recording', backing: 'one backing track', rerecorded: 'the same song, re-recorded' }[AU.level];
+  const changes = [col.delta_e_mean >= 10 ? 'new colors' : null, area.reshaped > 0.3 ? 'redrawn parts' : null,
+    !M.title.fires ? 'a new title' : null, onlyA >= 1 || onlyB >= 1 ? 'a part only one version has' : null].filter(Boolean);
+  const and = xs => xs.length > 1 ? xs.slice(0, -1).join(', ') + ' and ' + xs.slice(-1) : xs[0];
+  let first = anim && rec ? `One animation and ${rec}` : anim ? 'One animation with different audio' : rec ? `${cap(rec)}, with different animation` : 'Two versions that share neither animation nor audio';
+  if (changes.length) first += anim ? `, re-skinned with ${and(changes)}` : `; they differ in ${and(changes)}`;
+  const days = `${fx(M.timing_days.value, 0)} days apart`;
+  const second = sameChannel ? `Both on ${VA.channel}, ${days}.` : M.owner.fires ? `Published by one company on two channels, ${days}.` : `On two channels with no shared owner evidence, ${days}.`;
+  $('#lead').textContent = `${first}. ${second}`;
+  const name = T.song ? titleCase(T.song) : null;
+  $('#h1').textContent = name ? `${name}, twice` : 'Two versions compared';
+  $('#eyebrow').textContent = `Experiment 001 · Variant pairs · ${D.label || (D.name === 'seed-pair' ? 'Seed pair' : sameChannel ? 'Within ' + VA.channel : 'Across channels')}`;
+  document.title = name ? `${name}, Twice` : 'Variant Pair Report';
+}
 function openLink(e, link) {
   if (!link.startsWith('#row-')) return;
   const r = document.getElementById(link.slice(1)); if (!r) return;
@@ -604,8 +798,19 @@ function syncB(force) {
   if (!va.paused && vb.paused) vb.play().catch(() => {});
   return true;
 }
+/* A tile of a sprite: its own file (cols × rows tiles), or a region of a shared sheet (s.sheet, W × H px,
+   the sprite at s.x, s.y, tiles s.w × s.h px). Percent sizes and positions, so any displayed size works. */
+const sheetBg = (file, W, H, x, y, w, h) => ({ backgroundImage: `url(${file})`, backgroundSize: `${W / w * 100}% ${H / h * 100}%`,
+  backgroundPosition: `${W === w ? 0 : x / (W - w) * 100}% ${H === h ? 0 : y / (H - h) * 100}%` });
+/* A whole sprite cut from a shared sheet, shown at full width. */
+function sbRegion(s, label) {
+  const el = h('div', { role: 'img', 'aria-label': label, style: `width:100%;aspect-ratio:${s.iw} / ${s.ih};border-radius:4px;background-repeat:no-repeat` });
+  Object.assign(el.style, sheetBg(s.sheet, s.W, s.H, s.x, s.y, s.iw, s.ih));
+  return el;
+}
 function bgFor(name, i) {
   const s = SP[name], r = Math.floor(i / s.cols), c = i % s.cols;
+  if (s.sheet) return sheetBg(s.sheet, s.W, s.H, s.x + c * s.w, s.y + r * s.h, s.w, s.h);
   return { backgroundImage: `url(${s.file})`, backgroundSize: `${s.cols * 100}% ${s.rows * 100}%`,
     backgroundPosition: `${s.cols > 1 ? c / (s.cols - 1) * 100 : 0}% ${s.rows > 1 ? r / (s.rows - 1) * 100 : 0}%` };
 }
@@ -625,13 +830,13 @@ function update(force) {
     h('span', {}, h('span', { style: 'color:var(--b)' }, 'B '), hasB ? tcf(t + LAG) : '–'));
   for (const ph of document.querySelectorAll('.playhead')) { ph.setAttribute('x1', X(t)); ph.setAttribute('x2', X(t)); }
 }
-function seek(s) { va.currentTime = Math.max(0, Math.min(DUR - 0.04, s)); update(true); }
+function seek(s) { if (!VID) { showStill(s); return; } va.currentTime = Math.max(0, Math.min(DUR - 0.04, s)); update(true); }
 let raf = null;
 const loop = () => { update(); raf = va.paused ? null : requestAnimationFrame(loop); };
 va.addEventListener('play', () => { $('#play').textContent = 'Pause'; if (!raf) raf = requestAnimationFrame(loop); });
 va.addEventListener('pause', () => { $('#play').textContent = 'Play'; vb.pause(); update(true); });
 va.addEventListener('seeked', () => update(true));
-va.addEventListener('loadedmetadata', () => { va.currentTime = 15; });
+va.addEventListener('loadedmetadata', () => { va.currentTime = 0; });  // from the beginning
 va.addEventListener('ended', () => vb.pause());
 $('#play').addEventListener('click', () => { if (va.paused) { if (va.currentTime >= DUR - 0.1) seek(0); va.play().catch(() => {}); } else va.pause(); });
 tIn.addEventListener('input', () => seek(+tIn.value));
@@ -645,7 +850,7 @@ $('#swipe').addEventListener('input', e => { swipeX = e.target.value / 100; upda
   pane.addEventListener('pointerdown', e => { if (mode === 'swipe') { pane.setPointerCapture(e.pointerId); move(e); } });
   pane.addEventListener('pointermove', e => { if (e.buttons) move(e); });
 }
-const step = n => { va.pause(); seek(Math.round(va.currentTime * FPS + n) / FPS + 0.001); };
+const step = n => { if (!VID) { seek(+tIn.value + n); return; } va.pause(); seek(Math.round(va.currentTime * FPS + n) / FPS + 0.001); };
 $('#prevf').addEventListener('click', () => step(-1));
 $('#nextf').addEventListener('click', () => step(1));
 const cutJump = dir => {
@@ -686,7 +891,7 @@ const hline = (svg, y, hgt, lo, hi) => {
 };
 const AB = (pre, post = '') => h('span', {}, pre, h('span', { style: 'color:var(--a)' }, 'A'), ' and ', h('span', { style: 'color:var(--b)' }, 'B'), post);
 const CA = D.curves.audio, CF = D.curves.frames, CM = D.curves.motion, LD = D.curves.loudness;
-const aT = CA.times.map(x => x + 1);
+const aT = (CA && CA.times || []).map(x => x + 1);
 track('Alignment', 'matched song part; dashed: in one version only', 40, svg => {
   for (const [a0, a1] of parts.matched_a) svg.append(sv('rect', { x: X(a0), y: 4, width: X(a1) - X(a0), height: 14, fill: 'var(--a)', rx: 2 }));
   for (const [a0, a1] of parts.only_a) svg.append(sv('rect', { x: X(a0), y: 4, width: X(a1) - X(a0), height: 14, fill: 'var(--a-soft)', stroke: 'var(--a)', 'stroke-dasharray': '3 2', 'vector-effect': 'non-scaling-stroke' }));
@@ -700,15 +905,15 @@ if (LD) {
   const lT = LD.a.map((_, k) => k / LD.rate), lTb = LD.b.map((_, k) => k / LD.rate - LAG);
   track('Loudness', AB('', ', −45 to 0 dB'), 56, (svg, H) => { line(svg, lT, LD.a, H, 'var(--a)', -45, 0, 1.5); line(svg, lTb, LD.b, H, 'var(--b)', -45, 0, 1.5); });
 }
-track('Audio match', 'waveform correlation, 0–1; dashed: other moments’ 99th pct.', 46, (svg, H) => {
+if (CA && CA.waveform && AU.summaries && AU.summaries.waveform) track('Audio match', 'waveform correlation, 0–1; dashed: other moments’ 99th pct.', 46, (svg, H) => {
   hline(svg, AU.summaries.waveform.baseline_p99, H, 0, 1); line(svg, aT, CA.waveform, H, 'var(--ink)');
 });
-const mT = CM.a.magnitude.map((_, k) => k / CM.fps), mMax = Math.max(...CM.a.magnitude, ...CM.b.magnitude) * 0.8;
+const mT = CM.a.magnitude.map((_, k) => k / CM.fps), mMax = Math.max(1e-6, ...CM.a.magnitude, ...CM.b.magnitude) * 0.8;
 track('Motion', AB('optical flow, '), 46, (svg, H) => {
   line(svg, mT, CM.a.magnitude, H, 'var(--a)', 0, mMax, 1.5); line(svg, mT.map(x => x - LAG), CM.b.magnitude, H, 'var(--b)', 0, mMax, 1.5);
 });
 track('Outline match', 'edge SSIM; dashed: other moments’ 99th pct.', 46, (svg, H) => {
-  hline(svg, V.structure_edges.threshold, H, 0, 0.6); line(svg, CF.times, CF.edge_ssim, H, 'var(--ink)', 0, 0.6);
+  if (V.structure_edges.threshold != null) hline(svg, V.structure_edges.threshold, H, 0, 0.6); line(svg, CF.times, CF.edge_ssim, H, 'var(--ink)', 0, 0.6);
 });
 track('Changed area', h('span', {}, 'share of frame, ', h('span', { style: 'color:var(--recolor)' }, 'recolored'), ' + ', h('span', { style: 'color:var(--redraw)' }, 'redrawn')), 46, (svg, H) => {
   const ar = (low, high, color) => {
@@ -732,7 +937,7 @@ for (const svg of document.querySelectorAll('#tracks svg')) {
     const la = LD ? LD.a[Math.min(LD.a.length - 1, Math.round(s * LD.rate))] : null, lbI = LD ? Math.round((s + LAG) * LD.rate) : -1;
     tip.replaceChildren(h('div', { class: 'mono' }, `A ${tc(s)} · B ${inB ? tc(s + LAG) : 'none'}`),
       LD ? h('div', {}, `Loudness A ${la?.toFixed(0)} dB${inB && lbI >= 0 && lbI < LD.b.length ? `, B ${LD.b[lbI].toFixed(0)} dB` : ''}`) : null,
-      h('div', {}, inB ? `Audio match ${f3(CA.waveform[ka])}` : 'Only in A'),
+      h('div', {}, inB ? (CA && CA.waveform ? `Audio match ${f3(CA.waveform[ka])}` : 'In both') : 'Only in A'),
       inB ? h('div', {}, `Outline match ${f2(CF.edge_ssim[kf])}`) : null,
       inB ? h('div', {}, `Recolored ${pct(CF.recolored[kf])}, redrawn ${pct(CF.reshaped[kf])}`) : null,
       h('div', { style: 'opacity:.7' }, 'Click to go to this moment'));
@@ -830,9 +1035,8 @@ const NOTES = {
   timing_time_of_day: 'Channels often upload at a fixed hour, so many same-channel pairs share an exact upload time.',
   description: 'Same-channel descriptions repeat the channel’s template.',
   tags: 'Same-channel tags repeat a channel’s tag set.',
-  duration: 'The lengths differ by A’s end screen.',
-  motion_camera_x: 'There is almost no horizontal camera movement to correlate.',
-  frame_content: 'Reads what is depicted: a forest instead of a farm looks different, while the repeating verses make other moments look alike.',
+  duration: 'An intro or end screen in one version makes the lengths differ even when the song part is the same.',
+  frame_content: 'Reads what is depicted, so a redrawn background lowers it even when the animation is the same; repeating verses make other moments look alike.',
 };
 for (const [g, spec] of Object.entries(REG)) {
   const rows = h('div', { class: 'rows' });
@@ -840,9 +1044,11 @@ for (const [g, spec] of Object.entries(REG)) {
     const sig = S[g][id];
     const extra = id === 'storyboard' ? ['a', 'b'].map(k => h('figure', { style: 'margin:0;display:grid;gap:6px' },
       h('figcaption', { class: 'legend' }, tagEl(k), ` storyboard, ${SP['sb-' + k].n} tiles, one a second`),
-      h('img', { src: SP['sb-' + k].file, alt: `Storyboard tiles of version ${k.toUpperCase()}`, loading: 'lazy', style: 'width:100%;border-radius:4px' }))) : null;
-    rows.append(row(id, name, sub, fmt(sig.value), strip(sig), sig.fires,
-      [NOTES[id] ? h('p', {}, NOTES[id]) : null, detailTable(sig, fmt), extra]));
+      SP['sb-' + k].sheet ? sbRegion(SP['sb-' + k], `Storyboard tiles of version ${k.toUpperCase()}`)
+        : h('img', { src: SP['sb-' + k].file, alt: `Storyboard tiles of version ${k.toUpperCase()}`, loading: 'lazy', style: 'width:100%;border-radius:4px' }))) : null;
+    if (!sig) continue;
+    rows.append(row(id, name, sub, sig.value == null ? '–' : fmt(sig.value), strip(sig), sig.fires,
+      [NOTES[id] ? h('p', {}, NOTES[id]) : null, sig.settled_by ? h('p', {}, `Settled by ${sig.settled_by}.`) : null, detailTable(sig, fmt), extra]));
   }
   $('#board').append(h('div', { class: 'group' }, h('header', {}, h('h3', {}, spec.title), info(spec.tip, spec.title + ' baselines')), rows));
 }
@@ -850,9 +1056,10 @@ for (const [g, spec] of Object.entries(REG)) {
   const rows = h('div', { class: 'rows' });
   for (const [id, name, sub] of [['waveform', 'Waveform', 'median correlation per 2 s'], ['spectrum', 'Spectrum', 'EQ- and gain-independent'],
     ['backing', 'Backing track', 'drums, bass, other stems'], ['vocals', 'Vocals', 'vocal stem'], ['chroma', 'Melody and harmony', 'chroma, any recording']]) {
-    const sm = AU.summaries[id];
+    const sm = (AU.summaries || {})[id];
+    if (!sm) continue;
     rows.append(row('au-' + id, name, sub, f3(sm.median), audioStrip(sm, sm.median), sm.median > sm.baseline_p99,
-      h('p', {}, `Other moments: median ${f3(sm.baseline_median)}, 99th percentile ${f3(sm.baseline_p99)}. Longest stretch above it: ${tc(sm.longest[0])}–${tc(sm.longest[1])} on A (${sm.longest[2].toFixed(0)} s).`)));
+      h('p', {}, `Other moments: median ${f3(sm.baseline_median)}, 99th percentile ${f3(sm.baseline_p99)}. ${sm.longest && sm.longest[2] > 0 ? `Longest stretch above it: ${tc(sm.longest[0])}–${tc(sm.longest[1])} on A (${sm.longest[2].toFixed(0)} s).` : 'No stretch above it.'}`)));
   }
   $('#board').append(h('div', { class: 'group' }, h('header', {}, h('h3', {}, 'Audio'),
     info(`Per 2-second window on the aligned audio. ${SHIFT_BASE} The strip runs from −0.2 to 1.`, 'Audio baselines')), rows));
@@ -863,13 +1070,16 @@ for (const [g, spec] of Object.entries(REG)) {
   const toks = (arr, cls) => h('div', { class: 'tokens' }, arr.map(w => h('span', { class: 'tok ' + cls }, w)));
   $('#meta').append(
     h('div', { class: 'card' }, h('h3', {}, 'Owner evidence', info('Free text varies by channel, so general patterns are matched: “©” lines, app store links, emails and link domains, in video and channel descriptions.', 'How owner evidence is found')),
-      h('p', {}, 'Copyright line in both descriptions: ', h('b', {}, titleCase(own.shared.copyright.slice(-1)[0]))),
-      h('p', {}, 'Same app links: ', h('span', { class: 'mono' }, own.shared.app.join(', ') || 'none')),
-      h('p', {}, `Featured channels: ${VB.channel} lists ${own.featured.n_b}, ${VA.channel} lists ${own.featured.n_a}; neither lists the other. Featured channels alone would have missed this pair.`),
+      sameChannel ? h('p', {}, h('b', {}, 'Same channel: '), `both videos are on ${VA.channel}.`) : null,
+      h('p', {}, 'Copyright line in both descriptions: ', (own.shared.copyright || []).length ? h('b', {}, titleCase(own.shared.copyright.slice(-1)[0])) : 'none'),
+      h('p', {}, 'Same app links: ', h('span', { class: 'mono' }, (own.shared.app || []).join(', ') || 'none')),
+      sameChannel ? null : h('p', {}, `Featured channels: ${VB.channel} lists ${own.featured.n_b}, ${VA.channel} lists ${own.featured.n_a}; `
+        + (own.featured.a_lists_b && own.featured.b_lists_a ? 'each lists the other.' : own.featured.a_lists_b ? `${VA.channel} lists ${VB.channel}.` : own.featured.b_lists_a ? `${VB.channel} lists ${VA.channel}.`
+          : 'neither lists the other.' + ((own.shared.copyright || []).length || (own.shared.app || []).length ? ' Featured channels alone would have missed this pair.' : ''))),
       h('p', { class: 'muted' }, `${bs.same_owner_left_out.length} same-song videos in the baseline sample carry the same copyright line; they were left out of the other-studio baseline.`)),
     h('div', { class: 'card' }, h('h3', {}, 'Titles'),
       h('p', {}, tagEl('a'), ' ', VA.title), h('p', {}, tagEl('b'), ' ', VB.title),
-      h('div', {}, h('div', { class: 'eyebrow' }, 'Song name, removed before comparing'), toks([T.song], 's')),
+      T.song ? h('div', {}, h('div', { class: 'eyebrow' }, 'Song name, removed before comparing'), toks([T.song], 's')) : h('p', { class: 'muted' }, 'No run of words both titles share.'),
       h('div', {}, h('div', { class: 'eyebrow' }, 'Only in A'), toks(T.only_a, 'a')),
       h('div', {}, h('div', { class: 'eyebrow' }, 'Only in B'), toks(T.only_b, 'b'))),
     h('div', { class: 'card' }, h('h3', {}, `Tags: ${td.shared_tags.length} shared of ${td.n_tags[0]} and ${td.n_tags[1]}`),
@@ -903,57 +1113,87 @@ for (const [g, spec] of Object.entries(REG)) {
       h('p', { class: 'muted' }, `Saturation ${f2(col.saturation_a)} → ${f2(col.saturation_b)}; lightness ${col.lightness_diff.toFixed(1)} L*; mean color distance ${col.delta_e_mean.toFixed(0)} ΔE; hue overlap ${pct(col.hue_hist_overlap)}.`)),
     h('div', { class: 'card' }, h('h3', {}, 'Share of the frame', info('Per pixel at 320 × 180: changed above 15 ΔE; redrawn when the local gradient structure also differs, recolored when only the color does.', 'How changed area is measured')),
       bar(segs), leg(segs),
-      h('p', { class: 'muted' }, 'Over all aligned frames. Redrawn is mostly the background; recolored is mostly the ducks. See it per frame in the change map.')),
+      h('p', { class: 'muted' }, 'Over all aligned frames. See it per frame in the change map.')),
     h('div', { class: 'card' }, h('h3', {}, 'Parts only one version has'),
-      h('p', {}, onlyA ? `A: ${parts.only_a.map(([a, b]) => `${tc(a)}–${tc(b)} (${(b - a).toFixed(1)} s)`).join(', ')}, an end screen of other videos.` : 'A: none.'),
-      h('p', {}, onlyB ? `B: ${parts.only_b.map(([a, b]) => `${tc(a)}–${tc(b)}`).join(', ')}.` : 'B: none. Everything in B is in A.'),
-      h('p', { class: 'muted' }, `B begins ${Math.abs(LAG).toFixed(2)} s into A’s song.`)));
+      h('p', {}, onlyA ? `A: ${partsText(parts.only_a, VA.duration_s)}.` : 'A: none. Everything in A is in B.'),
+      h('p', {}, onlyB ? `B: ${partsText(parts.only_b, VB.duration_s)}.` : 'B: none. Everything in B is in A.'),
+      h('p', { class: 'muted' }, offsetText())));
 }
 
 /* ---------- Audio levels ---------- */
 AU.levels.forEach((lv, k) => {
   const e = lv.evidence, top = lv.key === AU.level;
   const ev = {
-    exact: () => `waveform r = ${f3(e.waveform_corr)}, gain ${e.gain_db.toFixed(2)} dB, fingerprint match ${pct(e.fingerprint_share)}. Needs |gain| < 0.5 dB.`,
-    adjusted: () => `waveform r = ${f3(e.waveform_corr)} after a ${Math.abs(LAG).toFixed(2)} s offset; gain ${e.gain_db.toFixed(2)} dB, speed ${e.speed.toFixed(4)}×.`,
-    backing: () => `backing r = ${f3(e.backing_corr)}, vocals r = ${f3(e.vocals_corr)}: the overlay is the same too.`,
-    rerecorded: () => `chroma ${f3(e.chroma_median)}; key ${e.key_a} / ${e.key_b}; tempo ${e.tempo_a.toFixed(0)} / ${e.tempo_b.toFixed(0)} bpm.`,
-  }[lv.key]();
+    exact: () => `waveform r = ${f3(e.waveform_corr)}, gain ${fx(e.gain_db, 2)} dB, fingerprint match ${pct(e.fingerprint_share)}. Needs |gain| < 0.5 dB.`,
+    adjusted: () => `waveform r = ${f3(e.waveform_corr)} after a ${Math.abs(LAG).toFixed(2)} s offset; gain ${fx(e.gain_db, 2)} dB, speed ${fx(e.speed, 4)}×.`,
+    backing: () => lv.skipped || e.backing_corr == null ? `Not checked: the stems weren’t separated${AU.settled_by ? ` (settled by ${AU.settled_by})` : ''}.`
+      : `backing r = ${f3(e.backing_corr)}, vocals r = ${f3(e.vocals_corr)}${e.vocals_corr == null ? '.' : e.vocals_corr >= 0.8 ? ': the overlay is the same too.' : ': the vocals or effects differ.'}`,
+    rerecorded: () => `chroma ${f3(e.chroma_median)}; key ${e.key_a || '–'} / ${e.key_b || '–'}; tempo ${fx(e.tempo_a, 0)} / ${fx(e.tempo_b, 0)} bpm.`,
+  }[lv.key]?.() ?? '';
   $('#ladder').append(h('div', { class: 'rung' + (top ? ' top' : '') }, h('span', { class: 'num' }, k + 1),
     h('div', {}, h('b', {}, lv.name), h('div', { class: 'ev' }, ev)),
-    h('span', { class: 'pill' + (top ? ' on' : '') }, top ? 'Pair’s level' : lv.holds ? 'Holds' : 'Doesn’t hold')));
+    h('span', { class: 'pill' + (top ? ' on' : '') }, top ? 'Pair’s level' : lv.holds == null ? 'Not checked' : lv.holds ? 'Holds' : 'Doesn’t hold')));
 });
-for (const s of ['vocals', 'drums', 'bass', 'other']) {
-  $('#stems').append(h('div', { class: 'stem' }, h('span', { class: 'eyebrow' }, s), h('span', { class: 'big' }, f3(AU.stem_corr[s])),
-    h('span', { class: 'muted' }, `correlation · B ${AU.stem_gain_db[s].toFixed(1)} dB`)));
+if (AU.stems_skipped || !AU.stem_corr) {
+  $('#stems').replaceWith(h('p', { class: 'muted', id: 'stems' }, `Not separated: the waveforms already match${AU.settled_by ? ` (settled by ${AU.settled_by})` : ''}.`));
+} else {
+  for (const s of ['vocals', 'drums', 'bass', 'other']) {
+    $('#stems').append(h('div', { class: 'stem' }, h('span', { class: 'eyebrow' }, s), h('span', { class: 'big' }, f3(AU.stem_corr[s])),
+      h('span', { class: 'muted' }, `correlation · B ${fx((AU.stem_gain_db || {})[s])} dB`)));
+  }
 }
 
 /* ---------- Features and audience ---------- */
 {
-  const F = CH.features.shared_part, FB = CH.features_baseline, FD = CH.features_dataset;
+  const F = CH.features?.shared_part || { a: {}, b: {} }, FB = CH.features_baseline || {}, FD = CH.features_dataset || {};
   const NAMES = { cuts_per_min: 'Cuts per minute', inter_cut_dssim_mean: 'Change at cuts', palette_change_per_min: 'Palette changes per minute',
     lstar_flash_per_min: 'Flashes per minute', motion_frac: 'Motion', loudness_jumps_per_min: 'Loudness jumps per minute', mean_saturation: 'Saturation',
     mean_lstar: 'Lightness', lufs: 'Loudness (LUFS)', high_lufs_frac: 'Share loud', build_resolve_per_min: 'Builds per minute', loudness_jump_at_cut_per_min: 'Loudness jumps at cuts' };
-  const rows = Object.keys(NAMES).filter(f => !(F.a[f] === 0 && F.b[f] === 0)).map(f => h('tr', {},
-    h('td', {}, NAMES[f]), h('td', { class: 'mono' }, (+F.a[f]).toFixed(2)), h('td', { class: 'mono' }, (+F.b[f]).toFixed(2)),
-    h('td', { class: 'mono' }, pct(FD[f].a_pct) + ' / ' + pct(FD[f].b_pct)),
-    h('td', { class: 'mono' }, FB[f].per_set.same_song ? pct(FB[f].per_set.same_song.closer_than) : '–')));
+  const rows = Object.keys(NAMES).filter(f => F.a[f] != null && !(F.a[f] === 0 && F.b[f] === 0)).map(f => h('tr', {},
+    h('td', {}, NAMES[f]), h('td', { class: 'mono' }, f2(F.a[f])), h('td', { class: 'mono' }, f2(F.b[f])),
+    h('td', { class: 'mono' }, FD[f] ? pct(FD[f].a_pct) + ' / ' + pct(FD[f].b_pct) : '–'),
+    h('td', { class: 'mono' }, FB[f]?.per_set?.same_song ? pct(FB[f].per_set.same_song.closer_than) : '–')));
   const zero = Object.keys(NAMES).filter(f => F.a[f] === 0 && F.b[f] === 0).map(f => NAMES[f].toLowerCase());
   $('#features').append(
-    h('div', { class: 'card' }, h('h3', {}, 'Our 12 features, shared part', info('Measured with the dataset’s pipeline from 0:30, on the song part both versions share (A’s end screen left out). Dataset pct. is where each version sits among all dataset videos.', 'How features are measured')),
+    h('div', { class: 'card' }, h('h3', {}, 'Our 12 features, shared part', info('Measured with the dataset’s pipeline from 0:30, on the song part both versions share (parts only one version has left out). Dataset pct. is where each version sits among all dataset videos.', 'How features are measured')),
       h('div', { class: 'scroll' }, h('table', { class: 'feat' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Feature'), h('th', {}, h('span', { class: 'tag a' }, 'A')), h('th', {}, h('span', { class: 'tag b' }, 'B')), h('th', {}, 'Dataset pct. A / B'), h('th', {}, 'Closer than same-song pairs'))),
         h('tbody', {}, rows))),
       zero.length ? h('p', { class: 'muted' }, `Zero for both, left out: ${zero.join(', ')}.`) : null),
-    h('div', { class: 'card' }, h('h3', {}, 'Audience', info(`View and like counts from the Data API on 2026-11-10. B is the later upload, on a channel created ${Math.round((new Date(VB.published) - new Date(VB.channel_created)) / 864e5)} days before it.`, 'About the audience numbers')),
+    h('div', { class: 'card' }, h('h3', {}, 'Audience', info(`View and like counts from the Data API${FETCHED}. ${LATER.toUpperCase()} is the later upload, on a channel created ${plural(daysBefore(VL), 'day')} before it.`, 'About the audience numbers')),
       h('div', { class: 'scroll' }, h('table', { class: 'feat' },
         h('thead', {}, h('tr', {}, h('th', {}, h('span', { class: 'sr' }, 'Measure')), h('th', {}, h('span', { class: 'tag a' }, 'A')), h('th', {}, h('span', { class: 'tag b' }, 'B')), h('th', {}, 'B / A'))),
         h('tbody', {},
-          h('tr', {}, h('td', {}, 'Views'), h('td', { class: 'mono' }, big(statsA.viewCount)), h('td', { class: 'mono' }, big(statsB.viewCount)), h('td', { class: 'mono' }, viewRatio.toFixed(1) + '×')),
-          h('tr', {}, h('td', {}, 'Likes'), h('td', { class: 'mono' }, big(statsA.likeCount)), h('td', { class: 'mono' }, big(statsB.likeCount)), h('td', { class: 'mono' }, (statsB.likeCount / statsA.likeCount).toFixed(1) + '×')),
-          h('tr', {}, h('td', {}, 'Like rate'), h('td', { class: 'mono' }, pct(statsA.likeCount / statsA.viewCount, 2)), h('td', { class: 'mono' }, pct(statsB.likeCount / statsB.viewCount, 2)), h('td', { class: 'mono' }, likeRatio.toFixed(1) + '×')),
-          h('tr', {}, h('td', {}, 'Channel subscribers'), h('td', { class: 'mono' }, big(VA.channel_subscribers)), h('td', { class: 'mono' }, big(VB.channel_subscribers)), h('td', { class: 'mono' }, (VB.channel_subscribers / VA.channel_subscribers).toFixed(2) + '×')))))));
+          h('tr', {}, h('td', {}, 'Views'), h('td', { class: 'mono' }, big(statsA.viewCount)), h('td', { class: 'mono' }, big(statsB.viewCount)), h('td', { class: 'mono' }, viewRatio == null ? '–' : viewRatio.toFixed(1) + '×')),
+          h('tr', {}, h('td', {}, 'Likes'), h('td', { class: 'mono' }, big(statsA.likeCount)), h('td', { class: 'mono' }, big(statsB.likeCount)), h('td', { class: 'mono' }, div(statsB.likeCount, statsA.likeCount) == null ? '–' : div(statsB.likeCount, statsA.likeCount).toFixed(1) + '×')),
+          h('tr', {}, h('td', {}, 'Like rate'), h('td', { class: 'mono' }, pct(statsA.likeCount / statsA.viewCount, 2)), h('td', { class: 'mono' }, pct(statsB.likeCount / statsB.viewCount, 2)), h('td', { class: 'mono' }, likeRatio == null ? '–' : likeRatio.toFixed(1) + '×')),
+          h('tr', {}, h('td', {}, 'Channel subscribers'), h('td', { class: 'mono' }, big(VA.channel_subscribers)), h('td', { class: 'mono' }, big(VB.channel_subscribers)), h('td', { class: 'mono' }, div(VB.channel_subscribers, VA.channel_subscribers) == null ? '–' : div(VB.channel_subscribers, VA.channel_subscribers).toFixed(2) + '×')))))));
 }
 
 setSound('a'); setMode('side');
+/* Without the videos: the stills (one a second, B at A's aligned moment) on the same slider. */
+function showStill(t) {
+  t = Math.max(0, Math.min(DUR - 0.04, t));
+  const i = Math.min(SP.a.n - 1, Math.floor(t)), hasB = D.has_b ? D.has_b[i] !== false : true;
+  Object.assign(stillA.style, bgFor('a', i)); Object.assign(stillB.style, bgFor('b', i));
+  $('#nob').hidden = hasB; if (!hasB) $('#nob').textContent = `No matching moment in B: ${tc(t)} is only in A.`;
+  if (document.activeElement !== tIn) tIn.value = t.toFixed(2);
+  $('#tc').replaceChildren(h('span', {}, h('span', { style: 'color:var(--a)' }, 'A '), tcf(i)),
+    h('span', {}, h('span', { style: 'color:var(--b)' }, 'B '), hasB ? tcf(i + LAG) : '–'));
+  for (const ph of document.querySelectorAll('.playhead')) { ph.setAttribute('x1', X(t)); ph.setAttribute('x2', X(t)); }
+}
+let stillA = null, stillB = null;
+if (VID) { va.src = VID.a; vb.src = VID.b; }
+else if (SP.a && SP.b) {
+  for (const x of document.querySelectorAll('#inspect .toolbar, #play')) x.hidden = true;
+  va.hidden = vb.hidden = true;
+  stillA = h('div', { class: 'sprite' }); stillB = h('div', { class: 'sprite' });
+  $('#pa').prepend(stillA); $('#pb').prepend(stillB);
+  $('#inspect .sec-head p').textContent = 'The synced video isn’t included in this report: these are stills, one a second, with B at the moment aligned to A. Drag the slider or click a track to move.';
+  showStill(0);
+} else {
+  for (const x of document.querySelectorAll('#inspect .toolbar, #inspect .stage, #inspect .transport')) x.hidden = true;
+  $('#inspect .sec-head p').textContent = 'The synced video isn’t included in this report. The timeline tracks below and the storyboards under Signals against baselines still show how the two versions line up.';
+}
+}
 </script>

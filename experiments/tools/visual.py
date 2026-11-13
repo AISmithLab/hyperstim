@@ -62,9 +62,11 @@ def load_image(path) -> np.ndarray:
 
 @lru_cache(maxsize=1)
 def _dino():
+    import os
+
     import torch
 
-    torch.set_num_threads(8)
+    torch.set_num_threads(int(os.environ.get("EXP_TORCH_THREADS", "8")))
     model = torch.hub.load("facebookresearch/dinov2", "dinov2_vits14", verbose=False)
     model.eval()
     return model
@@ -75,6 +77,8 @@ def embed(images: list[np.ndarray] | np.ndarray, size: tuple[int, int] = (392, 2
     """L2-normalised DINOv2 (ViT-S/14) CLS embeddings of RGB uint8 images, resized to size (w, h)."""
     import torch
 
+    if len(images) == 0:
+        return np.zeros((0, 384), np.float32)
     model = _dino()
     mean = np.array([0.485, 0.456, 0.406], np.float32)
     std = np.array([0.229, 0.224, 0.225], np.float32)
@@ -142,8 +146,11 @@ def storyboard_signal(times_a, frames_a, times_b, frames_b, audio_lag: float | N
             j = int(np.argmin(np.abs(times_b - (t + lag))))
             if abs(times_b[j] - (t + lag)) <= step / 2:
                 sims.append(float(ea[i] @ eb[j]))
-        scores.append(np.mean(sims) if len(sims) >= max(5, 0.3 * len(times_a)) else np.nan)
+        # Enough overlap for a mean: a share of the SHORTER storyboard (a short vs a compilation).
+        scores.append(np.mean(sims) if len(sims) >= max(5, 0.3 * min(len(times_a), len(times_b))) else np.nan)
     scores = np.array(scores)
+    if np.all(np.isnan(scores)):
+        scores = np.nan_to_num(scores, nan=0.0)
     best = int(np.nanargmax(scores))
     lag = float(cands[best])
     far = np.abs(cands - lag) >= 3
@@ -171,6 +178,59 @@ def storyboard_signal(times_a, frames_a, times_b, frames_b, audio_lag: float | N
 
 
 # --- Frame signals on the downloads ------------------------------------------------------
+
+
+def frame_alignment(ea: np.ndarray, eb: np.ndarray, rate: float, dur_a: float, dur_b: float,
+                    min_share: float = 0.3) -> Segment | None:
+    """Fallback when the audio finds no shared segment (e.g. new audio): the single time offset
+    where the two videos' frame embeddings (L2-normalised, `rate` a second) agree best, over at
+    least `min_share` of the shorter video. B time = A time + lag, as for audio segments."""
+    if len(ea) == 0 or len(eb) == 0:
+        return None
+    sim = ea @ eb.T
+    n = min(len(ea), len(eb))
+    best = None
+    for k in range(-(len(ea) - 1), len(eb)):  # B index = A index + k
+        d = np.diagonal(sim, offset=k)
+        if len(d) >= max(3, min_share * n) and (best is None or d.mean() > best[1]):
+            best = (k, float(d.mean()))
+    if best is None:
+        return None
+    lag = best[0] / rate
+    a0, a1 = max(0.0, -lag), min(dur_a, dur_b - lag)
+    return Segment(a0, a1, lag, best[1]) if a1 > a0 else None
+
+
+def frame_overlap(ea: np.ndarray, eb: np.ndarray, rate: float, seg: Segment, win_s: float = 10.0,
+                  step_s: float = 5.0, tol_s: float = 3.0) -> float:
+    """Seconds of A that really match B near `seg`'s lag (from frame_alignment): A's 10 s windows,
+    every 5 s, whose own best lag over all of B is within `tol_s` of it. A run of frames is unique
+    even where single scenes repeat (a song's verses), and the tolerance lets a re-edit drift a little;
+    a shared intro covers only its own windows' middles. The segment itself spans the whole overlap at its
+    best lag, matched or not."""
+    k = round(seg.lag * rate)
+    sim = ea @ eb.T
+    n, m = sim.shape
+    w = min(int(win_s * rate), n, m)
+    if w < 1:
+        return 0.0
+    step, tol = max(1, int(step_s * rate)), int(tol_s * rate)
+    covered = np.zeros(n, bool)
+    starts = list(range(0, n - w + 1, step))
+    if starts[-1] != n - w:
+        starts.append(n - w)   # the last window reaches A's end
+    for i in starts:
+        # Mean similarity along each diagonal through A's window: B frames j0 .. j0 + w - 1.
+        acc = np.zeros(m - w + 1)
+        for t in range(w):
+            acc += sim[i + t, t:t + m - w + 1]
+        if abs(int(np.argmax(acc)) - i - k) <= tol:
+            # Only the window's middle counts (to its file's edge for the first and last), so a
+            # window that only partly overlaps the shared part adds at most half of itself.
+            lo = 0 if i == starts[0] else i + (w - step) // 2
+            hi = n if i == starts[-1] else i + (w + step) // 2
+            covered[lo:hi] = True
+    return float(covered.sum() / rate)
 
 
 def frame_diff(gray: np.ndarray) -> np.ndarray:

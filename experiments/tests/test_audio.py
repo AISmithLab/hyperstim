@@ -103,3 +103,10 @@ def test_analyze_levels():
     other = music(10, 5)
     unrelated = audio.analyze(song, other, segs, st, stems_of(other, 2), 1.0)
     assert unrelated["level"] == "none"
+
+
+def test_analyze_a_silent_track_holds_no_level(song):
+    # One version with its soundtrack muted (seen in the search): no baseline, no level, no crash.
+    silent = np.zeros_like(song)
+    r = audio.analyze(song, silent, [Segment(0.0, len(song) / SR, 0.0, 1.0)], None, None, 1.0)
+    assert not any(lv["holds"] for lv in r["levels"] if lv["key"] in ("exact", "adjusted"))

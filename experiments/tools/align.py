@@ -101,7 +101,8 @@ def segments(a: np.ndarray, b: np.ndarray) -> tuple[list[Segment], dict]:
     times = np.arange(0, max(0.0, dur_a - WIN_S), STEP_S)
     lag0 = global_lag(a, b)
     null = null_scores(ma, mb, lag0, times)
-    thr = float(max(np.percentile(null, 99), 0.5))
+    # No baseline when every window is silent (no correlation): then only the floor.
+    thr = float(max(np.percentile(null, 99), 0.5)) if len(null) else 0.5
     score0 = window_scores(ma, mb, lag0, times)
     matched = np.nan_to_num(score0, nan=-1) > thr
     dur_b = len(b) / SR
@@ -126,7 +127,8 @@ def segments(a: np.ndarray, b: np.ndarray) -> tuple[list[Segment], dict]:
             segs += _runs(times[sel], np.nan_to_num(sc, nan=-1) > thr, sc, best_lag, dur_a, dur_b)
     segs.sort(key=lambda s: -s.length)
     curves = {"times": times, "score": score0, "threshold": thr, "lag": lag0,
-              "null_p99": float(np.percentile(null, 99)), "null_median": float(np.median(null))}
+              "null_p99": float(np.percentile(null, 99)) if len(null) else None,
+              "null_median": float(np.median(null)) if len(null) else None}
     return segs, curves
 
 

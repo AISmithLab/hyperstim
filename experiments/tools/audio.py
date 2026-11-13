@@ -185,9 +185,13 @@ def tempo_of(y: np.ndarray) -> float:
     return float(np.atleast_1d(librosa.beat.beat_track(y=y, sr=SR)[0])[0])
 
 
-def analyze(a: np.ndarray, b: np.ndarray, segs: list[Segment], stems_a: dict, stems_b: dict,
+def analyze(a: np.ndarray, b: np.ndarray, segs: list[Segment], stems_a: dict | None, stems_b: dict | None,
             speed: float) -> dict:
-    """All audio levels for a pair: summary values, per-window curves, baselines and the level."""
+    """All audio levels for a pair: summary values, per-window curves, baselines and the level.
+
+    Without stems (None: signal order, when the waveforms already settle the level), the backing
+    level is skipped (`holds` None) and the stem values are None."""
+    has_stems = stems_a is not None and stems_b is not None
     dur_a = len(a) / SR
     main = segs[0]
     xa, xb = _aligned(a, b, main)
@@ -197,9 +201,11 @@ def analyze(a: np.ndarray, b: np.ndarray, segs: list[Segment], stems_a: dict, st
         "spectrum": (logmel(a), logmel(b), fr),
         "chroma": (chroma(a), chroma(b), fr),
     }
-    backing = {k: sum(v[s] for s in ("drums", "bass", "other")) for k, v in (("a", stems_a), ("b", stems_b))}
-    feats["backing"] = (backing["a"][:, None], backing["b"][:, None], SR)
-    feats["vocals"] = (stems_a["vocals"][:, None], stems_b["vocals"][:, None], SR)
+    if has_stems:
+        backing = {k: sum(v[s] for s in ("drums", "bass", "other"))
+                   for k, v in (("a", stems_a), ("b", stems_b))}
+        feats["backing"] = (backing["a"][:, None], backing["b"][:, None], SR)
+        feats["vocals"] = (stems_a["vocals"][:, None], stems_b["vocals"][:, None], SR)
     curves, nulls = {}, {}
     times = None
     for name, (fa, fb, rate) in feats.items():
@@ -207,25 +213,28 @@ def analyze(a: np.ndarray, b: np.ndarray, segs: list[Segment], stems_a: dict, st
         nulls[name] = shifted_null(fa, fb, segs, dur_a, rate, n=12 if rate == SR else 30)
 
     def summary(name: str) -> dict:
-        c = curves[name]
-        p99 = float(np.percentile(nulls[name], 99))
-        return {"median": float(np.nanmedian(c)), "baseline_p99": p99,
-                "baseline_median": float(np.median(nulls[name])),
+        c, null = curves[name], nulls[name]
+        # A silent track has no correlations, so no baseline: NaN, and no level holds.
+        p99 = float(np.percentile(null, 99)) if len(null) else float("nan")
+        return {"median": float(np.nanmedian(c)) if np.isfinite(c).any() else float("nan"),
+                "baseline_p99": p99,
+                "baseline_median": float(np.median(null)) if len(null) else float("nan"),
                 "longest": longest_run(times, c, p99)}
 
     wave_corr = float(np.corrcoef(xa, xb)[0, 1])
     g = gain_db(xa, xb)
     fp = fingerprint_match(fingerprint(a), fingerprint(b))
-    stem_corr = {}
-    stem_gain = {}
-    for s in stems_a:
-        sa, sb = _aligned(stems_a[s], stems_b[s], main)
-        stem_corr[s] = float(np.corrcoef(sa, sb)[0, 1]) if sa.std() > 1e-4 and sb.std() > 1e-4 else None
-        stem_gain[s] = gain_db(sa, sb)
-    ba, bb = _aligned(backing["a"], backing["b"], main)
-    backing_corr = float(np.corrcoef(ba, bb)[0, 1])
+    stem_corr, stem_gain, backing_corr, s_back, s_voc = None, None, None, None, None
+    if has_stems:
+        stem_corr, stem_gain = {}, {}
+        for s in stems_a:
+            sa, sb = _aligned(stems_a[s], stems_b[s], main)
+            stem_corr[s] = float(np.corrcoef(sa, sb)[0, 1]) if sa.std() > 1e-4 and sb.std() > 1e-4 else None
+            stem_gain[s] = gain_db(sa, sb)
+        ba, bb = _aligned(backing["a"], backing["b"], main)
+        backing_corr = float(np.corrcoef(ba, bb)[0, 1])
+        s_back, s_voc = summary("backing"), summary("vocals")
     s_wave, s_spec, s_chroma = summary("waveform"), summary("spectrum"), summary("chroma")
-    s_back, s_voc = summary("backing"), summary("vocals")
 
     levels = [
         {"key": "exact", "name": "Exact same audio",
@@ -239,10 +248,13 @@ def analyze(a: np.ndarray, b: np.ndarray, segs: list[Segment], stems_a: dict, st
                       "spectrum_median": s_spec["median"]},
          "longest": longest_run(times, curves["waveform"], max(ADJUSTED_CORR, s_wave["baseline_p99"]))},
         {"key": "backing", "name": "Same backing, different overlay",
-         "holds": backing_corr >= BACKING_CORR and backing_corr > s_back["baseline_p99"],
-         "evidence": {"backing_corr": backing_corr, "vocals_corr": stem_corr.get("vocals"),
+         "holds": (backing_corr >= BACKING_CORR and backing_corr > s_back["baseline_p99"])
+         if has_stems else None,
+         "skipped": not has_stems,
+         "evidence": {"backing_corr": backing_corr, "vocals_corr": (stem_corr or {}).get("vocals"),
                       "stem_corr": stem_corr, "stem_gain_db": stem_gain},
-         "longest": longest_run(times, curves["backing"], max(BACKING_CORR, s_back["baseline_p99"]))},
+         "longest": longest_run(times, curves["backing"], max(BACKING_CORR, s_back["baseline_p99"]))
+         if has_stems else None},
         {"key": "rerecorded", "name": "Same song, re-recorded",
          "holds": s_chroma["median"] > s_chroma["baseline_p99"],
          "evidence": {"chroma_median": s_chroma["median"], "key_a": key_of(a), "key_b": key_of(b),
@@ -255,6 +267,6 @@ def analyze(a: np.ndarray, b: np.ndarray, segs: list[Segment], stems_a: dict, st
         "fingerprint": fp, "waveform_corr": wave_corr, "backing_corr": backing_corr,
         "stem_corr": stem_corr, "stem_gain_db": stem_gain,
         "summaries": {"waveform": s_wave, "spectrum": s_spec, "chroma": s_chroma,
-                      "backing": s_back, "vocals": s_voc},
+                      **({"backing": s_back, "vocals": s_voc} if has_stems else {})},
         "curves": {"times": times, **curves},
     }

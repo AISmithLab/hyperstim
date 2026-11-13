@@ -209,3 +209,61 @@ def test_embed_batches_and_normalises(monkeypatch):
     out = vis.embed(np.stack([rgb(s) for s in range(5)]), size=(28, 14), batch=2)
     assert calls == [(2, 3, 14, 28), (2, 3, 14, 28), (1, 3, 14, 28)]
     assert out.shape == (5, 3) and np.allclose(np.linalg.norm(out, axis=1), 1)
+
+
+def test_embed_of_no_images_is_empty():
+    # A pair whose versions barely align (e.g. one at 2x speed) has no frames to compare.
+    assert vis.embed([]).shape == (0, 384)
+
+
+def test_frame_alignment_finds_the_offset_of_shared_frames():
+    # B is A's frames 10..39 with a new start: B time = A time - 5 s at 2 frames a second.
+    rng = np.random.default_rng(0)
+    ea = rng.normal(size=(40, 16))
+    ea /= np.linalg.norm(ea, axis=1, keepdims=True)
+    noise = rng.normal(size=(6, 16))
+    eb = np.vstack([noise / np.linalg.norm(noise, axis=1, keepdims=True), ea[10:40]])
+    seg = vis.frame_alignment(ea, eb, 2.0, 20.0, 18.0)
+    assert seg.lag == pytest.approx(-2.0)  # A frame 10 (5 s) is B frame 6 (3 s)
+    assert seg.a0 == pytest.approx(2.0) and seg.a1 == pytest.approx(20.0)
+    assert seg.score > 0.8  # 30 of the 36 overlapping frames match
+
+
+def test_frame_alignment_without_frames():
+    assert vis.frame_alignment(np.zeros((0, 4)), np.zeros((3, 4)), 2.0, 1.0, 1.5) is None
+
+
+def test_frame_overlap_counts_only_matching_frames():
+    # B shares A's frames 40..119 (40 s) at lag -10 s; the rest of each is something else.
+    rng = np.random.default_rng(1)
+
+    def unit(n):
+        x = rng.normal(size=(n, 16))
+        return x / np.linalg.norm(x, axis=1, keepdims=True)
+
+    ea = unit(200)
+    eb = np.vstack([unit(20), ea[40:120], unit(100)])
+    seg = vis.frame_alignment(ea, eb, 2.0, 100.0, 100.0)
+    assert seg.lag == pytest.approx(-10.0)
+    # A window matches once a few of its frames are shared, and counts its middle 5 s: each edge
+    # can add up to 5 s.
+    assert 40.0 <= vis.frame_overlap(ea, eb, 2.0, seg) <= 50.0
+    assert vis.frame_overlap(unit(200), unit(200), 2.0, seg) < 20.0  # chance matches only
+
+
+def test_frame_overlap_holds_through_repeated_scenes_and_drift():
+    # A re-skin of a song whose verse scene repeats: B is A recolored (noise), and frame by frame the
+    # repeats look as alike as the match. Its second half is also re-timed 1 s later.
+    rng = np.random.default_rng(2)
+
+    def unit(x):
+        return x / np.linalg.norm(x, axis=1, keepdims=True)
+
+    verse = rng.normal(size=(16, 16))
+    parts = []
+    for _ in range(6):   # verse, then a short unique bridge, six times
+        parts += [verse + 0.3 * rng.normal(size=verse.shape), rng.normal(size=(8, 16))]
+    ea = unit(np.vstack(parts))                                   # 144 frames, 72 s
+    eb = unit(np.vstack([ea[:72], ea[70:]]) + 0.08 * rng.normal(size=(146, 16)))
+    seg = vis.Segment(0.0, 72.0, 0.0, 0.9)
+    assert vis.frame_overlap(ea, eb, 2.0, seg) >= 0.8 * 72.0

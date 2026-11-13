@@ -93,3 +93,9 @@ def test_runs_and_gaps():
     # A run that starts at the first window runs to where B starts.
     edge = align._runs(times, times < 3, score, -0.5, 12.0, 13.0)
     assert edge[0].a0 == 0.5
+
+
+def test_segments_of_silent_audio_are_empty():
+    silent = np.zeros(align.SR * 20, np.float32)
+    segs, _ = align.segments(silent, silent.copy())
+    assert segs == []
