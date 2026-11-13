@@ -6,6 +6,7 @@ Research experiments on YouTube videos, kept apart from the website.
   - `exp/main`: the base, based on `main` and rebased onto newer `main` over time; it holds what all experiments share (these rules, the budget tool `tools/yt.py`, the uv env, the ledger). Experiment files live only in `experiments/`, so rebases don't conflict.
   - `exp/NNN-short-title`: one per experiment, named after its folder (`exp/001-variant-pairs`), based on `exp/main` and rebased onto it over time. When an experiment is ready, it is merged into `exp/main` the website's way (rebase, checks, `git merge --ff-only`).
   - Pushed to `origin`, so they are public. _(human decision: based on main; no need to keep it private)_
+  - Commit types: experiment commits use `chore` (code, results) or `docs` (plans, READMEs), never `feat` or `fix`: they never reach the live site _(human decision, 2026-11-13)_.
 - **Tests** _(human decision)_: experiment code has tests too (pytest, in `tests/` for `tools/` and in `NNN-*/tests/` for an experiment's own scripts), with no network or YouTube requests. Before a commit: `uv run ruff check .` and `uv run pytest` pass.
 - **Never merged into `main`** unless the user explicitly says so in that request; double-check before any merge. Publishing results (e.g. as a blog post, plan 018) is decided later. _(human decision)_
 - Never commit downloaded clips (`cache/` is ignored) or server details (paths, hosts, usernames): read them from env vars.
