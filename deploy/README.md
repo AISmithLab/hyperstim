@@ -45,6 +45,11 @@ Then make the first release with `hyperstim-release`.
 
 4. **The alert issues' token** (plan 013, decision 12): GitHub → your settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token. Resource owner: the repo's owner; Repository access: only this repo; Permissions → Repository permissions → **Issues: Read and write** (nothing else; "Metadata: Read" is added by GitHub). Expiration: up to a year, with a calendar reminder to renew it. Put it in `ALERT_GITHUB_TOKEN` in `server.env` and run `sudo deploy/setup.sh`. Without it the hourly check only logs what it would post. The token can't push, read secrets or change settings; the issues it writes are fixed templates (`backend/src/hyperstim_api/collector/alerts.py`), never log text.
 
+5. **Contributors' pull requests** (plan 016):
+   - Settings → General → Pull Requests: only **Allow rebase merging** on (merge commits and squash off); **Automatically delete head branches** on.
+   - Settings → Rules → Rulesets → New branch ruleset `main`: enforcement Active; target the default branch; bypass list: **Repository admin** role and **Deploy keys** (the data bot pushes to `main` daily, and admins merge with `git merge --ff-only`). Rules: restrict deletions; require linear history; require a pull request (1 approval, dismiss stale approvals, require conversation resolution, allowed merge methods: Rebase); require status checks (`frontend`, `backend`, `e2e`, `sonar`, `SonarCloud Code Analysis`; "require branches to be up to date" off, since `main` moves fast); block force pushes.
+   - Settings → Collaborators and teams → Add people: role **Write**.
+
 ## Cloud firewall (once)
 
 In the cloud provider's security group for the server, allow only SSH (22) and HTTP/HTTPS (80, 443) from the internet. The service itself listens on `127.0.0.1` only.

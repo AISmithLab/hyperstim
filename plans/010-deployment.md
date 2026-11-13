@@ -17,7 +17,7 @@ A lightweight release with one command: `main` is the latest dev version, prod r
   | Config | `.env` / `.env.local` (dev values) | the instance's `env` file (analysis limits on, `YOUTUBE_API_KEY` set, `CORS_ORIGIN` = the site's origin: the org's Pages custom domain, which `<owner>.github.io` redirects to); Actions variables for the frontend |
   | Data | `backend/analysis/` | the instance's `data/` |
 
-- **Releases are semantic-version tags `vMAJOR.MINOR.PATCH`, bumped from the commit messages since the last release** _(human decision, 2026-10-24: replaces the date tags `vYYYY.MM.DD.N`)_. Commits follow Conventional Commits (the rule is in `CLAUDE.md`):
+- **Releases are semantic-version tags `vMAJOR.MINOR.PATCH`, bumped from the commit messages since the last release** _(human decision, 2026-10-24: replaces the date tags `vYYYY.MM.DD.N`)_. Commits follow Conventional Commits (the rule is in `DEVELOPMENT.md`, "Commit messages", and `AGENTS.md` points to it _(human decision, 2026-11-13, plan 016)_):
   - `!` after the type (`feat!: …`) or a `BREAKING CHANGE:` line in the body → **major**.
   - any `feat` → **minor**; anything else (`fix`, `docs`, `refactor`, `chore`, …, or a subject that doesn't parse) → **patch**.
   - One tag releases frontend and backend together (they share the API contract).

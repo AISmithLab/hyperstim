@@ -75,22 +75,7 @@ Before committing, check `git diff --staged` for anything above.
   - Accessibility is tested too: an axe check in each component test file and on each page in E2E, and each page's keyboard path and 320 px reflow in E2E. A new page or major UI change also gets a manual keyboard and screen reader pass before handoff, and a check on a real iPhone (Safari's bugs pass Playwright's newer WebKit, plan 017).
 - Do not commit or push unless asked.
 - When asked for a commit plan, list each commit message in full together with the branch it goes on, and report the test coverage of the changed lines (`npm run test:coverage`, `uv run pytest --cov`), flagging any below Sonar's 80% new-code gate (plan 012).
-- **Commit messages follow Conventional Commits**; `release.sh` takes the next version and the release notes from them (plan 010). Format: `<type>[!]: <subject> (plan NNN)`, then an optional body after a blank line. The `commit-msg` hook in `.githooks/` checks the format.
-  - **Subject:** imperative, capitalised, no full stop; says what changes and why, in words a reader of the release notes understands. End with the plan(s) it belongs to, `(plan 007)` or `(plans 007, 008)`; leave it out for changes outside any plan.
-  - **Type**, by what the change means for the live site (pick the first that fits; split the commit if it's two things):
-    - `feat`: something new visitors can see or use: pages, features, text, API endpoints. → minor version.
-    - `fix`: the site or API didn't work as intended, or an existing feature is adjusted to work better (how it behaves, looks or is laid out), including security fixes (also a dependency upgrade done for one). A new blog post is `fix` too: content on an existing page, not a new feature (plan 018). So is new text or UI that explains or handles a failure of an existing feature (e.g. a note for a missing thumbnail). → patch.
-    - `perf`: faster or lighter, same behaviour. `refactor`: code change with no visible change. `style`: formatting only.
-    - `test`: tests only. `docs`: plans, READMEs, `STYLE.md`, `AGENTS.md`, code comments. `build`: dependencies, build config, dev scripts. `ci`: CI, release and server setup (`.github/`, `release.sh`, `deploy/`). `chore`: anything else.
-    - `data`: only the server's daily commit of the collected dataset (`backend/data/collected/`, plan 013); never used by hand. Not listed in the release notes and no version bump; CI and `release.sh` reject a `data:` commit that changes any other file.
-  - **Breaking:** add `!` after the type and a body line `BREAKING CHANGE: <what stops working, and what to do instead>` when a page URL or shareable link stops working (removed, or moved without a redirect), or scores or measurements change meaning so they can't be compared with earlier ones. → major version. Redesigns, new text and new pages are not breaking.
-  - Examples:
-    - `feat: Add the compare page for two videos or two channels (plan 008)`
-    - `fix: Show a count of 0 as 0 and silent clips as "No sound" (plan 004)`
-    - `fix: Upgrade Next.js to 16.4.2 for its security fixes`
-    - `docs: Record human decisions in place in plans`
-    - `ci: Number release tags from .1 each day (plan 010)`
-    - `feat!: Score videos with the v3 feature set (plan 002)` + body `BREAKING CHANGE: scores are not comparable with earlier releases.`
+- **Commit messages follow Conventional Commits, as set out in "Commit messages" in `DEVELOPMENT.md`** (plans 010, 016): `<type>[!]: <subject> (plan NNN)`. Read that section before writing a commit message; it has the types, when a change is breaking, and examples. `release.sh` takes the next version and the release notes from them; the `commit-msg` hook and CI check the format.
 - Releasing to prod is only through `hyperstim-release` (`release.sh`, plan 010). Backend API changes stay additive within a release, so the live frontend keeps working while the two deploy.
 - **Never launch a release yourself.** A release is started manually by the team, or by you only when explicitly told to release in that request. Finishing, merging, or pushing work is not a request to release; neither is an earlier approval.
 
