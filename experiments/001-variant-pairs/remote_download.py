@@ -31,10 +31,18 @@ def log(msg: str) -> None:
     print(time.strftime("%H:%M:%S"), msg, flush=True)
 
 
-def fetch_todo(server: str, remote: str, out: Path) -> list[str]:
+def fetch_todo(server: str, remote: str, out: Path, tries: int = 10, wait: float = 30) -> list[str]:
+    """The server's todo list. Retries a failed fetch: the server's sshd drops new connections
+    at random while bots flood it (MaxStartups), and one dropped fetch shouldn't end the run."""
     dst = out / "todo.txt"
-    subprocess.run(["rsync", "-q", f"{server}:{remote}/todo.txt", str(dst)], check=True)
-    return [ln.strip() for ln in dst.read_text().splitlines() if ln.strip()]
+    for i in range(tries):
+        res = subprocess.run(["rsync", "-q", f"{server}:{remote}/todo.txt", str(dst)],
+                             capture_output=True, text=True, check=False)
+        if res.returncode == 0:
+            return [ln.strip() for ln in dst.read_text().splitlines() if ln.strip()]
+        log(f"todo fetch failed ({i + 1} of {tries}), retrying: {res.stderr.strip()[-200:]}")
+        time.sleep(wait)
+    raise SystemExit(f"todo fetch failed {tries} times in a row: is the server reachable?")
 
 
 def download(v: str, out: Path) -> bool:
