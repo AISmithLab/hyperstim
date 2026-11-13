@@ -23,6 +23,9 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(HERE))
+
+import overlap  # noqa: E402
 
 import align  # noqa: E402
 import audio  # noqa: E402
@@ -127,6 +130,10 @@ def main() -> None:
     ap.add_argument("a")
     ap.add_argument("b")
     ap.add_argument("--name", required=True)
+    ap.add_argument("--all-signals", action="store_true",
+                    help="run every signal, also those the signal order would skip (checks the order)")
+    ap.add_argument("--features", type=Path, default=ROOT / "cache/features",
+                    help="folder with features.tsv and features-shared.tsv (prepare_pair.py)")
     args = ap.parse_args()
     va, vb = args.a, args.b
     out_dir = ROOT / "cache" / "report" / args.name
@@ -143,7 +150,10 @@ def main() -> None:
     print("song:", title["song"])
 
     exclude = {ch_a, ch_b}
-    sets = bl.sample_sets(rows, song, exclude)
+    pair_titles = [sa["snippet"]["title"], sb["snippet"]["title"]]
+    subject, subject_how = bl.subject_videos(rows, song, exclude, pair_titles)
+    print(f"same subject: {len(subject)} videos ({subject_how})")
+    sets = bl.sample_sets(rows, song, exclude, subject=subject)
     sample_ids = sorted({v for s in sets.values() for v in s})
     snips = bl.snippets(sample_ids, EXP, f"{args.name}: baseline sample")
     pair_ev = md.owner_evidence(sa["snippet"]["description"] + "\n" + sb["snippet"]["description"])
@@ -167,7 +177,7 @@ def main() -> None:
     text = md.text_signal(sa["snippet"]["description"], sb["snippet"]["description"],
                           sa["snippet"].get("tags", []), sb["snippet"].get("tags", []))
 
-    big = bl.dataset_pairs(rows, song, exclude, same_owner_channels)
+    big = bl.dataset_pairs(rows, song, exclude, same_owner_channels, subject=subject)
     small = bl.pairs_for(sets, rows, (va, vb), same_owner)
     meta_of = lambda v: rows.get(v) or {  # noqa: E731
         "title": snip_pair[v]["snippet"]["title"], "published_at": snip_pair[v]["snippet"]["publishedAt"],
@@ -221,7 +231,10 @@ def main() -> None:
     pa, pb = yt.download(va, EXP), yt.download(vb, EXP)
     ya, yb = media.audio(pa), media.audio(pb)
     dur_a, dur_b = len(ya) / align.SR, len(yb) / align.SR
-    segs, acurves = align.segments(ya, yb)
+    # By the audio, or by the frames when the audio covers under half (e.g. new audio).
+    al = overlap.align_pair(pa, pb, ya, yb)
+    segs, acurves, align_source = al["segs"], al["curves"], al["source"]
+    assert segs, "no alignment from audio or frames"
     speed = align.speed_ratio(ya, yb, segs[0])
     parts = chg.only_parts(segs, dur_a, dur_b)
     print("segments:", segs)
@@ -236,16 +249,43 @@ def main() -> None:
     story = vis.storyboard_signal(*sbs[va], *sbs[vb], audio_lag=segs[0].lag)
 
     # --- Audio -------------------------------------------------------------------------
-    stems_a, stems_b = audio.stems(pa, derived), audio.stems(pb, derived)
-    au = audio.analyze(ya, yb, segs, stems_a, stems_b, speed)
-    print("audio level:", au["level"])
+    # Signal order: stem separation (the costliest step) decides only "same backing, different
+    # overlay", so it runs only when the waveforms don't already settle a closer level.
+    au = audio.analyze(ya, yb, segs, None, None, speed)
+    if au["level"] in ("exact", "adjusted") and not args.all_signals:
+        au["stems_skipped"] = True
+        au["settled_by"] = f"waveform match, r {au['waveform_corr']:.3f}"
+    else:
+        level_without = au["level"]
+        stems_a, stems_b = audio.stems(pa, derived), audio.stems(pb, derived)
+        au = audio.analyze(ya, yb, segs, stems_a, stems_b, speed)
+        au["stems_skipped"] = False
+        # The order check (every 10th pair runs every signal): would skipping have changed the level?
+        if level_without in ("exact", "adjusted"):
+            au["order_check"] = {"level_without_stems": level_without, "same": level_without == au["level"]}
+    print("audio level:", au["level"], "(stems skipped)" if au["stems_skipped"] else "")
 
     # --- Frames ------------------------------------------------------------------------
     fps = media.probe(pa)["fps"]
-    assert abs(media.probe(pb)["fps"] - fps) < 1e-6, "different frame rates: resample first"
-    gsa, gsb = media.frames(pa, SMALL, gray=True), media.frames(pb, SMALL, gray=True)
-    gma, gmb = media.frames(pa, MID, gray=True), media.frames(pb, MID, gray=True)
-    cma, cmb = media.frames(pa, MID), media.frames(pb, MID)
+    # Different frame rates: B is decoded at A's, so frame indices share one clock.
+    fps_b = None if abs(media.probe(pb)["fps"] - fps) < 1e-6 else fps
+    gsa, gsb = media.frames(pa, SMALL, gray=True), media.frames(pb, SMALL, fps=fps_b, gray=True)
+    # The larger frames are read only where they're sampled below (aligned pairs, their time-shift
+    # baselines, one a second for the sprites): all of them would be gigabytes for a long video.
+    # Decoding can give a frame or two less than the audio's length, so sample A's frames only.
+    dur_frames = min(dur_a, (len(gsa) - 0.5) / fps)
+    pairs = vis.sample_pairs(segs, dur_frames, fps, len(gsb), SAMPLE_RATE)
+    null_pairs = [vis.sample_pairs(segs, dur_frames, fps, len(gsb), SAMPLE_RATE / 2, shift=s)
+                  for s in vis.shifts(8)]
+    sec = np.arange(0, int(dur_a))
+    sec_i = [min(round(t * fps), len(gsa) - 1) for t in sec]
+    sec_tb = [align.map_time(segs, float(t)) for t in sec]
+    sec_j = [None if tb is None or round(tb * fps) >= len(gsb) else round(tb * fps) for tb in sec_tb]
+    keep_a = {i for ps in [pairs, *null_pairs] for _, i, _ in ps} | set(sec_i)
+    keep_b = {j for ps in [pairs, *null_pairs] for _, _, j in ps} | {j for j in sec_j if j is not None}
+    gma = media.frames_at(pa, MID, keep_a, gray=True)
+    gmb = media.frames_at(pb, MID, keep_b, fps=fps_b, gray=True)
+    cma, cmb = media.frames_at(pa, MID, keep_a), media.frames_at(pb, MID, keep_b, fps=fps_b)
 
     da, db = vis.frame_diff(gsa), vis.frame_diff(gsb)
     cuts_a, cuts_b = vis.cuts(da, fps), vis.cuts(db, fps)
@@ -259,11 +299,9 @@ def main() -> None:
     motion_null = {k: [vis.curve_corr(flow_a[k], flow_b[k], segs, fps, s) for s in vis.shifts(30)]
                    for k in flow_a}
 
-    pairs = vis.sample_pairs(segs, dur_a, fps, len(gmb), SAMPLE_RATE)
     st = vis.structure(gma, gmb, pairs)
     st_null = {"gray_ssim": [], "edge_ssim": []}
-    for s in vis.shifts(8):
-        sp = vis.sample_pairs(segs, dur_a, fps, len(gmb), SAMPLE_RATE / 2, shift=s)
+    for sp in null_pairs:
         x = vis.structure(gma, gmb, sp)
         for k in st_null:
             st_null[k] += [v for v in x[k] if not np.isnan(v)]
@@ -273,8 +311,7 @@ def main() -> None:
     ea, eb = vis.embed(cma[ia]), vis.embed(cmb[ib])
     content = np.sum(ea * eb, axis=1)
     content_null = []
-    for s in vis.shifts(8):
-        sp = vis.sample_pairs(segs, dur_a, fps, len(gmb), SAMPLE_RATE / 2, shift=s)
+    for sp in null_pairs:
         x, y = vis.embed(cma[[i for _, i, _ in sp]]), vis.embed(cmb[[j for _, _, j in sp]])
         content_null += np.sum(x * y, axis=1).tolist()
 
@@ -283,8 +320,12 @@ def main() -> None:
     area = chg.area_summary(chs)
     color = chg.color_summary([cma[i] for i in ia], [cmb[j] for j in ib])
 
-    fa = features(ROOT / "cache/features/features.tsv")
-    fs = features(ROOT / "cache/features/features-shared.tsv")
+    # A clip the pipeline couldn't measure (e.g. a shared part under its minimum length, when the
+    # versions barely align) has no row: its features are NaN.
+    missing = dict.fromkeys(bl.FEATURES, float("nan"))
+    fa = {v: features(args.features / "features.tsv").get(v, missing) for v in (va, vb)}
+    shared_path = args.features / "features-shared.tsv"
+    fs = {v: (features(shared_path) if shared_path.exists() else {}).get(v, missing) for v in (va, vb)}
     feat = {"dataset_clip": {"a": fa[va], "b": fa[vb]}, "shared_part": {"a": fs[va], "b": fs[vb]}}
     base_feat = {}
     for f in bl.FEATURES:
@@ -307,20 +348,16 @@ def main() -> None:
              for v in (va, vb)}
 
     # --- Sprites for the report (A's timeline, 1 still a second) ------------------------
-    sec = np.arange(0, int(dur_a))
     sa_f, sb_f, mask_f, edge_f, has_b = [], [], [], [], []
     blank = np.full((SPRITE[1], SPRITE[0], 3), 30, np.uint8)
-    for t in sec:
-        i = min(round(t * fps), len(cma) - 1)
+    for i, j in zip(sec_i, sec_j, strict=True):
         sa_f.append(cv2.resize(cma[i], SPRITE, interpolation=cv2.INTER_AREA))
-        tb = align.map_time(segs, float(t))
-        if tb is None or round(tb * fps) >= len(cmb):
+        if j is None:
             has_b.append(False)
             sb_f.append(blank)
             mask_f.append(blank)
             edge_f.append(blank)
             continue
-        j = round(tb * fps)
         has_b.append(True)
         sb_f.append(cv2.resize(cmb[j], SPRITE, interpolation=cv2.INTER_AREA))
         ch = chg.pair_change(cma[i], cmb[j], chg.moving_mask(gsa, i, MID))
@@ -403,9 +440,12 @@ def main() -> None:
         "videos": {v: video_info(snip_pair[v], chans[snip_pair[v]["snippet"]["channelId"]], len(y) / align.SR,
                                  stats[v])
                    for v, y in ((va, ya), (vb, yb))},
-        "alignment": {"segments": [s.__dict__ for s in segs], "speed": speed, "lag": segs[0].lag},
+        "alignment": {"segments": [s.__dict__ for s in segs], "speed": speed, "lag": segs[0].lag,
+                      "source": align_source, "audio_share": al["audio_share"],
+                      "frame_share": al["frame_share"], "share": al["share"]},
         "signals": sig, "curves": curves, "sprites": sprites, "has_b": has_b,
-        "baseline_sizes": {"sample_videos": len(snips), "same_owner_left_out": sorted(same_owner),
+        "baseline_sizes": {"sample_videos": len(snips), "subject_how": subject_how,
+                           "subject_videos": len(subject), "same_owner_left_out": sorted(same_owner),
                            "dataset_pairs": {k: len(v) for k, v in big.items()},
                            "sample_pairs": {k: len(v) for k, v in small.items()}},
     }
