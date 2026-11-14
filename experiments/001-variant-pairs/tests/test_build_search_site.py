@@ -280,6 +280,14 @@ def test_saturation_lookup_first_found_wins(tmp_path):
     assert sat == {"a": 10.0, "b": 20.0, "c": 30.0}
 
 
+def test_saturation_lookup_skips_reports_on_slowed_copies(tmp_path):
+    feats = tmp_path / "features"
+    path = feats / "pairs" / f"{site.SLOWED_TYPE}-a-f" / "features.tsv"
+    path.parent.mkdir(parents=True)
+    path.write_text("video_id\tmean_saturation\nf\t50\n")
+    assert site.saturation_sources(feats, []) == []
+
+
 def test_check_reports_finds_missing_files_and_videos(tmp_path):
     ok_n, bad_n = "AxB-aaaaaaaaaaa-bbbbbbbbbbb", "AxA-ccccccccccc-ddddddddddd"
     for n in (ok_n, bad_n):

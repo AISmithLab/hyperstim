@@ -2,6 +2,7 @@
 next to the 1x video it was made from.
 
     uv run python 001-variant-pairs/speed.py match    # find each 2x video's 1x original
+    uv run python 001-variant-pairs/speed.py reports  # a full report per match (CPU, ~10 min each)
     uv run python 001-variant-pairs/speed.py page     # build cache/search/site/speed/
 
 `match` takes the videos whose titles say they are sped up ("X2 Speed", "2x speed"), and compares
@@ -12,6 +13,9 @@ moments are compared pixel by pixel. A median difference under SAME_PX (of 255) 
 picture, only faster; a re-skin differs by 20-60. A 2x video longer than one sped-up candidate is
 matched part by part (one was the same 2x song three times in a row). Results go to
 results/search/speed.json; videos still to download are listed there and in cache/remote/todo.txt.
+
+`reports` runs the usual pair report (prepare_pair, score_pair, build_report) on each match, with
+the 2x copy slowed to 1x (cache/video-1x/), so every signal compares the same moments.
 """
 
 from __future__ import annotations
@@ -19,6 +23,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -32,6 +37,7 @@ ROOT = HERE.parent
 sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(HERE))
 
+import build_report  # noqa: E402
 import build_search_report as base  # noqa: E402
 import build_search_site as site  # noqa: E402
 import gate_check  # noqa: E402
@@ -48,6 +54,10 @@ NEAR_S = 1.0         # each moment takes the 1x frame closest to it within +-1 s
 FAST_TITLE = re.compile(r"\b(x\s?2|2\s?x)\b", re.I)
 RESULT = OUT / "speed.json"
 DEST = site.SITE / "speed"
+SLOW_DIR = ROOT / "cache" / "video-1x"   # 2x copies slowed to 1x, for their reports
+REPORTS = ROOT / "cache" / "report"
+REPORT_TYPE = site.SLOWED_TYPE            # report names: Spd-<1x video>-<2x copy>
+ASSETS = ROOT / "cache" / "viewer" / "speed-assets.json"   # this page's asset store: <id> or <id>.1x -> URL
 GENERIC_LEAD = (" Videos linked by this label form a group; each group's versions are numbered by"
                 " publish date.")
 LEAD_END = " Each family's #1 is the 1x video, then its 2x copies by publish date."
@@ -183,6 +193,80 @@ def run_match() -> dict:
     return out
 
 
+# --- Reports ----------------------------------------------------------------------------------
+
+
+def slowed_path(f: str) -> Path:
+    return SLOW_DIR / f"{f}.1x.mp4"
+
+
+def report_jobs(res: dict) -> list[dict]:
+    """One full report per matched 2x copy: its 1x video (A) against the copy slowed to 1x (B), so
+    the usual signals compare the same moments. A copy that plays the song several times is cut to
+    its first time."""
+    jobs = []
+    for r in res["fast"]:
+        if not r["parts"]:
+            continue
+        orig = min(r["parts"], key=lambda p: p["pixel_diff"])["cand"]
+        mine = sorted((p for p in r["parts"] if p["cand"] == orig), key=lambda p: p["from_s"])
+        jobs.append({"name": f"{REPORT_TYPE}-{orig}-{r['fast']}", "a": orig, "b": r["fast"],
+                     "end_s": mine[0]["to_s"] if len(mine) > 1 else None})
+    return jobs
+
+
+def report_note(job: dict) -> str:
+    """The sentence the report adds to its lead."""
+    part = f" (its first {job['end_s']:.0f} s; it plays the song more than once)" if job["end_s"] else ""
+    return (f"B is a 2x copy{part}, slowed to 1x for this report so every signal compares the same "
+            "moments; its basic info is the real video's. Stretching the sound to 2x and back changes its "
+            "waveform, and the slowed frames fall between the original's, so audio, color and shape read "
+            "further apart than they are.")
+
+
+def make_slowed(f: str, end_s: float | None = None) -> Path:
+    """f slowed from 2x to 1x (picture and sound), optionally only its first end_s seconds."""
+    out = slowed_path(f)
+    if not out.exists():
+        out.parent.mkdir(parents=True, exist_ok=True)
+        cut = ["-t", f"{end_s:.3f}"] if end_s else []
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *cut, "-i", str(yt.video_path(f)),
+                        "-vf", f"setpts={SPEED}*PTS", "-af", f"atempo={1 / SPEED}",
+                        "-c:v", "libx264", "-crf", "20", "-preset", "veryfast", "-c:a", "aac", "-b:a", "128k",
+                        str(out)], check=True)
+    return out
+
+
+def run_reports(res: dict) -> list[str]:
+    """Builds each job's report (prepare, score, page), skipping ones already built; returns the
+    names that failed. Logs per step in cache/report/<name>.<step>.log."""
+    failed = []
+    py = [sys.executable]
+    for job in report_jobs(res):
+        n = job["name"]
+        if (HERE / "results" / f"{n}.json").exists() and (REPORTS / n / "index.html").exists():
+            continue
+        b_file = str(make_slowed(job["b"], job["end_s"]))
+        steps = [("prepare", py + [str(HERE / "prepare_pair.py"), "--name", n, "--b-file", b_file,
+                                   "--", job["a"], job["b"]]),
+                 ("score", py + [str(HERE / "score_pair.py"), "--name", n, "--b-file", b_file,
+                                 "--note", report_note(job), "--slowed", "--features",
+                                 str(ROOT / "cache" / "features" / "pairs" / n), "--", job["a"], job["b"]]),
+                 ("report", py + [str(HERE / "build_report.py"), n])]
+        for step, cmd in steps:
+            t0 = datetime.now(UTC)
+            res_ = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT, check=False)
+            REPORTS.mkdir(parents=True, exist_ok=True)
+            (REPORTS / f"{n}.{step}.log").write_text(res_.stdout + "\n" + res_.stderr)
+            secs = (datetime.now(UTC) - t0).total_seconds()
+            state = "ok" if res_.returncode == 0 else "failed"
+            print(f"{n} {step}: {state} in {secs / 60:.1f} min", flush=True)
+            if res_.returncode != 0:
+                failed.append(n)
+                break
+    return failed
+
+
 # --- The page ---------------------------------------------------------------------------------
 
 
@@ -242,6 +326,48 @@ def facts_list(n_fast: int, n_matched: int, n_missing: int) -> str:
             f"<li><b>{n_matched}</b> matched to a 1x video</li>{missing}</ul>")
 
 
+def built_reports(res: dict) -> dict[str, dict]:
+    """The report jobs whose results and report pages exist, by name."""
+    return {j["name"]: j for j in report_jobs(res)
+            if (HERE / "results" / f"{j['name']}.json").exists()
+            and (REPORTS / j["name"] / "index.html").exists()}
+
+
+def report_videos(names: dict[str, dict], assets: dict[str, str]) -> dict:
+    """videos.json: each report's 1x video and slowed copy from the asset store (null until uploaded)."""
+    return {n: {"a": assets.get(j["a"]), "b": assets.get(f"{j['b']}.1x")} for n, j in names.items()}
+
+
+def reports_block(k: int, name: str, num: dict[str, int], reports: list[dict], group: bool) -> str:
+    """A family's report buttons: all versions together (with two or more copies), then each copy's
+    full report against #1."""
+    items = []
+    if group:
+        items.append(site.report_button(f"group.html#g={k}", f"group-{k}", f"{k}. {name}: all versions",
+                                        f"All {len(num)} versions together",
+                                        "played in sync, the 2x copies slowed to 1x"))
+    for j in reports:
+        items.append(site.report_button(f"pairs/{j['name']}/index.html", site.token(j["name"]),
+                                        f"{k}. {name}: #1 → #{num[j['b']]}", f"#1 → #{num[j['b']]}",
+                                        "full report, the 2x copy slowed to 1x"))
+    if not items:
+        return ""
+    return (f"<div class='reps'><h3>Reports</h3><p class='muted'>Each 2x copy against #1, slowed to 1x so "
+            f"the same moments line up; every signal of the pair reports.</p>"
+            f"<ul class='replist'>{''.join(items)}</ul></div>")
+
+
+def family_section(k: int, key: str, name: str, what: str, line: str, body: str) -> str:
+    """A family's section on the page; name, what and line are plain text, body is HTML."""
+    return (f"<section class='group' id='g{k}' data-key='{site.esc(key)}' aria-labelledby='g{k}h'>"
+            f"<div class='sec-head'><div class='ghead'><h2 id='g{k}h'>"
+            f"<span class='gnum'>{k}.</span> {site.esc(name)}</h2>"
+            f"<button type='button' class='star' aria-pressed='false' "
+            f"aria-label='Star family {k}, {site.esc(name)}' hidden>☆</button></div>"
+            f"<p>{site.esc(what)}</p><p class='muted'>{site.esc(line)}</p>"
+            f"{site.note_box(k, name)}</div>{body}</section>")
+
+
 def build_page(res: dict) -> Path:
     con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True, timeout=60)
     vids = load_videos(con)
@@ -253,13 +379,30 @@ def build_page(res: dict) -> Path:
     strips = base.Strips(DEST, make=base.video_strip)
     strips.slots, strips.written = {}, {}
     fams = families(res)
+    done = built_reports(res)
+    assets = json.loads(ASSETS.read_text()) if ASSETS.exists() else {}
+    videos_json = report_videos(done, assets)
+    (DEST / "videos.json").write_text(json.dumps(videos_json, indent=1))
+    for n in done:
+        has_video = bool(videos_json[n]["a"] and videos_json[n]["b"])
+        data = build_report.public_data(HERE / "results" / f"{n}.json")
+        build_report.write_pair(n, data, DEST / "pairs" / n,
+                                site=True, quality=site.QUALITY, scale=site.SCALE, stills_from=REPORTS / n,
+                                frames=not has_video)
+        for key in ("a", "b"):   # videos come from the asset store, never copied in
+            (DEST / "pairs" / n / f"{key}.mp4").unlink(missing_ok=True)
+    for d in (DEST / "pairs").glob("*") if (DEST / "pairs").exists() else []:
+        if d.name not in done:
+            shutil.rmtree(d)
+    feats = site.features_by_video(sources)
+    group_rows = []
     sections = []
     for k, fam in enumerate(fams, 1):
         fast = sorted(fam["fast"], key=lambda v: vids[v]["published"])
         videos = ([fam["orig"]] if fam["orig"] else []) + fast
         num = {v: i for i, v in enumerate(videos, 1)}
         rows = site.version_rows(videos, num, vids, strips, inten)
-        name = site.esc(vids[videos[0]]["title"].split(" - ")[0].split(" | ")[0])
+        name = vids[videos[0]]["title"].split(" - ")[0].split(" | ")[0]
         if fam["orig"]:
             copies = "#2" if len(videos) == 2 else "#2–#" + str(len(videos))
             later = inside_later(fam["orig"], fam["fast"], vids)
@@ -271,21 +414,32 @@ def build_page(res: dict) -> Path:
                     if later else
                     f"#1 is the 1x original; {copies} the same picture at 2x (matched frame by frame).")
             line = family_summary(fam["fast"], fam["orig"], vids, fam["loops"], compare=not later)
+            reps = [j for j in done.values() if j["a"] == fam["orig"] and j["b"] in fam["fast"]]
+            reps.sort(key=lambda j: num[j["b"]])
+            group = len(reps) >= 2
+            if group:
+                urls = {fam["orig"]: assets.get(fam["orig"]),
+                        **{j["b"]: assets.get(f"{j['b']}.1x") for j in reps}}
+                gd = site.group_data(k, {"videos": videos, "pairs": []}, name, [j["name"] for j in reps],
+                                     vids, urls, feats, inten, {}, DEST)
+                gd["lead"] = (f"All {len(videos)} versions of this family, numbered by publish date, played "
+                              "together from the beginning: the 2x copies slowed to 1x, so the same moments "
+                              "line up.")
+                group_rows.append(gd)
+            reps_html = reports_block(k, name, num, reps, group)
         else:
             what = ("Its videos aren't downloaded yet: waiting for the laptop." if fam.get("waiting") else
                     "No 1x original found among the downloaded candidates"
                     + (f"; {len(fam['unchecked'])} not downloaded ({', '.join(fam['unchecked'])})."
                        if fam["unchecked"] else "."))
             line = family_summary(fam["fast"], None, vids, {})
-        sections.append(
-            f"<section class='group' id='g{k}' data-key='{site.esc(videos[0])}' aria-labelledby='g{k}h'>"
-            f"<div class='sec-head'><div class='ghead'><h2 id='g{k}h'>"
-            f"<span class='gnum'>{k}.</span> {name}</h2>"
-            f"<button type='button' class='star' aria-pressed='false' aria-label='Star family {k}, {name}' "
-            f"hidden>☆</button></div><p>{site.esc(what)}</p><p class='muted'>{site.esc(line)}</p>"
-            f"{site.note_box(k, name)}</div>"
-            f"{site.versions_table(rows, f'Versions of family {k}')}</section>")
+            reps_html = ""
+        sections.append(family_section(k, videos[0], name, what, line,
+                                       site.versions_table(rows, f"Versions of family {k}") + reps_html))
     strips.save()
+    (DEST / "group-data.json").write_text(json.dumps(group_rows))
+    style = site.split_style((HERE / "search_overview.html").read_text())
+    (DEST / "group.html").write_text(site.group_page(*style))
     matched = [f for f in fams if f["orig"]]
     n_fast = sum(len(f["fast"]) for f in fams)
     facts = facts_list(n_fast, sum(len(f["fast"]) for f in matched), len(res["missing"]))
@@ -306,10 +460,13 @@ def build_page(res: dict) -> Path:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=("match", "page"))
+    ap.add_argument("cmd", choices=("match", "reports", "page"))
     args = ap.parse_args()
     if args.cmd == "match":
         run_match()
+    elif args.cmd == "reports":
+        failed = run_reports(json.loads(RESULT.read_text()))
+        sys.exit(f"failed: {', '.join(failed)}" if failed else 0)
     else:
         print(build_page(json.loads(RESULT.read_text())))
 

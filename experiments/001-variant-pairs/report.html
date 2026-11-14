@@ -728,15 +728,19 @@ $('#sheet-sum').append(h('span', {}, h('b', {}, `${nSame} same`), ` · ${nAll - 
 $('#sheet-info').append(info(FIRE_RULE + ' Rows under What changed use the plain rule in each row’s note.', 'How verdicts are decided'));
 {
   const anim = V.aligned_cuts.fires || V.motion_magnitude.fires || V.structure_edges.fires;
-  const rec = { exact: 'one recording', adjusted: 'one recording', backing: 'one backing track', rerecorded: 'the same song, re-recorded' }[AU.level];
-  const changes = [col.delta_e_mean >= 10 ? 'new colors' : null, area.reshaped > 0.3 ? 'redrawn parts' : null,
+  // A copy slowed back to 1x (D.pair.slowed): stretching changes the sound's waveform and puts its frames
+  // between the original's, so a lower audio level and color or shape changes say nothing about the video.
+  const slowed = !!D.pair.slowed;
+  const rec = { exact: 'one recording', adjusted: 'one recording', backing: 'one backing track',
+    rerecorded: slowed ? 'the same song' : 'the same song, re-recorded' }[AU.level];
+  const changes = [!slowed && col.delta_e_mean >= 10 ? 'new colors' : null, !slowed && area.reshaped > 0.3 ? 'redrawn parts' : null,
     !M.title.fires ? 'a new title' : null, onlyA >= 1 || onlyB >= 1 ? 'a part only one version has' : null].filter(Boolean);
   const and = xs => xs.length > 1 ? xs.slice(0, -1).join(', ') + ' and ' + xs.slice(-1) : xs[0];
   let first = anim && rec ? `One animation and ${rec}` : anim ? 'One animation with different audio' : rec ? `${cap(rec)}, with different animation` : 'Two versions that share neither animation nor audio';
   if (changes.length) first += anim ? `, re-skinned with ${and(changes)}` : `; they differ in ${and(changes)}`;
   const days = `${fx(M.timing_days.value, 0)} days apart`;
   const second = sameChannel ? `Both on ${VA.channel}, ${days}.` : M.owner.fires ? `Published by one company on two channels, ${days}.` : `On two channels with no shared owner evidence, ${days}.`;
-  $('#lead').textContent = `${first}. ${second}`;
+  $('#lead').textContent = `${first}. ${second}` + (D.pair.note ? ` ${D.pair.note}` : '');
   const name = T.song ? titleCase(T.song) : null;
   $('#h1').textContent = name ? `${name}, twice` : 'Two versions compared';
   $('#eyebrow').textContent = `Experiment 001 · Variant pairs · ${D.label || (D.name === 'seed-pair' ? 'Seed pair' : sameChannel ? 'Within ' + VA.channel : 'Across channels')}`;

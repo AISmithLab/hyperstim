@@ -46,6 +46,7 @@ import search_story as story  # noqa: E402
 SITE = base.SITE
 REPORTS = ROOT / "cache" / "report"
 ASSETS = ROOT / "cache" / "viewer" / "assets.json"
+SLOWED_TYPE = "Spd"   # reports of a 2x copy slowed to 1x (speed.py): Spd-<1x video>-<2x copy>
 DB = ROOT / "cache" / "search.db"
 OUT = HERE / "results" / "search"
 LOG = OUT / "reports.tsv"
@@ -148,8 +149,10 @@ def read_saturation(path: Path, col: str = "mean_saturation") -> dict[str, float
 
 def saturation_sources(features: Path = FEATURES, dataset: list[Path] | None = None) -> list[Path]:
     """Where a video's features come from, first found wins: the dataset, then the clips the full
-    reports measured (cache/features/pairs/*/features.tsv), then cache/features/videos/."""
-    pairs = sorted(features.glob("pairs/*/features.tsv"))
+    reports measured (cache/features/pairs/*/features.tsv), then cache/features/videos/. Reports
+    on a slowed-down copy (SLOWED_TYPE) are left out: their B features aren't the real video's."""
+    pairs = sorted(p for p in features.glob("pairs/*/features.tsv")
+                   if not p.parent.name.startswith(f"{SLOWED_TYPE}-"))
     every = [*(DATASET if dataset is None else dataset), *pairs, features / "videos" / "features.tsv"]
     return [p for p in every if p.exists()]
 

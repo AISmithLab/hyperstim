@@ -59,26 +59,32 @@ def main() -> None:
     ap.add_argument("a")
     ap.add_argument("b")
     ap.add_argument("--name", required=True)
+    ap.add_argument("--b-file", type=Path,
+                    help="B's video file instead of its download (a sped-up copy slowed to 1x, speed.py); "
+                         "its clips and features then stay in the pair's own folders")
     args = ap.parse_args()
     va, vb = args.a, args.b
-    pa, pb = yt.video_path(va), yt.video_path(vb)
+    pa, pb = yt.video_path(va), args.b_file or yt.video_path(vb)
     assert pa.exists() and pb.exists(), "download both videos first"
     ya, yb = media.audio(pa), media.audio(pb)
     dur_a, dur_b = len(ya) / align.SR, len(yb) / align.SR
     segs = overlap.align_pair(pa, pb, ya, yb)["segs"]  # as score_pair.py aligns it
     assert segs, "no alignment from audio or frames"
     main_seg = segs[0]
+    # A changed B mustn't land in the shared clip and feature caches under B's own video ID.
+    clips = ROOT / "cache" / "clips-pair" / args.name if args.b_file else ROOT / "cache" / "clips"
+    feat = ROOT / "cache" / "features" / "pairs" / args.name
+    npz = feat / "npz" if args.b_file else ROOT / "cache" / "features" / "npz"
     for v, p, d in ((va, pa, dur_a), (vb, pb, dur_b)):
         start = CLIP_START if d > CLIP_START + 10 else 0.0
-        cut(p, ROOT / "cache" / "clips" / f"{v}.mp4", start, min(CLIP_LEN, d - start))
+        cut(p, clips / f"{v}.mp4", start, min(CLIP_LEN, d - start))
     # Shared part: A's [max(a0, 0:30), a1) and B's same moments.
     a0 = max(main_seg.a0, CLIP_START if main_seg.a1 - CLIP_START > 20 else main_seg.a0)
     a1 = min(main_seg.a1, a0 + CLIP_LEN)
     shared = ROOT / "cache" / "clips-shared" / args.name
     cut(pa, shared / f"{va}.mp4", a0, a1 - a0)
     cut(pb, shared / f"{vb}.mp4", a0 + main_seg.lag, a1 - a0)
-    feat = ROOT / "cache" / "features" / "pairs" / args.name
-    pipeline([va, vb], ROOT / "cache" / "clips", ROOT / "cache" / "features" / "npz", feat / "features.tsv")
+    pipeline([va, vb], clips, npz, feat / "features.tsv")
     pipeline([va, vb], shared, feat / "npz-shared", feat / "features-shared.tsv")
     print(f"{args.name}: main segment A {a0:.1f}-{a1:.1f} s, lag {main_seg.lag:+.2f} s; features in {feat}")
 

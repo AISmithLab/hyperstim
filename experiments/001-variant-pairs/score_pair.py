@@ -134,6 +134,12 @@ def main() -> None:
                     help="run every signal, also those the signal order would skip (checks the order)")
     ap.add_argument("--features", type=Path, default=ROOT / "cache/features",
                     help="folder with features.tsv and features-shared.tsv (prepare_pair.py)")
+    ap.add_argument("--b-file", type=Path,
+                    help="B's video file instead of its download (a sped-up copy slowed to 1x, speed.py)")
+    ap.add_argument("--note", default="", help="a sentence the report adds to its lead (what --b-file is)")
+    ap.add_argument("--slowed", action="store_true",
+                    help="--b-file is a sped-up copy slowed back to 1x: the lead claims no audio level or "
+                         "color and shape changes, which the stretching blurs")
     args = ap.parse_args()
     va, vb = args.a, args.b
     out_dir = ROOT / "cache" / "report" / args.name
@@ -228,7 +234,7 @@ def main() -> None:
                     [cv2.IMWRITE_JPEG_QUALITY, 85])
 
     # --- Downloads: alignment ----------------------------------------------------------
-    pa, pb = yt.download(va, EXP), yt.download(vb, EXP)
+    pa, pb = yt.download(va, EXP), args.b_file or yt.download(vb, EXP)
     ya, yb = media.audio(pa), media.audio(pb)
     dur_a, dur_b = len(ya) / align.SR, len(yb) / align.SR
     # By the audio, or by the frames when the audio covers under half (e.g. new audio).
@@ -436,10 +442,12 @@ def main() -> None:
         "loudness": {"rate": 10, **{k: loudness(y) for k, y in (("a", ya), ("b", yb))}},
     }
     result = {
-        "name": args.name, "pair": {"a": va, "b": vb},
-        "videos": {v: video_info(snip_pair[v], chans[snip_pair[v]["snippet"]["channelId"]], len(y) / align.SR,
-                                 stats[v])
-                   for v, y in ((va, ya), (vb, yb))},
+        "name": args.name, "pair": {"a": va, "b": vb, **({"note": args.note} if args.note else {}),
+                                   **({"slowed": True} if args.slowed else {})},
+        # A --b-file B (slowed down) keeps its real length in the basic info.
+        "videos": {v: video_info(snip_pair[v], chans[snip_pair[v]["snippet"]["channelId"]], d, stats[v])
+                   for v, d in ((va, len(ya) / align.SR),
+                                (vb, dur_b_api if args.b_file else len(yb) / align.SR))},
         "alignment": {"segments": [s.__dict__ for s in segs], "speed": speed, "lag": segs[0].lag,
                       "source": align_source, "audio_share": al["audio_share"],
                       "frame_share": al["frame_share"], "share": al["share"]},

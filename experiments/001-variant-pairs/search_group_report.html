@@ -125,7 +125,7 @@ th[aria-sort=ascending] .arrow, th[aria-sort=descending] .arrow { color: var(--i
     if (!g) { $('lead').textContent = 'No group ' + k + ' on this page.'; return; }
     document.title = g.k + '. ' + g.name + ': all versions';
     $('title').textContent = g.k + '. ' + g.name;
-    $('lead').textContent = 'All ' + g.versions.length + ' versions of this re-skin group, numbered by publish date, played together from the beginning.';
+    $('lead').textContent = g.lead || 'All ' + g.versions.length + ' versions of this re-skin group, numbered by publish date, played together from the beginning.';
     build(g);
     table(g);
   }).catch(() => { $('lead').textContent = 'The group data could not be loaded.'; });

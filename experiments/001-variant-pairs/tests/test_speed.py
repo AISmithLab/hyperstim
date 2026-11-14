@@ -84,3 +84,44 @@ def test_facts_list_mentions_missing_downloads_only_while_there_are_some():
     assert "<b>1</b> candidate video not downloaded" in speed.facts_list(7, 6, 1)
     done = speed.facts_list(7, 6, 0)
     assert "not downloaded" not in done and "Every candidate downloaded and checked" in done
+
+
+def test_report_jobs_take_each_copys_best_original_and_its_first_loop():
+    res = {"fast": [
+        {"fast": "F", "parts": [{"cand": "O", "pixel_diff": 3.0, "from_s": 0.0, "to_s": 82.0}]},
+        {"fast": "L", "parts": [{"cand": "O", "pixel_diff": 2.0, "from_s": 82.0, "to_s": 164.0},
+                                {"cand": "O", "pixel_diff": 3.0, "from_s": 0.0, "to_s": 82.0}]},
+        {"fast": "U", "parts": []}]}
+    jobs = speed.report_jobs(res)
+    assert jobs == [{"name": "Spd-O-F", "a": "O", "b": "F", "end_s": None},
+                    {"name": "Spd-O-L", "a": "O", "b": "L", "end_s": 82.0}]
+    assert "first 82 s" in speed.report_note(jobs[1]) and "slowed to 1x" in speed.report_note(jobs[0])
+    assert "further apart than they are" in speed.report_note(jobs[0])
+
+
+def test_report_videos_pair_the_1x_video_with_the_slowed_copy():
+    done = {"Spd-O-F": {"name": "Spd-O-F", "a": "O", "b": "F", "end_s": None}}
+    assert speed.report_videos(done, {"O": "/_blob/o", "F": "/_blob/f", "F.1x": "/_blob/f1"}) == {
+        "Spd-O-F": {"a": "/_blob/o", "b": "/_blob/f1"}}
+    assert speed.report_videos(done, {}) == {"Spd-O-F": {"a": None, "b": None}}
+
+
+def test_reports_block_adds_all_versions_only_for_a_group():
+    num = {"O": 1, "F": 2, "G": 3}
+    reps = [{"name": "Spd-O-F", "a": "O", "b": "F"}, {"name": "Spd-O-G", "a": "O", "b": "G"}]
+    html = speed.reports_block(1, "Pink", num, reps, True)
+    assert "group.html#g=1" in html and "#1 → #3" in html and html.count("<li>") == 3
+    assert "group.html" not in speed.reports_block(1, "Pink", num, reps[:1], False)
+    assert speed.reports_block(1, "Pink", num, [], False) == ""
+
+
+def test_family_section_escapes_the_name_once():
+    html = speed.family_section(1, "K71QjqJlAI0", "Bao's Bus", "a < b", "line", "<table></table>")
+    assert "Bao&#x27;s Bus</h2>" in html and "&amp;#x27;" not in html
+    assert "a &lt; b" in html and html.endswith("<table></table></section>")
+
+
+def test_reports_block_escapes_the_name_once():
+    reps = [{"name": "Spd-K71QjqJlAI0-LXMGLr9uFv4", "b": "LXMGLr9uFv4"}]
+    html = speed.reports_block(1, "Bao's Bus", {"K71QjqJlAI0": 1, "LXMGLr9uFv4": 2}, reps, False)
+    assert "Bao&#x27;s Bus" in html and "&amp;#x27;" not in html
