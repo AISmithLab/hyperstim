@@ -233,6 +233,15 @@ def families(res: dict) -> list[dict]:
     return [*fams.values(), *alone]
 
 
+def facts_list(n_fast: int, n_matched: int, n_missing: int) -> str:
+    """The page's key numbers; the downloads line only while candidates are missing."""
+    noun = "video" if n_missing == 1 else "videos"
+    missing = (f"<li><b>{n_missing}</b> candidate {noun} not downloaded</li>"
+               if n_missing else "<li>Every candidate downloaded and checked</li>")
+    return (f"<ul class='facts'><li><b>{n_fast}</b> videos titled as sped up (X2 / 2x speed)</li>"
+            f"<li><b>{n_matched}</b> matched to a 1x video</li>{missing}</ul>")
+
+
 def build_page(res: dict) -> Path:
     con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True, timeout=60)
     vids = load_videos(con)
@@ -279,10 +288,7 @@ def build_page(res: dict) -> Path:
     strips.save()
     matched = [f for f in fams if f["orig"]]
     n_fast = sum(len(f["fast"]) for f in fams)
-    facts = (f"<ul class='facts'><li><b>{n_fast}</b> videos titled as sped up (X2 / 2x speed)</li>"
-             f"<li><b>{sum(len(f['fast']) for f in matched)}</b> matched to a 1x video</li>"
-             f"<li><b>{len(res['missing'])}</b> candidate {'video' if len(res['missing']) == 1 else 'videos'}"
-             f" not downloaded</li></ul>")
+    facts = facts_list(n_fast, sum(len(f["fast"]) for f in matched), len(res["missing"]))
     head, style = site.split_style((HERE / "search_overview.html").read_text())
     title = "Sped-up Copies"
     tpl = (HERE / "search_groups.html").read_text()

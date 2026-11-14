@@ -78,3 +78,9 @@ def test_family_summary_leaves_out_the_ratio_when_not_comparable():
     vids = {"o": {"views": 1_000_000}, "f": {"views": 2_500_000}}
     line = speed.family_summary(["f"], "o", vids, {}, compare=False)
     assert line == "1x: 1,000,000 views · 2x: 2,500,000 views"
+
+
+def test_facts_list_mentions_missing_downloads_only_while_there_are_some():
+    assert "<b>1</b> candidate video not downloaded" in speed.facts_list(7, 6, 1)
+    done = speed.facts_list(7, 6, 0)
+    assert "not downloaded" not in done and "Every candidate downloaded and checked" in done
