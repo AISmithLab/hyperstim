@@ -11,6 +11,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 from types import ModuleType
 
@@ -81,6 +82,30 @@ def test_parses_blocks_in_order() -> None:
 def test_rejects_malformed_blocks(post: str, message: str) -> None:
     with pytest.raises(cd.ClipError, match=message):
         cd.parse_blocks(post)
+
+
+def test_parses_trailing_spaces() -> None:
+    post = "::::clips[X]{a=x b=y}  \n::cuts[C]{a=0:01-0:02 b=0:01-0:02}\t\n::::\n"
+    (block,) = cd.parse_blocks(post)
+    assert (block.a, block.b) == ("x", "y")
+    assert block.tabs == [cd.Tab("cuts", (1.0, 2.0), (1.0, 2.0))]
+
+
+@pytest.mark.parametrize(
+    ("line", "message"),
+    [
+        ("::::clips[" + "]{" * 50_000, "malformed clips block"),
+        ("::::clips[X]{" + "a" * 50_000 + "}", "attributes a and b"),
+        ("::::clips[X]{a=x b=y}\n::cuts[" + "]{" * 50_000, "unexpected line"),
+    ],
+    ids=["block start", "attributes", "tab"],
+)
+def test_long_odd_lines_fail_fast(line: str, message: str) -> None:
+    """Patterns that backtracked over each other took seconds on these (SonarQube S8786)."""
+    start = time.perf_counter()
+    with pytest.raises(cd.ClipError, match=message):
+        cd.parse_blocks(line + "\n::::\n")
+    assert time.perf_counter() - start < 0.5
 
 
 def test_motion_steps_leave_out_intervals_touching_a_cut() -> None:

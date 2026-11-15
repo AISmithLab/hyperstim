@@ -83,6 +83,16 @@ describe("loadPosts", () => {
     expect(posts[0].slug).toBe("every-element");
   });
 
+  it("reads a date with trailing spaces, and a long odd date line fails fast", () => {
+    const [first] = loadPosts(postsDir({ "2026-11-01-my-post.md": post("2026-11-01   ") }));
+    expect(first.date).toBe("2026-11-01");
+    // YAML still reads this as a date (the rest is a comment); a backtracking pattern took seconds.
+    const odd = postsDir({ "2026-11-01-my-post.md": post(`2026-11-01${" ".repeat(50_000)}#x`) });
+    const start = performance.now();
+    expect(() => loadPosts(odd)).toThrow(/"date" must be a real date/);
+    expect(performance.now() - start).toBeLessThan(500);
+  });
+
   describe("fails on a broken post", () => {
     it.each([
       ["a missing title", { date: "2026-11-01", tldr: "x" }, /2026-11-01-my-post\.md: "title" is missing/],

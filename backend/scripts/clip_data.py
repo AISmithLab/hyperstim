@@ -56,10 +56,11 @@ STEP_S = 0.2
 KINDS = ("cuts", "motion")
 
 TIME = r"(\d+):([0-5]\d(?:\.\d+)?)"
-BLOCK_START = re.compile(r"^::::clips\[(.*)\]\{(.*)\}\s*$")
+# Matched against whole lines without trailing whitespace, so no quantifier backtracks over another.
+BLOCK_START = re.compile(r"::::clips\[(.*)\]\{([^{}]*)\}")
 BLOCK_END = re.compile(r"^::::\s*$")
-TAB = re.compile(r"^::(\w+)\[(.*)\]\{(.*)\}\s*$")
-ATTR = re.compile(r"""(\w+)=(?:"([^"]*)"|'([^']*)'|([^\s"']+))""")
+TAB = re.compile(r"::(\w+)\[(.*)\]\{([^{}]*)\}")
+ATTR = re.compile(r"""(?<!\w)(\w+)=(?:"([^"]*)"|'([^']*)'|([^\s"']+))""")
 RANGE = re.compile(rf"^{TIME}-{TIME}$")
 
 Floats = npt.NDArray[np.float64]
@@ -107,7 +108,7 @@ def parse_blocks(markdown: str) -> list[Block]:
     block: Block | None = None
     for line_no, line in enumerate(markdown.splitlines(), 1):
         if block is None:
-            if m := BLOCK_START.match(line):
+            if m := BLOCK_START.fullmatch(line.rstrip()):
                 attrs = parse_attrs(m[2], line_no)
                 block = Block(attrs["a"], attrs["b"], [])
             elif line.startswith("::::clips"):
@@ -117,7 +118,7 @@ def parse_blocks(markdown: str) -> list[Block]:
                 raise ClipError(f"line {line_no}: a clips block needs at least one tab")
             blocks.append(block)
             block = None
-        elif m := TAB.match(line):
+        elif m := TAB.fullmatch(line.rstrip()):
             if m[1] not in KINDS:
                 raise ClipError(f"line {line_no}: unknown tab {m[1]!r} (expected cuts or motion)")
             attrs = parse_attrs(m[3], line_no)

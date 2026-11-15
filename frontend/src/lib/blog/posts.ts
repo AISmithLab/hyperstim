@@ -51,7 +51,7 @@ export class PostError extends Error {
  * one that doesn't exist (February 30) into the next month, so the date is read as written.
  */
 function readDate(value: unknown, frontMatter: string): string | undefined {
-  const text = value instanceof Date ? /^date:\s*["']?(.*?)["']?\s*$/m.exec(frontMatter)?.[1] : value;
+  const text = value instanceof Date ? /^date:(.*)$/m.exec(frontMatter)?.[1].trim() : value;
   if (typeof text !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(text)) return undefined;
   const date = new Date(`${text}T00:00:00Z`);
   return !Number.isNaN(date.getTime()) && date.toISOString().startsWith(text) ? text : undefined;
