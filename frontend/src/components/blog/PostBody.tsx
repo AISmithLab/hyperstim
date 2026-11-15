@@ -78,9 +78,15 @@ function dom<T extends { node?: unknown }>(props: T): Omit<T, "node"> {
 
 function components(slug: string): Components {
   return {
-    h2: ({ className, ...props }) => <h2 {...dom(props)} className={className || H2} />,
-    h3: (props) => (
-      <h3 {...dom(props)} className="mt-[1.5em] mb-[0.4em] font-hand text-xl leading-snug font-semibold text-navy sm:text-2xl" />
+    h2: ({ className, children, ...props }) => (
+      <h2 {...dom(props)} className={className || H2}>
+        {children}
+      </h2>
+    ),
+    h3: ({ children, ...props }) => (
+      <h3 {...dom(props)} className="mt-[1.5em] mb-[0.4em] font-hand text-xl leading-snug font-semibold text-navy sm:text-2xl">
+        {children}
+      </h3>
     ),
     p: (props) => <p {...dom(props)} className="mb-[1.1em]" />,
     ul: ({ className, ...props }) => (
