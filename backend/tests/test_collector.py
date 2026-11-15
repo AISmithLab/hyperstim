@@ -16,6 +16,7 @@ import pytest
 from hyperstim_api.collector import notes, sampling
 from hyperstim_api.collector.collector import (
     DAY_S,
+    MIN_IDLE_S,
     QUERIES,
     Collector,
     Settings,
@@ -290,6 +291,10 @@ def collected_ids(collector: Collector) -> list[str]:
     return [r["video_id"] for r in collector.store.collected_rows()]
 
 
+def attempt_count(collector: Collector) -> int:
+    return int(collector.store.db.execute("SELECT COUNT(*) FROM attempts").fetchone()[0])
+
+
 def run(collector: Collector, clock: Clock, ticks: int, step: float = DAY_S) -> None:
     for _ in range(ticks):
         collector.tick()
@@ -406,7 +411,113 @@ def test_pace_spreads_downloads_over_the_day(
     collector.s.per_day = 24
     collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
     run(collector, clock, 24 * 12, step=300)  # one day, a tick every 5 minutes
-    assert 10 <= len(collected_ids(collector)) <= 24  # on average 24, never more
+    assert len(collected_ids(collector)) == 24  # the average gap: 24, one an hour
+
+
+class FixedGap(random.Random):
+    def __init__(self, gap: float) -> None:
+        super().__init__()
+        self.gap = gap
+
+    def expovariate(self, lambd: float = 1.0) -> float:
+        return self.gap
+
+
+def turns_take(pipeline: FakePipeline, clock: Clock, seconds: float) -> None:
+    """Each download takes `seconds` on the clock (measuring and export take none)."""
+
+    def during(step: str, video_id: str, workdir: Path | None) -> None:
+        if step == "download":
+            clock.now += seconds
+
+    pipeline.during = during
+
+
+def test_the_gap_runs_from_one_downloads_start_to_the_next(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.rng = FixedGap(600)
+    turns_take(pipeline, clock, 90)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    assert len(collected_ids(collector)) == 1
+    assert float(collector.store.get("next_download_at")) == NOW + 600  # not NOW + 90 + 600
+
+
+def test_a_short_gap_starts_the_next_download_15_s_after_the_turn(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.rng = FixedGap(10)
+    turns_take(pipeline, clock, 90)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    assert float(collector.store.get("next_download_at")) == NOW + 90 + MIN_IDLE_S
+    clock.now = NOW + 90 + MIN_IDLE_S - 1
+    collector.tick()
+    assert len(collected_ids(collector)) == 1  # not yet
+    clock.now += 1
+    collector.tick()
+    assert len(collected_ids(collector)) == 2
+
+
+def test_a_long_turn_brings_one_late_download_not_a_burst(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.rng = FixedGap(600)
+    turns_take(pipeline, clock, 3000)  # five gaps long
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    started = clock.now + MIN_IDLE_S
+    assert float(collector.store.get("next_download_at")) == started
+    turns_take(pipeline, clock, 90)
+    clock.now = started
+    collector.tick()
+    assert len(collected_ids(collector)) == 2
+    assert float(collector.store.get("next_download_at")) == started + 600  # a fresh gap
+    collector.tick()
+    assert len(collected_ids(collector)) == 2
+
+
+def downloads_per_day(tmp_path: Path, days: float, pace_factor: float = 1.0) -> list[int]:
+    """Runs the download schedule alone (turns of 60–100 s, random gaps at the real pace of
+    120) for `days`, and returns the downloads of each whole day."""
+    clock = Clock()
+    collector = make_collector(tmp_path, FakeYouTube(), FakePipeline(), clock)
+    collector.s.per_day = 120
+    collector.rng = random.Random(7)
+    turn = random.Random(8)
+    if pace_factor < 1:
+        collector.store.set("pace_factor", pace_factor)
+        collector.store.set("blocked_at", NOW + days * DAY_S)  # so it stays halved
+    starts: list[float] = []
+
+    def collect(upload: Any, now: float) -> None:
+        starts.append(now)
+        clock.now += turn.uniform(60, 100)
+
+    collector.next_upload = lambda now: object()  # type: ignore[method-assign,assignment,return-value]
+    collector.collect = collect  # type: ignore[method-assign]
+    while clock.now < NOW + days * DAY_S:
+        clock.now += collector.maybe_download(clock.now)
+    per_day = Counter(int((t - NOW) // DAY_S) for t in starts)
+    return [per_day[d] for d in range(int(days))]
+
+
+def test_the_pace_holds_on_average_and_busy_days_go_over_it(tmp_path: Path) -> None:
+    days = downloads_per_day(tmp_path, 60)
+    assert 116 <= sum(days) / len(days) <= 122  # ~119; ~106 with the gap from the turn's end
+    assert max(days) > 120  # no daily cap
+
+
+def test_at_half_pace_the_average_halves(tmp_path: Path) -> None:
+    days = downloads_per_day(tmp_path, 60, pace_factor=0.5)
+    assert 57 <= sum(days) / len(days) <= 63  # ~60
 
 
 def failing(pipeline: FakePipeline, video_id: str) -> None:
@@ -456,7 +567,7 @@ def test_a_failed_download_is_tried_again_after_1_3_and_7_days_then_given_up(
     assert tries() == 4
 
 
-def test_retries_come_one_per_slot_and_count_towards_the_pace(
+def test_retries_come_one_per_slot_at_the_usual_spacing(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
     clock = Clock()
@@ -473,10 +584,6 @@ def test_retries_come_one_per_slot_and_count_towards_the_pace(
         collector.tick()
         collector.tick()  # a second tick in the same slot downloads nothing
         assert collected_ids(collector)[1:] == waiting[: i + 1]
-    collector.s.per_day = 6  # today's 6 slots are used: the 1st download and the 5 retries
-    clock.now += gap
-    collector.tick()
-    assert len(collected_ids(collector)) == 6
 
 
 def test_three_failures_in_a_row_pause_downloads_for_an_hour(
@@ -494,7 +601,7 @@ def test_three_failures_in_a_row_pause_downloads_for_an_hour(
         clock.now += gap
     assert float(collector.store.get("paused_until")) == NOW + 2 * gap + 3600
     collector.tick()
-    assert collector.store.attempts_since(0) == 3  # paused
+    assert attempt_count(collector) == 3  # paused
     clock.now = NOW + 2 * gap + 3600
     collector.tick()
     assert collector.store.failures(order[3]) == 1  # the 4th, after the pause
@@ -553,7 +660,7 @@ def test_a_block_pauses_downloads_and_backs_off(
     assert float(collector.store.get("blocked_until")) == NOW + 6 * 3600
     clock.now += 3600
     collector.tick()
-    assert collector.store.attempts_since(0) == 1  # still waiting
+    assert attempt_count(collector) == 1  # still waiting
     clock.now = NOW + 6 * 3600 + 1
     collector.tick()  # blocked again right away: twice the wait, half the pace
     assert float(collector.store.get("blocked_until")) == clock.now + 12 * 3600
@@ -2198,7 +2305,7 @@ def test_an_unexpected_error_is_a_failed_try_that_takes_a_slot(
     assert probed == []  # not YouTube: no block probe
     assert float(collector.store.get("next_download_at")) > clock.now  # the pace holds
     collector.tick()
-    assert collector.store.attempts_since(0) == 1
+    assert attempt_count(collector) == 1
 
 
 def test_a_new_channels_list_that_fails_on_page_3_goes_on_from_page_3(
@@ -2297,7 +2404,7 @@ def test_a_video_without_a_channel_name_waits_until_the_repair_fills_it(
     collector.store.set("repaired_day", "2026-10-26")
     collector.tick()
     assert collector.store.upload(first).state == "measured"  # type: ignore[union-attr]
-    assert collector.store.attempts_since(0) == 1  # measured: it took its slot
+    assert attempt_count(collector) == 1  # measured: it took its slot
     assert first not in collected_ids(collector)
     exported = tmp_path / "data" / "collected" / "2026.tsv"
     assert not exported.exists() or first not in exported.read_text()

@@ -75,6 +75,7 @@ OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
 MAX_BLOCK_WAIT_S = 48 * 3600
 PACE_BACK_S = 3 * DAY_S  # a halved pace doubles after this long without a block, up to full
+MIN_IDLE_S = 15  # at least this long from one video's turn ending to the next download
 # A failed download (not a block) is tried again after these waits; the next failure gives up.
 RETRY_AFTER_S = (DAY_S, 3 * DAY_S, 7 * DAY_S)
 FAILURES_IN_A_ROW = 3  # then downloads pause, with no change to the pace
@@ -798,17 +799,20 @@ class Collector:
         next_at = float(self.store.get("next_download_at", "0"))
         if now < next_at:
             return next_at - now
-        if self.store.attempts_since(now - DAY_S) >= self.per_day(now):
-            return 600
         if self.live_running() or self.low_on_space():
             return 60
         upload = self.next_upload(now)
         if upload is None:
             return 60
         self.collect(upload, now)
-        gap = self.rng.expovariate(self.per_day(now) / DAY_S)  # random spacing, on average even
-        self.store.set("next_download_at", self.clock() + gap)
-        return gap
+        # Random spacing from start to start, so a turn's own time (download, measuring,
+        # export) comes out of the gap and the pace holds on average; no daily cap, so some
+        # days go over it. One next start only: a long turn or a pause never brings a burst.
+        gap = self.rng.expovariate(self.per_day(now) / DAY_S)
+        done = self.clock()
+        next_at = max(now + gap, done + MIN_IDLE_S)
+        self.store.set("next_download_at", next_at)
+        return next_at - done
 
     def fill_scores(self, reference: dict[str, float]) -> None:
         """The dataset videos' scores, which the download order goes by (decision 2): v2's

@@ -697,10 +697,6 @@ class Store:
         )
         return int(row.fetchone()["n"])
 
-    def attempts_since(self, since: float) -> int:
-        row = self.db.execute("SELECT COUNT(*) AS n FROM attempts WHERE at >= ?", (since,))
-        return int(row.fetchone()["n"])
-
 
 def _upload(row: sqlite3.Row) -> Upload:
     return Upload(
