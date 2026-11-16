@@ -41,6 +41,7 @@ See `.env.example`. All are read at build time.
 | `npm run test:e2e` | End-to-end tests (Playwright): builds the site and runs it against the real backend (see **Testing**) |
 | `npm run build` | Static export to `out/` |
 | `npm run images` | Convert art to WebP (runs automatically before `dev` and `build`) |
+| `node scripts/render-readme-banner.mjs` | Re-render the root README's banner (`.github/readme/banner.png`) after editing `banner.html` |
 
 ## Testing
 

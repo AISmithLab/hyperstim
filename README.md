@@ -1,44 +1,45 @@
-# HyperStim?
+<p align="center">
+  <a href="https://aismithlab.com/hyperstim/">
+    <img src=".github/readme/banner.png" width="900" alt="HyperStim? How stimulating are the videos your child watches?">
+  </a>
+</p>
 
-[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=coverage)](https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim)
-[![Deploy](https://github.com/AISmithLab/hyperstim/actions/workflows/deploy.yml/badge.svg)](https://github.com/AISmithLab/hyperstim/actions/workflows/deploy.yml)
+<p align="center">
+  <a href="https://aismithlab.com/hyperstim/"><b>Website</b></a> &nbsp;|&nbsp;
+  <a href="https://aismithlab.com/hyperstim/how-it-works/">How it works</a> &nbsp;|&nbsp;
+  <a href="https://aismithlab.com/hyperstim/rankings/">Rankings</a> &nbsp;|&nbsp;
+  <a href="https://aismithlab.com/hyperstim/compare/">Compare</a>
+</p>
 
-How stimulating are kids’ YouTube videos?
+<p align="center">
+  <a href="https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim"><img src="https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=alert_status" alt="Quality gate status"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=AISmithLab_hyperstim"><img src="https://sonarcloud.io/api/project_badges/measure?project=AISmithLab_hyperstim&metric=coverage" alt="Coverage"></a>
+  <a href="https://github.com/AISmithLab/hyperstim/actions/workflows/deploy.yml"><img src="https://github.com/AISmithLab/hyperstim/actions/workflows/deploy.yml/badge.svg" alt="Deploy status"></a>
+</p>
 
-## What it is
+## About
 
-[HyperStim?](https://aismithlab.com/hyperstim/) is a platform that helps parents understand how stimulating children's videos are by analyzing audiovisual features such as rapid scene changes, bright colors, and loud sounds. Parents can explore and compare videos to make more informed decisions about what their children watch.
+HyperStim? helps parents see how stimulating children's YouTube videos are. It measures a video's production style (how fast the scenes change, how bright and colorful the picture is, how loud the sound is) and turns it into a score you can compare across videos and channels.
 
-## What you can do
+## Features
 
-- **[Check a video](https://aismithlab.com/hyperstim/):** paste a YouTube link and get its score.
-- **[Rankings](https://aismithlab.com/hyperstim/rankings/):** the most and least stimulating videos and channels.
-- **[Compare](https://aismithlab.com/hyperstim/compare/):** put two videos or two channels side by side.
-- **[How it works](https://aismithlab.com/hyperstim/how-it-works/):** what we measure and what the score means.
+- **Check a video:** paste a YouTube link and get its score.
+- **Rankings:** the most and least stimulating videos and channels.
+- **Compare:** two videos or two channels side by side.
 
 ## A growing dataset
 
-We keep adding videos and channels. The chart is redrawn every day from the dataset's [changelog](backend/data/collected/CHANGELOG.tsv).
+We add videos and channels every day. The chart is redrawn daily from the dataset's [changelog](backend/data/collected/CHANGELOG.tsv).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="backend/data/collected/growth-dark.svg">
   <img src="backend/data/collected/growth.svg" alt="Line chart of the number of videos and channels in the HyperStim dataset over time, redrawn daily.">
 </picture>
 
-## What the score is and isn’t
+## Development
 
-We measure production style only, from a 5-minute clip of the video. We don’t judge a video’s content, educational value, or age appropriateness.
-
-## How it’s built
-
-A static Next.js site on GitHub Pages, and a Python (FastAPI) API that serves the video dataset and analyzes new videos. To run it or work on it, see [`DEVELOPMENT.md`](DEVELOPMENT.md).
-
-## Privacy
-
-What the site stores and who it shares data with: [privacy policy](https://aismithlab.com/hyperstim/privacy/).
+A static Next.js site on GitHub Pages and a Python (FastAPI) API that serves the dataset and analyzes new videos. See [`DEVELOPMENT.md`](DEVELOPMENT.md) to run it locally or contribute.
 
 ## License
 
-[Apache 2.0](LICENSE).
+[Apache 2.0](LICENSE)
