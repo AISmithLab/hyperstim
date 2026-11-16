@@ -78,7 +78,7 @@ A clip comparison plays two YouTube videos side by side, with a tab per stretch 
 ::::
 ```
 
-- `a` and `b` are the two videos' IDs. Each tab is `::cuts` or `::motion`, with its label and the stretch of each video as `minutes:seconds-minutes:seconds` (tenths allowed).
+- `a` and `b` are the two videos' IDs. Each tab is `::cuts` or `::motion`, with its label (no `]` in it) and the stretch of each video as `minutes:seconds-minutes:seconds` (tenths allowed).
 - One tab is fine; with two or more, readers switch between them.
 - The numbers come from `public/blog-media/<slug>/clips.json`. Make it (and remake it after changing a block) with:
 

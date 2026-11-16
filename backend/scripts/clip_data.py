@@ -59,7 +59,7 @@ TIME = r"(\d+):([0-5]\d(?:\.\d+)?)"
 # Matched against whole lines without trailing whitespace, so no quantifier backtracks over another.
 BLOCK_START = re.compile(r"::::clips\[(.*)\]\{([^{}]*)\}")
 BLOCK_END = re.compile(r"^::::\s*$")
-TAB = re.compile(r"::(\w+)\[(.*)\]\{([^{}]*)\}")
+TAB = re.compile(r"::(\w+)\[([^\]]*)\]\{([^{}]*)\}")
 ATTR = re.compile(r"""(?<!\w)(\w+)=(?:"([^"]*)"|'([^']*)'|([^\s"']+))""")
 RANGE = re.compile(rf"^{TIME}-{TIME}$")
 
