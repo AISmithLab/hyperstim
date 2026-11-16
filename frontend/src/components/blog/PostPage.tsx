@@ -16,7 +16,7 @@ export default function PostPage({ post, mediaDir }: { post: Post; mediaDir?: st
         <Link href="/blog/" className={`inline-flex min-h-11 items-center text-sm ${TEXT_LINK}`}>
           <span aria-hidden="true">←</span>&nbsp;All posts
         </Link>
-        <h1 className="mt-2 font-hand text-[2rem] leading-tight font-semibold text-navy sm:text-[2.75rem] lg:text-[3.25rem]">
+        <h1 className="mt-2 font-hand text-[1.75rem] leading-[1.2] font-semibold text-pretty text-navy sm:text-[2.25rem] lg:text-[2.625rem]">
           {post.title}
         </h1>
         <p className="mt-2.5 text-ink">

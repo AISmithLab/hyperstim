@@ -25,7 +25,8 @@ Layout review: the artifact "Blog page layout" (round 2).
     - A new post pushes the oldest post on each page onto the next one. Links to page 2 and beyond don't promise fixed content; the newer / older links on posts are what lead through all posts in order.
 - **Post page (`/blog/<slug>/`):**
   - From the top: "← All posts" (text link), the H1 title, the date, then the TL;DR box (`rounded-2xl`, unfilled with a thin `navy/15` line _(human decision, 2026-11-10: in place of the butter fill; chosen from butter, sky and a sunny line)_, a "TL;DR" heading in `font-hand`).
-  - The title fills the full width before it wraps, with no balanced line breaks _(human decision, 2026-11-09: the title didn't use the full width)_.
+  - The title is smaller than other pages' H1s, since post titles are long: 28 px, 36 px from `sm`, 42 px from `lg` (`text-[1.75rem] sm:text-[2.25rem] lg:text-[2.625rem] leading-[1.2]`), but always larger than the text's H2 and H3 at every width (an E2E test checks it) _(human decision, 2026-11-16: the page H1 size was too large for long titles)_.
+  - The title fills the full width before it wraps, with no balanced line breaks _(human decision, 2026-11-09: the title didn't use the full width)_. Its last line is never a single word (`text-wrap: pretty`) _(human decision, 2026-11-16)_.
   - Then the body at the page container's full width _(human decision, 2026-11-09: it didn't use the full width)_, followed by References and the newer/older links.
   - No author or reading time _(human decision, 2026-11-09)_.
 - **Elements inside a post:**

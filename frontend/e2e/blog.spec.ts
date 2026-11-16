@@ -130,6 +130,20 @@ test.describe("accessibility", () => {
   });
 });
 
+test("a post's title is larger than its section headings at phone, tablet and desktop widths", async ({ page }) => {
+  const size = (name: string, level: number) =>
+    page.getByRole("heading", { name, level }).evaluate((h) => parseFloat(getComputedStyle(h).fontSize));
+  for (const width of [360, 768, 1280]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/blog/every-element/");
+    const title = await size(EXAMPLE, 1);
+    const h2 = await size("Headings", 2);
+    const h3 = await size("A smaller heading", 3);
+    expect(title, `title vs H2 at ${width} px`).toBeGreaterThan(h2);
+    expect(h2, `H2 vs H3 at ${width} px`).toBeGreaterThan(h3);
+  }
+});
+
 test("posts side by side from sm, stacked on phones", async ({ page }) => {
   await page.goto("/blog/test-post-05/");
   const more = page.getByRole("navigation", { name: "More posts" });
