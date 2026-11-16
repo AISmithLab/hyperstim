@@ -97,6 +97,24 @@ def test_the_next_daily_commit_brings_a_new_layout_and_redraws_the_chart(
     assert "16,860 videos" in git(clone, "show", dest + "growth.svg")
 
 
+def test_the_daily_commit_reads_the_held_channels_layout(tmp_path: Path, clone: Path) -> None:
+    # The layout from plan 013, step 34: no per-level counts, ch_left_out and ch_held.
+    from hyperstim_api.collector.collector import CHANGELOG_COLUMNS
+
+    subprocess.run([str(COMMIT_DATA), str(clone), str(collected(tmp_path))], check=True)
+    source = tmp_path / "collected"
+    newest = {"date": "2026-10-30", "videos": "16860", "channels": "591", "ch_held": "77",
+              "added_v": "135", "removed_v": "0", "new_ch": "3"}  # fmt: skip
+    rows = [dict(zip(COLUMNS, r.split("\t"), strict=True)) for r in CHANGELOG.splitlines()[1:]]
+    (source / "CHANGELOG.tsv").write_text("\t".join(CHANGELOG_COLUMNS) + "\n" + "".join(
+        "\t".join(r.get(c, "") for c in CHANGELOG_COLUMNS) + "\n" for r in [newest, *rows]
+    ))  # fmt: skip
+    out = subprocess.run([str(COMMIT_DATA), str(clone), str(source)], check=True,
+                         capture_output=True, text=True).stdout  # fmt: skip
+    assert out.strip() == "data: Add 135 videos and 3 channels (2026-10-30)"
+    assert "16,860 videos" in git(clone, "show", "HEAD:backend/data/collected/growth.svg")
+
+
 def test_the_data_goes_in_when_the_chart_fails(tmp_path: Path, clone: Path) -> None:
     # A release without the chart's Python: the script copied alone.
     lone = tmp_path / "release" / "scripts" / "commit-data.sh"

@@ -17,16 +17,16 @@ The site at the end of each finished day: every count is at 23:59:59 UTC, and th
 |---|---|
 | `date` | the day (UTC) |
 | `videos`, `channels` | on the site |
-| `ch_1` … `ch_4`, `ch_5plus` | channels on the site with 1, 2, 3, 4, or 5 or more videos (they add up to `channels`) |
 | `ch_ready` | channels not on the site yet, with a video checked and waiting to download |
-| `ch_out` | channels left out (the list below), with or without videos |
-| `ch_yr_2nd` | the thinnest channels: the second smallest of the channels' videos per year, among the channels on the site with an upload left to take. A channel's videos per year are its videos on the site over the years (2015 to that day) in which it has an eligible upload, each counted for the part the channel was active (from its first upload; the running year to that day) |
-| `ch_yr_med` | the typical channel: the median of the channels' videos per year |
+| `ch_left_out` | channels kept off the site because they don't fit the dataset: under 10% of their checked videos are made for kids, or they post under 5 eligible videos a year, or both (the list below), with or without videos |
+| `ch_held` | channels on the site that still have uploads to take, but none in a year with fewer videos per year than the channel's own average, so the collector skips them until the other channels pass them |
+| `ch_yr_2nd` | the thinnest channels: the second smallest of the channels' videos per year, among the channels on the site with an upload left to take that aren't held. A channel's videos per year are its videos on the site over the years (2015 to that day) in which it has an eligible upload, each counted for the part the channel was active (from its first upload; the running year to that day) |
+| `ch_yr_med` | the typical channel: the median of the channels' videos per year, over all channels on the site |
 | `added_v`, `removed_v` | videos added that day, and taken out as offline |
 | `new_ch` | channels that got their first video that day |
-| `note` | a change to what the collector picks, or in what order, or to how this file counts, that went live that day; and when `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` aren't from 23:59:59, when they are from |
+| `note` | a change to what the collector picks, or in what order, or to how this file counts, that went live that day; and when `ch_ready`, `ch_left_out`, `ch_held`, `ch_yr_2nd` and `ch_yr_med` aren't from 23:59:59, when they are from |
 
-`ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` can't be worked out again later (for the last two, the channels' upload lists keep growing), so the collector records them when it closes a day, just after midnight. They're blank for the days before it started recording them: `ch_yr_2nd` and `ch_yr_med` start on 2026-11-01, worked out from the backup taken at that day's end. Since the collector began keeping a log of who is left out and when, `ch_out` is counted from that log at 23:59:59 instead. When they aren't from 23:59:59 (the collector was down at midnight, or the day was recounted from a backup taken just after it), the note says when they're from, e.g. "ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC"; "at the day's last export (time not kept)" marks a day recorded before the time was kept.
+`ch_ready`, `ch_left_out`, `ch_held`, `ch_yr_2nd` and `ch_yr_med` can't be worked out again later (for the last three, the channels' upload lists keep growing), so the collector records them when it closes a day, just after midnight. They're blank for the days before it started recording them: `ch_yr_2nd` and `ch_yr_med` start on 2026-11-01, worked out from the backup taken at that day's end; `ch_held` starts on the day its note says, and on the days before it back to the oldest backup kept then. Since the collector began keeping a log of who is left out and when, `ch_left_out` is counted from that log at 23:59:59 instead. When they aren't from 23:59:59 (the collector was down at midnight, or the day was recounted from a backup taken just after it), the note says when they're from, e.g. "ch_ready, ch_left_out, ch_held, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC"; "at the day's last export (time not kept)" marks a day recorded before the time was kept.
 
 ## History
 
@@ -38,6 +38,12 @@ Until the day the changelog's note says "Counts end at 23:59:59 UTC" (plan 013),
 - At the switch: the 00:49 commit on 2026-10-31 already had a (partial) row for 2026-10-31, so the first 00:05 run (2026-11-01) found no new day and committed nothing. The next commit brings in the whole 2026-10-31 row with 2026-11-01's, but its message counts only 2026-11-01.
 - `ch_ready` and `ch_out` were recorded at each export, the day's last one standing (time not kept), until days were recounted from backups (above).
 - `ch_ready` and `ch_out` for 2026-10-26 to 2026-10-28 were recounted from backups with the kids-share rule, which went live on 2026-10-29; on those days no channel was left out on the site.
+
+Until the note "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out" (plan 013):
+
+- `ch_yr_2nd` counted the held channels too. A row whose `ch_held` is blank still has that count; one with `ch_held` has the count without them (the days just before the note were recounted from the backups).
+- `ch_left_out` was named `ch_out`; the note from 2026-10-31 keeps the old name.
+- The file also had `ch_1` … `ch_4` and `ch_5plus`: the channels on the site with 1, 2, 3, 4, or 5 or more videos. They were dropped once every channel had 5 or more (from 2026-11-08), so they only repeated `channels`. Earlier commits of this file have them.
 
 The commits and release notes stay as they were; the changelog's rows in the latest commit are what counts.
 

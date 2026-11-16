@@ -1005,8 +1005,8 @@ def test_status_shows_how_far_the_channels_are_filled(
         span(collector.store, channel_id)
     # CHANNEL: 5 over 2016 and 2024, 2.5 a year; SMALL: 1 a year, with nothing left to take.
     assert level_line(collector.store, clock.now) == (
-        "Channels' videos per year: median 1.75, second smallest None; the rule can fill 1 "
-        "channels now, skips 1"
+        "Channels' videos per year: median 1.75, second smallest None (held channels left out: "
+        "0); the rule can fill 1 channels now, skips 1"
     )
 
 
@@ -1554,7 +1554,7 @@ def test_ch_out_is_counted_from_the_log_from_its_first_day(tmp_path: Path) -> No
     store.update_left_out("2026-10-28", MIDNIGHT + DAY_S + 60)
     assert [r["channel_id"] for r in store.left_out_list()] == [TINY]
     store.record_daily("2026-10-28", 0, 99, MIDNIGHT + 2 * DAY_S)
-    rows = {r["date"]: r["ch_out"] for r in changelog(store, MIDNIGHT + 2 * DAY_S + 60)}
+    rows = {r["date"]: r["ch_left_out"] for r in changelog(store, MIDNIGHT + 2 * DAY_S + 60)}
     assert rows == {"2026-10-25": 7, "2026-10-26": 1, "2026-10-27": 2, "2026-10-28": 1}
 
 
@@ -1625,15 +1625,16 @@ def test_export_is_read_by_the_api(
     with (folder / "CHANGELOG.tsv").open(newline="", encoding="utf-8") as fh:
         log = list(csv.DictReader(fh, delimiter="\t"))
     assert log[-1:] == [
-        {"date": "2026-10-26", "videos": "3", "channels": "1", "ch_1": "0", "ch_2": "0",
-         "ch_3": "1", "ch_4": "0", "ch_5plus": "0", "ch_ready": "0", "ch_out": "0",
-         "ch_yr_2nd": "", "ch_yr_med": "3.00", "added_v": "3", "removed_v": "0", "new_ch": "1",
+        {"date": "2026-10-26", "videos": "3", "channels": "1", "ch_ready": "0",
+         "ch_left_out": "0", "ch_held": "1", "ch_yr_2nd": "", "ch_yr_med": "3.00",
+         "added_v": "3", "removed_v": "0", "new_ch": "1",
          "note": "Collecting starts: 150 videos a day, lowest r first; "
                  "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups; "
                  "Thinnest channels first; under 5 eligible a year left out; 3 new a day; "
                  "A third of downloads for new channels to catch up; at most 3 new a day; "
                  "New channels join by subscribers, most first; their counts read weekly; "
-                 "Pace lowered from 150 to 120 videos a day after three blocks"}
+                 "Pace lowered from 150 to 120 videos a day after three blocks; "
+                 "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -1665,7 +1666,7 @@ def changelog_rows(store: Store, now: float) -> list[dict[str, object]]:
     return [{k: v for k, v in row.items() if k != "note"} for row in changelog(store, now)]
 
 
-def test_the_changelog_counts_the_channels_by_their_videos_newest_day_first(
+def test_the_changelog_counts_the_videos_and_channels_newest_day_first(
     tmp_path: Path,
 ) -> None:
     store = make_store(tmp_path)
@@ -1682,17 +1683,13 @@ def test_the_changelog_counts_the_channels_by_their_videos_newest_day_first(
     store.add_removed("add00000001", utc(NOW + DAY_S), "gone")
     rows = changelog_rows(store, NOW + 2 * DAY_S)
     assert rows == [
-        {"date": "2026-10-27", "videos": 6, "channels": 2, "ch_1": 1, "ch_2": 0, "ch_3": 0,
-         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "",
-         "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 0,
-         "removed_v": 1, "new_ch": 0},
-        {"date": "2026-10-26", "videos": 7, "channels": 2, "ch_1": 0, "ch_2": 1, "ch_3": 0,
-         "ch_4": 0, "ch_5plus": 1, "ch_ready": "", "ch_out": "",
-         "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 1,
-         "removed_v": 0, "new_ch": 0},
+        {"date": "2026-10-27", "videos": 6, "channels": 2, "ch_ready": "", "ch_left_out": "",
+         "ch_held": "", "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 0, "removed_v": 1,
+         "new_ch": 0},
+        {"date": "2026-10-26", "videos": 7, "channels": 2, "ch_ready": "", "ch_left_out": "",
+         "ch_held": "", "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 1, "removed_v": 0,
+         "new_ch": 0},
     ]  # fmt: skip
-    for row in rows:
-        assert sum(int(str(row[f"ch_{k}"])) for k in (1, 2, 3, 4, "5plus")) == row["channels"]
 
 
 MIDNIGHT = NOW - NOW % DAY_S + DAY_S  # 2026-10-27 00:00:00 UTC, the end of 2026-10-26
@@ -1749,7 +1746,9 @@ def test_a_tick_that_ran_past_midnight_closes_the_day_as_of_then(tmp_path: Path)
     collector.close_day(MIDNIGHT + 31)
     assert recorded(collector.store) == {"2026-10-26": (0, 0, MIDNIGHT + 31)}
     note = notes_by_day(collector.store, MIDNIGHT + DAY_S)["2026-10-26"]
-    assert note.endswith("ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:31 UTC")
+    assert note.endswith(
+        "ch_ready, ch_left_out, ch_held, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:31 UTC"
+    )
 
 
 def test_days_the_collector_was_down_are_closed_as_they_ended(tmp_path: Path) -> None:
@@ -1779,14 +1778,14 @@ def test_the_first_run_with_closing_leaves_the_day_before_as_recorded(tmp_path: 
     assert recorded(collector.store) == {"2026-10-26": (4, 2, None)}
     assert collector.store.get("closed_day") == "2026-10-26"
     note = notes_by_day(collector.store, MIDNIGHT + DAY_S)["2026-10-26"]
-    assert note.endswith("ch_ready and ch_out at the day's last export (time not kept)")
+    assert note.endswith("ch_ready and ch_left_out at the day's last export (time not kept)")
 
 
 def test_a_day_recorded_before_ch_out_was_keeps_its_ch_ready(tmp_path: Path) -> None:
     store = make_store(tmp_path)
     added(store, CHANNEL, "add00000001", NOW)
     store.db.execute("INSERT INTO daily (day, ch_ready) VALUES ('2026-10-27', 4)")
-    rows = {r["date"]: (r["ch_ready"], r["ch_out"]) for r in changelog(store, NOW + 2 * DAY_S)}
+    rows = {r["date"]: (r["ch_ready"], r["ch_left_out"]) for r in changelog(store, NOW + 2 * DAY_S)}
     assert rows == {"2026-10-26": ("", ""), "2026-10-27": (4, "")}
 
 
@@ -1809,11 +1808,71 @@ def test_the_channels_videos_per_year_count_the_channels_on_the_site(tmp_path: P
                      ("UC" + "o" * 22,))  # fmt: skip  # nor a left-out one
     # CHANNEL 2.5 a year (5 over 2023-2024), SMALL 2 (only 2023 counts), TINY 3 (6 over two):
     # the median 2.5; the second smallest of those with an upload left (CHANNEL, TINY) 3.
-    assert channel_averages(store, "2026-10-26") == (3.0, 2.5)
+    assert channel_averages(store, "2026-10-26") == (3.0, 2.5, 0)
     # An upload the next day makes 2026 one of SMALL's years, still open: 2 over 1.82 years.
     store.add_uploads(SMALL, [("new00000001", "2026-10-27T00:00:00Z")])
-    assert channel_averages(store, "2026-10-26") == (3.0, 2.5)
-    assert channel_averages(store, "2026-10-27") == (2.5, 2.5)
+    assert channel_averages(store, "2026-10-26") == (3.0, 2.5, 0)
+    assert channel_averages(store, "2026-10-27") == (2.5, 2.5, 0)
+
+
+def held_channels(store: Store) -> None:
+    """CHANNEL 2 a year (4 in 2023, 2024 open with none), TINY 3.5 (6 in 2023, 1 in 2024, still
+    open) and SMALL held at 1.5: 2023's only eligible upload taken, 2024 open but at 2 a year,
+    above its average. Whole years 2023 to 2026, the later two without eligible uploads."""
+    for channel_id in (SMALL, TINY):
+        store.upsert_channel(id=channel_id, title="C", status="in", source="v2", listed_at=NOW)
+    for channel_id in (CHANNEL, SMALL, TINY):
+        span(store, channel_id)
+    fill_floor(store, CHANNEL, 4, year=2023)
+    fill_floor(store, TINY, 6, year=2023)
+    added(store, TINY, "add00000001", NOW)  # 2024; the collector's first day: 2026-10-26
+    fill_floor(store, SMALL, 1, year=2023)
+    fill_floor(store, SMALL, 2, year=2024)
+    for channel_id, video_id in ((CHANNEL, "chk00000001"), (SMALL, "chk00000002"),
+                                 (TINY, "chk00000003")):  # fmt: skip
+        store.add_uploads(channel_id, [(video_id, "2024-03-01T00:00:00Z")])  # one left to check
+
+
+def test_held_channels_are_counted_apart_from_the_thinnest(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    held_channels(store)
+    # SMALL is skipped by channel first, so it's held and left out of the second smallest
+    # (it would be 2.0, CHANNEL's, with it); the median still counts it.
+    assert channel_averages(store, "2026-10-26") == (3.5, 2.0, 1)
+    # A year below its average opens: an upload from 2025 left to check (2025: none yet, so
+    # SMALL is at 1 a year over three years, the thinnest).
+    store.add_uploads(SMALL, [("chk00000004", "2025-03-01T00:00:00Z")])
+    assert channel_averages(store, "2026-10-26") == (2.0, 2.0, 0)
+    # With nothing left to take, a channel is neither held nor among the thinnest.
+    store.set_state("chk00000002", "ineligible", "duration")
+    store.set_state("chk00000004", "ineligible", "duration")
+    assert channel_averages(store, "2026-10-26") == (3.5, 2.0, 0)
+
+
+def test_recount_fills_a_blank_ch_held_and_the_ch_yr_2nd_without_held_channels(
+    tmp_path: Path,
+) -> None:
+    store = make_store(tmp_path)
+    held_channels(store)
+    # Closed at 23:59:59 before ch_held: its ch_yr_2nd counted SMALL.
+    store.record_daily("2026-10-26", 3, 2, MIDNIGHT, (2.0, 2.0))
+    backup = backup_at(store, tmp_path / "collector-2026-10-27.db", MIDNIGHT + 41)
+    scratch = tmp_path / "scratch"
+    scratch.mkdir()
+    assert recount(store, [backup], scratch) == [
+        "collector-2026-10-27.db: 2026-10-26 already has a closer count, kept; filled in "
+        "ch_held 1, ch_yr_2nd 3.50, ch_yr_med 2.00"
+    ]
+    assert recorded(store) == {"2026-10-26": (3, 2, MIDNIGHT)}
+    row = changelog(store, MIDNIGHT + DAY_S)[0]
+    assert (row["ch_held"], row["ch_yr_2nd"], row["ch_yr_med"]) == (1, "3.50", "2.00")
+    # A day that has its ch_held keeps everything.
+    store.record_daily("2026-10-26", 3, 2, MIDNIGHT, (9.0, 9.0), 7)
+    assert recount(store, [backup], scratch) == [
+        "collector-2026-10-27.db: 2026-10-26 already has a closer count, skipped"
+    ]
+    day = store.daily()["2026-10-26"]
+    assert (day["ch_held"], day["ch_yr_2nd"], day["ch_yr_med"]) == (7, 9.0, 9.0)
 
 
 def test_the_channels_videos_per_year_are_recorded_at_the_close_and_kept(tmp_path: Path) -> None:
@@ -1907,11 +1966,13 @@ def test_recount_takes_the_counts_from_each_backup_with_its_time(tmp_path: Path)
     assert store.left_out_list() == []  # judged in the copy only
     assert done == [
         "collector-2026-10-26.db: 2026-10-25 is before the first day, skipped",
-        "collector-2026-10-27.db: 2026-10-26 ch_ready 1, ch_out 1, ch_yr_2nd -, ch_yr_med 1.00, "
-        "as of 2026-10-27T00:00:41Z",
+        "collector-2026-10-27.db: 2026-10-26 ch_ready 1, ch_left_out 1, ch_held 0, ch_yr_2nd -, "
+        "ch_yr_med 1.00, as of 2026-10-27T00:00:41Z",
     ]
     note = notes_by_day(store, MIDNIGHT + DAY_S)["2026-10-26"]
-    assert note.endswith("ch_ready, ch_out, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC")
+    assert note.endswith(
+        "ch_ready, ch_left_out, ch_held, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC"
+    )
 
 
 def test_recount_keeps_a_closer_count_and_fills_in_only_its_blank_videos_per_year(
@@ -1926,14 +1987,14 @@ def test_recount_keeps_a_closer_count_and_fills_in_only_its_blank_videos_per_yea
     scratch.mkdir()
     assert recount(store, [backup], scratch) == [
         "collector-2026-10-27.db: 2026-10-26 already has a closer count, kept; filled in "
-        "ch_yr_2nd -, ch_yr_med 1.00"
+        "ch_held 0, ch_yr_2nd -, ch_yr_med 1.00"
     ]
     assert recorded(store) == {"2026-10-26": (3, 2, MIDNIGHT)}
     day = store.daily()["2026-10-26"]
     assert (day["ch_yr_2nd"], round(day["ch_yr_med"], 2)) == (None, 1.0)
     assert "as of" not in notes_by_day(store, MIDNIGHT + DAY_S)["2026-10-26"]  # still 23:59:59
     # Only blanks are filled: the median stays; once both are there, a run skips the day.
-    store.fill_years("2026-10-26", (0.5, 9.0))
+    store.fill_years("2026-10-26", (0.5, 9.0), 4)
     assert recount(store, [backup], scratch) == [
         "collector-2026-10-27.db: 2026-10-26 already has a closer count, skipped"
     ]
@@ -2465,7 +2526,7 @@ def test_the_recount_command_records_and_writes_the_files(
     monkeypatch.setenv("COLLECTOR_CLIPS_DIR", str(tmp_path / "clips"))
     monkeypatch.setattr("sys.argv", ["collector", "recount", str(backup)])
     main()
-    assert "2026-10-26 ch_ready 0, ch_out 0" in capsys.readouterr().out
+    assert "2026-10-26 ch_ready 0, ch_left_out 0, ch_held 0" in capsys.readouterr().out
     assert "00:00:41 UTC" in (data / "collected" / "CHANGELOG.tsv").read_text()
 
 

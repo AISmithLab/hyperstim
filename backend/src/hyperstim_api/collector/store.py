@@ -109,11 +109,12 @@ CREATE TABLE IF NOT EXISTS left_out_log (
 CREATE INDEX IF NOT EXISTS left_out_log_channel ON left_out_log (channel_id, at);
 -- The changelog's counts that can't be worked out again later (decision 10), one row per UTC
 -- day, recorded when the day is closed: channels not on the site yet with a video waiting, and
--- channels left out (NULL on the days before it was recorded); `at`, the time they stand for
--- (the next midnight when they're the day's end; NULL when recorded before it was kept).
+-- channels left out (NULL on the days before it was recorded; the changelog's `ch_left_out`);
+-- `at`, the time they stand for (the next midnight when they're the day's end; NULL when
+-- recorded before it was kept); the channels' videos per year and the held channels.
 CREATE TABLE IF NOT EXISTS daily (
     day TEXT PRIMARY KEY, ch_ready INTEGER NOT NULL, ch_out INTEGER, at REAL, ch_yr_2nd REAL,
-    ch_yr_med REAL
+    ch_yr_med REAL, ch_held INTEGER
 );
 -- The changelog's notes (decision 10): each dated the first day the collector ran with it.
 CREATE TABLE IF NOT EXISTS notes (note TEXT PRIMARY KEY, day TEXT NOT NULL);
@@ -135,7 +136,13 @@ ADDED_COLUMNS = {
         "pick": "TEXT NOT NULL DEFAULT 'sample'",  # everything checked before was `sample`
         "score": "REAL",  # filled in when the collector starts
     },
-    "daily": {"ch_out": "INTEGER", "at": "REAL", "ch_yr_2nd": "REAL", "ch_yr_med": "REAL"},
+    "daily": {
+        "ch_out": "INTEGER",
+        "at": "REAL",
+        "ch_yr_2nd": "REAL",
+        "ch_yr_med": "REAL",
+        "ch_held": "INTEGER",
+    },
     "left_out": {"per_year": "REAL", "reason": "TEXT NOT NULL DEFAULT 'kids_share'"},
 }
 V2_JOINED = "2026-08-26"
@@ -480,20 +487,28 @@ class Store:
         ch_out: int,
         at: float,
         years: tuple[float | None, float | None] = (None, None),
+        ch_held: int | None = None,
     ) -> None:
         """The day's counts that can't be worked out again; `years`: `ch_yr_2nd`, `ch_yr_med`."""
         self.db.execute(
-            "INSERT OR REPLACE INTO daily (day, ch_ready, ch_out, at, ch_yr_2nd, ch_yr_med) "
-            "VALUES (?, ?, ?, ?, ?, ?)",
-            (day, ch_ready, ch_out, at, *years),
+            "INSERT OR REPLACE INTO daily "
+            "(day, ch_ready, ch_out, at, ch_yr_2nd, ch_yr_med, ch_held) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (day, ch_ready, ch_out, at, *years, ch_held),
         )
 
-    def fill_years(self, day: str, years: tuple[float | None, float | None]) -> None:
-        """Fills in a recorded day's `ch_yr_2nd` and `ch_yr_med` where they're blank."""
+    def fill_years(
+        self, day: str, years: tuple[float | None, float | None], ch_held: int | None
+    ) -> None:
+        """Fills in a recorded day's blank `ch_yr_med`, and a blank `ch_held` with the
+        `ch_yr_2nd` that goes with it (held channels left out; the one recorded before counted
+        them); a blank `ch_yr_2nd` too."""
+        second, median = years
         self.db.execute(
-            "UPDATE daily SET ch_yr_2nd = COALESCE(ch_yr_2nd, ?), "
-            "ch_yr_med = COALESCE(ch_yr_med, ?) WHERE day = ?",
-            (*years, day),
+            "UPDATE daily SET ch_yr_med = COALESCE(ch_yr_med, ?), "
+            "ch_yr_2nd = CASE WHEN ch_held IS NULL THEN ? ELSE COALESCE(ch_yr_2nd, ?) END, "
+            "ch_held = COALESCE(ch_held, ?) WHERE day = ?",
+            (median, second, second, ch_held, day),
         )
 
     def left_out_at(self, at: float) -> int | None:
@@ -510,8 +525,9 @@ class Store:
         )
 
     def daily(self) -> dict[str, sqlite3.Row]:
-        """The recorded counts by day: `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` (None
-        before each was recorded) and `at`, the time they stand for (None before it was kept)."""
+        """The recorded counts by day: `ch_ready`, `ch_out`, `ch_held`, `ch_yr_2nd` and
+        `ch_yr_med` (None before each was recorded) and `at`, the time they stand for (None
+        before it was kept)."""
         return {r["day"]: r for r in self.db.execute("SELECT * FROM daily")}
 
     def date_notes(self, notes: Iterable[tuple[str, str | None]], today: str) -> None:

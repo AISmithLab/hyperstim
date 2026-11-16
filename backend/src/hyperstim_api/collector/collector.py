@@ -69,7 +69,6 @@ NAMES_EVERY_S = 7 * DAY_S  # the dataset channels' names are read again this oft
 CHANNELS_PER_TICK = 25  # newest-uploads reads per tick, so other work isn't held up
 MAX_PAGES = 200  # pages of a channel's uploads read in one go (50 a page); more on the next tick
 CHECK_BATCHES_PER_TICK = 10  # of 50 uploads, so years with few eligible ones can't hold a tick
-CH_LEVELS = 5  # the changelog counts the channels with 1 to 4 videos, and with 5 or more
 LEFT_OUT_CHECKS_PER_DAY = 50  # uploads of left-out channels checked beyond the others
 OFFLINE_EVERY_S = 30 * DAY_S
 BLOCK_WAIT_S = 6 * 3600
@@ -1033,7 +1032,8 @@ class Collector:
 
     def close_day(self, now: float) -> None:
         """On the first tick of a UTC day: records the day before's counts that can't be worked
-        out again (`ch_ready`, `ch_out`, `ch_yr_2nd`, `ch_yr_med`), then writes the files and their
+        out again (`ch_ready`, `ch_left_out`, `ch_held`, `ch_yr_2nd`, `ch_yr_med`), then writes the
+        files and their
         day-end copy. When the last tick finished before midnight, nothing has changed since,
         so the counts are the day's end (also for days the collector was down); otherwise
         they're as of now, and only the day before gets them."""
@@ -1050,13 +1050,13 @@ class Collector:
         exact = started <= ended < midnight
         self.store.update_left_out(utc(now)[:10], now)
         ready, out = self.store.ready_to_join(), len(self.store.left_out_list())
-        years = channel_averages(self.store, yesterday)
+        second, median, held = channel_averages(self.store, yesterday)
         day = midnight - DAY_S
         with self.store.transaction():
             while utc(day)[:10] > closed:
                 if exact or utc(day)[:10] == yesterday:
                     at = day + DAY_S if exact else now
-                    self.store.record_daily(utc(day)[:10], ready, out, at, years)
+                    self.store.record_daily(utc(day)[:10], ready, out, at, (second, median), held)
                 day -= DAY_S
             self.store.set("closed_day", yesterday)
         if not exact:
@@ -1144,11 +1144,11 @@ def export(
 
 
 def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
-    """Works out `ch_ready`, `ch_out`, `ch_yr_2nd` and `ch_yr_med` again from daily backups of
-    collector.db (decision 10): each was taken on a day's first tick, so it holds the end of
-    the day before. Records
-    them for that day with the backup's time (its `tick_at`, else the file's), unless the day
-    has a count from 23:59:59 or from closer to it (then only its blank `ch_yr_2nd` and
+    """Works out `ch_ready`, `ch_left_out`, `ch_held`, `ch_yr_2nd` and `ch_yr_med` again from
+    daily backups of collector.db (decision 10): each was taken on a day's first tick, so it
+    holds the end of the day before. Records them for that day with the backup's time (its
+    `tick_at`, else the file's), unless the day has a count from 23:59:59 or from closer to it
+    (then only its blank `ch_held`, with the `ch_yr_2nd` that goes with it, and a blank
     `ch_yr_med` are filled in), or is before the collector's first day.
     Returns a line per backup saying what it did."""
     first = store.db.execute("SELECT MIN(added_at) FROM collected").fetchone()[0]
@@ -1164,28 +1164,36 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
         if first is None or day < first[:10]:
             done.append(f"{path.name}: {day} is before the first day, skipped")
         elif recorded is not None and recorded["at"] is not None and recorded["at"] <= at:
-            if recorded["ch_yr_2nd"] is not None and recorded["ch_yr_med"] is not None:
+            if recorded["ch_held"] is not None and recorded["ch_yr_med"] is not None:
                 done.append(f"{path.name}: {day} already has a closer count, skipped")
-            else:  # its closer counts stay; only the videos per year it lacks are filled in
+            else:  # its closer counts stay; only what it lacks is filled in
                 backup.update_left_out(day, at)
-                years = channel_averages(backup, day)
-                store.fill_years(day, years)
+                second, median, held = channel_averages(backup, day)
+                store.fill_years(day, (second, median), held)
                 done.append(
                     f"{path.name}: {day} already has a closer count, kept; filled in "
-                    f"ch_yr_2nd {_avg(years[0]) or '-'}, ch_yr_med {_avg(years[1]) or '-'}"
+                    f"{_years_text(store.daily()[day])}"
                 )
         else:
             backup.update_left_out(day, at)
             ready, out = backup.ready_to_join(), len(backup.left_out_list())
-            years = channel_averages(backup, day)
-            store.record_daily(day, ready, out, at, years)
+            second, median, held = channel_averages(backup, day)
+            store.record_daily(day, ready, out, at, (second, median), held)
             done.append(
-                f"{path.name}: {day} ch_ready {ready}, ch_out {out}, "
-                f"ch_yr_2nd {_avg(years[0]) or '-'}, ch_yr_med {_avg(years[1]) or '-'}, "
-                f"as of {utc(at)}"
+                f"{path.name}: {day} ch_ready {ready}, ch_left_out {out}, "
+                f"{_years_text(store.daily()[day])}, as of {utc(at)}"
             )
         backup.close()
     return done
+
+
+def _years_text(row: Any) -> str:
+    """A recorded day's `ch_held`, `ch_yr_2nd` and `ch_yr_med`, for `recount`'s lines."""
+    held = "-" if row["ch_held"] is None else row["ch_held"]
+    return (
+        f"ch_held {held}, ch_yr_2nd {_avg(row['ch_yr_2nd']) or '-'}, "
+        f"ch_yr_med {_avg(row['ch_yr_med']) or '-'}"
+    )
 
 
 def channel_names(store: Store) -> list[dict[str, object]]:
@@ -1229,17 +1237,16 @@ def left_out_rows(store: Store) -> list[dict[str, object]]:
 
 
 CHANGELOG_COLUMNS = (
-    "date", "videos", "channels", *(f"ch_{n}" for n in range(1, CH_LEVELS)),
-    f"ch_{CH_LEVELS}plus", "ch_ready", "ch_out", "ch_yr_2nd", "ch_yr_med", "added_v", "removed_v",
-    "new_ch", "note",
+    "date", "videos", "channels", "ch_ready", "ch_left_out", "ch_held", "ch_yr_2nd", "ch_yr_med",
+    "added_v", "removed_v", "new_ch", "note",
 )  # fmt: skip
 
 
 def changelog(store: Store, now: float) -> list[dict[str, object]]:
     """One line per finished UTC day with a change, a recorded count or a note, the newest
-    first: the site at 23:59:59 (videos, channels, the channels by their number of videos),
-    the channels ready to join and left out and the thinnest and typical channel-year as
-    recorded when the day was closed, the day's
+    first: the site at 23:59:59 (videos, channels), the channels ready to join, left out and
+    held, and the thinnest and typical channel's videos per year as recorded when the day was
+    closed, the day's
     changes and its notes. The channels left out now count as never there, as on the site. The
     days before each record began have none (blank), since they can't be counted again; a
     recorded count not from 23:59:59 gets a note saying when it's from."""
@@ -1283,7 +1290,6 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
             elif visible[channel] > 0:
                 line["removed_v"] = int(str(line["removed_v"])) + 1
                 visible[channel] -= 1
-        levels = Counter(min(n, CH_LEVELS) for n in visible.values() if n > 0)
         recorded = daily.get(day)
         end = calendar.timegm(time.strptime(day, "%Y-%m-%d")) + DAY_S
         logged = store.left_out_at(end)  # from the log, from its first day on
@@ -1291,11 +1297,10 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
         line |= {
             "date": day,
             "videos": sum(visible.values()),
-            "channels": sum(levels.values()),
-            **{f"ch_{n}": levels[n] for n in range(1, CH_LEVELS)},
-            f"ch_{CH_LEVELS}plus": levels[CH_LEVELS],
+            "channels": sum(1 for n in visible.values() if n > 0),
             "ch_ready": recorded["ch_ready"] if recorded else "",
-            "ch_out": "" if out is None else out,
+            "ch_left_out": "" if out is None else out,
+            "ch_held": "" if not recorded or recorded["ch_held"] is None else recorded["ch_held"],
             "ch_yr_2nd": _avg(recorded["ch_yr_2nd"]) if recorded else "",
             "ch_yr_med": _avg(recorded["ch_yr_med"]) if recorded else "",
             "note": "; ".join(
@@ -1338,10 +1343,13 @@ def rule(store: Store, now: float) -> tuple[list[Any], Order]:
     return rows, ahead + expand
 
 
-def channel_averages(store: Store, day: str) -> tuple[float | None, float | None]:
+def channel_averages(store: Store, day: str) -> tuple[float | None, float | None, int]:
     """The channels' videos per year on the site on `day` (decision 10): the second smallest
-    among the channels with an upload left to take (`ch_yr_2nd`), and the median over all
-    (`ch_yr_med`); None without channels."""
+    among the channels with an upload left to take that aren't held (`ch_yr_2nd`), the median
+    over all (`ch_yr_med`), and the held channels (`ch_held`): those with an upload left to
+    take, but none in a year with fewer videos per active year than the channel's average, so
+    channel first skips them until the others pass them. The videos per year are None without
+    channels."""
     out = store.left_out_ids()
     by: dict[str, list[sampling.Year]] = {}
     for y in sampling.years_from(store.year_rows(0, "", day), day):
@@ -1349,12 +1357,20 @@ def channel_averages(store: Store, day: str) -> tuple[float | None, float | None
             by.setdefault(y.channel_id, []).append(y)
     avgs = {c: sampling.average(ys, site=True) for c, ys in by.items() if any(y.site for y in ys)}
     values = [a for a in avgs.values() if a is not None]
-    left = sorted(
-        a for c, a in avgs.items() if a is not None and any(y.counted and y.open for y in by[c])
-    )
+    left, held = [], 0
+    for c, a in avgs.items():
+        open_years = [y for y in by[c] if y.counted and y.open]
+        if a is None or not open_years:
+            continue
+        if any(y.site / y.part < a for y in open_years):
+            left.append(a)
+        else:
+            held += 1
+    left.sort()
     return (
         round(left[1], 2) if len(left) > 1 else None,
         round(statistics.median(values), 2) if values else None,
+        held,
     )
 
 
@@ -1364,15 +1380,17 @@ def _avg(value: float | None) -> str:
 
 
 def recorded_when(day: str, recorded: Any, logged: bool = False) -> list[str]:
-    """The note for a day whose `ch_ready` and `ch_out` (and `ch_yr_2nd`, `ch_yr_med`) aren't
-    from 23:59:59; `ch_out` isn't named when it's from the log (`logged`), which has it there."""
+    """The note for a day whose `ch_ready` and `ch_left_out` (and `ch_held`, `ch_yr_2nd`,
+    `ch_yr_med`) aren't from 23:59:59; `ch_left_out` isn't named when it's from the log
+    (`logged`), which has it there."""
     if recorded is None:
         return []
-    names = ["ch_ready", *([] if logged else ["ch_out"])]
+    names = ["ch_ready", *([] if logged else ["ch_left_out"])]
+    names += ["ch_held"] if recorded["ch_held"] is not None else []
     names += ["ch_yr_2nd", "ch_yr_med"] if recorded["ch_yr_med"] is not None else []
     counts = " and ".join(names) if len(names) < 3 else ", ".join(names[:-1]) + " and " + names[-1]
     if recorded["at"] is None:
-        return ["ch_ready and ch_out at the day's last export (time not kept)"]
+        return ["ch_ready and ch_left_out at the day's last export (time not kept)"]
     end = calendar.timegm(time.strptime(day, "%Y-%m-%d")) + DAY_S
     if recorded["at"] == end:
         return []
