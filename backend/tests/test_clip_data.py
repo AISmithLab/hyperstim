@@ -77,7 +77,8 @@ def test_parses_blocks_in_order() -> None:
         ("::::clips[X]{a=x b=y}\n::cuts[C]{a=0:01-0:02 b=12-15}\n::::\n", "time range"),
         ("::::clips[X]{a=x b=y}\n::cuts[C]{a=0:05-0:02 b=0:01-0:02}\n::::\n", "ends before"),
         ("::::clips[X]{a=x b=y}\nstray text\n::::\n", "unexpected line"),
-        ("::::clips[X]{a=x b=y}\n::cuts[C]]{a=0:01-0:02 b=0:01-0:02}\n::::\n", "unexpected line"),
+        ("::::clips[X]{a=x a=x b=y}\n::::\n", "attributes a and b"),
+        ('::::clips[X]{a="x b=y}\n::::\n', "attributes a and b"),
     ],
 )
 def test_rejects_malformed_blocks(post: str, message: str) -> None:

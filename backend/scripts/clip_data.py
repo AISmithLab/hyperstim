@@ -31,6 +31,7 @@ import argparse
 import importlib.util
 import json
 import re
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -59,8 +60,7 @@ TIME = r"(\d+):([0-5]\d(?:\.\d+)?)"
 # Matched against whole lines without trailing whitespace, so no quantifier backtracks over another.
 BLOCK_START = re.compile(r"::::clips\[(.*)\]\{([^{}]*)\}")
 BLOCK_END = re.compile(r"^::::\s*$")
-TAB = re.compile(r"::(\w+)\[([^\]]*)\]\{([^{}]*)\}")
-ATTR = re.compile(r"""(?<!\w)(\w+)=(?:"([^"]*)"|'([^']*)'|([^\s"']+))""")
+TAB = re.compile(r"::(\w+)\[(.*)\]\{([^{}]*)\}")
 RANGE = re.compile(rf"^{TIME}-{TIME}$")
 
 Floats = npt.NDArray[np.float64]
@@ -85,8 +85,13 @@ class Block:
 
 
 def parse_attrs(text: str, line_no: int) -> dict[str, str]:
-    attrs = {m[1]: next(v for v in m.groups()[1:] if v is not None) for m in ATTR.finditer(text)}
-    if set(attrs) != {"a", "b"} or ATTR.sub("", text).strip():
+    """Space-separated name=value pairs, values optionally quoted, read without a regex."""
+    try:
+        words = shlex.split(text)
+    except ValueError:  # an unclosed quote
+        words = []
+    attrs = dict(word.split("=", 1) for word in words if "=" in word)
+    if set(attrs) != {"a", "b"} or len(words) != 2:
         raise ClipError(f"line {line_no}: expected exactly the attributes a and b: {{{text}}}")
     return attrs
 
