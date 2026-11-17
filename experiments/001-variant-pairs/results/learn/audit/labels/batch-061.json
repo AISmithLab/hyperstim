@@ -1,0 +1,72 @@
+[
+ {
+  "a": "AQU0afvXmAA",
+  "b": "f5KPuwl5uSM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wheels on the Bus panda short vs Halloween short; different content"
+ },
+ {
+  "a": "Fqvzysji-zI",
+  "b": "UFbEIqXwzbU",
+  "label": "same-template",
+  "confidence": 0.4,
+  "note": "two finger family compilations on one template; no frame matches, may share segments"
+ },
+ {
+  "a": "YudNG_jdUs4",
+  "b": "wk9I_xT1NNc",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "zoo songs, different characters and animation"
+ },
+ {
+  "a": "9-IDHjxw908",
+  "b": "Ym-tXlbrq-w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "animal sounds short vs monster finger family"
+ },
+ {
+  "a": "RYLtBFQDAGE",
+  "b": "cMBM09O3Bm4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "different songs and art"
+ },
+ {
+  "a": "I0FVW6-NCII",
+  "b": "WJ6v5zeLZ0E",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Halloween vs Christmas Wheels on the Bus compilations; different bus designs and scenes"
+ },
+ {
+  "a": "3aoEeaCHS_w",
+  "b": "gPmCCgMBars",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini short vs vehicle compilation"
+ },
+ {
+  "a": "Qv-eMjDmTJQ",
+  "b": "c3lLP39EdME",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilation vs Rattic short; same series, no shared frame seen"
+ },
+ {
+  "a": "Nj_pfXISKXc",
+  "b": "x1MysknCQKI",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus vs Wheels on the Firetruck shorts; song variant, different animation"
+ },
+ {
+  "a": "mxY1KRSmoFM",
+  "b": "ulkPZc48Au8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bob the Train monkeys vs swimming song"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "QlDpRW0_nBI",
+  "b": "bADOVfNgqbY",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "bus song (Bob, grandma) vs Halloween song (pig, cowboy); no shared shots"
+ },
+ {
+  "a": "A7LOToRCqR4",
+  "b": "H4_BpVuvsgU",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "bus song medley (white bus, trucks) vs Halloween Wheels on the Bus (neon purple bus); no matching shots"
+ },
+ {
+  "a": "_4x2xszMRq8",
+  "b": "phSVmXpDj08",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "birthday mouse cartoon vs Old MacDonald with baby and cow"
+ },
+ {
+  "a": "OOP4YvPyxmc",
+  "b": "X8Ylm3ai1FY",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Ten Little Fishermen vs Ten in the Bed with Bob and animals"
+ },
+ {
+  "a": "VnFSUCSnV-c",
+  "b": "jfM9EtsqGFo",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Kaboochi dance vs Halloween compilation; only thumbnails and one frame each"
+ },
+ {
+  "a": "2ahvNoPjNDI",
+  "b": "pywCPv77TJM",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Five Little Ducks vs Twinkle Twinkle, different characters"
+ },
+ {
+  "a": "Mds6Dx41AbY",
+  "b": "NnvOQVPXWTw",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "both Wheels on the Bus; Bob the Train 3D vs 2013 flat blue bus, different animation"
+ },
+ {
+  "a": "XiHVNvC7A3s",
+  "b": "puxWNIS7zJs",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "two compilations (Hindi rhymes vs Kaboochi); might share segments but none visible"
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "Nl_hbXSq9xI",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "both Wheels on the Bus; family/girl short vs 2014 yellow 3D bus, different staging"
+ },
+ {
+  "a": "YrsmVbdtgLY",
+  "b": "iAgf2jZes0w",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both Kaboochi; Halloween cat/witch/vampire vs dancing cars, different animation"
+ }
+]

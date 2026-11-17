@@ -1,0 +1,72 @@
+[
+ {
+  "a": "8nbuwQhxDhQ",
+  "b": "OOP4YvPyxmc",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "teddy bears vs fishermen counting songs"
+ },
+ {
+  "a": "I4Nh3mOaNck",
+  "b": "IeY9hKckmeA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "monster finger family vs Christmas compilation"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "nHT4spNAshs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "93hO6Ma5uEg",
+  "b": "idwuB7uQA2M",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Twinkle Twinkle vs Johny Johny"
+ },
+ {
+  "a": "8Ri1s8CTSrM",
+  "b": "kyProT-iMwg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "NpJ_yg1QJVA",
+  "b": "WVWSKXP1JjU",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus single vs compilation, different animation in frames"
+ },
+ {
+  "a": "KLm8GYqbKmU",
+  "b": "hjvaIaNfIVk",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "same title, long compilation vs short; frames show different animation"
+ },
+ {
+  "a": "PLFCyJZOJ_s",
+  "b": "kXwPD9AOlBc",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "five little ... jumping on the bed: monkeys vs sheep, different animation"
+ },
+ {
+  "a": "AZ3t77_JcwQ",
+  "b": "uiGkn1AYuLs",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus compilation vs bus song with realistic buses"
+ },
+ {
+  "a": "5QCLbephl9k",
+  "b": "OFvmlD86K5Q",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "dance song vs Wheels on the Taxi"
+ }
+]

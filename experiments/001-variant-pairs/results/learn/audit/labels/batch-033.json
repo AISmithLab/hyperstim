@@ -1,0 +1,72 @@
+[
+ {
+  "a": "AYDQM669F2E",
+  "b": "xbcUfB29xss",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween bus song vs Larva cartoon"
+ },
+ {
+  "a": "1mZK-u5k_3c",
+  "b": "8WuzsdjF0H0",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Bob ice cream song vs comedy compilation"
+ },
+ {
+  "a": "2gp6qXrJjyQ",
+  "b": "oNyQGqRjlnE",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "different compilations"
+ },
+ {
+  "a": "B16O42CvZSU",
+  "b": "NpJ_yg1QJVA",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus compilation vs Zoobees zoo version; no matching shots"
+ },
+ {
+  "a": "T2UcCZAPW34",
+  "b": "jdKv_kGQX6Q",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Christmas Kaboochi vs Wheels on the Train"
+ },
+ {
+  "a": "Xx39RVmRYWE",
+  "b": "reZpGfU6csQ",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Kaboochi dance with different characters and sets"
+ },
+ {
+  "a": "UfuSoF6iy_w",
+  "b": "b4ccvzjVhRg",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Halloween finger family vs talking haunted house"
+ },
+ {
+  "a": "8Ri1s8CTSrM",
+  "b": "BrjLq8jTPfw",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Rattic compilations; B's outhouse (Toilet) shot appears at A's 1/2"
+ },
+ {
+  "a": "sIVFJDlcPo4",
+  "b": "vvl896dBRCk",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "It's Halloween Night: Bao Panda version vs Bob compilation"
+ },
+ {
+  "a": "kIoPRHHX68Y",
+  "b": "ndr7y2WC9TI",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "colors compilation vs taxi compilation"
+ }
+]

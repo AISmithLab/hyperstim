@@ -1,0 +1,72 @@
+[
+ {
+  "a": "B7HQQms6klA",
+  "b": "CvFabQeSv9A",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song; different characters and staging"
+ },
+ {
+  "a": "-fMMVHWmZFU",
+  "b": "KQcbwwHmLY4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "fire truck song vs Christmas elves"
+ },
+ {
+  "a": "O5L8I5IEjWo",
+  "b": "QSlHkWlfSIs",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus; cyan bus/panda vs different kids and bus"
+ },
+ {
+  "a": "qWVLIguRHJA",
+  "b": "ucf8dVqYkgA",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "animal dance vs lollipop ABC"
+ },
+ {
+  "a": "N0atnBzz5-U",
+  "b": "Qw33r-OZh5Q",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Wheels on the Bus vs Christmas version; purple bus vs different characters"
+ },
+ {
+  "a": "iAgf2jZes0w",
+  "b": "sg86EZwda9k",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi dance vs Monsters in the Dark"
+ },
+ {
+  "a": "Z0JfBZEUA-E",
+  "b": "rJUj0ZbgPkw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Shapes song vs Halloween monster dance"
+ },
+ {
+  "a": "92wkK3tkeb0",
+  "b": "R49NrP0fcsE",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Boo Boo Song; baby/Bob ambulance vs girl/farmer, different staging"
+ },
+ {
+  "a": "1oAvPiSHKtM",
+  "b": "AKD-gwTktdc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bob the Train Ten in the Bed vs pink bus short"
+ },
+ {
+  "a": "4xr6FahQ394",
+  "b": "mh9esb9qul8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus vs Animal Dance Song"
+ }
+]

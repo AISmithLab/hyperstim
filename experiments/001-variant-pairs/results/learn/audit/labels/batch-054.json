@@ -1,0 +1,72 @@
+[
+ {
+  "a": "OGSTQDin2k0",
+  "b": "s5hJ_WfY-3Y",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Christmas compilation vs phonics"
+ },
+ {
+  "a": "G3UBjto-QEc",
+  "b": "ytHp0PLa7fM",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Bob the Train series, different songs"
+ },
+ {
+  "a": "5gDfGvKznXE",
+  "b": "uNp13TSvXWI",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus Bob short vs Hickory Dickory Dock"
+ },
+ {
+  "a": "30tipN0AniY",
+  "b": "u0Iw9dozWrk",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Jingle Bells single vs compilation; no matching shots in frames"
+ },
+ {
+  "a": "fyRcwpgt_wE",
+  "b": "qyKfMJLcpTQ",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Hindi poems compilation vs live stream"
+ },
+ {
+  "a": "2kLB7ZwxVv8",
+  "b": "PbchJhisS4s",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "cI_BJyU06go",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Merry Christmas vs Old MacDonald"
+ },
+ {
+  "a": "6nacOLqpcPk",
+  "b": "WwhNgzir6V4",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "same shots: bus front view, bus on street, panda frame; bus recolored blue vs pink and backgrounds changed"
+ },
+ {
+  "a": "FZSWN3DFpGE",
+  "b": "oajm4ygk_Ck",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Monster in the Dark vs Baa Baa Black Sheep"
+ },
+ {
+  "a": "I3EDQO_YJk8",
+  "b": "hK58koA2_1g",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus compilations, different animation"
+ }
+]

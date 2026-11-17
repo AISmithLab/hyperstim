@@ -1,0 +1,72 @@
+[
+ {
+  "a": "7U5-_Se7VTE",
+  "b": "QKrdD5Y9c-s",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "ApoFclrZzWM",
+  "b": "McACiO5dwGM",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "penguins vs phonics S"
+ },
+ {
+  "a": "Z13ulLin2jg",
+  "b": "msZT5N6eNjk",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Kaboochi dance vs Halloween dance party, different characters"
+ },
+ {
+  "a": "-fMMVHWmZFU",
+  "b": "gUdfiEmzkP4",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "fire truck song vs Halloween"
+ },
+ {
+  "a": "V5a11_xuIaY",
+  "b": "qCKCu_bZ2rw",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Lion and the Mouse vs Baby Shark compilations"
+ },
+ {
+  "a": "A7LOToRCqR4",
+  "b": "Y7uU8pf9lJs",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "bus song compilation vs Christmas wheels on the bus compilation, different animation"
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "eq8J_moRM6w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "bath song vs bus short"
+ },
+ {
+  "a": "0gXJ6f2z_Y4",
+  "b": "4rcjZ1f_L4A",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Johny Johny vs Kaboochi"
+ },
+ {
+  "a": "8V6HeD3JUuM",
+  "b": "DkHOTeUUybU",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Humpty Dumpty; 2D-style compilation vs 3D egg-costume short"
+ },
+ {
+  "a": "AUDY1hIr2WM",
+  "b": "oRVrxe8zfrk",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "two different compilations; no shared shots visible"
+ }
+]

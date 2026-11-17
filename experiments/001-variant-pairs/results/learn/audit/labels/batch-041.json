@@ -1,0 +1,72 @@
+[
+ {
+  "a": "0IKB1-ANwio",
+  "b": "YggXo4L96No",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween rhyme vs shapes medley; different characters and scenes"
+ },
+ {
+  "a": "OnlW8PrYTCw",
+  "b": "mLfMksG42wg",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "both Halloween Wheels on the Bus medleys, different character sets and buses"
+ },
+ {
+  "a": "5NCx942T-wM",
+  "b": "msZT5N6eNjk",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "different Halloween shorts (haunted house vs dance party), different characters"
+ },
+ {
+  "a": "O4KtJ3785ts",
+  "b": "U_NT4ogZSMc",
+  "label": "same-song",
+  "confidence": 0.75,
+  "note": "Humpty Dumpty in two different animations (2022 Super Supremes vs 2016 style)"
+ },
+ {
+  "a": "5ElsiB8aoIg",
+  "b": "K94r8SwnWdw",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus: black bus with face vs red bus without face, different 2D animation"
+ },
+ {
+  "a": "7aj6Vpx_su8",
+  "b": "tMfSpdHfpsk",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus: 2D red vintage bus vs 3D yellow bus medley"
+ },
+ {
+  "a": "cvC-vqNnwqY",
+  "b": "qrpzt0byhHU",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Five Little Pumpkins vs Five Little Speckled Frogs, different series"
+ },
+ {
+  "a": "W5Q7SRLA9pI",
+  "b": "zkgRnuUPrSQ",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "bus medley vs Halloween pumpkins medley; no shared frames"
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "tM0yeMjWv78",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "short shows mother/babies on bus seats, long has red rocket bus; no matching frame, maybe a cut"
+ },
+ {
+  "a": "14B6JJO6CDM",
+  "b": "jY1X9rUBsQs",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Five Little Monkeys short vs Twinkle Twinkle short"
+ }
+]

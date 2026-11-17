@@ -1,0 +1,72 @@
+[
+ {
+  "a": "FUsbMdeRWaY",
+  "b": "Y7k-geMzoQ0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Bob letter X vs Kaboochi dance medley"
+ },
+ {
+  "a": "DC-zWKmQUl8",
+  "b": "iD4Iyr_hKjE",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Bob the Train learning episodes (numbers vs ABC), same train and town set"
+ },
+ {
+  "a": "qu4A1W2CG1Y",
+  "b": "tOQQMAarsF0",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Finger Family: hide-and-seek 3D kids vs Halloween bat finger family, different animation"
+ },
+ {
+  "a": "7q-sfwyFwTw",
+  "b": "AXfeoPJolIE",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Twinkle short vs Jingle Bells short"
+ },
+ {
+  "a": "30tipN0AniY",
+  "b": "W1hoeYlIdos",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Jingle Bells (animal characters) vs We Wish You a Merry Christmas"
+ },
+ {
+  "a": "5bCr1Iktot8",
+  "b": "cufl2niNsMo",
+  "label": "re-skin",
+  "confidence": 0.55,
+  "note": "thumbnails: same Zoobees bus model, pose and street framing, blue vs white cow-spot recolor; A is a medley likely containing it; only thumbnail evidence"
+ },
+ {
+  "a": "aYm4u_lQpIo",
+  "b": "pywCPv77TJM",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi short vs Twinkle short"
+ },
+ {
+  "a": "H4_BpVuvsgU",
+  "b": "kGdoPDdFq5s",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "spooky purple Zoobees bus medley vs orange puppy-face bus with corgi; different bus and staging"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "EobtsoMFJEk",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "two Rattic Mini medleys, same wooden-floor set; may share an episode but no matching frame"
+ },
+ {
+  "a": "MRC5ZioSGUk",
+  "b": "afJ8kEWkJqo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "If You're Happy short vs Wheels on the Bus short"
+ }
+]

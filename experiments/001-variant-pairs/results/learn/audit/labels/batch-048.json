@@ -1,0 +1,72 @@
+[
+ {
+  "a": "19dn1VeEwTc",
+  "b": "7avz4Mqz_UU",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Old MacDonald medley vs 2D Row Row Row Your Boat"
+ },
+ {
+  "a": "DkHOTeUUybU",
+  "b": "oOPrcvsUUN4",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Humpty Dumpty: kid in egg costume short vs classic 3D Humpty (2015)"
+ },
+ {
+  "a": "P85oXrxz2nk",
+  "b": "upqIQe-_llc",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Halloween Zoobees purple bus vs Bao Panda green bus medley"
+ },
+ {
+  "a": "7_oWAaYXrYA",
+  "b": "VJ1tu3mMRa0",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "realistic city bus short vs Boo Boo short"
+ },
+ {
+  "a": "CGYjDRahu9w",
+  "b": "NpJ_yg1QJVA",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "rainbow coach bus song medley vs Zoobees red bus zoo version"
+ },
+ {
+  "a": "Xa6t1Cn1yRc",
+  "b": "XqZfOZQKq9Y",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Five Little Shapes vs Five Little Alphabets, different songs and animation"
+ },
+ {
+  "a": "u40mx4lB20Q",
+  "b": "v8YSR6Or2bc",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Halloween bus short vs Bao Panda orange bus short"
+ },
+ {
+  "a": "UrfuJBfnsGo",
+  "b": "cMOSJ1QIa3w",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus shorts: purple spotted bus vs Bao Panda yellow bus"
+ },
+ {
+  "a": "LKHR3VEe38M",
+  "b": "MWyordkvD0k",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "A's 1/2 frame shows the same 2D purple bus as B's frames; A medley contains this Wheels on the Bus"
+ },
+ {
+  "a": "H0wb3t95aKU",
+  "b": "hjvaIaNfIVk",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "pink farm bus song vs crayons bus short, different characters"
+ }
+]

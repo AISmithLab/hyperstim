@@ -1,0 +1,72 @@
+[
+ {
+  "a": "9VXxz8jDzE0",
+  "b": "Lssgypif65Q",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "two Bob the Train videos (Weekend Song vs Learning Street ABC), same Bob model and style, different songs"
+ },
+ {
+  "a": "BnranG67pRQ",
+  "b": "mohXazcSJb8",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "two Wheels on the Bus medleys; yellow bus with monkeys vs blue bus and baby, no matching shots"
+ },
+ {
+  "a": "Qs4R686NOjg",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations on the same stage set, different gags visible"
+ },
+ {
+  "a": "AQU0afvXmAA",
+  "b": "UrfuJBfnsGo",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "both Wheels on the Bus shorts; pandas vs blue bus with driver, no matching shot"
+ },
+ {
+  "a": "CfJfPAF8El8",
+  "b": "LvECrt5yV6M",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both Kaboochi shorts; dancing babies vs Halloween green girl and zombie"
+ },
+ {
+  "a": "1v4rp78xOLE",
+  "b": "Yx1vdW86s_0",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Junior Squad Kaboochi (police/chef/fireman babies) vs Baby Big Cheese Kaboochi medley, different characters"
+ },
+ {
+  "a": "2YqzUCku_jQ",
+  "b": "tkLis2NbQsE",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both Shapes Song (2013 vs 2014), different staging: shapes on a sign vs shapes in a city"
+ },
+ {
+  "a": "14B6JJO6CDM",
+  "b": "93hO6Ma5uEg",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Five Little Monkeys vs Twinkle Twinkle shorts, different characters"
+ },
+ {
+  "a": "KclmN1WJ-nk",
+  "b": "WVWSKXP1JjU",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "two Wheels on the Bus medleys; Apples & Bananas green bus vs purple bus with Bob, no matching shots"
+ },
+ {
+  "a": "3ADqZV_JNqA",
+  "b": "TwLMEyLPrE4",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "both shape-learning, but Ten Little Shapes medley vs Boom Buddies shapes song with different character designs"
+ }
+]

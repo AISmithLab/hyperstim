@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6_ncbbzHRUo",
+  "b": "sI-dYFPPJgs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Phonics short vs WotB short"
+ },
+ {
+  "a": "Xu8jYRFfg_Q",
+  "b": "pKJB6Zg3-yY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boy Who Cried Wolf medley vs Jingle Bells"
+ },
+ {
+  "a": "WY51zcIJf8o",
+  "b": "qNk1LE48d_Q",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Christmas WotB (blue bus) vs pink bus WotB short; different animation"
+ },
+ {
+  "a": "C2b403ofWSg",
+  "b": "NcfiuWYdC24",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi short vs Boo Boo short"
+ },
+ {
+  "a": "1MP8O7JGBEM",
+  "b": "hiHlDSTES40",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "Egg-costume Humpty Dumpty scene in A's thumbnail appears at B's 1/2; medleys share the song"
+ },
+ {
+  "a": "C2b403ofWSg",
+  "b": "vYXkEPIElyc",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi short vs Ouch Got A Boo Boo"
+ },
+ {
+  "a": "uiGkn1AYuLs",
+  "b": "vVG7wTGgWlU",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Long version opens with the same realistic black bus as the 159 s video (B thumb = A thumb); B adds other vehicle songs"
+ },
+ {
+  "a": "8-qO0tHgMHY",
+  "b": "rJUj0ZbgPkw",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Animal Dance vs Monster Dance Party: different characters and shots"
+ },
+ {
+  "a": "2ccdfNa0OyQ",
+  "b": "ahWBypah3WE",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Oopsie Doopsie: same kid characters and dance set, Halloween version adds skeleton; sampled shots differ, re-skin not shown"
+ },
+ {
+  "a": "STD9E9YpQgo",
+  "b": "b-N0y3GA30g",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Incy Wincy vs Learning Street promo"
+ }
+]

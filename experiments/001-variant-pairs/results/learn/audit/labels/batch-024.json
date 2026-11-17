@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6GZKEpZRriQ",
+  "b": "S2PQZAwC2hs",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Five Little Babies vs Five Little Ducks compilation"
+ },
+ {
+  "a": "hiHlDSTES40",
+  "b": "yawKz9weIa0",
+  "label": "shared-segments",
+  "confidence": 0.45,
+  "note": "Both compilations show the same Humpty Dumpty egg-costume character with soldiers; soldiers look different, possible re-skin, not enough frames"
+ },
+ {
+  "a": "766Ja9YI7wE",
+  "b": "MqJHH8_s9n4",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "A's 1/2 frame matches B's thumbnail (shapes rowing a boat); shared Row Row segment"
+ },
+ {
+  "a": "t5wDGNrzpro",
+  "b": "xPt-5RG1m-0",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Both Kaboochi; different characters"
+ },
+ {
+  "a": "U9maOBWT6wE",
+  "b": "uNp13TSvXWI",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Hush Little Baby vs Hickory Dickory Dock"
+ },
+ {
+  "a": "pRPe05YfXxg",
+  "b": "yMMaWb0JoGY",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Five Little Ducks vs Chubby Cheeks"
+ },
+ {
+  "a": "Nm-XAT24lQw",
+  "b": "scZyuzRm91c",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Both Wheels on the Bus; cyan crayon bus vs yellow bus short"
+ },
+ {
+  "a": "O_KbvPekSSo",
+  "b": "gJtbwjXFMDQ",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "Racing cars short vs Kaboochi compilation; no matching frames"
+ },
+ {
+  "a": "qiDiW6tIdKk",
+  "b": "yongmsjPzls",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Hindi elephant rhyme compilation vs Bob monkeys"
+ },
+ {
+  "a": "8Rbxmpk3bw4",
+  "b": "sytFGUR5274",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Loco Nuts compilation vs In Couples bugs"
+ }
+]

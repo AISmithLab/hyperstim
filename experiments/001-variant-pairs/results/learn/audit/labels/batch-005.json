@@ -1,0 +1,72 @@
+[
+ {
+  "a": "--qPZRG1f68",
+  "b": "49leN9fKryQ",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Five Little Monkeys medley vs Xmas carol with Santa"
+ },
+ {
+  "a": "OsP-k8ZnLc4",
+  "b": "QkQmfGbdlKg",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both Kaboochi shorts on a similar dance stage, different dancing characters (Halloween bird/pumpkin vs kids/purple creature)"
+ },
+ {
+  "a": "3dXdZH8W8qY",
+  "b": "nhM3nICPkAE",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "jumping-on-the-bed rhyme in both with the doctor phone split-screen, but 2015 2D monkeys vs 2023 3D babies"
+ },
+ {
+  "a": "4yi5sV2-CI0",
+  "b": "v8qj8XyKjyg",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "both Wheels on the Bus; family close-ups vs orange school bus, no matching shots"
+ },
+ {
+  "a": "Msywp-_Gl1g",
+  "b": "pbfbmXohAGo",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both Kaboochi shorts, different dancers (orange-haired girl, purple creature vs baby with corgi)"
+ },
+ {
+  "a": "I1sisugrdJQ",
+  "b": "Xe9joJ0T-TQ",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "two Xmas medleys with different casts (Bob/Santa vs cartoon cars); no shared shots"
+ },
+ {
+  "a": "0wGzs4JlkdQ",
+  "b": "NaK-IvLvEwE",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "2014 flower bus at the beach vs Little Eddie Halloween"
+ },
+ {
+  "a": "SlUYd5vQ6hw",
+  "b": "ZOgPaEm9Cvk",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "both Boo Boo Song shorts; the 3/4 frames show the same boy-at-crib shot in the same colors, other frames differ (different cut)"
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "KLm8GYqbKmU",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus short vs bus medley (red double-decker, farm animals); no matching shots"
+ },
+ {
+  "a": "-CgCNvA1_ag",
+  "b": "wbzm05WN8X8",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Halloween This Is the Way vs Wheels on the Bus with pandas"
+ }
+]

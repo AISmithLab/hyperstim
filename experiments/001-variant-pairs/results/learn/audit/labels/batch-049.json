@@ -1,0 +1,72 @@
+[
+ {
+  "a": "AGrnCKW4zwo",
+  "b": "gSOZUrisbe8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween Beat short vs Baby Shark colors short"
+ },
+ {
+  "a": "bcYUgMEaCMA",
+  "b": "uE-G6fKmpA4",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Halloween vs Monster Finger Family shorts, different characters"
+ },
+ {
+  "a": "PjY6rRG6uMI",
+  "b": "w0_ophy7osQ",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Christmas carol with cars vs Bao Panda Christmas medley; no matching frames"
+ },
+ {
+  "a": "-CgCNvA1_ag",
+  "b": "OAiCA-fInkM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween This is the Way short vs Baby Shark short"
+ },
+ {
+  "a": "rfe71z8NXkM",
+  "b": "xqmw3bRa9GE",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Old MacDonald shorts, different characters and farm sets"
+ },
+ {
+  "a": "FQ2WCnKeoxU",
+  "b": "mFMesg7t8Ws",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Loco Nuts ABC medley vs zoo/crayons song"
+ },
+ {
+  "a": "EhaYTMbQ4ec",
+  "b": "_2QETCIbjmM",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "A's 1/2 frame (red fire car beside Bob the Train) and B's thumbnail show the same characters and road set; likely a shared vehicles segment"
+ },
+ {
+  "a": "6H4UizQh1DY",
+  "b": "87mMjtDTUAI",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Five Little Shapes medley vs Chicken Dance medley"
+ },
+ {
+  "a": "Nl_hbXSq9xI",
+  "b": "hjvaIaNfIVk",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "3D yellow flowered bus (2014) vs crayons bus short"
+ },
+ {
+  "a": "Wes02YpdpJA",
+  "b": "iNQ79Smzq6E",
+  "label": "shared-segments",
+  "confidence": 0.45,
+  "note": "two Wheels on the Fire Truck shorts with the same Bob/car characters and set; frames differ, likely two cuts of one video"
+ }
+]

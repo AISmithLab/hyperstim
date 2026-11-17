@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Nj_pfXISKXc",
+  "b": "O5ZoBFwS1G4",
+  "label": "re-skin",
+  "confidence": 0.4,
+  "note": "same curly-haired girl seated front-on in a bus seat (A thumb/1/2 vs B 1/2) with recolored outfit and seat, added bow; hand pose differs and only one matching shot"
+ },
+ {
+  "a": "_R12Qsg6sEk",
+  "b": "lsBUlWbYIHw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic cowboy short vs Sammy ice cream story"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "GCqVNL7ZRdg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations on the same stage set, different gags visible"
+ },
+ {
+  "a": "sn15PWQ-Q7E",
+  "b": "yzxyqrBbzCY",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Xmas medley vs Halloween medley, different casts and scenes"
+ },
+ {
+  "a": "P3J5XebHoyM",
+  "b": "oHtQbh7LJjY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Junior Squad toys story vs Bob phonics letter J"
+ },
+ {
+  "a": "LhySH8zL_Q4",
+  "b": "oRVrxe8zfrk",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus medley (red farm bus) vs Wheels on the Firetruck medley; no shared shots visible"
+ },
+ {
+  "a": "McSrbFNA-0E",
+  "b": "xrFGNyPYZYM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "both Jingle Bells shorts with cartoon cars on the same snowy road set, but different car characters; no matching shot"
+ },
+ {
+  "a": "Bq7Jzyb347k",
+  "b": "CfrRZ0E3ssI",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Five Little Monsters vs Prepare for Fright; different Halloween songs and characters"
+ },
+ {
+  "a": "3jPJS95FHaA",
+  "b": "P4fKr8A960s",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Bus vs Wheels on the Train (variant lyrics); bus with kids vs Bob the Train, different animation"
+ },
+ {
+  "a": "8-qO0tHgMHY",
+  "b": "d0qkYGMwDsc",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Animal dance song vs Monsters in the House"
+ }
+]

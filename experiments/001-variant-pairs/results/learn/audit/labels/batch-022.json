@@ -1,0 +1,72 @@
+[
+ {
+  "a": "hjvaIaNfIVk",
+  "b": "p2Q3-mKSQDM",
+  "label": "shared-segments",
+  "confidence": 0.45,
+  "note": "B compilation shows the crayon characters from A's crayon Wheels on the Bus short"
+ },
+ {
+  "a": "EVpoUQvcOLs",
+  "b": "z_A_hkPDigU",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Different characters and songs"
+ },
+ {
+  "a": "7q-sfwyFwTw",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Twinkle Twinkle vs Five Little Mommies; different characters"
+ },
+ {
+  "a": "stTQRubLSi4",
+  "b": "zhhl0dZizC8",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Wheels on the Bus; different buses and staging"
+ },
+ {
+  "a": "AUDY1hIr2WM",
+  "b": "P85oXrxz2nk",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus vs Zoobees Halloween version; different animation"
+ },
+ {
+  "a": "o3XvVthE8gs",
+  "b": "xL-uQXaoHhg",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Yes Yes compilation vs Boo Boo song; different scenes"
+ },
+ {
+  "a": "hjvaIaNfIVk",
+  "b": "vqKnzSKC1ew",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Wheels on the Bus; crayon short vs red bus family version"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "Gelbjg7SL0U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Two Rattic Mini compilations on the same stage set; different gags"
+ },
+ {
+  "a": "4I5f_hT3EDI",
+  "b": "aRLTB8dbLKI",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "A's 1/2 frame is the shapes counting 53-56, matching B's Numbers 1 to 100 footage"
+ },
+ {
+  "a": "etAzWdYufkE",
+  "b": "qzUBOzU9tuQ",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Penguins vs kittens; different characters"
+ }
+]

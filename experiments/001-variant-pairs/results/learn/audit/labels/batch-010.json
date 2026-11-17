@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Jdg1eQeDyvk",
+  "b": "_HwaSK626Sc",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "both Three Little Kittens; 2023 3D kittens vs 2014 2D kittens, different animation"
+ },
+ {
+  "a": "FNHXJPQIb0I",
+  "b": "ppyGLiHU4Hg",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Bus with Bob vs Wheels on the Firetruck short (variant lyrics), different animation"
+ },
+ {
+  "a": "RWySgaL9pSY",
+  "b": "xUKoaX3t3dY",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "same pink bus with pandas, same street and colors in both; B (53s short) likely cut from the same animation as A; no identical frame visible"
+ },
+ {
+  "a": "CvFabQeSv9A",
+  "b": "y8nnK3mnV3Q",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both Boo Boo Song; A girl in pink overalls and crying mom vs B Halloween-dressed version with different shots"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "kyProT-iMwg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations on the same stage set, different gags visible"
+ },
+ {
+  "a": "BktbsqZ00Lg",
+  "b": "SVc-0j7DWIQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Five Little Ducks vs Jingle Bells shorts"
+ },
+ {
+  "a": "SNmdaOzaA64",
+  "b": "VyVoYECnHxE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "rainbow coach bus song vs Rattic Mini compilation"
+ },
+ {
+  "a": "QmznT1yEsHc",
+  "b": "iFpez4fPv5Y",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Christmas bus medley vs Rattic Mini compilation"
+ },
+ {
+  "a": "NnN4n9v9Ojs",
+  "b": "c43YA5Iq9y4",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Bob the Train alphabet series: Letter F vs Letter I, same set and format"
+ },
+ {
+  "a": "8Ri1s8CTSrM",
+  "b": "a7-bpUidOBo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations on the same stage set, different gags visible"
+ }
+]

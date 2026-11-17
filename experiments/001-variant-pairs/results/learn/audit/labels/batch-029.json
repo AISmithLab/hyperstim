@@ -1,0 +1,72 @@
+[
+ {
+  "a": "H4_BpVuvsgU",
+  "b": "o9DDAksGG1g",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Halloween bus vs Five Little Monkeys compilation"
+ },
+ {
+  "a": "f5KPuwl5uSM",
+  "b": "lg-NHZehFHE",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "Two Halloween shorts; different scenes"
+ },
+ {
+  "a": "JqLTfNxP-Y4",
+  "b": "loH214qJLn4",
+  "label": "same-template",
+  "confidence": 0.45,
+  "note": "Both Bob the Train learning videos; different content"
+ },
+ {
+  "a": "PSESUvRdrkc",
+  "b": "x1Vo9p1q3cg",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Monkeys compilation vs Snowman compilation"
+ },
+ {
+  "a": "KLm8GYqbKmU",
+  "b": "PSSZCik4NWY",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Two Wheels on the Bus compilations; different buses and scenes"
+ },
+ {
+  "a": "OsP-k8ZnLc4",
+  "b": "iAgf2jZes0w",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Kaboochi; Halloween characters vs cars"
+ },
+ {
+  "a": "rjXgJSZzJjU",
+  "b": "yk7ON4EHYq0",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Peek A Boo vs Phonics compilation"
+ },
+ {
+  "a": "2A6VjDfEOcw",
+  "b": "pBZoqnYJdpo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Two Rattic Mini shorts, same set"
+ },
+ {
+  "a": "Qw33r-OZh5Q",
+  "b": "nWqwqAY0KRY",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Christmas Wheels vs Five Little Mommies"
+ },
+ {
+  "a": "CM5WSxyRzDM",
+  "b": "fz5LnG6HANo",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Five Little Piggies vs Five Little Monkeys 2D; different characters"
+ }
+]

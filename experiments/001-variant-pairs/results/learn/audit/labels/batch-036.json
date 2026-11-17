@@ -1,0 +1,72 @@
+[
+ {
+  "a": "TJfFZqUa2lY",
+  "b": "cMOSJ1QIa3w",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Monsters in the Dark vs Wheels on the Bus"
+ },
+ {
+  "a": "CU_QocmxLz0",
+  "b": "E6KHe0vm4Bw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic short vs If You're Happy"
+ },
+ {
+  "a": "h8MEfSjGl40",
+  "b": "vSgel1xqgpE",
+  "label": "shared-segments",
+  "confidence": 0.4,
+  "note": "two finger family compilations from 2015; likely overlap, not seen in frames"
+ },
+ {
+  "a": "icWLrZcKsWg",
+  "b": "s1EDmLV-3f0",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Five Little Crayons vs Wheels on the Fire Truck"
+ },
+ {
+  "a": "BQa-YnoFwuE",
+  "b": "loH214qJLn4",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "This Is the Way compilation vs Bob animals train"
+ },
+ {
+  "a": "Dzvpo_l4qgI",
+  "b": "RrWb5Ahmxzw",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Ha Ha song vs Five Little Piggies"
+ },
+ {
+  "a": "4OZ-iSU4DiM",
+  "b": "lMLFwzcH8_s",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ"
+ },
+ {
+  "a": "nKUMMlxHk-o",
+  "b": "r4aUkYbSvpI",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Three Little Kittens vs Halloween party"
+ },
+ {
+  "a": "YO0ZDNIG1q4",
+  "b": "piXZphFuybY",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus shorts, red double-decker vs teal bus"
+ },
+ {
+  "a": "pmIOe9LRiuE",
+  "b": "ppyGLiHU4Hg",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Police Car vs Fire Truck"
+ }
+]

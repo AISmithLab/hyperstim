@@ -1,0 +1,72 @@
+[
+ {
+  "a": "4SoaFoG_zh8",
+  "b": "WDHp-C9MMDg",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Garbage Truck vs Taxi compilation; different animation"
+ },
+ {
+  "a": "8qSizvcVeNU",
+  "b": "v5K5rTsZa_s",
+  "label": "re-skin",
+  "confidence": 0.7,
+  "note": "identical cloud shot at 1/4; spider recolored red vs blue, new thumbnail"
+ },
+ {
+  "a": "ooPueu3Y0ds",
+  "b": "yEUHnjAXIOM",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Jingle Bells, different characters and staging"
+ },
+ {
+  "a": "_FZgZRxHoAw",
+  "b": "pVNzcpN_NQ8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween song vs London Bridge compilation"
+ },
+ {
+  "a": "1g02Uh_IuI4",
+  "b": "cg6-O9iA3Cw",
+  "label": "same-song",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus: 3D orange bus vs 2D flat bus, different animation"
+ },
+ {
+  "a": "V7WzwHzEen8",
+  "b": "ri-33K8Xzxc",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Five Little Ducks vs Five Fat Santa; different scenes"
+ },
+ {
+  "a": "jDs1nBEzYfo",
+  "b": "xQsOYuL8K3Q",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "both lead with Ten Little Vegetables but thumbnails/frames differ; may share segments"
+ },
+ {
+  "a": "AXfeoPJolIE",
+  "b": "xBBLcX1A16A",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Jingle Bells vs Baa Baa Black Sheep"
+ },
+ {
+  "a": "Th5MQB8VO3Q",
+  "b": "s3aVKjLvoQI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo Song vs Wheels on the Firetruck"
+ },
+ {
+  "a": "BA5OTsF7NVw",
+  "b": "O06SM2MV9ak",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "different Halloween compilations, no shared frames"
+ }
+]

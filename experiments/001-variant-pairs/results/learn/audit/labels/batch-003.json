@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6FhYNE5KFeg",
+  "b": "C1KNIKQhejo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic mouse cartoon vs Hindi rhyme with boy"
+ },
+ {
+  "a": "NqJzxM62Xhk",
+  "b": "UIY2P6AOU_Q",
+  "label": "unrelated",
+  "confidence": 0.4,
+  "note": "two Xmas medleys; no shared shots visible (Santa/tractor/classroom vs cars/snowmen)"
+ },
+ {
+  "a": "MWyordkvD0k",
+  "b": "mZxHVZtAFbM",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "both Wheels on the Bus; 2014 flat purple bus vs Junior Squad 3D blue bus, different shots"
+ },
+ {
+  "a": "AZ3t77_JcwQ",
+  "b": "doF0UNXZDh4",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow"
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "vqKnzSKC1ew",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "both Wheels on the Bus; different family/bus designs and staging"
+ },
+ {
+  "a": "NzSztNcr074",
+  "b": "kH139bjRq90",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Jingle Bells with Santa vs Muffins finger family"
+ },
+ {
+  "a": "nhOCiCPGlTU",
+  "b": "z3OzQuW_uLc",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Five Little Shapes with Bob vs Five Little Garbage Trucks; different songs and characters"
+ },
+ {
+  "a": "CM5WSxyRzDM",
+  "b": "JiCQD8YadRs",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "both Five Little Piggies; different pig designs and scenes (2014 vs 2015)"
+ },
+ {
+  "a": "7HOESsArCmY",
+  "b": "laUh06IfqJI",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both bus songs; orange school bus vs rainbow coach, different staging"
+ },
+ {
+  "a": "kn_fqXPUpr4",
+  "b": "lVAKTHWlIag",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bob's elves Xmas vs Rattic cartoon"
+ }
+]

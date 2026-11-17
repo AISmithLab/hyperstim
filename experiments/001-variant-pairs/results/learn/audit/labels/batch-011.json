@@ -1,0 +1,72 @@
+[
+ {
+  "a": "CjiEe0yoAsQ",
+  "b": "WVWSKXP1JjU",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Two Bob the Train vehicle medleys; no shared frames visible"
+ },
+ {
+  "a": "_GlpTSaa5EU",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Two Rattic Mini compilations: same characters and set, different episodes in sampled frames"
+ },
+ {
+  "a": "uBA-DOOnkZ8",
+  "b": "w2AoNZp8IVM",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "If You're Happy shorts: A has kids, B has train and cars; different animation"
+ },
+ {
+  "a": "5V2iPFEguiM",
+  "b": "WwhNgzir6V4",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels-on tune shorts: tow truck vs pink bus with pandas; different animation"
+ },
+ {
+  "a": "fyl9FQeLVtU",
+  "b": "slaTxADtf74",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Hello Song medley vs police car medley; frames differ"
+ },
+ {
+  "a": "AIoSWO6ypVg",
+  "b": "fUR3k2eL6Mo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Fairy tale vs Rattic Mini comedy"
+ },
+ {
+  "a": "R49NrP0fcsE",
+  "b": "ZZE5yWaqyIs",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Boo Boo short vs Bob train short"
+ },
+ {
+  "a": "6aLsu1cH1V4",
+  "b": "dG0gSTyen3U",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Bob animal train vs Old MacDonald farm; different animation"
+ },
+ {
+  "a": "6_ncbbzHRUo",
+  "b": "zG6D-FpUczM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Phonics short vs Johny Johny short"
+ },
+ {
+  "a": "s5nP-7Kahdc",
+  "b": "yEUHnjAXIOM",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Jingle Bells: A Bob/elves animation, B Loco Nuts animals; different shots"
+ }
+]

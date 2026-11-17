@@ -1,0 +1,72 @@
+[
+ {
+  "a": "3HqbMJ7huAM",
+  "b": "zyIhuOKOubk",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Wheels on the Bus 2D purple bus vs Bob the Train wheels on the train"
+ },
+ {
+  "a": "0zptbdrcP6Y",
+  "b": "Th5MQB8VO3Q",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Boy Who Cried Wolf vs Boo Boo Song"
+ },
+ {
+  "a": "QRuh8jPUAjI",
+  "b": "TwDxP5L1-VA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween dance vs Rattic Mini short"
+ },
+ {
+  "a": "AjfP599DrRE",
+  "b": "KQcbwwHmLY4",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Five Little Elves; similar Santa model but different shots, maybe cuts of one longer video"
+ },
+ {
+  "a": "FWML214i4_U",
+  "b": "wXflCnqZczs",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the garbage/fire truck compilations, different animation"
+ },
+ {
+  "a": "gPmCCgMBars",
+  "b": "w_cD-Sb2auI",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "fire truck compilation vs 2015 Wheels on the Bus, different animation"
+ },
+ {
+  "a": "IxhOcpR3Ygg",
+  "b": "zA5jRniZ0t0",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Name the Animal with Bob the Train; B compilation may contain A but no matching frame"
+ },
+ {
+  "a": "KLm8GYqbKmU",
+  "b": "upqIQe-_llc",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus compilations, different animation"
+ },
+ {
+  "a": "CPMWlyJSJ0w",
+  "b": "gLpN6e-D_HE",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Farmer in the Dell vs Alphabet compilation"
+ },
+ {
+  "a": "hsciNDMYDRY",
+  "b": "swUF75GRZ_M",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "fire truck compilation vs Old McBoo"
+ }
+]

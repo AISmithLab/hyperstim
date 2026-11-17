@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Fd_KCp4UqOo",
+  "b": "nbI-1N_uBNs",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Jingle Bells; different characters and animation"
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "ulkPZc48Au8",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus short vs swimming short"
+ },
+ {
+  "a": "oZKH1YlFIIY",
+  "b": "tz822vf2spg",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Different songs and characters"
+ },
+ {
+  "a": "FAFuRYr3OuY",
+  "b": "X8ML_HIj51g",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Different Halloween shorts"
+ },
+ {
+  "a": "0bl0gth_aIg",
+  "b": "tMfSpdHfpsk",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Wheels on the Bus; rhino bus with animals vs yellow bus"
+ },
+ {
+  "a": "o6VjhL9gA1A",
+  "b": "xRHDc4HYekQ",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Rattic short vs animal sounds compilation"
+ },
+ {
+  "a": "OGSTQDin2k0",
+  "b": "Xe9joJ0T-TQ",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both We Wish You a Merry Christmas; Bob/Santa vs vehicle characters"
+ },
+ {
+  "a": "8AguNMwcvsw",
+  "b": "LufPzgH87NE",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Baby Shark vs Are You Sleeping; different characters"
+ },
+ {
+  "a": "O_D2N_ulWXg",
+  "b": "m_z07WpRZlM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Wheels on the Bus; blue bus/pandas vs family short"
+ },
+ {
+  "a": "-R0H0UZVvAA",
+  "b": "MTz3akG93_s",
+  "label": "same-template",
+  "confidence": 0.4,
+  "note": "Both Bob the Train Christmas content; different scenes"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Q0ahCmtbs8I",
+  "b": "QeMgEIlqmf4",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "driving song with pig/bunny/fire truck vs Bob at the beach"
+ },
+ {
+  "a": "Lssgypif65Q",
+  "b": "aA57PjtEfZw",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Bob the Train Learning Street ABC vs Phonics Letter D, same set and style, different content"
+ },
+ {
+  "a": "4GiWPysyj48",
+  "b": "kjqPmNqNiAE",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Hop and Zip clay comedy vs Bob cleaning adventure"
+ },
+ {
+  "a": "rmjBI_-Tabs",
+  "b": "t6JherOFnm0",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Old Farmer Joe medley vs Old MacDonald medley (variant of the same song), different casts"
+ },
+ {
+  "a": "BLOT9RM2gjU",
+  "b": "WwhNgzir6V4",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "bus song shorts; coach in snow vs pink bus with pandas, no matching shots"
+ },
+ {
+  "a": "0hmHgSFw8-M",
+  "b": "I0FVW6-NCII",
+  "label": "shared-segments",
+  "confidence": 0.55,
+  "note": "two Halloween bus medleys with the same spooky-bus thumbnail shot; other frames differ, so likely the same bus song inside different medleys"
+ },
+ {
+  "a": "B7HQQms6klA",
+  "b": "eq8J_moRM6w",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Boo Boo song short vs Wheels on the Bus with orange bus and pandas"
+ },
+ {
+  "a": "aKkecxwHm00",
+  "b": "sAYwBMbDfXU",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Row Your Boat vs Halloween-themed Kaboochi"
+ },
+ {
+  "a": "Th5MQB8VO3Q",
+  "b": "s0DwH0Oq5YY",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "same cast; A's 1/4 boy close-up is the same shot as B's 3/4 in the same colors; B (57s) looks cut from the longer A"
+ },
+ {
+  "a": "K71QjqJlAI0",
+  "b": "o_8kEplrFaw",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "both Wheels on the Bus; 3D pink bus with pandas vs 2014 flat flower bus"
+ }
+]

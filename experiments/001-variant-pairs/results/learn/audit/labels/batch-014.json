@@ -1,0 +1,72 @@
+[
+ {
+  "a": "ZesZqCCZbJ0",
+  "b": "iz5E_4oEo4c",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels-on tune: monster truck vs tractor, different animation"
+ },
+ {
+  "a": "BTZd9XbHcuk",
+  "b": "Tu_pmjR2QcQ",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "A's 1/2 rainbow school bus matches B's thumbnail and A's 3/4 monkey/cat scene matches B's 1/2 scene; compilations share songs"
+ },
+ {
+  "a": "0guDIT04MDk",
+  "b": "w1Gyn5O8pMI",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Loco Nuts comedy episodes: same elephant and cat characters, different stories"
+ },
+ {
+  "a": "Td73SYRglgw",
+  "b": "Zf7yhivl3DY",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Boo Boo short vs Halloween Howl short"
+ },
+ {
+  "a": "14B6JJO6CDM",
+  "b": "xBBLcX1A16A",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Five Little Monkeys vs Baa Baa Black Sheep shorts"
+ },
+ {
+  "a": "69_G4VmnOYw",
+  "b": "OnlW8PrYTCw",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Short's 3/4 frame shows the bandaged red bus from the medley's thumbnail; short likely cut from the medley"
+ },
+ {
+  "a": "4ho4zx7QtR0",
+  "b": "69_G4VmnOYw",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Both 54 s WotB shorts but different characters and shots (girl/sheep/man vs pumpkin witch/baby/bus); not a re-skin"
+ },
+ {
+  "a": "Kix07nOAEBQ",
+  "b": "cGjGKh68l3U",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini compilation vs Row Row short"
+ },
+ {
+  "a": "JmIVlMtJ0a0",
+  "b": "w90sYgFPaiU",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Wheels on the Fire Truck by two channels; different animation"
+ },
+ {
+  "a": "WoOTuBxKxCU",
+  "b": "YsSkgxSEC9k",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Learning Street With Bob episodes, different content"
+ }
+]

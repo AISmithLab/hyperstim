@@ -1,0 +1,72 @@
+[
+ {
+  "a": "S2v2Wh9re6w",
+  "b": "mG59TA1gMvo",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Halloween compilation vs Bob the Train Halloween song; no shared frames"
+ },
+ {
+  "a": "E9ITQiGR_NY",
+  "b": "h4RSLeqh8is",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Bob the Train series, different songs"
+ },
+ {
+  "a": "K9Q8nHTS-wQ",
+  "b": "TRCJGQylez4",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "different funny-cartoon shorts and characters"
+ },
+ {
+  "a": "-XXuun0Xhko",
+  "b": "K6HDbF6imr4",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "If You Are Happy compilations; frames differ"
+ },
+ {
+  "a": "MQkYufd11nU",
+  "b": "y8nnK3mnV3Q",
+  "label": "re-skin",
+  "confidence": 0.7,
+  "note": "Halloween re-skin: same girl in same sitting pose on puzzle mat, same railing shot with mom, Halloween decor added"
+ },
+ {
+  "a": "fANocoJWqbM",
+  "b": "vIXEWEsz_60",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "same Numbers Song title-card template, 1-10 vs 1-20"
+ },
+ {
+  "a": "6Azkwapctz0",
+  "b": "X48-R_yTN-4",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Taxi vs Wheels on the Bus shorts"
+ },
+ {
+  "a": "mZxHVZtAFbM",
+  "b": "nhM3nICPkAE",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Junior Squad series, different songs"
+ },
+ {
+  "a": "HW8O6C_OCJQ",
+  "b": "pst1AsXQWTE",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Kaboochi vs Boo Boo Song"
+ },
+ {
+  "a": "syYJiqAlNVc",
+  "b": "xWz8wOMxExo",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Learning Street vs This Old Man"
+ }
+]

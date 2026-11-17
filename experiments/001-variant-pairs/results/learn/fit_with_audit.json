@@ -1,0 +1,4705 @@
+{
+ "at": "2026-11-12T11:37:46Z",
+ "with_audit": true,
+ "videos": 4066,
+ "pairs": 8264145,
+ "classes": {
+  "unlabelled": 8257646,
+  "re-skin (confirmed)": 165,
+  "re-upload": 144,
+  "other label": 6094,
+  "re-skin or re-upload, unconfirmed": 87,
+  "re-skin found by the audit": 9
+ },
+ "tiers": {
+  "M": {
+   "name": "Metadata (0 images)",
+   "features": [
+    "title_sim",
+    "title_words",
+    "desc",
+    "tags",
+    "dur_logratio",
+    "dur_fit",
+    "dur_min",
+    "days_log",
+    "type_axb",
+    "type_axa"
+   ],
+   "n_train": 206268,
+   "n_pos": 174,
+   "models": {
+    "logreg": [
+     {
+      "recall_target": 1.0,
+      "cut": -8.247421264648438,
+      "pairs_kept": 8239215,
+      "pairs_total": 8264145,
+      "share_kept": 0.9969833539948779,
+      "share_ruled_out": 0.003016646005122081,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 158,
+      "positives": 158,
+      "medley_kept": 15,
+      "medley": 16,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 6082,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -5.270902156829834,
+      "pairs_kept": 4403595,
+      "pairs_total": 8264145,
+      "share_kept": 0.5328554859577125,
+      "share_ruled_out": 0.4671445140422875,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 158,
+      "medley_kept": 15,
+      "medley": 16,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 5987,
+      "lost": [
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -8.247421264648438
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": -0.8726668357849121,
+      "pairs_kept": 261758,
+      "pairs_total": 8264145,
+      "share_kept": 0.031673936021209693,
+      "share_ruled_out": 0.9683260639787903,
+      "videos_kept": 4032,
+      "videos_total": 4066,
+      "positives_kept": 155,
+      "positives": 158,
+      "medley_kept": 14,
+      "medley": 16,
+      "reuploads_kept": 113,
+      "reuploads": 144,
+      "hard_neg_kept": 4865,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -5.270902156829834
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -3.664287567138672
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -8.247421264648438
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": -0.2657303810119629,
+      "pairs_kept": 193758,
+      "pairs_total": 8264145,
+      "share_kept": 0.02344561960130177,
+      "share_ruled_out": 0.9765543803986982,
+      "videos_kept": 4005,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 158,
+      "medley_kept": 12,
+      "medley": 16,
+      "reuploads_kept": 108,
+      "reuploads": 144,
+      "hard_neg_kept": 4575,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -5.270902156829834
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -0.8726668357849121
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -3.664287567138672
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -8.247421264648438
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": 0.7374382019042969,
+      "pairs_kept": 121506,
+      "pairs_total": 8264145,
+      "share_kept": 0.014702791395843127,
+      "share_ruled_out": 0.9852972086041569,
+      "videos_kept": 3944,
+      "videos_total": 4066,
+      "positives_kept": 151,
+      "positives": 158,
+      "medley_kept": 8,
+      "medley": 16,
+      "reuploads_kept": 92,
+      "reuploads": 144,
+      "hard_neg_kept": 4095,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -5.270902156829834
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -0.8726668357849121
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -3.664287567138672
+       },
+       {
+        "a": "6nacOLqpcPk",
+        "b": "WwhNgzir6V4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "same shots: bus front view, bus on street, panda frame; bus recolored blue vs pink and backgrounds changed",
+        "title_a": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "pos": 1830703,
+        "score": 0.39865827560424805
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -0.2657303810119629
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -8.247421264648438
+       },
+       {
+        "a": "efop8uMcFFQ",
+        "b": "wbzm05WN8X8",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.8502644430899143,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #short #viral #explore #bus #ytkids #youtube",
+        "pos": 7278999,
+        "score": 0.4220709800720215
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": 3.059391975402832,
+      "pairs_kept": 46507,
+      "pairs_total": 8264145,
+      "share_kept": 0.005627563407950853,
+      "share_ruled_out": 0.9943724365920491,
+      "videos_kept": 3674,
+      "videos_total": 4066,
+      "positives_kept": 143,
+      "positives": 158,
+      "medley_kept": 4,
+      "medley": 16,
+      "reuploads_kept": 73,
+      "reuploads": 144,
+      "hard_neg_kept": 3020,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -5.270902156829834
+       },
+       {
+        "a": "3ucQA933UyQ",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.015241050172841,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie Nursery Rhymes by Kids Tv",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1150377,
+        "score": 2.4858222007751465
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -0.8726668357849121
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -3.664287567138672
+       },
+       {
+        "a": "6nacOLqpcPk",
+        "b": "WwhNgzir6V4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "same shots: bus front view, bus on street, panda frame; bus recolored blue vs pink and backgrounds changed",
+        "title_a": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "pos": 1830703,
+        "score": 0.39865827560424805
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -0.2657303810119629
+       },
+       {
+        "a": "7HOESsArCmY",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.991604314097965,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie | Nursery Rhymes For Kids",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1941693,
+        "score": 2.7168164253234863
+       },
+       {
+        "a": "8-93_TmkKfc",
+        "b": "K71QjqJlAI0",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9887436066473169,
+        "source": "search",
+        "title_a": "The Wheels On The Bus Nursery Rhyme & Kindergarten Songs for Babies",
+        "title_b": "Baby Bao Panda's Pink Wheels On The Bus Fun Nursery Rhyme for Kids",
+        "pos": 2120645,
+        "score": 1.559708595275879
+       },
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": 1.7436943054199219
+       },
+       {
+        "a": "Nl_hbXSq9xI",
+        "b": "9ywRXy36pAg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.023112894936161,
+        "source": "search",
+        "title_a": "Wheels on the Bus go round and round | 3d Rhymes",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "pos": 2527430,
+        "score": 0.7374382019042969
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -8.247421264648438
+       },
+       {
+        "a": "XCGE-_TDcGI",
+        "b": "MNiZl3mNEIk",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.428813322643866,
+        "source": "search",
+        "title_a": "Wheels On The Bus #shorts #trending #ytshorts #babysong #cartoon #viral",
+        "title_b": "Wheels on the Bus #shorts #explore #kidsmusic #babysongs #nurseryrhymes #forkids",
+        "pos": 4847021,
+        "score": 1.5606489181518555
+       },
+       {
+        "a": "Nl_hbXSq9xI",
+        "b": "uaNCJzGwl3E",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 1.0208761631681453,
+        "source": "search",
+        "title_a": "Wheels on the Bus go round and round | 3d Rhymes",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Kids Songs",
+        "pos": 5082270,
+        "score": 2.463855743408203
+       },
+       {
+        "a": "yCSjhx5qiv0",
+        "b": "e9LhPr3svs0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9997823407851885,
+        "source": "search",
+        "title_a": "Wheels on the Bus - Nursery Rhyme & Kids Song by Baby Bao Panda",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhyme & Kids Song",
+        "pos": 7242280,
+        "score": 2.9295573234558105
+       },
+       {
+        "a": "efop8uMcFFQ",
+        "b": "wbzm05WN8X8",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.8502644430899143,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #short #viral #explore #bus #ytkids #youtube",
+        "pos": 7278999,
+        "score": 0.4220709800720215
+       }
+      ]
+     }
+    ],
+    "boosted": [
+     {
+      "recall_target": 1.0,
+      "cut": -8.44245433807373,
+      "pairs_kept": 8261413,
+      "pairs_total": 8264145,
+      "share_kept": 0.9996694152873649,
+      "share_ruled_out": 0.0003305847126351402,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 158,
+      "positives": 158,
+      "medley_kept": 16,
+      "medley": 16,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 5989,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -7.594820499420166,
+      "pairs_kept": 8226719,
+      "pairs_total": 8264145,
+      "share_kept": 0.9954712798480666,
+      "share_ruled_out": 0.004528720151933396,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 158,
+      "medley_kept": 16,
+      "medley": 16,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 5682,
+      "lost": [
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -8.44245433807373
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": -5.626046180725098,
+      "pairs_kept": 8200177,
+      "pairs_total": 8264145,
+      "share_kept": 0.9922595743419313,
+      "share_ruled_out": 0.00774042565806865,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 155,
+      "positives": 158,
+      "medley_kept": 13,
+      "medley": 16,
+      "reuploads_kept": 143,
+      "reuploads": 144,
+      "hard_neg_kept": 5297,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -7.456672191619873
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -8.44245433807373
+       },
+       {
+        "a": "efop8uMcFFQ",
+        "b": "wbzm05WN8X8",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.8502644430899143,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #short #viral #explore #bus #ytkids #youtube",
+        "pos": 7278999,
+        "score": -7.594820499420166
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": -5.231974124908447,
+      "pairs_kept": 1160525,
+      "pairs_total": 8264145,
+      "share_kept": 0.14042892519431835,
+      "share_ruled_out": 0.8595710748056816,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 158,
+      "medley_kept": 12,
+      "medley": 16,
+      "reuploads_kept": 113,
+      "reuploads": 144,
+      "hard_neg_kept": 4736,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -7.456672191619873
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -8.44245433807373
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -5.626046180725098
+       },
+       {
+        "a": "efop8uMcFFQ",
+        "b": "wbzm05WN8X8",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.8502644430899143,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #short #viral #explore #bus #ytkids #youtube",
+        "pos": 7278999,
+        "score": -7.594820499420166
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": -3.599733352661133,
+      "pairs_kept": 124844,
+      "pairs_total": 8264145,
+      "share_kept": 0.01510670492833802,
+      "share_ruled_out": 0.984893295071662,
+      "videos_kept": 4062,
+      "videos_total": 4066,
+      "positives_kept": 151,
+      "positives": 158,
+      "medley_kept": 7,
+      "medley": 16,
+      "reuploads_kept": 98,
+      "reuploads": 144,
+      "hard_neg_kept": 3253,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -7.456672191619873
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -8.44245433807373
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -5.231974124908447
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -4.405923843383789
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -5.626046180725098
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -5.091797351837158
+       },
+       {
+        "a": "efop8uMcFFQ",
+        "b": "wbzm05WN8X8",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.8502644430899143,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #short #viral #explore #bus #ytkids #youtube",
+        "pos": 7278999,
+        "score": -7.594820499420166
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": -1.8064390420913696,
+      "pairs_kept": 42323,
+      "pairs_total": 8264145,
+      "share_kept": 0.005121279938820047,
+      "share_ruled_out": 0.9948787200611799,
+      "videos_kept": 3389,
+      "videos_total": 4066,
+      "positives_kept": 143,
+      "positives": 158,
+      "medley_kept": 4,
+      "medley": 16,
+      "reuploads_kept": 86,
+      "reuploads": 144,
+      "hard_neg_kept": 1741,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -7.456672191619873
+       },
+       {
+        "a": "JZveVyuclhs",
+        "b": "3ucQA933UyQ",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9292445847341076,
+        "source": "search",
+        "title_a": "Fun and Educational Wheels On The Bus preschool nursery rhyme kids tv",
+        "title_b": "Wheels On The Bus | Little Eddie Nursery Rhymes by Kids Tv",
+        "pos": 1149261,
+        "score": -3.599733352661133
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "4OZ-iSU4DiM",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.5150997075744356,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "pos": 1250384,
+        "score": -3.3600406646728516
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -3.3600406646728516
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": -8.44245433807373
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -5.231974124908447
+       },
+       {
+        "a": "6nacOLqpcPk",
+        "b": "WwhNgzir6V4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "same shots: bus front view, bus on street, panda frame; bus recolored blue vs pink and backgrounds changed",
+        "title_a": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "pos": 1830703,
+        "score": -2.3941831588745117
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -4.405923843383789
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -5.626046180725098
+       },
+       {
+        "a": "KKfXDr6uVA0",
+        "b": "A_1ApJU_amc",
+        "label": "re-skin",
+        "confidence": 0.93,
+        "share": 0.9080690431922197,
+        "source": "search",
+        "title_a": "Rain Rain Go Away | Bao Panda Nursery Rhymes For Toddlers | Cartoon Videos by Kids Tv",
+        "title_b": "Rain Rain Go Away | Baby Bao Panda | Song For Kids",
+        "pos": 2655197,
+        "score": -3.0912249088287354
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "rjjjfXf4pjg",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 1.155782434357618,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Wheels on the Bus Vehicle Rhyme - Fun Vehicle Songs, Rhymes & Learning for Children",
+        "pos": 3397947,
+        "score": -3.0912249088287354
+       },
+       {
+        "a": "YO0ZDNIG1q4",
+        "b": "QqbqYe-JRVE",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #kidstv #babies #cartoon #youtube #shorts #explore #trending",
+        "pos": 5643667,
+        "score": -2.1877613067626953
+       },
+       {
+        "a": "Ye7ulpWeLfw",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9534997693726937,
+        "source": "search",
+        "title_a": "Baby Bao Panda's Wheels On The Bus #viral #popular #trending #shorts #kidsmusic #babysongs",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 6556117,
+        "score": -2.2182860374450684
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -5.091797351837158
+       },
+       {
+        "a": "efop8uMcFFQ",
+        "b": "wbzm05WN8X8",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.8502644430899143,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #short #viral #explore #bus #ytkids #youtube",
+        "pos": 7278999,
+        "score": -7.594820499420166
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "I1": {
+   "name": "Metadata + thumbnail (1 image)",
+   "features": [
+    "title_sim",
+    "title_words",
+    "desc",
+    "tags",
+    "dur_logratio",
+    "dur_fit",
+    "dur_min",
+    "days_log",
+    "type_axb",
+    "type_axa",
+    "thumb_emb",
+    "thumb_outline"
+   ],
+   "n_train": 206268,
+   "n_pos": 174,
+   "models": {
+    "logreg": [
+     {
+      "recall_target": 1.0,
+      "cut": -7.9782209396362305,
+      "pairs_kept": 7889701,
+      "pairs_total": 8264145,
+      "share_kept": 0.9546905336244705,
+      "share_ruled_out": 0.04530946637552946,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 158,
+      "positives": 158,
+      "medley_kept": 15,
+      "medley": 16,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 6080,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -1.8812406063079834,
+      "pairs_kept": 379617,
+      "pairs_total": 8264145,
+      "share_kept": 0.045935423446708645,
+      "share_ruled_out": 0.9540645765532914,
+      "videos_kept": 4054,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 158,
+      "medley_kept": 10,
+      "medley": 16,
+      "reuploads_kept": 116,
+      "reuploads": 144,
+      "hard_neg_kept": 5553,
+      "lost": [
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -7.9782209396362305
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": 0.968350887298584,
+      "pairs_kept": 95166,
+      "pairs_total": 8264145,
+      "share_kept": 0.011515528829661144,
+      "share_ruled_out": 0.9884844711703389,
+      "videos_kept": 3898,
+      "videos_total": 4066,
+      "positives_kept": 155,
+      "positives": 158,
+      "medley_kept": 8,
+      "medley": 16,
+      "reuploads_kept": 84,
+      "reuploads": 144,
+      "hard_neg_kept": 4471,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -1.8812406063079834
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -0.2399153709411621
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -7.9782209396362305
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": 1.226457118988037,
+      "pairs_kept": 84896,
+      "pairs_total": 8264145,
+      "share_kept": 0.01027281104094858,
+      "share_ruled_out": 0.9897271889590514,
+      "videos_kept": 3868,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 158,
+      "medley_kept": 8,
+      "medley": 16,
+      "reuploads_kept": 83,
+      "reuploads": 144,
+      "hard_neg_kept": 4335,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -1.8812406063079834
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -0.2399153709411621
+       },
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": 0.968350887298584
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -7.9782209396362305
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": 2.003833770751953,
+      "pairs_kept": 61208,
+      "pairs_total": 8264145,
+      "share_kept": 0.007406452815143006,
+      "share_ruled_out": 0.992593547184857,
+      "videos_kept": 3759,
+      "videos_total": 4066,
+      "positives_kept": 151,
+      "positives": 158,
+      "medley_kept": 8,
+      "medley": 16,
+      "reuploads_kept": 74,
+      "reuploads": 144,
+      "hard_neg_kept": 3950,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -1.8812406063079834
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": 1.5836091041564941
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -0.2399153709411621
+       },
+       {
+        "a": "7HOESsArCmY",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.991604314097965,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie | Nursery Rhymes For Kids",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1941693,
+        "score": 1.226457118988037
+       },
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": 0.968350887298584
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -7.9782209396362305
+       },
+       {
+        "a": "j316Y_-hFW0",
+        "b": "mksDZdIzhkI",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.6344612950169192,
+        "source": "search",
+        "title_a": "Rainbow Wheels On The Bus | Kindergarten Nursery Rhymes For Children",
+        "title_b": "Wheels On The Bus | Junior Squad Cartoons| Songs For Babies",
+        "pos": 7627626,
+        "score": 1.8819398880004883
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": 2.7019309997558594,
+      "pairs_kept": 46495,
+      "pairs_total": 8264145,
+      "share_kept": 0.005626111352112046,
+      "share_ruled_out": 0.994373888647888,
+      "videos_kept": 3657,
+      "videos_total": 4066,
+      "positives_kept": 143,
+      "positives": 158,
+      "medley_kept": 6,
+      "medley": 16,
+      "reuploads_kept": 68,
+      "reuploads": 144,
+      "hard_neg_kept": 3650,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -1.8812406063079834
+       },
+       {
+        "a": "1g02Uh_IuI4",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 642602,
+        "score": 2.003833770751953
+       },
+       {
+        "a": "3ucQA933UyQ",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.015241050172841,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie Nursery Rhymes by Kids Tv",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1150377,
+        "score": 2.167954921722412
+       },
+       {
+        "a": "OokGp8l_x9k",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9990680458655126,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #trending #viralshort #kidscartoon #babysong #ytshort #halloweenwheelson",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1725785,
+        "score": 1.5836091041564941
+       },
+       {
+        "a": "SQBTIuB0SsI",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.997201216848273,
+        "source": "search",
+        "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 1726011,
+        "score": -0.2399153709411621
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": 2.552245616912842
+       },
+       {
+        "a": "7HOESsArCmY",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.991604314097965,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie | Nursery Rhymes For Kids",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1941693,
+        "score": 1.226457118988037
+       },
+       {
+        "a": "8-93_TmkKfc",
+        "b": "K71QjqJlAI0",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9887436066473169,
+        "source": "search",
+        "title_a": "The Wheels On The Bus Nursery Rhyme & Kindergarten Songs for Babies",
+        "title_b": "Baby Bao Panda's Pink Wheels On The Bus Fun Nursery Rhyme for Kids",
+        "pos": 2120645,
+        "score": 2.392529010772705
+       },
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": 0.968350887298584
+       },
+       {
+        "a": "Nl_hbXSq9xI",
+        "b": "9ywRXy36pAg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.023112894936161,
+        "source": "search",
+        "title_a": "Wheels on the Bus go round and round | 3d Rhymes",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "pos": 2527430,
+        "score": 2.196692943572998
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -7.9782209396362305
+       },
+       {
+        "a": "WoeCbK5HG-E",
+        "b": "cuF6uph58zo",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 7.235619768798024,
+        "source": "search",
+        "title_a": "If you're happy and you know it | cartoon rhymes for children | Baby Bao Panda by Kids TV",
+        "title_b": "If You Are Happy | Bao Panda Video And Song For Babies | Kindergarten Nursery Rhymes by Kids Tv",
+        "pos": 6344769,
+        "score": 2.699301242828369
+       },
+       {
+        "a": "efop8uMcFFQ",
+        "b": "wbzm05WN8X8",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.8502644430899143,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #short #viral #explore #bus #ytkids #youtube",
+        "pos": 7278999,
+        "score": 2.131509304046631
+       },
+       {
+        "a": "j316Y_-hFW0",
+        "b": "mksDZdIzhkI",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.6344612950169192,
+        "source": "search",
+        "title_a": "Rainbow Wheels On The Bus | Kindergarten Nursery Rhymes For Children",
+        "title_b": "Wheels On The Bus | Junior Squad Cartoons| Songs For Babies",
+        "pos": 7627626,
+        "score": 1.8819398880004883
+       },
+       {
+        "a": "k3vCYP_aQ3w",
+        "b": "yOq3vuvmRCQ",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.999638043709266,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Baby Bao Panda | Nursery Rhymes For Kids",
+        "title_b": "Wheels on the Bus Vehicle Song & Rhyme for Kids",
+        "pos": 7694252,
+        "score": 2.0802688598632812
+       }
+      ]
+     }
+    ],
+    "boosted": [
+     {
+      "recall_target": 1.0,
+      "cut": -3.909128427505493,
+      "pairs_kept": 173993,
+      "pairs_total": 8264145,
+      "share_kept": 0.02105396263013294,
+      "share_ruled_out": 0.9789460373698671,
+      "videos_kept": 4063,
+      "videos_total": 4066,
+      "positives_kept": 158,
+      "positives": 158,
+      "medley_kept": 10,
+      "medley": 16,
+      "reuploads_kept": 98,
+      "reuploads": 144,
+      "hard_neg_kept": 3905,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -3.707057476043701,
+      "pairs_kept": 124470,
+      "pairs_total": 8264145,
+      "share_kept": 0.015061449188028526,
+      "share_ruled_out": 0.9849385508119715,
+      "videos_kept": 4060,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 158,
+      "medley_kept": 8,
+      "medley": 16,
+      "reuploads_kept": 97,
+      "reuploads": 144,
+      "hard_neg_kept": 3323,
+      "lost": [
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -3.909128427505493
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": -3.4213337898254395,
+      "pairs_kept": 72111,
+      "pairs_total": 8264145,
+      "share_kept": 0.008725766549352655,
+      "share_ruled_out": 0.9912742334506474,
+      "videos_kept": 3937,
+      "videos_total": 4066,
+      "positives_kept": 155,
+      "positives": 158,
+      "medley_kept": 8,
+      "medley": 16,
+      "reuploads_kept": 96,
+      "reuploads": 144,
+      "hard_neg_kept": 2607,
+      "lost": [
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -3.6870312690734863
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -3.707057476043701
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -3.909128427505493
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": -3.330456018447876,
+      "pairs_kept": 68520,
+      "pairs_total": 8264145,
+      "share_kept": 0.008291238839589576,
+      "share_ruled_out": 0.9917087611604104,
+      "videos_kept": 3907,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 158,
+      "medley_kept": 8,
+      "medley": 16,
+      "reuploads_kept": 95,
+      "reuploads": 144,
+      "hard_neg_kept": 2458,
+      "lost": [
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "4OZ-iSU4DiM",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.5150997075744356,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "pos": 1250384,
+        "score": -3.4213337898254395
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -3.6870312690734863
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -3.707057476043701
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -3.909128427505493
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": -2.595419406890869,
+      "pairs_kept": 48092,
+      "pairs_total": 8264145,
+      "share_kept": 0.0058193557833266475,
+      "share_ruled_out": 0.9941806442166734,
+      "videos_kept": 3700,
+      "videos_total": 4066,
+      "positives_kept": 151,
+      "positives": 158,
+      "medley_kept": 6,
+      "medley": 16,
+      "reuploads_kept": 90,
+      "reuploads": 144,
+      "hard_neg_kept": 2133,
+      "lost": [
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": -3.3225135803222656
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "4OZ-iSU4DiM",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.5150997075744356,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "pos": 1250384,
+        "score": -3.4213337898254395
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -3.6870312690734863
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -3.707057476043701
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -3.909128427505493
+       },
+       {
+        "a": "Ye7ulpWeLfw",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9534997693726937,
+        "source": "search",
+        "title_a": "Baby Bao Panda's Wheels On The Bus #viral #popular #trending #shorts #kidsmusic #babysongs",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 6556117,
+        "score": -3.330456018447876
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -2.6334049701690674
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": -0.6933808922767639,
+      "pairs_kept": 19399,
+      "pairs_total": 8264145,
+      "share_kept": 0.0023473692680852044,
+      "share_ruled_out": 0.9976526307319148,
+      "videos_kept": 2906,
+      "videos_total": 4066,
+      "positives_kept": 143,
+      "positives": 158,
+      "medley_kept": 4,
+      "medley": 16,
+      "reuploads_kept": 78,
+      "reuploads": 144,
+      "hard_neg_kept": 1257,
+      "lost": [
+       {
+        "a": "s3aVKjLvoQI",
+        "b": "0k76HQnSwt8",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9994263951864021,
+        "source": "search",
+        "title_a": "Wheels On The Firetruck #trending #viralshort #kidscartoon #babysong #ytshort #education",
+        "title_b": "Wheels On The Firetruck #trending #viralshort #kidscartoon #babysong #ytshort #wheels #education",
+        "pos": 448531,
+        "score": -0.7698239684104919
+       },
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": -3.3225135803222656
+       },
+       {
+        "a": "2b9xzvfYqD8",
+        "b": "P9QIOA_X06w",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9993040588436184,
+        "source": "search",
+        "title_a": "Wheels On The Bus #shorts #viral #ytshorts #kidsmusic #nurseryrhymes #kidstv #cartoon",
+        "title_b": "Wheels on the Bus #short #bus #babies #songs #trending #cartoon #rhymes",
+        "pos": 844703,
+        "score": -1.354567527770996
+       },
+       {
+        "a": "3ucQA933UyQ",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.015241050172841,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie Nursery Rhymes by Kids Tv",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1150377,
+        "score": -1.8192484378814697
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "4OZ-iSU4DiM",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.5150997075744356,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "pos": 1250384,
+        "score": -3.4213337898254395
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -3.6870312690734863
+       },
+       {
+        "a": "6nacOLqpcPk",
+        "b": "WwhNgzir6V4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "same shots: bus front view, bus on street, panda frame; bus recolored blue vs pink and backgrounds changed",
+        "title_a": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "pos": 1830703,
+        "score": -2.1127610206604004
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -3.707057476043701
+       },
+       {
+        "a": "afJ8kEWkJqo",
+        "b": "AKD-gwTktdc",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.7723023018799333,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels On The Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 2599210,
+        "score": -2.595419406890869
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -3.909128427505493
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "rjjjfXf4pjg",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 1.155782434357618,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Wheels on the Bus Vehicle Rhyme - Fun Vehicle Songs, Rhymes & Learning for Children",
+        "pos": 3397947,
+        "score": -2.35573410987854
+       },
+       {
+        "a": "K71QjqJlAI0",
+        "b": "s11HCj_gAWE",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "same Bao Panda bus model, street shots and panda-in-seat pose; pink bus vs red bus, green vs blue seats; B is the 2x-speed cut (82s = 164s/2)",
+        "title_a": "Baby Bao Panda's Pink Wheels On The Bus Fun Nursery Rhyme for Kids",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhyme & Kids Song - X2 Speed Bus Song",
+        "pos": 4513916,
+        "score": -1.5371253490447998
+       },
+       {
+        "a": "MQkYufd11nU",
+        "b": "y8nnK3mnV3Q",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": null,
+        "source": "audit",
+        "note": "Halloween re-skin: same girl in same sitting pose on puzzle mat, same railing shot with mom, Halloween decor added",
+        "title_a": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "title_b": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "pos": 4864478,
+        "score": -2.3251047134399414
+       },
+       {
+        "a": "Ye7ulpWeLfw",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9534997693726937,
+        "source": "search",
+        "title_a": "Baby Bao Panda's Wheels On The Bus #viral #popular #trending #shorts #kidsmusic #babysongs",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 6556117,
+        "score": -3.330456018447876
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -2.6334049701690674
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "I2": {
+   "name": "Metadata + thumbnail + middle frame (2 images)",
+   "features": [
+    "title_sim",
+    "title_words",
+    "desc",
+    "tags",
+    "dur_logratio",
+    "dur_fit",
+    "dur_min",
+    "days_log",
+    "type_axb",
+    "type_axa",
+    "thumb_emb",
+    "thumb_outline",
+    "hq2_emb",
+    "hq2_outline",
+    "cross_emb"
+   ],
+   "n_train": 206268,
+   "n_pos": 174,
+   "models": {
+    "logreg": [
+     {
+      "recall_target": 1.0,
+      "cut": -9.302581787109375,
+      "pairs_kept": 1341211,
+      "pairs_total": 8264145,
+      "share_kept": 0.16229277196854605,
+      "share_ruled_out": 0.8377072280314539,
+      "videos_kept": 4053,
+      "videos_total": 4066,
+      "positives_kept": 158,
+      "positives": 158,
+      "medley_kept": 15,
+      "medley": 16,
+      "reuploads_kept": 143,
+      "reuploads": 144,
+      "hard_neg_kept": 5844,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -6.420815467834473,
+      "pairs_kept": 542619,
+      "pairs_total": 8264145,
+      "share_kept": 0.06565942393314735,
+      "share_ruled_out": 0.9343405760668526,
+      "videos_kept": 4024,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 158,
+      "medley_kept": 15,
+      "medley": 16,
+      "reuploads_kept": 143,
+      "reuploads": 144,
+      "hard_neg_kept": 5675,
+      "lost": [
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": -9.302581787109375
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": -1.6109399795532227,
+      "pairs_kept": 88158,
+      "pairs_total": 8264145,
+      "share_kept": 0.010667528219797693,
+      "share_ruled_out": 0.9893324717802023,
+      "videos_kept": 3756,
+      "videos_total": 4066,
+      "positives_kept": 155,
+      "positives": 158,
+      "medley_kept": 13,
+      "medley": 16,
+      "reuploads_kept": 135,
+      "reuploads": 144,
+      "hard_neg_kept": 5088,
+      "lost": [
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": -2.2103681564331055
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -6.420815467834473
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": -9.302581787109375
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": -0.016242027282714844,
+      "pairs_kept": 48934,
+      "pairs_total": 8264145,
+      "share_kept": 0.005921241701349626,
+      "share_ruled_out": 0.9940787582986503,
+      "videos_kept": 3559,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 158,
+      "medley_kept": 11,
+      "medley": 16,
+      "reuploads_kept": 130,
+      "reuploads": 144,
+      "hard_neg_kept": 4710,
+      "lost": [
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": -2.2103681564331055
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -6.420815467834473
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": -9.302581787109375
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "w_cD-Sb2auI",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 6351914,
+        "score": -1.6109399795532227
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": 0.4973173141479492,
+      "pairs_kept": 40782,
+      "pairs_total": 8264145,
+      "share_kept": 0.0049348117681865455,
+      "share_ruled_out": 0.9950651882318134,
+      "videos_kept": 3488,
+      "videos_total": 4066,
+      "positives_kept": 151,
+      "positives": 158,
+      "medley_kept": 11,
+      "medley": 16,
+      "reuploads_kept": 129,
+      "reuploads": 144,
+      "hard_neg_kept": 4555,
+      "lost": [
+       {
+        "a": "1g02Uh_IuI4",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 642602,
+        "score": -0.016242027282714844
+       },
+       {
+        "a": "Nl_hbXSq9xI",
+        "b": "1g02Uh_IuI4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9966449023479766,
+        "source": "search",
+        "title_a": "Wheels on the Bus go round and round | 3d Rhymes",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "pos": 642965,
+        "score": 0.37172985076904297
+       },
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": -2.2103681564331055
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -6.420815467834473
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": -9.302581787109375
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "w_cD-Sb2auI",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 6351914,
+        "score": -1.6109399795532227
+       },
+       {
+        "a": "j316Y_-hFW0",
+        "b": "mksDZdIzhkI",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.6344612950169192,
+        "source": "search",
+        "title_a": "Rainbow Wheels On The Bus | Kindergarten Nursery Rhymes For Children",
+        "title_b": "Wheels On The Bus | Junior Squad Cartoons| Songs For Babies",
+        "pos": 7627626,
+        "score": 0.4846458435058594
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": 2.286452293395996,
+      "pairs_kept": 23052,
+      "pairs_total": 8264145,
+      "share_kept": 0.0027893992663487873,
+      "share_ruled_out": 0.9972106007336512,
+      "videos_kept": 3164,
+      "videos_total": 4066,
+      "positives_kept": 143,
+      "positives": 158,
+      "medley_kept": 9,
+      "medley": 16,
+      "reuploads_kept": 121,
+      "reuploads": 144,
+      "hard_neg_kept": 4063,
+      "lost": [
+       {
+        "a": "1g02Uh_IuI4",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 642602,
+        "score": -0.016242027282714844
+       },
+       {
+        "a": "Nl_hbXSq9xI",
+        "b": "1g02Uh_IuI4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9966449023479766,
+        "source": "search",
+        "title_a": "Wheels on the Bus go round and round | 3d Rhymes",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "pos": 642965,
+        "score": 0.37172985076904297
+       },
+       {
+        "a": "6nacOLqpcPk",
+        "b": "WwhNgzir6V4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "same shots: bus front view, bus on street, panda frame; bus recolored blue vs pink and backgrounds changed",
+        "title_a": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "pos": 1830703,
+        "score": 0.4973173141479492
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": 1.2420997619628906
+       },
+       {
+        "a": "7HOESsArCmY",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.991604314097965,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie | Nursery Rhymes For Kids",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1941693,
+        "score": 1.4458246231079102
+       },
+       {
+        "a": "9ywRXy36pAg",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 2527067,
+        "score": -2.2103681564331055
+       },
+       {
+        "a": "Nl_hbXSq9xI",
+        "b": "9ywRXy36pAg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.023112894936161,
+        "source": "search",
+        "title_a": "Wheels on the Bus go round and round | 3d Rhymes",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "pos": 2527430,
+        "score": 0.9230108261108398
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -6.420815467834473
+       },
+       {
+        "a": "m151ZBLwbhc",
+        "b": "EN7S56j6Z5Y",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9981449858174941,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery Rhymes | Color Fun",
+        "title_b": "Wheels On The Bus | Nursery Rhymes | ABC Baby",
+        "pos": 3465942,
+        "score": 1.4169788360595703
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "Hd7k7i4jqH4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9416228756708408,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 4099133,
+        "score": 1.2175836563110352
+       },
+       {
+        "a": "yebnJe7tUqE",
+        "b": "MWyordkvD0k",
+        "label": "re-skin",
+        "confidence": 0.92,
+        "share": 0.9335441385360963,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus Kids Tv | Nursery Rhymes Songs For Children | Rhymes For Babies | Kids Rhymes",
+        "pos": 4882753,
+        "score": 0.5821771621704102
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": -9.302581787109375
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "w_cD-Sb2auI",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 6351914,
+        "score": -1.6109399795532227
+       },
+       {
+        "a": "j316Y_-hFW0",
+        "b": "mksDZdIzhkI",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.6344612950169192,
+        "source": "search",
+        "title_a": "Rainbow Wheels On The Bus | Kindergarten Nursery Rhymes For Children",
+        "title_b": "Wheels On The Bus | Junior Squad Cartoons| Songs For Babies",
+        "pos": 7627626,
+        "score": 0.4846458435058594
+       },
+       {
+        "a": "uaNCJzGwl3E",
+        "b": "m151ZBLwbhc",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9143432569633814,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Kids Songs",
+        "title_b": "Wheels On The Bus | Nursery Rhymes | Color Fun",
+        "pos": 7813947,
+        "score": 0.663355827331543
+       }
+      ]
+     }
+    ],
+    "boosted": [
+     {
+      "recall_target": 1.0,
+      "cut": -5.527291297912598,
+      "pairs_kept": 8263793,
+      "pairs_total": 8264145,
+      "share_kept": 0.9999574063620617,
+      "share_ruled_out": 4.259363793834847e-05,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 158,
+      "positives": 158,
+      "medley_kept": 16,
+      "medley": 16,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 5911,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -4.603153705596924,
+      "pairs_kept": 8177998,
+      "pairs_total": 8264145,
+      "share_kept": 0.9895758121378557,
+      "share_ruled_out": 0.010424187862144274,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 158,
+      "medley_kept": 14,
+      "medley": 16,
+      "reuploads_kept": 143,
+      "reuploads": 144,
+      "hard_neg_kept": 4811,
+      "lost": [
+       {
+        "a": "V6mkgjixCoQ",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9673533145022883,
+        "source": "search",
+        "title_a": "Yellow Wheels On The Bus | Nursery rhymes | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 6157675,
+        "score": -5.527291297912598
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": -4.518304824829102,
+      "pairs_kept": 8154817,
+      "pairs_total": 8264145,
+      "share_kept": 0.9867708032712398,
+      "share_ruled_out": 0.013229196728760217,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 155,
+      "positives": 158,
+      "medley_kept": 14,
+      "medley": 16,
+      "reuploads_kept": 142,
+      "reuploads": 144,
+      "hard_neg_kept": 4781,
+      "lost": [
+       {
+        "a": "xI9-MgmErhQ",
+        "b": "HWNDED8zbjE",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9821512612951808,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Cartoon Shows For Toddlers by Kids Tv",
+        "title_b": "Wheels On The Bus | Kindergarten Nursery Rhymes For Children | Videos For Toddlers by Kids Tv",
+        "pos": 4077774,
+        "score": -4.603153705596924
+       },
+       {
+        "a": "V6mkgjixCoQ",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9673533145022883,
+        "source": "search",
+        "title_a": "Yellow Wheels On The Bus | Nursery rhymes | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 6157675,
+        "score": -5.527291297912598
+       },
+       {
+        "a": "pIBlHJFJ1vs",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.008962831685744,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 8003772,
+        "score": -4.603153705596924
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": -4.514439105987549,
+      "pairs_kept": 8113996,
+      "pairs_total": 8264145,
+      "share_kept": 0.9818312723215771,
+      "share_ruled_out": 0.018168727678422925,
+      "videos_kept": 4066,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 158,
+      "medley_kept": 13,
+      "medley": 16,
+      "reuploads_kept": 142,
+      "reuploads": 144,
+      "hard_neg_kept": 4348,
+      "lost": [
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -4.518304824829102
+       },
+       {
+        "a": "xI9-MgmErhQ",
+        "b": "HWNDED8zbjE",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9821512612951808,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Cartoon Shows For Toddlers by Kids Tv",
+        "title_b": "Wheels On The Bus | Kindergarten Nursery Rhymes For Children | Videos For Toddlers by Kids Tv",
+        "pos": 4077774,
+        "score": -4.603153705596924
+       },
+       {
+        "a": "V6mkgjixCoQ",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9673533145022883,
+        "source": "search",
+        "title_a": "Yellow Wheels On The Bus | Nursery rhymes | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 6157675,
+        "score": -5.527291297912598
+       },
+       {
+        "a": "pIBlHJFJ1vs",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.008962831685744,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 8003772,
+        "score": -4.603153705596924
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": -4.053633689880371,
+      "pairs_kept": 112737,
+      "pairs_total": 8264145,
+      "share_kept": 0.013641701591634706,
+      "share_ruled_out": 0.9863582984083653,
+      "videos_kept": 4057,
+      "videos_total": 4066,
+      "positives_kept": 152,
+      "positives": 158,
+      "medley_kept": 12,
+      "medley": 16,
+      "reuploads_kept": 102,
+      "reuploads": 144,
+      "hard_neg_kept": 3537,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -4.444317817687988
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -4.518304824829102
+       },
+       {
+        "a": "xI9-MgmErhQ",
+        "b": "HWNDED8zbjE",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9821512612951808,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Cartoon Shows For Toddlers by Kids Tv",
+        "title_b": "Wheels On The Bus | Kindergarten Nursery Rhymes For Children | Videos For Toddlers by Kids Tv",
+        "pos": 4077774,
+        "score": -4.603153705596924
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": -4.514439105987549
+       },
+       {
+        "a": "V6mkgjixCoQ",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9673533145022883,
+        "source": "search",
+        "title_a": "Yellow Wheels On The Bus | Nursery rhymes | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 6157675,
+        "score": -5.527291297912598
+       },
+       {
+        "a": "pIBlHJFJ1vs",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.008962831685744,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 8003772,
+        "score": -4.603153705596924
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": -2.7374587059020996,
+      "pairs_kept": 15905,
+      "pairs_total": 8264145,
+      "share_kept": 0.0019245790096858175,
+      "share_ruled_out": 0.9980754209903142,
+      "videos_kept": 3128,
+      "videos_total": 4066,
+      "positives_kept": 143,
+      "positives": 158,
+      "medley_kept": 6,
+      "medley": 16,
+      "reuploads_kept": 102,
+      "reuploads": 144,
+      "hard_neg_kept": 1626,
+      "lost": [
+       {
+        "a": "12mNC1UN38M",
+        "b": "6Knlj_rhgE4",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+        "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+        "pos": 496758,
+        "score": -4.444317817687988
+       },
+       {
+        "a": "JZveVyuclhs",
+        "b": "3ucQA933UyQ",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9292445847341076,
+        "source": "search",
+        "title_a": "Fun and Educational Wheels On The Bus preschool nursery rhyme kids tv",
+        "title_b": "Wheels On The Bus | Little Eddie Nursery Rhymes by Kids Tv",
+        "pos": 1149261,
+        "score": -3.288694381713867
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "4OZ-iSU4DiM",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.5150997075744356,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "pos": 1250384,
+        "score": -4.009860038757324
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -4.009860038757324
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -4.053633689880371
+       },
+       {
+        "a": "a9lx-Xb2X0I",
+        "b": "9ywRXy36pAg",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "pos": 2528277,
+        "score": -3.4680559635162354
+       },
+       {
+        "a": "AZ3t77_JcwQ",
+        "b": "doF0UNXZDh4",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+        "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+        "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+        "pos": 2649762,
+        "score": -4.518304824829102
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "rjjjfXf4pjg",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 1.155782434357618,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Wheels on the Bus Vehicle Rhyme - Fun Vehicle Songs, Rhymes & Learning for Children",
+        "pos": 3397947,
+        "score": -4.009860038757324
+       },
+       {
+        "a": "xI9-MgmErhQ",
+        "b": "HWNDED8zbjE",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.9821512612951808,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Cartoon Shows For Toddlers by Kids Tv",
+        "title_b": "Wheels On The Bus | Kindergarten Nursery Rhymes For Children | Videos For Toddlers by Kids Tv",
+        "pos": 4077774,
+        "score": -4.603153705596924
+       },
+       {
+        "a": "XCGE-_TDcGI",
+        "b": "MNiZl3mNEIk",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.428813322643866,
+        "source": "search",
+        "title_a": "Wheels On The Bus #shorts #trending #ytshorts #babysong #cartoon #viral",
+        "title_b": "Wheels on the Bus #shorts #explore #kidsmusic #babysongs #nurseryrhymes #forkids",
+        "pos": 4847021,
+        "score": -2.8652358055114746
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": -4.514439105987549
+       },
+       {
+        "a": "V6mkgjixCoQ",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9673533145022883,
+        "source": "search",
+        "title_a": "Yellow Wheels On The Bus | Nursery rhymes | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 6157675,
+        "score": -5.527291297912598
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -4.053633689880371
+       },
+       {
+        "a": "k3vCYP_aQ3w",
+        "b": "yOq3vuvmRCQ",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.999638043709266,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Baby Bao Panda | Nursery Rhymes For Kids",
+        "title_b": "Wheels on the Bus Vehicle Song & Rhyme for Kids",
+        "pos": 7694252,
+        "score": -4.008553504943848
+       },
+       {
+        "a": "pIBlHJFJ1vs",
+        "b": "yebnJe7tUqE",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.008962831685744,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "pos": 8003772,
+        "score": -4.603153705596924
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "G": {
+   "name": "Metadata + 4 images (gate frames)",
+   "features": [
+    "title_sim",
+    "title_words",
+    "desc",
+    "tags",
+    "dur_logratio",
+    "dur_fit",
+    "dur_min",
+    "days_log",
+    "type_axb",
+    "type_axa",
+    "thumb_emb",
+    "thumb_outline",
+    "hq2_emb",
+    "hq2_outline",
+    "cross_emb",
+    "frames_emb",
+    "frames_outline"
+   ],
+   "n_train": 205913,
+   "n_pos": 172,
+   "models": {
+    "logreg": [
+     {
+      "recall_target": 1.0,
+      "cut": -4.211582183837891,
+      "pairs_kept": 32901,
+      "pairs_total": 2263128,
+      "share_kept": 0.014537843197556657,
+      "share_ruled_out": 0.9854621568024433,
+      "videos_kept": 2051,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 157,
+      "medley_kept": 9,
+      "medley": 15,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 4158,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -0.3919792175292969,
+      "pairs_kept": 10350,
+      "pairs_total": 2263128,
+      "share_kept": 0.004573316224270125,
+      "share_ruled_out": 0.9954266837757298,
+      "videos_kept": 1886,
+      "videos_total": 4066,
+      "positives_kept": 156,
+      "positives": 157,
+      "medley_kept": 8,
+      "medley": 15,
+      "reuploads_kept": 132,
+      "reuploads": 144,
+      "hard_neg_kept": 3071,
+      "lost": [
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -4.211582183837891
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": 1.2747611999511719,
+      "pairs_kept": 6807,
+      "pairs_total": 2263128,
+      "share_kept": 0.0030077839167735984,
+      "share_ruled_out": 0.9969922160832264,
+      "videos_kept": 1764,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 157,
+      "medley_kept": 7,
+      "medley": 15,
+      "reuploads_kept": 124,
+      "reuploads": 144,
+      "hard_neg_kept": 2586,
+      "lost": [
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -4.211582183837891
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": 0.5810985565185547
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "w_cD-Sb2auI",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 6351914,
+        "score": -0.3919792175292969
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": 1.451425552368164,
+      "pairs_kept": 6519,
+      "pairs_total": 2263128,
+      "share_kept": 0.002880526421837386,
+      "share_ruled_out": 0.9971194735781627,
+      "videos_kept": 1757,
+      "videos_total": 4066,
+      "positives_kept": 153,
+      "positives": 157,
+      "medley_kept": 7,
+      "medley": 15,
+      "reuploads_kept": 123,
+      "reuploads": 144,
+      "hard_neg_kept": 2528,
+      "lost": [
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -4.211582183837891
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": 0.5810985565185547
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "w_cD-Sb2auI",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 6351914,
+        "score": -0.3919792175292969
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "cMOSJ1QIa3w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.8356809678903527,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels On The Bus #viral #popular #trending #shorts #kidsmusic #babysongs",
+        "pos": 6652483,
+        "score": 1.2747611999511719
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": 1.935678482055664,
+      "pairs_kept": 5821,
+      "pairs_total": 2263128,
+      "share_kept": 0.0025721037431378165,
+      "share_ruled_out": 0.9974278962568622,
+      "videos_kept": 1726,
+      "videos_total": 4066,
+      "positives_kept": 150,
+      "positives": 157,
+      "medley_kept": 7,
+      "medley": 15,
+      "reuploads_kept": 117,
+      "reuploads": 144,
+      "hard_neg_kept": 2405,
+      "lost": [
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": 1.8313770294189453
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -4.211582183837891
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": 0.5810985565185547
+       },
+       {
+        "a": "XCGE-_TDcGI",
+        "b": "MNiZl3mNEIk",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.428813322643866,
+        "source": "search",
+        "title_a": "Wheels On The Bus #shorts #trending #ytshorts #babysong #cartoon #viral",
+        "title_b": "Wheels on the Bus #shorts #explore #kidsmusic #babysongs #nurseryrhymes #forkids",
+        "pos": 4847021,
+        "score": 1.7689781188964844
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": 1.451425552368164
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "w_cD-Sb2auI",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 6351914,
+        "score": -0.3919792175292969
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "cMOSJ1QIa3w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.8356809678903527,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels On The Bus #viral #popular #trending #shorts #kidsmusic #babysongs",
+        "pos": 6652483,
+        "score": 1.2747611999511719
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": 4.136486053466797,
+      "pairs_kept": 3680,
+      "pairs_total": 2263128,
+      "share_kept": 0.0016260679908516001,
+      "share_ruled_out": 0.9983739320091484,
+      "videos_kept": 1543,
+      "videos_total": 4066,
+      "positives_kept": 142,
+      "positives": 157,
+      "medley_kept": 7,
+      "medley": 15,
+      "reuploads_kept": 103,
+      "reuploads": 144,
+      "hard_neg_kept": 1844,
+      "lost": [
+       {
+        "a": "a9lx-Xb2X0I",
+        "b": "1g02Uh_IuI4",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9595020707831324,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "pos": 643812,
+        "score": 3.8056716918945312
+       },
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": 1.8313770294189453
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -4.211582183837891
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": 0.5810985565185547
+       },
+       {
+        "a": "7HOESsArCmY",
+        "b": "aLftDG8Od_0",
+        "label": "re-skin",
+        "confidence": 0.9,
+        "share": 0.991604314097965,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Little Eddie | Nursery Rhymes For Kids",
+        "title_b": "Christmas Wheels on the Bus - Xmas Rhyme & Kids Cartoon Video",
+        "pos": 1941693,
+        "score": 2.435426712036133
+       },
+       {
+        "a": "8-93_TmkKfc",
+        "b": "e9LhPr3svs0",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9886548937092892,
+        "source": "search",
+        "title_a": "The Wheels On The Bus Nursery Rhyme & Kindergarten Songs for Babies",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhyme & Kids Song",
+        "pos": 2121954,
+        "score": 4.03797721862793
+       },
+       {
+        "a": "Nl_hbXSq9xI",
+        "b": "9ywRXy36pAg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.023112894936161,
+        "source": "search",
+        "title_a": "Wheels on the Bus go round and round | 3d Rhymes",
+        "title_b": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby | Pink Color Bus",
+        "pos": 2527430,
+        "score": 3.6968631744384766
+       },
+       {
+        "a": "XCGE-_TDcGI",
+        "b": "MNiZl3mNEIk",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.428813322643866,
+        "source": "search",
+        "title_a": "Wheels On The Bus #shorts #trending #ytshorts #babysong #cartoon #viral",
+        "title_b": "Wheels on the Bus #shorts #explore #kidsmusic #babysongs #nurseryrhymes #forkids",
+        "pos": 4847021,
+        "score": 1.7689781188964844
+       },
+       {
+        "a": "yebnJe7tUqE",
+        "b": "MWyordkvD0k",
+        "label": "re-skin",
+        "confidence": 0.92,
+        "share": 0.9335441385360963,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Nursery rhymes Rhymes for children | Kids Tv Nursery Rhymes",
+        "title_b": "Wheels On The Bus Kids Tv | Nursery Rhymes Songs For Children | Rhymes For Babies | Kids Rhymes",
+        "pos": 4882753,
+        "score": 2.290607452392578
+       },
+       {
+        "a": "S0b-cNOME7I",
+        "b": "P9QIOA_X06w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels on the Bus #short #bus #babies #songs #trending #cartoon #rhymes",
+        "pos": 5347003,
+        "score": 1.935678482055664
+       },
+       {
+        "a": "WUbI_x69AIc",
+        "b": "Qy4EwtfCTkM",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.9992069692460318,
+        "source": "search",
+        "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+        "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+        "pos": 5654986,
+        "score": 1.451425552368164
+       },
+       {
+        "a": "S0b-cNOME7I",
+        "b": "_B5Aec29lHQ",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels on the Bus #cartoon #kidstv #babysongs #shorts #explore #forkids #youtube",
+        "pos": 5763668,
+        "score": 3.358806610107422
+       },
+       {
+        "a": "V3cEq4F1TFk",
+        "b": "zyvI7zhO2CE",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": null,
+        "source": "audit",
+        "note": "Bob finger family: same head-on train shots in arch frame, Christmas version with elf hats and new colors",
+        "title_a": "Bob the Train Finger Family #short #trending #viral #bobthetrain #kidsmusic #bob #popular",
+        "title_b": "Christmas Finger Family #short #trending #viral #kidsmusic #viralshort",
+        "pos": 6147491,
+        "score": 3.741952896118164
+       },
+       {
+        "a": "Wr8LTyW-iTA",
+        "b": "w_cD-Sb2auI",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels On The Bus | Classic Nursery Rhymes By ABC Baby",
+        "title_b": "The Wheels On The Bus go round and round | Best Nursery Rhymes | kids songs",
+        "pos": 6351914,
+        "score": -0.3919792175292969
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "cMOSJ1QIa3w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.8356809678903527,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels On The Bus #viral #popular #trending #shorts #kidsmusic #babysongs",
+        "pos": 6652483,
+        "score": 1.2747611999511719
+       }
+      ]
+     }
+    ],
+    "boosted": [
+     {
+      "recall_target": 1.0,
+      "cut": -6.988490581512451,
+      "pairs_kept": 2263051,
+      "pairs_total": 2263128,
+      "share_kept": 0.9999659762947566,
+      "share_ruled_out": 3.402370524341336e-05,
+      "videos_kept": 2128,
+      "videos_total": 4066,
+      "positives_kept": 157,
+      "positives": 157,
+      "medley_kept": 14,
+      "medley": 15,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 5710,
+      "lost": []
+     },
+     {
+      "recall_target": 0.99,
+      "cut": -6.987329959869385,
+      "pairs_kept": 2263038,
+      "pairs_total": 2263128,
+      "share_kept": 0.9999602320328325,
+      "share_ruled_out": 3.976796716753661e-05,
+      "videos_kept": 2128,
+      "videos_total": 4066,
+      "positives_kept": 156,
+      "positives": 157,
+      "medley_kept": 14,
+      "medley": 15,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 5701,
+      "lost": [
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -6.988490581512451
+       }
+      ]
+     },
+     {
+      "recall_target": 0.98,
+      "cut": -5.042767524719238,
+      "pairs_kept": 2221774,
+      "pairs_total": 2263128,
+      "share_kept": 0.9817270609528052,
+      "share_ruled_out": 0.018272939047194847,
+      "videos_kept": 2128,
+      "videos_total": 4066,
+      "positives_kept": 154,
+      "positives": 157,
+      "medley_kept": 14,
+      "medley": 15,
+      "reuploads_kept": 144,
+      "reuploads": 144,
+      "hard_neg_kept": 4833,
+      "lost": [
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": -6.987329959869385
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -6.439157962799072
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -6.988490581512451
+       }
+      ]
+     },
+     {
+      "recall_target": 0.97,
+      "cut": -3.7011804580688477,
+      "pairs_kept": 86926,
+      "pairs_total": 2263128,
+      "share_kept": 0.038409670155642985,
+      "share_ruled_out": 0.961590329844357,
+      "videos_kept": 2121,
+      "videos_total": 4066,
+      "positives_kept": 153,
+      "positives": 157,
+      "medley_kept": 12,
+      "medley": 15,
+      "reuploads_kept": 89,
+      "reuploads": 144,
+      "hard_neg_kept": 3224,
+      "lost": [
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": -6.987329959869385
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -6.439157962799072
+       },
+       {
+        "a": "MQkYufd11nU",
+        "b": "y8nnK3mnV3Q",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": null,
+        "source": "audit",
+        "note": "Halloween re-skin: same girl in same sitting pose on puzzle mat, same railing shot with mom, Halloween decor added",
+        "title_a": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "title_b": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "pos": 4864478,
+        "score": -5.042767524719238
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -6.988490581512451
+       }
+      ]
+     },
+     {
+      "recall_target": 0.95,
+      "cut": -3.5910086631774902,
+      "pairs_kept": 46291,
+      "pairs_total": 2263128,
+      "share_kept": 0.0204544329794868,
+      "share_ruled_out": 0.9795455670205132,
+      "videos_kept": 2119,
+      "videos_total": 4066,
+      "positives_kept": 152,
+      "positives": 157,
+      "medley_kept": 12,
+      "medley": 15,
+      "reuploads_kept": 89,
+      "reuploads": 144,
+      "hard_neg_kept": 2405,
+      "lost": [
+       {
+        "a": "o_8kEplrFaw",
+        "b": "0wGzs4JlkdQ",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.8972657904956927,
+        "source": "search",
+        "title_a": "Wheels On The Bus Go Round and Round | Kids Tv Nursery Rhymes For Children",
+        "title_b": "Wheels on the bus | Nursery Rhyme with Lyrics | Kids Tv Nursery Rhymes",
+        "pos": 475945,
+        "score": -3.7011804580688477
+       },
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": -6.987329959869385
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -6.439157962799072
+       },
+       {
+        "a": "MQkYufd11nU",
+        "b": "y8nnK3mnV3Q",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": null,
+        "source": "audit",
+        "note": "Halloween re-skin: same girl in same sitting pose on puzzle mat, same railing shot with mom, Halloween decor added",
+        "title_a": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "title_b": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "pos": 4864478,
+        "score": -5.042767524719238
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -6.988490581512451
+       }
+      ]
+     },
+     {
+      "recall_target": 0.9,
+      "cut": -0.5316461324691772,
+      "pairs_kept": 1421,
+      "pairs_total": 2263128,
+      "share_kept": 0.0006278920149456858,
+      "share_ruled_out": 0.9993721079850543,
+      "videos_kept": 919,
+      "videos_total": 4066,
+      "positives_kept": 142,
+      "positives": 157,
+      "medley_kept": 11,
+      "medley": 15,
+      "reuploads_kept": 63,
+      "reuploads": 144,
+      "hard_neg_kept": 567,
+      "lost": [
+       {
+        "a": "o_8kEplrFaw",
+        "b": "0wGzs4JlkdQ",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.8972657904956927,
+        "source": "search",
+        "title_a": "Wheels On The Bus Go Round and Round | Kids Tv Nursery Rhymes For Children",
+        "title_b": "Wheels on the bus | Nursery Rhyme with Lyrics | Kids Tv Nursery Rhymes",
+        "pos": 475945,
+        "score": -3.7011804580688477
+       },
+       {
+        "a": "24CuY0nwSX0",
+        "b": "eq8J_moRM6w",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidscartoon",
+        "title_b": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "pos": 745242,
+        "score": -6.987329959869385
+       },
+       {
+        "a": "Nj_pfXISKXc",
+        "b": "2b9xzvfYqD8",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.9993836974707921,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv",
+        "title_b": "Wheels On The Bus #shorts #viral #ytshorts #kidsmusic #nurseryrhymes #kidstv #cartoon",
+        "pos": 844591,
+        "score": -2.6263630390167236
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "4OZ-iSU4DiM",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.5150997075744356,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "pos": 1250384,
+        "score": -3.5910086631774902
+       },
+       {
+        "a": "4OZ-iSU4DiM",
+        "b": "lMLFwzcH8_s",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": null,
+        "source": "audit",
+        "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ",
+        "title_a": "Fun Ride Adventure with Wheels on the Bus Song + More Vehicle Rhymes for Children",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhymes & Kid Songs",
+        "pos": 1252511,
+        "score": -3.5910086631774902
+       },
+       {
+        "a": "lo3-hAO9RJg",
+        "b": "6nacOLqpcPk",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 0.8031999714394517,
+        "source": "search",
+        "title_a": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "title_b": "Wheels On The Bus Nursery Rhyme #shorts #rhymes #trending #viralshorts",
+        "pos": 1831693,
+        "score": -6.439157962799072
+       },
+       {
+        "a": "8-93_TmkKfc",
+        "b": "O_D2N_ulWXg",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.9905124827152176,
+        "source": "search",
+        "title_a": "The Wheels On The Bus Nursery Rhyme & Kindergarten Songs for Babies",
+        "title_b": "Wheels On The Bus Nursery Rhyme for Kids",
+        "pos": 2120928,
+        "score": -2.3754727840423584
+       },
+       {
+        "a": "8-93_TmkKfc",
+        "b": "e9LhPr3svs0",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 0.9886548937092892,
+        "source": "search",
+        "title_a": "The Wheels On The Bus Nursery Rhyme & Kindergarten Songs for Babies",
+        "title_b": "Wheels on the Bus - Fun Learning Nursery Rhyme & Kids Song",
+        "pos": 2121954,
+        "score": -1.4917819499969482
+       },
+       {
+        "a": "KKfXDr6uVA0",
+        "b": "A_1ApJU_amc",
+        "label": "re-skin",
+        "confidence": 0.93,
+        "share": 0.9080690431922197,
+        "source": "search",
+        "title_a": "Rain Rain Go Away | Bao Panda Nursery Rhymes For Toddlers | Cartoon Videos by Kids Tv",
+        "title_b": "Rain Rain Go Away | Baby Bao Panda | Song For Kids",
+        "pos": 2655197,
+        "score": -3.5910086631774902
+       },
+       {
+        "a": "E4cuOfwU8k0",
+        "b": "rjjjfXf4pjg",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": 1.155782434357618,
+        "source": "search",
+        "title_a": "Wheels on the Bus + More Vehicle Songs and Baby Rhymes",
+        "title_b": "Wheels on the Bus Vehicle Rhyme - Fun Vehicle Songs, Rhymes & Learning for Children",
+        "pos": 3397947,
+        "score": -3.5910086631774902
+       },
+       {
+        "a": "MQkYufd11nU",
+        "b": "y8nnK3mnV3Q",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": null,
+        "source": "audit",
+        "note": "Halloween re-skin: same girl in same sitting pose on puzzle mat, same railing shot with mom, Halloween decor added",
+        "title_a": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "title_b": "Boo Boo Song #shorts #kidssongs #nurseryrhymes #cartoon #singalong #childrenmusic",
+        "pos": 4864478,
+        "score": -5.042767524719238
+       },
+       {
+        "a": "YO0ZDNIG1q4",
+        "b": "QqbqYe-JRVE",
+        "label": "re-skin",
+        "confidence": 0.85,
+        "share": 1.0,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels on the Bus #kidstv #babies #cartoon #youtube #shorts #explore #trending",
+        "pos": 5643667,
+        "score": -3.075315475463867
+       },
+       {
+        "a": "V3cEq4F1TFk",
+        "b": "zyvI7zhO2CE",
+        "label": "re-skin",
+        "confidence": 0.7,
+        "share": null,
+        "source": "audit",
+        "note": "Bob finger family: same head-on train shots in arch frame, Christmas version with elf hats and new colors",
+        "title_a": "Bob the Train Finger Family #short #trending #viral #bobthetrain #kidsmusic #bob #popular",
+        "title_b": "Christmas Finger Family #short #trending #viral #kidsmusic #viralshort",
+        "pos": 6147491,
+        "score": -2.829880714416504
+       },
+       {
+        "a": "ZPOOOfJmzp4",
+        "b": "lo3-hAO9RJg",
+        "label": "re-skin",
+        "confidence": 0.8,
+        "share": 0.9843378117859862,
+        "source": "search",
+        "title_a": "Wheels on the Bus #kids #songs #vehicle #shorts #explore #trending",
+        "title_b": "Wheels on the Bus #shorts #trending #ytshorts #babysong #cartoon #viral #kidsvideos",
+        "pos": 6653069,
+        "score": -6.988490581512451
+       },
+       {
+        "a": "afJ8kEWkJqo",
+        "b": "cMOSJ1QIa3w",
+        "label": "re-skin",
+        "confidence": 0.75,
+        "share": 0.9032485004673868,
+        "source": "search",
+        "title_a": "Wheels on the Bus #viral #popular #trending #shorts #kidsmusic #babysongs #kidstv #babybaopanda",
+        "title_b": "Wheels On The Bus #viral #popular #trending #shorts #kidsmusic #babysongs",
+        "pos": 6920257,
+        "score": -0.6287487149238586
+       }
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "importance": {
+  "M": [
+   {
+    "feature": "title_words",
+    "coef": 1.5169663429260254
+   },
+   {
+    "feature": "desc",
+    "coef": 1.2550697326660156
+   },
+   {
+    "feature": "dur_logratio",
+    "coef": -0.8762711882591248
+   },
+   {
+    "feature": "type_axb",
+    "coef": 0.8459205031394958
+   },
+   {
+    "feature": "dur_fit",
+    "coef": 0.7558110356330872
+   },
+   {
+    "feature": "days_log",
+    "coef": -0.5221318602561951
+   },
+   {
+    "feature": "tags",
+    "coef": 0.4124923646450043
+   },
+   {
+    "feature": "dur_min",
+    "coef": -0.2392110675573349
+   },
+   {
+    "feature": "title_sim",
+    "coef": 0.05535639449954033
+   },
+   {
+    "feature": "type_axa",
+    "coef": -0.043684519827365875
+   }
+  ],
+  "I1": [
+   {
+    "feature": "title_words",
+    "coef": 1.621557354927063
+   },
+   {
+    "feature": "desc",
+    "coef": 1.274421215057373
+   },
+   {
+    "feature": "type_axb",
+    "coef": 1.1327701807022095
+   },
+   {
+    "feature": "thumb_outline",
+    "coef": 0.8699628710746765
+   },
+   {
+    "feature": "days_log",
+    "coef": -0.6050290465354919
+   },
+   {
+    "feature": "dur_min",
+    "coef": 0.5170008540153503
+   },
+   {
+    "feature": "tags",
+    "coef": 0.4214581251144409
+   },
+   {
+    "feature": "type_axa",
+    "coef": 0.38112673163414
+   },
+   {
+    "feature": "dur_fit",
+    "coef": 0.3009110987186432
+   },
+   {
+    "feature": "thumb_emb",
+    "coef": 0.23719719052314758
+   },
+   {
+    "feature": "title_sim",
+    "coef": -0.18473637104034424
+   },
+   {
+    "feature": "dur_logratio",
+    "coef": 0.16537512838840485
+   }
+  ],
+  "I2": [
+   {
+    "feature": "type_axb",
+    "coef": 9.596991539001465
+   },
+   {
+    "feature": "desc",
+    "coef": 8.471441268920898
+   },
+   {
+    "feature": "cross_emb",
+    "coef": 3.049156904220581
+   },
+   {
+    "feature": "dur_min",
+    "coef": 2.753497362136841
+   },
+   {
+    "feature": "thumb_outline",
+    "coef": 2.331380844116211
+   },
+   {
+    "feature": "type_axa",
+    "coef": 2.118539333343506
+   },
+   {
+    "feature": "title_words",
+    "coef": 1.9511189460754395
+   },
+   {
+    "feature": "hq2_outline",
+    "coef": 1.4624583721160889
+   },
+   {
+    "feature": "thumb_emb",
+    "coef": 1.055446743965149
+   },
+   {
+    "feature": "dur_logratio",
+    "coef": 0.9386551976203918
+   },
+   {
+    "feature": "hq2_emb",
+    "coef": 0.8903756737709045
+   },
+   {
+    "feature": "dur_fit",
+    "coef": 0.8741762638092041
+   },
+   {
+    "feature": "days_log",
+    "coef": 0.5639970898628235
+   },
+   {
+    "feature": "tags",
+    "coef": 0.4358832836151123
+   },
+   {
+    "feature": "title_sim",
+    "coef": -0.23176482319831848
+   },
+   {
+    "feature": "hq2_emb missing",
+    "coef": 0.0580880269408226
+   },
+   {
+    "feature": "hq2_outline missing",
+    "coef": 0.05780215188860893
+   },
+   {
+    "feature": "cross_emb missing",
+    "coef": 0.05780215188860893
+   }
+  ],
+  "G": [
+   {
+    "feature": "desc",
+    "coef": 13.473381996154785
+   },
+   {
+    "feature": "type_axb",
+    "coef": 12.837655067443848
+   },
+   {
+    "feature": "frames_emb",
+    "coef": 5.367873191833496
+   },
+   {
+    "feature": "title_words",
+    "coef": 3.687675952911377
+   },
+   {
+    "feature": "dur_fit",
+    "coef": 2.89182448387146
+   },
+   {
+    "feature": "hq2_emb",
+    "coef": 2.1705307960510254
+   },
+   {
+    "feature": "type_axa",
+    "coef": -2.1015772819519043
+   },
+   {
+    "feature": "thumb_outline",
+    "coef": 1.858649730682373
+   },
+   {
+    "feature": "hq2_outline",
+    "coef": 1.4102939367294312
+   },
+   {
+    "feature": "title_sim",
+    "coef": -1.4032303094863892
+   },
+   {
+    "feature": "frames_outline",
+    "coef": -1.198991298675537
+   },
+   {
+    "feature": "cross_emb",
+    "coef": 0.9031698107719421
+   },
+   {
+    "feature": "thumb_emb",
+    "coef": 0.521298885345459
+   },
+   {
+    "feature": "dur_min",
+    "coef": -0.48998451232910156
+   },
+   {
+    "feature": "dur_logratio",
+    "coef": 0.4237286448478699
+   },
+   {
+    "feature": "tags",
+    "coef": 0.3045688271522522
+   },
+   {
+    "feature": "days_log",
+    "coef": -0.05125167965888977
+   }
+  ]
+ },
+ "tree_M": "|--- title_words <= 0.265\n|   |--- dur_min <= 6.579\n|   |   |--- dur_fit <= 828.500\n|   |   |   |--- class: 0\n|   |   |--- dur_fit >  828.500\n|   |   |   |--- class: 0\n|   |--- dur_min >  6.579\n|   |   |--- dur_min <= 6.580\n|   |   |   |--- class: 1\n|   |   |--- dur_min >  6.580\n|   |   |   |--- class: 0\n|--- title_words >  0.265\n|   |--- days_log <= 7.879\n|   |   |--- dur_min <= 6.461\n|   |   |   |--- class: 1\n|   |   |--- dur_min >  6.461\n|   |   |   |--- class: 0\n|   |--- days_log >  7.879\n|   |   |--- dur_min <= 4.086\n|   |   |   |--- class: 0\n|   |   |--- dur_min >  4.086\n|   |   |   |--- class: 0\n",
+ "best_model": {
+  "M": "logreg",
+  "I1": "boosted",
+  "I2": "logreg",
+  "G": "logreg"
+ },
+ "lookalike": {
+  "M": {
+   "logreg": {
+    "0.9": 30501,
+    "0.95": 48005,
+    "0.98": 54262,
+    "1.0": 58380,
+    "of": 60199
+   },
+   "boosted": {
+    "0.9": 12787,
+    "0.95": 24056,
+    "0.98": 38952,
+    "1.0": 58406,
+    "of": 60199
+   }
+  },
+  "I2": {
+   "logreg": {
+    "0.9": 20253,
+    "0.95": 42042,
+    "0.98": 52683,
+    "1.0": 59008,
+    "of": 60199
+   },
+   "boosted": {
+    "0.9": 2259,
+    "0.95": 5319,
+    "0.98": 23447,
+    "1.0": 51266,
+    "of": 60199
+   }
+  },
+  "I2f": {
+   "logreg": {
+    "0.9": 15754,
+    "0.95": 28076,
+    "0.98": 34380,
+    "1.0": 35951,
+    "of": 36681
+   },
+   "boosted": {
+    "0.9": 1994,
+    "0.95": 3995,
+    "0.98": 5918,
+    "1.0": 13058,
+    "of": 36681
+   }
+  },
+  "G": {
+   "logreg": {
+    "0.9": 6592,
+    "0.95": 18755,
+    "0.98": 27982,
+    "1.0": 30552,
+    "of": 36681
+   },
+   "boosted": {
+    "0.9": 1455,
+    "0.95": 3767,
+    "0.98": 4214,
+    "1.0": 30252,
+    "of": 36681
+   }
+  }
+ },
+ "cascade": {
+  "models": {
+   "M": "logreg",
+   "I": "I2 logreg",
+   "L": "I2 boosted"
+  },
+  "m_recall": 0.98,
+  "cascade_recall": 0.97,
+  "cut_m": -0.8726668357849121,
+  "cut_i": -2.2103681564331055,
+  "pairs_total": 8264145,
+  "videos_total": 4066,
+  "positives": 158,
+  "medley": 16,
+  "m": {
+   "pairs_kept": 261758,
+   "videos_needing_images": 4032,
+   "positives_kept": 155,
+   "medley_kept": 14
+  },
+  "i": {
+   "pairs_kept": 60282,
+   "videos_needing_gate_frames": 3679,
+   "positives_kept": 154,
+   "medley_kept": 13,
+   "reuploads_kept": 111,
+   "lookalikes_kept": 4381
+  },
+  "agent": [
+   {
+    "recall_target": 0.97,
+    "cut": -11.229778289794922,
+    "pairs_reviewed": 51349,
+    "sheets": 5135,
+    "same_length_found": 154,
+    "medley_found": 13,
+    "reuploads_reviewed": 111,
+    "lookalikes_reviewed": 4283,
+    "unlabelled_reviewed": 46705,
+    "download_videos": 139
+   },
+   {
+    "recall_target": 0.95,
+    "cut": -8.625239372253418,
+    "pairs_reviewed": 7796,
+    "sheets": 780,
+    "same_length_found": 151,
+    "medley_found": 11,
+    "reuploads_reviewed": 102,
+    "lookalikes_reviewed": 1913,
+    "unlabelled_reviewed": 5541,
+    "download_videos": 137
+   },
+   {
+    "recall_target": 0.9,
+    "cut": -7.144207000732422,
+    "pairs_reviewed": 2323,
+    "sheets": 233,
+    "same_length_found": 143,
+    "medley_found": 9,
+    "reuploads_reviewed": 86,
+    "lookalikes_reviewed": 788,
+    "unlabelled_reviewed": 1241,
+    "download_videos": 128
+   }
+  ],
+  "top": {
+   "50": {
+    "re_skins": 46,
+    "reuploads": 2,
+    "lookalikes": 1
+   },
+   "100": {
+    "re_skins": 71,
+    "reuploads": 10,
+    "lookalikes": 9
+   },
+   "200": {
+    "re_skins": 95,
+    "reuploads": 30,
+    "lookalikes": 38
+   },
+   "500": {
+    "re_skins": 126,
+    "reuploads": 52,
+    "lookalikes": 146
+   }
+  },
+  "lost_by_screens": [
+   {
+    "a": "12mNC1UN38M",
+    "b": "6Knlj_rhgE4",
+    "label": "re-skin",
+    "confidence": 0.8,
+    "share": 1.0,
+    "source": "search",
+    "title_a": "Halloween Wheels on the Bus #cartoon #shorts #ytkids #halloween #trending #viral",
+    "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+    "pos": 496758,
+    "medley": false,
+    "where": "metadata"
+   },
+   {
+    "a": "3CUN9mw8SOk",
+    "b": "doF0UNXZDh4",
+    "label": "re-skin",
+    "confidence": 0.75,
+    "share": null,
+    "source": "audit",
+    "note": "A's 3/4 frame double-decker shot (same pose, street, exhaust) appears in B's 1/2 frame recolored purple->yellow; B is a long medley",
+    "title_a": "Let's Learn and Sing Wheels On The Bus with Fun Rhyme & Baby Song",
+    "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+    "pos": 998921,
+    "medley": true,
+    "where": "metadata"
+   },
+   {
+    "a": "SQBTIuB0SsI",
+    "b": "6Knlj_rhgE4",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "share": 0.997201216848273,
+    "source": "search",
+    "title_a": "Halloween Wheels On The Bus #halloween #cartoon #ytshort #trending #halloweenbus #shorts",
+    "title_b": "Wheels on the Spooky Bus - Halloween  #wheelsonthespookybus #halloweenbus #shorts #ytshorts",
+    "pos": 1726011,
+    "medley": false,
+    "where": "metadata"
+   },
+   {
+    "a": "AZ3t77_JcwQ",
+    "b": "doF0UNXZDh4",
+    "label": "re-skin",
+    "confidence": 0.75,
+    "share": null,
+    "source": "audit",
+    "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow",
+    "title_a": "Let's Learn and Sing Wheels On The Bus + More Rhymes & Baby Songs",
+    "title_b": "Dinosaur Song | Dino Zoo | Walking in the Jungle | Nursery Rhymes & Baby Songs - Kids Tv",
+    "pos": 2649762,
+    "medley": false,
+    "where": "metadata"
+   },
+   {
+    "a": "WUbI_x69AIc",
+    "b": "Qy4EwtfCTkM",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "share": 0.9992069692460318,
+    "source": "search",
+    "title_a": "Wheels on The Bus | Kindergarten Nursery Rhymes & Kids Songs | Baby Toot Toot | Cartoon Videos",
+    "title_b": "New Wheels On The Bus Song | Nursery Rhymes & Children's Music | Baby Toot Toot | Kids Tv",
+    "pos": 5654986,
+    "medley": false,
+    "where": "images"
+   },
+   {
+    "a": "W99Te7xIpX0",
+    "b": "Wes02YpdpJA",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "share": 0.9835506908495736,
+    "source": "search",
+    "title_a": "The Wheels On The Firetruck #trending #popular #viral #shorts #kidstv #ytshorts #bobthetrain",
+    "title_b": "Wheels on the Fire Truck #shorts #firetruck #kidslearning #nurseryrhymes #kidssongs",
+    "pos": 6275157,
+    "medley": true,
+    "where": "metadata"
+   },
+   {
+    "a": "mHDPn8N5ASE",
+    "b": "oJ_S3VH_L_I",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "share": 0.9819522000034023,
+    "source": "search",
+    "title_a": "The Wheels On The Bus : A Fun Bumpy Ride with Boom Buddies Nursery Rhyme",
+    "title_b": "Wheels On The Bus + More Nursery Rhymes And Baby Songs",
+    "pos": 7832296,
+    "medley": true,
+    "where": "images"
+   }
+  ]
+ },
+ "part2": {
+  "candidates": 350498,
+  "scored": 9714,
+  "gate_pass": 5736,
+  "labelled": 5799,
+  "sheets": 583,
+  "download_videos": 364,
+  "positives_in_candidates": 157
+ },
+ "narrowing": {
+  "signals": [
+   {
+    "signal": "title_sim",
+    "recall_target": 1.0,
+    "radius": 0.005118073895573616,
+    "positives_with_signal": 174,
+    "pairs_within": 3678320,
+    "share_of_pairs": 0.4450938360834666,
+    "neighbours_per_video": 1809.3064436792918
+   },
+   {
+    "signal": "title_sim",
+    "recall_target": 0.98,
+    "radius": 0.1415332853794098,
+    "positives_with_signal": 174,
+    "pairs_within": 473201,
+    "share_of_pairs": 0.057259522914953696,
+    "neighbours_per_video": 232.75996064928677
+   },
+   {
+    "signal": "title_sim",
+    "recall_target": 0.95,
+    "radius": 0.17615628242492676,
+    "positives_with_signal": 174,
+    "pairs_within": 341485,
+    "share_of_pairs": 0.04132127400959204,
+    "neighbours_per_video": 167.97097884899165
+   },
+   {
+    "signal": "title_words",
+    "recall_target": 1.0,
+    "radius": 0.0,
+    "positives_with_signal": 174,
+    "pairs_within": 8264145,
+    "share_of_pairs": 1.0,
+    "neighbours_per_video": 4065.0
+   },
+   {
+    "signal": "title_words",
+    "recall_target": 0.98,
+    "radius": 0.2666666805744171,
+    "positives_with_signal": 174,
+    "pairs_within": 179487,
+    "share_of_pairs": 0.02171876219500021,
+    "neighbours_per_video": 88.28676832267585
+   },
+   {
+    "signal": "title_words",
+    "recall_target": 0.95,
+    "radius": 0.2857142984867096,
+    "positives_with_signal": 174,
+    "pairs_within": 161818,
+    "share_of_pairs": 0.01958073097700972,
+    "neighbours_per_video": 79.59567142154451
+   },
+   {
+    "signal": "thumb_emb",
+    "recall_target": 1.0,
+    "radius": 0.15119396150112152,
+    "positives_with_signal": 174,
+    "pairs_within": 8097822,
+    "share_of_pairs": 0.9798741430601714,
+    "neighbours_per_video": 3983.1883915395965
+   },
+   {
+    "signal": "thumb_emb",
+    "recall_target": 0.98,
+    "radius": 0.20321355760097504,
+    "positives_with_signal": 174,
+    "pairs_within": 7924585,
+    "share_of_pairs": 0.9589116599478833,
+    "neighbours_per_video": 3897.975897688146
+   },
+   {
+    "signal": "thumb_emb",
+    "recall_target": 0.95,
+    "radius": 0.5027668476104736,
+    "positives_with_signal": 174,
+    "pairs_within": 3976834,
+    "share_of_pairs": 0.481215419138943,
+    "neighbours_per_video": 1956.1406787998033
+   },
+   {
+    "signal": "thumb_outline",
+    "recall_target": 1.0,
+    "radius": -0.1253463476896286,
+    "positives_with_signal": 174,
+    "pairs_within": 8143959,
+    "share_of_pairs": 0.9854569347464257,
+    "neighbours_per_video": 4005.8824397442204
+   },
+   {
+    "signal": "thumb_outline",
+    "recall_target": 0.98,
+    "radius": -0.02080625295639038,
+    "positives_with_signal": 174,
+    "pairs_within": 6395845,
+    "share_of_pairs": 0.7739270063630297,
+    "neighbours_per_video": 3146.013280865716
+   },
+   {
+    "signal": "thumb_outline",
+    "recall_target": 0.95,
+    "radius": 0.01276202779263258,
+    "positives_with_signal": 174,
+    "pairs_within": 5062511,
+    "share_of_pairs": 0.6125873880480074,
+    "neighbours_per_video": 2490.16773241515
+   },
+   {
+    "signal": "hq2_emb",
+    "recall_target": 1.0,
+    "radius": 0.3294488191604614,
+    "positives_with_signal": 174,
+    "pairs_within": 6908656,
+    "share_of_pairs": 0.8363909308384423,
+    "neighbours_per_video": 3398.256763403837
+   },
+   {
+    "signal": "hq2_emb",
+    "recall_target": 0.98,
+    "radius": 0.33885514736175537,
+    "positives_with_signal": 174,
+    "pairs_within": 6771254,
+    "share_of_pairs": 0.8197564672497119,
+    "neighbours_per_video": 3330.6709296606
+   },
+   {
+    "signal": "hq2_emb",
+    "recall_target": 0.95,
+    "radius": 0.3963642120361328,
+    "positives_with_signal": 174,
+    "pairs_within": 5755527,
+    "share_of_pairs": 0.6967882877647674,
+    "neighbours_per_video": 2831.0511559272013
+   },
+   {
+    "signal": "hq2_outline",
+    "recall_target": 1.0,
+    "radius": -0.07652193307876587,
+    "positives_with_signal": 174,
+    "pairs_within": 7812778,
+    "share_of_pairs": 0.9458477399734627,
+    "neighbours_per_video": 3842.979832759469
+   },
+   {
+    "signal": "hq2_outline",
+    "recall_target": 0.98,
+    "radius": -0.017572304233908653,
+    "positives_with_signal": 174,
+    "pairs_within": 6656014,
+    "share_of_pairs": 0.8058050285227262,
+    "neighbours_per_video": 3273.9862272503688
+   },
+   {
+    "signal": "hq2_outline",
+    "recall_target": 0.95,
+    "radius": 0.007425231859087944,
+    "positives_with_signal": 174,
+    "pairs_within": 5838868,
+    "share_of_pairs": 0.7068778994876563,
+    "neighbours_per_video": 2872.0452533202165
+   },
+   {
+    "signal": "cross_emb",
+    "recall_target": 1.0,
+    "radius": 0.31055253744125366,
+    "positives_with_signal": 174,
+    "pairs_within": 7726930,
+    "share_of_pairs": 0.9354546202942344,
+    "neighbours_per_video": 3800.7525823905557
+   },
+   {
+    "signal": "cross_emb",
+    "recall_target": 0.98,
+    "radius": 0.44764018058776855,
+    "positives_with_signal": 174,
+    "pairs_within": 5968575,
+    "share_of_pairs": 0.7225807740360868,
+    "neighbours_per_video": 2935.846040334481
+   },
+   {
+    "signal": "cross_emb",
+    "recall_target": 0.95,
+    "radius": 0.4745752811431885,
+    "positives_with_signal": 174,
+    "pairs_within": 5412039,
+    "share_of_pairs": 0.6552041868843885,
+    "neighbours_per_video": 2662.0949335956716
+   },
+   {
+    "signal": "frames_emb",
+    "recall_target": 1.0,
+    "radius": 0.5979886054992676,
+    "positives_with_signal": 172,
+    "pairs_within": 989525,
+    "share_of_pairs": 0.43723775234984497,
+    "neighbours_per_video": 486.7314313821938
+   },
+   {
+    "signal": "frames_emb",
+    "recall_target": 0.98,
+    "radius": 0.7377094626426697,
+    "positives_with_signal": 172,
+    "pairs_within": 126090,
+    "share_of_pairs": 0.0557149220017604,
+    "neighbours_per_video": 62.02164289227742
+   },
+   {
+    "signal": "frames_emb",
+    "recall_target": 0.95,
+    "radius": 0.7900552749633789,
+    "positives_with_signal": 172,
+    "pairs_within": 28293,
+    "share_of_pairs": 0.012501723278577261,
+    "neighbours_per_video": 13.916871618298082
+   },
+   {
+    "signal": "dur_logratio",
+    "recall_target": 1.0,
+    "radius": 2.4076955318450928,
+    "positives_with_signal": 174,
+    "pairs_within": 6867193,
+    "share_of_pairs": 0.8309623076555409,
+    "neighbours_per_video": 3377.8617806197735
+   },
+   {
+    "signal": "dur_logratio",
+    "recall_target": 0.98,
+    "radius": 1.578911304473877,
+    "positives_with_signal": 174,
+    "pairs_within": 5078416,
+    "share_of_pairs": 0.6145119670576932,
+    "neighbours_per_video": 2497.9911460895228
+   },
+   {
+    "signal": "dur_logratio",
+    "recall_target": 0.95,
+    "radius": 1.4554904699325562,
+    "positives_with_signal": 174,
+    "pairs_within": 4715614,
+    "share_of_pairs": 0.5706112368551133,
+    "neighbours_per_video": 2319.5346778160356
+   }
+  ],
+  "union": [
+   {
+    "signals": [
+     "title_sim",
+     "thumb_emb",
+     "thumb_outline",
+     "hq2_emb",
+     "hq2_outline",
+     "cross_emb"
+    ],
+    "recall_each": 0.98,
+    "recall": 1.0,
+    "pairs": 8252052,
+    "neighbours_per_video": 4059.0516478111167
+   },
+   {
+    "signals": [
+     "title_sim",
+     "thumb_emb",
+     "thumb_outline",
+     "hq2_emb",
+     "hq2_outline",
+     "cross_emb"
+    ],
+    "recall_each": 0.95,
+    "recall": 1.0,
+    "pairs": 8056661,
+    "neighbours_per_video": 3962.941957697983
+   }
+  ],
+  "part2": {
+   "pairs": 350498,
+   "recall": 0.9827586206896551,
+   "neighbours_per_video": 172.40432857845548
+  }
+ }
+}

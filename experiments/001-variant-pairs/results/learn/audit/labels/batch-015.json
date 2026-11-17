@@ -1,0 +1,72 @@
+[
+ {
+  "a": "hTaUaHzrKRE",
+  "b": "sXrz3kZIO_c",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Row Row short (bunny) vs Row Row medley; no matching frames"
+ },
+ {
+  "a": "C2b403ofWSg",
+  "b": "T2UcCZAPW34",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi vs Christmas Kaboochi: different characters and shots"
+ },
+ {
+  "a": "L9Rsc20F4Iw",
+  "b": "Q9BbiIQ6C_E",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Scared of the Dark vs We Wish You a Merry Christmas shorts"
+ },
+ {
+  "a": "qbQFlAdsydo",
+  "b": "xUKoaX3t3dY",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels-on tune: ambulance vs pink bus; different animation"
+ },
+ {
+  "a": "fizRQ-UR3Pg",
+  "b": "lNPt7kIvl60",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Same 134 s length but different songs and characters (Santa/elves vs toy land kids)"
+ },
+ {
+  "a": "3gGApJMJxP0",
+  "b": "til-YVI7gG0",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "Humpty Dumpty vs Hop and Zip"
+ },
+ {
+  "a": "QlDpRW0_nBI",
+  "b": "_B5Aec29lHQ",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "WotB shorts 2022 vs 2026; different characters"
+ },
+ {
+  "a": "mMuqHBeLDI8",
+  "b": "sLMBUN_2qgw",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Thanksgiving prayer vs Humpty Dumpty medley"
+ },
+ {
+  "a": "AEGo0JRvQJc",
+  "b": "a-q2yRxEDhc",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Five Little Kittens vs Halloween medley"
+ },
+ {
+  "a": "Bs7grNq13yU",
+  "b": "rYJOKmtCMig",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Halloween medley vs Chew Your Food medley"
+ }
+]

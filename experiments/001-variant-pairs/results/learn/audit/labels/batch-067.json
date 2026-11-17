@@ -1,0 +1,72 @@
+[
+ {
+  "a": "P9QIOA_X06w",
+  "b": "sG_f01xgWPo",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Wheels on the Bus vs Halloween version; similar driver close-ups but poses differ, possible re-skin"
+ },
+ {
+  "a": "U3O9WIfjY8A",
+  "b": "sOdMlTse5Vc",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus 2D vs Wheels on the Car 3D"
+ },
+ {
+  "a": "NaK-IvLvEwE",
+  "b": "Z9Jg3hLBNpk",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "two 2018 Halloween songs, same length, different scenes"
+ },
+ {
+  "a": "-kxb9hBvr3M",
+  "b": "Lssgypif65Q",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Learning Street with Bob the Train episodes"
+ },
+ {
+  "a": "ijnm5yWwyZA",
+  "b": "r5hl9FFnOrI",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "colors song vs fire truck"
+ },
+ {
+  "a": "Jn9aklUYdQk",
+  "b": "iaSPV2ZHx5U",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Boo Boo Song vs Sick Song, different characters"
+ },
+ {
+  "a": "9-IDHjxw908",
+  "b": "sAYwBMbDfXU",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "animal sounds vs Kaboochi"
+ },
+ {
+  "a": "5l8bgaGtGv0",
+  "b": "sg86EZwda9k",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Jingle Bells vs Monsters in the Dark"
+ },
+ {
+  "a": "UN4V4ywCWxA",
+  "b": "aW_J2JMPmG8",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations, different episodes"
+ },
+ {
+  "a": "30tipN0AniY",
+  "b": "vpnRfh9tTz4",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Jingle Bells single vs Christmas compilation; frames differ"
+ }
+]

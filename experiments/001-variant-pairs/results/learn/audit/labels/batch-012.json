@@ -1,0 +1,72 @@
+[
+ {
+  "a": "MqJHH8_s9n4",
+  "b": "ZkMDTaMX7X0",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "B's 1/2 frame is the Row Row Your Boat boat scene shown in A's thumbnail; medleys share a song"
+ },
+ {
+  "a": "I8PdidUfhZc",
+  "b": "Rn7s3--IDpA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Shapes song vs Sportbots comedy"
+ },
+ {
+  "a": "E7LWvi86hYw",
+  "b": "bvyWJKgpTpQ",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Halloween Wheels on the Bus: different bus designs and characters in frames"
+ },
+ {
+  "a": "-OXYsniHGBM",
+  "b": "bVrFl7Z48so",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Boo Boo song: A girl/boy, B baby; different animation"
+ },
+ {
+  "a": "3pqDFvAk8bk",
+  "b": "Ve-HgwE-EqE",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Finger Family template: hand with finger puppets, ice cream vs sheep; different content shots"
+ },
+ {
+  "a": "WVWSKXP1JjU",
+  "b": "xUKoaX3t3dY",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Bob WotB medley vs pink-bus WotB short; no matching frames"
+ },
+ {
+  "a": "5bCr1Iktot8",
+  "b": "SEoJGGkKx7k",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Zoobees bus model recolored blue vs yellow in thumbnails (same pose), but sampled frames show different scenes; possible re-skin not confirmed"
+ },
+ {
+  "a": "In-a3vZkYZ0",
+  "b": "J9ZqIfAI_tk",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Learning Street With Bob episodes, different lessons"
+ },
+ {
+  "a": "Jg4SrPnwLo8",
+  "b": "O6fMIDJyDhY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Sportbots vs larva-style comedy"
+ },
+ {
+  "a": "V1u7TPoPOSM",
+  "b": "sg86EZwda9k",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Peek A Boo vs Monsters In The Dark shorts; different characters and shots"
+ }
+]

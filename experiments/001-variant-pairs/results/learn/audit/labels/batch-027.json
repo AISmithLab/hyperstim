@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Ia2TzzY2Vto",
+  "b": "lkGmcS3ArOg",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Rattic short vs Loco Nuts Halloween compilation"
+ },
+ {
+  "a": "Nl_hbXSq9xI",
+  "b": "mksDZdIzhkI",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Both Wheels on the Bus; yellow flower bus vs Junior Squad red bus"
+ },
+ {
+  "a": "CgR6YuA2Uoo",
+  "b": "PoRuagin4iM",
+  "label": "unrelated",
+  "confidence": 0.4,
+  "note": "Boo Boo vs Peek A Boo; similar family characters but different songs/scenes"
+ },
+ {
+  "a": "WJkikdHFak4",
+  "b": "mzK0b4cm1KY",
+  "label": "same-song",
+  "confidence": 0.7,
+  "note": "Old King Cole in 3D (2018) vs 2D (2015); same song, different animation"
+ },
+ {
+  "a": "E7LWvi86hYw",
+  "b": "sG_f01xgWPo",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Halloween Wheels on the Bus: Zoobees bus vs Frankenstein short"
+ },
+ {
+  "a": "FGUfrSFknik",
+  "b": "OSOdLGenkS0",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Two Rattic Mini compilations, same set"
+ },
+ {
+  "a": "JUxs1S9jQ5A",
+  "b": "kwXxrZQ5GaQ",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Learning Street With Bob The Train episodes"
+ },
+ {
+  "a": "Msywp-_Gl1g",
+  "b": "xPt-5RG1m-0",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Both Kaboochi; different characters"
+ },
+ {
+  "a": "HVxwiq0l91I",
+  "b": "i0ByoF6T3WA",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "Junior Squad carols compilation vs Zoobees Deck the Halls; no matching frames"
+ },
+ {
+  "a": "-x5dKL_rB14",
+  "b": "SyVbbpWvE9U",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Learning Street With Bob The Train episodes"
+ }
+]

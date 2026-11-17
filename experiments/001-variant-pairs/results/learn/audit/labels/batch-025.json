@@ -1,0 +1,72 @@
+[
+ {
+  "a": "cXFzC5Ht5Ds",
+  "b": "mZxHVZtAFbM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Wheels on the Bus; spooky short vs Junior Squad"
+ },
+ {
+  "a": "2HCfQoGn2UE",
+  "b": "gszQsk7Ov9k",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Shape song vs Monster Finger Family"
+ },
+ {
+  "a": "I3EDQO_YJk8",
+  "b": "aLftDG8Od_0",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Both Wheels on the Bus; red double-decker vs Christmas bus"
+ },
+ {
+  "a": "9-IDHjxw908",
+  "b": "BktbsqZ00Lg",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Animal sounds vs Five Little Ducks"
+ },
+ {
+  "a": "OLXeTCu2ESc",
+  "b": "gdVpv0KN_uU",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "No No song vs Five Little Mommies"
+ },
+ {
+  "a": "KKfXDr6uVA0",
+  "b": "MpkOKNviHtc",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Bao Panda Rain Rain vs Humpty compilation"
+ },
+ {
+  "a": "8-93_TmkKfc",
+  "b": "qXS5B2CYe8k",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus vs Christmas Jingle Bells"
+ },
+ {
+  "a": "0wGzs4JlkdQ",
+  "b": "UCrI_HkV9gw",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Both Wheels on the Bus 2014; flower bus vs red bus, different animation"
+ },
+ {
+  "a": "4xr6FahQ394",
+  "b": "H4_BpVuvsgU",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Wheels on the Bus; green school bus vs Zoobees spooky bus"
+ },
+ {
+  "a": "O0Oaes7oCMI",
+  "b": "cREbN-4BzHE",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Wash Your Hands vs Bugs song"
+ }
+]

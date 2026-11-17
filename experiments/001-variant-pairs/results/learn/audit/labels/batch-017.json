@@ -1,0 +1,72 @@
+[
+ {
+  "a": "rCy_ihze8sc",
+  "b": "tMfSpdHfpsk",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "WotB: two different yellow bus animations"
+ },
+ {
+  "a": "MCNSLagd7Ss",
+  "b": "jR1m58xXW9k",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Shapes chant medley vs Mary Had a Little Lamb"
+ },
+ {
+  "a": "1m-0OJH4Tpo",
+  "b": "TGZl_HsDj_0",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "2D Finger Family vs Rattic Mini"
+ },
+ {
+  "a": "4HgNPtymg-8",
+  "b": "IWeiJekM5Cs",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "WotB: strawberry bus vs pink Zoobees bus medley"
+ },
+ {
+  "a": "lZngiTw7yGo",
+  "b": "tNPoYErk2rs",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Monkey Dance vs Boo Boo shorts"
+ },
+ {
+  "a": "er0eSWIomzo",
+  "b": "luH0EBIl2Cs",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Vehicle medley vs Bob beach medley"
+ },
+ {
+  "a": "sEfyLd3DjVU",
+  "b": "vWxl7eCjxlI",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Finger Family song: 3D spider puppets vs 2014 2D faces on hand"
+ },
+ {
+  "a": "5bCr1Iktot8",
+  "b": "HDafF0-iosc",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Zoobees WotB medley vs 2026 WotB short (police driver); no matching frames"
+ },
+ {
+  "a": "WUKlDCQm0sI",
+  "b": "u0Iw9dozWrk",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Jingle Bells: Kids TV animation vs Loco Nuts medley; different shots"
+ },
+ {
+  "a": "EX0D6k2zAM0",
+  "b": "oMEt_dTdnMg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini medley vs larva-style comedy short"
+ }
+]

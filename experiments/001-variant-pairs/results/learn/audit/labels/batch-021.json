@@ -1,0 +1,72 @@
+[
+ {
+  "a": "56zIe-B5xfM",
+  "b": "Q5bfMoqqBB4",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Both Bob the Train counting/number rhymes; different content"
+ },
+ {
+  "a": "9mZnkKVN1GM",
+  "b": "Iygt_NzD7VU",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Monster compilation vs Boo Boo short with different characters"
+ },
+ {
+  "a": "YudNG_jdUs4",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Zoo song vs Halloween short; different characters and sets"
+ },
+ {
+  "a": "Is1sSXyJz28",
+  "b": "K9bq75znrw8",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Two different Halloween shorts; different characters"
+ },
+ {
+  "a": "P0ySNBzpAm0",
+  "b": "yUjUU9FVa8s",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "Halloween compilation vs Monster Dance short; zombie girls differ in design"
+ },
+ {
+  "a": "0RaDhoUxGaw",
+  "b": "y8hqTbGimTI",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Five Little Fruits vs Boom Buddies compilation"
+ },
+ {
+  "a": "-OXYsniHGBM",
+  "b": "MoftuEWtBuI",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Boo Boo short vs Kaboochi short; different characters"
+ },
+ {
+  "a": "LtsRwM5rMN8",
+  "b": "a9lx-Xb2X0I",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "A's thumbnail is B's mother-and-baby-on-bus frame; long compilation contains B's footage"
+ },
+ {
+  "a": "ILRNIIMH5a0",
+  "b": "i67fULlODLo",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Two Junior Squad songs; same characters, different content"
+ },
+ {
+  "a": "LWCHzyCxJSQ",
+  "b": "afyKHCB03MU",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Different shows (pink bug vs Rattic)"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "cO1aLZ7teeg",
+  "b": "zSf5nw7US6U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "4y7s4mCtWlM",
+  "b": "acvMclVtEw4",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Bob number medley vs bugs friendship song"
+ },
+ {
+  "a": "HwuzyyGUwp8",
+  "b": "Vd8UEW0g-Xg",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "WotB medley vs Christmas bus medley; different vehicles and scenes"
+ },
+ {
+  "a": "_B5Aec29lHQ",
+  "b": "uiGkn1AYuLs",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "WotB short (police driver) vs realistic bus song; different animation"
+ },
+ {
+  "a": "KewThMde2U0",
+  "b": "W5Q7SRLA9pI",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "WotB medleys: red Circle bus/pink train vs purple bus family; no matching frames"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "BfeGvBwS5To",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "Rattic Mini vs Simple Simon"
+ },
+ {
+  "a": "2fBdfXU6Vuo",
+  "b": "qHf6e1CQQ5c",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Johny Johny vs Kaboochi shorts"
+ },
+ {
+  "a": "4ZcEUwuI3iU",
+  "b": "a5F46p9TXaI",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Finger family: bee version vs puppet hand medley; different animation"
+ },
+ {
+  "a": "5PJld2Za7kM",
+  "b": "OnlW8PrYTCw",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Halloween WotB: monster bus/kids vs bandaged red bus; different designs"
+ },
+ {
+  "a": "ML4lbHOxdTY",
+  "b": "luH0EBIl2Cs",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Spooky Peek A Boo vs Bob beach medley"
+ }
+]

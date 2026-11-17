@@ -1,0 +1,72 @@
+[
+ {
+  "a": "oRUKPowFBgM",
+  "b": "phrajiOFBCY",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Apples & Bananas short vs Rattic Mini short"
+ },
+ {
+  "a": "a7-bpUidOBo",
+  "b": "aDyWeSAt-sI",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "A's 1/4 frame (rat with top-hat snowman) matches B's 3/4 frame; Rattic Mini medleys share an episode"
+ },
+ {
+  "a": "7_i2hBtxCms",
+  "b": "f849tWYwA2E",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Muffin Man medley vs Jump a Bub Bub farm animals"
+ },
+ {
+  "a": "4w905Gj-uvw",
+  "b": "mL5VBqEJJHI",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "two Halloween medleys (Row Row vs Wheels on the Bus); no frames match"
+ },
+ {
+  "a": "efop8uMcFFQ",
+  "b": "piXZphFuybY",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus shorts: Bao Panda yellow bus vs teal bus with kids"
+ },
+ {
+  "a": "QxdLe9kTzxs",
+  "b": "STD9E9YpQgo",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Incy Wincy Spider: yellow fuzzy spider (2013) vs red spiky spider (2016), different designs"
+ },
+ {
+  "a": "AHEjl0yntmM",
+  "b": "OwnNzMl4ZMQ",
+  "label": "re-skin",
+  "confidence": 0.65,
+  "note": "A's thumbnail and B's 1/2 frame: Humpty on the same wall, same hills/castle/path background and framing; white egg with blue hat vs yellow egg with red hat; A is a medley containing it"
+ },
+ {
+  "a": "0yIhvJw1GK8",
+  "b": "n2mneo6Owhk",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boo Boo short vs Kaboochi short"
+ },
+ {
+  "a": "8-93_TmkKfc",
+  "b": "avByim8fLio",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "yellow school bus song vs Wheels on the Police Car medley (Bao Panda); no matching frames"
+ },
+ {
+  "a": "8cScDP7TgoU",
+  "b": "Ye7ulpWeLfw",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Garbage Truck short vs Bao Panda bus short, variant lyrics, different vehicles"
+ }
+]

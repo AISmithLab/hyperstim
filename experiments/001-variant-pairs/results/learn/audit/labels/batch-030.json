@@ -1,0 +1,72 @@
+[
+ {
+  "a": "hjvaIaNfIVk",
+  "b": "tM0yeMjWv78",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Both Wheels on the Bus; crayon short vs red rocket bus"
+ },
+ {
+  "a": "SNmdaOzaA64",
+  "b": "laUh06IfqJI",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Same thumbnail; A's 1/4 frame equals B's 1/2 frame; A (295s) is an extended version containing B"
+ },
+ {
+  "a": "MbujX-vJQMg",
+  "b": "Tnu2IOo_tPs",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "No No Song vs Ten In The Bed"
+ },
+ {
+  "a": "hdHYlljxSqw",
+  "b": "scj-3JnR6VQ",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus vs Boom Buddies Halloween version"
+ },
+ {
+  "a": "ZrYSG3dEEnQ",
+  "b": "nHlaAkdsS8c",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Ambulance short vs Fruits compilation"
+ },
+ {
+  "a": "QKrdD5Y9c-s",
+  "b": "wJ_TfcJAIpI",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Two Rattic Mini compilations, same set"
+ },
+ {
+  "a": "aYJa4LaXliA",
+  "b": "dUVLr4oJ_1A",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Both Halloween camp compilations share the polka-dot camp set, witch and purple hippo; likely shared footage"
+ },
+ {
+  "a": "sdqXvtcWfIw",
+  "b": "xrFGNyPYZYM",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Jingle Bells compilation vs Jingle Bells short; different scenes"
+ },
+ {
+  "a": "7dvyseMYtCA",
+  "b": "BnranG67pRQ",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Two Wheels on the Bus compilations; different buses"
+ },
+ {
+  "a": "AYDQM669F2E",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Halloween Wheels vs If You're a Monster"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "H0wb3t95aKU",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus short vs longer video, different shots"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "6U9UX0MLvU4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini short vs Boo Boo Song"
+ },
+ {
+  "a": "Z13ulLin2jg",
+  "b": "mh9esb9qul8",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Kaboochi kids vs animal dance, different characters"
+ },
+ {
+  "a": "I0FVW6-NCII",
+  "b": "WVWSKXP1JjU",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Halloween wheels on the bus vs wheels on the bus compilation, different animation"
+ },
+ {
+  "a": "nhM3nICPkAE",
+  "b": "y7FElRQhklM",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Five Little Babies vs Wheels on the Bus"
+ },
+ {
+  "a": "_nU2w3nD-CM",
+  "b": "fMBIJhg9Gzs",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Christmas carol vs Halloween dance"
+ },
+ {
+  "a": "JJF38fzL8cs",
+  "b": "xUKoaX3t3dY",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus; driver interior vs pink bus/panda, different animation"
+ },
+ {
+  "a": "ZOgPaEm9Cvk",
+  "b": "s0DwH0Oq5YY",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Boo Boo Song, different characters and shots"
+ },
+ {
+  "a": "TktTriUcH50",
+  "b": "s7u-7RVu-qY",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Sportbots episodes"
+ },
+ {
+  "a": "ZOgPaEm9Cvk",
+  "b": "vYXkEPIElyc",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "boo boo songs; same girl character design but different scenes"
+ }
+]

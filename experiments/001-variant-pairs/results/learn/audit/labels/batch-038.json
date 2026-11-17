@@ -1,0 +1,72 @@
+[
+ {
+  "a": "19yPrd-it5I",
+  "b": "JOMSMENnSIQ",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic compilations: same stroller and claw machine shots in both"
+ },
+ {
+  "a": "7-abUIzCk5U",
+  "b": "ONwFOOEkasU",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi shorts, different characters"
+ },
+ {
+  "a": "6f6S5Y_1aIA",
+  "b": "NCUDBe8GKEQ",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Boo Boo song vs Wheels on the Bus"
+ },
+ {
+  "a": "AHy0JaHTI8g",
+  "b": "QidFzjRpGdM",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Veggies song vs Five Little Mommies"
+ },
+ {
+  "a": "E7LWvi86hYw",
+  "b": "bodrABbSgfA",
+  "label": "re-skin",
+  "confidence": 0.55,
+  "note": "A medley opens with the Zoobees Halloween bus recolored red vs teal in B, same model and front pose; character shots differ"
+ },
+ {
+  "a": "JmIVlMtJ0a0",
+  "b": "dPsVlnAF2HU",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Fire Truck vs Wheels on the Taxi compilation"
+ },
+ {
+  "a": "KYwjCiQCbr8",
+  "b": "KxLPa2_O8iY",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Three Little Pigs vs Jingle Bells"
+ },
+ {
+  "a": "NYMr_EvD6_s",
+  "b": "uiGkn1AYuLs",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Bob vehicle wheels compilation vs realistic bus song"
+ },
+ {
+  "a": "V3cEq4F1TFk",
+  "b": "zyvI7zhO2CE",
+  "label": "re-skin",
+  "confidence": 0.7,
+  "note": "Bob finger family: same head-on train shots in arch frame, Christmas version with elf hats and new colors"
+ },
+ {
+  "a": "72n7si7QsOY",
+  "b": "m7FZm2iepaU",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "finger family: cakes vs pandas on hand"
+ }
+]

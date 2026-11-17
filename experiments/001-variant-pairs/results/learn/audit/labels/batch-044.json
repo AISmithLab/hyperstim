@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "p2Q3-mKSQDM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "short shows mother/babies on bus seats, medley has red rocket bus and crayons; no matching frame"
+ },
+ {
+  "a": "TXr_SdAH2IM",
+  "b": "bovyfb6ABys",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Finger Family medley vs Oopsie Doopsie medley, no frames match"
+ },
+ {
+  "a": "SSeBjzpJLFk",
+  "b": "wW339izcKu4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini medleys on the same set, different gags in frames"
+ },
+ {
+  "a": "v8qj8XyKjyg",
+  "b": "xK9x6dEAZ08",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus: orange school bus (2D-ish) vs Bao Panda orange bus, different models and shots"
+ },
+ {
+  "a": "DsCvHyQ10gU",
+  "b": "VSJjVlGnmGQ",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Finger Family candy series: cotton candy vs lollipop characters on similar finger layouts; different designs, not same shots"
+ },
+ {
+  "a": "_i-HUb2b2Es",
+  "b": "pLJJzn2h5EM",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Jingle Bells short vs Machli Jal Ki Rani short"
+ },
+ {
+  "a": "sxB-HhoXc6c",
+  "b": "yjXnogfKzzI",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "A's 1/2 frame (animals in bed, pink) matches B's thumbnail; medleys share Ten in the Bed"
+ },
+ {
+  "a": "ApUXMFYjTUc",
+  "b": "eq8J_moRM6w",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Five in the Bed short vs Wheels on the Bus short"
+ },
+ {
+  "a": "-t7g8JmOz5s",
+  "b": "I3EDQO_YJk8",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "pink Zoobees bus medley vs Super Supremes double-decker medley, different animation"
+ },
+ {
+  "a": "EAGYaTsgvsc",
+  "b": "jDs1nBEzYfo",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Johny Johny medley vs vegetables counting medley, no frames match"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "t9RgxUBQ2gk",
+  "b": "vXbh-h6JGgg",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Old MacDonald compilation vs Red Riding Hood"
+ },
+ {
+  "a": "6dDwq-irTNg",
+  "b": "bh7LwMMuwPU",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Boo Boo compilation vs kitten finger family; no shared frames"
+ },
+ {
+  "a": "XIgNCe-5tDI",
+  "b": "riH6ctp6EAo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "alphabet vs Halloween"
+ },
+ {
+  "a": "EAGYaTsgvsc",
+  "b": "eC1DuQ5HIdU",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Johny Johny compilation vs monkey song"
+ },
+ {
+  "a": "e3ej1CBEdWk",
+  "b": "iaSPV2ZHx5U",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Old MacDonald vs Sick Song shorts"
+ },
+ {
+  "a": "BzKkVeSHlm8",
+  "b": "Ll2XLCph9_w",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween bus compilation vs colors video"
+ },
+ {
+  "a": "GsgkT-kp_mM",
+  "b": "I4Nh3mOaNck",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "different Halloween shorts"
+ },
+ {
+  "a": "OokGp8l_x9k",
+  "b": "P9QIOA_X06w",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Halloween Wheels on the Bus (Frankenstein kid) vs plain version; poses and shots differ"
+ },
+ {
+  "a": "Ja2d9CLWcvU",
+  "b": "QSlHkWlfSIs",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus shorts, purple bus/pandas vs orange bus/baby; different animation"
+ },
+ {
+  "a": "8FaMrACJoMw",
+  "b": "RBXvO24GKq0",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "different compilations"
+ }
+]

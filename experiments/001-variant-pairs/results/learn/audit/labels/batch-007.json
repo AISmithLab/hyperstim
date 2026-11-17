@@ -1,0 +1,72 @@
+[
+ {
+  "a": "FVGasyFuPvQ",
+  "b": "TMGjfjCJ23E",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "monkey cartoon medley vs Halloween medley"
+ },
+ {
+  "a": "ZelslnxUyNU",
+  "b": "mr-757RHm8g",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "both Jingle Bells; snowmobile/car short vs Santa and kids, different animation"
+ },
+ {
+  "a": "ApUXMFYjTUc",
+  "b": "xgI2f3OPmyc",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Five in the Bed baby short vs Wheels on the Bus with pandas"
+ },
+ {
+  "a": "HDafF0-iosc",
+  "b": "di7g1bv5UC0",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wheels on the Bus short vs Rattic cartoon"
+ },
+ {
+  "a": "Nlt_DqiIHcQ",
+  "b": "xcmtfR5eQxQ",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic mime short vs Boo Boo song"
+ },
+ {
+  "a": "PwrdGrEVMZI",
+  "b": "RNVtdRvnjzI",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "two Bob the Train learning videos with the same Bob model and style, different songs"
+ },
+ {
+  "a": "klDPbXVTBzw",
+  "b": "oiKleOeQCZw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic compilation vs tooth-brushing rhyme"
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "KMmDccpgRJQ",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus short vs bus medley (yellow bus, fire truck); no matching shots"
+ },
+ {
+  "a": "34zV8hDOuFs",
+  "b": "fUR3k2eL6Mo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations on the same stage set, different gags visible"
+ },
+ {
+  "a": "UMNFIPcx56c",
+  "b": "WAA-gbyp24s",
+  "label": "shared-segments",
+  "confidence": 0.4,
+  "note": "two Kids TV medleys a day apart, both feature the same Shapes cast (heart, star, triangle); no identical frame visible"
+ }
+]

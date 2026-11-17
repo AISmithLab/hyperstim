@@ -1,0 +1,72 @@
+[
+ {
+  "a": "MNiZl3mNEIk",
+  "b": "s1EDmLV-3f0",
+  "label": "same-template",
+  "confidence": 0.45,
+  "note": "Bob the Train toy-play shorts, different songs"
+ },
+ {
+  "a": "HWH2lpQomEk",
+  "b": "ZdnpWPRKNUg",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Five Little Monkeys kids vs Five Little Mommies cats"
+ },
+ {
+  "a": "EN7S56j6Z5Y",
+  "b": "Q8o0b4BIx90",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus green bus vs Christmas version, different animation"
+ },
+ {
+  "a": "Lm2OJi4yYNQ",
+  "b": "qCWFFPHRu1Q",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "tooth brushing vs dinosaur song"
+ },
+ {
+  "a": "O5ZoBFwS1G4",
+  "b": "b5H4Hts6eiU",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Wheels on the Bus short vs vegetable compilation"
+ },
+ {
+  "a": "dG7KouaFW-o",
+  "b": "gkk96Hm-IHo",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "5QCLbephl9k",
+  "b": "zPS3ihinlZs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "dance song vs Rattic Mini short"
+ },
+ {
+  "a": "6JrT14KVoRE",
+  "b": "DLv18V_BAzY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "bus short vs Booya cartoon"
+ },
+ {
+  "a": "D0tOd2ZH-cQ",
+  "b": "awLcqOFRHzg",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes (toy jeep appears in both, different shots)"
+ },
+ {
+  "a": "ByweyT4kigM",
+  "b": "vbizsxmXjaY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "fruits song vs sleep music"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "JEi957f1zic",
+  "b": "MRC5ZioSGUk",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "monster truck vs happy and you know it"
+ },
+ {
+  "a": "M3sOUpxsrJE",
+  "b": "mqMTtAJD4o8",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Rattic Mini short vs Larva short"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "JOMSMENnSIQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "JpuB_7cGFro",
+  "b": "VMZj8Fp3oFI",
+  "label": "shared-segments",
+  "confidence": 0.65,
+  "note": "both compilations contain the same orange-bus Wheels on the Bus shot unchanged"
+ },
+ {
+  "a": "XffN4zk3kDY",
+  "b": "dUVLr4oJ_1A",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Halloween songs, different animation"
+ },
+ {
+  "a": "KEIlzWl3Lxg",
+  "b": "RQ1saT70JGA",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "No No Song; different characters (single vs compilation)"
+ },
+ {
+  "a": "EqplsYEtxeE",
+  "b": "PLFCyJZOJ_s",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Five School Teachers vs Five Little Monkeys"
+ },
+ {
+  "a": "CiS78B1Zzuo",
+  "b": "h4RSLeqh8is",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "same Mary Had a Little Lamb shot with Bob the Train, dubbed (Thai compilation vs Portuguese)"
+ },
+ {
+  "a": "2KXsLpPPCSQ",
+  "b": "Vd8UEW0g-Xg",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the ice cream truck vs Christmas bus compilations, different animation"
+ },
+ {
+  "a": "Ar6N0i4c36U",
+  "b": "QkQmfGbdlKg",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini short vs Kaboochi"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "-kMVWdZjOP8",
+  "b": "sQbHOcFoK3Q",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini Halloween short vs animal song short"
+ },
+ {
+  "a": "PZ9-N1-ePgU",
+  "b": "dUVLr4oJ_1A",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "different Halloween compilations; no shared shots in frames"
+ },
+ {
+  "a": "lNPt7kIvl60",
+  "b": "pPw8P9W91QE",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "different Christmas songs, different scenes"
+ },
+ {
+  "a": "DsKrgJF4RiM",
+  "b": "w-zm91YvUUo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "hand-washing short vs Deck the Halls short"
+ },
+ {
+  "a": "SrRv-n-dGmY",
+  "b": "ydS5uZQiPi4",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "both Bob the Train episodes; same intro shot of kids running"
+ },
+ {
+  "a": "gMBgWz_2NdM",
+  "b": "km1nI6-op2A",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "different compilations (vegetables vs Halloween)"
+ },
+ {
+  "a": "QqbqYe-JRVE",
+  "b": "dhPzF3WYhYQ",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Wheels on the Bus vs vehicle finger family"
+ },
+ {
+  "a": "8Ri1s8CTSrM",
+  "b": "Xk01xkZmr-4",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini comedy vs Halloween rhymes"
+ },
+ {
+  "a": "s0DwH0Oq5YY",
+  "b": "vYXkEPIElyc",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "both Boo Boo songs, different characters and staging"
+ },
+ {
+  "a": "fLesGGBLBoM",
+  "b": "ogqYnN2SIl0",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Bob the Train episodes, same intro, different songs"
+ }
+]

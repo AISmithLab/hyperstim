@@ -1,0 +1,72 @@
+[
+ {
+  "a": "VJ1tu3mMRa0",
+  "b": "_uYyO8y5Txc",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "two shorts from the same Boo Boo song animation (boy in plaid, girl in pink)"
+ },
+ {
+  "a": "OKNdDQ3rJiY",
+  "b": "SyVbbpWvE9U",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Bob Learning Street episodes, same set and kids"
+ },
+ {
+  "a": "GWTS1DmFMgI",
+  "b": "P_KRHhg_TlQ",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "comedy compilation vs Christmas compilation"
+ },
+ {
+  "a": "jCBkyU72Riw",
+  "b": "jY1X9rUBsQs",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "bear finger family vs Twinkle Twinkle short"
+ },
+ {
+  "a": "8cScDP7TgoU",
+  "b": "nhlwE21asQc",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Garbage Truck vs Bus to the Zoo"
+ },
+ {
+  "a": "4x4Yq87gtlQ",
+  "b": "h48pV4-5rKs",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Bob the Train episodes, different songs"
+ },
+ {
+  "a": "8YanDLyxsaY",
+  "b": "oLEF3ytHJAM",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "two finger family compilations, different frames"
+ },
+ {
+  "a": "2fBdfXU6Vuo",
+  "b": "Msywp-_Gl1g",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Johny Johny vs Kaboochi"
+ },
+ {
+  "a": "4AHTuFMPftA",
+  "b": "Zf7yhivl3DY",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "different Halloween songs, different characters"
+ },
+ {
+  "a": "7NiozhK0Vj0",
+  "b": "NpJ_yg1QJVA",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Halloween Wheels on the Bus compilation vs Zoobees zoo bus, different buses"
+ }
+]

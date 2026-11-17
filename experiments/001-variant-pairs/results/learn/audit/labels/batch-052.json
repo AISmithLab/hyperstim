@@ -1,0 +1,72 @@
+[
+ {
+  "a": "h0fw1lcn5uU",
+  "b": "sI-dYFPPJgs",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Christmas Wheels on the Bus vs Wheels on the Bus; different animation"
+ },
+ {
+  "a": "ex7xMfJ9vjI",
+  "b": "zlO1s1IHJ4Y",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Bob the Train series episodes, different songs"
+ },
+ {
+  "a": "ApoFclrZzWM",
+  "b": "H2sLQtMRDkk",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "five little penguins vs five little dogs, different songs and styles"
+ },
+ {
+  "a": "nOQgO8q6E8Q",
+  "b": "ooPueu3Y0ds",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Jingle Bells, same 133s length but different characters and shots"
+ },
+ {
+  "a": "S_FlflY4epQ",
+  "b": "vgvXtlvdNAo",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "bus song vs fire truck compilation, different animation"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "UPDBxhcsIRQ",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "7m15CgRy6OU",
+  "b": "AydSzRoGSLY",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Boo Boo Song; mom/girl scenes vs farmer boy scenes, no matching shots"
+ },
+ {
+  "a": "_glAZAdz8mg",
+  "b": "dJGR_ECKwCA",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Larva shorts, different episodes"
+ },
+ {
+  "a": "KKgsTFivFJM",
+  "b": "wMHsxnO156E",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "IzP30262d8A",
+  "b": "WUKlDCQm0sI",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Jingle Bells; cars/snowman vs kids/Santa animation"
+ }
+]

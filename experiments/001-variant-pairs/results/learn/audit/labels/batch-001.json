@@ -1,0 +1,72 @@
+[
+ {
+  "a": "B_MmKCyAmpw",
+  "b": "sUz47md7Gqo",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "different Halloween songs, different characters and shots"
+ },
+ {
+  "a": "m151ZBLwbhc",
+  "b": "yt7FiUHFO68",
+  "label": "re-skin",
+  "confidence": 0.7,
+  "note": "B (22-min medley) thumb shows the bus front shot of A's 1/2 frame, same pose, street and driver, bus recolored cyan->purple"
+ },
+ {
+  "a": "3bTL4x31XTI",
+  "b": "iaSPV2ZHx5U",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "bath song vs sick song, different characters and scenes"
+ },
+ {
+  "a": "nlKnN1ROoAc",
+  "b": "yc8M3YeKsCo",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "toy cars vs Bob the Train with kids"
+ },
+ {
+  "a": "2j_kChB8TU0",
+  "b": "VfHin9QKzu4",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "both Baa Baa Black Sheep, thumbnails show different sheep/character designs; few frames"
+ },
+ {
+  "a": "Lm2OJi4yYNQ",
+  "b": "_QFj7e58XGE",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "tooth-brushing song vs train song, different characters"
+ },
+ {
+  "a": "49leN9fKryQ",
+  "b": "QJ0F4mKegzo",
+  "label": "shared-segments",
+  "confidence": 0.35,
+  "note": "Xmas song vs Xmas medley with the same Santa/gingerbread/baby/Bob cast; B frames sparse, overlap not visible"
+ },
+ {
+  "a": "4rcjZ1f_L4A",
+  "b": "7-abUIzCk5U",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "both Kaboochi shorts, different dancers and scenes"
+ },
+ {
+  "a": "X48-R_yTN-4",
+  "b": "pBZoqnYJdpo",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "bus song vs Rattic cartoon"
+ },
+ {
+  "a": "24CuY0nwSX0",
+  "b": "6JrT14KVoRE",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "both Wheels on the Bus; red bus vs green double-decker, pandas in both but different scenes"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "tl_WeFcvnd4",
+  "b": "y8d5M6M3zkQ",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "both Bob the Train series (Rig a Jig Jig vs ABC balloons medley), different content"
+ },
+ {
+  "a": "Y1gxU2ML5sI",
+  "b": "mQ1MBBDqizk",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "crayons medley vs Halloween medley"
+ },
+ {
+  "a": "Ia-g9fkyMJ4",
+  "b": "mqMTtAJD4o8",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "two Larva shorts, same characters and set, different gags"
+ },
+ {
+  "a": "scj-3JnR6VQ",
+  "b": "vqKnzSKC1ew",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Halloween Wheels on the Bus (Boom Buddies) vs Kids Channel red bus, different animation"
+ },
+ {
+  "a": "aySJa5VcfL0",
+  "b": "qC6yZCpDNAM",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "gummy Five Little Bears vs Five Little Penguins, different songs and sets"
+ },
+ {
+  "a": "1j9mlvKJcXw",
+  "b": "tnxADKlyqS4",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "B's 1/2 frame (yellow car on road) matches A's thumbnail; medleys share a driving segment"
+ },
+ {
+  "a": "S2v2Wh9re6w",
+  "b": "VbT8JnABk0E",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Halloween medleys of two channels; no frames match"
+ },
+ {
+  "a": "T2UcCZAPW34",
+  "b": "yMX7X-q4zxA",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Christmas Kaboochi short vs Christmas carol short, different characters"
+ },
+ {
+  "a": "AruenFtf5rs",
+  "b": "MqJHH8_s9n4",
+  "label": "shared-segments",
+  "confidence": 0.8,
+  "note": "A's 1/2 frame (shapes in boat) matches B's thumbnail and B's 1/2 (cookies) matches A's thumbnail"
+ },
+ {
+  "a": "IAzIC-bg5Vo",
+  "b": "PfQEywBU0wA",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "We Wish You a Merry Christmas, two different 2018 animations"
+ }
+]

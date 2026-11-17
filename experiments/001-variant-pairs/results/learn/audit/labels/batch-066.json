@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6FhYNE5KFeg",
+  "b": "jRCHQ6wCTUA",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, different gags"
+ },
+ {
+  "a": "1fL9dsWYLJ0",
+  "b": "EcqgDq0yrY4",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus short vs 116s version; characters and shots differ"
+ },
+ {
+  "a": "1lYnLr7Bv0I",
+  "b": "qM6hdr1DVSM",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, different gags"
+ },
+ {
+  "a": "_Wu1wIiW-3M",
+  "b": "uaNCJzGwl3E",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Fire Truck vs Wheels on the Bus; different animation"
+ },
+ {
+  "a": "OShHVcwW2Uo",
+  "b": "yWkiHt5DAXk",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "phonics compilations, different animation"
+ },
+ {
+  "a": "EURnxENVdVI",
+  "b": "W0RsaWG0ZeE",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "alphabet vs occupations"
+ },
+ {
+  "a": "DkHOTeUUybU",
+  "b": "OVlbtpG4d64",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Humpty Dumpty: costume kid vs egg characters"
+ },
+ {
+  "a": "Q95CAqmYoew",
+  "b": "hFclYPnk-RI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Larva cartoon vs crayon finger family"
+ },
+ {
+  "a": "X5tQg9x3Nfs",
+  "b": "n2mneo6Owhk",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Boo Boo Song vs Kaboochi"
+ },
+ {
+  "a": "93hO6Ma5uEg",
+  "b": "Nj_pfXISKXc",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Twinkle Twinkle vs Wheels on the Bus shorts"
+ }
+]

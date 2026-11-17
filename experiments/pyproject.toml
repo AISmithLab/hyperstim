@@ -13,6 +13,7 @@ dependencies = [
     "torch",
     "torchaudio",
     "demucs",
+    "scikit-learn==1.9.1",
 ]
 
 [tool.uv]

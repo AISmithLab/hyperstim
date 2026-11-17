@@ -1,0 +1,180 @@
+<title>Re-skin Screen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column with wide tables in their own scroll boxes; a log-scale funnel opens the page. */
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --fg: #18202b; --muted: #5a6575; --line: #dde2ea;
+  --accent: #2f5aae; --accent-soft: #e3eafa; --bar: #e0a526; --med: #b4532a; --med-soft: #f8e6dc;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11151c; --surface: #19202a; --fg: #e6eaf0; --muted: #9aa5b5; --line: #2c3542;
+  --accent: #8fb0ff; --accent-soft: #22304d; --bar: #e8b443; --med: #f0936a; --med-soft: #3b261d; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11151c; --surface: #19202a; --fg: #e6eaf0; --muted: #9aa5b5; --line: #2c3542;
+  --accent: #8fb0ff; --accent-soft: #22304d; --bar: #e8b443; --med: #f0936a; --med-soft: #3b261d; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body); }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 44px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -0.01em; }
+h2 { font-size: 1.55rem; }
+h3 { font-size: 1.1rem; margin-top: 8px; }
+p { margin: 0; max-width: 68ch; }
+section { display: flex; flex-direction: column; gap: 14px; }
+.eyebrow { font: 500 0.78rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.lede { font-size: 1.15rem; color: var(--fg); }
+.muted { color: var(--muted); }
+code, .mono { font-family: var(--mono); font-size: 0.86em; }
+.funnel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 14px; }
+.frow { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 7.5rem; gap: 14px; align-items: center; }
+.flabel { display: flex; flex-direction: column; min-width: 0; }
+.flabel span { color: var(--muted); font-size: 0.85rem; line-height: 1.35; }
+.ftrack { height: 18px; background: var(--accent-soft); border-radius: 3px; }
+.fbar { height: 100%; background: var(--accent); border-radius: 3px; }
+.fnum { font: 500 0.95rem var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+.scale { font: 0.78rem var(--mono); color: var(--muted); }
+@media (max-width: 640px) { .frow { grid-template-columns: 1fr auto; } .ftrack { grid-column: 1 / -1; grid-row: 2; } }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.fact { border-top: 3px solid var(--bar); padding-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+.fact b { font: 600 1.5rem var(--display); }
+.fact span { color: var(--muted); font-size: 0.92rem; line-height: 1.4; }
+.tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 0.75rem var(--body); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); white-space: nowrap; }
+td { font-variant-numeric: tabular-nums; }
+tbody tr:last-child td { border-bottom: 0; }
+details { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+details summary { cursor: pointer; padding: 10px 14px; font-weight: 600; }
+details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+details .tw { border: 0; border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; }
+.pairs { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.pair { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.imgs img { width: 100%; border-radius: 4px; aspect-ratio: 16 / 9; object-fit: cover; background: var(--line); }
+figcaption { font-size: 0.85rem; line-height: 1.4; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+figcaption .t { color: var(--muted); overflow-wrap: anywhere; }
+figcaption code { color: var(--muted); font-size: 0.75rem; overflow-wrap: anywhere; }
+.chip { display: inline-block; font: 600 0.72rem var(--body); letter-spacing: 0.03em; padding: 1px 8px; border-radius: 99px; width: fit-content; }
+.chip.med { background: var(--med-soft); color: var(--med); }
+.chip.same { background: var(--accent-soft); color: var(--accent); }
+pre { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font: 0.82rem/1.5 var(--mono); margin: 0; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.cols > * { min-width: 0; }
+ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+.rec { background: var(--accent-soft); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+.rec ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 8px; max-width: 72ch; }
+</style>
+
+<div class="wrap">
+<header style="display:flex;flex-direction:column;gap:12px">
+  <div class="eyebrow">Experiment 001 · Search other channels · Step 2</div>
+  <h1>How much can we rule out before downloading?</h1>
+  <p class="lede">Cheap classifiers trained on the seed search's labels, tested on all $pairs pairs of the $videos videos of Kids TV and Kids Channel. Downloads are the scarce resource, so every stage before them spends something cheaper: API units, image requests, CPU, then agent tokens.</p>
+  <p class="muted">Labels as of $at, with $pos confirmed same-length re-skins and $med medley re-skins (a song re-skinned inside a video at least twice as long). Recall below is among re-skins the seed search could find; the audit checks what it missed.</p>
+</header>
+
+<section>
+  <h2>The cascade</h2>
+  <div class="funnel" role="img" aria-label="Pairs left after each stage, on a log scale">
+    $funnel
+    <div class="scale">Bar length on a log scale: 1 to $pairs.</div>
+  </div>
+  <div class="facts">
+    <div class="fact"><b>$m_share</b><span>of pairs kept by metadata alone ($m_kept), with $m_pos of $pos same-length re-skins.</span></div>
+    <div class="fact"><b>$i_share</b><span>kept after adding the thumbnail ($i_kept), with $i_pos of $pos re-skins.</span></div>
+    <div class="fact"><b>$a_sheets sheets</b><span>for the agent ($a_pairs pairs) to find $a_found of $pos re-skins. The seed search needed $p2_sheets sheets ($p2_lab pairs).</span></div>
+    <div class="fact"><b>$a_dl downloads</b><span>videos of confirmed re-skins. The seed search downloaded $p2_dl, re-uploads included.</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Where the classifiers sit</h2>
+  <p>Every stage runs before the download. The two screens (metadata, then thumbnail) are trained against random pairs and only rule pairs out. The look-alike model is trained on what survives the screens, where most pairs are series episodes, same-song versions and shared footage; it orders those pairs for the agent and sets how far down the agent reads. The agent's label decides the download. After the download nothing changes: the overlap step and the full report confirm each pair.</p>
+  <p>No stage could send pairs straight to download. Among the top 50 pairs of the look-alike model, about 3 in 4 are re-skins; the rest are re-uploads and look-alikes, which the images alone can't tell apart. So the agent stays the last check before a download.</p>
+</section>
+
+<section>
+  <h2>What each tier keeps</h2>
+  <p>Pairs kept at a given share of same-length re-skins, per tier and model (5-fold cross-validation, with videos linked by a re-skin or re-upload kept in one fold). Logistic regression ranks smoothly; boosted trees rule out more at 98% but drop to keeping nearly everything when the last few re-skins look like random pairs.</p>
+  $tiers
+</section>
+
+<section>
+  <h2>What carries the metadata screen</h2>
+  <div class="cols">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <p>A three-level tree on the metadata, as a readable check. Re-skins share title words, have nearly the same length, and are under ~10 minutes.</p>
+      <pre>$tree</pre>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <p>Strongest logistic regression weights (standardized features):</p>
+      <ul>$imp</ul>
+      <p class="muted">Within these two channels, nearly every video has some sibling with similar metadata, so the metadata screen keeps a pair for $m_videos of $videos videos. It saves pairs, not thumbnail requests.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The agent's band</h2>
+  <p>Pairs the agent reviews, in the look-alike model's order, for each recall of same-length re-skins (after both screens).</p>
+  <div class="tw"><table><thead><tr><th>Recall</th><th>Pairs</th><th>Sheets</th><th>Re-skins found</th><th>Medleys found</th><th>Look-alikes</th><th>Re-uploads</th><th>Unlabelled</th><th>Download videos</th></tr></thead><tbody>$agent_rows</tbody></table></div>
+  <p>Above 95% the band grows fast: the last few re-skins score like ordinary look-alikes. Which inputs the look-alike model needs (pairs reviewed, among the screen survivors):</p>
+  <div class="tw"><table><thead><tr><th>Inputs</th><th>Model</th><th>90%</th><th>95%</th><th>98%</th><th>Of</th></tr></thead><tbody>$look_rows</tbody></table></div>
+  <p class="muted">The gate frames (¼ and ¾) were fetched for only half the videos, so the last two rows cover the same, smaller set of pairs and compare like with like. Linear models can't do this stage; boosted trees can.</p>
+</section>
+
+<section>
+  <h2>Re-skins the screens lose</h2>
+  <p>Most are medleys: a short song re-skinned inside a longer video of several songs. Duration and title don't match by design, and the thumbnail shows another song. They are a different strategy, and a screen built on the same-length re-skins misses them. Finding them needs a test of "contains", such as frames of the short video matched against many frames of the long one, which costs more images per video.</p>
+  <div class="pairs">$lost</div>
+</section>
+
+<section>
+  <h2>Narrowing without listing every pair</h2>
+  <p>For channels too large to pair in full, each signal as a radius search: every neighbour closer than the radius that keeps a share of all re-skins.</p>
+  <div class="tw"><table><thead><tr><th>Signal</th><th>Re-skins kept</th><th>Pairs within</th><th>Neighbours per video</th></tr></thead><tbody>$nar_rows</tbody></table></div>
+  <p>Shared title words are the only single key that works here: all re-skins within $title_pairs pairs ($title_nb neighbours a video). Image signals alone don't narrow: a few re-skins have unlike thumbnails, so the radius that keeps them keeps almost everything. This studio keeps the song name in both titles; other studios may not, so a title key is one way in, never the only one.</p>
+</section>
+
+<section>
+  <h2>Recall audit</h2>
+  <p>Pairs the cascade or the seed search would drop, labelled by the agent from the saved images (thumbnail and middle frame; gate frames only where they had been fetched), with the samples mixed on each sheet. The first four samples are the pairs closest to a cut-off, not a random draw, so their counts are a floor for that zone, not a rate. Only the random sample gives a rate: 0 of 100, so at most 3.6% of ordinary pairs (95% interval), which says little at this size.</p>
+  $audit
+  $rerun
+</section>
+
+<section>
+  <h2>Cost of a group</h2>
+  <p>Scaled from the seed channels, at 95% recall. Agent pairs are a range: low if look-alikes grow with the number of videos, high if they grow with the number of pairs. Images are at ~1 a second; downloads at 50 a day.</p>
+  <div class="tw"><table><thead><tr><th>Videos</th><th>API units</th><th>Images</th><th>Agent pairs</th><th>Sheets</th><th>Downloads</th></tr></thead><tbody>$cost_rows</tbody></table></div>
+</section>
+
+<section class="rec">
+  <h2>Recommendation for the next step</h2>
+  <ol>
+    <li><b>Screen with metadata and one thumbnail per video.</b> The metadata screen (API only) rules out about 98% of pairs, and the thumbnail cuts the rest by more than half. Within one studio the metadata doesn't save thumbnails: nearly every video has a look-alike sibling, so every video needs its thumbnail. Fetch the other frames only for videos still in a pair after the thumbnail screen.</li>
+    <li><b>Don't count on the ¼ and ¾ frames.</b> On the pairs that have them, the boosted look-alike model's list barely changes with them (2,165 against 2,281 pairs at 95% recall) and gets longer at 98% (table above). An earlier fit, before the screens were fixed, showed a large gain that didn't hold up. They help the linear model, not the best one. Fetch them only where the agent needs them to decide a pair.</li>
+    <li><b>Let the look-alike model set the agent's reading order,</b> and have the agent read a few hundred pairs past the cut-off in each group. That doubles as the audit: 5 of the 150 pairs just below the cut were re-skins the seed search had missed too.</li>
+    <li><b>Download only what the agent confirms.</b> That is about 3% of videos here, against 9% in the seed search, which also downloaded re-uploads.</li>
+    <li><b>Give medleys their own route.</b> 14 of the 165 re-skins, and 4 of the 9 the audit found, are a song re-skinned inside a longer video. They fail the duration and title signals by design. A cheap way in: pairs where a short video's thumbnail or middle frame matches any frame of a long video with shared title words, sent to the agent as their own sheets.</li>
+    <li><b>Expect about 90–95% recall, not 99%.</b> The last few re-skins look like ordinary look-alikes: the agent's list is 1,701 pairs at 90%, 4,983 at 95% and 32,029 at 97%. At 95% the agent reads nearly as many sheets as the seed search did (499 against 583); the saving is in downloads, and at 90% in sheets too (171). Check the cut-offs on a second owner group before trusting them there, and rerun on the corrected labels.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Limits</h2>
+  <ul>
+    <li>All labels come from one studio. Cut-offs fitted here are a starting point, checked on a second owner group before they set its cut-offs.</li>
+    <li>Recall is among re-skins the seed search could find. The audit estimates the rest.</li>
+    <li>Some labels are being corrected in another session; this runs again on the corrected labels.</li>
+    <li>No GPU was needed: features for all pairs take under a minute, every model trains in a few minutes on the CPU within a 10 GB memory cap. Image requests set the time, not compute.</li>
+  </ul>
+</section>
+</div>

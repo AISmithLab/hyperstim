@@ -1,0 +1,72 @@
+[
+ {
+  "a": "UEAQLDDEJQs",
+  "b": "vJUTEgqiFbM",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "shapes vs farm compilations"
+ },
+ {
+  "a": "NYq-3fN_HJ0",
+  "b": "cMOSJ1QIa3w",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus shorts, different buses"
+ },
+ {
+  "a": "UrfuJBfnsGo",
+  "b": "xh-75gMcI_4",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Bus vs Wheels on the Tractor"
+ },
+ {
+  "a": "OZPHjDHTOzA",
+  "b": "qM6hdr1DVSM",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "No No song vs Rattic airplane short"
+ },
+ {
+  "a": "DnjyjuhfUoM",
+  "b": "wxLAOZ5dr2Q",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Bob the Train episodes, different songs"
+ },
+ {
+  "a": "p-ppSFNd3vM",
+  "b": "rfe71z8NXkM",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Old MacDonald shorts, different shots"
+ },
+ {
+  "a": "MI4XvQZDPZc",
+  "b": "y8hqTbGimTI",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Halloween shark short vs Boom Buddies compilation"
+ },
+ {
+  "a": "DsCvHyQ10gU",
+  "b": "Hj9YUej0a7k",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "finger family on hand: candy vs fruits"
+ },
+ {
+  "a": "Ng85dlGMIQA",
+  "b": "ex7xMfJ9vjI",
+  "label": "same-template",
+  "confidence": 0.45,
+  "note": "Bob Learning Street vs Korean Bob animal sounds"
+ },
+ {
+  "a": "_QkBvYROA7o",
+  "b": "oCiHs7agwmE",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Ten in the Bed vs Kaboochi"
+ }
+]

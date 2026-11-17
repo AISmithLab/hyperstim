@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6MhA8hdVe00",
+  "b": "yEUHnjAXIOM",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Jingle Bells: 2017 Santa/girl animation vs Loco Nuts animals"
+ },
+ {
+  "a": "6cmE3gwaqJI",
+  "b": "afyKHCB03MU",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts: same character and set, different gags"
+ },
+ {
+  "a": "Nm1MQqEan_0",
+  "b": "TMGjfjCJ23E",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Shapes medley vs Supremes Halloween medley"
+ },
+ {
+  "a": "14B6JJO6CDM",
+  "b": "U9maOBWT6wE",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Five Little Monkeys vs Hush Little Baby shorts"
+ },
+ {
+  "a": "rvWFuvJh85o",
+  "b": "z9-GvhYLIuw",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "WotB: blue Kids TV bus vs yellow Kids Channel bus; different animation"
+ },
+ {
+  "a": "IDwshmCv_Xw",
+  "b": "KMr0eKc64zE",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Jingle Bells short vs Five Strict Mommies"
+ },
+ {
+  "a": "LvECrt5yV6M",
+  "b": "ijAeNNIiKJ4",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi: Halloween zombie characters vs pink baby; poses and shots differ"
+ },
+ {
+  "a": "4xr6FahQ394",
+  "b": "RFR72VQ3ydg",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "WotB vs Spooky Train medley; no shared frames"
+ },
+ {
+  "a": "dTdnDn9FEww",
+  "b": "oEDZUGxcTSk",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Fire truck short vs Old MacDonald short"
+ },
+ {
+  "a": "Gat8_QjF0YA",
+  "b": "H2sLQtMRDkk",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "Five Little Monsters medley vs Five Little Dogs; different animation"
+ }
+]

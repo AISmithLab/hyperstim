@@ -1,0 +1,72 @@
+[
+ {
+  "a": "4QGdob5fIWU",
+  "b": "nv4bco4e-O0",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "finger family compilations, different characters"
+ },
+ {
+  "a": "Zy0VtX5RTFM",
+  "b": "w7exxTCHfx8",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations, different episodes"
+ },
+ {
+  "a": "TwS8SzpZrug",
+  "b": "lEvNMZQ2DT4",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations, different episodes"
+ },
+ {
+  "a": "cMOSJ1QIa3w",
+  "b": "jL4xf527bwg",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus vs Five Little Shapes"
+ },
+ {
+  "a": "QSLzIvIqRjQ",
+  "b": "ftMbLOkC580",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Learning Street with Bob episodes"
+ },
+ {
+  "a": "1eGnLbUKbn0",
+  "b": "jS1OOSMcfV8",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "phonics compilation vs Five Strict Moms"
+ },
+ {
+  "a": "7HOESsArCmY",
+  "b": "oJ_S3VH_L_I",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus Little Eddie vs Kids Channel compilation; different animation"
+ },
+ {
+  "a": "PEBejRumYZc",
+  "b": "_Wu1wIiW-3M",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Taxi compilation vs Fire Truck"
+ },
+ {
+  "a": "S2v2Wh9re6w",
+  "b": "sZyaD9COry8",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "different Halloween compilations, no shared frames"
+ },
+ {
+  "a": "20HqqfnKxZk",
+  "b": "_pqh8Nw-k3o",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations, different episodes"
+ }
+]

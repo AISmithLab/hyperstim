@@ -1,0 +1,72 @@
+[
+ {
+  "a": "KFwebO9sy58",
+  "b": "_GlpTSaa5EU",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations, same set, different episodes"
+ },
+ {
+  "a": "RWySgaL9pSY",
+  "b": "k3vCYP_aQ3w",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "panda Wheels on the Bus remake: similar bus framing but different bus model (pink vs red), not clearly same shots"
+ },
+ {
+  "a": "clQj41x_5A0",
+  "b": "rYV4h-p7O2Y",
+  "label": "shared-segments",
+  "confidence": 0.45,
+  "note": "same cat-costume girl and baby characters appear in both Halloween compilations"
+ },
+ {
+  "a": "cl8T4ksmsbk",
+  "b": "hsUfmH_uRjc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "animal sounds vs Rattic Mini"
+ },
+ {
+  "a": "EcqgDq0yrY4",
+  "b": "hjvaIaNfIVk",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Bus vs short whose frames show crayon characters"
+ },
+ {
+  "a": "4HU9yzH5K5s",
+  "b": "_j_ZQtJR7yc",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "two Five Little Fruits compilations; similar thumbnails, likely shared songs"
+ },
+ {
+  "a": "s0DwH0Oq5YY",
+  "b": "y6mmZsg_wGI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Boo Boo Song vs alphabet"
+ },
+ {
+  "a": "6nacOLqpcPk",
+  "b": "sI-dYFPPJgs",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Wheels on the Bus shorts, blue bus/pandas vs driver/baby; different animation"
+ },
+ {
+  "a": "EAGYaTsgvsc",
+  "b": "EUmb0Bi_X4g",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Johny Johny compilation vs elephant song"
+ },
+ {
+  "a": "BnranG67pRQ",
+  "b": "laUh06IfqJI",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "bus songs, different buses and scenes"
+ }
+]

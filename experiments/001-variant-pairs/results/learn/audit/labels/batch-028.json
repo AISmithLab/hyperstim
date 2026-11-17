@@ -1,0 +1,72 @@
+[
+ {
+  "a": "6f6S5Y_1aIA",
+  "b": "jPvyJ9IIRJk",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Boo Boo short vs Rattic short"
+ },
+ {
+  "a": "kHVGgxylqd8",
+  "b": "qCWFFPHRu1Q",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Boo Boo vs Dinosaur song"
+ },
+ {
+  "a": "9VsF5w_n7qA",
+  "b": "xrFGNyPYZYM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Both Jingle Bells shorts; Bob reindeer vs Santa and car"
+ },
+ {
+  "a": "mdsX1ElUR3Q",
+  "b": "sytFGUR5274",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Bingo vs In Couples"
+ },
+ {
+  "a": "DkHOTeUUybU",
+  "b": "yawKz9weIa0",
+  "label": "shared-segments",
+  "confidence": 0.6,
+  "note": "Short shows the same Humpty egg-costume and soldiers as B's compilation thumbnail; likely cut from it"
+ },
+ {
+  "a": "0SSkUHyXW48",
+  "b": "urDH9Tn7i2c",
+  "label": "unrelated",
+  "confidence": 0.45,
+  "note": "Vegetables compilation vs Five Little Babies"
+ },
+ {
+  "a": "414DEMcGHtU",
+  "b": "5Guu53F9Yno",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Both Kaboochi; different characters"
+ },
+ {
+  "a": "4P1o1CaXIuE",
+  "b": "MqJHH8_s9n4",
+  "label": "shared-segments",
+  "confidence": 0.7,
+  "note": "Shapes-in-boat and potato frames appear in both compilations"
+ },
+ {
+  "a": "ZesZqCCZbJ0",
+  "b": "bzcufo-BRaA",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Monster truck short vs spooky bus short"
+ },
+ {
+  "a": "AhgfC_D4cT8",
+  "b": "DkHOTeUUybU",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Humpty compilation with cartoon egg vs egg-costume Humpty short"
+ }
+]

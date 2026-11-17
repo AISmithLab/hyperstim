@@ -1,0 +1,72 @@
+[
+ {
+  "a": "SP3eASDKke4",
+  "b": "X5tQg9x3Nfs",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Both Boo Boo song shorts; different characters and staging"
+ },
+ {
+  "a": "IDwshmCv_Xw",
+  "b": "Yp_wsRyrcvk",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Jingle Bells vs Five Little Mommies"
+ },
+ {
+  "a": "jJQqD6JDoSg",
+  "b": "mQ1MBBDqizk",
+  "label": "unrelated",
+  "confidence": 0.4,
+  "note": "Two Halloween compilations with vehicle segments; no matching frames"
+ },
+ {
+  "a": "O54gqk8cJww",
+  "b": "OJHwYLQykr4",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Ducks compilation vs Schoolies compilation"
+ },
+ {
+  "a": "766Ja9YI7wE",
+  "b": "cqjfiWrwmmg",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Learning compilation vs Rattic short"
+ },
+ {
+  "a": "RrWb5Ahmxzw",
+  "b": "tM5ComC4b1U",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Five Little Piggies vs Wheels on the Bus compilation"
+ },
+ {
+  "a": "TAeO_pKB_ik",
+  "b": "pPtodbpI5o0",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Three Bears story vs Loose Tooth compilation"
+ },
+ {
+  "a": "1lFKlL_Tl_k",
+  "b": "yWkiHt5DAXk",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Ice Cream compilation vs Phonics compilation"
+ },
+ {
+  "a": "Rk-54Vp2AsE",
+  "b": "WKpcp6DJUF4",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Incy Wincy short vs Loco Nuts Yes Yes"
+ },
+ {
+  "a": "BRG1NCs2uAg",
+  "b": "tM5ComC4b1U",
+  "label": "same-song",
+  "confidence": 0.3,
+  "note": "Wheels on the Car vs Wheels on the Bus; same tune variant, different animation"
+ }
+]

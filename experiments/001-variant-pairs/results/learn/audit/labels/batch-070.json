@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Xrjzzmf9hC0",
+  "b": "fNgPN1QmyzM",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Five Little Babies 2D vs Bob the Train 3D"
+ },
+ {
+  "a": "ciTgLLbYXjA",
+  "b": "df2ZHa21Y_g",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "If You Are Happy, fuzzballs vs Little Eddie compilation"
+ },
+ {
+  "a": "YVaBFUbjzuk",
+  "b": "gmRIldLgb8k",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini shorts"
+ },
+ {
+  "a": "E81SQWQe6Pg",
+  "b": "dJGR_ECKwCA",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Fruit Song vs Larva"
+ },
+ {
+  "a": "5bCr1Iktot8",
+  "b": "7HOESsArCmY",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus compilation vs Little Eddie version; different animation"
+ },
+ {
+  "a": "NSo7lHyzVYw",
+  "b": "Q8o0b4BIx90",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Wheels on the Bus short vs Christmas version; different animation"
+ },
+ {
+  "a": "E4cuOfwU8k0",
+  "b": "mL5VBqEJJHI",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Bus vs Halloween compilation; different scenes"
+ },
+ {
+  "a": "PgroFiKBfOc",
+  "b": "pGKvuZ2Qwhs",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Jingle Bells shorts, different animation"
+ },
+ {
+  "a": "KMmDccpgRJQ",
+  "b": "hjvaIaNfIVk",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Bus compilation vs short showing crayon characters"
+ },
+ {
+  "a": "KYwjCiQCbr8",
+  "b": "cAngxOmb79A",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Three Little Pigs vs Halloween song"
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "a": "LufPzgH87NE",
+  "b": "nvR3fxkl_Bc",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "different songs and characters"
+ },
+ {
+  "a": "CTxI-fIyCeo",
+  "b": "nTzEGiBLw00",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "both Jingle Bells compilations with similar sweater family, but different shots"
+ },
+ {
+  "a": "9DBJvlkWDs4",
+  "b": "VJ1tu3mMRa0",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "two shorts cut from the same Boo Boo song animation (same boy, baby), different moments"
+ },
+ {
+  "a": "n6eghHp7qWw",
+  "b": "wW339izcKu4",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "K-_wbYf1cF4",
+  "b": "vWxl7eCjxlI",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "finger family: cake pops vs human faces on hand"
+ },
+ {
+  "a": "TZCA6KshEUg",
+  "b": "z-XVQ0MdjpY",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Christmas bus short vs tug truck cartoon"
+ },
+ {
+  "a": "WY51zcIJf8o",
+  "b": "afJ8kEWkJqo",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Christmas Wheels on the Bus vs green bus version; only one A frame"
+ },
+ {
+  "a": "ML4lbHOxdTY",
+  "b": "sh3wjZBtofI",
+  "label": "shared-segments",
+  "confidence": 0.45,
+  "note": "short song vs compilation titled with it; no matching frame visible"
+ },
+ {
+  "a": "A6GBaaBZuV8",
+  "b": "HO-3dteY438",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "finger family: human faces vs bunnies"
+ },
+ {
+  "a": "BPEyTCIqxtY",
+  "b": "qhaDwGQUOLM",
+  "label": "same-template",
+  "confidence": 0.4,
+  "note": "Five Little X jumping-on-bed shorts with doctor; different characters"
+ }
+]

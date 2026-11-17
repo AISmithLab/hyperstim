@@ -1,0 +1,72 @@
+[
+ {
+  "a": "3HqbMJ7huAM",
+  "b": "EcqgDq0yrY4",
+  "label": "same-song",
+  "confidence": 0.65,
+  "note": "Wheels on the Bus: 2D purple bus (2013) vs 3D red bus (2023)"
+ },
+ {
+  "a": "F8aglE8xTlI",
+  "b": "Ym2JIL8xgVI",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Arabic Bob the Train colors vs Rattic Mini"
+ },
+ {
+  "a": "Lm494FQebI8",
+  "b": "qbQFlAdsydo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "monster Halloween short vs ambulance short"
+ },
+ {
+  "a": "g3viCK9PxU0",
+  "b": "yOq3vuvmRCQ",
+  "label": "same-song",
+  "confidence": 0.6,
+  "note": "Bob the Train Wheels on the Bus vs Bao Panda purple bus, different animation"
+ },
+ {
+  "a": "S_FlflY4epQ",
+  "b": "VoXmrDwoE-o",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "rainbow coach bus song vs Wheels on the Tractor medley (variant lyrics); no matching frames"
+ },
+ {
+  "a": "iiqbyMQ9vZI",
+  "b": "sUz47md7Gqo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Wheels on the Bus short vs Halloween Howl short"
+ },
+ {
+  "a": "K71QjqJlAI0",
+  "b": "s11HCj_gAWE",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "same Bao Panda bus model, street shots and panda-in-seat pose; pink bus vs red bus, green vs blue seats; B is the 2x-speed cut (82s = 164s/2)"
+ },
+ {
+  "a": "CUc_taVtINA",
+  "b": "laUh06IfqJI",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Christmas Wheels on the Bus medley vs rainbow coach bus song, different buses"
+ },
+ {
+  "a": "M0V1ofCOEew",
+  "b": "dJGR_ECKwCA",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Rattic Mini medley vs Larva short"
+ },
+ {
+  "a": "3NvIqAhmQys",
+  "b": "sLuL_msn9-c",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Ten Little Vegetables vs Wash Your Hands medley"
+ }
+]

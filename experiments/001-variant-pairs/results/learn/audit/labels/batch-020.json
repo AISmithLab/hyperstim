@@ -1,0 +1,72 @@
+[
+ {
+  "a": "_i-HUb2b2Es",
+  "b": "w9BOETCUH5o",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Jingle Bells shorts: kids with Santa vs Santa close-ups; different shots"
+ },
+ {
+  "a": "lkGmcS3ArOg",
+  "b": "q7xbimEegqs",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Loco Nuts Halloween medley vs Junior Squad"
+ },
+ {
+  "a": "_JGLYw6u1HE",
+  "b": "yRbWCPlOzKM",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Halloween skeleton short vs Johny Johny short"
+ },
+ {
+  "a": "Jt4V3NCA-u0",
+  "b": "wW339izcKu4",
+  "label": "shared-segments",
+  "confidence": 0.75,
+  "note": "Rattic Mini compilations share episodes: A's wardrobe/balloon thumbnail scene is B's 1/2 frame, dinosaur and mime scenes in both"
+ },
+ {
+  "a": "-kRTFYd6WkI",
+  "b": "jRCHQ6wCTUA",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini shorts: same character and set, different gags"
+ },
+ {
+  "a": "7Ldj5W-FyMs",
+  "b": "Qw33r-OZh5Q",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels-on tune: tractor vs Christmas bus; different characters"
+ },
+ {
+  "a": "7_oWAaYXrYA",
+  "b": "kHVGgxylqd8",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Realistic bus short vs Boo Boo short"
+ },
+ {
+  "a": "KrOTLDGnPpY",
+  "b": "ocG_0i3oIAw",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Junior Squad videos, different songs in frames"
+ },
+ {
+  "a": "XOflyZkgppo",
+  "b": "Ymv_NV_aIQc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Supremes Johny Johny medley vs Bob Little Jack Horner"
+ },
+ {
+  "a": "pLJJzn2h5EM",
+  "b": "xBBLcX1A16A",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Machli Jal Ki Rani vs Baa Baa Black Sheep"
+ }
+]

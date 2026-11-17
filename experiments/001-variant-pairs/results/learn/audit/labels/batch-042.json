@@ -1,0 +1,72 @@
+[
+ {
+  "a": "S2v2Wh9re6w",
+  "b": "uRt46006_V4",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "two Halloween medleys of one channel; no frames match"
+ },
+ {
+  "a": "a1i4xSfmk-E",
+  "b": "bphowM9rjos",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Five Little Monsters vs Boom Buddies Halloween medley, different characters"
+ },
+ {
+  "a": "E9ITQiGR_NY",
+  "b": "VAL4w6JvDHc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Bob the Train ducks vs 2D Five Little Monkeys"
+ },
+ {
+  "a": "d_IwH0t_BfY",
+  "b": "stTQRubLSi4",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Daddy's Red Car vs Wheels on the Bus medley"
+ },
+ {
+  "a": "XgoixwiYjro",
+  "b": "fWMyOdacjvA",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Twinkle short (Bob, star, moon) vs Bao Panda Teddy Bear"
+ },
+ {
+  "a": "X48-R_yTN-4",
+  "b": "e9LhPr3svs0",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "short shows girl, toys and a long green bus; long is Bao Panda green bus, different bus model"
+ },
+ {
+  "a": "UIMRHHCLLPY",
+  "b": "fMBIJhg9Gzs",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "Halloween medley vs Oopsie Doopsie dance, different characters"
+ },
+ {
+  "a": "NuSaRUBg63k",
+  "b": "RvAO1F7fMC8",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Hickory Dickory Dock medley vs Bob the Train Buckle My Shoe"
+ },
+ {
+  "a": "ElmlbfVXOD4",
+  "b": "_8l0yW5tqVo",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Halloween costume song vs Twinkle Twinkle medley"
+ },
+ {
+  "a": "AKD-gwTktdc",
+  "b": "Lm494FQebI8",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "pink bus short vs monster Halloween short"
+ }
+]

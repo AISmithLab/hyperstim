@@ -1,0 +1,72 @@
+[
+ {
+  "a": "_QkBvYROA7o",
+  "b": "uQ90xr1p-eQ",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Ten in the Bed vs Kaboochi"
+ },
+ {
+  "a": "K60IqRXXYIA",
+  "b": "gcZkel60kdA",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "crayons finger family vs finger family compilation a day later; likely contains it"
+ },
+ {
+  "a": "sIVFJDlcPo4",
+  "b": "uksF4E8Hu1s",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "different Halloween songs"
+ },
+ {
+  "a": "DVLFCQUsuFI",
+  "b": "pe_iRGqeBlA",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic Mini compilations, different episodes in frames"
+ },
+ {
+  "a": "WKeK0Zqi5jw",
+  "b": "m_z07WpRZlM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the X shorts, different vehicles and characters"
+ },
+ {
+  "a": "IxhOcpR3Ygg",
+  "b": "yc8M3YeKsCo",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Bob the Train episodes, different content"
+ },
+ {
+  "a": "Qmd7WSUIsdE",
+  "b": "UrfuJBfnsGo",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Bus shorts, different bus models"
+ },
+ {
+  "a": "19yPrd-it5I",
+  "b": "DHjD-cfozsk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini vs Hindi balloon song"
+ },
+ {
+  "a": "EREEjNYs_wU",
+  "b": "QqbqYe-JRVE",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Wheels on the Train vs Wheels on the Bus"
+ },
+ {
+  "a": "T5U81A-7CwY",
+  "b": "cMOSJ1QIa3w",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Wheels on the Ambulance vs yellow bus version"
+ }
+]

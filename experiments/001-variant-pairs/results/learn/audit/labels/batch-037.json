@@ -1,0 +1,72 @@
+[
+ {
+  "a": "MF6balhMgB0",
+  "b": "OtD1f9K_-SM",
+  "label": "shared-segments",
+  "confidence": 0.4,
+  "note": "two finger family compilations from 2016; likely overlap, not seen in frames"
+ },
+ {
+  "a": "7WeaOIdnZmM",
+  "b": "ojRNNQ2lkLI",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Wheels on the Bus compilation vs hiking song compilation"
+ },
+ {
+  "a": "HJQi0bU9o2M",
+  "b": "nTzEGiBLw00",
+  "label": "same-song",
+  "confidence": 0.4,
+  "note": "Jingle Bells short vs Zoobees Jingle Bells compilation, different shots"
+ },
+ {
+  "a": "163ojnwXQ98",
+  "b": "Ud9zaWiK9_s",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "haunted house short vs Five Little Ducks compilation"
+ },
+ {
+  "a": "fAQ_c_NEM7A",
+  "b": "sAYwBMbDfXU",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "Kaboochi with different characters (Halloween set in B)"
+ },
+ {
+  "a": "PvwnJG2i1i4",
+  "b": "TXr_SdAH2IM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Halloween finger family vs finger family compilation"
+ },
+ {
+  "a": "P85oXrxz2nk",
+  "b": "tM5ComC4b1U",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Halloween Zoobees bus vs pink bus compilation; different models"
+ },
+ {
+  "a": "pGKvuZ2Qwhs",
+  "b": "vE5gwrynvDg",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "Jingle Bells shorts, different animation"
+ },
+ {
+  "a": "4xr6FahQ394",
+  "b": "rAPgQ8woeTc",
+  "label": "re-skin",
+  "confidence": 0.6,
+  "note": "Super Supremes Wheels on the Bus: same green bus and same two-seat shot, kids redrawn as animals in A vs heroes in B"
+ },
+ {
+  "a": "TZCA6KshEUg",
+  "b": "w89Qcsn4-PE",
+  "label": "same-song",
+  "confidence": 0.35,
+  "note": "Christmas Wheels on the Bus short vs compilation"
+ }
+]

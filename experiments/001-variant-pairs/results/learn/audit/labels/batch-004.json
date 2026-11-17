@@ -1,0 +1,72 @@
+[
+ {
+  "a": "3_pLah5vo_Y",
+  "b": "wxLAOZ5dr2Q",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "two Bob the Train Learning Street rhymes, same characters and set style, different songs"
+ },
+ {
+  "a": "ewZwn2G14Wg",
+  "b": "zSf5nw7US6U",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations on the same wooden-stage set, different gags visible"
+ },
+ {
+  "a": "cufl2niNsMo",
+  "b": "v8qj8XyKjyg",
+  "label": "same-song",
+  "confidence": 0.55,
+  "note": "both Wheels on the Bus; pink/white Zoobees bus vs orange school bus, different shots"
+ },
+ {
+  "a": "AZ5YlRetess",
+  "b": "aHbVkvKGZzE",
+  "label": "unrelated",
+  "confidence": 0.7,
+  "note": "good-habits medley vs Bob Jingle Bells, different scenes"
+ },
+ {
+  "a": "KVvaZF-PRrc",
+  "b": "PnO51tbfqQs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Bob fruit train vs Boo Boo song"
+ },
+ {
+  "a": "PxVRd-kf_lM",
+  "b": "hSebCGnisKs",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Five Little Ducks with Bob vs Ten in the Bed with pandas"
+ },
+ {
+  "a": "PcgCeS0AJm4",
+  "b": "lLoLYPA3Z0I",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Johny Johny medley vs Halloween train medley"
+ },
+ {
+  "a": "aDyWeSAt-sI",
+  "b": "w7exxTCHfx8",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations, same set and character, different gags visible"
+ },
+ {
+  "a": "GCqVNL7ZRdg",
+  "b": "MxB4KiDF6XY",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "two Rattic Mini compilations, same set and character, different gags visible"
+ },
+ {
+  "a": "3CUN9mw8SOk",
+  "b": "doF0UNXZDh4",
+  "label": "re-skin",
+  "confidence": 0.75,
+  "note": "A's 3/4 frame double-decker shot (same pose, street, exhaust) appears in B's 1/2 frame recolored purple->yellow; B is a long medley"
+ }
+]

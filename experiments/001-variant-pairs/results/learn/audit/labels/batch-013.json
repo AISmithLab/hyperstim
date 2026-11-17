@@ -1,0 +1,72 @@
+[
+ {
+  "a": "JJF38fzL8cs",
+  "b": "u4OtZ9oYGNM",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "WotB shorts with different shots (driver view vs car/crayon)"
+ },
+ {
+  "a": "PFPDDhGr6us",
+  "b": "dARN00vJ1oc",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Kaboochi medley vs Play-Doh ABC"
+ },
+ {
+  "a": "L_LmPW3R9HM",
+  "b": "uzUxdwfXgWI",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "Bob phonics vs Rattic Mini"
+ },
+ {
+  "a": "2zHVC4ndLJ0",
+  "b": "i0ByoF6T3WA",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Christmas Baby Shark vs Deck The Halls; different characters"
+ },
+ {
+  "a": "GkcqRmdwKlE",
+  "b": "IsGFj2ex3to",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "2D phonics letter J vs Five Little Kittens medley"
+ },
+ {
+  "a": "h3bvPp9Jqnc",
+  "b": "z_A_hkPDigU",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Kaboochi short vs bus-to-camp short; different characters"
+ },
+ {
+  "a": "8m7GH0naQw0",
+  "b": "ejBvtH0Igqk",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Kids Channel WotB medley vs Bob vehicle medley; frames differ"
+ },
+ {
+  "a": "DF6G0YHRlV8",
+  "b": "_R1LYMF-KLY",
+  "label": "unrelated",
+  "confidence": 0.9,
+  "note": "Rattic Mini crib short vs Jingle Bells short"
+ },
+ {
+  "a": "0zptbdrcP6Y",
+  "b": "1WzZWyDsRw4",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Boy Who Cried Wolf short vs Boo Boo short"
+ },
+ {
+  "a": "DNMm447eqVE",
+  "b": "X8ML_HIj51g",
+  "label": "unrelated",
+  "confidence": 0.5,
+  "note": "Two Halloween shorts with different characters; partial frames"
+ }
+]

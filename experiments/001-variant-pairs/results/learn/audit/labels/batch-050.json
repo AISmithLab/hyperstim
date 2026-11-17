@@ -1,0 +1,72 @@
+[
+ {
+  "a": "1ucTc1AzH54",
+  "b": "y5srqqr-gGs",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Wheels on the Police Car vs Hindi Chunnu Munnu"
+ },
+ {
+  "a": "OwkdqxsyhOo",
+  "b": "seXZDKkONiU",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Italian finger family medley vs Hindi parrot short"
+ },
+ {
+  "a": "GZQvzMCdQkI",
+  "b": "ayo0-fI_wQM",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Bob the Train learning medleys (shapes vs colors/shapes/numbers); may share a segment but no frame match"
+ },
+ {
+  "a": "eT-HIXX8iXY",
+  "b": "hmqdid2kALU",
+  "label": "same-template",
+  "confidence": 0.6,
+  "note": "Bob the Train episodes: number train vs letter A"
+ },
+ {
+  "a": "OOP4YvPyxmc",
+  "b": "r_h0zzmYswc",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Ten Little Fishermen vs Boo Boo song medley"
+ },
+ {
+  "a": "VzkWcBJ6958",
+  "b": "vz_GBPPVxvQ",
+  "label": "unrelated",
+  "confidence": 0.65,
+  "note": "Bob Three Blind Mice medley vs pet song medley"
+ },
+ {
+  "a": "Mds6Dx41AbY",
+  "b": "f6DRatbGs_w",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Bob sing-along bus vs crayon finger family medley"
+ },
+ {
+  "a": "ri-33K8Xzxc",
+  "b": "v5K5rTsZa_s",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Five Fat Santa vs Incy Wincy Spider"
+ },
+ {
+  "a": "aZdQk56qy0E",
+  "b": "kthpbHSE0Xo",
+  "label": "same-template",
+  "confidence": 0.5,
+  "note": "Pretend Play story series, both 252s; different stories and characters"
+ },
+ {
+  "a": "Kix07nOAEBQ",
+  "b": "kt7mWHClxqk",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Rattic Mini medley vs Larva medley, different series"
+ }
+]

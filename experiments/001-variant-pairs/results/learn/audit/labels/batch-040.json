@@ -1,0 +1,72 @@
+[
+ {
+  "a": "Mo5pNnz7Npk",
+  "b": "m5k-5ZOUp-A",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Monsters in the Dark vs Halloween finger family"
+ },
+ {
+  "a": "9DuDNOTEIHk",
+  "b": "C3d7z_AykL0",
+  "label": "same-song",
+  "confidence": 0.5,
+  "note": "jumping on the bed: babies vs lions, different staging"
+ },
+ {
+  "a": "Wf6m01fUM6k",
+  "b": "wbzm05WN8X8",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Christmas double-decker vs red bus with panda"
+ },
+ {
+  "a": "6r_PTIvKT6A",
+  "b": "vz_GBPPVxvQ",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "swimming vs pet compilations"
+ },
+ {
+  "a": "-KQmGUyQoiE",
+  "b": "-R0H0UZVvAA",
+  "label": "same-template",
+  "confidence": 0.4,
+  "note": "Bob the Train Christmas songs, different songs and shots"
+ },
+ {
+  "a": "Nlt_DqiIHcQ",
+  "b": "urNKg4X9kIU",
+  "label": "same-template",
+  "confidence": 0.65,
+  "note": "Rattic Mini shorts, different episodes (mime vs teleport)"
+ },
+ {
+  "a": "14B6JJO6CDM",
+  "b": "BktbsqZ00Lg",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Five Little Monkeys vs Five Little Ducks"
+ },
+ {
+  "a": "Kix07nOAEBQ",
+  "b": "gmRIldLgb8k",
+  "label": "same-template",
+  "confidence": 0.55,
+  "note": "Rattic compilation vs Kung Fu short; no matching shot"
+ },
+ {
+  "a": "gUdfiEmzkP4",
+  "b": "tQ3LttVt_Jk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Halloween short vs Rattic canyon"
+ },
+ {
+  "a": "JUxs1S9jQ5A",
+  "b": "xwFH_6C6EWA",
+  "label": "same-template",
+  "confidence": 0.75,
+  "note": "Bob Learning Street episodes"
+ }
+]

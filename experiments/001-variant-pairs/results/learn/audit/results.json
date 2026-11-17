@@ -1,0 +1,155 @@
+{
+ "below_cut_metadata": {
+  "sampled": 150,
+  "labelled": 150,
+  "re_skins": 1,
+  "labels": {
+   "same-song": 61,
+   "unrelated": 52,
+   "same-template": 30,
+   "shared-segments": 5,
+   "re-skin": 2
+  },
+  "rate_ci": [
+   0.00016877114310994754,
+   0.03658316774058025
+  ],
+  "population": 8160270,
+  "found": [
+   {
+    "a": "4OZ-iSU4DiM",
+    "b": "lMLFwzcH8_s",
+    "label": "re-skin",
+    "confidence": 0.75,
+    "note": "compilations both open with the Bao Panda Wheels on the Bus: identical side shot and thumbnail pose, bus recolored purple vs pink; later segments differ"
+   }
+  ]
+ },
+ "below_cut_images": {
+  "sampled": 150,
+  "labelled": 150,
+  "re_skins": 0,
+  "labels": {
+   "same-song": 75,
+   "shared-segments": 3,
+   "unrelated": 56,
+   "same-template": 16
+  },
+  "rate_ci": [
+   0.0,
+   0.02429259716610854
+  ],
+  "population": 67215,
+  "found": []
+ },
+ "below_cut_lookalike": {
+  "sampled": 150,
+  "labelled": 150,
+  "re_skins": 5,
+  "labels": {
+   "unrelated": 39,
+   "same-song": 60,
+   "same-template": 29,
+   "shared-segments": 14,
+   "re-skin": 8
+  },
+  "rate_ci": [
+   0.01091018646891129,
+   0.07607232253734687
+  ],
+  "population": 33977,
+  "found": [
+   {
+    "a": "V3cEq4F1TFk",
+    "b": "zyvI7zhO2CE",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "note": "Bob finger family: same head-on train shots in arch frame, Christmas version with elf hats and new colors"
+   },
+   {
+    "a": "MQkYufd11nU",
+    "b": "y8nnK3mnV3Q",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "note": "Halloween re-skin: same girl in same sitting pose on puzzle mat, same railing shot with mom, Halloween decor added"
+   },
+   {
+    "a": "8qSizvcVeNU",
+    "b": "v5K5rTsZa_s",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "note": "identical cloud shot at 1/4; spider recolored red vs blue, new thumbnail"
+   },
+   {
+    "a": "K71QjqJlAI0",
+    "b": "s11HCj_gAWE",
+    "label": "re-skin",
+    "confidence": 0.75,
+    "note": "same Bao Panda bus model, street shots and panda-in-seat pose; pink bus vs red bus, green vs blue seats; B is the 2x-speed cut (82s = 164s/2)"
+   },
+   {
+    "a": "6nacOLqpcPk",
+    "b": "WwhNgzir6V4",
+    "label": "re-skin",
+    "confidence": 0.75,
+    "note": "same shots: bus front view, bus on street, panda frame; bus recolored blue vs pink and backgrounds changed"
+   }
+  ]
+ },
+ "high_single_signal": {
+  "sampled": 150,
+  "labelled": 150,
+  "re_skins": 3,
+  "labels": {
+   "same-song": 23,
+   "same-template": 13,
+   "unrelated": 90,
+   "shared-segments": 20,
+   "re-skin": 4
+  },
+  "rate_ci": [
+   0.0041436252812205475,
+   0.05733422228820578
+  ],
+  "population": 7913647,
+  "found": [
+   {
+    "a": "AZ3t77_JcwQ",
+    "b": "doF0UNXZDh4",
+    "label": "re-skin",
+    "confidence": 0.75,
+    "note": "both medleys; B's 1/2 frame is A's thumbnail double-decker shot (same pose, street, exhaust) recolored purple->yellow"
+   },
+   {
+    "a": "3CUN9mw8SOk",
+    "b": "doF0UNXZDh4",
+    "label": "re-skin",
+    "confidence": 0.75,
+    "note": "A's 3/4 frame double-decker shot (same pose, street, exhaust) appears in B's 1/2 frame recolored purple->yellow; B is a long medley"
+   },
+   {
+    "a": "m151ZBLwbhc",
+    "b": "yt7FiUHFO68",
+    "label": "re-skin",
+    "confidence": 0.7,
+    "note": "B (22-min medley) thumb shows the bus front shot of A's 1/2 frame, same pose, street and driver, bus recolored cyan->purple"
+   }
+  ]
+ },
+ "random": {
+  "sampled": 100,
+  "labelled": 100,
+  "re_skins": 0,
+  "labels": {
+   "unrelated": 97,
+   "same-song": 2,
+   "same-template": 1
+  },
+  "rate_ci": [
+   0.0,
+   0.03621669264517641
+  ],
+  "population": 7913647,
+  "found": []
+ }
+}

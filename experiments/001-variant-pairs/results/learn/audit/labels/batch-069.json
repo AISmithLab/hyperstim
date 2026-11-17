@@ -1,0 +1,72 @@
+[
+ {
+  "a": "-8Te4zdaB5o",
+  "b": "UFbEIqXwzbU",
+  "label": "same-template",
+  "confidence": 0.4,
+  "note": "finger family compilations; no frame matches, may share segments"
+ },
+ {
+  "a": "8qmCzsjMmcE",
+  "b": "PXxve2PXWGs",
+  "label": "shared-segments",
+  "confidence": 0.5,
+  "note": "Red Riding Hood story compilation vs short; likely contains it, frames not matched"
+ },
+ {
+  "a": "X-QhvkoitP0",
+  "b": "zsEf6M5oPWM",
+  "label": "unrelated",
+  "confidence": 0.8,
+  "note": "Color Song vs Deck the Hall"
+ },
+ {
+  "a": "BrjLq8jTPfw",
+  "b": "oWkIR8ZkHgo",
+  "label": "same-template",
+  "confidence": 0.7,
+  "note": "Rattic Mini compilations, different episodes"
+ },
+ {
+  "a": "Nv3MARzde2A",
+  "b": "z3OzQuW_uLc",
+  "label": "unrelated",
+  "confidence": 0.6,
+  "note": "Five Little Kittens compilation vs garbage trucks"
+ },
+ {
+  "a": "7q-sfwyFwTw",
+  "b": "BjJsBFK0q3k",
+  "label": "unrelated",
+  "confidence": 0.75,
+  "note": "Twinkle vs Humpty shorts"
+ },
+ {
+  "a": "6L0oq3iwbS0",
+  "b": "aLnuvTGf-pk",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Rattic Mini vs Bob the Train"
+ },
+ {
+  "a": "lfVKXtjHwIo",
+  "b": "vq2OB2gswJw",
+  "label": "unrelated",
+  "confidence": 0.85,
+  "note": "Christmas vs Halloween"
+ },
+ {
+  "a": "PtIc6e-co2I",
+  "b": "dPsVlnAF2HU",
+  "label": "same-song",
+  "confidence": 0.45,
+  "note": "Wheels on the Taxi compilations, different animation"
+ },
+ {
+  "a": "Se_E5OOTB4s",
+  "b": "V04vD3vrctU",
+  "label": "unrelated",
+  "confidence": 0.55,
+  "note": "different Halloween shorts"
+ }
+]
