@@ -2,7 +2,7 @@
 
 **Question:** Do studios publish near-identical versions of one video (same animation; new colors, background or title), and is there evidence they test the variants against each other?
 
-**Parts** _(human decision, 2026-11-12)_: 1. quantify how similar the seed pair is (Signal framework, Pair report); 2. search the two seed channels for more pairs (Search: more pairs in the seed channels); 3. search other channels (planned when part 2 is done).
+**Parts** _(human decision, 2026-11-12)_: 1. quantify how similar the seed pair is (Signal framework, Pair report); 2. search the two seed channels for more pairs (Search: more pairs in the seed channels); 3. search other channels (Search: other channels).
 
 **Seed pair** (same song, two channels the user believes are one company; published 18 days 1 h 27 min apart):
 
@@ -148,13 +148,65 @@ Overview sections:
    - Feedback: does A's later look (thumbnail saturation and lightness over time, free; pipeline features where in the dataset) move toward B's style after B's versions outperform? That would be the strongest evidence of learning from a test.
 4. Strategy profiles across all validated pairs (which signals fire how often), and how the agent's labels compare with the full reports.
 
+## Search: other channels
+
+_(human decision, 2026-11-12: a third part of 001, built step by step; each step is planned in depth when we reach it)_
+
+**Goal:** a large corpus of **re-skins** across many channels: the same animation with a new look, and with it the variants that keep the animation but change the audio (any sound effect added or removed, such as chuckles; louder or quieter) _(human decision, 2026-11-12)_, the pacing (sped up) or the cuts (scenes added for more cuts per minute) _(human decision)_. Re-uploads, same template, shared segments, same song and **dubs** (same video in another language) are out of scope _(human decision: dubs don't tell us anything about stimulation)_.
+
+**Principles:**
+- Within an owner first: pairs are compared only inside an owner group, so results stay comparable with the seed channels. Comparing across owners comes later, as a step of its own (Ideas, below).
+- Never all pairs, and no cut-off decided in advance _(human decision, 2026-11-12: pairs are rare, so false negatives are the bigger risk)_: the number of pairs grows with the square of the videos (100 k videos = 5 billion pairs), so steps narrow the candidates without listing every pair, by early decisions that are cheap and keep recall high, not by a fixed cap (a top-k, a share of pairs). Each early decision is measured on what it drops: its recall on known re-skins and an audit sample of the pairs it stops.
+- Don't learn only the strategy we've seen: the seed studio's re-skins are one strategy; others may redraw, re-time or re-voice instead. Whatever the found re-skins teach is a way in, never the only one.
+- Light enough for scale: API and image signals before any download; nothing that costs a download per video.
+
+### Step 1: Channel discovery and grouping
+
+**Goal:** group the channels we already have by owner, using only the API: which channels belong to one company, how big each group is, and which groups are worth searching. No images, no player requests.
+
+**Channels:** the 662 channels in the dataset (542 in the reference set, 319 collected, 199 in both); Kids TV is among them; Kids Channel is neither in the dataset nor featured by a dataset channel, so the two seed channels are added by hand, for the check. The collector's excluded (not kids-focused) channels stay out.
+- **Family channels** too: a channel outside the dataset that a dataset channel features is fetched and grouped as well _(human decision, 2026-11-12)_, so groups show the whole company, not only its channels we happen to have. Featured lists also name friends and partners, so a featured channel joins a group only when other owner evidence confirms it (a shared copyright holder, app or email, both channels featuring each other, or a section named like "our channels" / "family"). Otherwise it is kept as featured only, not grouped. The 662 feature 2,389 channels outside the dataset; most sit in general "Featured Channels" (1,286) or friends sections, ~770 in family sections.
+  - A family section names the company's own channels or languages ("Our Channels", "Visit Other Pinkfong Channels", "In More Languages", "Worldwide"), not friends, partners, recommendations or favorites.
+- One hop only: channels that only family channels feature are listed as the **frontier** but not fetched; going further is a later step _(human decision: eventually, not now)_.
+
+**Data per channel** (≈ 1,050 API units for the 662; within the 2,000-a-day limit _(human decision, 2026-11-12)_):
+
+| Source | Gives | Units |
+|---|---|---|
+| `channels.list` (snippet, statistics, brandingSettings, contentDetails) | Description, country, created, keywords, videos and subscriber count, uploads playlist | 1 per 50 channels ≈ 14 |
+| `channelSections.list` | Featured channels (`multiplechannels` sections) | 1 per channel ≈ 662 |
+| `videos.list` for the dataset's video IDs | Video descriptions (copyright lines, links, apps, emails) | 1 per 50 videos ≈ 360 |
+
+Family channels have no dataset videos, so their evidence is fetched **cheapest first**, and a channel that already has a strong link skips the later stages: (1) `channels.list` for all (1 unit per 50; confirmed 729 of 2,389 from channel descriptions and family sections); (2) `playlistItems` (50 latest uploads) and `videos.list` for their descriptions, 2 units a channel, the most-featured first; (3) the channel's own `channelSections` (a mutual feature), 1 unit. About 3,300–4,500 units, so the fetch may need a second day; it waits for each new Pacific day by itself. It runs on the experiments' own key and project, within their 9,500 a day (experiments README, YouTube budget) _(human decision, 2026-11-12; first 2,000, then 2,500 a day of the site's key)_, so it should finish within a day.
+
+All responses are saved (by `tools/yt.py`, in `cache/api/`); reruns cost nothing. Script: `channels.py fetch` (the requests, resumable) and `channels.py group` (offline, rerun at any time).
+
+**Evidence and links** (from `owner_evidence` in `tools/metadata.py`, which 001 already uses):
+- Strong: one channel lists the other in a section named like "our channels" / "family" (not "friends", "partners", "channels we love", "other great channels", "related"); a shared copyright holder; a shared app ID; a shared email.
+- Weak: a feature in a general "featured channels" section, one-way or mutual (changed 2026-11-12: with the family channels' own sections fetched, friends that feature each other chained CBBC, CBeebies and Sesame Street into one group of 159, and Masha into Cleo & Cuquín); a shared domain (not a social, shortener or merch host); similar channel names (one name contains the other).
+- A value counts for a channel only when it is in the channel's description or in at least two of its videos' descriptions: a credit in one video (a guest, a song licensor) doesn't name the owner. Copyright holders are compared without company suffixes ("Pvt. Ltd."); legal boilerplate ("respective owners", "Section 107") is dropped.
+- Evidence that unrelated channels share (e.g. a music licensor's copyright line, a distributor's or network's domain) marks a **network**, not an owner: such values are kept apart, listed with their channels, and don't link channels by themselves. They are interesting in their own right (a network or channel-building service behind many channels). Rule: holders named together in one channel's descriptions count as one company (a rename such as USP Studios → USP Digital; an owner and the studio it bought); a value is a network when its channels' holders form two or more unrelated companies, unless (for a copyright holder) most of its channels name it first.
+
+**Groups:** connected channels over strong links. An agent checks, from the saved responses (descriptions, featured sections, video titles; no page requests), groups held together by a single link, groups larger than ~10 channels, and channels linked only by weak evidence. A "single link" is one whose removal splits the group into two parts of 2+ channels each, counted on the graph of channels and evidence values (each shared holder links each of its channels to the value; counting channel-to-channel links instead made every holder link look single). Language channels (dubs) stay in their group but are marked, so later steps can skip them.
+
+**Output:** `results/channels/` (`channels.tsv`, `links.tsv`, `groups.tsv` and `groups.json`: group, channels, evidence per link, videos, subscribers, languages, flags; `networks.tsv`; `frontier.tsv`), and a private artifact page: the groups ranked by size, each link's evidence, the networks and the frontier count.
+
+**Check:** Kids TV and Kids Channel must land in one group, by the copyright line, together with the "Our Family" channels confirmed as the same owner (dubs marked).
+
+### Ideas for the next steps (not built yet)
+
+- **Which groups to search:** screen a sample of each group (e.g. its most-viewed videos, 1 image each), count re-skins, and search high-yield groups in full. Yield is likely heavy-tailed: a few big studios may give most of the corpus. Step 2 sets the images per video and the candidate rule.
+- Audio or whole-video inputs need a download per video, so they can't go into the screen at scale; they belong after the download, where 001's framework already scores audio levels, speed, added cuts and added parts.
+- **Across owners:** the same comparison between groups, with its own baseline class (different owner), as a separate step. Interesting because of channel farms (e.g. channels built by AI agents and sold as "passive income") copying successful videos.
+- **Beyond our channels:** grow from the frontier (featured channels), and from the networks' and copyright holders' other channels.
+
 ## Steps
 
 0. Write `tools/yt.py` (budget check + ledger) before any further YouTube request.
 1. Score the seed pair on every signal: 2 downloads. This tests the framework.
 2. Find the company's other channels: start from Kids Channel's "Our Family" list and check each with the owner signal (API).
 3. Search the seed channel pair for more pairs (see Search, above).
-4. Later, not this time: extend the search to the company's other channels _(human decision)_.
+4. Search other channels, step by step (see Search: other channels, above) _(human decision, 2026-11-12: was "later, not this time")_. First: channel discovery and grouping; then, alongside it, learn from the seed re-skins (step 2, offline).
 5. Downloads only for agent-confirmed pairs and a small baseline set (~10 videos), within the search's 200.
 6. Strategy profiles per pair and studio.
 
@@ -177,6 +229,14 @@ Overview sections:
 - Profile: same owner, same audio adjusted, same cuts and motion, look-alike thumbnail; new title, recolored, redrawn background, end screen only in A.
 - Framework findings: the storyboard alone recovers the offset (−0.5 s; tiles sit at whole seconds, not at yt-dlp's fragment durations) and the cuts, so it can screen candidates without downloads. Download signals use a time-shift baseline (B moved 3–30 s) until baseline downloads exist; the repeated verses make it strict. The dataset has publish dates only, so time of day uses the API sample.
 
+**Channel groups** (2026-11-12, part 3 step 1; fetch done: ~6,200 API units over two Pacific days, the last ~3,700 on the experiments' own key; no images or downloads; `channels.py`, page built by `build_channels_report.py`):
+- 3,034 channels: the 662 dataset channels, 2,371 family channels they feature (outside the dataset), and Kids Channel added by hand. Family channels confirmed cheapest first: 729 by channel descriptions, more by video descriptions; 1,102 stay **featured only** (no evidence beyond being featured).
+- **521 groups, 124 with 2 or more channels**; 23 network values. Largest: USP (263 channels, 41 in the dataset, most of them language channels), Moonbug (148, 43), a fairy-tales language network (60, 33), Pinkfong (52), Super Simple (41), PAW Patrol (35), Masha (33), BabyBus (32), Animaj with Pocoyo, Maya the Bee and HeyKids (29), Kids Planet (26).
+- **Seed check passes:** Kids TV and Kids Channel are in one group (USP).
+- USP files under two names, "USP Studios" and "USP Digital": holders named together in one channel count as one company, so they merge.
+- Review of the 14 single links (7 groups), done by hand from the saved data: likely right: Animaj (Pocoyo's app is registered to Animaj), Booba (shared email), Pinkfong, ZeeKay with Mister Maker and Totally Spies. **Wrong:** G037 (Cartoon Network, Cartoonito, Netflix Jr., Lucas the Spider: distributors list licensed shows in family sections). **Doubtful:** G032 (Wizz, Me Too!, Baby Jake) and G018 (First Toons, HopHop). Not yet cut: Open questions.
+- The frontier (channels the family channels feature, not fetched) is 2,369.
+
 **Search run** (2026-11-11 to 2026-11-12):
 - Filters 0–5: 5,887 videos, 4,066 after compilations (30 min); 8.26 M pairs → 350,498 candidates (4.2%) → 9,714 scored above the cut (2.8%) → 5,736 through the gate (59%, plus 65 stopped pairs audited) → 5,799 labelled by the agent. 11,793 image requests, 0 errors.
 - Labels (confidence ≥ 0.7 shown in groups): re-skin 227, re-upload 164, same song 368, same template 2,207, shared segments 1,542, unrelated 1,291.
@@ -188,6 +248,7 @@ Overview sections:
 
 ## Open questions
 
+
 - Sped-up copies _(human decision, 2026-11-13: show the 2x videos next to their 1x originals, with their stats, on a page of their own)_: `speed.py` takes the videos titled as sped up (X2 / 2x speed: 7, all Kids TV's Wheels on the Bus, 2024–2025) and matches each against same-song candidates played at 2x (every second frame embedding, then the frame check), comparing frames at matched moments pixel by pixel: each moment takes the closest 1x frame within ±1 s, since the alignment's lag can be off by a frame step (median difference ≤ 10 of 255 = the same picture; matches came out at 2–8, the next-best candidates at 19 or more, re-skins at 20–60). After 124 more candidate downloads (2026-11-13, 123 on the laptop; 2026-11-14, KpIs4qf6HQ0 on the server, after it failed on the laptop), **6 of the 7 are matched**: exact 2x copies of four Baby Bao Panda videos (pink K71QjqJlAI0, also played three times in a row in uwnBzV6vNZs; yellow 8-93_TmkKfc; orange yCSjhx5qiv0; red k3vCYP_aQ3w from 2018), and the Christmas ride, whose 1x picture was found only inside a compilation published a year after it (HIQBjbLrMYU), so its views aren't compared. The 2x short vvaQBakslQw has no match among all its candidates. Each match gets a full report _(human decision, 2026-11-14: the page should have the reports as well)_: the 1x video against the 2x copy slowed to 1x (picture and sound, ffmpeg; a copy that plays the song several times is cut to its first time), so every signal compares the same moments, and the report says so in its lead (`speed.py reports`; `prepare_pair.py` and `score_pair.py` take the slowed file as `--b-file`, keeping its clips and features in the pair's own folders, and the site's measures leave these reports out, since a slowed copy's cuts per minute aren't the real video's). A family with two or more copies (the pink one) also gets the all-versions report, its copies played slowed. Slowing can't undo the speed-up exactly: the copies keep the original's pitch (sped up by time-stretching, so slowing uses ffmpeg's `atempo`), but stretching twice with two tools changes the waveform (correlation ≈ 0, fingerprint 1.5%; the spectrum still matches, 0.91–0.94 against a baseline p99 of 0.27–0.39), and the slowed frames fall between the original's, so moving parts read as changed (ΔE 11–15 on five of six, with saturation, lightness and hues the same). The audio level ("re-recorded") and the color and shape changes are therefore artifacts here: `score_pair.py --slowed` marks such a pair, and its lead claims neither. Page: `speed.py page` → `cache/search/site/speed/`; videos in the page's own asset store.
 - Gate misses, being checked _(human decision, 2026-11-12: the stopped pairs never got a frame-by-frame check)_: every stopped pair the agent hasn't seen gets filter 6b's overlap check on the downloaded videos (`gate_check.py`: 3,913 pairs, 993 videos, 877 to download on the laptop, frame embeddings cached per video). Pairs that share at least half of each video go to the agent to tell re-skins from re-uploads, then on to reports and groups as usual. Stage table in `results/search/gate_check.json` and `gate_check_status.txt`. Done 2026-11-12: 3,912 pairs checked (one pair with a live stream left out: nothing fixed to download); **556 share at least half of each video** (520 same-channel, 516 by audio), another 157 hold one video inside a longer one. They touch 327 videos, 302 not in any group yet; 62 clusters, the largest (108 videos) Rattic Mini's "& More" compilations that reshuffle the same episodes. 26 pairs touch the re-skin or re-upload groups (21 add a video, 2 join two groups). The agent labels the 556 _(human decision, 2026-11-12: go ahead with labelling and the steps after it)_ on the usual sheets plus, per pair, a row of frames from the downloaded videos at matching moments (B time = A time + the check's lag) and the overlap shares in the pair data (`review.py`): sharing the audio alone doesn't tell a re-skin from a different animation of the same song. Labelled 2026-11-12 (7 agents, ~0.7 M tokens): 393 same-template, 107 same-song, 25 shared-segments, **23 re-skin** (19 confident), 7 re-upload, 1 unrelated. Most of the same-template pairs are Rattic Mini compilations that share one background-music track (the audio match isn't shared footage); most same-song pairs are Kaboochi shorts, one song in many animations. Many of the new re-skins are holiday versions (Christmas, Halloween) of shorts. Re-skin groups: 39 → 44 (6 new, 5 grown, two of them merged), 125 → 147 videos; 103 reports (19 new, 2 dropped as the groups' linking pairs changed). The re-skin page's 1 GB asset store was full: the 14 videos no report used any more (removed compilations) were deleted to make room. Pages republished 2026-11-13. The audio-share fix changed the shares of 87 earlier pairs but none crossed a threshold: the groups stay the same.
 - Gate misses: the auto-frames sit at fixed shares of each video (¼, ½, ¾), so when one version has a new intro or end screen, they show different moments of the same animation. The gate compares all 3 × 3 frame pairs, and the thumbnail is a second way through, but a shift between those points can still stop a re-skin: the audit found 1 re-skin in 65 stopped pairs (`ZPOOOfJmzp4` / `cMOSJ1QIa3w`), so roughly 60 of the 3,978 stopped pairs (95% range 2–330). The images are cached, so the agent could review all stopped pairs with no new YouTube requests.
@@ -196,3 +257,4 @@ Overview sections:
 
 - Baseline size: is ~10 downloaded baseline videos enough for a 99th percentile, or should baselines lean on API and image signals and the dataset's existing features?
 
+- Channel groups: cut the wrong join in G037 (Cartoon Network / Netflix Jr. / Lucas the Spider) and decide the doubtful G032 and G018, with a short list of cut links in `channels.py`? Or leave them, since a distributor's group only widens the later sampling a little?

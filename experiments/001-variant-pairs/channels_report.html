@@ -1,0 +1,143 @@
+<title>Channel Owner Groups</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; summary strip, then a ranked list of groups that open in place. */
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --fg: #1b2230; --muted: #5d6676; --line: #dde1e8;
+  --accent: #1f6f8b; --accent-soft: #e2f0f5; --warn: #9a5b00; --warn-soft: #fbf0dc;
+  --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12161d; --panel: #1a2029; --fg: #e4e8ef; --muted: #98a2b3; --line: #2c3442;
+  --accent: #6cbad6; --accent-soft: #1d3440; --warn: #f0b45c; --warn-soft: #3a2c16; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12161d; --panel: #1a2029; --fg: #e4e8ef; --muted: #98a2b3; --line: #2c3442;
+  --accent: #6cbad6; --accent-soft: #1d3440; --warn: #f0b45c; --warn-soft: #3a2c16; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px; }
+main { max-width: 1060px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+h1 { font-size: 1.9rem; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h2 { font-size: 1.15rem; margin: 0 0 10px; text-wrap: balance; }
+p { margin: 0; max-width: 68ch; }
+.lede { color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); font-size: 0.85em; }
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.strip div { background: var(--panel); padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
+.strip b { font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.strip span { color: var(--muted); font-size: 0.85rem; }
+.note { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 8px; }
+.note.warn { background: var(--warn-soft); border-color: transparent; }
+.status { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+.controls label { display: flex; gap: 6px; align-items: center; color: var(--muted); font-size: 0.9rem; }
+input[type=search] { font: inherit; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--panel); color: var(--fg); min-width: 0; width: 260px; max-width: 100%; }
+input:focus-visible, summary:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.groups { display: flex; flex-direction: column; gap: 6px; }
+details.g { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+details.g > summary { cursor: pointer; list-style: none; padding: 10px 14px; display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; }
+details.g > summary::-webkit-details-marker { display: none; }
+.gid { font-family: var(--mono); color: var(--muted); font-size: 0.85rem; }
+.gname { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.gmeta { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; text-align: right; }
+.chips { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 0.75rem; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.gbody { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 12px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; }
+.ev { display: flex; flex-wrap: wrap; gap: 6px; }
+.ev span { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; }
+.ev em { font-style: normal; color: var(--muted); }
+button.more { font: inherit; color: var(--accent); background: none; border: 1px solid var(--line); border-radius: 6px;
+  padding: 6px 12px; cursor: pointer; align-self: flex-start; }
+@media (max-width: 560px) { details.g > summary { grid-template-columns: 44px minmax(0, 1fr); }
+  .gmeta { grid-column: 2; text-align: left; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+<main>
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <h1>Channel owner groups</h1>
+    <p class="lede">Experiment 001, part 3, step 1: the dataset's channels and the channels they feature, grouped by owner from public
+      API data (copyright lines, apps, emails, featured channels). No images or downloads.</p>
+  </header>
+  <section class="strip" id="strip"></section>
+  <section class="note" id="seed"></section>
+  <section class="note warn" id="status"></section>
+  <section>
+    <h2>Groups, largest first</h2>
+    <div class="controls">
+      <input type="search" id="q" placeholder="Find a channel, holder or group" aria-label="Find a channel, holder or group">
+      <label><input type="checkbox" id="multi" checked> Only groups of 2 or more</label>
+    </div>
+    <div class="groups" id="groups"></div>
+    <button class="more" id="more" hidden>Show more groups</button>
+  </section>
+  <section>
+    <h2>Networks</h2>
+    <p class="lede" style="margin-bottom:10px">Values that unrelated companies share (a licensor, distributor or service).
+      They don't link channels by themselves.</p>
+    <div class="scroll"><table id="nets"></table></div>
+  </section>
+</main>
+<script>
+const D = __DATA__;
+const fmt = n => n >= 1e9 ? (n/1e9).toFixed(1)+' B' : n >= 1e6 ? (n/1e6).toFixed(1)+' M' : n >= 1e4 ? Math.round(n/1e3)+' k' : n.toLocaleString('en-US');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const S = D.summary;
+document.getElementById('strip').innerHTML = [
+  [S.dataset_channels, 'dataset channels'], [S.family_channels, 'family channels fetched'],
+  [S.groups_2plus, 'groups of 2 or more'], [S.groups - S.groups_2plus, 'channels on their own'],
+  [S.featured_only, 'featured only (not confirmed)'], [S.networks, 'network values']
+].map(([n, l]) => `<div><b>${(n||0).toLocaleString('en-US')}</b><span>${l}</span></div>`).join('');
+const seedTxt = ['Kids TV', 'Kids Channel'].map(s => `${s}: ${D.seeds[s] ? '<b>'+D.seeds[s]+'</b>' : 'not fetched yet'}`).join(' · ');
+const same = D.seeds['Kids TV'] && D.seeds['Kids TV'] === D.seeds['Kids Channel'];
+document.getElementById('seed').innerHTML = `<h2 style="margin:0">Seed check</h2><p>${seedTxt}. ${same ? 'Both seed channels are in one group, as they should be.' :
+  'The check passes when both seed channels are in one group; Kids Channel comes in with the family fetch.'}</p>`;
+document.getElementById('status').innerHTML = `<h2 style="margin:0">Fetch complete</h2><p>All family channels fetched, cheapest evidence first. Built ${esc(S.at)}.</p><div class="status">${D.status.map(esc).join('\n')}</div>`;
+const KIND = {copyright: 'copyright', app: 'app', email: 'email', featured: 'featured', domain: 'domain', name: 'name'};
+const ORIGIN = {reference: 'reference set', collected: 'collected', both: 'both sets', family: 'family', seed: 'seed'};
+function groupName(g) { const c = g.channels[0]; const holders = {}; g.channels.forEach(x => x[7].split('; ').filter(Boolean).forEach(h => holders[h] = (holders[h]||0)+1));
+  const top = Object.entries(holders).sort((a,b) => b[1]-a[1])[0]; return top ? top[0] : (c ? c[1] : g.id); }
+function render(g) {
+  const chips = [`<span class="chip">${g.lang}</span>`];
+  if (g.dubs) chips.push(`<span class="chip">${g.dubs} other-language</span>`);
+  g.flags.forEach(f => chips.push(`<span class="chip warn">${esc(f)}</span>`));
+  if (g.weak.length) chips.push(`<span class="chip warn">weak links to ${g.weak.length} other group(s)</span>`);
+  const rows = g.channels.map(c => `<tr><td><a href="https://www.youtube.com/channel/${c[0]}" target="_blank" rel="noopener">${esc(c[1])}</a></td><td>${ORIGIN[c[2]]||c[2]}</td><td>${c[3]}${c[4] ? ' (other language)' : ''}</td><td class="r">${c[5].toLocaleString('en-US')}</td><td class="r">${fmt(c[6])}</td><td>${esc(c[7])}</td></tr>`).join('');
+  const ev = g.evidence.map(([k, v, n]) => `<span><em>${KIND[k]}</em> ${esc(v)} <em>× ${n}</em></span>`).join('');
+  return `<details class="g"><summary><span class="gid">${g.id}</span><span class="gname">${esc(groupName(g))}</span>
+    <span class="gmeta">${g.n} channels · ${g.in} in dataset · ${fmt(g.videos)} videos · ${fmt(g.subs)} subs</span>
+    <span class="chips">${chips.join('')}</span></summary>
+    <div class="gbody">${ev ? `<div><h2 style="font-size:.85rem;color:var(--muted)">Evidence (strong links)</h2><div class="ev">${ev}</div></div>` : ''}
+    <div class="scroll"><table><thead><tr><th>Channel</th><th>From</th><th>Language</th><th class="r">Videos</th><th class="r">Subs</th><th>Copyright holders</th></tr></thead><tbody>${rows}</tbody></table></div></div></details>`;
+}
+let shown = 60;
+function list() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const multi = document.getElementById('multi').checked;
+  const gs = D.groups.filter(g => (!multi || g.n > 1) && (!q || g.id.toLowerCase() === q ||
+    g.channels.some(c => c[1].toLowerCase().includes(q) || c[7].includes(q) || c[0] === q)));
+  document.getElementById('groups').innerHTML = gs.slice(0, shown).map(render).join('') ||
+    '<p class="lede">No group matches. Try part of a channel name or a copyright holder.</p>';
+  const more = document.getElementById('more'); more.hidden = gs.length <= shown;
+  more.textContent = `Show more groups (${gs.length - shown} left)`;
+}
+document.getElementById('q').addEventListener('input', () => { shown = 60; list(); });
+document.getElementById('multi').addEventListener('change', () => { shown = 60; list(); });
+document.getElementById('more').addEventListener('click', () => { shown += 60; list(); });
+list();
+document.getElementById('nets').innerHTML = '<thead><tr><th>Kind</th><th>Value</th><th class="r">Channels</th><th class="r">Groups</th></tr></thead><tbody>' +
+  D.networks.map(n => `<tr><td>${n[0]}</td><td class="mono">${esc(n[1])}</td><td class="r">${n[2]}</td><td class="r">${n[3]}</td></tr>`).join('') + '</tbody>';
+</script>

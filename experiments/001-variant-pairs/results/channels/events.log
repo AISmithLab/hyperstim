@@ -1,0 +1,115 @@
+2026-11-12T03:15:38Z fetch: 662 dataset channels
+2026-11-12T03:15:55Z fetch: featured channels of 100 of 662
+2026-11-12T03:16:10Z fetch: featured channels of 200 of 662
+2026-11-12T03:16:23Z fetch: featured channels of 300 of 662
+2026-11-12T03:16:37Z fetch: featured channels of 400 of 662
+2026-11-12T03:16:52Z fetch: featured channels of 500 of 662
+2026-11-12T03:17:05Z fetch: featured channels of 600 of 662
+2026-11-12T03:18:34Z fetch: descriptions of 18058 dataset videos
+2026-11-12T03:18:34Z fetch: 2389 family channels (featured by a dataset channel, not in the dataset)
+2026-11-12T03:20:12Z group: 0 channels -> 0 groups (0 with 2+), 0 network values, 0 featured only, frontier 0
+2026-11-12T03:21:27Z group: 3033 channels -> 491 groups (102 with 2+), 42 network values, 1663 featured only, frontier 19
+2026-11-12T03:23:29Z group: 2794 channels -> 489 groups (100 with 2+), 40 network values, 1496 featured only, frontier 28
+2026-11-12T03:24:49Z group: 3033 channels -> 489 groups (101 with 2+), 41 network values, 1662 featured only, frontier 19
+2026-11-12T03:26:27Z group: 3033 channels -> 488 groups (101 with 2+), 12 network values, 1659 featured only, frontier 19
+2026-11-12T03:26:49Z fetch: 662 dataset channels
+2026-11-12T03:26:49Z fetch: featured channels of 100 of 662
+2026-11-12T03:26:49Z fetch: featured channels of 200 of 662
+2026-11-12T03:26:49Z fetch: featured channels of 300 of 662
+2026-11-12T03:26:49Z fetch: featured channels of 400 of 662
+2026-11-12T03:26:49Z fetch: featured channels of 500 of 662
+2026-11-12T03:26:49Z fetch: featured channels of 600 of 662
+2026-11-12T03:26:50Z fetch: descriptions of 18058 dataset videos
+2026-11-12T03:26:50Z fetch: 2389 family channels (featured by a dataset channel, not in the dataset)
+2026-11-12T03:28:01Z fetch: family stage 1 (channel descriptions): 729 confirmed, 1660 open
+2026-11-12T03:28:31Z fetch: family stage 2 (video descriptions): 50 of 1660
+2026-11-12T03:28:59Z fetch: family stage 2 (video descriptions): 100 of 1660
+2026-11-12T03:29:28Z fetch: family stage 2 (video descriptions): 150 of 1660
+2026-11-12T03:29:56Z fetch: family stage 2 (video descriptions): 200 of 1660
+2026-11-12T03:29:59Z budget used up for today (API budget: 2000 of 2000 units used today (Pacific)); waiting until 2026-11-12 08:05 UTC
+2026-11-12T03:30:37Z group: 3034 channels -> 489 groups (101 with 2+), 14 network values, 1619 featured only, frontier 19
+2026-11-12T07:23:43Z fetch: 662 dataset channels
+2026-11-12T07:23:43Z fetch: featured channels of 100 of 662
+2026-11-12T07:23:43Z fetch: featured channels of 200 of 662
+2026-11-12T07:23:43Z fetch: featured channels of 300 of 662
+2026-11-12T07:23:43Z fetch: featured channels of 400 of 662
+2026-11-12T07:23:43Z fetch: featured channels of 500 of 662
+2026-11-12T07:23:43Z fetch: featured channels of 600 of 662
+2026-11-12T07:23:45Z fetch: descriptions of 18058 dataset videos
+2026-11-12T07:23:45Z fetch: 2389 family channels (featured by a dataset channel, not in the dataset)
+2026-11-12T07:24:55Z fetch: family stage 1 (channel descriptions): 792 confirmed, 1597 open
+2026-11-12T07:24:55Z fetch: family stage 2 (video descriptions): 50 of 1597
+2026-11-12T07:24:55Z fetch: family stage 2 (video descriptions): 100 of 1597
+2026-11-12T07:25:00Z fetch: family stage 2 (video descriptions): 150 of 1597
+2026-11-12T07:25:28Z fetch: family stage 2 (video descriptions): 200 of 1597
+2026-11-12T07:26:00Z fetch: family stage 2 (video descriptions): 250 of 1597
+2026-11-12T07:26:31Z fetch: family stage 2 (video descriptions): 300 of 1597
+2026-11-12T07:27:06Z fetch: family stage 2 (video descriptions): 350 of 1597
+2026-11-12T07:27:23Z budget used up for today (API budget: 2500 of 2500 units used today (Pacific)); waiting until 2026-11-12 08:05 UTC
+2026-11-12T07:34:55Z fetch: 662 dataset channels
+2026-11-12T07:34:55Z fetch: featured channels of 100 of 662
+2026-11-12T07:34:55Z fetch: featured channels of 200 of 662
+2026-11-12T07:34:55Z fetch: featured channels of 300 of 662
+2026-11-12T07:34:55Z fetch: featured channels of 400 of 662
+2026-11-12T07:34:55Z fetch: featured channels of 500 of 662
+2026-11-12T07:34:55Z fetch: featured channels of 600 of 662
+2026-11-12T07:34:56Z fetch: descriptions of 18058 dataset videos
+2026-11-12T07:34:56Z fetch: 2389 family channels (featured by a dataset channel, not in the dataset)
+2026-11-12T07:36:12Z fetch: family stage 1 (channel descriptions): 838 confirmed, 1551 open
+2026-11-12T07:36:13Z fetch: family stage 2 (video descriptions): 50 of 1551
+2026-11-12T07:36:13Z fetch: family stage 2 (video descriptions): 100 of 1551
+2026-11-12T07:36:13Z fetch: family stage 2 (video descriptions): 150 of 1551
+2026-11-12T07:36:14Z fetch: family stage 2 (video descriptions): 200 of 1551
+2026-11-12T07:36:14Z fetch: family stage 2 (video descriptions): 250 of 1551
+2026-11-12T07:36:14Z fetch: family stage 2 (video descriptions): 300 of 1551
+2026-11-12T07:36:23Z fetch: family stage 2 (video descriptions): 350 of 1551
+2026-11-12T07:36:55Z fetch: family stage 2 (video descriptions): 400 of 1551
+2026-11-12T07:37:22Z fetch: family stage 2 (video descriptions): 450 of 1551
+2026-11-12T07:37:52Z fetch: family stage 2 (video descriptions): 500 of 1551
+2026-11-12T07:38:19Z fetch: family stage 2 (video descriptions): 550 of 1551
+2026-11-12T07:38:47Z fetch: family stage 2 (video descriptions): 600 of 1551
+2026-11-12T07:39:14Z fetch: family stage 2 (video descriptions): 650 of 1551
+2026-11-12T07:43:05Z fetch: 662 dataset channels
+2026-11-12T07:43:05Z fetch: featured channels of 100 of 662
+2026-11-12T07:43:05Z fetch: featured channels of 200 of 662
+2026-11-12T07:43:05Z fetch: featured channels of 300 of 662
+2026-11-12T07:43:05Z fetch: featured channels of 400 of 662
+2026-11-12T07:43:05Z fetch: featured channels of 500 of 662
+2026-11-12T07:43:05Z fetch: featured channels of 600 of 662
+2026-11-12T07:43:07Z fetch: descriptions of 18058 dataset videos
+2026-11-12T07:43:07Z fetch: 2389 family channels (featured by a dataset channel, not in the dataset)
+2026-11-12T07:44:23Z fetch: family stage 1 (channel descriptions): 934 confirmed, 1455 open
+2026-11-12T07:44:24Z fetch: family stage 2 (video descriptions): 50 of 1455
+2026-11-12T07:44:24Z fetch: family stage 2 (video descriptions): 100 of 1455
+2026-11-12T07:44:24Z fetch: family stage 2 (video descriptions): 150 of 1455
+2026-11-12T07:44:24Z fetch: family stage 2 (video descriptions): 200 of 1455
+2026-11-12T07:44:24Z fetch: family stage 2 (video descriptions): 250 of 1455
+2026-11-12T07:44:24Z fetch: family stage 2 (video descriptions): 300 of 1455
+2026-11-12T07:44:25Z fetch: family stage 2 (video descriptions): 350 of 1455
+2026-11-12T07:44:25Z fetch: family stage 2 (video descriptions): 400 of 1455
+2026-11-12T07:44:25Z fetch: family stage 2 (video descriptions): 450 of 1455
+2026-11-12T07:44:25Z fetch: family stage 2 (video descriptions): 500 of 1455
+2026-11-12T07:44:26Z fetch: family stage 2 (video descriptions): 550 of 1455
+2026-11-12T07:44:33Z fetch: family stage 2 (video descriptions): 600 of 1455
+2026-11-12T07:45:00Z fetch: family stage 2 (video descriptions): 650 of 1455
+2026-11-12T07:45:28Z fetch: family stage 2 (video descriptions): 700 of 1455
+2026-11-12T07:45:55Z fetch: family stage 2 (video descriptions): 750 of 1455
+2026-11-12T07:46:21Z fetch: family stage 2 (video descriptions): 800 of 1455
+2026-11-12T07:46:48Z fetch: family stage 2 (video descriptions): 850 of 1455
+2026-11-12T07:47:14Z fetch: family stage 2 (video descriptions): 900 of 1455
+2026-11-12T07:47:40Z fetch: family stage 2 (video descriptions): 950 of 1455
+2026-11-12T07:48:05Z fetch: family stage 2 (video descriptions): 1000 of 1455
+2026-11-12T07:48:30Z fetch: family stage 2 (video descriptions): 1050 of 1455
+2026-11-12T07:48:56Z fetch: family stage 2 (video descriptions): 1100 of 1455
+2026-11-12T07:49:20Z fetch: family stage 2 (video descriptions): 1150 of 1455
+2026-11-12T07:49:44Z fetch: family stage 2 (video descriptions): 1200 of 1455
+2026-11-12T07:50:09Z fetch: family stage 2 (video descriptions): 1250 of 1455
+2026-11-12T07:50:36Z fetch: family stage 2 (video descriptions): 1300 of 1455
+2026-11-12T07:51:01Z fetch: family stage 2 (video descriptions): 1350 of 1455
+2026-11-12T07:51:27Z fetch: family stage 2 (video descriptions): 1400 of 1455
+2026-11-12T07:51:52Z fetch: family stage 2 (video descriptions): 1450 of 1455
+2026-11-12T07:53:19Z fetch: family stage 2 done: 1269 still open
+2026-11-12T07:58:08Z fetch: family stage 3 (their featured channels) done: 378 featured only
+2026-11-12T07:58:08Z fetch: done; 6191 API units used today (Pacific)
+2026-11-12T07:59:35Z group: 3034 channels -> 478 groups (215 with 2+), 23 network values, 378 featured only, frontier 2369
+2026-11-12T08:05:05Z group: 3034 channels -> 521 groups (124 with 2+), 23 network values, 1102 featured only, frontier 2369
