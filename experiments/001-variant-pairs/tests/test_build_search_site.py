@@ -317,7 +317,7 @@ def test_link_frames_points_sprites_at_the_reports_sheet():
     assert "file" not in f["sprites"]["mask"] and set(f["sprites"]) == {"mask", "edges"}
 
 
-def test_overview_links_pairs_to_reports_or_groups_and_families_to_groups():
+def test_overview_links_pairs_to_reports_or_groups_without_a_families_table():
     groups = [{"videos": ["aaaaaaaaaaa", "bbbbbbbbbbb", "ccccccccccc"],
                "pairs": [{"a": "aaaaaaaaaaa", "b": "bbbbbbbbbbb", "type": "AxB"},
                          {"a": "ccccccccccc", "b": "aaaaaaaaaaa", "type": "AxA"}]}]
@@ -326,7 +326,8 @@ def test_overview_links_pairs_to_reports_or_groups_and_families_to_groups():
                                 {("aaaaaaaaaaa", "bbbbbbbbbbb"): "same shots"})
     assert 'href="#AxB-aaaaaaaaaaa-bbbbbbbbbbb"' in out     # a pair with a full report opens it
     assert 'href="#g1"' in out                              # one without jumps to its group
-    assert "<a href='#g1'>1. " in out and "same shots" in out and "Channel story" in out
+    assert "Channel story" in out
+    assert "Families" not in out and "<a href='#g1'>1. " not in out   # the table was dropped (2026-11-17)
 
 
 def test_closing_the_panel_returns_focus_to_its_opener_without_scrolling():

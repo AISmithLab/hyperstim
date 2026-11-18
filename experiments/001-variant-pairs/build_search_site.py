@@ -363,7 +363,7 @@ def pair_items(pairs: list[dict], vids: dict, strips: base.Strips, inten: dict, 
 def overview_section(groups: list[dict], vids: dict, eligible: dict, reports: list[list[str]],
                      notes: dict) -> str:
     """Before the re-skin groups: the channel story's timeline (every link opens its pair's full
-    report, else jumps to its group) and the families table, one row per group linking to it."""
+    report, else jumps to its group). The families table was dropped (2026-11-17)."""
     built = {n for g in reports for n in g}
     where: dict[tuple[str, str], int] = {}
     pairs = []
@@ -388,34 +388,9 @@ def overview_section(groups: list[dict], vids: dict, eligible: dict, reports: li
                 "<p class='muted'>Each link is a re-skin pair: click it for the pair's full report, or its "
                 "group when it has none. Links above the Kids TV row join two Kids TV videos; below the Kids "
                 "Channel row, two Kids Channel videos.</p>")
-    rows = []
-    for k, g in enumerate(groups, 1):
-        members = g["videos"]
-        r = [vids.get(v, {}) for v in members]
-        views = [x.get("views") or 0 for x in r]
-        top = max(members, key=lambda v: vids.get(v, {}).get("views") or 0)
-        side = Counter(x.get("side") for x in r)
-        ns = list(dict.fromkeys(notes[(q["a"], q["b"])] for q in g["pairs"] if notes.get((q["a"], q["b"]))))
-        name = story.family_name([x.get("title", "") for x in r])
-        more = f" <span class='muted'>(+{len(ns) - 3} more)</span>" if len(ns) > 3 else ""
-        rows.append(
-            f"<tr><th scope='row'><a href='#g{k}'>{k}. {esc(name)}</a></th>"
-            f"<td class='num'>{len(members)}</td><td class='num'>{side['A']} / {side['B']}</td>"
-            f"<td>{esc((r[0].get('published') or '')[:10])} – {esc((r[-1].get('published') or '')[:10])}</td>"
-            f"<td class='num'>{story.views_span(views)}</td><td>{'yes' if top == members[0] else 'no'}</td>"
-            f"<td class='notes'>{'<br>'.join(esc(n) for n in ns[:3])}{more}</td></tr>")
-    def most_viewed(g: dict) -> str:
-        return max(g["videos"], key=lambda v: vids.get(v, {}).get("views") or 0)
-
-    earliest_top = sum(1 for g in groups if most_viewed(g) == g["videos"][0])
-    families = (f"<p>One row per group below: {len(groups)} families. In {earliest_top} of them the "
-                "most-viewed version is also the earliest. Click a family to go to its group.</p>"
-                f"{story.fam_table(rows)}")
     return (f"<section class='group overview' aria-labelledby='story-h'><div class='sec-head'>"
             "<h2 id='story-h'>Channel story</h2><p>Uploads of both channels over time, and every re-skin "
-            f"pair that links the groups below.</p></div>{timeline}</section>"
-            f"<section class='group overview' aria-labelledby='fam-h'><div class='sec-head'>"
-            f"<h2 id='fam-h'>Families</h2></div>{families}</section>")
+            f"pair that links the groups below.</p></div>{timeline}</section>")
 
 
 def little_section(little: list[dict], waiting: int, vids: dict, strips: base.Strips, inten: dict,
