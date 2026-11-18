@@ -120,7 +120,7 @@ if [ "$MOCK" = 0 ]; then
       ANALYSIS_LIMIT_PER_DAY=0 \
       uv run "${env_file[@]+"${env_file[@]}"}" \
       uvicorn --factory hyperstim_api.main:create_app \
-      --host 127.0.0.1 --port "$BACKEND_PORT" --reload 2>&1 | prefix backend
+      --host 127.0.0.1 --port "$BACKEND_PORT" --reload --reload-dir src 2>&1 | prefix backend
   } &
   PIDS="$PIDS $!"
   API_BASE="http://localhost:$BACKEND_PORT"
