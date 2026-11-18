@@ -1,0 +1,276 @@
+<title>Re-skin Views and Stimulation</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600&display=swap">
+<style>
+/* Layout: one reading column (~44rem) of findings, charts at column width, family table at the end. */
+:root {
+  --bg: #fbfbf8; --surface: #ffffff; --fg: #1d1d1b; --muted: #5d5c57; --faint: #8b8a83;
+  --rule: #e4e2da; --grid: #eeece5; --accent: #2a78d6; --accent-soft: rgba(42,120,214,.16);
+  --placebo: #8b8a83; --ref: #b4b2a8;
+  --display: "Fraunces", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #171716; --surface: #1f1f1d; --fg: #eeede8; --muted: #b9b8b0; --faint: #8f8e87;
+  --rule: #34332f; --grid: #2a2a27; --accent: #3987e5; --accent-soft: rgba(57,135,229,.22);
+  --placebo: #8f8e87; --ref: #5b5a55; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #171716; --surface: #1f1f1d; --fg: #eeede8; --muted: #b9b8b0; --faint: #8f8e87;
+  --rule: #34332f; --grid: #2a2a27; --accent: #3987e5; --accent-soft: rgba(57,135,229,.22);
+  --placebo: #8f8e87; --ref: #5b5a55; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem; display: grid; gap: 2.75rem; }
+section { display: grid; gap: .9rem; min-width: 0; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -.01em; }
+h1 { font-size: clamp(1.7rem, 4.5vw, 2.3rem); line-height: 1.15; }
+h2 { font-size: 1.3rem; }
+p { margin: 0; max-width: 65ch; }
+.eyebrow { font: 500 .72rem/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.lead { font-size: 1.07rem; }
+.muted { color: var(--muted); }
+.num, td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: .88em; }
+.answer { border-left: 3px solid var(--accent); padding: .2rem 0 .2rem 1rem; display: grid; gap: .5rem; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: .8rem; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+svg text { fill: var(--muted); font: 11px var(--mono); }
+svg .lbl { fill: var(--fg); font: 500 12.5px var(--body); }
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .75rem; position: relative; }
+.tabs { display: flex; flex-wrap: wrap; gap: .4rem; }
+.tabs button { font: 500 .85rem var(--body); color: var(--fg); background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 999px; padding: .3rem .85rem; cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+button:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tip { position: absolute; pointer-events: none; background: var(--fg); color: var(--bg); font-size: .8rem; line-height: 1.4;
+  padding: .45rem .6rem; border-radius: 4px; max-width: 17rem; z-index: 2; }
+details { border-bottom: 1px solid var(--rule); }
+details > summary { cursor: pointer; padding: .55rem 0; display: flex; gap: .75rem; align-items: baseline; flex-wrap: wrap; }
+details > summary .t { flex: 1 1 16rem; min-width: 0; }
+.chip { font: 500 .7rem var(--mono); padding: .1rem .45rem; border-radius: 3px; border: 1px solid var(--rule); color: var(--muted); }
+ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .35rem; max-width: 65ch; }
+a { color: var(--accent); }
+@media (max-width: 520px) { body { font-size: 14px; } th, td { padding: .4rem .35rem; } }
+</style>
+
+<main>
+  <header style="display:grid;gap:.8rem">
+    <span class="eyebrow">Experiment 001 · part 4 · exploratory</span>
+    <h1>Does the more stimulating re-skin get more views?</h1>
+    <p class="lead">Each family below is one animation published in two or more versions by USP's two seed channels, with the same audio and cuts but new colors or backgrounds. Comparing versions inside a family holds the song, animation and studio fixed, so differences in views come from the re-skin, the timing, or luck.</p>
+  </header>
+
+  <section class="answer" aria-labelledby="answer-h">
+    <h2 id="answer-h">Not yet: the direction is there, the evidence isn't</h2>
+    <p>Across {{n_fam}} families ({{n_vid}} videos), a version 10 points more saturated than its siblings gets <b class="num">{{lead_ratio}}</b> the views expected for its age (95% interval {{lead_ci}}). Lightness and loudness point the same way. None of the three passes the test after correcting for testing three measures, and the placebo (cuts per minute, which re-skins share) shows a spread as wide as the real measures.</p>
+    <p class="muted">These families are the ones the pattern was first noticed on, so this run only shapes the test. The real test runs on other studios' families, with the rules fixed in advance (PLAN.md).</p>
+  </section>
+
+  <section aria-labelledby="est-h">
+    <h2 id="est-h">Effect of each measure</h2>
+    <p class="muted">Views relative to what's expected for the video's age, per step of each measure, with 95% intervals from resampling families. 1× means no effect.</p>
+    <div class="chart" id="forest"></div>
+    <div class="scroll"><table id="est-table"></table></div>
+  </section>
+
+  <section aria-labelledby="fam-h">
+    <h2 id="fam-h">Versions inside each family</h2>
+    <p class="muted">Each dot is one version; lines join a family's versions. Both axes are relative to the family's average, so only within-family differences show. Up and to the right is "more stimulating, more views".</p>
+    <div class="tabs" role="group" aria-label="Measure" id="tabs"></div>
+    <div class="chart" id="scatter"></div>
+  </section>
+
+  <section aria-labelledby="order-h">
+    <h2 id="order-h">Publish order and the noise floor</h2>
+    <p>Re-upload families (nothing changed between copies) show how much views differ by channel, timing and luck alone. Re-skin versions spread about as widely as re-uploads, so a color effect, if real, is small next to that noise.</p>
+    <div class="scroll"><table id="noise-table"></table></div>
+    <p>Later versions get fewer views than the channel's typical video of their age, in re-skins and even more in re-uploads. In raw views, a later version beats its family's first in {{skin_later}} re-skins and {{upload_later}} re-uploads: the later versions that win stand out, but they're the minority. A likely reason: studios re-release their hits, so the first version is a proven success and later ones fall back toward the channel's norm.</p>
+  </section>
+
+  <section aria-labelledby="power-h">
+    <h2 id="power-h">How many families a clear answer needs</h2>
+    <p class="muted">If the effects seen here are the true ones: the chance that a test on this many families finds them at Holm's strictest level (p &lt; 0.017).</p>
+    <div class="scroll"><table id="power-table"></table></div>
+    <p>Saturation needs a few hundred families; loudness, at the size seen here, more than any search is likely to find.</p>
+  </section>
+
+  <section aria-labelledby="list-h">
+    <h2 id="list-h">All families</h2>
+    <p class="muted">Versions in publish order. "vs expected" is views divided by the channel's typical views for a video released around the same time, at the same length class.</p>
+    <div id="fam-list"></div>
+  </section>
+
+  <section aria-labelledby="method-h">
+    <h2 id="method-h">Method</h2>
+    <ul>
+      <li><b>Outcome:</b> log views, measured against the channel's median for its other videos released within ±<span class="num" id="m-window"></span> days in the same length class (up to 4 min, longer; compilations and family videos left out). That expected value takes age and era together, so publish order can be tested separately.</li>
+      <li><b>Model:</b> family fixed effects; measure, later version (not the first published) and a holiday flag as terms; standard errors clustered by family.</li>
+      <li><b>Test:</b> each measure shuffled among its family's versions <span class="num" id="m-perm"></span> times; Holm correction across the three measures. Intervals: <span class="num" id="m-boot"></span> family resamples.</li>
+      <li><b>Pairwise check:</b> odds that the version higher on the measure has more views, per step, each family weighted once (estimate table). It ignores how much more, so it can disagree with the ratio: saturation's interval stays above 1×, loudness's points below.</li>
+      <li><b>Spread in family:</b> the typical factor between a version's views (against expected) and its family's average.</li>
+      <li><b>Shorts</b> (vertical downloads) are compared only with Shorts; no family mixed the two.</li>
+      <li><b>Robustness:</b> with a window twice as wide, the ratios are <span id="m-robust"></span>.</li>
+      <li><b>Limits:</b> features come from the dataset's clip where the video is in it, else from the pair report's shared part; views were saved by the search run on 2026-11-11 and 12. One studio only. The studio decides what to re-skin and promote, so this shows association, not cause.</li>
+    </ul>
+    <p class="muted">Fit: <span id="m-at"></span>, <code>views_model.py run</code>.</p>
+  </section>
+</main>
+
+<script id="data" type="application/json">{{data}}</script>
+<script>
+(() => {
+const D = JSON.parse(document.getElementById("data").textContent);
+const NS = "http://www.w3.org/2000/svg";
+const fx = v => v.toFixed(2) + "×";
+const fp = p => p == null || Number.isNaN(p) ? "–" : p < 0.001 ? "< 0.001" : p.toFixed(3);
+const fmt = n => n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + " M" : n >= 1e3 ? (n / 1e3).toFixed(n >= 1e4 ? 0 : 1) + " k" : String(n);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function tipFor(box) {
+  const t = document.createElement("div"); t.className = "tip"; t.hidden = true; box.appendChild(t);
+  return {
+    show(html, ev) {
+      t.innerHTML = html; t.hidden = false;
+      const r = box.getBoundingClientRect();
+      let x = ev.clientX - r.left + 12, y = ev.clientY - r.top + 12;
+      if (x + t.offsetWidth > r.width) x = ev.clientX - r.left - t.offsetWidth - 12;
+      t.style.left = Math.max(0, x) + "px"; t.style.top = y + "px";
+    },
+    hide() { t.hidden = true; },
+  };
+}
+
+// --- Forest plot -------------------------------------------------------------
+const rows = [...D.measures, D.placebo];
+(function forest() {
+  const box = document.getElementById("forest");
+  const W = 640, rowH = 40, top = 10, left = 190, right = 20, H = top + rows.length * rowH + 30;
+  const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img",
+    "aria-label": "Views ratio per step of each measure, with 95% intervals"}, box);
+  const lo = Math.log(0.5), hi = Math.log(2.5);
+  const X = v => left + (Math.log(v) - lo) / (hi - lo) * (W - left - right);
+  for (const v of [0.5, 0.75, 1, 1.5, 2, 2.5]) {
+    el("line", {x1: X(v), x2: X(v), y1: top, y2: H - 22, stroke: v === 1 ? "var(--ref)" : "var(--grid)",
+      "stroke-width": v === 1 ? 1.5 : 1, "stroke-dasharray": v === 1 ? "4 3" : ""}, svg);
+    el("text", {x: X(v), y: H - 6, "text-anchor": "middle"}, svg).textContent = v + "×";
+  }
+  const tip = tipFor(box);
+  rows.forEach((m, i) => {
+    const y = top + i * rowH + rowH / 2, c = m === D.placebo ? "var(--placebo)" : "var(--accent)";
+    el("text", {x: 0, y: y - 2, class: "lbl"}, svg).textContent = m.label.replace(" (placebo)", "");
+    el("text", {x: 0, y: y + 13}, svg).textContent = m === D.placebo ? "placebo · per 5 cuts/min" : "per " + m.per_text.split(" of ")[0];
+    const [a, b] = m.views_ratio_ci.map(v => Math.min(Math.max(v, 0.5), 2.5));
+    el("line", {x1: X(a), x2: X(b), y1: y, y2: y, stroke: c, "stroke-width": 2, "stroke-linecap": "round"}, svg);
+    el("circle", {cx: X(m.views_ratio), cy: y, r: 5.5, fill: c, stroke: "var(--surface)", "stroke-width": 2}, svg);
+    const hit = el("rect", {x: left, y: y - rowH / 2, width: W - left - right, height: rowH, fill: "transparent"}, svg);
+    const html = `<b>${esc(m.label)}</b><br>${fx(m.views_ratio)} per ${esc(m.per_text)}<br>95%: ${fx(m.views_ratio_ci[0])} to ${fx(m.views_ratio_ci[1])}<br>permutation p ${fp(m.p_perm)}`;
+    hit.addEventListener("pointermove", ev => tip.show(html, ev));
+    hit.addEventListener("pointerleave", () => tip.hide());
+  });
+})();
+
+document.getElementById("est-table").innerHTML =
+  `<thead><tr><th>Measure</th><th class="num">Views ratio</th><th class="num">95% interval</th><th class="num">p</th><th class="num">p, Holm</th><th class="num">Pair odds (95%)</th><th class="num">Top above family</th></tr></thead><tbody>` +
+  rows.map(m => `<tr><td>${esc(m.label.replace(" (placebo)", ""))}<br><span class="muted" style="font-size:.8rem">${m === D.placebo ? "placebo, " : ""}per ${esc(m.per_text.split(" of ")[0])}</span></td>
+    <td class="num">${fx(m.views_ratio)}</td><td class="num">${fx(m.views_ratio_ci[0])}–${fx(m.views_ratio_ci[1])}</td>
+    <td class="num">${fp(m.p_perm)}</td><td class="num">${m.p_holm == null ? "–" : fp(m.p_holm)}</td>
+    <td class="num">${m.pair_odds_ratio ? `${fx(m.pair_odds_ratio)}<br><span class="muted">${fx(m.pair_odds_ci[0])}–${fx(m.pair_odds_ci[1])}</span>` : "–"}</td>
+    <td class="num">${m.top_wins} of ${m.top_families}</td></tr>`).join("") + "</tbody>";
+
+// --- Within-family scatter ---------------------------------------------------
+const KEY = {mean_saturation: "sat", mean_lstar: "lstar", lufs: "lufs", cuts_per_min: null};
+function scatter(m) {
+  const box = document.getElementById("scatter"); box.textContent = "";
+  const k = KEY[m.measure], pts = [], lines = [];
+  for (const f of D.families) {
+    const vs = f.versions.filter(v => v[k] != null);
+    if (vs.length < 2) continue;
+    const mx = vs.reduce((s, v) => s + v[k], 0) / vs.length;
+    const my = vs.reduce((s, v) => s + Math.log(v.vs_expected), 0) / vs.length;
+    const fp_ = vs.map(v => ({x: v[k] - mx, y: Math.log(v.vs_expected) - my, v, f})).sort((a, b) => a.x - b.x);
+    pts.push(...fp_); lines.push(fp_);
+  }
+  const W = 640, H = 400, l = 52, r = 16, t = 14, b = 40;
+  const xmax = Math.max(...pts.map(p => Math.abs(p.x))) * 1.08 || 1;
+  const ymax = Math.log(30);
+  const X = v => l + (v + xmax) / (2 * xmax) * (W - l - r);
+  const Y = v => t + (1 - (Math.max(-ymax, Math.min(ymax, v)) + ymax) / (2 * ymax)) * (H - t - b);
+  const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img",
+    "aria-label": `${m.label}: versions relative to their family average, against views relative to expected`}, box);
+  for (const v of [1 / 30, 1 / 10, 1 / 3, 1, 3, 10, 30]) {
+    el("line", {x1: l, x2: W - r, y1: Y(Math.log(v)), y2: Y(Math.log(v)), stroke: v === 1 ? "var(--ref)" : "var(--grid)"}, svg);
+    el("text", {x: l - 6, y: Y(Math.log(v)) + 4, "text-anchor": "end"}, svg).textContent = v < 1 ? "1/" + Math.round(1 / v) + "×" : v + "×";
+  }
+  const step = xmax > 40 ? 20 : xmax > 15 ? 10 : xmax > 6 ? 5 : xmax > 3 ? 2 : 1;
+  for (let v = -Math.floor(xmax / step) * step; v <= xmax; v += step) {
+    el("line", {x1: X(v), x2: X(v), y1: t, y2: H - b, stroke: v === 0 ? "var(--ref)" : "var(--grid)"}, svg);
+    el("text", {x: X(v), y: H - b + 16, "text-anchor": "middle"}, svg).textContent = (v > 0 ? "+" : "") + v;
+  }
+  el("text", {x: (l + W - r) / 2, y: H - 6, "text-anchor": "middle"}, svg).textContent = `${m.label.replace(" (placebo)", "")}, difference from family average`;
+  // fitted slope (log scale), through the origin
+  el("line", {x1: X(-xmax), x2: X(xmax), y1: Y(-xmax * m.beta), y2: Y(xmax * m.beta),
+    stroke: "var(--fg)", "stroke-width": 1.5, "stroke-dasharray": "6 4", opacity: .55}, svg);
+  for (const ln of lines) el("polyline", {points: ln.map(p => `${X(p.x)},${Y(p.y)}`).join(" "), fill: "none",
+    stroke: "var(--accent)", "stroke-opacity": .28, "stroke-width": 1.2}, svg);
+  const tip = tipFor(box);
+  for (const p of pts) {
+    el("circle", {cx: X(p.x), cy: Y(p.y), r: 4.5, fill: "var(--accent)", stroke: "var(--surface)", "stroke-width": 1.5}, svg);
+    const hit = el("circle", {cx: X(p.x), cy: Y(p.y), r: 10, fill: "transparent"}, svg);
+    const v = p.v;
+    const html = `<b>${esc(v.title)}</b><br>${v.published} · ${fmt(v.views)} views (${fx(v.vs_expected)} expected)<br>${esc(m.label)}: ${v[k].toFixed(1)}`;
+    hit.addEventListener("pointermove", ev => tip.show(html, ev));
+    hit.addEventListener("pointerleave", () => tip.hide());
+  }
+}
+const tabs = document.getElementById("tabs");
+D.measures.forEach((m, i) => {
+  const btn = document.createElement("button"); btn.type = "button"; btn.textContent = m.label;
+  btn.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+  btn.addEventListener("click", () => {
+    tabs.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+    scatter(m);
+  });
+  tabs.appendChild(btn);
+});
+scatter(D.measures[0]);
+
+// --- Noise floor and order ---------------------------------------------------
+const nz = D.noise;
+document.getElementById("noise-table").innerHTML =
+  `<thead><tr><th>Kind</th><th class="num">Families</th><th class="num">Videos</th><th class="num">Spread in family</th><th class="num">Later vs expected</th><th class="num">p</th></tr></thead><tbody>` +
+  [["Re-skin", nz["re-skin"]], ["Re-upload", nz["re-upload"]]].map(([n, z]) =>
+    `<tr><td>${n}</td><td class="num">${z.n_families}</td><td class="num">${z.n_videos}</td><td class="num">${fx(Math.exp(z.sd_resid))}</td><td class="num">${fx(z.later.views_ratio)}</td><td class="num">${fp(z.later.p_t)}</td></tr>`).join("") +
+  `</tbody>`;
+
+const sizes = Object.keys(D.power[D.measures[0].measure]);
+document.getElementById("power-table").innerHTML =
+  `<thead><tr><th>Measure</th>${sizes.map(s => `<th class="num">${s} families</th>`).join("")}</tr></thead><tbody>` +
+  D.measures.map(m => `<tr><td>${esc(m.label)}</td>${sizes.map(s => `<td class="num">${Math.round(100 * D.power[m.measure][s])}%</td>`).join("")}</tr>`).join("") + "</tbody>";
+
+// --- Family list -------------------------------------------------------------
+document.getElementById("fam-list").innerHTML = D.families.map(f => {
+  const vs = f.versions, top = vs.reduce((a, b) => (b.vs_expected > a.vs_expected ? b : a));
+  const short = vs[0].short ? `<span class="chip">Shorts</span>` : "";
+  return `<details><summary><span class="t">${esc(vs[0].title)}</span>${short}<span class="muted num">${vs.length} versions</span></summary>
+  <div class="scroll"><table><thead><tr><th>Version</th><th>Published</th><th class="num">Views</th><th class="num">vs expected</th><th class="num">Saturation</th><th class="num">Lightness</th><th class="num">LUFS</th></tr></thead><tbody>${
+    vs.map(v => `<tr><td><a href="https://www.youtube.com/watch?v=${esc(v.video)}" target="_blank" rel="noopener">${esc(v.title)}</a>${v.holiday ? ' <span class="chip">holiday</span>' : ""}${v === top ? ' <span class="chip">most above expected</span>' : ""}<br><span class="muted" style="font-size:.8rem">${v.side === "A" ? "Kids TV" : "Kids Channel"}</span></td>
+      <td class="num">${v.published}</td><td class="num">${fmt(v.views)}</td><td class="num">${fx(v.vs_expected)}</td>
+      <td class="num">${v.sat == null ? "–" : v.sat.toFixed(0)}</td><td class="num">${v.lstar == null ? "–" : v.lstar.toFixed(0)}</td><td class="num">${v.lufs == null ? "–" : v.lufs.toFixed(1)}</td></tr>`).join("")
+  }</tbody></table></div></details>`;
+}).join("");
+
+document.getElementById("m-window").textContent = D.window;
+document.getElementById("m-perm").textContent = D.n_perm.toLocaleString("en-US");
+document.getElementById("m-boot").textContent = D.n_boot.toLocaleString("en-US");
+document.getElementById("m-robust").textContent = D.measures.map(m => `${m.label.toLowerCase()} ${fx(D.robust[m.measure])}`).join(", ");
+document.getElementById("m-at").textContent = D.at.replace("T", " ").replace("+00:00", " UTC");
+})();
+</script>

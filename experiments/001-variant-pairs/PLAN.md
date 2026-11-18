@@ -2,7 +2,7 @@
 
 **Question:** Do studios publish near-identical versions of one video (same animation; new colors, background or title), and is there evidence they test the variants against each other?
 
-**Parts** _(human decision, 2026-11-12)_: 1. quantify how similar the seed pair is (Signal framework, Pair report); 2. search the two seed channels for more pairs (Search: more pairs in the seed channels); 3. search other channels (Search: other channels).
+**Parts** _(human decision, 2026-11-12)_: 1. quantify how similar the seed pair is (Signal framework, Pair report); 2. search the two seed channels for more pairs (Search: more pairs in the seed channels); 3. search other channels (Search: other channels); 4. does the more stimulating version get more views? (Views and stimulation, proposed) _(human decision, 2026-11-17: part of 001)_.
 
 **Seed pair** (same song, two channels the user believes are one company; published 18 days 1 h 27 min apart):
 
@@ -253,6 +253,76 @@ No tier sends pairs straight to download: images and metadata can't tell re-skin
 - **Across owners:** the same comparison between groups, with its own baseline class (different owner), as a separate step. Interesting because of channel farms (e.g. channels built by AI agents and sold as "passive income") copying successful videos.
 - **Beyond our channels:** grow from the frontier (featured channels), and from the networks' and copyright holders' other channels.
 
+## Views and stimulation (2026-11-17)
+
+**Question:** within a re-skin family (same animation, same audio, same cuts), does the more stimulating version get more views? The earlier paper compared unrelated videos; a family is a matched set, like siblings in a twin study, so content, song, pacing and (mostly) channel are held fixed.
+
+**What "more stimulating" can mean here:** re-skins keep cuts and motion, so the treatment is mainly visual: color saturation (the site's visual intensity), lightness, plus loudness (re-skins often re-mix the gain). Pacing measures are a placebo: they should not differ.
+
+**Pilot (2026-11-17, existing data, 0 requests):** 44 re-skin families, 147 videos, all with saturation and views; 176 pairs differ by ≥ 5 in saturation (34 families, 166 of the pairs within one channel). In 23 of 34 families the more saturated version has more views (sign test p = 0.058); median ratio 1.22×. The more saturated one is the later one in 77 of 176 pairs, so order and saturation aren't the same thing. Exploratory only: the user spotted the pattern on these families, so they can't also confirm it.
+
+**Decisions:**
+
+1. **Hold-out.** USP families = exploratory (fit the model, choose the measure). The confirmatory test runs on families from part 3 (other studios), with hypothesis, measure, model and exclusions written here before their views are looked at.
+2. **Measures:** three, each tested on its own, none primary and no composite: mean saturation, mean lightness (L*), loudness (LUFS). Holm correction across the three _(human decision, 2026-11-17)_.
+3. **Outcome:** log total views, with an age control _(human decision, 2026-11-17: total views only; no daily fetch over a window; first weeks after release can't be had, YouTube shows no view history to non-owners)_.
+   - Views as saved by the search run (2026-11-11/12); age = days from publish to that fetch (the cached response's time), per video. Part 3's families use their own fetch date. No new requests.
+   - **Expected views** take age and era together: the median log views of the channel's other videos published within ±90 days, in the same length class (up to 4 min, longer), compilations and family videos left out; the window doubles until it holds 10. The outcome is log views − expected. Within a family the later version is always the younger one, and that holds in re-upload families too, so neither can give the age curve; the channel's other videos can. _(Changed while building: the plan had the curve from the re-upload families.)_ This also replaces the year bands and the channel term.
+   - **Shorts** count views differently (every play since 2025-03), so a family mixing Shorts and long videos is compared within format only, or left out. Length can't tell them apart (40 of 44 re-skin families are 3 min or shorter); the downloaded files' aspect ratio can (vertical = Short), with no requests.
+   - **Holiday versions** (Christmas, Halloween, and other holiday words in the title) gain mostly in season: a holiday flag in the model.
+
+**Model** (video *i* in family *g*):
+
+`log(views_ig) − expected_ig = α_g + β·stim_ig + δ·later_ig + h·holiday_ig + ε_ig`
+
+- α_g: family fixed effect (absorbs song, animation, studio). Only within-family differences estimate β.
+- later: not the first-published version in the family (the "later version won" pattern).
+- Standard errors clustered by family (CR1). With ~150 videos, few terms; add one only if it's decided before the fit.
+- **Test:** a within-family permutation test of β (shuffle the measure among a family's versions, 10,000 times), Holm across the three measures; the regression's t-test as a check. Intervals: 2,000 family resamples.
+- **Pairwise form** (easier to read): for each pair, P(higher version has more views) = logistic(Δexpected + β·Δstim + δ·Δlater + h·Δholiday), no intercept, each family weighted once. Reported as an odds ratio per step.
+- **Heterogeneity:** a random slope per studio once there are ≥ 3 studios with ≥ 10 families.
+
+**Negative controls:**
+
+- **Re-upload families** (100 after the format split; nothing changed): the within-family spread of views around expected is the noise floor (channel, timing, luck).
+- **Placebo measure:** cuts per minute, which re-skins share; its β should be ≈ 0.
+
+**Threats** (stated, not all fixable):
+- **The studio chooses.** A studio may re-skin a hit into a newer, brighter style, promote one version (playlists, end screens, compilations), or delete the losers (we only see survivors). The design shows association within a family, not cause.
+- **Thumbnail and title** change with the re-skin and drive clicks; the design can't tell whether an effect runs through the thumbnail or the video. Not measured _(human decision, 2026-11-17: no thumbnail saturation measure)_.
+- **Measurement window:** a video's features come from the dataset's clip where it is in the dataset, else from its pair report's shared part, so two versions of one family can be measured on different stretches.
+- **Power:** see the results; part 3's other studios are what make this a test rather than an anecdote.
+
+**Built** (2026-11-17; 0 requests): `views_model.py run` (fit → `results/views/model.json`, ~3 min on CPU) and `views_model.py page` (`views_page.py` with the template `views_report.html` → `cache/views/index.html`, a private page); tests in `tests/test_views_model.py`. numpy and scipy only.
+
+**Results, USP (exploratory, 2026-11-17):** 44 re-skin families, 147 videos (no family mixes Shorts and long videos; 56 videos are Shorts).
+
+| Measure | Views per step | 95% interval | p (permutation) | p (Holm) |
+|---|---|---|---|---|
+| Saturation, per 10 points | 1.18× | 0.95–1.44 | 0.200 | 0.600 |
+| Lightness, per 10 L* | 1.29× | 0.78–2.15 | 0.327 | 0.600 |
+| Loudness, per 3 dB | 1.21× | 0.89–2.07 | 0.219 | 0.600 |
+| Cuts per minute (placebo), per 5 | 1.12× | 0.74–1.79 | 0.735 | – |
+
+- All three point the same way (more stimulating, more views); none passes. The pairwise form (who has more views, ignoring by how much) gives saturation 1.54× odds per 10 points (1.05–2.30), lightness 1.85× (0.70–7.6), but loudness 0.63× (0.25–1.28): loudness's sign isn't stable. With the placebo as wide as the real measures, this run can't tell an effect from noise. A window of ±180 days gives the same ratios (1.16×, 1.30×, 1.26×).
+- **Noise floor:** views around expected spread ~2.6× inside a re-skin family and ~2.9× inside a re-upload family: re-skins vary no more than unchanged copies.
+- **Later versions:** 0.68× expected in re-skins (p 0.21), 0.50× in re-uploads (p 0.011). In raw views a later version beats its family's first in 32 of 103 (re-skins) and 31 of 116 (re-uploads): the winners noticed on the page are the minority. Likely reason: studios re-release hits, so the first version is a proven success.
+- **Power** (chance to pass Holm's strictest level, p < 0.017, if these effects are true): saturation 34% at 100 families, 47% at 150, 65% at 200; lightness 11% at 100, 31% at 200; loudness under 10% at any size up to 200. A clear answer for saturation needs ~300 families.
+
+**Confirmatory test** (fixed 2026-11-17, before any other studio's views are looked at):
+
+- **Data:** re-skin families found by part 3 in other owner groups (not USP), labelled by the agent as re-skin with confidence ≥ 0.7, compilations out, 2 or more versions with views and all three features; Shorts and long videos split by the downloads' aspect ratio. Views and fetch time from that group's own `videos.list` responses.
+- **Hypotheses** (one-sided in what they claim, two-sided in the test): H1 more saturated, H2 lighter, H3 louder versions get more views than expected for their age, within a family.
+- **Model, test, controls:** exactly as above (`views_model.py`, its constants unchanged: ±90-day window, 4-min length class, 10,000 permutations); Holm across H1–H3 at α = 0.05. The placebo and the noise floor are reported but don't gate.
+- **Run when** there are ≥ 150 families outside USP; before that, families are counted but their results not opened. If part 3 can't reach 150, report what there is as a second exploratory set.
+- **Report** every measure's ratio and interval whatever the p-value; any change to the analysis after this date is listed as a deviation.
+
+**Steps:**
+
+1. ✓ `views_model.py` with tests; run on USP (results above).
+2. ✓ Confirmatory test written (above); run once part 3 has ≥ 150 families outside USP. `views_model.py` reads USP's search database for now; it gets a source per owner group when part 3's searches exist.
+3. ✓ Private page: estimates, versions inside each family, noise floor and order, power, all families.
+
 ## Steps
 
 0. Write `tools/yt.py` (budget check + ledger) before any further YouTube request.
@@ -325,3 +395,5 @@ No tier sends pairs straight to download: images and metadata can't tell re-skin
 - Baseline size: is ~10 downloaded baseline videos enough for a 99th percentile, or should baselines lean on API and image signals and the dataset's existing features?
 
 - Channel groups: cut the wrong join in G037 (Cartoon Network / Netflix Jr. / Lucas the Spider) and decide the doubtful G032 and G018, with a short list of cut links in `channels.py`? Or leave them, since a distributor's group only widens the later sampling a little?
+
+- Views and stimulation: the confirmatory test runs at ≥ 150 families outside USP, where saturation's effect (if it is as large as USP's) passes only about half the time; wait for ~300 instead, which may take several owner groups' searches?
