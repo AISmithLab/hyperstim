@@ -48,3 +48,6 @@ __pycache__/
 /backend/.coverage
 /backend/coverage.xml
 /deploy/server.env
+
+# Experiment caches left in a shared checkout after leaving an exp/ branch (plan 001)
+/experiments/cache/

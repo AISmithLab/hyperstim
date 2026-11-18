@@ -17,6 +17,8 @@ README.md, DEVELOPMENT.md   repo front page, developer guide (below)
 ARCHITECTURE.md             diagrams of dev, CI, prod and outside services (below)
 ```
 
+- `experiments/` lives only on the `exp/` branches (`AGENTS.md`). `main`'s `.gitignore` ignores `/experiments/cache/`, so the cache an `exp/` branch leaves in the shared checkout doesn't show on `main` _(human decision, 2026-11-18)_.
+
 ### README and developer guide _(human decision, 2026-10-24: the README read like a developer guide)_
 
 - **`README.md` is for anyone who lands on the repo** (parents, researchers, developers): what the site is, not how to work on it.
