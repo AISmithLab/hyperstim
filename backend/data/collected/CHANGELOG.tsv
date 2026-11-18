@@ -1,4 +1,5 @@
 date	videos	channels	ch_ready	ch_left_out	ch_held	ch_yr_2nd	ch_yr_med	added_v	removed_v	new_ch	note
+2026-11-17	18098	605	134	417	77	2.07	5.05	121	0	3	
 2026-11-16	17977	602	134	411	76	2.00	5.05	99	0	2	ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out
 2026-11-15	17878	600	133	383	77	1.92	5.05	106	0	1	
 2026-11-14	17772	599	127	382	72	1.84	5.05	90	0	2	
