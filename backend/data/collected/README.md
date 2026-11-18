@@ -3,7 +3,7 @@
 The videos added to the HyperStim dataset since the reference set (16,375 videos, 2015 to August 2026), committed every day by the data bot, as they stood at 23:59:59 UTC the day before. How they're picked: [plan 013](../../../plans/013-growing-dataset.md).
 
 - `<year>.tsv`: the videos added that year, in the order they were added.
-- `removed.tsv`: videos taken out because they went offline.
+- `removed.tsv`: videos taken out because they went offline (`reason`: `gone`, `region`) or no longer fit our collection criteria (`criteria`).
 - `channel-names.tsv`: the current name of each channel with videos in the dataset, read from YouTube weekly. The site shows it instead of the channel name in a video's row, which is the name the channel had when the video was collected.
 - `excluded-channels.tsv`: channels left out because few of their uploads are made for kids, or they make too few videos we can use (below).
 - `CHANGELOG.tsv`: one row a finished day, the newest first (below).
@@ -22,7 +22,7 @@ The site at the end of each finished day: every count is at 23:59:59 UTC, and th
 | `ch_held` | channels on the site that still have uploads to take, but none in a year with fewer videos per year than the channel's own average, so the collector skips them until the other channels pass them |
 | `ch_yr_2nd` | the thinnest channels: the second smallest of the channels' videos per year, among the channels on the site with an upload left to take that aren't held. A channel's videos per year are its videos on the site over the years (2015 to that day) in which it has an eligible upload, each counted for the part the channel was active (from its first upload; the running year to that day) |
 | `ch_yr_med` | the typical channel: the median of the channels' videos per year, over all channels on the site |
-| `added_v`, `removed_v` | videos added that day, and taken out as offline |
+| `added_v`, `removed_v` | videos added that day, and taken out (offline, or no longer fitting our collection criteria) |
 | `new_ch` | channels that got their first video that day |
 | `note` | a change to what the collector picks, or in what order, or to how this file counts, that went live that day; and when `ch_ready`, `ch_left_out`, `ch_held`, `ch_yr_2nd` and `ch_yr_med` aren't from 23:59:59, when they are from |
 

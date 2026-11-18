@@ -94,6 +94,8 @@ def run(s: Settings) -> None:
     if requeued:
         log.info("Trying %d failed downloads again", requeued)
     collector.fill_scores({v.id: v.score for v in reference.videos})
+    # Once: the dataset's compilations leave when the rule starts (decision 1, 2026-11-18).
+    collector.drop_compilations({v.id: v.title for v in reference.videos})
     stop = threading.Event()
 
     def on_signal(*_: object) -> None:

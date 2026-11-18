@@ -17,4 +17,5 @@ NOTES: tuple[tuple[str, str | None], ...] = (
     ("New channels join by subscribers, most first; their counts read weekly", None),
     ("Pace lowered from 150 to 120 videos a day after three blocks", None),
     ("ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out", None),
+    ("Took out videos that no longer fit our collection criteria", None),
 )

@@ -162,11 +162,13 @@ YEARS = (
     f"WHERE state IN {IN_STATES} GROUP BY channel_id, y) "
 )
 # Uploads whose made-for-kids answer is known: those that passed that check (the later checks
-# need it), those that failed it, and the floor's eligible ones put back unchecked (`trimmed`).
+# need it, compilations' too), those that failed it, and the floor's eligible ones put back
+# unchecked (`trimmed`).
 # v2's picks don't count: they were picked for being made for kids.
 ANSWERED = (
     "state IN ('eligible', 'measured', 'collected', 'failed') OR (state = 'ineligible' "
-    "AND reason IN ('not_for_kids', 'duration', 'short')) OR (state = 'new' AND reason = 'trimmed')"
+    "AND reason IN ('not_for_kids', 'duration', 'compilation', 'short')) "
+    "OR (state = 'new' AND reason = 'trimmed')"
 )
 
 

@@ -28,7 +28,7 @@ import subprocess
 import sys
 import time
 from collections import Counter
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -84,6 +84,7 @@ API_RETRY_AFTER_S = (3600, 6 * 3600, DAY_S)
 BACKUP_RETRY_S = 3600
 REPAIR_BATCHES = 10  # of 50 uploads or channels, per repair pass
 FAILURE_PAUSE_S = 3600
+COMPILATIONS_DROPPED = "compilations_dropped_at"  # kv: when the compilations were taken out
 LOGS_KEPT_S = 30 * DAY_S  # the downloader's output for failed downloads, in download-logs/
 FREE_SPACE_MIN = 50 * 1024**3
 BACKUPS_KEPT = 7  # daily copies of collector.db, in clips_dir/backups
@@ -823,6 +824,36 @@ class Collector:
                 (r["video_id"], self.score(json.loads(r["features"])))
                 for r in self.store.unscored()
             )
+
+    def drop_compilations(self, reference_titles: Mapping[str, str]) -> int:
+        """Once, when the compilation rule starts (decision 1, 2026-11-18): the dataset's
+        compilations are taken out (`removed.tsv`, reason `criteria`), judged on their titles
+        then (v2's picks on the reference set's, `reference_titles`: video ID -> title), and the
+        ones waiting become ineligible. Returns how many were taken out."""
+        if self.store.get(COMPILATIONS_DROPPED):
+            return 0
+        now = self.clock()
+        rows = self.store.db.execute(
+            "SELECT id, state, title FROM uploads "
+            "WHERE state IN ('v2', 'collected', 'measured', 'eligible')"
+        ).fetchall()
+        removed = 0
+        with self.store.transaction():
+            for row in rows:
+                title = reference_titles.get(row["id"], "") if row["state"] == "v2" else ""
+                if not sampling.is_compilation(title or row["title"]):
+                    continue
+                if row["state"] in ("v2", "collected"):
+                    self.store.set_state(row["id"], "removed", "criteria")
+                    self.store.add_removed(row["id"], utc(now), "criteria")
+                    removed += 1
+                else:  # waiting, or measured but not yet on the site
+                    self.store.set_state(row["id"], "ineligible", "compilation")
+            self.store.set(COMPILATIONS_DROPPED, utc(now))
+        log.info("Took out %d videos that no longer fit the collection criteria", removed)
+        if removed:
+            self.store.set("export_due", "1")
+        return removed
 
     def collect(self, upload: Upload, now: float) -> None:
         """Download, measure and classify the upload, and add it; or, while it lacks a title,

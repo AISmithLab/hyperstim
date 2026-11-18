@@ -5,7 +5,8 @@ plus, one at a time, an eligible upload of the channel with the fewest videos pe
 its year with the fewest videos per active year below the channel's threshold (on a tie, the
 year farthest from its years with videos, then a random one), the one with the lowest number, so
 a random one (`pick_order`). Eligibility is v2's: made for kids, 2-60
-minutes, not a Short, online and not blocked in the US. A channel that marks only a few of its
+minutes, not a Short, online and not blocked in the US; and not a compilation (by its title,
+`is_compilation`). A channel that marks only a few of its
 uploads as made for kids, or makes fewer than 5 eligible videos a year, is left out with all
 its videos (`left_out`). A third of the downloads goes to new channels until they catch up with
 the others (`explore_turn`, `catch_up_order`).
@@ -44,8 +45,22 @@ PER_YEAR_MIN = 5
 # 60-180 s may be one (asked at /shorts/<id>), > 180 s can't be.
 MIN_DURATION_S, MAX_DURATION_S = 120, 3600
 SHORT_CERTAIN_S, SHORT_POSSIBLE_S = 60, 180
+# A compilation's title (decision 1, 2026-11-18): its measured clip is usually just its first
+# episode. "collection" after a toy word, or "full collection", is a toy collection: one video.
+_COMPILATION = re.compile(r"compil|collection|\b\d+\s*(?:hours?|hrs?)\b", re.IGNORECASE)
+_TOY_COLLECTION = re.compile(
+    r"\b(?:toys?|figures?|cars?|dolls?|eggs?|pez|pins?|full)\s+collection", re.IGNORECASE
+)
 
-Verdict = Literal["eligible", "gone", "region", "not_for_kids", "duration", "short", "wait"]
+Verdict = Literal[
+    "eligible", "gone", "region", "not_for_kids", "duration", "compilation", "short", "wait"
+]
+
+
+def is_compilation(title: str) -> bool:
+    """Whether a title names a compilation: `compil`, "collection" (not a toy collection) or a
+    number of hours."""
+    return bool(_COMPILATION.search(_TOY_COLLECTION.sub("", title)))
 
 
 def left_out(kids: int, answers: int) -> bool:
@@ -338,7 +353,8 @@ def needs_shorts_probe(details: Details) -> bool:
 
 
 def verdict(details: Details | None, is_short: bool | None = None) -> Verdict:
-    """v2's checks in v2's order. `is_short` is the /shorts/ probe's answer, asked only when
+    """v2's checks in v2's order, with the compilation check before the Shorts probe (it needs
+    no request). `is_short` is the /shorts/ probe's answer, asked only when
     `needs_shorts_probe`; undecided counts as a Short, as in v2."""
     if details is None:
         return "gone"
@@ -351,6 +367,8 @@ def verdict(details: Details | None, is_short: bool | None = None) -> Verdict:
     d = details.duration_s
     if d is None or d <= SHORT_CERTAIN_S or d < MIN_DURATION_S or d > MAX_DURATION_S:
         return "duration"
+    if is_compilation(details.title):
+        return "compilation"
     if needs_shorts_probe(details) and is_short is not False:
         return "short"
     return "eligible"

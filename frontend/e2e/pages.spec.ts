@@ -42,6 +42,13 @@ test.describe("how it works", () => {
     }
   });
 
+  test("says a pick can't be a compilation, in the diagram and the questions", async ({ page }) => {
+    await page.goto("/how-it-works/");
+    await expect(page.getByRole("listitem").filter({ hasText: /^✓ not a compilation$/ })).toBeVisible();
+    await page.getByText("How do you choose the channels and videos?").click();
+    await expect(page.getByText(/not a Short, not a compilation of existing videos, and still online\./)).toBeVisible();
+  });
+
   test("a question opens and closes by keyboard", async ({ page }) => {
     await page.goto("/how-it-works/");
     // A <summary> has no role to find it by.

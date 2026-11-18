@@ -86,6 +86,16 @@ describe("HowItWorks", () => {
     expect(screen.getByText(/compared with the same set of 16,375 videos from 2015 to August 2026/)).toBeInTheDocument();
   });
 
+  it("lists every check a pick must pass, compilations too", () => {
+    render(<HowItWorks />);
+    const checks = ["made for kids", "not a Short", "2–60 minutes", "still online", "not a compilation"];
+    const items = screen.getAllByRole("listitem").map((item) => item.textContent);
+    for (const check of checks) expect(items).toContain(`✓ ${check}`);
+    expect(
+      screen.getByText(/must be made for kids, 2 to 60 minutes long, not a Short, not a compilation of existing videos, and still online\./),
+    ).toBeInTheDocument();
+  });
+
   it("opens every common question", async () => {
     const user = userEvent.setup();
     const { container } = render(<HowItWorks />);

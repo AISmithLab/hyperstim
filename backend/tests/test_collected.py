@@ -396,3 +396,21 @@ def test_a_channel_comes_back_when_its_left_out_file_changes(
     left_out.write_text("channel_id\tmade_for_kids\tanswers\n")
     assert store.reload_if_changed()
     assert store.current.channels_by_id["chan-c"].video_count == 2
+
+
+def test_a_video_taken_out_for_the_criteria_moves_no_score(
+    dataset_path: Path, collected: Path
+) -> None:
+    """A dataset video that no longer fits the collection criteria (plan 013, decision 1,
+    2026-11-18) leaves like an offline one: out of the lists, its page kept, the reference
+    pools and every score unchanged."""
+    before = load_dataset(dataset_path, collected)
+    with (collected / "removed.tsv").open("a", encoding="utf-8") as fh:
+        fh.write(f"vid-a2\t{T3}\tcriteria\n")
+    grown = load_dataset(dataset_path, collected)
+    assert "vid-a2" not in [v.id for v in grown.videos]
+    assert grown.videos_by_id["vid-a2"].removed_at == T3
+    assert grown.pools == before.pools
+    assert grown.reference_count == before.reference_count
+    for video in grown.videos_by_id.values():
+        assert video.score == before.videos_by_id[video.id].score

@@ -86,6 +86,7 @@ From `lg`, the short label sits next to each marker as well. Below `lg`, only th
                                                          each pick must be:
                                                          ✓ made for kids  ✓ not a Short
                                                          ✓ 2–60 minutes   ✓ still online
+                                                         ✓ not a compilation
 ```
 
 In the second box, one channel's uploads are small rectangles stacked by year, uneven: few early, many recent. In the third, the picked ones are filled navy. One pick per row is crossed out (failed a check) and the next one is picked instead; the checks are a ✓ list in its box (read out by screen readers, like the first box's).
@@ -228,7 +229,7 @@ The list shows the existing one-line descriptions (plan 004).
 | H2 | ③ We compare it with our dataset |
 | Box 1 | **Find channels.** Box: ✓ 10K+ subscribers ✓ 100+ videos, then “(at our latest scan, August 2026)” _(human decision)_. |
 | Box 2 | **Line up every upload by year.** |
-| Box 3 | **Pick a few at random, every year.** Box: ✓ made for kids ✓ not a Short ✓ 2–60 minutes ✓ still online. |
+| Box 3 | **Pick a few at random, every year.** Box: ✓ made for kids ✓ not a Short ✓ 2–60 minutes ✓ still online ✓ not a compilation _(human decision, 2026-11-18: plan 013's compilation rule)_. |
 | Box 4 | **Our dataset.** |
 
 **④ You get a score**
@@ -246,7 +247,7 @@ The list shows the existing one-line descriptions (plan 004).
 | This video looks really stimulating. Why is its score low? _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ | We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are stimulating too, so a video can feel busy and still sit in the middle. _(human decision)_ |
 | What do “No cuts” and “No sound” mean? | Scene discontinuity measures how different each new shot looks from the one before. If a video stays on one shot for the whole 5 minutes we measure, there’s nothing to compare, so we show “No cuts” instead of a score. Likewise, a video without sound has no loudness to measure, so Audio intensity shows “No sound”. _(human decision, 2026-10-16: replaces “What does ‘None detected’ mean?”, since a count of 0 now shows as 0)_ |
 | How is a channel’s score worked out? _(human decision: a question, not a section)_ | It’s the average of its videos’ scores in our dataset. _(human decision: no mention of rankings)_ |
-| How do you choose the channels and videos? _(plan 013, 2026-10-25)_ | We look for kids’ channels on YouTube that have at least 10,000 subscribers and more than 100 videos, leaving out channels YouTube makes automatically (e.g., “Topic” channels). From each channel, we randomly pick about the same number of videos from every year since 2015. Every video we pick must be made for kids, 2 to 60 minutes long, not a Short, and still online. We keep adding new channels and videos. _(human decision, 2026-11-02: plan 013's channel-first rule, worded for a general audience; it said every video has the same chance)_ |
+| How do you choose the channels and videos? _(plan 013, 2026-10-25)_ | We look for kids’ channels on YouTube that have at least 10,000 subscribers and more than 100 videos, leaving out channels YouTube makes automatically (e.g., “Topic” channels). From each channel, we randomly pick about the same number of videos from every year since 2015. Every video we pick must be made for kids, 2 to 60 minutes long, not a Short, not a compilation of existing videos _(human decision, 2026-11-18: plan 013's compilation rule)_, and still online. We keep adding new channels and videos. _(human decision, 2026-11-02: plan 013's channel-first rule, worded for a general audience; it said every video has the same chance)_ |
 | Can I check a video that isn’t on YouTube? _(human decision, 2026-10-16: placed with the privacy question, both about checking a video)_ | Not yet. For now, we can only check YouTube videos. _(human decision, 2026-10-16: short, no reason given)_ |
 | Do you keep anything about me? | When you check a video that isn’t in our dataset, we save its results, so anyone who checks it later gets them right away. Nothing about who checked it is saved. Our server keeps short-lived logs to prevent abuse. See our [privacy policy](/privacy). _(human decision: open with what is saved and why)_ |
 
@@ -299,6 +300,7 @@ The list shows the existing one-line descriptions (plan 004).
 - The ASCII sketch of diagram E drops its step numbers (see **Diagrams**, E).
 - The phone sketch below **Layout** has no kid under the H1 (2026-10-16; see **Decisions**, Art).
 - Diagram C's sketch reads “less stimulating” / “more stimulating” and “74 of every 100 videos are less stimulating” (2026-11-09; see **Diagrams**, C).
+- Diagram E's sketch lists “✓ not a compilation” among the checks (2026-11-18; see **Diagrams**, E, Box 3).
 
 ## Open questions
 

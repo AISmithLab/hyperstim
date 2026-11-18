@@ -103,7 +103,7 @@ const STEPS: { title: string; picture: ReactNode }[] = [
     picture: (
       <Picture
         drawing={<Years rows={PICKS} />}
-        checks={["made for kids", "not a Short", "2–60 minutes", "still online"]}
+        checks={["made for kids", "not a Short", "2–60 minutes", "still online", "not a compilation"]}
       />
     ),
   },

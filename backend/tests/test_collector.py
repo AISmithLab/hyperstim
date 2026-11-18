@@ -116,10 +116,52 @@ def details(**changes: Any) -> Details:
         (details(duration_s=150), True, "short"),
         (details(duration_s=150), None, "short"),  # undecided counts as a Short, as in v2
         (details(duration_s=181), None, "eligible"),
+        (details(title="Songs Compilation"), None, "compilation"),
+        # Before the Shorts probe: a compilation is one whatever the probe would say.
+        (details(title="Songs Compilation", duration_s=150), None, "compilation"),
+        (details(title="Songs Compilation", made_for_kids=False), None, "not_for_kids"),
+        (details(title="Songs Compilation", duration_s=60), None, "duration"),
     ],
 )
 def test_verdict(found: Details | None, short: bool | None, expected: str) -> None:
     assert sampling.verdict(found, short) == expected
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Sunny Bunnies | 30 MIN Compilation",
+        "COMPILATION | Cartoons for Kids",
+        "Canciones Infantiles | Compilación",
+        "Bebefinn Best Kids Songs Compilations",
+        "Moral Stories Collection in English Part 8",
+        "1 Hour Oddbods Full Episodes",
+        "Baby Shark | 2 hrs of songs",
+        "Lullabies for babies 3hours",
+        "Toy Collection | 1 Hour of play",  # a toy collection, but an hour of it
+    ],
+)
+def test_a_compilations_title_matches(title: str) -> None:
+    assert sampling.is_compilation(title)
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Peppa Pig Toy Collection with Crocodile Hiding",
+        "Learn Vehicles for Kids | Miniature Cars | Toy Collection",
+        "Princes Sofia & Royal Family Sofia Doll Collection",
+        "McDonald Toy Car Collection",
+        "Moana Bullyland Figures Full Collection",
+        "Bath Animals Surprise Eggs Collection",
+        "MINIONS PEZ COLLECTION CANDY DISPENSERS",
+        "The Hour of Code for kids",
+        "24/7 Kids Songs",
+        "Hourglass Song",
+    ],
+)
+def test_a_single_videos_title_doesnt_match(title: str) -> None:
+    assert not sampling.is_compilation(title)
 
 
 def test_region_blocked() -> None:
@@ -992,6 +1034,104 @@ def test_the_shorts_probe_is_asked_only_when_its_all_thats_left(
     assert asked.asked == [second]
 
 
+def test_a_compilation_is_ineligible_without_asking_the_shorts_probe(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first, second = by_rank(youtube.uploads[CHANNEL])[:2]
+    youtube.video(first, contentDetails__duration="PT2M30S", snippet__title="ABC Compilation")
+    youtube.video(second, contentDetails__duration="PT2M30S")
+    asked: list[str] = []
+
+    class Probe(dict[str, bool | None]):
+        def get(self, key: str, default: Any = None) -> Any:
+            asked.append(key)
+            return False
+
+    collector = make_collector(tmp_path, youtube, pipeline, clock, shorts=Probe(unused=False))
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    run(collector, clock, 1, step=3600)
+    row = collector.store.db.execute("SELECT state, reason FROM uploads WHERE id = ?", (first,))
+    assert tuple(row.fetchone()) == ("ineligible", "compilation")
+    assert asked == [second]
+    assert first not in collected_ids(collector)
+
+
+def test_compilations_count_for_the_kids_share_but_not_as_eligible(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    store.upsert_channel(id=SMALL, title="Small", status="in", source="v2", listed_at=NOW)
+    span(store, SMALL)  # 2.82 active years
+    ids = [f"cmp{i:07d}" for i in range(20)]
+    store.add_uploads(SMALL, [(v, "2024-05-01T00:00:00Z") for v in ids])
+    for video_id in ids:
+        store.set_state(video_id, "ineligible", "compilation")
+    # 20 answers, all made for kids: judged, and in for its kids share; but none eligible, so
+    # left out for its eligible uploads a year (fails if compilations aren't answers: unjudged).
+    (row,) = store.update_left_out("2026-10-26", NOW)
+    assert (row["channel_id"], row["kids"], row["answers"], row["reason"]) == (
+        SMALL, 20, 20, "per_year"
+    )  # fmt: skip
+    assert row["per_year"] == 0
+
+
+def test_the_datasets_compilations_are_taken_out_once(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock, at_floor=False)
+    store = collector.store
+    store.add_uploads(CHANNEL, [(v, "2023-01-01T00:00:00Z") for v in (
+        "v2compil001", "v2single001", "v2nottitle1", "addcompil01", "addsingle01",
+        "waitcompil1", "waitsingle1", "meascompil1", "newcompil01",
+    )])  # fmt: skip
+    for video_id, state, title in (
+        ("v2compil001", "v2", "Old"),  # the reference set's title decides for v2's picks
+        ("v2single001", "v2", "Old"),
+        ("v2nottitle1", "v2", "Old Compilation"),  # its reference title is a single video's
+        ("addcompil01", "collected", "Songs Collection"),
+        ("addsingle01", "collected", "A song"),
+        ("waitcompil1", "eligible", "1 Hour of Songs"),
+        ("waitsingle1", "eligible", "A song"),
+        ("meascompil1", "measured", "Compilation"),
+        ("newcompil01", "new", "Compilation"),  # unchecked: judged when it's checked
+    ):
+        store.set_state(video_id, state, title=title)
+    reference = {
+        "v2compil001": "Cartoons | 30 MIN Compilation",
+        "v2single001": "A song",
+        "v2nottitle1": "A song",
+    }
+    assert collector.drop_compilations(reference) == 2
+    states = {
+        r["id"]: (r["state"], r["reason"])
+        for r in store.db.execute("SELECT id, state, reason FROM uploads")
+    }
+    assert states == {
+        "v2compil001": ("removed", "criteria"),
+        "v2single001": ("v2", ""),
+        "v2nottitle1": ("v2", ""),
+        "addcompil01": ("removed", "criteria"),
+        "addsingle01": ("collected", ""),
+        "waitcompil1": ("ineligible", "compilation"),
+        "waitsingle1": ("eligible", ""),
+        "meascompil1": ("ineligible", "compilation"),
+        "newcompil01": ("new", ""),
+    }
+    collector.export()
+    rows = list(csv.DictReader((tmp_path / "data" / "collected" / "removed.tsv").open(),
+                               delimiter="\t"))  # fmt: skip
+    assert sorted((r["video_id"], r["removed_at"], r["reason"]) for r in rows) == [
+        ("addcompil01", utc(NOW), "criteria"),
+        ("v2compil001", utc(NOW), "criteria"),
+    ]
+    # Once only: a later run takes nothing out, whatever the titles say then.
+    store.set_state("addsingle01", "collected", title="Now a Compilation")
+    clock.now += DAY_S
+    assert collector.drop_compilations({"v2single001": "Now a Compilation"}) == 0
+    assert store.upload("addsingle01").state == "collected"  # type: ignore[union-attr]
+    assert store.upload("v2single001").state == "v2"  # type: ignore[union-attr]
+
+
 def test_status_shows_how_far_the_channels_are_filled(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:
@@ -1634,7 +1774,8 @@ def test_export_is_read_by_the_api(
                  "A third of downloads for new channels to catch up; at most 3 new a day; "
                  "New channels join by subscribers, most first; their counts read weekly; "
                  "Pace lowered from 150 to 120 videos a day after three blocks; "
-                 "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out"}
+                 "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out; "
+                 "Took out videos that no longer fit our collection criteria"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
