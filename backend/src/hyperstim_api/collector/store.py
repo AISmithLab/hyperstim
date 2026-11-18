@@ -8,7 +8,7 @@ API units used per day.
 import json
 import os
 import sqlite3
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterable, Iterator, Mapping
 from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
@@ -532,8 +532,18 @@ class Store:
         before it was kept)."""
         return {r["day"]: r for r in self.db.execute("SELECT * FROM daily")}
 
-    def date_notes(self, notes: Iterable[tuple[str, str | None]], today: str) -> None:
-        """Dates each note not seen before: its own date if it has one, else today."""
+    def date_notes(
+        self,
+        notes: Iterable[tuple[str, str | None]],
+        today: str,
+        reworded: Mapping[str, str] | None = None,
+    ) -> None:
+        """Rewords the dated notes in `reworded` (old: new), keeping their day and place, then
+        dates each note not seen before: its own date if it has one, else today."""
+        self.db.executemany(
+            "UPDATE notes SET note = ? WHERE note = ?",
+            [(new, old) for old, new in (reworded or {}).items()],
+        )
         self.db.executemany(
             "INSERT OR IGNORE INTO notes VALUES (?, ?)",
             [(note, day or today) for note, day in notes],

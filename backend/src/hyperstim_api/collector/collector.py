@@ -1282,7 +1282,7 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
     days before each record began have none (blank), since they can't be counted again; a
     recorded count not from 23:59:59 gets a note saying when it's from."""
     today = time.strftime("%Y-%m-%d", time.gmtime(now))
-    store.date_notes(notes.NOTES, today)
+    store.date_notes(notes.NOTES, today, notes.REWORDED)
     channel_of = {
         r["id"]: r["channel_id"]
         for r in store.db.execute(

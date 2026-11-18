@@ -2,7 +2,9 @@
 collector picks or in what order, or to how the changelog counts, shown on the day it went live.
 
 A change to the collector's rules or order adds a line here in the same commit, without a date:
-the collector dates it the first day it runs with it. Keep each under ~70 characters.
+the collector dates it the first day it runs with it. Keep each under ~70 characters. To reword
+a note already dated, change it here and map the old wording to the new in REWORDED: the
+collector swaps the text and keeps the day.
 """
 
 # (note, day): the day only for the notes from before the collector dated them itself.
@@ -17,5 +19,12 @@ NOTES: tuple[tuple[str, str | None], ...] = (
     ("New channels join by subscribers, most first; their counts read weekly", None),
     ("Pace lowered from 150 to 120 videos a day after three blocks", None),
     ("ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out", None),
-    ("Took out videos that no longer fit our collection criteria", None),
+    ("Took out compilations of existing videos; no new ones are collected", None),
 )
+
+# old wording: new wording, for notes reworded after they were dated.
+REWORDED: dict[str, str] = {
+    "Took out videos that no longer fit our collection criteria": (
+        "Took out compilations of existing videos; no new ones are collected"
+    ),
+}

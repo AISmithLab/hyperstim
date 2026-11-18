@@ -1775,7 +1775,7 @@ def test_export_is_read_by_the_api(
                  "New channels join by subscribers, most first; their counts read weekly; "
                  "Pace lowered from 150 to 120 videos a day after three blocks; "
                  "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out; "
-                 "Took out videos that no longer fit our collection criteria"}
+                 "Took out compilations of existing videos; no new ones are collected"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -2181,6 +2181,19 @@ def test_a_new_note_lands_on_the_first_day_the_collector_runs_with_it(
     changelog(store, NOW + DAY_S + 60)  # a later release the same day
     by_day = {r["date"]: r["note"] for r in changelog(store, NOW + 3 * DAY_S)}
     assert by_day == {"2026-10-27": "Rule A; Rule B", "2026-10-26": "Started"}
+
+
+def test_a_reworded_note_keeps_its_day_and_place(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store = make_store(tmp_path)
+    added(store, CHANNEL, "add00000001", NOW)
+    monkeypatch.setattr(notes, "NOTES", (("Rule A", None), ("Rule B", None)))
+    changelog(store, NOW + DAY_S)
+    monkeypatch.setattr(notes, "NOTES", (("Rule A, said better", None), ("Rule B", None)))
+    monkeypatch.setattr(notes, "REWORDED", {"Rule A": "Rule A, said better"})
+    by_day = {r["date"]: r["note"] for r in changelog(store, NOW + 3 * DAY_S)}
+    assert by_day == {"2026-10-27": "Rule A, said better; Rule B", "2026-10-26": ""}
 
 
 # --- channels ------------------------------------------------------------------------------
