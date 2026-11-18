@@ -218,10 +218,8 @@ describe("ChannelPage", () => {
 
   it("glides to the panel without reduced motion, and stops gliding on Play or when the visitor scrolls", async () => {
     const user = userEvent.setup();
-    open(ID);
-    await loaded();
-    vi.stubGlobal("matchMedia", (query: string) => ({ matches: !query.includes("reduced-motion"), media: query }));
-    // Animation frames run when the test says, at the times it gives.
+    // Animation frames run when the test says, at the times it gives. Stubbed before the page
+    // renders, so every frame it asks for comes here, whenever React runs its effects.
     const frames = new Map<number, FrameRequestCallback>();
     let next = 0;
     vi.stubGlobal("requestAnimationFrame", (cb: FrameRequestCallback) => (frames.set(++next, cb), next));
@@ -231,6 +229,14 @@ describe("ChannelPage", () => {
       frames.clear();
       for (const [, cb] of due) cb(now);
     };
+    open(ID);
+    await loaded();
+    // The score gauge's count-up (reduced motion: one frame) runs before motion is turned on;
+    // run later, on a busy machine, it counted up for a second on the glide's frames.
+    await waitFor(() => expect(frames.size).toBe(1));
+    tick(0);
+    expect(frames.size).toBe(0);
+    vi.stubGlobal("matchMedia", (query: string) => ({ matches: !query.includes("reduced-motion"), media: query }));
     vi.spyOn(performance, "now").mockReturnValue(1000);
     const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
     const rects = layout(900, 200);

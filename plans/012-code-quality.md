@@ -113,6 +113,11 @@ Show test coverage and SonarQube Cloud's analysis (bugs, code smells, security h
     - `blog.spec.ts`, "clicking a lane…": lane B's playhead shows once B's (fake) player has loaded and reports playing; waited for up to 10 s, as this spec's other player waits.
     - The other one-shot position and size reads (`blog`, `compare`, `rankings`, `video`, `thumbnails`, `safari`) measure a layout that has settled (after load, without motion), or are already polled: unchanged. The compare spec's `waitForTimeout(500)` is a held finger.
     - Found by running the whole suite 5 times at 16 workers and 3 times at 8. Other failures there were timeouts from overload (30 s tests, pages not loading in 5 s at 16 workers), not seen at 4.
+
+14. Flaky component tests (2026-11-18): two failed once each in full Vitest runs on a busy machine. Both test-only: the page did the right thing, the tests read a clock or queue that other code also used.
+    - `ChannelPage.test.tsx`, "glides to the panel…": the test stubs animation frames to drive the glide. When React ran the score gauge's count-up effect late (after the stub and after motion was turned on), the count-up queued its frames there too, and one was left after the glide. Now the frames are stubbed before the page renders, and the gauge's one reduced-motion frame runs before motion is turned on. Reproduced by turning motion on before the page's effects ran.
+    - `ClipCompare.test.tsx`, "by keyboard…": the seek target adds the real time since the player's last report, and the test allowed 0.05 s; it took longer under load. Now the clock stands still in that test and the seek must be 20.5 s exactly. Reproduced with an 80 ms pause before the keys.
+    - Found and checked by running the whole Vitest suite 4 at a time: each failed about once in 12 runs before its fix; none of 16 runs failed with both fixed.
     - Stress command in `frontend/README.md`.
 
 **For you (team):** Automatic Analysis off and `SONAR_TOKEN` secret set (done). In the project's Administration → New Code, choose "Previous version".

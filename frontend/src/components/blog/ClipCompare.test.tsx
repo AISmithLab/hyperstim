@@ -207,6 +207,9 @@ describe("ClipCompare", () => {
     });
 
     it("by keyboard: arrows move 1 s, Page Up/Down 5 s, Home and End to either end, each playing from there", async () => {
+      // The player's clock stands still, so where the keys seek to doesn't depend on how long the
+      // test takes between the player's report and the keys (on a busy machine, over 50 ms).
+      const now = vi.spyOn(performance, "now").mockReturnValue(1000);
       const user = userEvent.setup();
       render(<ClipCompare clips={CLIPS} />);
       slider("A").focus();
@@ -222,10 +225,11 @@ describe("ClipCompare", () => {
       await user.keyboard("{ArrowRight}{PageUp}");
       expect(slider("A")).toHaveAttribute("aria-valuenow", "6");
       const seeks = post.mock.calls.map(([m]) => JSON.parse(String(m))).filter((m) => m.func === "seekTo");
-      expect(seeks.at(-1).args[0]).toBeCloseTo(20.5, 1); // 14.5 + 6 (the clock runs on a little in between)
+      expect(seeks.at(-1).args[0]).toBeCloseTo(20.5, 6); // 14.5 + 6
       expect(post).toHaveBeenCalledWith(command("playVideo"), PLAYER);
       await user.keyboard("{End}");
       expect(slider("A")).toHaveAttribute("aria-valuetext", "16 of 16 seconds, 3 cuts so far");
+      now.mockRestore();
     });
 
     it("a drag the browser takes over for scrolling is called off without playing", () => {
