@@ -7,19 +7,19 @@
 <text x="56.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#4a5262" text-anchor="start"><tspan font-weight="700" fill="#0f2e8a">17,244</tspan> videos (left axis)</text>
 <line x1="300" x2="324" y1="62" y2="62" stroke="#d9603f" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 5"/>
 <text x="332.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#4a5262" text-anchor="start"><tspan font-weight="700" fill="#0f2e8a">604</tspan> channels (right axis)</text>
-<text x="62.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">15,000</text>
+<text x="62.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">14,000</text>
 <text x="738.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="start">450</text>
 <line x1="70" x2="730" y1="271.5" y2="271.5" stroke="#0f2e8a" stroke-opacity="0.10"/>
-<text x="62.0" y="275.5" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">16,000</text>
+<text x="62.0" y="275.5" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">15,000</text>
 <text x="738.0" y="275.5" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="start">500</text>
 <line x1="70" x2="730" y1="213.0" y2="213.0" stroke="#0f2e8a" stroke-opacity="0.10"/>
-<text x="62.0" y="217.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">17,000</text>
+<text x="62.0" y="217.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">16,000</text>
 <text x="738.0" y="217.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="start">550</text>
 <line x1="70" x2="730" y1="154.5" y2="154.5" stroke="#0f2e8a" stroke-opacity="0.10"/>
-<text x="62.0" y="158.5" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">18,000</text>
+<text x="62.0" y="158.5" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">17,000</text>
 <text x="738.0" y="158.5" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="start">600</text>
 <line x1="70" x2="730" y1="96.0" y2="96.0" stroke="#0f2e8a" stroke-opacity="0.10"/>
-<text x="62.0" y="100.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">19,000</text>
+<text x="62.0" y="100.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">18,000</text>
 <text x="738.0" y="100.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="start">650</text>
 <line x1="70" x2="730" y1="330" y2="330" stroke="#0f2e8a" stroke-opacity="0.30"/>
 <line x1="70.0" x2="70.0" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
@@ -36,8 +36,8 @@
 <text x="620.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 14</text>
 <line x1="730.0" x2="730.0" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
 <text x="730.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 18</text>
-<path d="M70.0,307.8 L97.5,304.3 L125.0,283.2 L152.5,262.1 L180.0,200.1 L207.5,200.1 L235.0,200.1 L262.5,197.8 L290.0,195.5 L317.5,191.9 L345.0,188.4 L372.5,184.9 L400.0,182.6 L427.5,180.2 L455.0,176.7 L482.5,173.2 L510.0,170.9 L537.5,168.5 L565.0,165.0 L592.5,161.5 L620.0,160.3 L647.5,159.2 L675.0,156.8 L702.5,153.3 L730.0,149.8" fill="none" stroke="#d9603f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 5"/>
+<path d="M70.0,307.8 L97.5,304.3 L125.0,284.4 L152.5,264.5 L180.0,203.6 L207.5,201.3 L235.0,200.1 L262.5,197.8 L290.0,195.5 L317.5,191.9 L345.0,188.4 L372.5,184.9 L400.0,182.6 L427.5,180.2 L455.0,176.7 L482.5,173.2 L510.0,170.9 L537.5,168.5 L565.0,165.0 L592.5,161.5 L620.0,160.3 L647.5,159.2 L675.0,156.8 L702.5,153.3 L730.0,149.8" fill="none" stroke="#d9603f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 5"/>
 <circle cx="730.0" cy="149.8" r="4.5" fill="#d9603f" stroke="#ffffff" stroke-width="2"/>
-<path d="M70.0,293.7 L97.5,290.4 L125.0,282.4 L152.5,274.1 L180.0,266.8 L207.5,259.2 L235.0,252.4 L262.5,248.5 L290.0,245.9 L317.5,241.8 L345.0,237.5 L372.5,230.4 L400.0,223.5 L427.5,217.0 L455.0,209.0 L482.5,201.2 L510.0,195.9 L537.5,190.4 L565.0,183.6 L592.5,176.9 L620.0,172.8 L647.5,166.6 L675.0,160.9 L702.5,153.9 L730.0,198.7" fill="none" stroke="#2f5fd0" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="730.0" cy="198.7" r="4.5" fill="#2f5fd0" stroke="#ffffff" stroke-width="2"/>
+<path d="M70.0,277.6 L97.5,274.7 L125.0,267.0 L152.5,259.2 L180.0,252.3 L207.5,245.1 L235.0,238.5 L262.5,234.7 L290.0,232.3 L317.5,228.4 L345.0,224.2 L372.5,217.6 L400.0,211.1 L427.5,205.0 L455.0,197.9 L482.5,190.5 L510.0,185.4 L537.5,180.4 L565.0,174.4 L592.5,167.8 L620.0,163.6 L647.5,157.6 L675.0,152.6 L702.5,146.1 L730.0,140.2" fill="none" stroke="#2f5fd0" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="730.0" cy="140.2" r="4.5" fill="#2f5fd0" stroke="#ffffff" stroke-width="2"/>
 </svg>

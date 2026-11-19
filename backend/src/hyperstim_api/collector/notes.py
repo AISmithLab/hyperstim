@@ -20,6 +20,7 @@ NOTES: tuple[tuple[str, str | None], ...] = (
     ("Pace lowered from 150 to 120 videos a day after three blocks", None),
     ("ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out", None),
     ("Took out compilations of existing videos; no new ones are collected", None),
+    ("Compilations taken out count as never added, also on past days", None),
 )
 
 # old wording: new wording, for notes reworded after they were dated.

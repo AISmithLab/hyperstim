@@ -11,7 +11,7 @@ The videos added to the HyperStim dataset since the reference set (16,375 videos
 
 ## CHANGELOG.tsv
 
-The site at the end of each finished day: every count is at 23:59:59 UTC, and the day still running has no row yet. Channels left out for their kids share are counted nowhere, as on the site, using today's list for every row, so a channel that comes or goes changes the past rows too.
+The site at the end of each finished day: every count is at 23:59:59 UTC, and the day still running has no row yet. Channels left out for their kids share are counted nowhere, as on the site, using today's list for every row, so a channel that comes or goes changes the past rows too. Videos taken out for no longer fitting our collection criteria count nowhere either, from the day each was added, so the totals don't drop on the day they were taken out.
 
 | Column | What it counts |
 |---|---|
@@ -22,8 +22,9 @@ The site at the end of each finished day: every count is at 23:59:59 UTC, and th
 | `ch_held` | channels on the site that still have uploads to take, but none in a year with fewer videos per year than the channel's own average, so the collector skips them until the other channels pass them |
 | `ch_yr_2nd` | the thinnest channels: the second smallest of the channels' videos per year, among the channels on the site with an upload left to take that aren't held. A channel's videos per year are its videos on the site over the years (2015 to that day) in which it has an eligible upload, each counted for the part the channel was active (from its first upload; the running year to that day) |
 | `ch_yr_med` | the typical channel: the median of the channels' videos per year, over all channels on the site |
-| `added_v`, `removed_v` | videos added that day, and taken out (offline, or no longer fitting our collection criteria) |
+| `added_v`, `removed_v` | videos added that day, and taken out because they went offline |
 | `new_ch` | channels that got their first video that day |
+| `removed_ch` | channels that lost their last video on the site that day (it went offline) |
 | `note` | a change to what the collector picks, or in what order, or to how this file counts, that went live that day; and when `ch_ready`, `ch_left_out`, `ch_held`, `ch_yr_2nd` and `ch_yr_med` aren't from 23:59:59, when they are from |
 
 `ch_ready`, `ch_left_out`, `ch_held`, `ch_yr_2nd` and `ch_yr_med` can't be worked out again later (for the last three, the channels' upload lists keep growing), so the collector records them when it closes a day, just after midnight. They're blank for the days before it started recording them: `ch_yr_2nd` and `ch_yr_med` start on 2026-11-01, worked out from the backup taken at that day's end; `ch_held` starts on the day its note says, and on the days before it back to the oldest backup kept then. Since the collector began keeping a log of who is left out and when, `ch_left_out` is counted from that log at 23:59:59 instead. When they aren't from 23:59:59 (the collector was down at midnight, or the day was recounted from a backup taken just after it), the note says when they're from, e.g. "ch_ready, ch_left_out, ch_held, ch_yr_2nd and ch_yr_med as of 2026-10-27 00:00:41 UTC"; "at the day's last export (time not kept)" marks a day recorded before the time was kept.
@@ -61,3 +62,7 @@ The channels left out of the site now, by channel ID, for either of two reasons,
 | `reason` | `kids_share`, `per_year`, or `both` |
 | `since` | the day (UTC) it was last left out; for the channels already left out when the collector began logging this, that day: they were left out on or before it |
 | `videos` | its videos in the dataset, not shown on the site while it's left out |
+
+Until the note "Compilations taken out count as never added, also on past days" (plan 013):
+
+- The videos taken out for no longer fitting our collection criteria counted until the day they were taken out (2026-11-18), so the files committed before 2026-11-19 show a drop in `videos` that day, counted in `removed_v`. The rows up to 2026-11-18 were recounted the new way by hand once.

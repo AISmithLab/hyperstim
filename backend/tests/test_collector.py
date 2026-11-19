@@ -1767,7 +1767,7 @@ def test_export_is_read_by_the_api(
     assert log[-1:] == [
         {"date": "2026-10-26", "videos": "3", "channels": "1", "ch_ready": "0",
          "ch_left_out": "0", "ch_held": "1", "ch_yr_2nd": "", "ch_yr_med": "3.00",
-         "added_v": "3", "removed_v": "0", "new_ch": "1",
+         "added_v": "3", "removed_v": "0", "new_ch": "1", "removed_ch": "0",
          "note": "Collecting starts: 150 videos a day, lowest r first; "
                  "Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups; "
                  "Thinnest channels first; under 5 eligible a year left out; 3 new a day; "
@@ -1775,7 +1775,8 @@ def test_export_is_read_by_the_api(
                  "New channels join by subscribers, most first; their counts read weekly; "
                  "Pace lowered from 150 to 120 videos a day after three blocks; "
                  "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out; "
-                 "Took out compilations of existing videos; no new ones are collected"}
+                 "Took out compilations of existing videos; no new ones are collected; "
+                 "Compilations taken out count as never added, also on past days"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -1826,10 +1827,46 @@ def test_the_changelog_counts_the_videos_and_channels_newest_day_first(
     assert rows == [
         {"date": "2026-10-27", "videos": 6, "channels": 2, "ch_ready": "", "ch_left_out": "",
          "ch_held": "", "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 0, "removed_v": 1,
-         "new_ch": 0},
+         "new_ch": 0, "removed_ch": 0},
         {"date": "2026-10-26", "videos": 7, "channels": 2, "ch_ready": "", "ch_left_out": "",
          "ch_held": "", "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 1, "removed_v": 0,
-         "new_ch": 0},
+         "new_ch": 0, "removed_ch": 0},
+    ]  # fmt: skip
+
+
+def test_the_changelog_counts_the_channels_that_lost_their_last_video(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
+    added(store, CHANNEL, "add00000001", NOW)
+    added(store, CHANNEL, "add00000002", NOW)
+    added(store, SMALL, "add00000003", NOW)
+    for video_id in ("add00000001", "add00000003"):  # CHANNEL keeps one, SMALL none
+        store.set_state(video_id, "removed")
+        store.add_removed(video_id, utc(NOW + DAY_S), "gone")
+    rows = changelog_rows(store, NOW + 2 * DAY_S)
+    assert [(r["date"], r["channels"], r["new_ch"], r["removed_v"], r["removed_ch"])
+            for r in rows] == [
+        ("2026-10-27", 1, 0, 2, 1),
+        ("2026-10-26", 2, 2, 0, 0),
+    ]  # fmt: skip
+
+
+def test_compilations_taken_out_count_as_never_added(tmp_path: Path) -> None:
+    # The totals don't drop on the day the compilations were taken out: the changelog leaves
+    # them out from the day each was added (and from the reference set), as if never there.
+    store = make_store(tmp_path)
+    reference = fill_floor(store, CHANNEL)  # 5 videos
+    store.upsert_channel(id=SMALL, title="C", status="in", source="v2", listed_at=NOW)
+    added(store, CHANNEL, "add00000001", NOW)
+    added(store, SMALL, "compil00001", NOW)  # SMALL's only video
+    store.set_state(reference[0], "removed", "criteria")  # a reference-set compilation
+    store.add_removed(reference[0], utc(NOW + DAY_S), "criteria")
+    store.set_state("compil00001", "removed", "criteria")
+    store.add_removed("compil00001", utc(NOW + DAY_S), "criteria")
+    rows = changelog_rows(store, NOW + 2 * DAY_S)
+    assert [(r["date"], r["videos"], r["channels"], r["added_v"], r["removed_v"], r["new_ch"])
+            for r in rows] == [
+        ("2026-10-26", 5, 1, 1, 0, 0),
     ]  # fmt: skip
 
 

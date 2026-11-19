@@ -1269,7 +1269,7 @@ def left_out_rows(store: Store) -> list[dict[str, object]]:
 
 CHANGELOG_COLUMNS = (
     "date", "videos", "channels", "ch_ready", "ch_left_out", "ch_held", "ch_yr_2nd", "ch_yr_med",
-    "added_v", "removed_v", "new_ch", "note",
+    "added_v", "removed_v", "new_ch", "removed_ch", "note",
 )  # fmt: skip
 
 
@@ -1277,16 +1277,19 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
     """One line per finished UTC day with a change, a recorded count or a note, the newest
     first: the site at 23:59:59 (videos, channels), the channels ready to join, left out and
     held, and the thinnest and typical channel's videos per year as recorded when the day was
-    closed, the day's
-    changes and its notes. The channels left out now count as never there, as on the site. The
-    days before each record began have none (blank), since they can't be counted again; a
-    recorded count not from 23:59:59 gets a note saying when it's from."""
+    closed, the day's changes (videos added and taken out, channels that got their first video
+    and that lost their last) and its notes. The channels left out now count as never there, as
+    on the site, and so do the videos taken out for no longer fitting the criteria (the
+    compilations), so the totals don't drop on the day the rule started. The days before each
+    record began have none (blank), since they can't be counted again; a recorded count not
+    from 23:59:59 gets a note saying when it's from."""
     today = time.strftime("%Y-%m-%d", time.gmtime(now))
     store.date_notes(notes.NOTES, today, notes.REWORDED)
     channel_of = {
         r["id"]: r["channel_id"]
         for r in store.db.execute(
-            "SELECT id, channel_id FROM uploads WHERE state IN ('v2', 'collected', 'removed') "
+            "SELECT id, channel_id FROM uploads WHERE (state IN ('v2', 'collected') "
+            "OR (state = 'removed' AND reason != 'criteria')) "
             f"AND channel_id {KEPT}"
         )
     }
@@ -1309,7 +1312,7 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
     lines: list[dict[str, object]] = []
     i = 0
     for day in days:
-        line: dict[str, object] = {"added_v": 0, "removed_v": 0, "new_ch": 0}
+        line: dict[str, object] = {"added_v": 0, "removed_v": 0, "new_ch": 0, "removed_ch": 0}
         while i < len(events) and events[i][0][:10] == day:
             _, kind, video_id = events[i]
             i += 1
@@ -1321,6 +1324,7 @@ def changelog(store: Store, now: float) -> list[dict[str, object]]:
             elif visible[channel] > 0:
                 line["removed_v"] = int(str(line["removed_v"])) + 1
                 visible[channel] -= 1
+                line["removed_ch"] = int(str(line["removed_ch"])) + (visible[channel] == 0)
         recorded = daily.get(day)
         end = calendar.timegm(time.strptime(day, "%Y-%m-%d")) + DAY_S
         logged = store.left_out_at(end)  # from the log, from its first day on
