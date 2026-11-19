@@ -1,5 +1,6 @@
 """The collector (plan 013): which uploads it takes, in what order, and what it writes."""
 
+import calendar
 import csv
 import json
 import os
@@ -1775,8 +1776,7 @@ def test_export_is_read_by_the_api(
                  "New channels join by subscribers, most first; their counts read weekly; "
                  "Pace lowered from 150 to 120 videos a day after three blocks; "
                  "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out; "
-                 "Took out compilations of existing videos; no new ones are collected; "
-                 "Compilations taken out count as never added, also on past days"}
+                 "Took out compilations of existing videos; no new ones are collected"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -1832,6 +1832,19 @@ def test_the_changelog_counts_the_videos_and_channels_newest_day_first(
          "ch_held": "", "ch_yr_2nd": "", "ch_yr_med": "", "added_v": 1, "removed_v": 0,
          "new_ch": 0, "removed_ch": 0},
     ]  # fmt: skip
+
+
+def test_the_compilations_notes_stand_on_2026_11_18_in_order(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    # On the server the first wording was dated on 2026-11-18 before this release.
+    store.date_notes([("Took out videos that no longer fit our collection criteria", None)],
+                     "2026-11-18")  # fmt: skip
+    nov_19 = calendar.timegm((2026, 11, 19, 12, 0, 0))
+    assert notes_by_day(store, nov_19)["2026-11-18"] == (
+        "Took out compilations of existing videos; no new ones are collected; "
+        "Earlier rows count them as never added, except ch_ready, ch_held, ch_yr_2nd and "
+        "ch_yr_med, which couldn't be recounted and still include them"
+    )
 
 
 def test_the_changelog_counts_the_channels_that_lost_their_last_video(tmp_path: Path) -> None:

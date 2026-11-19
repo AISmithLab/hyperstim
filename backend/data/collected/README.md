@@ -63,6 +63,6 @@ The channels left out of the site now, by channel ID, for either of two reasons,
 | `since` | the day (UTC) it was last left out; for the channels already left out when the collector began logging this, that day: they were left out on or before it |
 | `videos` | its videos in the dataset, not shown on the site while it's left out |
 
-Until the note "Compilations taken out count as never added, also on past days" (plan 013):
+Until the note on 2026-11-18 "Earlier rows count them as never added, …" (plan 013):
 
-- The videos taken out for no longer fitting our collection criteria counted until the day they were taken out (2026-11-18), so the files committed before 2026-11-19 show a drop in `videos` that day, counted in `removed_v`. The rows up to 2026-11-18 were recounted the new way by hand once.
+- The videos taken out for no longer fitting our collection criteria counted until the day they were taken out (2026-11-18), so the files committed before 2026-11-19 show a drop in `videos` that day, counted in `removed_v`. The rows up to 2026-11-18 were recounted the new way by hand once. `ch_ready`, `ch_held`, `ch_yr_2nd` and `ch_yr_med` couldn't be recounted, so up to 2026-11-17 they still include the compilations.
