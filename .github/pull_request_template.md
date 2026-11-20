@@ -1,8 +1,3 @@
-## Related issue
-
-<!-- Every PR closes or refers to an issue. Discuss bigger changes in the issue first. -->
-Closes #
-
 ## Type of change
 
 - [ ] Bug fix (something didn't work as intended)
@@ -27,9 +22,17 @@ Closes #
 
 ## Screenshots
 
-<!-- UI changes only: before and after, at phone (360 px), tablet (768 px) and desktop (1280 px). -->
+<!-- UI changes only; otherwise write "None". -->
 
-## Checklist
+| Size | Before | After |
+| --- | --- | --- |
+| Phone (360 px) | | |
+| Tablet (768 px) | | |
+| Desktop (1280 px) | | |
+
+## Ready for review
+
+<!-- Each box is a merge requirement, not a list of what you did. Tick all of them before asking for review. If one doesn't apply, tick it and add "n/a" with a word on why. If one isn't met yet, leave the PR as a draft. -->
 
 - [ ] Tests added or updated; a bug fix includes a test that fails without it
 - [ ] Lint, type check, tests (unit, component, end-to-end) and build pass

@@ -32,7 +32,7 @@ Work to pick up is in the [issues labelled `task`](../../issues?q=is%3Aopen+labe
 1. Comment on the issue to take it; a maintainer assigns it to you. Ask there if anything is unclear, and agree on bigger choices before building.
 2. Branch from the latest `main`: `issue-<number>-short-title`, e.g. `issue-1-category-classification`.
 3. Follow the project rules in [`AGENTS.md`](AGENTS.md) (they apply to people too) and the visual style in [`frontend/design/STYLE.md`](frontend/design/STYLE.md) for UI work. Add tests with every change (plan 012).
-4. Open a pull request; the template asks for the linked issue, the problem and solution, and a checklist. CI must pass.
+4. Open a pull request and link its issue in the Development sidebar. The template asks for the problem and solution, before/after screenshots for UI changes, and a checklist to tick in full before review (open a draft until then). CI must pass.
 5. A maintainer reviews it and merges it with "Rebase and merge", so history stays linear and each of your commits lands on `main` as written. Before merging, rebase onto the latest `main` if asked.
 
 Maintainers open new tasks as blank issues ("Blank issue", shown to maintainers only) labelled `task`, with two sections: `## Goal` and `## Done when` ([plan 016](plans/016-community.md)).
