@@ -172,6 +172,54 @@ def evidence_str(detail, cat, fld):
     return "; ".join(out[:8])
 
 
+# Candidate for issue #1. Keep classify() available as the evaluation baseline.
+_TITLE_SEPARATOR = re.compile(r"\s*\|\s*|\s+[–—]\s+")
+_PLOT_TITLE = re.compile(r"\bvs\.?\s+\w", re.I)
+_SPECIFIC_TERMS = {
+    "music": {"nursery rhyme", "sing along", "lyrics"},
+    "narrative": {"fairy tale", "full episode", "read-aloud"},
+    "educational": {"science", "math", "phonics", "lesson", "experiment"},
+    "gaming": {"gameplay", "roblox", "minecraft", "nintendo"},
+    "play": {"DIY", "craft", "toy", "workout", "yoga", "zumba"},
+}
+_AMBIGUOUS_TERMS = {"game", "racing", "play", "learn", "challenge"}
+
+
+def _keyword_scores(text):
+    forms = variants(text)
+    scores = {}
+    for category, patterns in COMPILED.items():
+        scores[category] = max(
+            (2 if term in _SPECIFIC_TERMS[category] else 1
+             for term, pattern in patterns
+             if term not in _AMBIGUOUS_TERMS and any(pattern.search(form) for form in forms)),
+            default=0,
+        )
+    return scores
+
+
+def classify_candidate(row):
+    """Return a category when metadata provides a clear lead for weighted rules."""
+    title, *suffixes = _TITLE_SEPARATOR.split(row.get("title") or "")
+    scores = _keyword_scores(title)
+    if _PLOT_TITLE.search(title) and any(
+        _keyword_scores(suffix)["narrative"] for suffix in suffixes
+    ):
+        scores["narrative"] = max(scores["narrative"], 1)
+    suffix_scores = _keyword_scores(" ".join(suffixes))
+    tag_scores = _keyword_scores(row.get("tag") or "")
+    description_scores = _keyword_scores(row.get("desc") or "")
+    totals = {
+        category: 3 * scores[category]
+        + max(suffix_scores[category] > 0, tag_scores[category], description_scores[category])
+        for category in ORDER
+    }
+    first, second, *_ = sorted(totals, key=totals.get, reverse=True)
+    if totals[first] >= 2 and totals[first] - totals[second] >= 2:
+        return first
+    return None
+
+
 def unescape(s):
     return (s or "").replace("\\n", "\n")
 
