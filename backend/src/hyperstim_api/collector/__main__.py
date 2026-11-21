@@ -177,9 +177,10 @@ WAITING_SHOWN = 5  # the channels next in line that `status` names
 def level_line(store: Store, now: float) -> str:
     """How far the channels are filled (plan 013, decision 1): their videos per year (the
     median, and the second smallest of those with an upload left that aren't held, and how
-    many are held), how many the channel-first rule can fill now and how many it skips for
-    now (nothing left below their threshold)."""
-    second, median, held = channel_averages(store, utc(now)[:10])
+    many are held: nothing ready now in a year below their average), how many the
+    channel-first rule can fill now and how many it skips for now (nothing left below their
+    threshold)."""
+    second, median, held = channel_averages(store, utc(now)[:10], now)
     rows, order = rule(store, now)
     on_site = {r["channel_id"] for r in rows if int(r["videos"])} - store.left_out_ids()
     return (

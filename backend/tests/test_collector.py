@@ -1776,7 +1776,8 @@ def test_export_is_read_by_the_api(
                  "New channels join by subscribers, most first; their counts read weekly; "
                  "Pace lowered from 150 to 120 videos a day after three blocks; "
                  "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out; "
-                 "Took out compilations of existing videos; no new ones are collected"}
+                 "Took out compilations of existing videos; no new ones are collected; "
+                 "ch_held also counts channels whose thin years have nothing ready"}
     ]  # fmt: skip
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
@@ -1999,11 +2000,14 @@ def test_the_channels_videos_per_year_count_the_channels_on_the_site(tmp_path: P
                      ("UC" + "o" * 22,))  # fmt: skip  # nor a left-out one
     # CHANNEL 2.5 a year (5 over 2023-2024), SMALL 2 (only 2023 counts), TINY 3 (6 over two):
     # the median 2.5; the second smallest of those with an upload left (CHANNEL, TINY) 3.
-    assert channel_averages(store, "2026-10-26") == (3.0, 2.5, 0)
+    assert channel_averages(store, "2026-10-26", NOW) == (3.0, 2.5, 0)
     # An upload the next day makes 2026 one of SMALL's years, still open: 2 over 1.82 years.
     store.add_uploads(SMALL, [("new00000001", "2026-10-27T00:00:00Z")])
-    assert channel_averages(store, "2026-10-26") == (3.0, 2.5, 0)
-    assert channel_averages(store, "2026-10-27") == (2.5, 2.5, 0)
+    assert channel_averages(store, "2026-10-26", NOW) == (3.0, 2.5, 0)
+    # At that day's end it isn't a day old, so not due for its check: nothing ready in a year
+    # below SMALL's average, so it's held. A day later it's due, and SMALL is the thinnest.
+    assert channel_averages(store, "2026-10-27", MIDNIGHT + DAY_S - 1) == (3.0, 2.5, 1)
+    assert channel_averages(store, "2026-10-28", MIDNIGHT + 2 * DAY_S - 1) == (2.5, 2.5, 0)
 
 
 def held_channels(store: Store) -> None:
@@ -2029,21 +2033,44 @@ def test_held_channels_are_counted_apart_from_the_thinnest(tmp_path: Path) -> No
     held_channels(store)
     # SMALL is skipped by channel first, so it's held and left out of the second smallest
     # (it would be 2.0, CHANNEL's, with it); the median still counts it.
-    assert channel_averages(store, "2026-10-26") == (3.5, 2.0, 1)
+    assert channel_averages(store, "2026-10-26", NOW) == (3.5, 2.0, 1)
     # A year below its average opens: an upload from 2025 left to check (2025: none yet, so
     # SMALL is at 1 a year over three years, the thinnest).
     store.add_uploads(SMALL, [("chk00000004", "2025-03-01T00:00:00Z")])
-    assert channel_averages(store, "2026-10-26") == (2.0, 2.0, 0)
+    assert channel_averages(store, "2026-10-26", NOW) == (2.0, 2.0, 0)
     # With nothing left to take, a channel is neither held nor among the thinnest.
     store.set_state("chk00000002", "ineligible", "duration")
     store.set_state("chk00000004", "ineligible", "duration")
-    assert channel_averages(store, "2026-10-26") == (3.5, 2.0, 0)
+    assert channel_averages(store, "2026-10-26", NOW) == (3.5, 2.0, 0)
+
+
+def test_a_channel_whose_thin_years_have_nothing_ready_is_held(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    held_channels(store)
+    store.add_uploads(SMALL, [("chk00000004", "2025-03-01T00:00:00Z")])
+    assert channel_averages(store, "2026-10-26", NOW) == (2.0, 2.0, 0)  # due: SMALL thinnest
+    # Its only upload left in 2025 is a live stream, put off a day at each check: the picker
+    # can't fill that year, so SMALL is held, not the thinnest (fails without the change).
+    store.db.execute("UPDATE uploads SET retry_at = ? WHERE id = 'chk00000004'", (NOW + DAY_S,))
+    assert channel_averages(store, "2026-10-26", NOW) == (3.5, 2.0, 1)
+    # Once it's due for its check again, SMALL comes back.
+    assert channel_averages(store, "2026-10-26", NOW + DAY_S) == (2.0, 2.0, 0)
+    # The same with an eligible upload whose download failed, waiting for its retry.
+    store.set_state("chk00000004", "eligible", "failed", retry_at=NOW + DAY_S)
+    assert channel_averages(store, "2026-10-26", NOW) == (3.5, 2.0, 1)
+    assert channel_averages(store, "2026-10-26", NOW + DAY_S) == (2.0, 2.0, 0)
+    # One ready upload among the put-off ones in that year: not held.
+    waiting(store, SMALL, ["rdy00000001"])
+    store.db.execute("UPDATE uploads SET published_at = '2025-04-01T00:00:00Z' "
+                     "WHERE id = 'rdy00000001'")  # fmt: skip
+    assert channel_averages(store, "2026-10-26", NOW) == (2.0, 2.0, 0)
 
 
 def test_recount_fills_a_blank_ch_held_and_the_ch_yr_2nd_without_held_channels(
     tmp_path: Path,
 ) -> None:
     store = make_store(tmp_path)
+    store.date_notes([(notes.HELD_READY, None)], "2026-10-26")  # counted with the rule
     held_channels(store)
     # Closed at 23:59:59 before ch_held: its ch_yr_2nd counted SMALL.
     store.record_daily("2026-10-26", 3, 2, MIDNIGHT, (2.0, 2.0))
@@ -2064,6 +2091,36 @@ def test_recount_fills_a_blank_ch_held_and_the_ch_yr_2nd_without_held_channels(
     ]
     day = store.daily()["2026-10-26"]
     assert (day["ch_held"], day["ch_yr_2nd"], day["ch_yr_med"]) == (7, 9.0, 9.0)
+
+
+def test_recount_counts_held_channels_again_on_the_days_before_the_rule(
+    tmp_path: Path,
+) -> None:
+    store = make_store(tmp_path)
+    held_channels(store)
+    store.add_uploads(SMALL, [("chk00000004", "2025-03-01T00:00:00Z")])  # a live stream:
+    store.db.execute("UPDATE uploads SET retry_at = ? WHERE id = 'chk00000004'",
+                     (MIDNIGHT + DAY_S,))  # fmt: skip  # put off past the backup
+    # Closed with the old rule: SMALL wasn't held and set ch_yr_2nd.
+    store.record_daily("2026-10-26", 3, 2, MIDNIGHT, (2.0, 2.0), 0)
+    backup = backup_at(store, tmp_path / "collector-2026-10-27.db", MIDNIGHT + 41)
+    scratch = tmp_path / "scratch"
+    scratch.mkdir()
+    # The rule went live the next day: the day before it is counted again (fails without it).
+    store.date_notes([(notes.HELD_READY, None)], "2026-10-27")
+    assert recount(store, [backup], scratch) == [
+        "collector-2026-10-27.db: 2026-10-26 already has a closer count, kept; counted held "
+        "channels again: ch_held 1, ch_yr_2nd 3.50, ch_yr_med 2.00"
+    ]
+    assert recorded(store) == {"2026-10-26": (3, 2, MIDNIGHT)}  # the other counts stay
+    # A day from the note's on was counted with the rule already: skipped.
+    store.record_daily("2026-10-26", 3, 2, MIDNIGHT, (9.0, 9.0), 7)
+    store.db.execute("UPDATE notes SET day = '2026-10-26' WHERE note = ?", (notes.HELD_READY,))
+    assert recount(store, [backup], scratch) == [
+        "collector-2026-10-27.db: 2026-10-26 already has a closer count, skipped"
+    ]
+    day = store.daily()["2026-10-26"]
+    assert (day["ch_held"], day["ch_yr_2nd"]) == (7, 9.0)
 
 
 def test_the_channels_videos_per_year_are_recorded_at_the_close_and_kept(tmp_path: Path) -> None:
@@ -2170,6 +2227,7 @@ def test_recount_keeps_a_closer_count_and_fills_in_only_its_blank_videos_per_yea
     tmp_path: Path,
 ) -> None:
     store = make_store(tmp_path)
+    store.date_notes([(notes.HELD_READY, None)], "2026-10-26")  # counted with the rule
     span(store, CHANNEL)
     added(store, CHANNEL, "add00000001", NOW)
     store.record_daily("2026-10-26", 3, 2, MIDNIGHT)  # at 23:59:59, before ch_yr_* were kept

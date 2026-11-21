@@ -86,6 +86,7 @@ class Year:
     unchecked: int  # not checked yet
     part: float  # the part of the year the channel was active, in (0, 1]
     low_r: float | None = None  # the lowest number of its eligible uploads ready now
+    due: int = 0  # of the unchecked ones, due for a check now (a day old, not put off)
 
     @property
     def counted(self) -> bool:
@@ -263,6 +264,7 @@ def years_from(rows: Iterable[Any], today: str) -> list[Year]:
             unchecked=int(r["unchecked"]),
             part=active_part(int(r["y"]), *dates[str(r["channel_id"])], day),
             low_r=r["low_r"],
+            due=int(r["due"] or 0),
         )
         for r in rows
         if int(r["y"]) >= FIRST_YEAR

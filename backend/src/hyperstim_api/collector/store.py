@@ -513,6 +513,14 @@ class Store:
             (median, second, second, ch_held, day),
         )
 
+    def replace_held(self, day: str, second: float | None, ch_held: int) -> None:
+        """Replaces a recorded day's `ch_held` and the `ch_yr_2nd` that goes with it, counted
+        again from a backup with the rule that also holds channels whose thin years have
+        nothing ready (plan 013, step 37); its other counts stay."""
+        self.db.execute(
+            "UPDATE daily SET ch_held = ?, ch_yr_2nd = ? WHERE day = ?", (ch_held, second, day)
+        )
+
     def left_out_at(self, at: float) -> int | None:
         """The channels left out just before `at`, from the log; None if the log began later."""
         start = self.get("left_out_log_from")

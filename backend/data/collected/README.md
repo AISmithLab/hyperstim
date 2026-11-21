@@ -19,7 +19,7 @@ The site at the end of each finished day: every count is at 23:59:59 UTC, and th
 | `videos`, `channels` | on the site |
 | `ch_ready` | channels not on the site yet, with a video checked and waiting to download |
 | `ch_left_out` | channels kept off the site because they don't fit the dataset: under 10% of their checked videos are made for kids, or they post under 5 eligible videos a year, or both (the list below), with or without videos |
-| `ch_held` | channels on the site that still have uploads to take, but none in a year with fewer videos per year than the channel's own average, so the collector skips them until the other channels pass them |
+| `ch_held` | channels on the site that still have uploads to take, but none ready in a year with fewer videos per year than the channel's own average, so the collector skips them for now. Ready means it can be downloaded or checked now; an upload put off for later (a failed download waiting for its retry, a live stream or an unclear answer waiting for its next check) doesn't count, so channels come and go as those come due |
 | `ch_yr_2nd` | the thinnest channels: the second smallest of the channels' videos per year, among the channels on the site with an upload left to take that aren't held. A channel's videos per year are its videos on the site over the years (2015 to that day) in which it has an eligible upload, each counted for the part the channel was active (from its first upload; the running year to that day) |
 | `ch_yr_med` | the typical channel: the median of the channels' videos per year, over all channels on the site |
 | `added_v`, `removed_v` | videos added that day, and taken out because they went offline |
@@ -45,6 +45,10 @@ Until the note "ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch
 - `ch_yr_2nd` counted the held channels too. A row whose `ch_held` is blank still has that count; one with `ch_held` has the count without them (the days just before the note were recounted from the backups).
 - `ch_left_out` was named `ch_out`; the note from 2026-10-31 keeps the old name.
 - The file also had `ch_1` … `ch_4` and `ch_5plus`: the channels on the site with 1, 2, 3, 4, or 5 or more videos. They were dropped once every channel had 5 or more (from 2026-11-08), so they only repeated `channels`. Earlier commits of this file have them.
+
+Until the note "ch_held also counts channels whose thin years have nothing ready" (plan 013):
+
+- `ch_held` counted only the channels whose years with uploads left were all at or above their average. A channel whose thinner years had only uploads put off for later (a live stream, a failed download waiting for its retry) wasn't held, so it could keep `ch_yr_2nd` low while the collector filled other channels (1.68 on 2026-11-19 and 2026-11-20). The days back to 2026-11-14 were counted again from the backups with the new rule; the rows before keep the old count.
 
 The commits and release notes stay as they were; the changelog's rows in the latest commit are what counts.
 

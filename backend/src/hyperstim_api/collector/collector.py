@@ -1081,7 +1081,8 @@ class Collector:
         exact = started <= ended < midnight
         self.store.update_left_out(utc(now)[:10], now)
         ready, out = self.store.ready_to_join(), len(self.store.left_out_list())
-        second, median, held = channel_averages(self.store, yesterday)
+        counted_at = midnight - 1 if exact else now  # 23:59:59, as the picker saw the day's end
+        second, median, held = channel_averages(self.store, yesterday, counted_at)
         day = midnight - DAY_S
         with self.store.transaction():
             while utc(day)[:10] > closed:
@@ -1180,10 +1181,12 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
     holds the end of the day before. Records them for that day with the backup's time (its
     `tick_at`, else the file's), unless the day has a count from 23:59:59 or from closer to it
     (then only its blank `ch_held`, with the `ch_yr_2nd` that goes with it, and a blank
-    `ch_yr_med` are filled in), or is before the collector's first day.
+    `ch_yr_med` are filled in; before the day of the note `notes.HELD_READY`, its `ch_held` and
+    `ch_yr_2nd` are replaced by the ones with that rule), or is before the collector's first day.
     Returns a line per backup saying what it did."""
     first = store.db.execute("SELECT MIN(added_at) FROM collected").fetchone()[0]
     daily = store.daily()
+    held_from = next((d for d, ns in store.notes().items() if notes.HELD_READY in ns), None)
     done: list[str] = []
     for path in sorted(backups):
         copy = scratch / path.name  # judged again in a copy, so the backup stays as it was
@@ -1195,11 +1198,20 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
         if first is None or day < first[:10]:
             done.append(f"{path.name}: {day} is before the first day, skipped")
         elif recorded is not None and recorded["at"] is not None and recorded["at"] <= at:
-            if recorded["ch_held"] is not None and recorded["ch_yr_med"] is not None:
+            complete = recorded["ch_held"] is not None and recorded["ch_yr_med"] is not None
+            if complete and (held_from is None or day >= held_from):
                 done.append(f"{path.name}: {day} already has a closer count, skipped")
+            elif complete:  # its ch_held is from before the note: counted again with the rule
+                backup.update_left_out(day, at)
+                second, _, held = channel_averages(backup, day, at)
+                store.replace_held(day, second, held)
+                done.append(
+                    f"{path.name}: {day} already has a closer count, kept; counted held "
+                    f"channels again: {_years_text(store.daily()[day])}"
+                )
             else:  # its closer counts stay; only what it lacks is filled in
                 backup.update_left_out(day, at)
-                second, median, held = channel_averages(backup, day)
+                second, median, held = channel_averages(backup, day, at)
                 store.fill_years(day, (second, median), held)
                 done.append(
                     f"{path.name}: {day} already has a closer count, kept; filled in "
@@ -1208,7 +1220,7 @@ def recount(store: Store, backups: list[Path], scratch: Path) -> list[str]:
         else:
             backup.update_left_out(day, at)
             ready, out = backup.ready_to_join(), len(backup.left_out_list())
-            second, median, held = channel_averages(backup, day)
+            second, median, held = channel_averages(backup, day, at)
             store.record_daily(day, ready, out, at, (second, median), held)
             done.append(
                 f"{path.name}: {day} ch_ready {ready}, ch_left_out {out}, "
@@ -1378,16 +1390,19 @@ def rule(store: Store, now: float) -> tuple[list[Any], Order]:
     return rows, ahead + expand
 
 
-def channel_averages(store: Store, day: str) -> tuple[float | None, float | None, int]:
+def channel_averages(store: Store, day: str, at: float) -> tuple[float | None, float | None, int]:
     """The channels' videos per year on the site on `day` (decision 10): the second smallest
     among the channels with an upload left to take that aren't held (`ch_yr_2nd`), the median
     over all (`ch_yr_med`), and the held channels (`ch_held`): those with an upload left to
-    take, but none in a year with fewer videos per active year than the channel's average, so
-    channel first skips them until the others pass them. The videos per year are None without
-    channels."""
+    take, but nothing ready at `at` in a year with fewer videos per active year than the
+    channel's average, so channel first skips them for now. Ready as the picker sees it: an
+    eligible upload not waiting for a retry, or an unchecked one due for its check; uploads
+    put off (a failed download, a live stream, an unsure answer) don't count until they're
+    due again. The videos per year are None without channels."""
     out = store.left_out_ids()
     by: dict[str, list[sampling.Year]] = {}
-    for y in sampling.years_from(store.year_rows(0, "", day), day):
+    rows = store.year_rows(at, utc(at - sampling.SETTLE_S), day)
+    for y in sampling.years_from(rows, day):
         if y.channel_id not in out:
             by.setdefault(y.channel_id, []).append(y)
     avgs = {c: sampling.average(ys, site=True) for c, ys in by.items() if any(y.site for y in ys)}
@@ -1397,7 +1412,7 @@ def channel_averages(store: Store, day: str) -> tuple[float | None, float | None
         open_years = [y for y in by[c] if y.counted and y.open]
         if a is None or not open_years:
             continue
-        if any(y.site / y.part < a for y in open_years):
+        if any(y.site / y.part < a and (y.ready or y.due) for y in open_years):
             left.append(a)
         else:
             held += 1

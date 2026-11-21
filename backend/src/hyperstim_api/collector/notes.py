@@ -7,6 +7,10 @@ a note already dated, change it here and map the old wording to the new in REWOR
 collector swaps the text and keeps the day.
 """
 
+# From this note's day on, `ch_held` counts the channels whose thin years have nothing ready;
+# `recount` counts the days before it again from the backups (plan 013, step 37).
+HELD_READY = "ch_held also counts channels whose thin years have nothing ready"
+
 # (note, day): the day only for the notes from before the collector dated them itself.
 NOTES: tuple[tuple[str, str | None], ...] = (
     ("Collecting starts: 150 videos a day, lowest r first", "2026-10-26"),
@@ -25,6 +29,7 @@ NOTES: tuple[tuple[str, str | None], ...] = (
         "ch_yr_med, which couldn't be recounted and still include them",
         "2026-11-18",
     ),
+    (HELD_READY, None),
 )
 
 # old wording: new wording, for notes reworded after they were dated.
