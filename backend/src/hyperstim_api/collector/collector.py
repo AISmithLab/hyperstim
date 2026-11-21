@@ -78,6 +78,14 @@ MIN_IDLE_S = 15  # at least this long from one video's turn ending to the next d
 # A failed download (not a block) is tried again after these waits; the next failure gives up.
 RETRY_AFTER_S = (DAY_S, 3 * DAY_S, 7 * DAY_S)
 FAILURES_IN_A_ROW = 3  # then downloads pause, with no change to the pace
+# yt-dlp's errors for a video gone for good (decision 7, 2026-11-21): with `videos.list` not
+# listing it either, it's settled at once instead of retried. Lower case, matched in the error.
+GONE_ERRORS = (
+    "removed by the uploader",
+    "removed for violating",
+    "has been terminated",
+    "private video",
+)
 # After a Data API error, an item (a channel's list, a batch of uploads) or a job waits this
 # long, then a day at a time; an error is no answer about the item, so it's never final.
 API_RETRY_AFTER_S = (3600, 6 * 3600, DAY_S)
@@ -129,6 +137,11 @@ def scorer(reference: Dataset) -> Callable[[dict[str, float | None]], float | No
         return video.score if video else None
 
     return score
+
+
+def is_gone_error(message: str) -> bool:
+    """Whether a failed download's message says the video is gone for good (`GONE_ERRORS`)."""
+    return any(e in message.lower() for e in GONE_ERRORS)
 
 
 def api_wait(failures: int) -> float:
@@ -930,6 +943,8 @@ class Collector:
             self.store.set("failures_in_a_row", 0)
             log.warning("YouTube is blocking downloads; waiting %.0f h%s", wait / 3600, where)
             return  # the video stays eligible and is tried again
+        if self.gone(upload.id, message, now):
+            return
         # Not a block: try again later, as often as RETRY_AFTER_S allows (plan 013, decision 7).
         with self.store.transaction():
             self.store.log_attempt(upload.id, now, "failed", message)
@@ -954,6 +969,53 @@ class Collector:
                 FAILURES_IN_A_ROW, FAILURE_PAUSE_S / 60,
             )  # fmt: skip
         self.store.set("failures_in_a_row", in_a_row)
+
+    def gone(self, video_id: str, message: str, now: float) -> bool:
+        """Whether a download that failed with `message` settled the upload as gone for good
+        (decision 7, 2026-11-21): the message is one of `GONE_ERRORS` and `videos.list` doesn't
+        list it either. Then it's logged as a failed try and becomes ineligible (`gone`);
+        otherwise (no match, still listed, or the Data API failing) the retries go on."""
+        if not is_gone_error(message):
+            return False
+        if not self.unlisted_gone([video_id], now, message):
+            return False
+        log.info("Gone: %s (%s)", video_id, message[-200:])
+        return True
+
+    def settle_gone(self) -> int:
+        """At each start: the uploads waiting for a retry after an error saying they're gone
+        (`GONE_ERRORS`) get the same check (decision 7, 2026-11-21), so the ones that failed
+        before the rule don't wait out their retries. Returns how many were settled."""
+        now = self.clock()
+        rows = self.store.db.execute(
+            "SELECT u.id, a.message FROM uploads u JOIN attempts a ON a.id = (SELECT MAX(id) "
+            "FROM attempts WHERE video_id = u.id AND outcome = 'failed') "
+            "WHERE u.state = 'eligible' AND u.retry_at > ? ORDER BY u.id",
+            (now,),
+        ).fetchall()
+        ids = [r["id"] for r in rows if is_gone_error(r["message"] or "")]
+        settled = 0
+        for start in range(0, len(ids), 50):
+            settled += len(self.unlisted_gone(ids[start : start + 50], now))
+        if settled:
+            log.info("Settled %d uploads waiting for a retry as gone", settled)
+        return settled
+
+    def unlisted_gone(self, ids: list[str], now: float, message: str = "") -> list[str]:
+        """Of up to 50 uploads, the ones `videos.list` doesn't list, made ineligible (`gone`),
+        with a failed try logged for `message` if given; none when the Data API fails."""
+        try:
+            listed = self.api.videos(ids)
+        except (ApiError, OutOfUnits) as exc:
+            log.warning("Couldn't ask whether %s are gone: %s", ", ".join(ids), exc)
+            return []
+        gone = [video_id for video_id in ids if video_id not in listed]
+        with self.store.transaction():
+            for video_id in gone:
+                if message:
+                    self.store.log_attempt(video_id, now, "failed", message)
+                self.store.set_state(video_id, "ineligible", "gone", retry_at=0, checked_at=now)
+        return gone
 
     def keep_logs(self, video_id: str, work: Path, now: float) -> Path | None:
         """The download script's output for each failed try, kept as one file in

@@ -655,6 +655,126 @@ def test_three_failures_in_a_row_pause_downloads_for_an_hour(
     assert collector.store.get("failures_in_a_row") == "0"
 
 
+REMOVED = "ERROR: [youtube] {}: This video has been removed by the uploader"
+
+
+def gone_on_download(
+    youtube: FakeYouTube, pipeline: FakePipeline, video_id: str, message: str, listed: bool
+) -> list[int]:
+    """The video's download fails with `message`; from then on `videos.list` lists it only if
+    `listed`. Returns a list that gets the number of `videos` calls made before the failure."""
+    pipeline.fail[video_id] = ("download", "unavailable")
+    pipeline.details[video_id] = message.format(video_id)
+    calls: list[int] = []
+
+    def drop(step: str, vid: str, workdir: Path | None) -> None:
+        if step == "download" and vid == video_id:
+            calls.append(youtube.calls.count("videos"))
+            if not listed:
+                youtube.videos.pop(video_id, None)
+
+    pipeline.during = drop
+    return calls
+
+
+def test_a_download_gone_for_good_is_settled_at_once(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    gone_on_download(youtube, pipeline, first, REMOVED, listed=False)
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    row = collector.store.db.execute("SELECT state, reason FROM uploads WHERE id = ?", (first,))
+    assert tuple(row.fetchone()) == ("ineligible", "gone")
+    assert collector.store.failures(first) == 1  # the try is in the record
+    assert collector.store.retrying(clock.now) == []
+    assert collector.store.get("failures_in_a_row", "0") == "0"  # not an outage
+    run(collector, clock, 3, step=DAY_S)
+    assert collector.store.failures(first) == 1  # never tried again
+
+
+@pytest.mark.parametrize("api", ["lists it", "fails"])
+def test_a_gone_error_is_retried_when_the_api_lists_the_video_or_fails(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline, api: str
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    gone_on_download(youtube, pipeline, first, REMOVED, listed=True)
+    if api == "fails":  # from the failed download on
+        pipeline.during = lambda step, vid, workdir: setattr(
+            youtube, "fails", lambda method, params: method == "videos"
+        )
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    upload = collector.store.upload(first)
+    assert upload is not None
+    assert upload.state == "eligible"
+    assert collector.store.retrying(clock.now) == [NOW + DAY_S]
+    assert collector.store.failures(first) == 1
+
+
+def test_an_error_not_saying_gone_is_retried_without_asking_the_api(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    before = gone_on_download(youtube, pipeline, first, "{}\terror\texit 0 but wrote 262 B", False)
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    assert youtube.calls.count("videos") == before[0]  # no call after the failure
+    upload = collector.store.upload(first)
+    assert upload is not None
+    assert upload.state == "eligible"
+    assert collector.store.retrying(clock.now) == [NOW + DAY_S]
+    assert collector.store.get("failures_in_a_row") == "1"
+
+
+def test_status_counts_the_downloads_gone_for_good(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    from hyperstim_api.collector.__main__ import health
+
+    clock = Clock()
+    first = by_rank(youtube.uploads[CHANNEL])[0]
+    gone_on_download(youtube, pipeline, first, REMOVED, listed=False)
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    collector.tick()
+    line = next(x for x in health(collector.store, clock.now) if x.startswith("Given up"))
+    assert line.endswith(", 0 downloads, 1 downloads gone for good")
+    assert health(collector.store, clock.now + 31 * DAY_S)[2].endswith(
+        ", 0 downloads gone for good"
+    )
+
+
+def test_uploads_waiting_after_a_gone_error_are_settled_at_start(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    store = collector.store
+    store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    removed, empty, back = by_rank(youtube.uploads[CHANNEL])[:3]
+    for video_id, message in (
+        (removed, REMOVED.format(removed)),
+        (empty, f"{empty}\terror\texit 0 but wrote 262 B"),
+        (back, REMOVED.format(back)),  # listed again: no longer gone
+    ):
+        store.log_attempt(video_id, NOW - DAY_S, "failed", message)
+        store.set_state(video_id, "eligible", message, retry_at=NOW + 2 * DAY_S)
+    youtube.videos.pop(removed)
+    youtube.videos.pop(empty)  # missing too, but its error doesn't say gone
+    assert collector.settle_gone() == 1
+    states = {v: store.upload(v).state for v in (removed, empty, back)}  # type: ignore[union-attr]
+    assert states == {removed: "ineligible", empty: "eligible", back: "eligible"}
+    assert store.failures(removed) == 1  # no new try logged
+    assert collector.settle_gone() == 0
+
+
 def test_the_downloaders_output_is_kept_for_30_days(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:

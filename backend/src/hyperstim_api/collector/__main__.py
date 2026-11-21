@@ -93,6 +93,8 @@ def run(s: Settings) -> None:
     requeued = store.requeue_failed(len(RETRY_AFTER_S) + 1)
     if requeued:
         log.info("Trying %d failed downloads again", requeued)
+    # Uploads waiting for a retry after an error saying they're gone are settled (decision 7).
+    collector.settle_gone()
     collector.fill_scores({v.id: v.score for v in reference.videos})
     # Once: the dataset's compilations leave when the rule starts (decision 1, 2026-11-18).
     collector.drop_compilations({v.id: v.title for v in reference.videos})
@@ -262,7 +264,13 @@ def health(store: Store, now: float) -> list[str]:
                 '(SELECT video_id FROM attempts WHERE at >= ?)',
                 month,
             )
-        } downloads",
+        } downloads, {
+            count(
+                "SELECT COUNT(*) FROM uploads WHERE state = 'ineligible' AND reason = 'gone' "
+                "AND id IN (SELECT video_id FROM attempts WHERE outcome = 'failed' AND at >= ?)",
+                month,
+            )
+        } downloads gone for good",
         "Waiting for a title, channel name or date: "
         f"{count("SELECT COUNT(*) FROM uploads WHERE state = 'measured'")} measured videos",
         "Channels with uploads still to read: "

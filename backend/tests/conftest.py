@@ -73,13 +73,15 @@ class FakePipeline:
 
     Every video gets the same features unless `features` says otherwise, and the channel
     UC-live unless `channels` says otherwise; `fail` makes a
-    step fail for a video; `during(step, video_id, workdir)` runs inside each step.
+    step fail for a video, with `details` as its message; `during(step, video_id, workdir)`
+    runs inside each step.
     """
 
     def __init__(self) -> None:
         self.features: dict[str, dict[str, float | None]] = {}
         self.channels: dict[str, str] = {}  # id -> channel ID
         self.fail: dict[str, tuple[str, ErrorCode | None]] = {}  # id -> (step, code or crash)
+        self.details: dict[str, str] = {}  # id -> the failure's message (yt-dlp's error)
         self.during: Callable[[str, str, Path | None], None] | None = None
         self.workdirs: list[Path] = []
         self.links: dict[str, tuple[str, str]] = {}  # channel lookups: URL -> (ID, name)
@@ -95,7 +97,7 @@ class FakePipeline:
         if failing and failing[0] == step:
             if failing[1] is None:
                 raise RuntimeError("pipeline crashed")
-            raise AnalysisError(failing[1])
+            raise AnalysisError(failing[1], self.details.get(video_id, ""))
 
     def lookup(self, video_id: str) -> VideoInfo:
         self._step("lookup", video_id)
