@@ -1307,6 +1307,36 @@ def test_no_first_video_while_a_channel_is_catching_up_and_exploring_left_goes_t
     assert explore_flags(store) == [1, 1, 1, 0]
 
 
+def test_a_channel_catching_up_with_nothing_ready_doesnt_hold_back_first_videos(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    clock.now = NOW - NOW % DAY_S + 3600
+    youtube.uploads[CHANNEL] = []
+    collector = make_collector(tmp_path, youtube, pipeline, clock)  # CHANNEL: nothing to take
+    store = collector.store
+    second, third = "UC" + "9" * 22, "UC" + "8" * 22
+    numbers = level_ids("stk", 4)
+    new_channel(store, TINY)
+    eligible_waiting(store, TINY, numbers[:1], 2024)
+    eligible_waiting(store, TINY, numbers[1:2], 2025)
+    run(collector, clock, 1, step=3600)
+    assert collected_ids(collector) == numbers[:1]
+    # Its 2025 upload failed and waits for its retry: TINY is still catching up, nothing ready.
+    store.log_attempt(numbers[1], clock.now, "failed", "exit 0 but wrote 262 B")
+    store.set_state(numbers[1], "eligible", retry_at=clock.now + DAY_S)
+    for channel_id, video_id in ((second, numbers[2]), (third, numbers[3])):
+        new_channel(store, channel_id)
+        eligible_waiting(store, channel_id, [video_id], 2024)
+    run(collector, clock, 1, step=3600)
+    assert store.catching_up() >= {TINY}
+    assert channel_of(store, collected_ids(collector)[-1]) == second  # a first video goes ahead
+    # Once its retry is due, TINY comes first again, before the third channel's first video.
+    clock.now += DAY_S
+    run(collector, clock, 1, step=3600)
+    assert collected_ids(collector)[-1] == numbers[1]
+
+
 def test_at_most_3_channels_get_their_first_video_a_day(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:

@@ -681,8 +681,9 @@ class Collector:
         than `FIRST_VIDEOS_PER_DAY` channels got theirs today. Otherwise an expanding one: by
         the channel-first rule over the channels in, the first channel in line with an upload
         ready in one of its years below its threshold, the thinnest such year, its lowest
-        number. Either goes to the other when it has nothing ready. A channel that caught up
-        is marked so here."""
+        number. Either goes to the other when it has nothing ready. A channel catching up with
+        nothing ready (all put off) doesn't hold back first videos (2026-11-21). A channel that
+        caught up is marked so here."""
         _, ahead, done, expand = plan(self.store, now)
         for channel_id in done:
             self.store.set_catching_up(channel_id, False)
@@ -692,7 +693,7 @@ class Collector:
                 for y in years:
                     if y.ready:
                         return self.store.ready_upload(channel_id, y.year, now)
-            if not ahead and self.store.first_video_left(now):
+            if self.store.first_video_left(now):
                 return self.store.first_video(now)
             return None
 
