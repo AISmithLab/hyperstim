@@ -1,6 +1,7 @@
 date	videos	channels	ch_ready	ch_left_out	ch_held	ch_yr_2nd	ch_yr_med	added_v	removed_v	new_ch	removed_ch	note
-2026-11-20	17433	605	150	442	73	2.19	4.75	93	0	0	0	
-2026-11-19	17340	605	139	440	73	2.03	4.75	96	0	1	0	
+2026-11-21	17507	605	147	446	73	2.26	4.75	78	0	1	0	ch_held also counts channels whose thin years have nothing ready
+2026-11-20	17429	604	150	442	73	2.19	4.75	93	0	0	0	
+2026-11-19	17336	604	139	440	73	2.03	4.75	92	0	0	0	
 2026-11-18	17244	604	139	439	64	1.51	4.75	100	0	3	0	Took out compilations of existing videos; no new ones are collected; Earlier rows count them as never added, except ch_ready, ch_held, ch_yr_2nd and ch_yr_med, which couldn't be recounted and still include them
 2026-11-17	17144	601	134	417	84	2.07	5.05	112	0	3	0	
 2026-11-16	17032	598	134	411	83	2.00	5.05	85	0	2	0	ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out
