@@ -265,11 +265,7 @@ def create_app(
     store = DatasetStore(settings.dataset_path, settings.collected_dir, settings.collected_reload_s)
     blog_videos = load_blog_videos(settings.dataset_path)
     if pipeline is None:
-        pipeline = ResearchPipeline(settings.ytdlp_cookies, settings.youtube_api_key)
-        if settings.youtube_api_key is None:
-            logging.getLogger(__name__).warning(
-                "YOUTUBE_API_KEY is not set: live analysis accepts videos not made for kids"
-            )
+        pipeline = ResearchPipeline(settings.ytdlp_cookies)
     analyzer = Analyzer(
         settings.analysis_dir,
         pipeline,

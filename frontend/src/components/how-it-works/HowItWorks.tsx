@@ -57,7 +57,7 @@ function PasteLink() {
       step={1}
       className="lg:grid lg:grid-cols-[1fr_auto] lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-10"
     >
-      <Lead>Paste any YouTube video made for kids.</Lead>
+      <Lead>Paste any YouTube video.</Lead>
       {/* From lg, its field is as long as the home card's at full width (a 411 px form). */}
       <div className="mt-6 rounded-2xl bg-butter p-5 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:w-[28.25rem]">
         <CheckVideoForm />

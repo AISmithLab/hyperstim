@@ -18,13 +18,11 @@ import subprocess
 import sys
 import threading
 import time
-import urllib.error
-import urllib.request
 from collections import deque
 from collections.abc import Callable
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
-from typing import Any, Literal, Protocol
+from typing import Any, Literal, Protocol, get_args
 
 from hyperstim_api import scoring
 
@@ -32,14 +30,14 @@ log = logging.getLogger(__name__)
 
 Status = Literal["queued", "lookup", "download", "measure", "done", "failed"]
 Step = Literal["lookup", "download", "measure"]
-ErrorCode = Literal["unavailable", "not_for_kids", "too_short", "live", "failed"]
+ErrorCode = Literal["unavailable", "too_short", "live", "failed"]
 
 STEPS: tuple[Step, ...] = ("lookup", "download", "measure")
 # Typical seconds per step, timed on our server (2026-10-14, 2- to 30-minute videos).
 TYPICAL_S: dict[Step, float] = {"lookup": 6, "download": 15, "measure": 25}
 STEP_CAP = 0.9  # within a step, the bar stops at this share of it until the step is done
-MAX_QUEUE = 10  # videos waiting, not counting the one being analyzed
-MIN_DURATION_S = 90  # the clip starts at 0:30; the old live API had the same minimum
+MAX_QUEUE = 30  # videos waiting, not counting the one being analyzed
+MIN_DURATION_S = 60  # the clip starts at 0:30, so at least 30 s of it (plan 004, 2026-11-23)
 LIMIT_WINDOW_S = 3600
 DAY_S = 24 * 3600
 
@@ -48,9 +46,6 @@ DOWNLOAD_SCRIPT = PIPELINE_DIR / "58_download_clips_v2.py"
 EXTRACT_SCRIPT = PIPELINE_DIR / "04_extract_features_v2.py"
 MIN_CLIP_BYTES = 10000  # the download script's own success floor
 LOOKUP_TIMEOUT_S = 60
-# YouTube's "made for kids" flag; yt-dlp doesn't expose it, only the Data API does.
-VIDEOS_API = "https://www.googleapis.com/youtube/v3/videos?part=status&id={}"
-VIDEOS_API_TIMEOUT_S = 15
 DOWNLOAD_TIMEOUT_S = 15 * 60  # the script tries three YouTube clients, 5 min each
 MEASURE_TIMEOUT_S = 10 * 60
 # Measuring is mostly single-threaded (only ffmpeg's decoding uses more cores): timed on our
@@ -139,18 +134,14 @@ class ResearchPipeline:
     def __init__(
         self,
         cookies: Path | None = None,
-        youtube_api_key: str | None = None,
         measure_cores: int = MEASURE_CORES,
     ) -> None:
         self._cookies = cookies
-        self._api_key = youtube_api_key  # None: the made-for-kids check is off
         self._cores = measure_cores  # the collector measures on 1 (plan 013)
         self._proc: subprocess.Popen[str] | None = None
         self._cancelled = False
 
     def lookup(self, video_id: str) -> VideoInfo:
-        if self._api_key:
-            check_made_for_kids(video_id, self._videos_api(video_id))
         cmd = [sys.executable, "-m", "yt_dlp", "--no-warnings", "--skip-download"]
         cmd += ["--remote-components", "ejs:github"]
         if self._cookies:
@@ -201,18 +192,6 @@ class ResearchPipeline:
         failures = cache / "failures.tsv"  # extract notes a clip it couldn't measure here
         detail = failures.read_text(encoding="utf-8") if failures.exists() else ""
         return parse_features(video_id, out, detail)
-
-    def _videos_api(self, video_id: str) -> str:
-        assert self._api_key
-        # The key goes in a header, not the URL, so it can't end up in an error message.
-        request = urllib.request.Request(
-            VIDEOS_API.format(video_id), headers={"X-Goog-Api-Key": self._api_key}
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=VIDEOS_API_TIMEOUT_S) as response:
-                return str(response.read().decode("utf-8"))
-        except (urllib.error.URLError, TimeoutError) as exc:
-            raise AnalysisError("failed", f"YouTube Data API: {exc}") from exc
 
     def channel(self, url: str) -> tuple[str, str]:
         """The channel ID and name behind a channel page link (compare page, plan 008).
@@ -275,21 +254,6 @@ class ResearchPipeline:
         if proc.returncode != 0:
             raise subprocess.CalledProcessError(proc.returncode, cmd, out, err)
         return out
-
-
-def check_made_for_kids(video_id: str, body: str) -> None:
-    """The Data API's answer → nothing if YouTube marks the video as made for kids.
-
-    The dataset holds only such videos (the research sampling kept `madeForKids` true).
-    """
-    try:
-        items = json.loads(body).get("items")
-    except (json.JSONDecodeError, AttributeError):
-        raise AnalysisError("failed", f"unexpected Data API output: {body[-200:]!r}") from None
-    if not items:
-        raise AnalysisError("unavailable", "not found by the Data API")  # private or removed
-    if items[0].get("status", {}).get("madeForKids") is not True:
-        raise AnalysisError("not_for_kids")
 
 
 def _limit_cores(pid: int, cores: int) -> None:
@@ -413,6 +377,10 @@ class Analyzer:
             except (OSError, ValueError, TypeError) as exc:
                 log.error("Skipping unreadable analysis file %s: %s", path, exc)
                 continue
+            if record.error is not None and record.error not in get_args(ErrorCode):
+                # A code the API no longer sends (`not_for_kids`, until 2026-11-23): the page
+                # offers to try again, which runs it under today's rules.
+                record = replace(record, error="failed")
             self._records[record.id] = record
             if record.status not in ("done", "failed"):
                 unfinished.append(record)

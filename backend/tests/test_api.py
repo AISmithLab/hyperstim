@@ -9,7 +9,9 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+from hyperstim_api.analysis import ResearchPipeline
 from hyperstim_api.config import load_settings
+from hyperstim_api.main import create_app
 from hyperstim_api.scoring import FEATURES, build_pools, percentile_rank
 from tests.conftest import ORIGIN, VIDEOS, Row, video_row, write_dataset
 
@@ -192,7 +194,6 @@ def env(monkeypatch: pytest.MonkeyPatch) -> pytest.MonkeyPatch:
     monkeypatch.setenv("ANALYSIS_DIR", "analysis")
     monkeypatch.setenv("THUMBNAIL_DIR", "thumbnails")
     monkeypatch.delenv("YTDLP_COOKIES", raising=False)
-    monkeypatch.delenv("YOUTUBE_API_KEY", raising=False)
     monkeypatch.delenv("ANALYSIS_LIMIT_PER_IP", raising=False)
     monkeypatch.delenv("ANALYSIS_LIMIT_PER_DAY", raising=False)
     monkeypatch.delenv("API_DOCS", raising=False)
@@ -206,8 +207,7 @@ def test_settings_from_env(env: pytest.MonkeyPatch) -> None:
     assert settings.analysis_dir == Path("analysis")
     assert settings.thumbnail_dir == Path("thumbnails")
     assert settings.ytdlp_cookies is None
-    assert settings.youtube_api_key is None  # no made-for-kids check
-    assert settings.analysis_limit_per_ip == 20  # unset: limited all the same
+    assert settings.analysis_limit_per_ip == 60  # unset: limited all the same
     assert settings.analysis_limit_per_day == 1000
     assert settings.api_docs
 
@@ -224,10 +224,8 @@ def test_settings_optional_analysis_values(env: pytest.MonkeyPatch) -> None:
     env.setenv("ANALYSIS_LIMIT_PER_IP", "0")
     env.setenv("ANALYSIS_LIMIT_PER_DAY", "0")
     env.setenv("API_DOCS", "0")
-    env.setenv("YOUTUBE_API_KEY", " key ")
     settings = load_settings()
     assert settings.ytdlp_cookies == Path("/secret/cookies.txt")
-    assert settings.youtube_api_key == "key"
     assert settings.analysis_limit_per_ip == 0
     assert settings.analysis_limit_per_day == 0
     assert not settings.api_docs
@@ -461,3 +459,13 @@ def test_shutdown_stops_the_worker_threads_even_after_an_error(
     with pytest.raises(RuntimeError):
         asyncio.run(run())
     assert running() == set()
+
+
+def test_the_app_builds_its_own_pipeline_without_an_api_key(
+    env: pytest.MonkeyPatch, dataset_path: Path, tmp_path: Path
+) -> None:
+    env.setenv("DATASET_PATH", str(dataset_path))
+    env.setenv("ANALYSIS_DIR", str(tmp_path / "analyses"))
+    env.setenv("THUMBNAIL_DIR", str(tmp_path / "thumbnails"))
+    app = create_app()
+    assert isinstance(app.state.analyzer._pipeline, ResearchPipeline)

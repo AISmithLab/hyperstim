@@ -137,7 +137,7 @@ export type ChannelLookup = {
 export type AnalysisStatus = "queued" | "lookup" | "download" | "measure" | "done" | "failed";
 
 /** Why a live analysis failed. */
-export type AnalysisErrorCode = "unavailable" | "not_for_kids" | "too_short" | "live" | "failed";
+export type AnalysisErrorCode = "unavailable" | "too_short" | "live" | "failed";
 
 /** A live analysis of a video that isn't in the dataset. */
 export type Analysis = {

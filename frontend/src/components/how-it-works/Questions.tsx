@@ -13,7 +13,7 @@ const QUESTIONS: [string, ReactNode][] = [
   ],
   [
     "This video looks really stimulating. Why is its score low?",
-    "We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are stimulating too, so a video can feel busy and still sit in the middle.",
+    "We measure up to 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are stimulating too, so a video can feel busy and still sit in the middle.",
   ],
   [
     "What do “No cuts” and “No sound” mean?",

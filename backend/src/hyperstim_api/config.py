@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
-DEFAULT_LIMIT_PER_IP = 20  # new analyses per IP per hour when ANALYSIS_LIMIT_PER_IP is unset
+DEFAULT_LIMIT_PER_IP = 60  # new analyses per IP per hour when ANALYSIS_LIMIT_PER_IP is unset
 DEFAULT_LIMIT_PER_DAY = 1000  # new analyses in 24 hours when ANALYSIS_LIMIT_PER_DAY is unset
 
 
@@ -15,7 +15,6 @@ class Settings:
     analysis_dir: Path
     thumbnail_dir: Path
     ytdlp_cookies: Path | None = None
-    youtube_api_key: str | None = None  # None = no made-for-kids check
     analysis_limit_per_ip: int = DEFAULT_LIMIT_PER_IP  # 0 = no limit
     analysis_limit_per_day: int = DEFAULT_LIMIT_PER_DAY  # 0 = no limit
     api_docs: bool = True  # /docs, /redoc, /openapi.json
@@ -63,7 +62,6 @@ def load_settings() -> Settings:
         analysis_dir=Path(_required("ANALYSIS_DIR")),
         thumbnail_dir=Path(_required("THUMBNAIL_DIR")),
         ytdlp_cookies=Path(cookies) if cookies else None,
-        youtube_api_key=os.environ.get("YOUTUBE_API_KEY", "").strip() or None,
         analysis_limit_per_ip=_limit("ANALYSIS_LIMIT_PER_IP", DEFAULT_LIMIT_PER_IP),
         analysis_limit_per_day=_limit("ANALYSIS_LIMIT_PER_DAY", DEFAULT_LIMIT_PER_DAY),
         api_docs=_flag("API_DOCS", default=True),

@@ -164,7 +164,6 @@ const MOCK_WAIT_S = 4; // mockVidWait's time in the queue
 // IDs that fail after the look-up, one per error.
 const MOCK_FAILURES: Record<string, AnalysisErrorCode> = {
   mockVidFail: "unavailable",
-  mockNotKids: "not_for_kids",
   mockVidShrt: "too_short",
   mockVidLive: "live",
   mockVidErrr: "failed",

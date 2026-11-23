@@ -193,7 +193,7 @@ Final text for every string on the page goes in a table here, as in plans 002/00
 | Where | Text |
 |---|---|
 | H2 | ① Paste a link |
-| Lead | Paste any YouTube video made for kids. |
+| Lead | Paste any YouTube video. _(human decision, 2026-11-23: the live analysis no longer requires made for kids, plan 004)_ |
 | Check field | As on the home page (plan 002): “YouTube link or video ID”, “Check video →” and its two errors; no length hint _(human decision, 2026-10-26: its 15-minute limit had nothing behind it; a check takes about the same time for any length, since only a 5-minute clip is measured)_. |
 
 **② We measure 12 things**
@@ -244,7 +244,7 @@ The list shows the existing one-line descriptions (plan 004).
 | Question | Answer |
 |---|---|
 | What does a high score mean? _(human decision)_ | A high score means a video is more stimulating than most videos we compare with. We measure production style only. We don’t judge a video’s content, educational value, or age appropriateness. |
-| This video looks really stimulating. Why is its score low? _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ | We measure 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are stimulating too, so a video can feel busy and still sit in the middle. _(human decision)_ |
+| This video looks really stimulating. Why is its score low? _(human decision, 2026-11-09: “stimulating”, not “intense” or “calm”)_ | We measure up to 5 minutes, starting 30 seconds in, not the whole video. If its busiest parts come later, the score won’t see them. And the score compares with other kids’ videos, many of which are stimulating too, so a video can feel busy and still sit in the middle. _(human decision; “up to”, 2026-11-23: a checked video can be as short as 60 s, plan 004)_ |
 | What do “No cuts” and “No sound” mean? | Scene discontinuity measures how different each new shot looks from the one before. If a video stays on one shot for the whole 5 minutes we measure, there’s nothing to compare, so we show “No cuts” instead of a score. Likewise, a video without sound has no loudness to measure, so Audio intensity shows “No sound”. _(human decision, 2026-10-16: replaces “What does ‘None detected’ mean?”, since a count of 0 now shows as 0)_ |
 | How is a channel’s score worked out? _(human decision: a question, not a section)_ | It’s the average of its videos’ scores in our dataset. _(human decision: no mention of rankings)_ |
 | How do you choose the channels and videos? _(plan 013, 2026-10-25)_ | We look for kids’ channels on YouTube that have at least 10,000 subscribers and more than 100 videos, leaving out channels YouTube makes automatically (e.g., “Topic” channels). From each channel, we randomly pick about the same number of videos from every year since 2015. Every video we pick must be made for kids, 2 to 60 minutes long, not a Short, not a compilation of existing videos _(human decision, 2026-11-18: plan 013's compilation rule)_, and still online. We keep adding new channels and videos. _(human decision, 2026-11-02: plan 013's channel-first rule, worded for a general audience; it said every video has the same chance)_ |

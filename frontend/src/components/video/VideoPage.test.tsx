@@ -255,7 +255,7 @@ describe("VideoPage, a video not in the dataset", () => {
     const steps = screen.getAllByRole("listitem");
     expect(steps.map((li) => li.textContent)).toEqual([
       "Looking up the video(done)",
-      "Downloading a 5-minute clip(current)",
+      "Downloading a clip of up to 5 minutes(current)",
       "Measuring",
     ]);
     expect(steps[1]).toHaveAttribute("aria-current", "step");
@@ -295,7 +295,7 @@ describe("VideoPage, a video not in the dataset", () => {
       .mockResolvedValueOnce(analysis({ status: "done", progress: 1 }));
     const { container } = open(ID);
     const live = () => container.querySelector("[aria-live=polite]");
-    await waitFor(() => expect(live()).toHaveTextContent("Downloading a 5-minute clip"));
+    await waitFor(() => expect(live()).toHaveTextContent("Downloading a clip of up to 5 minutes"));
     await poll();
     expect(live()).toHaveTextContent("Measuring");
     vi.mocked(getVideo).mockResolvedValue(video());
@@ -315,7 +315,7 @@ describe("VideoPage, a video not in the dataset", () => {
     expect(await screen.findByText(text, VISIBLE)).toBeInTheDocument();
     expect(screen.getAllByRole("listitem").map((li) => li.textContent)).toEqual([
       "Looking up the video",
-      "Downloading a 5-minute clip",
+      "Downloading a clip of up to 5 minutes",
       "Measuring",
     ]);
     expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "0");
@@ -329,8 +329,7 @@ describe("VideoPage, a video not in the dataset", () => {
 
   it.each([
     ["unavailable", "We couldn’t get this video from YouTube. It may be private, removed, or restricted."],
-    ["not_for_kids", "YouTube doesn’t list this video as made for kids, so we can’t check it."],
-    ["too_short", "This video is too short to measure: we need at least 90 seconds."],
+    ["too_short", "This video is too short to measure: we need at least 60 seconds."],
     ["live", "We can’t measure live streams or premieres that haven’t aired yet."],
   ] as const)("explains a failure (%s) and stops polling", async (error, text) => {
     vi.mocked(startAnalysis).mockResolvedValue(analysis());

@@ -21,7 +21,6 @@ from hyperstim_api.analysis import (
     Record,
     TooManyRequests,
     _limit_cores,
-    check_made_for_kids,
     estimate,
     parse_features,
     parse_lookup,
@@ -266,7 +265,6 @@ def test_over_the_day_limit_does_not_count_toward_the_ip_limit(tmp_path: Path) -
     ("step", "code"),
     [
         ("lookup", "unavailable"),
-        ("lookup", "not_for_kids"),
         ("lookup", "too_short"),
         ("lookup", "live"),
         ("download", "unavailable"),
@@ -345,6 +343,19 @@ def test_unreadable_files_are_skipped(
     assert client.get(f"/api/analyses/{live(1)}").status_code == 404
 
 
+def test_a_stored_code_no_longer_sent_reads_as_failed(
+    dataset: Path, make_client: Callable[..., TestClient], tmp_path: Path
+) -> None:
+    folder = tmp_path / "analyses"
+    folder.mkdir()
+    stored = {"id": live(1), "status": "failed", "status_since": 1.0, "requested_at": 1.0}
+    (folder / f"{live(1)}.json").write_text(json.dumps({**stored, "error": "not_for_kids"}))
+    client = make_client(dataset, analysis_dir=folder)
+    response = client.get(f"/api/analyses/{live(1)}")
+    assert (response.status_code, response.json()["error"]) == (200, "failed")
+    assert client.post(f"/api/analyses/{live(1)}").json()["status"] == "queued"
+
+
 def test_unknown_and_malformed_ids(client: TestClient) -> None:
     unknown = client.get(f"/api/analyses/{live(1)}")
     assert (unknown.status_code, unknown.json()) == (404, {"detail": "Analysis not found"})
@@ -401,6 +412,17 @@ def test_parse_lookup() -> None:
     assert (info.title, info.channel_id, info.channel) == ("T", "UC1", "C")
 
 
+def test_parse_lookup_takes_a_one_minute_video_but_not_shorter() -> None:
+    parse_lookup(live(1), lookup_json(duration=60))  # plan 004, 2026-11-23 (was 90 s)
+    with pytest.raises(AnalysisError) as raised:
+        parse_lookup(live(1), lookup_json(duration=59))
+    assert raised.value.code == "too_short"
+
+
+def test_thirty_videos_can_wait() -> None:
+    assert MAX_QUEUE == 30  # plan 004, 2026-11-23 (was 10)
+
+
 @pytest.mark.parametrize(
     ("out", "code"),
     [
@@ -415,30 +437,6 @@ def test_parse_lookup() -> None:
 def test_parse_lookup_refusals(out: str, code: str) -> None:
     with pytest.raises(AnalysisError) as raised:
         parse_lookup(live(1), out)
-    assert raised.value.code == code
-
-
-def videos_api_json(*items: object) -> str:
-    return json.dumps({"kind": "youtube#videoListResponse", "items": list(items)})
-
-
-def test_check_made_for_kids() -> None:
-    check_made_for_kids(live(1), videos_api_json({"status": {"madeForKids": True}}))
-
-
-@pytest.mark.parametrize(
-    ("body", "code"),
-    [
-        (videos_api_json({"status": {"madeForKids": False}}), "not_for_kids"),
-        (videos_api_json({"status": {}}), "not_for_kids"),
-        (videos_api_json(), "unavailable"),  # private or removed
-        ("not json", "failed"),
-        ("[]", "failed"),
-    ],
-)
-def test_check_made_for_kids_refusals(body: str, code: str) -> None:
-    with pytest.raises(AnalysisError) as raised:
-        check_made_for_kids(live(1), body)
     assert raised.value.code == code
 
 

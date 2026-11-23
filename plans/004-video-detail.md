@@ -1,7 +1,7 @@
 # 004 — Video detail page
 
 **Area:** Video page (`/video`), its endpoint and live analysis.
-**Status:** done (2026-10-14). Changes planned 2026-10-26: the player grows when played, the channel name as a pill, the score number centred (steps 10–12); the grow animation, the kid ducking and the player's size (steps 13–14). Changes planned 2026-10-28: the title stays left-aligned while the video plays (steps 15–16).
+**Status:** done (2026-10-14). Changes planned 2026-10-26: the player grows when played, the channel name as a pill, the score number centred (steps 10–12); the grow animation, the kid ducking and the player's size (steps 13–14). Changes planned 2026-10-28: the title stays left-aligned while the video plays (steps 15–16). Change planned 2026-11-23: the live analysis takes any video of 60 s or more (step 18).
 
 ## Goal
 
@@ -247,15 +247,15 @@ _(human decision: “Check a video” should actually work, by running the downl
 
 - **Starts on its own.** When `GET /api/videos/{id}` says 404, the page starts the analysis (no extra click): the person already asked for this video in the check-a-video form. Starting is idempotent per video ID: a second visitor, a reload, or coming back later to the same link joins the running analysis or gets the stored result. So the link can be closed and reopened.
 - **The research pipeline, unchanged.** The backend runs the two scripts in `backend/pipeline/` as subprocesses, exactly as the README's usage shows (one-row manifest, `--workers 1`, no download delays, `derive` with its default thresholds), so live features are measured like the dataset's. Steps for one video:
-  1. **Look up**. First YouTube's "made for kids" flag (`status.madeForKids`, YouTube Data API `videos.list`, 1 quota unit, ~0.1 s; yt-dlp doesn't expose it): refuse a video without it, like the dataset's sampling did _(human decision: same filter as the dataset)_. The key is `YOUTUBE_API_KEY`; unset, the check is off and the API logs a warning at startup (local development). Then yt-dlp (metadata only, no download): title, channel, channel ID, duration, live status. Refuse live streams / upcoming premieres and videos shorter than 90 s (the clip starts at 0:30; the old live API used the same minimum). No maximum, and Shorts are not refused, unlike the dataset's 120–3600 s sampling _(human decision: 90 s and up is fine)_.
+  1. **Look up** with yt-dlp (metadata only, no download): title, channel, channel ID, duration, live status. Refuse live streams / upcoming premieres and videos shorter than 60 s (the clip starts at 0:30, so a 60 s video gives a 30 s clip). No maximum, Shorts are not refused, and the video needn't be made for kids, unlike the dataset's sampling (made for kids, 120–3600 s, no Shorts) _(human decision, 2026-11-23: relaxed from made for kids and 90 s; the API no longer calls the YouTube Data API or reads `YOUTUBE_API_KEY`, which only the collector uses)_.
   2. **Download** the clip (`58_download_clips_v2.py`): 5 minutes from 0:30, 360p. Only that section is fetched (yt-dlp `--download-sections`), so the time doesn't grow with the video's length: ~14 s for videos from 2 minutes to 3 hours (timed 2026-10-14).
   3. **Measure** (`04_extract_features_v2.py extract`, then `derive`): the 12 features. Limited to 4 of the server's cores _(human decision: more cores barely help; timed 2026-10-14 per video: 1 core 32 s, 2 28 s, 4 26 s, 8 26 s, since the motion pass is single-threaded and only ffmpeg's decoding uses more)_.
   4. **Score** against the dataset (below), store, delete the clip and the cache.
 - **Never part of the dataset** _(human decision)_. A live video is scored against the dataset's pools (each feature's percentile in the dataset, its composite's percentile among the dataset's composites), the same way `scoring.py` already describes. The pools, the dataset's scores, the rankings and the video count never change. If a video later joins the dataset, its dataset row wins.
 - **Stored as plain files, one JSON file per video** (`ANALYSIS_DIR/<video_id>.json`) _(human decision: no SQLite, plain file reads and writes are enough for this lightweight task)_: status, stage times, title, channel, channel ID, the 12 raw features, error, timestamps. Written to a temporary file and renamed into place, so a reader never sees a half-written file. Writes go through one lock (the request that queues a video writes its first state; the analysis thread the rest). Raw values only; percentiles are computed on each read, so they follow the dataset if it is re-imported. No visitor data (no IP, no cookie) is stored.
 - **Kept until removed by hand** (delete the file) _(human decision)_; the privacy policy says requested video IDs are stored.
-- **One analysis at a time,** in a background thread of the API process; the others wait in a first-in, first-out queue. Queue full (10 waiting) → 503 _(human decision)_. The API must run as a single process (no `--workers`) for this; the README says so.
-- **Limits: per IP, plus a site-wide daily cap** _(human decision, 2026-10-17, plan 010: many IPs together could use up the YouTube API quota)_. Site-wide: at most `ANALYSIS_LIMIT_PER_DAY` new analyses (prod 1,000 _(human decision, 2026-10-17: too strict)_) in 24 hours from all visitors together; over it, the same `503 Busy` as a full queue. It's counted from the stored analyses' request times (no IPs), so a restart doesn't reset it. Per IP: 20 new analyses per IP address per hour _(human decision, 2026-10-17: too strict)_; was the old API's 5). The compare page's channel lookups that have to ask YouTube count toward the same limit _(human decision, 2026-10-16)_ (plan 008). No cookies: they wouldn't stop abuse (cleared at will, blocked across sites). The counts live in memory only, for at most an hour, never stored; the privacy policy says so. Requests for a stored or running video don't count. Behind the reverse proxy, uvicorn runs with `--proxy-headers` so the limit sees the visitor's IP (README). Set by `ANALYSIS_LIMIT_PER_IP` (new analyses per hour; `0` = off). Off for local development (`dev.sh`, `.env.example`) _(human decision: so it doesn't interfere with debugging)_.
+- **One analysis at a time,** in a background thread of the API process; the others wait in a first-in, first-out queue. Queue full (30 waiting) → 503 _(human decision, 2026-11-23: 10 could turn away a first-time visitor; at ~45 s a video, 30 is a ~20-minute wait, and the page shows the place in line)_. The API must run as a single process (no `--workers`) for this; the README says so.
+- **Limits: per IP, plus a site-wide daily cap** _(human decision, 2026-10-17, plan 010: many IPs together could use up the YouTube API quota)_. Site-wide: at most `ANALYSIS_LIMIT_PER_DAY` new analyses (prod 1,000 _(human decision, 2026-10-17: too strict)_) in 24 hours from all visitors together; over it, the same `503 Busy` as a full queue. It's counted from the stored analyses' request times (no IPs), so a restart doesn't reset it. Per IP: 60 new analyses per IP address per hour _(human decision, 2026-11-23: 20 could turn away a first-time visitor sharing an IP, e.g. at a school or on a mobile network; earlier 20, 2026-10-17, and the old API's 5)_. The daily cap stays at 1,000 _(human decision, 2026-11-23)_: without the Data API it no longer guards a quota, but live downloads share the server's IP with the collector, so a burst could get both blocked by YouTube. The compare page's channel lookups that have to ask YouTube count toward the same limit _(human decision, 2026-10-16)_ (plan 008). No cookies: they wouldn't stop abuse (cleared at will, blocked across sites). The counts live in memory only, for at most an hour, never stored; the privacy policy says so. Requests for a stored or running video don't count. Behind the reverse proxy, uvicorn runs with `--proxy-headers` so the limit sees the visitor's IP (README). Set by `ANALYSIS_LIMIT_PER_IP` (new analyses per hour; `0` = off). Off for local development (`dev.sh`, `.env.example`) _(human decision: so it doesn't interfere with debugging)_.
 - **Timeouts:** look-up 1 min, download 15 min (the script tries three YouTube clients, 5 min each), measure 10 min. A timeout fails the analysis.
 - **Restart:** at startup the backend reads the folder; analyses that were waiting or running when the API stopped start again from the beginning. The queue itself lives in memory.
 - **Failed analyses** stay stored with their reason, so the page can explain; requesting the video again retries it (counts toward the limit).
@@ -284,17 +284,17 @@ Analysis = {
   queuePosition: number | null,  // videos ahead, while queued
   progress: number,              // 0–1, the estimate above
   remainingS: number | null,     // estimated seconds left; null when queued or done
-  error: "unavailable" | "not_for_kids" | "too_short" | "live" | "failed" | null
+  error: "unavailable" | "too_short" | "live" | "failed" | null
 }
 ```
 
-`unavailable`: the look-up or download failed (private, removed, age- or region-restricted, or YouTube refused). `not_for_kids`: YouTube doesn't mark it as made for kids. `failed`: measuring failed or timed out, or the Data API couldn't be reached.
+`unavailable`: the look-up or download failed (private, removed, age- or region-restricted, or YouTube refused). `failed`: measuring failed or timed out. (`not_for_kids` was dropped 2026-11-23; stored results with it are re-run when the video is opened, like any failed one.)
 
 ### Backend
 
 - `analysis.py`: the queue, worker thread, the JSON file store, the pipeline runs (subprocess, temp folder per video under `ANALYSIS_DIR`, always deleted), and the progress estimate. `scoring.py` gains nothing new: `feature_percentiles` and `percentile_rank` against the existing pools; `Dataset` keeps its sorted composite pool for this.
-- New env vars (`.env.example`, README, `dev.sh`): `ANALYSIS_DIR` (the result files + temporary clips; outside the repo or git-ignored), `YTDLP_COOKIES` (optional path to a cookies file for yt-dlp, as the research download uses; never committed), `ANALYSIS_LIMIT_PER_IP` (optional; default 5 when unset, so a server that forgets it is still limited; `0` in `.env.example` and `dev.sh`), `YOUTUBE_API_KEY` (for the made-for-kids check; a secret, never committed; set on the server).
-- Tests with the pipeline replaced by a fake runner (no network, no ffmpeg): start → queued → stages → done; idempotent start; queue position; queue full → 503; limit → 429 (stored videos don't count; `0` = off); dataset video → done; too short / live / unavailable / not for kids / failed mapping; restart resumes; the temp folder is deleted after success and failure; a live result through `GET /api/videos/{id}` has percentiles against the dataset pools, and `/api/meta`, rankings and the dataset videos' scores are unchanged. Plus one real end-to-end run by hand during review (not in CI).
+- New env vars (`.env.example`, README, `dev.sh`): `ANALYSIS_DIR` (the result files + temporary clips; outside the repo or git-ignored), `YTDLP_COOKIES` (optional path to a cookies file for yt-dlp, as the research download uses; never committed), `ANALYSIS_LIMIT_PER_IP` (optional; default 60 when unset, so a server that forgets it is still limited; `0` in `.env.example` and `dev.sh`), `YOUTUBE_API_KEY` (the collector's only since 2026-11-23, plan 013).
+- Tests with the pipeline replaced by a fake runner (no network, no ffmpeg): start → queued → stages → done; idempotent start; queue position; queue full → 503; limit → 429 (stored videos don't count; `0` = off); dataset video → done; too short / live / unavailable / failed mapping; a stored code the API no longer sends reads as `failed`; restart resumes; the temp folder is deleted after success and failure; a live result through `GET /api/videos/{id}` has percentiles against the dataset pools, and `/api/meta`, rankings and the dataset videos' scores are unchanged. Plus one real end-to-end run by hand during review (not in CI).
 
 ### Design
 
@@ -306,7 +306,7 @@ The look of the old "We haven’t checked this video yet" state, now saying the 
 │            Checking this video…                  │
 │                                                  │
 │      ✓ Looking up the video                      │
-│      ● Downloading a 5-minute clip               │
+│      ● Downloading a clip of up to 5 minutes     │
 │      ○ Measuring                                 │
 │        [██████████░░░░░░░░░░░░░░░░░░░░]          │
 │                About 1 min left                  │
@@ -328,22 +328,21 @@ The look of the old "We haven’t checked this video yet" state, now saying the 
 | H1 | Checking this video… |
 | Queued | {2} videos ahead of yours. (1: “1 video ahead of yours.”) |
 | Step 1 | Looking up the video |
-| Step 2 | Downloading a 5-minute clip |
+| Step 2 | Downloading a clip of up to 5 minutes _(human decision, 2026-11-23: a video can be as short as 60 s)_ |
 | Step 3 | Measuring |
 | Time left | About {1} min left · Less than a minute left |
 | `unavailable` | We couldn’t get this video from YouTube. It may be private, removed, or restricted. |
-| `not_for_kids` | YouTube doesn’t list this video as made for kids, so we can’t check it. _(human decision)_ |
-| `too_short` | This video is too short to measure: we need at least 90 seconds. |
+| `too_short` | This video is too short to measure: we need at least 60 seconds. _(human decision, 2026-11-23)_ |
 | `live` | We can’t measure live streams or premieres that haven’t aired yet. |
 | `failed` | Something went wrong while measuring this video. |
 | 503 | We’re checking a lot of videos right now. Please try again in a few minutes. |
 | 429 | You’ve checked several new videos in the last hour. Please try again later. |
 | Failed-state links | Check another video → · Watch on YouTube ↗ |
-| Live region | Downloading a 5-minute clip · Measuring · Done |
+| Live region | Downloading a clip of up to 5 minutes · Measuring · Done |
 
 ### Mocks
 
-Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, then shows a mock result; `mockVidFail`, `mockNotKids`, `mockVidShrt`, `mockVidLive` and `mockVidErrr` fail as `unavailable`, `not_for_kids`, `too_short`, `live` and `failed`, `mockVidWait` sits in the queue for a few seconds, `mockVidBusy` gets 503 and `mockVid0429` gets 429.
+Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, then shows a mock result; `mockVidFail`, `mockVidShrt`, `mockVidLive` and `mockVidErrr` fail as `unavailable`, `too_short`, `live` and `failed`, `mockVidWait` sits in the queue for a few seconds, `mockVidBusy` gets 503 and `mockVid0429` gets 429.
 
 ## Steps
 
@@ -364,6 +363,7 @@ Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, t
 15. **Title stays left while playing** (2026-10-28). The header keeps the full content width while playing: title and channel line left-aligned, the shrink button (replacing ×) at the line's right end, the player centred under them at the screen-fitting width; the grow and the score panel's slide unchanged; `STYLE.md` (Video header); tests (while playing the title's left edge stays where it was, the player is centred, "Shrink video" closes it).
 16. **Review.** Recordings at 360, 768 and 1280 px, screenshots at 1280 × 800 and 1920 × 1080 while playing. Stop for review.
 17. **Safari and phone fixes** (2026-10-30, plan 017). The player plays inline on iPhone (`playsinline=1`). `PLAYER_WIDTH` uses `svh`, so a playing video doesn't resize as the mobile toolbar hides. The score's info popover draws over the measurement rows below `lg` (`z-10` on its wrapper), and every info popover shifts to stay 16 px inside the screen (it stuck out at 320 px). `STYLE.md` (Video header, Score gauge, Popover); tests.
+18. **Relaxed live-analysis rules** (2026-11-23). Backend: drop the made-for-kids check (`check_made_for_kids`, the Data API call, `youtube_api_key` in `config.py` and `main.py`, its startup warning) and the `not_for_kids` code; `MIN_DURATION_S` 90 → 60. A stored result with `not_for_kids` reads as `failed` (otherwise `GET /api/analyses/{id}` would fail the response check), so the page offers to try again. Frontend: drop `not_for_kids` from `api.ts`, `LiveAnalysis.tsx` and the mock (`mockNotKids`); "at least 60 seconds"; step 2 "Downloading a clip of up to 5 minutes". Docs: `backend/README.md`, `.env.example` (the key is the collector's only). Plan 006's lead and its FAQ answer "We measure up to 5 minutes". Tests: a 60 s video is accepted and 59 s refused; a video not made for kids is analyzed; no Data API request. Limits: `MAX_QUEUE` 10 → 30, `DEFAULT_LIMIT_PER_IP` 20 → 60, `ANALYSIS_LIMIT_PER_IP="60"` in `deploy/server.env.example`, and the same in the server's env file (by the team at deploy). No privacy policy change: the Data API call only sent video IDs from our server, and the policy never mentioned it.
 
 ## Review decisions
 
@@ -379,6 +379,7 @@ Human decisions applied to the sketches, which can't carry an inline mark:
 
 8. **Desktop sketch** (2026-10-28): the playing state's × is the shrink icon (⤡) (see **Elements**: video preview).
 9. **Desktop and phone sketches** (2026-11-09): the dial's end labels read “less” / “more” (short for “less stimulating” / “more stimulating”, on two lines on the page) instead of “calm” / “intense” (see **Elements**: gauge column; **Copy**: dial end labels).
+10. **Live analysis sketch** (2026-11-23): step 2 reads “Downloading a clip of up to 5 minutes” (see **Live analysis → Copy**: Step 2).
 
 ## Open questions
 

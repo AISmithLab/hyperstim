@@ -5,16 +5,13 @@ part, and `urlopen` / `subprocess.run` by stand-ins. `_run` itself runs small re
 processes.
 """
 
-import io
 import json
 import subprocess
 import sys
 import threading
 import time
-import urllib.error
 import urllib.request
 from collections.abc import Callable
-from email.message import Message
 from pathlib import Path
 from typing import Any
 
@@ -34,7 +31,6 @@ from hyperstim_api.scoring import FEATURES
 from tests.conftest import FakePipeline
 
 VIDEO = "abcdefghijk"
-KEY = "secret-api-key"
 
 Script = Callable[[list[str]], str]
 
@@ -121,97 +117,18 @@ def test_lookup_failure_is_unavailable(script: Script, detail: str) -> None:
     assert str(exc.value) == detail
 
 
-# The made-for-kids check (YouTube Data API)
+# No made-for-kids check (plan 004, 2026-11-23)
 
 
-class FakeResponse(io.BytesIO):
-    def __enter__(self) -> "FakeResponse":
-        return self
+def test_lookup_asks_only_yt_dlp(monkeypatch: pytest.MonkeyPatch) -> None:
+    def no_network(*args: object, **kwargs: object) -> None:
+        raise AssertionError("the look-up must not call the YouTube Data API")
 
-    def __exit__(self, *args: object) -> None:
-        self.close()
-
-
-def made_for_kids(value: bool) -> bytes:
-    return json.dumps({"items": [{"status": {"madeForKids": value}}]}).encode()
-
-
-@pytest.fixture
-def urlopen(monkeypatch: pytest.MonkeyPatch) -> list[urllib.request.Request]:
-    """Answers every Data API request with "made for kids"; returns the requests."""
-    requests: list[urllib.request.Request] = []
-
-    def fake(request: urllib.request.Request, timeout: float) -> FakeResponse:
-        requests.append(request)
-        return FakeResponse(made_for_kids(True))
-
-    monkeypatch.setattr(urllib.request, "urlopen", fake)
-    return requests
-
-
-def test_lookup_checks_made_for_kids_with_the_key_in_a_header(
-    urlopen: list[urllib.request.Request],
-) -> None:
-    pipeline = ResearchPipeline(youtube_api_key=KEY)
-    with_run(pipeline, lambda cmd: LOOKUP_OK)
-    pipeline.lookup(VIDEO)
-    [request] = urlopen
-    assert request.get_header("X-goog-api-key") == KEY
-    assert KEY not in request.full_url
-    assert VIDEO in request.full_url
-
-
-def test_lookup_skips_the_check_without_a_key(urlopen: list[urllib.request.Request]) -> None:
+    monkeypatch.setattr(urllib.request, "urlopen", no_network)
     pipeline = ResearchPipeline()
-    with_run(pipeline, lambda cmd: LOOKUP_OK)
-    pipeline.lookup(VIDEO)
-    assert urlopen == []
-
-
-def test_lookup_refuses_a_video_not_made_for_kids_before_yt_dlp(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.setattr(
-        urllib.request,
-        "urlopen",
-        lambda request, timeout: FakeResponse(made_for_kids(False)),
-    )
-    pipeline = ResearchPipeline(youtube_api_key=KEY)
     run = with_run(pipeline, lambda cmd: LOOKUP_OK)
-    with pytest.raises(AnalysisError) as exc:
-        pipeline.lookup(VIDEO)
-    assert exc.value.code == "not_for_kids"
-    assert run.calls == []
-
-
-@pytest.mark.parametrize(
-    "error",
-    [
-        urllib.error.URLError("no route"),
-        TimeoutError("timed out"),
-        urllib.error.HTTPError(
-            "https://www.googleapis.com/",
-            403,
-            "Forbidden",
-            Message(),
-            None,
-        ),
-    ],
-)
-def test_data_api_failure_is_failed_and_does_not_leak_the_key(
-    monkeypatch: pytest.MonkeyPatch, error: Exception
-) -> None:
-    def fake(request: urllib.request.Request, timeout: float) -> FakeResponse:
-        raise error
-
-    monkeypatch.setattr(urllib.request, "urlopen", fake)
-    pipeline = ResearchPipeline(youtube_api_key=KEY)
-    with_run(pipeline, lambda cmd: LOOKUP_OK)
-    with pytest.raises(AnalysisError) as exc:
-        pipeline.lookup(VIDEO)
-    assert exc.value.code == "failed"
-    assert str(exc.value).startswith("YouTube Data API:")
-    assert KEY not in str(exc.value)
+    pipeline.lookup(VIDEO)
+    assert len(run.calls) == 1
 
 
 # download

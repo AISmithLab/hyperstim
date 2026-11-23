@@ -16,14 +16,13 @@ export const GIVE_UP_MS = 30_000;
 
 export const STEPS = [
   { status: "lookup", label: "Looking up the video" },
-  { status: "download", label: "Downloading a 5-minute clip" },
+  { status: "download", label: "Downloading a clip of up to 5 minutes" },
   { status: "measure", label: "Measuring" },
 ] as const;
 
 const FAILED: Record<AnalysisErrorCode, string> = {
   unavailable: "We couldn’t get this video from YouTube. It may be private, removed, or restricted.",
-  not_for_kids: "YouTube doesn’t list this video as made for kids, so we can’t check it.",
-  too_short: "This video is too short to measure: we need at least 90 seconds.",
+  too_short: "This video is too short to measure: we need at least 60 seconds.",
   live: "We can’t measure live streams or premieres that haven’t aired yet.",
   failed: "Something went wrong while measuring this video.",
 };

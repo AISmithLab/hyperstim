@@ -76,7 +76,7 @@ def run(s: Settings) -> None:
         store.add_units(day, units)
 
     reference = load_dataset(Path(_required("DATASET_PATH")))
-    pipeline = ResearchPipeline(youtube_api_key=None, measure_cores=1)  # no cookies (plan 013)
+    pipeline = ResearchPipeline(measure_cores=1)  # no cookies (plan 013)
     collector = Collector(
         s,
         store,
