@@ -1,4 +1,5 @@
 date	videos	channels	ch_ready	ch_left_out	ch_held	ch_yr_2nd	ch_yr_med	added_v	removed_v	new_ch	removed_ch	note
+2026-11-22	17584	607	147	450	74	2.30	4.75	77	0	2	0	
 2026-11-21	17507	605	147	446	73	2.26	4.75	78	0	1	0	ch_held also counts channels whose thin years have nothing ready
 2026-11-20	17429	604	150	442	73	2.19	4.75	93	0	0	0	
 2026-11-19	17336	604	139	440	73	2.03	4.75	92	0	0	0	
