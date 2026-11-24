@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" role="img">
-<title>HyperStim dataset: 17,584 videos and 607 channels on November 22, 2026</title>
+<title>HyperStim dataset: 17,670 videos and 609 channels on November 23, 2026</title>
 <rect width="800" height="380" rx="12" fill="#ffffff"/>
 <text x="24.0" y="36.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#0f2e8a" text-anchor="start" font-weight="700">HyperStim dataset</text>
-<text x="776.0" y="36.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#4a5262" text-anchor="end">updated Nov 22, 2026</text>
+<text x="776.0" y="36.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#4a5262" text-anchor="end">updated Nov 23, 2026</text>
 <line x1="24" x2="48" y1="62" y2="62" stroke="#2f5fd0" stroke-width="3" stroke-linecap="round"/>
-<text x="56.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#4a5262" text-anchor="start"><tspan font-weight="700" fill="#0f2e8a">17,584</tspan> videos (left axis)</text>
+<text x="56.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#4a5262" text-anchor="start"><tspan font-weight="700" fill="#0f2e8a">17,670</tspan> videos (left axis)</text>
 <line x1="300" x2="324" y1="62" y2="62" stroke="#d9603f" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 5"/>
-<text x="332.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#4a5262" text-anchor="start"><tspan font-weight="700" fill="#0f2e8a">607</tspan> channels (right axis)</text>
+<text x="332.0" y="67.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#4a5262" text-anchor="start"><tspan font-weight="700" fill="#0f2e8a">609</tspan> channels (right axis)</text>
 <text x="62.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="end">14,000</text>
 <text x="738.0" y="334.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="start">450</text>
 <line x1="70" x2="730" y1="271.5" y2="271.5" stroke="#0f2e8a" stroke-opacity="0.10"/>
@@ -24,22 +24,18 @@
 <line x1="70" x2="730" y1="330" y2="330" stroke="#0f2e8a" stroke-opacity="0.30"/>
 <line x1="70.0" x2="70.0" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
 <text x="70.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Oct 25</text>
-<line x1="164.3" x2="164.3" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
-<text x="164.3" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Oct 29</text>
-<line x1="258.6" x2="258.6" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
-<text x="258.6" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 2</text>
-<line x1="352.9" x2="352.9" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
-<text x="352.9" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 6</text>
-<line x1="447.1" x2="447.1" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
-<text x="447.1" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 10</text>
-<line x1="541.4" x2="541.4" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
-<text x="541.4" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 14</text>
-<line x1="635.7" x2="635.7" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
-<text x="635.7" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 18</text>
-<line x1="730.0" x2="730.0" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
-<text x="730.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 22</text>
-<path d="M70.0,307.8 L93.6,304.3 L117.1,284.4 L140.7,264.5 L164.3,203.6 L187.9,201.3 L211.4,200.1 L235.0,197.8 L258.6,195.5 L282.1,191.9 L305.7,188.4 L329.3,184.9 L352.9,182.6 L376.4,180.2 L400.0,176.7 L423.6,173.2 L447.1,170.9 L470.7,168.5 L494.3,165.0 L517.9,161.5 L541.4,160.3 L565.0,159.2 L588.6,156.8 L612.1,153.3 L635.7,149.8 L659.3,149.8 L682.9,149.8 L706.4,148.7 L730.0,146.3" fill="none" stroke="#d9603f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 5"/>
-<circle cx="730.0" cy="146.3" r="4.5" fill="#d9603f" stroke="#ffffff" stroke-width="2"/>
-<path d="M70.0,277.6 L93.6,274.7 L117.1,267.0 L140.7,259.2 L164.3,252.3 L187.9,245.1 L211.4,238.5 L235.0,234.7 L258.6,232.3 L282.1,228.4 L305.7,224.2 L329.3,217.6 L352.9,211.1 L376.4,205.0 L400.0,197.9 L423.6,190.5 L447.1,185.4 L470.7,180.4 L494.3,174.4 L517.9,167.8 L541.4,163.6 L565.0,157.6 L588.6,152.6 L612.1,146.1 L635.7,140.2 L659.3,134.8 L682.9,129.4 L706.4,124.8 L730.0,120.3" fill="none" stroke="#2f5fd0" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="730.0" cy="120.3" r="4.5" fill="#2f5fd0" stroke="#ffffff" stroke-width="2"/>
+<line x1="183.8" x2="183.8" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
+<text x="183.8" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Oct 30</text>
+<line x1="297.6" x2="297.6" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
+<text x="297.6" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 4</text>
+<line x1="411.4" x2="411.4" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
+<text x="411.4" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 9</text>
+<line x1="525.2" x2="525.2" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
+<text x="525.2" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 14</text>
+<line x1="639.0" x2="639.0" y1="330" y2="335" stroke="#0f2e8a" stroke-opacity="0.30"/>
+<text x="639.0" y="350.0" font-family="Nunito, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#4a5262" text-anchor="middle">Nov 19</text>
+<path d="M70.0,307.8 L92.8,304.3 L115.5,284.4 L138.3,264.5 L161.0,203.6 L183.8,201.3 L206.6,200.1 L229.3,197.8 L252.1,195.5 L274.8,191.9 L297.6,188.4 L320.3,184.9 L343.1,182.6 L365.9,180.2 L388.6,176.7 L411.4,173.2 L434.1,170.9 L456.9,168.5 L479.7,165.0 L502.4,161.5 L525.2,160.3 L547.9,159.2 L570.7,156.8 L593.4,153.3 L616.2,149.8 L639.0,149.8 L661.7,149.8 L684.5,148.7 L707.2,146.3 L730.0,144.0" fill="none" stroke="#d9603f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 5"/>
+<circle cx="730.0" cy="144.0" r="4.5" fill="#d9603f" stroke="#ffffff" stroke-width="2"/>
+<path d="M70.0,277.6 L92.8,274.7 L115.5,267.0 L138.3,259.2 L161.0,252.3 L183.8,245.1 L206.6,238.5 L229.3,234.7 L252.1,232.3 L274.8,228.4 L297.6,224.2 L320.3,217.6 L343.1,211.1 L365.9,205.0 L388.6,197.9 L411.4,190.5 L434.1,185.4 L456.9,180.4 L479.7,174.4 L502.4,167.8 L525.2,163.6 L547.9,157.6 L570.7,152.6 L593.4,146.1 L616.2,140.2 L639.0,134.8 L661.7,129.4 L684.5,124.8 L707.2,120.3 L730.0,115.3" fill="none" stroke="#2f5fd0" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="730.0" cy="115.3" r="4.5" fill="#2f5fd0" stroke="#ffffff" stroke-width="2"/>
 </svg>
