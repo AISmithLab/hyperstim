@@ -59,6 +59,7 @@ def test_videos_most_stimulating_first(client: TestClient) -> None:
         "channelId": "chan-c",
         "channel": "Channel chan-c",
         "category": "music",
+        "categories": ["music"],
         "rank": 1,
         "score": 100.0,
     }

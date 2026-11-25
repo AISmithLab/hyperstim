@@ -30,6 +30,11 @@ CATEGORIES: dict[str, str] = {
     "gaming": "gaming",
 }
 
+# Reviewed memberships keyed by video ID, shared by dataset loading and collector export.
+REVIEWED_CATEGORIES: dict[str, tuple[str, ...]] = {
+    "--7WJyWZf8A": ("music", "narrative"),
+}
+
 # Per-minute counts (plan 004). A count of 0 is the least stimulating value there is, so it shows as
 # percentile 0: in the pool thousands of videos tie at 0, and "at or below" puts them in the
 # middle (e.g. 60). Shown values only; the score uses the pool percentiles (scoring.py).
@@ -74,6 +79,13 @@ class Video:
     published_at: str | None  # ISO date; None for a video analyzed live
     added_at: str | None = None  # UTC, ISO 8601, when the collector added it; None: reference set
     removed_at: str | None = None  # when the collector took it out (offline); None: in
+    categories: tuple[str, ...] | None = None
+
+    @property
+    def memberships(self) -> tuple[str, ...]:
+        if self.categories is not None:
+            return self.categories
+        return (self.category,) if self.category else ()
 
     def visible(self, as_of: str | None) -> bool:
         """In the dataset now (`as_of` None), or at the time `as_of` (UTC, ISO 8601)."""
@@ -154,7 +166,7 @@ class Dataset:
             order,
             None
             if default
-            else lambda v: v.visible(as_of) and (category is None or v.category == category),
+            else lambda v: v.visible(as_of) and (category is None or category in v.memberships),
             query,
             offset,
             limit,
@@ -277,7 +289,7 @@ def _channel(members: list[Video]) -> Channel:
         score=sum(v.score for v in members) / len(members),
         features=tuple(features),
         videos=tuple(sorted(members, key=lambda v: (v.published_at or "", v.id))),
-        categories=frozenset(v.category for v in members if v.category is not None),
+        categories=frozenset(category for v in members for category in v.memberships),
         added_at=None
         if any(v.added_at is None for v in members)
         else min(v.added_at for v in members if v.added_at is not None),
@@ -303,6 +315,14 @@ def _category(path: Path, raw: str) -> str:
     if key is None:
         raise ValueError(f"{path}: unknown category {raw!r}")
     return key
+
+
+def _memberships(path: Path, row: dict[str, str]) -> tuple[str, ...] | None:
+    reviewed = REVIEWED_CATEGORIES.get(row["video_id"].strip())
+    if reviewed is not None:
+        return reviewed
+    raw = row.get("categories") or ""
+    return tuple(dict.fromkeys(_category(path, value) for value in raw.split(","))) if raw else None
 
 
 def meta_path(dataset_path: Path) -> Path:
@@ -385,7 +405,7 @@ def load_dataset(path: Path, collected_dir: Path | None = None) -> Dataset:
             composite_pool,
         )
         assert video is not None  # every kept row has a feature value
-        videos.append(video)
+        videos.append(replace(video, categories=_memberships(path, row)))
     reference_count = len(videos)
     if collected_dir is not None:
         videos = _with_collected(videos, collected_dir, pools, composite_pool, names)
@@ -501,7 +521,9 @@ def _with_collected(
                 composite_pool,
             )
             if video is not None:
-                by_id[video_id] = replace(video, added_at=row["added_at"])
+                by_id[video_id] = replace(
+                    video, added_at=row["added_at"], categories=_memberships(path, row)
+                )
     for video_id, removed_at in removed.items():
         if video_id in by_id:
             by_id[video_id] = replace(by_id[video_id], removed_at=removed_at)

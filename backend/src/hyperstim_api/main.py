@@ -104,6 +104,7 @@ class FeatureValue(ApiModel):
 
 class RankedVideo(VideoSummary):
     category: str
+    categories: list[str]
     rank: int | None  # within its category, 1 = first in the list's order; None = no value
     features: list[FeatureValue]
 
@@ -200,6 +201,7 @@ def ranked_video(r: Ranked[Video]) -> RankedVideo:
         channel_id=v.channel_id,
         channel=v.channel,
         category=v.category or "",
+        categories=list(v.memberships),
         rank=r.rank,
         score=round(v.score, 1),
         features=feature_values(v.features),

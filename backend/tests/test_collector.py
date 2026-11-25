@@ -1932,6 +1932,20 @@ def test_export_is_read_by_the_api(
     assert "CHANGELOG.tsv" not in [p.name for p in collected_files(folder)]
 
 
+def test_export_keeps_reviewed_memberships_for_existing_rows(tmp_path: Path) -> None:
+    store = make_store(tmp_path)
+    video_id = "--7WJyWZf8A"
+    added(store, CHANNEL, video_id, NOW)
+    store.db.execute("UPDATE collected SET category = 'music' WHERE video_id = ?", (video_id,))
+    folder = tmp_path / "collected"
+    for _ in range(2):
+        export(store, folder, NOW + 60)
+        with (folder / "2026.tsv").open(newline="", encoding="utf-8") as fh:
+            row = next(csv.DictReader(fh, delimiter="\t"))
+        assert row["category"] == "music"
+        assert row["categories"] == "music,narrative"
+
+
 def test_videos_picked_under_rule_v1_keep_their_provenance(tmp_path: Path) -> None:
     store = make_store(tmp_path)
     for video_id, pick in (("old00000001", "floor"), ("old00000002", "sample")):

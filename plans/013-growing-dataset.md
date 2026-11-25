@@ -533,6 +533,13 @@ By hand (the team), in order:
     - Tests (pytest): a catching-up channel with only put-off uploads doesn't stop a first video (fails without the change); with a ready upload it still goes first; a "removed by the uploader" failure missing from the fake API becomes `ineligible` / `gone` and isn't retried (fails without the change); the same error with the video still listed, or with the API failing, gets the 1-day retry; an "exit 0 but wrote 262 B" failure gets the retry and no API call; a gone video doesn't add to the failures in a row; the start-up pass settles a waiting gone upload and leaves a waiting empty-file one, and a gone-error one listed again, alone; `status` counts a settled one for 30 days.
     - Stop for review; deployed with the next release.
 
+## Reviewed category memberships (2026-11-24)
+
+- Show the reviewed Pinkfong upload (`--7WJyWZf8A`) under Music and Narrative because it opens with a story and ends with a featured song. Show it once in All _(human decision)_.
+- Keep the primary category for older clients. On dataset load and collector export, apply the reviewed memberships by video ID. Legacy rows use the primary category when no list or override exists.
+- Filter video and channel rankings by membership (plan 007). Verify both filters and All on the built site against the real backend, and check that repeated collector exports retain the correction.
+- Broader classifier selection remains open pending evaluation on held-out channels.
+
 ## Review decisions
 
 Decisions made while building (2026-10-26), each in its spot above where it fits there:
