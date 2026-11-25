@@ -162,9 +162,11 @@ DOM order: H1 + intro → rankings card (search + view switch, category chips, r
 
 ## API contract (frontend `api.ts` ↔ backend)
 
+- **Category classification update** (2026-11-24, plan 013) _(human decision)_. The backend filters video and channel rankings by category memberships. A video qualifies for each applicable filter and appears once in All. A channel qualifies once if any of its videos belongs to the selected category. Keep existing filter URLs and accept legacy single-category data during rollout. Verify on the built site against the real backend that the reviewed Pinkfong example appears under Narrative and Music and once in All.
+
 ```
 GET /api/videos?sort=score|<feature key>&order=desc|asc&category=<key>&q=<text>&offset=0&limit=25
-  → { items: [{ id, title, channelId, channel, category,               // category: key, e.g. "play"
+  → { items: [{ id, title, channelId, channel, category, categories,   // category keys, e.g. "play"
                 rank: number | null,                 // by `sort` within `category`, 1 = first in `order`; null = no value
                 score: number,                       // 0–100, 1 decimal
                 features: [{ key, value, percentile }] }],   // the 12, as in GET /api/videos/{id}

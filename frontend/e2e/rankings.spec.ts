@@ -55,6 +55,25 @@ test.describe("rankings", () => {
     await expect(results(page).getByRole("link", { name: video.title, exact: true })).toBeVisible();
   });
 
+  test("the reviewed Pinkfong video appears once in All, Music, and Narrative", async ({ page }) => {
+    const query = new URLSearchParams({ q: "--7WJyWZf8A" });
+    await page.goto(`/rankings/?${query}`);
+    const video = results(page).getByRole("link", { name: /Police Car vs\. Thief.*S2 EP01.*Pinkfong/ });
+    await expect(video).toHaveCount(1);
+    const chips = page.getByRole("group", { name: "Category" }).filter({ visible: true });
+    for (const name of ["Music", "Narrative"]) {
+      if (await chips.isVisible()) {
+        await chips.getByRole("button", { name, exact: true }).click();
+      } else {
+        await page.getByRole("combobox", { name: "Category" }).selectOption({ label: name });
+      }
+      await expect(page).toHaveURL(new RegExp(`category%3A${name.toLowerCase()}`));
+      await page.reload();
+      await expect(page.getByText(new RegExp(`^Showing .* ${name.toLowerCase()} video for this link$`))).toBeVisible();
+      await expect(video).toHaveCount(1);
+    }
+  });
+
   test("a click anywhere in a table row opens its video", async ({ page, request }) => {
     test.skip(isPhone(), "phones get a list of cards");
     const [video] = await topVideos(request);

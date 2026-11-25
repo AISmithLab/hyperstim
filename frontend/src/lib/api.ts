@@ -79,6 +79,7 @@ export type ChannelDetail = {
 export type RankedVideo = VideoSummary & {
   /** Category key (see `CATEGORIES`). */
   category: string;
+  categories?: string[];
   /** Place by the ranking's criterion within its category, 1 = first in the order asked for (the
    * most stimulating, or with `asc` the least stimulating); null = no value. */
   rank: number | null;

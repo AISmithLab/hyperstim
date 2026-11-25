@@ -39,7 +39,7 @@ from hyperstim_api.collector import notes, sampling
 from hyperstim_api.collector.seed import tier
 from hyperstim_api.collector.store import IN_STATES, KEPT, Store, Upload
 from hyperstim_api.collector.youtube import ApiError, DataApi, OutOfUnits, quota_day
-from hyperstim_api.dataset import LEFT_OUT_FILE, Dataset
+from hyperstim_api.dataset import LEFT_OUT_FILE, REVIEWED_CATEGORIES, Dataset
 from hyperstim_api.thumbnails import OFFLINE_HINTS
 
 log = logging.getLogger(__name__)
@@ -1186,6 +1186,7 @@ COLUMNS = (
     "video_id", "title", "channel_id", "channel_title", "category", "published_at",
     "duration_s", *scoring.FEATURES, "added_at", "r", "cutoff", "pick", "rule_version",
     "measured_by", "ytdlp_version", "ffmpeg_version", "pipeline_commit", "cache_version",
+    "categories",
 )  # fmt: skip
 
 
@@ -1213,6 +1214,9 @@ def export(
             "channel_id": row["channel_id"],
             "channel_title": row["channel_title"],
             "category": row["category"] or "",
+            "categories": ",".join(
+                CATEGORY_NAMES[key] for key in REVIEWED_CATEGORIES.get(row["video_id"], ())
+            ),
             "published_at": row["published_at"][:10],
             "duration_s": row["duration_s"] if row["duration_s"] is not None else "",
             "added_at": row["added_at"],

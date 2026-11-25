@@ -95,6 +95,28 @@ def test_counts_categories_and_removals(dataset_path: Path, collected: Path) -> 
     assert grown.channel_count_at(T2) == 4
 
 
+def test_reviewed_video_is_in_both_rankings(
+    tmp_path: Path, make_client: Callable[..., TestClient]
+) -> None:
+    video_id = "--7WJyWZf8A"
+    path = write_dataset(
+        tmp_path / "videos.tsv",
+        [video_row(video_id, "reviewed", 5.0), video_row("legacy", "legacy", 3.0)],
+    )
+    with make_client(path) as client:
+        for category in ("", "music", "narrative"):
+            params = {"category": category}
+            videos = client.get("/api/videos", params=params).json()["items"]
+            reviewed = [video for video in videos if video["id"] == video_id]
+            assert len(reviewed) == 1
+            assert reviewed[0]["category"] == "music"
+            assert reviewed[0]["categories"] == ["music", "narrative"]
+            legacy = [video["categories"] for video in videos if video["id"] == "legacy"]
+            assert legacy == ([] if category == "narrative" else [["music"]])
+            channels = client.get("/api/channels", params=params)
+            assert [row["id"] for row in channels.json()["items"]].count("reviewed") == 1
+
+
 def test_unknown_category_in_the_collected_files_is_an_error(
     dataset_path: Path, tmp_path: Path
 ) -> None:
