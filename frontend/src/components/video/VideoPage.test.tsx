@@ -12,7 +12,8 @@ import {
 } from "@/lib/api";
 import { FEATURE_GROUPS } from "@/lib/features";
 import { expectNoAxeViolations } from "@/test/axe";
-import { GIVE_UP_MS, POLL_MS } from "./LiveAnalysis";
+import { COPIED_MS } from "./CopyLink";
+import LiveAnalysis, { GIVE_UP_MS, POLL_MS, WAITING_POLL_MS } from "./LiveAnalysis";
 import VideoPage from "./VideoPage";
 
 let search = new URLSearchParams();
@@ -331,6 +332,7 @@ describe("VideoPage, a video not in the dataset", () => {
     ["unavailable", "We couldn’t get this video from YouTube. It may be private, removed, or restricted."],
     ["too_short", "This video is too short to measure: we need at least 60 seconds."],
     ["live", "We can’t measure live streams or premieres that haven’t aired yet."],
+    ["blocked", "We couldn’t download this video from YouTube. Please try again later."],
   ] as const)("explains a failure (%s) and stops polling", async (error, text) => {
     vi.mocked(startAnalysis).mockResolvedValue(analysis());
     vi.mocked(getAnalysis).mockResolvedValue(analysis({ status: "failed", error }));
@@ -403,5 +405,98 @@ describe("VideoPage, a video not in the dataset", () => {
     open(ID);
     await screen.findByText(/We couldn’t get this video from YouTube/, VISIBLE);
     await expectNoAxeViolations();
+  });
+
+  describe("waiting for YouTube", () => {
+    const WAITING_TEXT =
+      "YouTube is temporarily limiting our access to videos. We’ve queued your video for analysis and will process it as soon as possible. Please check back later to see your results.";
+    const waiting = () => analysis({ status: "waiting", progress: 0, remainingS: null });
+
+    function stubClipboard(writeText: (text: string) => Promise<void>) {
+      const spy = vi.fn(writeText);
+      Object.defineProperty(navigator, "clipboard", { value: { writeText: spy }, configurable: true });
+      return spy;
+    }
+
+    it("says the check waits, without steps or a bar, and polls once a minute", async () => {
+      vi.mocked(startAnalysis).mockResolvedValue(waiting());
+      vi.mocked(getAnalysis).mockResolvedValueOnce(waiting()).mockResolvedValue(analysis({ status: "lookup" }));
+      const { container } = open(ID);
+      expect(
+        await screen.findByRole("heading", { level: 1, name: "Your check is waiting in line" }),
+      ).toBeInTheDocument();
+      expect(screen.getByText(WAITING_TEXT, VISIBLE)).toBeInTheDocument();
+      expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
+      expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Copy link" })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /Check another video/ })).toHaveAttribute("href", "/");
+      await waitFor(() =>
+        expect(container.querySelector("[aria-live=polite]")).toHaveTextContent("Your check is waiting in line"),
+      );
+
+      await poll();
+      expect(getAnalysis).not.toHaveBeenCalled(); // not every 2 s
+      await act(() => vi.advanceTimersByTimeAsync(WAITING_POLL_MS - POLL_MS));
+      expect(getAnalysis).toHaveBeenCalledTimes(1);
+      await act(() => vi.advanceTimersByTimeAsync(WAITING_POLL_MS));
+      // Started: the steps are back, and screen readers hear it.
+      expect(await screen.findByRole("heading", { level: 1, name: "Checking this video…" })).toBeInTheDocument();
+      expect(screen.getAllByRole("listitem")).toHaveLength(3);
+      expect(container.querySelector("[aria-live=polite]")).toHaveTextContent(
+        "Checking this video. Looking up the video",
+      );
+    });
+
+    it("Copy link copies the page's address and says so", async () => {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+      const writeText = stubClipboard(() => Promise.resolve());
+      vi.mocked(startAnalysis).mockResolvedValue(waiting());
+      const { container } = open(ID);
+      const live = container.querySelector("[aria-live=polite]");
+      // The waiting announcement first, so it can't land after the copy's (as it could under fake timers).
+      await waitFor(() => expect(live).toHaveTextContent("Your check is waiting in line"));
+      await user.click(screen.getByRole("button", { name: "Copy link" }));
+      expect(writeText).toHaveBeenCalledWith(window.location.href);
+      expect(screen.getByRole("button", { name: "Link copied" })).toBeInTheDocument();
+      await waitFor(() => expect(live).toHaveTextContent("Link copied"));
+      await act(() => vi.advanceTimersByTimeAsync(COPIED_MS));
+      expect(screen.getByRole("button", { name: "Copy link" })).toBeInTheDocument();
+    });
+
+    it("says so when the browser won't copy", async () => {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+      stubClipboard(() => Promise.reject(new Error("not allowed")));
+      vi.mocked(startAnalysis).mockResolvedValue(waiting());
+      const { container } = open(ID);
+      const live = container.querySelector("[aria-live=polite]");
+      // The waiting announcement first, so it can't land after the copy's (as it could under fake timers).
+      await waitFor(() => expect(live).toHaveTextContent("Your check is waiting in line"));
+      await user.click(screen.getByRole("button", { name: "Copy link" }));
+      expect(await screen.findByRole("button", { name: "Couldn’t copy" })).toBeInTheDocument();
+      await waitFor(() => expect(live).toHaveTextContent("Couldn’t copy"));
+      expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+      await act(() => vi.advanceTimersByTimeAsync(COPIED_MS));
+      expect(screen.getByRole("button", { name: "Copy link" })).toBeInTheDocument();
+    });
+
+    it("has a compact form for a compare slot", async () => {
+      vi.mocked(startAnalysis).mockResolvedValue(waiting());
+      render(<LiveAnalysis id={ID} onDone={() => {}} announce={() => {}} compact />);
+      expect(
+        await screen.findByText(
+          "Your check is waiting in line: YouTube is temporarily limiting our access to videos. Please check back later to see your results.",
+        ),
+      ).toBeInTheDocument();
+      expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Copy link" })).toBeInTheDocument();
+      expect(screen.queryByRole("link", { name: /Check another video/ })).not.toBeInTheDocument();
+    });
+
+    it("has no accessibility violations", async () => {
+      vi.mocked(startAnalysis).mockResolvedValue(waiting());
+      open(ID);
+      await screen.findByRole("heading", { level: 1, name: "Your check is waiting in line" });
+      await expectNoAxeViolations();
+    });
   });
 });

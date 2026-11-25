@@ -1551,18 +1551,3 @@ def provenance() -> dict[str, str]:
         "pipeline_commit": commit + ("+changes" if dirty else ""),
         "cache_version": cache.group(1) if cache else "",
     }
-
-
-def probe_block(video_id: str) -> bool:
-    """Ask yt-dlp once, with its full error text, whether YouTube is blocking us. (The
-    download script keeps only the error's last 180 characters, which cut the reason off.)"""
-    cmd = [sys.executable, "-m", "yt_dlp", "--simulate", "--no-warnings"]
-    cmd += ["--remote-components", "ejs:github", f"https://www.youtube.com/watch?v={video_id}"]
-    path = f"{Path(sys.executable).parent}{os.pathsep}{os.environ.get('PATH', '')}"
-    try:
-        proc = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=120, env={**os.environ, "PATH": path}
-        )
-    except subprocess.TimeoutExpired:
-        return False
-    return "not a bot" in proc.stderr

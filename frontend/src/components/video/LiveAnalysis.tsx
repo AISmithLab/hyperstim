@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   ApiError,
   getAnalysis,
@@ -8,9 +8,12 @@ import {
   type Analysis,
   type AnalysisErrorCode,
 } from "@/lib/api";
+import CopyLink from "./CopyLink";
 import { CheckAnother, KidMessage, Message, OUTLINED_BUTTON, WatchOnYouTube } from "./parts";
 
 export const POLL_MS = 2000;
+/** While a check waits for YouTube (hours, not seconds), the page asks once a minute. */
+export const WAITING_POLL_MS = 60_000;
 /** How long polling may keep failing (e.g. lost connection) before the page says so. */
 export const GIVE_UP_MS = 30_000;
 
@@ -24,8 +27,15 @@ const FAILED: Record<AnalysisErrorCode, string> = {
   unavailable: "We couldn’t get this video from YouTube. It may be private, removed, or restricted.",
   too_short: "This video is too short to measure: we need at least 60 seconds.",
   live: "We can’t measure live streams or premieres that haven’t aired yet.",
+  blocked: "We couldn’t download this video from YouTube. Please try again later.",
   failed: "Something went wrong while measuring this video.",
 };
+
+export const WAITING_HEADING = "Your check is waiting in line";
+const WAITING =
+  "YouTube is temporarily limiting our access to videos. We’ve queued your video for analysis and will process it as soon as possible. Please check back later to see your results.";
+const WAITING_COMPACT =
+  "Your check is waiting in line: YouTube is temporarily limiting our access to videos. Please check back later to see your results.";
 
 const REFUSED = {
   429: "You’ve checked several new videos in the last hour. Please try again later.",
@@ -88,6 +98,10 @@ export default function LiveAnalysis({
           return;
         }
         setState({ kind: "running", analysis });
+        if (analysis.status === "waiting") {
+          timer = setTimeout(tick, WAITING_POLL_MS);
+          return;
+        }
       } catch (error) {
         if (stopped) return;
         if (error instanceof ApiError && !started && (error.status === 429 || error.status === 503)) {
@@ -121,9 +135,16 @@ export default function LiveAnalysis({
   }, []);
 
   const status = state.kind === "running" ? state.analysis.status : null;
+  const waited = useRef(false); // only changes what is said, not when
   useEffect(() => {
+    if (status === "waiting") {
+      waited.current = true;
+      announce(WAITING_HEADING);
+      return;
+    }
     const step = STEPS.find((s) => s.status === status);
-    if (step) announce(step.label);
+    // After waiting for YouTube, say that the check has started.
+    if (step) announce(waited.current ? `Checking this video. ${step.label}` : step.label);
   }, [status, announce]);
 
   const Box = compact ? CompactBox : KidMessage;
@@ -131,6 +152,27 @@ export default function LiveAnalysis({
   switch (state.kind) {
     case "starting":
     case "running":
+      if (state.kind === "running" && state.analysis.status === "waiting") {
+        return compact ? (
+          <CompactBox>
+            <p>{WAITING_COMPACT}</p>
+            <div className="mt-3">
+              <CopyLink announce={announce} />
+            </div>
+          </CompactBox>
+        ) : (
+          <KidMessage>
+            <h1 className="font-hand text-2xl font-semibold text-navy sm:text-3xl">{WAITING_HEADING}</h1>
+            <p className="mt-3">{WAITING}</p>
+            <div className="mt-4">
+              <CopyLink announce={announce} />
+            </div>
+            <div className="mt-2">
+              <CheckAnother />
+            </div>
+          </KidMessage>
+        );
+      }
       return <Progress analysis={state.kind === "running" ? state.analysis : null} compact={compact} />;
     case "failed":
       return (

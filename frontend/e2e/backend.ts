@@ -18,9 +18,13 @@ export const ANALYZED = {
   channel: "E2E test channel",
 };
 
+/** A live check waiting until YouTube lets us download again (plan 004); the backend loads it at startup. */
+export const WAITING = { id: "E2Ewait0001" };
+
 /**
  * Empty analysis and thumbnail folders for the backend, outside the repo, with one finished
- * analysis (CI can't download videos). Runs before the servers start, and again in each
+ * analysis (CI can't download videos) and one check waiting for YouTube. While that one waits, the
+ * backend takes YouTube as blocking it, so a new check would wait too. Runs before the servers start, and again in each
  * worker, which writes the same files.
  */
 export function prepareBackendDirs() {
@@ -56,5 +60,7 @@ export function prepareBackendDirs() {
     error: null,
   };
   fs.writeFileSync(path.join(analysis, `${ANALYZED.id}.json`), JSON.stringify(record));
+  const waiting = { id: WAITING.id, status: "waiting", status_since: now, requested_at: now, waiting_since: now };
+  fs.writeFileSync(path.join(analysis, `${WAITING.id}.json`), JSON.stringify(waiting));
   return { analysis, thumbnails };
 }

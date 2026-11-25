@@ -875,6 +875,18 @@ def test_a_block_seen_by_a_live_check_pauses_downloads(
     assert len(collected_ids(collector)) == 1
 
 
+def test_a_live_check_waiting_for_youtube_does_not_hold_up_downloads(
+    tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
+) -> None:
+    clock = Clock()
+    collector = make_collector(tmp_path, youtube, pipeline, clock)
+    collector.store.add_uploads(CHANNEL, youtube.uploads[CHANNEL])
+    (tmp_path / "analyses").mkdir()
+    (tmp_path / "analyses" / "other000000.json").write_text(json.dumps({"status": "waiting"}))
+    collector.tick()
+    assert len(collected_ids(collector)) == 1
+
+
 def test_clips_and_feature_caches_are_kept(
     tmp_path: Path, youtube: FakeYouTube, pipeline: FakePipeline
 ) -> None:

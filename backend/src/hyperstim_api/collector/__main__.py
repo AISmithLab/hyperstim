@@ -22,7 +22,7 @@ from collections import Counter
 from pathlib import Path
 
 from hyperstim_api import scoring
-from hyperstim_api.analysis import ResearchPipeline
+from hyperstim_api.analysis import ResearchPipeline, probe_block
 from hyperstim_api.collector import alerts, sampling
 from hyperstim_api.collector import seed as seeding
 from hyperstim_api.collector.collector import (
@@ -33,7 +33,6 @@ from hyperstim_api.collector.collector import (
     export,
     load_classifier,
     plan,
-    probe_block,
     provenance,
     recount,
     rule,

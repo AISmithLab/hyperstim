@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from hyperstim_api.analysis import AnalysisError, ErrorCode, VideoInfo
+from hyperstim_api.analysis import BLOCKED, AnalysisError, ErrorCode, VideoInfo
 from hyperstim_api.config import Settings
 from hyperstim_api.dataset import REQUIRED_COLUMNS
 from hyperstim_api.main import create_app
@@ -73,8 +73,9 @@ class FakePipeline:
 
     Every video gets the same features unless `features` says otherwise, and the channel
     UC-live unless `channels` says otherwise; `fail` makes a
-    step fail for a video, with `details` as its message; `during(step, video_id, workdir)`
-    runs inside each step.
+    step fail for a video, with `details` as its message; `blocked` makes YouTube's bot check
+    refuse every look-up; `during(step, video_id, workdir)` runs inside each step; `looked_up`
+    lists the look-ups.
     """
 
     def __init__(self) -> None:
@@ -86,6 +87,8 @@ class FakePipeline:
         self.workdirs: list[Path] = []
         self.links: dict[str, tuple[str, str]] = {}  # channel lookups: URL -> (ID, name)
         self.channel_calls: list[str] = []
+        self.blocked = False
+        self.looked_up: list[str] = []
 
     def _step(self, step: str, video_id: str, workdir: Path | None = None) -> None:
         if workdir is not None:
@@ -100,6 +103,9 @@ class FakePipeline:
             raise AnalysisError(failing[1], self.details.get(video_id, ""))
 
     def lookup(self, video_id: str) -> VideoInfo:
+        self.looked_up.append(video_id)
+        if self.blocked:
+            raise AnalysisError("unavailable", BLOCKED)
         self._step("lookup", video_id)
         channel_id = self.channels.get(video_id, "UC-live")
         return VideoInfo(title=f"Live {video_id}", channel_id=channel_id, channel="Live channel")

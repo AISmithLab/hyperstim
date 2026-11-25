@@ -133,11 +133,14 @@ export type ChannelLookup = {
   videoCount: number;
 };
 
-/** Where a live analysis is: waiting, one of its three steps, or finished. */
-export type AnalysisStatus = "queued" | "lookup" | "download" | "measure" | "done" | "failed";
+/**
+ * Where a live analysis is: in the queue, waiting until YouTube lets us download again
+ * (`waiting`), one of its three steps, or finished.
+ */
+export type AnalysisStatus = "queued" | "waiting" | "lookup" | "download" | "measure" | "done" | "failed";
 
-/** Why a live analysis failed. */
-export type AnalysisErrorCode = "unavailable" | "too_short" | "live" | "failed";
+/** Why a live analysis failed; `blocked`: YouTube didn't let us download it for a day. */
+export type AnalysisErrorCode = "unavailable" | "too_short" | "live" | "blocked" | "failed";
 
 /** A live analysis of a video that isn't in the dataset. */
 export type Analysis = {

@@ -1,4 +1,5 @@
 import { topVideos } from "./api";
+import { WAITING } from "./backend";
 import { expect, tabTo, test } from "./fixtures";
 
 test.describe("video", () => {
@@ -69,5 +70,19 @@ test.describe("video", () => {
     await page.goto("/video/?id=not-an-id");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByRole("region", { name: "Stimulation score" })).toHaveCount(0);
+  });
+
+  test("a check waiting for YouTube says so and offers its link", async ({ page }) => {
+    await page.goto(`/video/?id=${WAITING.id}`);
+    await expect(page.getByRole("heading", { level: 1, name: "Your check is waiting in line" })).toBeVisible();
+    await expect(page.getByText("Please check back later to see your results.")).toBeVisible();
+    await expect(page.getByRole("progressbar")).toHaveCount(0);
+    const copy = page.getByRole("button", { name: "Copy link" });
+    await tabTo(page, copy);
+    await page.keyboard.press("Enter");
+    // Copied, or where the browser won't let a test copy, says so.
+    await expect(
+      page.getByRole("button", { name: "Link copied" }).or(page.getByRole("button", { name: "Couldn’t copy" })),
+    ).toBeVisible();
   });
 });

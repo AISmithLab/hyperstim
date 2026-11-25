@@ -1,7 +1,7 @@
 # 004 — Video detail page
 
 **Area:** Video page (`/video`), its endpoint and live analysis.
-**Status:** done (2026-10-14). Changes planned 2026-10-26: the player grows when played, the channel name as a pill, the score number centred (steps 10–12); the grow animation, the kid ducking and the player's size (steps 13–14). Changes planned 2026-10-28: the title stays left-aligned while the video plays (steps 15–16). Change planned 2026-11-23: the live analysis takes any video of 60 s or more (step 18).
+**Status:** done (2026-10-14). Changes planned 2026-10-26: the player grows when played, the channel name as a pill, the score number centred (steps 10–12); the grow animation, the kid ducking and the player's size (steps 13–14). Changes planned 2026-10-28: the title stays left-aligned while the video plays (steps 15–16). Change planned 2026-11-23: the live analysis takes any video of 60 s or more (step 18). Changes planned 2026-11-25: a check YouTube blocks waits and runs later instead of failing (steps 19–21).
 
 ## Goal
 
@@ -258,6 +258,14 @@ _(human decision: “Check a video” should actually work, by running the downl
 - **Limits: per IP, plus a site-wide daily cap** _(human decision, 2026-10-17, plan 010: many IPs together could use up the YouTube API quota)_. Site-wide: at most `ANALYSIS_LIMIT_PER_DAY` new analyses (prod 1,000 _(human decision, 2026-10-17: too strict)_) in 24 hours from all visitors together; over it, the same `503 Busy` as a full queue. It's counted from the stored analyses' request times (no IPs), so a restart doesn't reset it. Per IP: 60 new analyses per IP address per hour _(human decision, 2026-11-23: 20 could turn away a first-time visitor sharing an IP, e.g. at a school or on a mobile network; earlier 20, 2026-10-17, and the old API's 5)_. The daily cap stays at 1,000 _(human decision, 2026-11-23)_: without the Data API it no longer guards a quota, but live downloads share the server's IP with the collector, so a burst could get both blocked by YouTube. The compare page's channel lookups that have to ask YouTube count toward the same limit _(human decision, 2026-10-16)_ (plan 008). No cookies: they wouldn't stop abuse (cleared at will, blocked across sites). The counts live in memory only, for at most an hour, never stored; the privacy policy says so. Requests for a stored or running video don't count. Behind the reverse proxy, uvicorn runs with `--proxy-headers` so the limit sees the visitor's IP (README). Set by `ANALYSIS_LIMIT_PER_IP` (new analyses per hour; `0` = off). Off for local development (`dev.sh`, `.env.example`) _(human decision: so it doesn't interfere with debugging)_.
 - **Timeouts:** look-up 1 min, download 15 min (the script tries three YouTube clients, 5 min each), measure 10 min. A timeout fails the analysis.
 - **Restart:** at startup the backend reads the folder; analyses that were waiting or running when the API stopped start again from the beginning. The queue itself lives in memory.
+- **Blocked by YouTube: the check waits, it doesn't fail** _(human decision, 2026-11-25: YouTube blocked this server's downloads for about 18 of 192 hours in the week to 2026-11-25; a visitor arriving then got "may be private, removed, or restricted", which was untrue and a dead end)_. When the look-up or download is refused with YouTube's bot check (`BLOCKED`; a failed download asks yt-dlp once more for the full error, the collector's `probe_block`, moved to `analysis.py`, since the download script keeps only the error's end), the check is set to `waiting` (stored in its file, so it survives a restart) instead of `failed`, and the `youtube-blocked` marker is written as now (the collector pauses on it).
+  - **While a block is known** (a check was blocked and nothing has got through since), new checks, and the ones queued behind the blocked one, go straight to `waiting` without asking YouTube, so visitors don't add to the block.
+  - **Trying again:** once an hour the worker retries the oldest waiting check (one request). If it isn't refused by the bot check (whatever its outcome), the block is over: the waiting checks join the normal queue, oldest first, ahead of new ones. Hourly, because the blocks so far lasted 2–8 hours and each refused request may lengthen one. After a restart, waiting checks stay waiting and the next try is an hour after the last refusal (the marker's time).
+  - **Gives up after 24 hours** waiting: the check fails as `blocked`, with its own message; requesting it again starts over, like any failed check _(human decision, 2026-11-25: the longest block so far was about 8 hours; after 24 h something else is likely wrong)_.
+  - **No alert** for waiting or given-up checks _(human decision, 2026-11-25)_: the collector's `blocked` alert (plan 013) already covers a day-long block.
+  - Waiting checks don't count toward the queue's 30 (they aren't running), but are capped at 100; over that, new checks get the usual `503 Busy`. They count toward the per-IP and daily limits like any new check.
+  - The collector already treats only `queued`/`lookup`/`download`/`measure` as a running live check, so a waiting check doesn't hold it up; no collector change.
+  - **Privacy:** nothing new is stored (the video ID file a check already has); the clip is still downloaded only when the check runs and deleted after. The privacy policy stays true as written.
 - **Failed analyses** stay stored with their reason, so the page can explain; requesting the video again retries it (counts toward the limit).
 - **Progress the person can trust** _(human decision: show the status and/or a progress bar so people know what to expect)_. The scripts don't report progress inside one video, and they must stay unchanged, so:
   - The page shows **the steps** (look up, download, measure), with the current one marked; while waiting, the number of videos ahead.
@@ -280,15 +288,15 @@ GET /api/analyses/{id}      poll (the page polls every 2 s)
   404 → never requested
 
 Analysis = {
-  status: "queued" | "lookup" | "download" | "measure" | "done" | "failed",
+  status: "queued" | "waiting" | "lookup" | "download" | "measure" | "done" | "failed",  // waiting: YouTube blocks downloads (2026-11-25)
   queuePosition: number | null,  // videos ahead, while queued
   progress: number,              // 0–1, the estimate above
   remainingS: number | null,     // estimated seconds left; null when queued or done
-  error: "unavailable" | "too_short" | "live" | "failed" | null
+  error: "unavailable" | "too_short" | "live" | "blocked" | "failed" | null
 }
 ```
 
-`unavailable`: the look-up or download failed (private, removed, age- or region-restricted, or YouTube refused). `failed`: measuring failed or timed out. (`not_for_kids` was dropped 2026-11-23; stored results with it are re-run when the video is opened, like any failed one.)
+`unavailable`: the look-up or download failed (private, removed, age- or region-restricted). A refusal by YouTube's bot check is `waiting`, then `blocked` after 24 hours (2026-11-25). Both are additive: an older frontend open during a deploy shows a `waiting` check as still running. `failed`: measuring failed or timed out. (`not_for_kids` was dropped 2026-11-23; stored results with it are re-run when the video is opened, like any failed one.)
 
 ### Backend
 
@@ -319,6 +327,7 @@ The look of the old "We haven’t checked this video yet" state, now saying the 
 - Queued: the steps all ○, above them "{2} videos ahead of yours."; the bar stays at 0.
 - Failed: the same box with the reason, "Check another video →" and "Watch on YouTube ↗"; for `failed` also "Try again" (outlined button).
 - Busy (503) / limit (429): the box with the message and "Try again" / "Check another video →". Nothing is stored for a refused request; the page doesn't retry on its own _(human decision)_.
+- **Waiting** (YouTube blocks downloads, 2026-11-25): the same box and kid, the H1 "Your check is waiting in line", the message below it, no steps and no bar (nothing is running, and there's no honest time to show), a "Copy link" button (outlined) _(human decision, 2026-11-25: for phones, where bookmarking is awkward)_, and "Check another video →". "Copy link" copies the page's address (the compare page's, with both videos, in a compare slot); its label reads "Link copied" for 3 s, and the live region says so. If the browser won't copy, the label reads “Couldn’t copy” for 3 s instead, and the live region says so _(human decision, 2026-11-25: no field with the address)_. The page polls once a minute instead of every 2 s; when the check starts, the steps and bar come back on their own and the live region says "Checking this video". The compact form shows the compact message and "Copy link". The message box as for failures; **new in `STYLE.md`:** the copy-link button (Controls).
 - Lost connection while polling: keep polling quietly; after ~30 s of failures, the error message box with "Try again".
 
 ### Copy
@@ -335,14 +344,19 @@ The look of the old "We haven’t checked this video yet" state, now saying the 
 | `too_short` | This video is too short to measure: we need at least 60 seconds. _(human decision, 2026-11-23)_ |
 | `live` | We can’t measure live streams or premieres that haven’t aired yet. |
 | `failed` | Something went wrong while measuring this video. |
+| Waiting H1 | Your check is waiting in line _(human decision, 2026-11-25)_ |
+| Waiting message | YouTube is temporarily limiting our access to videos. We’ve queued your video for analysis and will process it as soon as possible. Please check back later to see your results. _(human decision, 2026-11-25; no “usually within a few hours”, which a long block would make untrue)_ |
+| Waiting, compact (compare slot) | Your check is waiting in line: YouTube is temporarily limiting our access to videos. Please check back later to see your results. |
+| `blocked` | We couldn’t download this video from YouTube. Please try again later. _(human decision, 2026-11-25: without “for a day”)_ |
+| Copy link | Copy link → Link copied · Couldn’t copy |
 | 503 | We’re checking a lot of videos right now. Please try again in a few minutes. |
 | 429 | You’ve checked several new videos in the last hour. Please try again later. |
 | Failed-state links | Check another video → · Watch on YouTube ↗ |
-| Live region | Downloading a clip of up to 5 minutes · Measuring · Done |
+| Live region | Downloading a clip of up to 5 minutes · Measuring · Done · Your check is waiting in line · Checking this video · Link copied · Couldn’t copy |
 
 ### Mocks
 
-Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, then shows a mock result; `mockVidFail`, `mockVidShrt`, `mockVidLive` and `mockVidErrr` fail as `unavailable`, `too_short`, `live` and `failed`, `mockVidWait` sits in the queue for a few seconds, `mockVidBusy` gets 503 and `mockVid0429` gets 429.
+Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, then shows a mock result; `mockVidFail`, `mockVidShrt`, `mockVidLive` and `mockVidErrr` fail as `unavailable`, `too_short`, `live` and `failed`, `mockVidWait` sits in the queue for a few seconds, `mockVidBusy` gets 503 and `mockVid0429` gets 429. `mockVidBlck` waits (2026-11-25): it stays `waiting` for ~20 s, then runs through the steps; `mockVidGvUp` fails as `blocked`.
 
 ## Steps
 
@@ -364,6 +378,9 @@ Mock mode gets a mock analysis: an unknown ID runs through the steps in ~12 s, t
 16. **Review.** Recordings at 360, 768 and 1280 px, screenshots at 1280 × 800 and 1920 × 1080 while playing. Stop for review.
 17. **Safari and phone fixes** (2026-10-30, plan 017). The player plays inline on iPhone (`playsinline=1`). `PLAYER_WIDTH` uses `svh`, so a playing video doesn't resize as the mobile toolbar hides. The score's info popover draws over the measurement rows below `lg` (`z-10` on its wrapper), and every info popover shifts to stay 16 px inside the screen (it stuck out at 320 px). `STYLE.md` (Video header, Score gauge, Popover); tests.
 18. **Relaxed live-analysis rules** (2026-11-23). Backend: drop the made-for-kids check (`check_made_for_kids`, the Data API call, `youtube_api_key` in `config.py` and `main.py`, its startup warning) and the `not_for_kids` code; `MIN_DURATION_S` 90 → 60. A stored result with `not_for_kids` reads as `failed` (otherwise `GET /api/analyses/{id}` would fail the response check), so the page offers to try again. Frontend: drop `not_for_kids` from `api.ts`, `LiveAnalysis.tsx` and the mock (`mockNotKids`); "at least 60 seconds"; step 2 "Downloading a clip of up to 5 minutes". Docs: `backend/README.md`, `.env.example` (the key is the collector's only). Plan 006's lead and its FAQ answer "We measure up to 5 minutes". Tests: a 60 s video is accepted and 59 s refused; a video not made for kids is analyzed; no Data API request. Limits: `MAX_QUEUE` 10 → 30, `DEFAULT_LIMIT_PER_IP` 20 → 60, `ANALYSIS_LIMIT_PER_IP="60"` in `deploy/server.env.example`, and the same in the server's env file (by the team at deploy). No privacy policy change: the Data API call only sent video IDs from our server, and the policy never mentioned it.
+19. **Blocked checks wait, backend** (2026-11-25). In `analysis.py`: the `waiting` status and `blocked` error; a known block sends new checks straight to waiting; the hourly retry of the oldest; waiting checks rejoin the queue ahead of new ones; 24-hour give-up; the cap of 100; restart keeps waiting checks waiting. Tests with the fake runner (blocked → waiting, not failed; while blocked, a new check doesn't call the runner; the retry after an hour, success → all run oldest first, refusal → still waiting; give-up after 24 h → `blocked`; cap → 503; restart; the collector's running-check test still passes with a waiting check). A test that fails without the fix: a blocked download today ends `failed`/`unavailable`.
+20. **Blocked checks wait, frontend** (2026-11-25). `api.ts` types (`waiting`, `blocked`) and the mocks; the waiting state in `LiveAnalysis` (full and compact), the `CopyLink` button, the slower poll, the live region; `STYLE.md` (Controls: copy-link button); component tests (the waiting text, no steps or bar, poll interval, back to the steps when it starts, `blocked` text, Copy link copies the address and says so, “Couldn’t copy” when copying fails, axe); an E2E spec for `mockVidBlck` (also without JavaScript the page reads as a sentence) and the Safari check.
+21. **Review.** Screenshots of the waiting state, full and compact, at 360, 768 and 1280 px; keyboard and screen reader pass. Stop for review.
 
 ## Review decisions
 

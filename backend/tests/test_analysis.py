@@ -10,15 +10,22 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+from hyperstim_api import analysis
 from hyperstim_api.analysis import (
+    BLOCK_MARKER,
+    BLOCKED,
+    GIVE_UP_WAITING_S,
     MAX_QUEUE,
+    MAX_WAITING,
     MIN_DURATION_S,
+    RETRY_BLOCKED_S,
     STEP_CAP,
     TYPICAL_S,
     AnalysisError,
     Analyzer,
     Busy,
     Record,
+    ResearchPipeline,
     TooManyRequests,
     _limit_cores,
     estimate,
@@ -477,3 +484,163 @@ def test_limit_cores_covers_what_the_process_starts() -> None:
     _limit_cores(proc.pid, 1)
     out, _ = proc.communicate(timeout=10)
     assert out.strip() == "1"
+
+
+# YouTube's bot check (plan 004, 2026-11-25): checks wait instead of failing.
+
+
+def blocked_analyzer(tmp_path: Path, now: list[float], pipeline: FakePipeline) -> Analyzer:
+    return Analyzer(tmp_path, pipeline, limit_per_ip=0, clock=lambda: now[0])
+
+
+def statuses(analyzer: Analyzer, *ids: str) -> list[tuple[str, str | None]]:
+    out: list[tuple[str, str | None]] = []
+    for video_id in ids:
+        found = analyzer.snapshot(video_id)
+        assert found is not None
+        out.append((found[0].status, found[0].error))
+    return out
+
+
+def test_a_check_youtube_refuses_waits_and_so_do_the_ones_behind_it(tmp_path: Path) -> None:
+    now = [100_000.0]
+    pipeline = FakePipeline()
+    analyzer = blocked_analyzer(tmp_path, now, pipeline)
+    for n in range(3):
+        analyzer.start(live(n), "ip")
+    pipeline.blocked = True
+    assert analyzer.run_next()
+    assert statuses(analyzer, live(0), live(1), live(2)) == [("waiting", None)] * 3
+    assert pipeline.looked_up == [live(0)]  # the others didn't ask YouTube
+    assert (tmp_path / BLOCK_MARKER).read_text().strip() == str(now[0])
+    # A new check waits at once; nothing more is tried until an hour has passed.
+    analyzer.start(live(3), "ip")
+    assert statuses(analyzer, live(3)) == [("waiting", None)]
+    now[0] += RETRY_BLOCKED_S - 1
+    assert not analyzer.run_next()
+    assert pipeline.looked_up == [live(0)]
+    assert [analyzer.snapshot(live(n))[1] for n in (1, 2, 3)] == [None] * 3  # type: ignore[index]
+
+
+def test_waiting_checks_are_tried_hourly_and_run_oldest_first_once_through(
+    tmp_path: Path,
+) -> None:
+    now = [100_000.0]
+    pipeline = FakePipeline()
+    analyzer = blocked_analyzer(tmp_path, now, pipeline)
+    pipeline.blocked = True
+    analyzer.start(live(0), "ip")
+    analyzer.run_next()
+    now[0] += 60
+    analyzer.start(live(1), "ip")
+    now[0] += 60
+    analyzer.start(live(2), "ip")
+    now[0] += RETRY_BLOCKED_S
+    assert analyzer.run_next()  # still refused: one request, then another hour
+    assert pipeline.looked_up == [live(0), live(0)]
+    assert statuses(analyzer, live(0), live(1)) == [("waiting", None)] * 2
+    assert not analyzer.run_next()
+
+    now[0] += RETRY_BLOCKED_S
+    pipeline.blocked = False
+    analyzer.start(live(9), "ip")  # asked while still blocked as far as we know: waits too
+    assert analyzer.run_next()
+    assert statuses(analyzer, live(1), live(2), live(9)) == [("queued", None)] * 3
+    assert [analyzer.snapshot(live(n))[1] for n in (1, 2, 9)] == [0, 1, 2]  # type: ignore[index]
+    while analyzer.run_next():
+        pass
+    assert pipeline.looked_up[2:] == [live(0), live(1), live(2), live(9)]
+    assert statuses(analyzer, live(0), live(9)) == [("done", None)] * 2
+    analyzer.start(live(10), "ip")  # the block is over: new checks queue as usual
+    assert statuses(analyzer, live(10)) == [("queued", None)]
+
+
+def test_a_check_gives_up_after_a_day_of_waiting(tmp_path: Path) -> None:
+    now = [100_000.0]
+    pipeline = FakePipeline()
+    analyzer = blocked_analyzer(tmp_path, now, pipeline)
+    pipeline.blocked = True
+    analyzer.start(live(0), "ip")
+    analyzer.run_next()
+    now[0] += 3 * 3600
+    analyzer.start(live(1), "ip")
+    for _ in range(20):
+        now[0] += RETRY_BLOCKED_S
+        analyzer.run_next()
+    assert statuses(analyzer, live(0), live(1)) == [("waiting", None)] * 2
+    now[0] = 100_000.0 + GIVE_UP_WAITING_S  # live(0) has waited a day
+    analyzer.run_next()
+    assert statuses(analyzer, live(0), live(1)) == [("failed", "blocked"), ("waiting", None)]
+    # Asking again starts over.
+    pipeline.blocked = False
+    record, created = analyzer.start(live(0), "ip")
+    assert created and record.status == "waiting"  # still blocked as far as we know
+
+
+def test_waiting_checks_are_capped(tmp_path: Path) -> None:
+    pipeline = FakePipeline()
+    analyzer = Analyzer(tmp_path, pipeline, limit_per_ip=0)
+    pipeline.blocked = True
+    analyzer.start(live(0), "ip")
+    analyzer.run_next()
+    for n in range(1, MAX_WAITING):
+        analyzer.start(f"w{n:010d}", "ip")
+    with pytest.raises(Busy):
+        analyzer.start(live(1), "ip")
+
+
+def test_waiting_checks_stay_waiting_after_a_restart(tmp_path: Path) -> None:
+    now = [100_000.0]
+    pipeline = FakePipeline()
+    first = blocked_analyzer(tmp_path, now, pipeline)
+    pipeline.blocked = True
+    first.start(live(0), "ip")
+    first.run_next()
+    now[0] += 600
+    again = blocked_analyzer(tmp_path, now, pipeline)
+    assert statuses(again, live(0)) == [("waiting", None)]
+    again.start(live(1), "ip")
+    assert statuses(again, live(1)) == [("waiting", None)]
+    pipeline.blocked = False
+    now[0] += RETRY_BLOCKED_S - 601  # an hour after the refusal, not after the restart
+    assert not again.run_next()
+    now[0] += 1
+    while again.run_next():
+        pass
+    assert statuses(again, live(0), live(1)) == [("done", None)] * 2
+
+
+def test_the_api_reports_a_waiting_check(client: TestClient, pipeline: FakePipeline) -> None:
+    pipeline.blocked = True
+    client.post(f"/api/analyses/{live(1)}")
+    analyzer_of(client).run_next()
+    assert status(client, live(1)) == {
+        "status": "waiting",
+        "queuePosition": None,
+        "progress": 0.0,
+        "remainingS": None,
+        "error": None,
+    }
+
+
+def test_a_failed_download_that_youtube_refused_is_a_block(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def refuse(self: object, cmd: list[str], timeout: float, cores: int | None = None) -> str:
+        raise subprocess.CalledProcessError(1, cmd, "", "ERROR: [youtube] abc: Sign in to conf")
+
+    monkeypatch.setattr(ResearchPipeline, "_run", refuse)
+    probed: list[str] = []
+
+    def probe(video_id: str, cookies: Path | None = None) -> bool:
+        probed.append(video_id)
+        return True
+
+    monkeypatch.setattr(analysis, "probe_block", probe)
+    with pytest.raises(AnalysisError, match=BLOCKED):
+        ResearchPipeline().download(live(1), tmp_path)
+    assert probed == [live(1)]
+    monkeypatch.setattr(analysis, "probe_block", lambda vid, cookies=None: False)
+    with pytest.raises(AnalysisError, match="Sign in to conf") as raised:
+        ResearchPipeline().download(live(1), tmp_path)
+    assert raised.value.code == "unavailable"

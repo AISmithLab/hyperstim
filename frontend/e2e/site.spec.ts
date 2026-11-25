@@ -1,5 +1,5 @@
 import { topChannels, topVideos } from "./api";
-import { ANALYZED } from "./backend";
+import { ANALYZED, WAITING } from "./backend";
 import { expect, expectNoAxeViolations, expectNoSidewaysScroll, isPhone, tabTo, test } from "./fixtures";
 
 // Every page, loaded: no accessibility violations and no sideways scroll at 320 px.
@@ -10,6 +10,7 @@ test.describe("every page", () => {
     { name: "rankings, channels", path: () => "/rankings/?view=channels" },
     { name: "video", path: ({ video }) => `/video/?id=${video}` },
     { name: "video, live check", path: () => `/video/?id=${ANALYZED.id}` },
+    { name: "video, check waiting for YouTube", path: () => `/video/?id=${WAITING.id}` },
     { name: "channel", path: ({ channel }) => `/channel/?id=${channel}` },
     { name: "compare, empty", path: () => "/compare/" },
     { name: "compare, two videos", path: ({ video, video2 }) => `/compare/?a=${video}&b=${video2}` },

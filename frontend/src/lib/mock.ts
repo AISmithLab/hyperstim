@@ -1,8 +1,8 @@
 // Mock API responses for frontend work without a backend (NEXT_PUBLIC_API_MOCK=1).
 // All titles and channel names are made up. Video pages: mockVid0500 returns a server error;
 // any other ID that isn't a mock video is analyzed live in ~12 s, then has a result. Live
-// analysis: mockVidWait waits in the queue first; the IDs in MOCK_FAILURES fail with their
-// error; mockVidBusy gets 503 (queue full) and mockVid0429 gets 429 (limit reached). Channel
+// analysis: mockVidWait waits in the queue first; mockVidBlck waits for YouTube (blocked) for
+// 20 s, then runs; the IDs in MOCK_FAILURES fail with their error; mockVidBusy gets 503 (queue full) and mockVid0429 gets 429 (limit reached). Channel
 // pages: every mock channel has generated videos (Zippy Zoom Kids: 60 over many years; Little
 // Paws Play: one year; Quiet Meadow Tales: one video; Puddle Lane: counts of 0 and missing
 // values); MOCK_CHANNEL_ERROR returns a server error; any other channel ID is not found.
@@ -161,12 +161,14 @@ const MOCK_STEPS: [AnalysisStatus, number][] = [
   ["measure", 6],
 ];
 const MOCK_WAIT_S = 4; // mockVidWait's time in the queue
+const MOCK_BLOCKED_S = 20; // mockVidBlck's time waiting for YouTube
 // IDs that fail after the look-up, one per error.
 const MOCK_FAILURES: Record<string, AnalysisErrorCode> = {
   mockVidFail: "unavailable",
   mockVidShrt: "too_short",
   mockVidLive: "live",
   mockVidErrr: "failed",
+  mockVidGvUp: "blocked",
 };
 const analyses = new Map<string, number>(); // ID -> start time (ms)
 
@@ -178,6 +180,9 @@ function mockAnalysis(id: string): Analysis {
     return { ...base, status: "queued", queuePosition: Math.ceil((wait - elapsed) / 2), progress: 0 };
   }
   elapsed -= wait;
+  const blocked = id === "mockVidBlck" ? MOCK_BLOCKED_S : 0;
+  if (elapsed < blocked) return { ...base, status: "waiting", progress: 0 };
+  elapsed -= blocked;
   const error = MOCK_FAILURES[id];
   if (error && elapsed > MOCK_STEPS[0][1]) return { ...base, status: "failed", progress: 0, error };
   const total = MOCK_STEPS.reduce((sum, [, s]) => sum + s, 0);
