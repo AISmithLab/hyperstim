@@ -1,32 +1,33 @@
 date	videos	channels	ch_ready	ch_left_out	ch_held	ch_yr_2nd	ch_yr_med	added_v	removed_v	new_ch	removed_ch	note
-2026-11-25	17844	613	152	457	74	2.44	4.72	81	0	2	0	
-2026-11-24	17763	611	144	456	73	2.06	4.72	93	0	2	0	
-2026-11-23	17670	609	146	456	75	2.35	4.74	86	0	2	0	
-2026-11-22	17584	607	147	450	74	2.30	4.75	77	0	2	0	
-2026-11-21	17507	605	147	446	73	2.26	4.75	78	0	1	0	ch_held also counts channels whose thin years have nothing ready
-2026-11-20	17429	604	150	442	73	2.19	4.75	93	0	0	0	
-2026-11-19	17336	604	139	440	73	2.03	4.75	92	0	0	0	
-2026-11-18	17244	604	139	439	64	1.51	4.75	100	0	3	0	Took out compilations of existing videos; no new ones are collected; Earlier rows count them as never added, except ch_ready, ch_held, ch_yr_2nd and ch_yr_med, which couldn't be recounted and still include them
-2026-11-17	17144	601	134	417	84	2.07	5.05	112	0	3	0	
-2026-11-16	17032	598	134	411	83	2.00	5.05	85	0	2	0	ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out
-2026-11-15	16947	596	133	383	83	1.92	5.05	103	0	1	0	
-2026-11-14	16844	595	127	382	80	1.84	5.05	71	0	1	0	
-2026-11-13	16773	594	119	380	69	1.77	5.06	113	0	3	0	
-2026-11-12	16660	591	114	378	67	1.69	5.06	103	0	3	0	
-2026-11-11	16557	588	110	373	66	1.60	5.06	86	0	2	0	
-2026-11-10	16471	586	109	357	66	1.52	5.06	87	0	2	0	Pace lowered from 150 to 120 videos a day after three blocks
-2026-11-09	16384	584	110	346	66	1.44	5.07	126	0	3	0	New channels join by subscribers, most first; their counts read weekly
-2026-11-08	16258	581	93	331		1.34	5.07	121	0	3	0	
-2026-11-07	16137	578	78	329		1.20	5.08	105	0	2	0	
-2026-11-06	16032	576	80	328		1.07	5.09	111	0	2	0	
-2026-11-05	15921	574	78	313		0.93	5.09	125	12	3	0	
-2026-11-04	15808	571	75	287		0.74	5.10	72	0	3	0	
-2026-11-03	15736	568	74	279		0.64	5.11	66	0	3	0	A third of downloads for new channels to catch up; at most 3 new a day
-2026-11-02	15670	565	70	277		0.51	5.12	41	0	2	0	Thinnest channels first; under 5 eligible a year left out; 3 new a day
-2026-11-01	15629	563	65	240		0.42	5.06	65	0	2	0	
-2026-10-31	15564	561	55	240				112	0	1	0	Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups
-2026-10-30	15452	560	39	215				124	0	2	0	ch_ready and ch_left_out as of 2026-10-31 00:00:12 UTC
-2026-10-29	15328	558	17	188				118	0	52	0	Each channel gets 5 videos first; failed downloads retried; Fewest-video channels first; channels with under 10% kids' videos left out; Channels with 1–4 videos by score first; at most 3 new channels a day; ch_ready and ch_left_out as of 2026-10-30 00:00:34 UTC
-2026-10-28	15210	506	53	145				133	0	17	0	ch_ready and ch_left_out as of 2026-10-29 00:00:13 UTC
-2026-10-27	15077	489	48	145				131	0	17	0	ch_ready and ch_left_out as of 2026-10-28 00:00:29 UTC
-2026-10-26	14946	472	51	145				118	67	3	0	Collecting starts: 150 videos a day, lowest r first; ch_ready and ch_left_out as of 2026-10-27 08:26:43 UTC
+2026-11-26	17768	612	156	460	72	2.19	4.70	42	88	1	0	
+2026-11-25	17814	611	152	457	74	2.44	4.72	81	0	2	0	
+2026-11-24	17733	609	144	456	73	2.06	4.72	93	0	2	0	
+2026-11-23	17640	607	146	456	75	2.35	4.74	86	0	2	0	
+2026-11-22	17554	605	147	450	74	2.30	4.75	77	0	2	0	
+2026-11-21	17477	603	147	446	73	2.26	4.75	78	0	1	0	ch_held also counts channels whose thin years have nothing ready
+2026-11-20	17399	602	150	442	73	2.19	4.75	93	0	0	0	
+2026-11-19	17306	602	139	440	73	2.03	4.75	90	0	0	0	
+2026-11-18	17216	602	139	439	64	1.51	4.75	96	0	3	0	Took out compilations of existing videos; no new ones are collected; Earlier rows count them as never added, except ch_ready, ch_held, ch_yr_2nd and ch_yr_med, which couldn't be recounted and still include them
+2026-11-17	17120	599	134	417	84	2.07	5.05	112	0	3	0	
+2026-11-16	17008	596	134	411	83	2.00	5.05	85	0	2	0	ch_yr_2nd leaves out held channels, now in ch_held; ch_out is ch_left_out
+2026-11-15	16923	594	133	383	83	1.92	5.05	102	0	1	0	
+2026-11-14	16821	593	127	382	80	1.84	5.05	71	0	1	0	
+2026-11-13	16750	592	119	380	69	1.77	5.06	111	0	3	0	
+2026-11-12	16639	589	114	378	67	1.69	5.06	92	0	2	0	
+2026-11-11	16547	587	110	373	66	1.60	5.06	86	0	2	0	
+2026-11-10	16461	585	109	357	66	1.52	5.06	87	0	2	0	Pace lowered from 150 to 120 videos a day after three blocks
+2026-11-09	16374	583	110	346	66	1.44	5.07	126	0	3	0	New channels join by subscribers, most first; their counts read weekly
+2026-11-08	16248	580	93	331		1.34	5.07	121	0	3	0	
+2026-11-07	16127	577	78	329		1.20	5.08	105	0	2	0	
+2026-11-06	16022	575	80	328		1.07	5.09	111	0	2	0	
+2026-11-05	15911	573	78	313		0.93	5.09	125	12	3	0	
+2026-11-04	15798	570	75	287		0.74	5.10	72	0	3	0	
+2026-11-03	15726	567	74	279		0.64	5.11	66	0	3	0	A third of downloads for new channels to catch up; at most 3 new a day
+2026-11-02	15660	564	70	277		0.51	5.12	41	0	2	0	Thinnest channels first; under 5 eligible a year left out; 3 new a day
+2026-11-01	15619	562	65	240		0.42	5.06	65	0	2	0	
+2026-10-31	15554	560	55	240				112	0	1	0	Counts end at 23:59:59 UTC; ch_ready, ch_out recounted from backups
+2026-10-30	15442	559	39	215				124	0	2	0	ch_ready and ch_left_out as of 2026-10-31 00:00:12 UTC
+2026-10-29	15318	557	17	188				118	0	52	0	Each channel gets 5 videos first; failed downloads retried; Fewest-video channels first; channels with under 10% kids' videos left out; Channels with 1–4 videos by score first; at most 3 new channels a day; ch_ready and ch_left_out as of 2026-10-30 00:00:34 UTC
+2026-10-28	15200	505	53	145				133	0	17	0	ch_ready and ch_left_out as of 2026-10-29 00:00:13 UTC
+2026-10-27	15067	488	48	145				131	0	17	0	ch_ready and ch_left_out as of 2026-10-28 00:00:29 UTC
+2026-10-26	14936	471	51	145				118	67	3	0	Collecting starts: 150 videos a day, lowest r first; ch_ready and ch_left_out as of 2026-10-27 08:26:43 UTC
